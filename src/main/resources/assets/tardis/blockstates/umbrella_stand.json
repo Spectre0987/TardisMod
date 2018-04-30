@@ -1,0 +1,10 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:umbrella_stand"
+        },
+        "inventory":{
+            "model":"tardis:umbrella_stand"
+        }
+    }
+}

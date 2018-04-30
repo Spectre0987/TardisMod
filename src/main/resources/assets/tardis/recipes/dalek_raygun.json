@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GCR",
+    "III",
+    " BI"
+  ],
+  "key": {
+    "G": {
+      "item": "tardis:gunstick"
+    },
+    "C":{
+        "item":"tardis:circuts"
+    },
+    "R":{
+        "item":"tardis:isotope_64"
+    },
+    "I":{
+        "item":"minecraft:iron_ingot"
+    },
+    "B":{
+        "item":"minecraft:wooden_button"
+    }
+  },
+  "result": {
+    "item": "tardis:ray_gun"
+  }
+}

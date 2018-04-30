@@ -1,0 +1,10 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:door"
+        },
+        "inventory":{
+            "model":"tardis:door"
+        }
+    }
+}

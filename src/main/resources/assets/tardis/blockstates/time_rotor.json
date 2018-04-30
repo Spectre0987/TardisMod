@@ -1,0 +1,10 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:time_rotor"
+        },
+        "inventory":{
+             "model":"tardis:time_rotor"
+        }
+    }
+}
