@@ -25,6 +25,10 @@ public class EntityHelper {
 		EntityRegistry.addSpawn(entityClass, 50, 0, 1, EnumCreatureType.MONSTER, biomes.toArray(new Biome[1]));
 	}
 
+	public static void registerNoSpawn(Class entityClass, String name) {
+		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID), entityClass, name, ++id, Tardis.instance, 64, 1, true);
+	}
+	
 	public static void makeGoodBiomes() {
 		for(ResourceLocation rl:Biome.REGISTRY.getKeys()) {
 			Biome b=Biome.REGISTRY.getObject(rl);

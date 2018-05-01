@@ -119,9 +119,7 @@ public class Tardis
         EntityHelper.registerStatic(ControlFuel.class, "fuel");
         EntityHelper.registerStatic(EntityCam.class, "cam");
         EntityHelper.registerStatic(EntityForceField.class, "force_field");
-        EntityHelper.registerMob(EntityAngel.class, "weeping_angel");
-        EntityHelper.registerMob(EntityDalek.class, "dalek");
-        EntityHelper.registerMob(EntityTardis.class, "tardis");
+        EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
         EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
         GameRegistry.registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
         GameRegistry.registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -139,7 +137,6 @@ public class Tardis
         ScrewdriverMode.register(new RecallMode());
         ScrewdriverMode.register(new TransmatMode());
         ScrewdriverMode.register(new RoundelMode());
-        ScrewdriverMode.register(new Hall());
         
         ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
         
