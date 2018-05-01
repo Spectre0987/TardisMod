@@ -21,6 +21,8 @@ public class TileEntitySonicGun extends TileEntity implements ITickable{
 	public void update() {
 		--ticks;
 		if(ticks<=0) {
+			if(state==null)
+				state=Blocks.AIR.getDefaultState();
 			world.setBlockState(this.getPos(), state);
 		}
 	}
@@ -33,6 +35,10 @@ public class TileEntitySonicGun extends TileEntity implements ITickable{
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		Block block=Block.getBlockFromName(tag.getString("block_name"));
+		if(block==null) {
+			state=Blocks.AIR.getDefaultState();
+			return;
+		}
 		if(tag.hasKey("meta"))
 			state=block.getStateFromMeta(tag.getInteger("meta"));
 		else state=block.getDefaultState();

@@ -24,7 +24,7 @@ public class SonicBlaster extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		if(!worldIn.isRemote) {
 			RayTraceResult ray = worldIn.rayTraceBlocks(playerIn.getPositionVector().addVector(0, playerIn.getEyeHeight(), 0), playerIn.getPositionVector().add(playerIn.getForward().scale(120)),true);
-			if(ray!=null&&ray.typeOfHit==RayTraceResult.Type.BLOCK) {
+			if(ray!=null&&ray.typeOfHit.equals(RayTraceResult.Type.BLOCK)&&ray.getBlockPos()!=null) {
 				BlockPos pos=ray.getBlockPos().down().west().north();
 				for(int x=0;x<3;x++) {
 					for(int y=0;y<3;y++) {
