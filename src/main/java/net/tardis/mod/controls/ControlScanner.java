@@ -39,7 +39,6 @@ public class ControlScanner extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		
-		}
 	}
 
 }
