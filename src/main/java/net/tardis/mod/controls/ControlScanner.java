@@ -38,24 +38,7 @@ public class ControlScanner extends EntityControl{
 
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if(!world.isRemote) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.tardisPos);
-			if(!tardis.isInFlight()) {
-				WorldServer ws=((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
-				BlockPos pos=tardis.getLocation();
-				ChunkPos c=ws.getChunkFromBlockCoords(pos).getPos();
-				ws.getChunkProvider().loadChunk(c.x,c.z);
-				EntityCam cam=new EntityCam(ws, pos);
-				cam.setConsolePos(tardisPos);
-				ws.spawnEntity(cam);
-				Tardis.packet_instance.sendTo(new MessageCam(cam.getEntityId(),tardis.dimension), (EntityPlayerMP)player);
-				System.out.println("Entity ID: "+cam.getEntityId());
-				/*player.setPosition(pos.getX(), pos.getY(),pos.getZ());
-				player.startRiding(cam, true);
-				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)player, tardis.dimension, new TardisTeleporter((WorldServer)world));
-				*/
-			}
-			else player.sendMessage(new TextComponentTranslation("tardis.flying"));
+		
 		}
 	}
 
