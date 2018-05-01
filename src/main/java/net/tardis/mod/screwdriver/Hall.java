@@ -1,4 +1,4 @@
-package net.tardis.mod.screwdrivers;
+package net.tardis.mod.screwdriver;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.server.MinecraftServer;

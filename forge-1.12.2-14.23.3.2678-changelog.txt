@@ -1,5 +1,264 @@
 Changelog:
-Build 2618:
+Build 2678:
+	cpw: Clean up broken aliases caused by registry bug #4894. (#4909)
+
+Build 1.12.2-14.23.3.2677:
+	LexManos:
+		Only revert to frozen data on server shutdown on client. Should fix race
+		condition exposed by #4904
+	LexManos: Move registry snapshot read/write code to Snapshot class. Cleaner code.
+
+Build 1.12.2-14.23.3.2676:
+	LexManos:
+		Potentially fix issue with BungeeCord or other servers resetting the
+		registry mappings on the client while the game is running. Errors may
+		still occure if the client knows about world data beyond vanilla.
+		Servers should NEVER send world/registry invocations before they have
+		sent registry mappings. Closes #4901
+
+Build 1.12.2-14.23.3.2675:
+	sfPlayer1: Reduce range requirement for World.checkLightFor from 17 to 16 (#4729)
+
+Build 1.12.2-14.23.3.2674:
+	bs2609: Fix typo in validation of vanilla registry wrappers (#4899)
+
+Build 1.12.2-14.23.3.2673:
+	josephcsible: Fix #4772: add an "isActivator" boolean to powered rails (#4774)
+
+Build 1.12.2-14.23.3.2672:
+	bs2609: Fix some code holding client world references longer than needed (#4881)
+	bs2609:
+		Add checks for undefined packet discriminators when sending messages
+		(#4890)
+
+Build 1.12.2-14.23.3.2671:
+	bs2609: Don't try to render removed tile entities. Fixes MC-123363 (#4811)
+
+Build 1.12.2-14.23.3.2670:
+	LexManos: Fix overrides typo in saving registry data. Closes #4894
+
+Build 1.12.2-14.23.3.2669:
+	LexManos: Fix library path and soft fail when repository root is not found.
+
+Build 1.12.2-14.23.3.2668:
+	LexManos:
+		Fix libraries not being added to the modlist when using external
+		metadata. Closes #4879
+
+Build 1.12.2-14.23.3.2666:
+	bs2609:
+		Fix dragon fight not initialising correctly under some circumstances
+		(#4868)
+
+Build 1.12.2-14.23.3.2665:
+	LexManos:
+		Cleanup some issues with the mod extraction to the memory modlist.
+		Closes #4874 #4875
+
+Build 1.12.2-14.23.3.2664:
+	mezz: Improve missing mod dependency error screen (#4762)
+
+Build 1.12.2-14.23.3.2663:
+	bs2609: Fix biome dictionary's biome type detection (#4878)
+
+Build 1.12.2-14.23.3.2662:
+	bs2609: Clean up Reader/Writer handling to use a specified charset (#4872)
+
+Build 1.12.2-14.23.3.2661:
+	bs2609:
+		Suppress firing events at load time if an error has already occurred
+		(#4801)
+
+Build 1.12.2-14.23.3.2660:
+	AlexIIL: Fix FluidUtil.getFluidHandler skipping some fluid tile entities (#4854)
+
+Build 1.12.2-14.23.3.2659:
+	erlend: Parse contained dependency Timestamp as long instead of int (#4866)
+
+Build 1.12.2-14.23.3.2658:
+	LexManos: Fix Forge's metadata not being loaded. Closes #4865
+
+Build 1.12.2-14.23.3.2657:
+	LexManos: Fix mods without ModSide meta value.
+
+Build 1.12.2-14.23.3.2656:
+	LexManos: Rewrite dependency extraction to use mod list system (#4841)
+
+Build 1.12.2-14.23.3.2655:
+	LexManos: Bump Forge version for new dev chunk.
+
+Build 1.12.2-14.23.2.2654:
+	LexManos:
+		Add support for World Workers skipping ticks without being removed from
+		the worker list.
+	LexManos:
+		Slow down Forge chunk gen worker when save queue is to high. Prevents
+		task from completing while tons of chunks are pending save. And add
+		minimum notification every 60 seconds.
+	LexManos: Fix vanilla duplication bug.
+
+Build 1.12.2-14.23.2.2653:
+	williewillus: Fix MC-88179 in a better way that avoids and closes #4824 (#4830)
+
+Build 1.12.2-14.23.2.2652:
+	bs2609: Improve the warning logged for cascading world generation (#4725)
+
+Build 1.12.2-14.23.2.2651:
+	bs2609:
+		New ITeleporter interface making dimensional teleportation easier.
+		(#4602)
+
+Build 1.12.2-14.23.2.2650:
+	williewillus:
+		Add a FML outbound target for all players tracking a point or entity in
+		the world. Closes #3677 (#4631)
+
+Build 1.12.2-14.23.2.2649:
+	mail:
+		Prevent EntityPlayer.attackEntityFrom from firing LivingAttackEvent
+		twice (#4661)
+
+Build 1.12.2-14.23.2.2648:
+	bs2609: Improve performance of some ExtendedBlockState methods (#4698)
+	6081834+Yuudaari: Add a way to get a list of registered biome types (#4685)
+
+Build 1.12.2-14.23.2.2647:
+	bs2609:
+		Check for empty dimensions outside of chunk unloading loop, culling
+		worlds without needing chunk unloads to trigger it. (#4704)
+	bs2609: Optimise adding normal element to vertex formats (#4699)
+
+Build 1.12.2-14.23.2.2646:
+	CreativeMD:
+		Fixed Spectator mode particles and sounds computed from where you have
+		been before (MC-46445) (#4728)
+	Parker Young:
+		Update ItemHandlerHelper.giveItemToPlayer to allow player who picked up
+		the item to hear the sound as well (#4720)
+	josephcsible: Add description to Error raised by the server hang watchdog. (#4714)
+	Judge40: Create event for overriding mob griefing flag based on entity. (#4710)
+
+Build 1.12.2-14.23.2.2645:
+	matti.j.ruohonen:
+		Add a WorldProvider#canSleepHere() method to allow providers to control
+		sleeping in beds separately from re-spawning. (#4741)
+
+Build 1.12.2-14.23.2.2644:
+	bs2609: Fix some block connection logic not matching vanilla (#4781)
+	bs2609: Reduce memory usage of model transforms (#4753)
+	malte0811:
+		Fix FMLCommonHandler#exitJava printing useless/wrong calling info
+		(#4742)
+
+Build 1.12.2-14.23.2.2643:
+	34900092+temp1011: Add fences and fence gates to ore dictionary (#4807)
+	TheCyberBrick: Added chunk instance to ChunkWatchEvent (#4805)
+	Bward7864:
+		Small performance improvement to ItemStack, by using Items.AIR directly
+		instead of getting it from the Block map. (#4786)
+	Mordenkainen:
+		Fix for the player inadvertently being removed from the Entity Tracker
+		when the chunk they were in unloads after they teleport out of it.
+		(#4784)
+
+Build 1.12.2-14.23.2.2642:
+	bs2609: Fix entities sometimes not rendering when out-of-world (#4823)
+
+Build 1.12.2-14.23.2.2641:
+	mezz: Fix issues with the test mods
+
+Build 1.12.2-14.23.2.2640:
+	marvinroesch99: Reorganise test mods into packages (#4706)
+
+Build 1.12.2-14.23.2.2639:
+	diesieben07: Fix servers crashing due to initializer on @SideOnly field (#4825)
+
+Build 1.12.2-14.23.2.2638:
+	Bward7864:
+		Cleaner TileEntityItemStackRenderers, now stored on the Item. Modders
+		should be careful and cache their renderers. (#4700)
+
+Build 1.12.2-14.23.2.2637:
+	mezz:
+		Add support for creator mod ID for modded enchanted books, potions,
+		arrows, and spawn eggs (#4810)
+
+Build 1.12.2-14.23.2.2636:
+	LexManos: Remove Mercurius from optional mods.
+
+Build 1.12.2-14.23.2.2635:
+	CreativeMD: Fixed sound engine crash when stopping streaming sounds (#4765)
+
+Build 1.12.2-14.23.2.2634:
+	LexManos:
+		Merge vanilla pre-decompile annotations with Forge's post-patching.
+		Fixes #4769 Crash detail classes causing class not found errors.
+
+Build 1.12.2-14.23.2.2633:
+	malte0811:
+		Fix NBT data loss when shift-clicking stacked items in the enchantment
+		table (MC-17431) (#4817)
+
+Build 1.12.2-14.23.2.2632:
+	mezz: Update docs for ItemTooltipEvent
+
+Build 1.12.2-14.23.2.2631:
+	ichttt: Fix some IResources being leaked (#4806)
+
+Build 1.12.2-14.23.2.2630:
+	mezz:
+		Fix server console logging issues
+		Closes #4808
+
+Build 1.12.2-14.23.2.2629:
+	mezz: Fix up logging and log4j configuration (#4802)
+
+Build 1.12.2-14.23.2.2628:
+	josephcsible: Make lookupFluidForBlock work for flowing water and lava (#4675)
+
+Build 1.12.2-14.23.2.2627:
+	wynprice999:
+		Patched BlockInfo#updateLightMatrix to use
+		IBlockState#doesSideBlockRendering instead of
+		Block#doesSideBlockRendering (#4798)
+
+Build 1.12.2-14.23.2.2626:
+	bs2609: Fix integrated server crash not stopping client (#4796)
+
+Build 1.12.2-14.23.2.2625:
+	mezz: Fix #4792 TextComponentHelper handling for FakePlayers
+
+Build 1.12.2-14.23.2.2624:
+	ichttt:
+		Fix serverside startup failure when checking for vanilla acceptance
+		(#4783)
+
+Build 1.12.2-14.23.2.2623:
+	mezz: Prevent various vanilla blocks from loading unloaded chunks (#4689)
+	bs2609: Improve how smooth lighting code handles translucency (#4711)
+
+Build 1.12.2-14.23.2.2622:
+	mezz:
+		Improve the "Mod rejections" error message when connecting to a server
+		(#4761)
+
+Build 1.12.2-14.23.2.2621:
+	cpw:
+		Fix the ForgeChunkManager to use the writebehind FileIO thread for
+		writing (#4777)
+		the chunk file. Closes #4775
+		 This is a performance tweak - doing File IO on the server thread during
+		 world saves causes significant lag spikes. This is one of many.
+
+Build 1.12.2-14.23.2.2620:
+	LexManos:
+		Fix vanilla crash classes not being preloaded. Closes #4769 Fix classes
+		not being aggregated for mods using the new annotation cache.
+
+Build 1.12.2-14.23.2.2619:
+	bs2609: Fix incorrect dimension ID being used for maps (#4690)
+
+Build 1.12.2-14.23.2.2618:
 	bs2609: Don't cull generated item models with non-default transforms (#4749)
 
 Build 1.12.2-14.23.2.2617:
@@ -221,7 +480,7 @@ Build 1.12.2-14.23.1.2569:
 	bs2609: Add missing nullability annotations to some Forge-added methods (#4578)
 
 Build 1.12.2-14.23.1.2568:
-	BillyGalbreath:
+	Billy Galbreath:
 		Allow EntityFishHook to spawn water particles in all liquids that use
 		Material.WATER (#4585)
 
@@ -337,7 +596,7 @@ Build 1.12.2-14.23.0.2537:
 Build 1.12.2-14.23.0.2536:
 	bs2609: Change item model alpha tests to match values used for rendering (#4490)
 	bs2609: Fix incorrect lighting of item models (#4493)
-	BillyGalbreath: Fix MC-51150 (#4495)
+	Billy Galbreath: Fix MC-51150 (#4495)
 
 Build 1.12.2-14.23.0.2535:
 	bartek.bok: Fix NPE when player tries to sleep without bed (#4487)
