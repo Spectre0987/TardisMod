@@ -1,30 +1,30 @@
-package net.tardis.mod.models.console.console;
+package net.tardis.mod.models.console.contols;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelFuelLever extends ModelBase
+public class ModelFlightLever extends ModelBase
 {
   //fields
     ModelRenderer Shape1;
     ModelRenderer Shape2;
   
-  public ModelFuelLever()
+  public ModelFlightLever()
   {
-    textureWidth = 10;
+    textureWidth = 12;
     textureHeight = 9;
     
       Shape1 = new ModelRenderer(this, 0, 0);
-      Shape1.addBox(0F, 0F, 0F, 1, 4, 1);
+      Shape1.addBox(0F, 0F, 0F, 1, 8, 1);
       Shape1.setRotationPoint(0F, 0F, 0F);
-      Shape1.setTextureSize(10, 9);
+      Shape1.setTextureSize(12, 9);
       Shape1.mirror = true;
       setRotation(Shape1, 0F, 0F, 0F);
-      Shape2 = new ModelRenderer(this, 0, 5);
-      Shape2.addBox(0F, 0F, 0F, 3, 2, 2);
-      Shape2.setRotationPoint(-3F, -0.5F, -0.5F);
-      Shape2.setTextureSize(10, 9);
+      Shape2 = new ModelRenderer(this, 4, 0);
+      Shape2.addBox(0F, 0F, 0F, 2, 3, 2);
+      Shape2.setRotationPoint(-0.5F, 8F, -0.5F);
+      Shape2.setTextureSize(12, 9);
       Shape2.mirror = true;
       setRotation(Shape2, 0F, 0F, 0F);
   }

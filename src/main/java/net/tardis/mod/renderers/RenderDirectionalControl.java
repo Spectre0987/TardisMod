@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.controls.EntityControl;
-import net.tardis.mod.models.console.console.ModelWheel;
+import net.tardis.mod.models.console.contols.ModelWheel;
 
 public class RenderDirectionalControl extends Render{
 

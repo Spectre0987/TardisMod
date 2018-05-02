@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.models.console.console.ModelFlightLever;
+import net.tardis.mod.models.console.contols.ModelFlightLever;
 
 public class RenderBigLever extends Render {
 

@@ -9,7 +9,7 @@
 
 
 
-package net.tardis.mod.models.console.console;
+package net.tardis.mod.models.console.contols;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

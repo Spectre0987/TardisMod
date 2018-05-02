@@ -9,7 +9,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.controls.ControlSTCLoad;
 import net.tardis.mod.controls.EntityControl;
 import net.tardis.mod.helpers.Helper;
-import net.tardis.mod.models.console.console.ModelButton;
+import net.tardis.mod.models.console.contols.ModelButton;
 
 public class RenderButton extends Render{
 	

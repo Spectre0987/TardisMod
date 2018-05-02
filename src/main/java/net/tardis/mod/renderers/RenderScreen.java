@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.controls.ControlScreen;
 import net.tardis.mod.helpers.Helper;
-import net.tardis.mod.models.console.console.ModelScreen;
+import net.tardis.mod.models.console.contols.ModelScreen;
 import net.tardis.mod.tileentity.TileEntityTardis;
 
 public class RenderScreen extends Render {

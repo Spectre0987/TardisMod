@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.controls.EntityControl;
-import net.tardis.mod.models.console.console.ModelLeverDemat;
+import net.tardis.mod.models.console.contols.ModelLeverDemat;
 
 public class RenderLever extends Render {
 

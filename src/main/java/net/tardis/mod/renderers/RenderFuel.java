@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.controls.ControlFuel;
-import net.tardis.mod.models.console.console.ModelFuelLever;
+import net.tardis.mod.models.console.contols.ModelFuelLever;
 
 public class RenderFuel extends Render {
 
