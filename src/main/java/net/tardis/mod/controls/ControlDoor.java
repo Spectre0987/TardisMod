@@ -22,7 +22,6 @@ public class ControlDoor extends EntityControl{
 	public ControlDoor(World world) {
 		super(world);
 		this.setSize(1F, 2F);
-		this.ignoreFrustumCheck=true;
 	}
 	
 	@Override
