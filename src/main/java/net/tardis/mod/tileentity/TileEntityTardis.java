@@ -92,8 +92,8 @@ public class TileEntityTardis extends TileEntity implements ITickable{
 			ticks=0;
 		}
 		if(chunkLoadTick) {
+			chunkLoadTick=false;
 			if(!world.isRemote) {
-				chunkLoadTick=false;
 				tardisTicket=ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisTicket, world.getChunkFromBlockCoords(this.getPos()).getPos());
 				WorldServer ws=((WorldServer)world).getMinecraftServer().getWorld(this.dimension);
