@@ -40,7 +40,7 @@ public class RenderButton extends Render{
 				ResourceLocation loc=TEXTURE;
 				if(entity instanceof ControlSTCLoad&&((ControlSTCLoad)entity).getLoading())loc=TEXTURE_LOADING;
 				Minecraft.getMinecraft().getTextureManager().bindTexture(loc);
-				GlStateManager.translate(0, c.ticks>0?Helper.normalizeVec3d(0, 0.5, 0).y:0, 0);
+				GlStateManager.translate(0, c.ticks>0?Helper.convertToPixels(0, 0.5, 0).y:0, 0);
 			}
 			model.render(entity, 0,0,0,0,0,0.0625F);
 		}

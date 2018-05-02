@@ -20,7 +20,7 @@ public class ControlFuel extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(-10,16,20);
+		return Helper.convertToPixels(-10,16,20);
 	}
 
 	@Override

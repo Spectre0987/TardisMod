@@ -26,7 +26,7 @@ public class ControlFlight extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(-22,0,-6);
+		return Helper.convertToPixels(-22,0,-6);
 	}
 
 	@Override

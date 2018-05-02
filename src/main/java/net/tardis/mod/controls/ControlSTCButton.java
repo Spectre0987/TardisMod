@@ -26,7 +26,7 @@ public class ControlSTCButton extends EntityControl{
 	
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(0,16,24.5).add(vec);
+		return Helper.convertToPixels(0,16,24.5).add(vec);
 	}
 
 	@Override

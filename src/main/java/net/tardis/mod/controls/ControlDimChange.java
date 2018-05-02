@@ -22,7 +22,7 @@ public class ControlDimChange extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(-10,14,16);
+		return Helper.convertToPixels(-10,14,16);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class ControlY extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(8,12,-6);
+		return Helper.convertToPixels(8,12,-6);
 	}
 
 	@Override

@@ -35,11 +35,11 @@ public class Helper {
 		player.setPositionAndUpdate(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
 	}
 
-	public static Vec3d normalizeVec3d(Vec3d vec) {
+	public static Vec3d convertToPixels(Vec3d vec) {
 		return new Vec3d(vec.x/16,vec.y/16,vec.z/16);
 	}
 	
-	public static Vec3d normalizeVec3d(double x,double y,double z) {
+	public static Vec3d convertToPixels(double x,double y,double z) {
 		return new Vec3d(x/16,y/16,z/16);
 	}
 

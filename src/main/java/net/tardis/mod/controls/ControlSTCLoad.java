@@ -25,7 +25,7 @@ public class ControlSTCLoad extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(-4,16,24.5);
+		return Helper.convertToPixels(-4,16,24.5);
 	}
 
 	@Override

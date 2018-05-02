@@ -21,7 +21,7 @@ public class ControlLaunch extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(-7,16,0);
+		return Helper.convertToPixels(-7,16,0);
 	}
 
 	@Override

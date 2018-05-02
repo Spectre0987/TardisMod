@@ -23,7 +23,7 @@ public class ControlRandom extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(-7.5,16,8);
+		return Helper.convertToPixels(-7.5,16,8);
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class ControlScanner extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.normalizeVec3d(23,16,0);
+		return Helper.convertToPixels(23,16,0);
 	}
 
 	@Override

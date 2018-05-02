@@ -24,7 +24,7 @@ public class RenderDoor extends Render {
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y+Helper.normalizeVec3d(0,8,0).y, z);
+		GlStateManager.translate(x, y+Helper.convertToPixels(0,8,0).y, z);
 		GlStateManager.rotate(180, 0, 1, 0);
 		double scale=1;
 		GlStateManager.scale(scale,scale,scale);
