@@ -64,6 +64,15 @@ public class TileEntityDoor extends TileEntity implements ITickable{
 			player.sendMessage(new TextComponentTranslation("tardis.locked."+isLocked));
 		}
 	}
+	
+	public void toggleLockedNoKey(EntityPlayer player) {
+		if(lockCooldown==0) {
+			lockCooldown=20;
+			isLocked=isLocked?false:true;
+			this.markDirty();
+			player.sendMessage(new TextComponentTranslation("tardis.locked."+isLocked));
+		}
+	}
 
 	@Override
 	public void update() {

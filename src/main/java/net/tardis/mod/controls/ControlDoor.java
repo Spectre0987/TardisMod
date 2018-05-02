@@ -3,11 +3,12 @@ package net.tardis.mod.controls;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.tardis.mod.items.TItems;
+import net.tardis.mod.sounds.TSounds;
 import net.tardis.mod.tileentity.TileEntityDoor;
 import net.tardis.mod.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
@@ -52,10 +53,13 @@ public class ControlDoor extends EntityControl{
 					player.setSpawnPoint(tardis.getLocation().north(), true);
 					player.setSpawnDimension(tardis.dimension);
 				}
-				else if(player.getHeldItemMainhand().getItem()==TItems.key) {
+				else {
 					WorldServer ws=((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
-					((TileEntityDoor)ws.getTileEntity(tardis.getLocation().up())).toggleLocked(player);
+					((TileEntityDoor)ws.getTileEntity(tardis.getLocation().up())).toggleLockedNoKey(player);
 				}
+			}
+			else {
+				world.playSound(null, this.getPosition(), TSounds.door_locked, SoundCategory.BLOCKS, 1F, 1F);
 			}
 		}
 	}
