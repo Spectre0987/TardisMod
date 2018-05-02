@@ -1,0 +1,8 @@
+{
+    "parent":"block/cube_bottom_top",
+    "textures":{
+        "side":"tardis:blocks/console_off",
+        "top":"tardis:blocks/console_top",
+        "bottom":"tardis:blocks/console_top"
+    }
+}
