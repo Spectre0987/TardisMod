@@ -17,6 +17,7 @@ public class TSounds {
 	public static SoundEvent dalek_ray;
 	public static SoundEvent dalek;
 	public static SoundEvent force_field;
+	public static SoundEvent door_locked;
 	
 	public static void register() {
 		takeoff=register("takeoff");
@@ -25,6 +26,7 @@ public class TSounds {
 		dalek_ray=register("dalek_ray");
 		dalek=register("dalek");
 		force_field=register("force_field");
+		door_locked=register("locked");
 	}
 	
 	public static SoundEvent register(String name) {
