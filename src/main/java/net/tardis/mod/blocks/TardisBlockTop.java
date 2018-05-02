@@ -23,6 +23,8 @@ public class TardisBlockTop extends BlockContainer implements IUnbreakable{
 	public TardisBlockTop() {
 		super(Material.WOOD,MapColor.BLUE);
 		this.setBlockUnbreakable();
+		this.setLightLevel(1F);
+		this.setLightOpacity(0);
 		this.setResistance(9999);
 	}
 

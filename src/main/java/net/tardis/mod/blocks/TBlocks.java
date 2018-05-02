@@ -79,7 +79,7 @@ public class TBlocks{
 		room_gen=new TBlock();
 		register(room_gen,"room_gen");
 		
-		//Block That Exist Solely for Models
+		//Blocks That Exist Solely for Models
 		time_rotor_interior=new BlockModel();
 		register(time_rotor_interior,"time_rotor_interior");
 		

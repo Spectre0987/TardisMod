@@ -12,7 +12,7 @@ public class TardisBlock extends Block implements IUnbreakable{
 	
 	public TardisBlock() {
 		super(Material.WOOD,MapColor.BLUE);
-		this.setLightLevel(7);
+		this.setLightLevel(1F);
 		this.setLightOpacity(0);
 		this.setBlockUnbreakable();
 		this.setResistance(999);
