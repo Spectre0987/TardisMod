@@ -37,7 +37,7 @@ public class ControlSTCButton extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.tardisPos);
+			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			if(index<tardis.saveCoords.size()) {
 				if(tardis.getLoading()) {
 					tardis.saveCoords.set(index, new SpaceTimeCoord(tardis.getLocation(),tardis.dimension));

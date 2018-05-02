@@ -30,7 +30,7 @@ public class ControlX extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
-			TileEntityTardis tardis=((TileEntityTardis)world.getTileEntity(this.tardisPos));
+			TileEntityTardis tardis=((TileEntityTardis)world.getTileEntity(this.getConsolePos()));
 			tardis.setDesination(tardis.getDestination().add(player.isSneaking()?-10:10,-1,0), tardis.getTargetDim());
 		}
 		else if(this.ticks<=0){

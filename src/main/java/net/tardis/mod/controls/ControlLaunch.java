@@ -32,7 +32,7 @@ public class ControlLaunch extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
-			TileEntity te=world.getTileEntity(this.tardisPos);
+			TileEntity te=world.getTileEntity(this.getConsolePos());
 			if(te!=null) {
 				TileEntityTardis tardis=(TileEntityTardis)te;
 				if(!tardis.isInFlight())tardis.startFlight();

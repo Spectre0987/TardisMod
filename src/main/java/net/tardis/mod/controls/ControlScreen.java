@@ -2,10 +2,6 @@ package net.tardis.mod.controls;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,11 +12,8 @@ import net.tardis.mod.tileentity.TileEntityTardis;
 
 public class ControlScreen extends EntityControl{
 	
-	public static final DataParameter<BlockPos> LOCATION=EntityDataManager.createKey(ControlScreen.class, DataSerializers.BLOCK_POS);
-	
 	public ControlScreen(TileEntityTardis tardis) {
 		super(tardis);
-		this.dataManager.set(LOCATION, tardis.getPos());
 	}
 	
 	public ControlScreen(World world) {
@@ -30,7 +23,6 @@ public class ControlScreen extends EntityControl{
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataManager.register(LOCATION, BlockPos.ORIGIN);
 	}
 	
 	@Override
@@ -52,10 +44,6 @@ public class ControlScreen extends EntityControl{
 	
 	@SideOnly(Side.CLIENT)
 	public void openGui() {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiProtocol(this.dataManager.get(LOCATION)));
-	}
-	
-	public BlockPos getConsolePos() {
-		return this.getDataManager().get(LOCATION);
+		Minecraft.getMinecraft().displayGuiScreen(new GuiProtocol(this.getConsolePos()));
 	}
 }

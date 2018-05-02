@@ -42,8 +42,8 @@ public class ControlDoor extends EntityControl{
 
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if(!world.isRemote&&this.tardisPos!=null) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.tardisPos);
+		if(!world.isRemote&&this.getConsolePos()!=null) {
+			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			if(!tardis.isInFlight()) {
 				if(!player.isSneaking()) {
 					WorldServer ws=(WorldServer)world;
@@ -69,8 +69,8 @@ public class ControlDoor extends EntityControl{
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
 		if(!(entityIn instanceof EntityPlayer)) {
-			if(!world.isRemote&&tardisPos!=null) {
-				TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(tardisPos);
+			if(!world.isRemote&&getConsolePos()!=null) {
+				TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(getConsolePos());
 				BlockPos pos=tardis.getLocation().north(3);
 				entityIn.setPosition(pos.getX(), pos.getY(), pos.getZ());
 				entityIn.changeDimension(tardis.dimension);

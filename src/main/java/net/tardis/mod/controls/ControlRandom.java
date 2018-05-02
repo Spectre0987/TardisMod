@@ -34,7 +34,7 @@ public class ControlRandom extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.tardisPos);
+			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			Random rand=new Random();
 			BlockPos loc=tardis.getLocation();
 			tardis.setDesination(new BlockPos(loc.getX()+(rand.nextInt(1000)-500),rand.nextInt(100),loc.getZ()+(rand.nextInt(1000)-500)),tardis.getTargetDim());

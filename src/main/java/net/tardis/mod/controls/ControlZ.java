@@ -30,7 +30,7 @@ public class ControlZ extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
-			TileEntityTardis tardis=((TileEntityTardis)world.getTileEntity(this.tardisPos));
+			TileEntityTardis tardis=((TileEntityTardis)world.getTileEntity(this.getConsolePos()));
 			tardis.setDesination(tardis.getDestination().add(0,0,player.isSneaking()?-10:10),tardis.getTargetDim());
 		}
 		else if(this.ticks<=0){

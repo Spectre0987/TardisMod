@@ -34,7 +34,7 @@ public class ControlDimChange extends EntityControl{
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
 			Integer[] ids=DimensionManager.getIDs(true);
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.tardisPos);
+			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			if(!player.isSneaking())++tardis.dimIndex;
 			else --tardis.dimIndex;
 			if(tardis.dimIndex>=ids.length||tardis.dimIndex<0)tardis.dimIndex=0;

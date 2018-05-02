@@ -36,7 +36,7 @@ public class ControlSTCLoad extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.tardisPos);
+			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			tardis.setLoading(tardis.getLoading()?false:true);
 			this.dataManager.set(IS_LOADING, tardis.getLoading());
 		}

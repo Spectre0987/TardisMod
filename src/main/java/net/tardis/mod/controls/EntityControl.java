@@ -3,6 +3,9 @@ package net.tardis.mod.controls;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -12,7 +15,8 @@ import net.tardis.mod.tileentity.TileEntityTardis;
 
 public abstract class EntityControl extends Entity implements IControl{
 
-	public BlockPos tardisPos;
+	public static final DataParameter<BlockPos> CONSOLE_POS=EntityDataManager.createKey(EntityControl.class, DataSerializers.BLOCK_POS);
+	public static final DataParameter<Boolean> IS_GLOWING=EntityDataManager.createKey(EntityControl.class, DataSerializers.BOOLEAN);
 	public int ticks=0;
 	public int direction=1;
 	
@@ -24,11 +28,29 @@ public abstract class EntityControl extends Entity implements IControl{
 	
 	public EntityControl(TileEntityTardis tardis) {
 		this(tardis.getWorld());
-		tardisPos=tardis.getPos();
+		this.dataManager.set(CONSOLE_POS, tardis.getPos().toImmutable());
 	}
 
+	public void setConsolePos(BlockPos pos) {
+		this.dataManager.set(CONSOLE_POS, pos.toImmutable());
+	}
+	
+	public BlockPos getConsolePos() {
+		return this.dataManager.get(CONSOLE_POS);
+	}
+	
+	public boolean getGlowing() {
+		return this.dataManager.get(IS_GLOWING);
+	}
+	
+	public void setGlowing(boolean glow) {
+		this.dataManager.set(IS_GLOWING, glow);
+	}
 	@Override
-	protected void entityInit() {}
+	protected void entityInit() {
+		this.dataManager.register(CONSOLE_POS, BlockPos.ORIGIN);
+		this.dataManager.register(IS_GLOWING, false);
+	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound tag) {}
@@ -83,10 +105,13 @@ public abstract class EntityControl extends Entity implements IControl{
 	@Override
 	public void onUpdate() {
 		if(!world.isRemote) {
-			if(tardisPos==null||tardisPos.equals(BlockPos.ORIGIN))this.setDead();
-			if(tardisPos!=null&&world.getTileEntity(this.tardisPos)==null)this.setDead();
+			if(getConsolePos()==null||getConsolePos().equals(BlockPos.ORIGIN))
+				this.setDead();
+			if(getConsolePos()!=null&&world.getTileEntity(this.getConsolePos())==null)
+				this.setDead();
 		}
-		if(ticks>0)--ticks;
+		if(ticks>0)
+			--ticks;
 		super.onUpdate();
 	}
 

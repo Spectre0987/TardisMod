@@ -37,19 +37,19 @@ public class ControlFlight extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.tardisPos);
+			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			if(!tardis.isInFlight()) {
 				WorldServer ws=((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 				BlockPos wPos=tardis.getLocation();
 				ws.setBlockToAir(tardis.getLocation());
 				ws.setBlockToAir(tardis.getLocation().up());
 				EntityTardis eT=new EntityTardis(ws,player);
-				eT.setConsolePos(tardisPos);
+				eT.setConsolePos(getConsolePos());
 				eT.setPosition(wPos.getX(), wPos.getY()+1, wPos.getZ());
 				ws.spawnEntity(eT);
 				player.setInvisible(true);
 				player.setPosition(wPos.getX(), wPos.getY(), wPos.getZ());
-				ForgeChunkManager.unforceChunk(tardis.tardisLocTicket, world.getChunkFromBlockCoords(tardisPos).getPos());
+				ForgeChunkManager.unforceChunk(tardis.tardisLocTicket, world.getChunkFromBlockCoords(getConsolePos()).getPos());
 				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)player, tardis.dimension, new TardisTeleporter((WorldServer)world));
 			}
 			else player.sendMessage(new TextComponentTranslation("tardis.flying"));

@@ -31,7 +31,7 @@ public class ControlFuel extends EntityControl{
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
-			TileEntityTardis t=(TileEntityTardis)world.getTileEntity(tardisPos);
+			TileEntityTardis t=(TileEntityTardis)world.getTileEntity(getConsolePos());
 			t.setFueling(t.isFueling()?false:true);
 		}
 		else ticks=20;
