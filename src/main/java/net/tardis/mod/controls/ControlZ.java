@@ -32,7 +32,6 @@ public class ControlZ extends EntityControl{
 		if(!world.isRemote) {
 			TileEntityTardis tardis=((TileEntityTardis)world.getTileEntity(this.tardisPos));
 			tardis.setDesination(tardis.getDestination().add(0,0,player.isSneaking()?-10:10),tardis.getTargetDim());
-			Helper.say("New Dest: "+Helper.formatBlockPos(tardis.getDestination()));
 		}
 		else if(this.ticks<=0){
 			ticks=20;

@@ -43,10 +43,6 @@ public class Helper {
 		return new Vec3d(x/16,y/16,z/16);
 	}
 
-	public static void say(String string) {
-		System.out.println(string);
-	}
-
 	public static void tell(EntityPlayer playerIn, String string) {
 		playerIn.sendMessage(new TextComponentString(string));
 	}

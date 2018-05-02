@@ -17,7 +17,6 @@ public class TardisWorldSavedData extends WorldSavedData {
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		Helper.say("FROM");
 		NBTTagCompound tardisTag=nbt.getCompoundTag("tardises");
 		NBTTagList list=tardisTag.getTagList("tardises", Constants.NBT.TAG_LIST);
 		for(NBTBase base:list) {

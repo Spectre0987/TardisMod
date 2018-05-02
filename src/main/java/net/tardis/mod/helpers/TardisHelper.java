@@ -37,7 +37,6 @@ public class TardisHelper {
 	public static BlockPos addTardis(UUID id) {
 		BlockPos pos=getNextFree();
 		tardisOwners.put(id.toString(), pos.toImmutable());
-		Helper.say("Add Tardis: Position "+Helper.formatBlockPos(pos));
 		if(TEventHandler.data!=null)
 			TEventHandler.data.markDirty();
 		return pos;
