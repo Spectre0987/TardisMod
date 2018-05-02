@@ -48,3 +48,6 @@ entity.dalek.name=Dalek
 entity.weeping_angel.name=Weeping Angel
 
 tardis.gui.protocol.force_field=Force Field Protocol
+
+scanner.safe=It is safe to exit
+scanner.unsafe=Safety Unknown
