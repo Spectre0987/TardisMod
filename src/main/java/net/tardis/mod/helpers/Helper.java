@@ -58,11 +58,13 @@ public class Helper {
 	public static BlockPos getLowestBlock(World world,BlockPos pos) {
 		pos=new BlockPos(pos.getX(),0,pos.getZ());
 		for(int i=0;i<256;++i) {
-			if(!world.getBlockState(pos).causesSuffocation()&&!world.getBlockState(pos.up()).causesSuffocation())return pos;
+			if(!world.getBlockState(pos).causesSuffocation()&&!world.getBlockState(pos.up()).causesSuffocation())
+				return pos;
 			pos=pos.up();
 		}
 		return null;
 	}
+	
 	public static double clamp(double f,double f1) {
 		return f>f1?f1:f;
 	}
