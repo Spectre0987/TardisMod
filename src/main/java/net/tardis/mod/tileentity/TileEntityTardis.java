@@ -109,7 +109,7 @@ public class TileEntityTardis extends TileEntity implements ITickable{
 			System.out.println("Traveled");
 			World dWorld=((WorldServer)world).getMinecraftServer().getWorld(destDim);
 			World oWorld=((WorldServer)world).getMinecraftServer().getWorld(dimension);
-			BlockPos nPos=isValid(dWorld,this.getDestination())?this.getDestination():dWorld.getTopSolidOrLiquidBlock(this.getDestination());
+			BlockPos nPos=dWorld.getTopSolidOrLiquidBlock(tardisDestination);
 			if(nPos!=null) {
 				boolean b=dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop);
@@ -130,13 +130,6 @@ public class TileEntityTardis extends TileEntity implements ITickable{
 		if(!world.isRemote) {
 			((WorldServer)world).getMinecraftServer().getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 8,TDimensions.id, this.getUpdatePacket());
 		}
-	}
-
-	public boolean isValid(World world,BlockPos pos) {
-		if(!world.getBlockState(pos).causesSuffocation()&&!world.getBlockState(pos.up()).causesSuffocation()) {
-			return true;
-		}
-		return false;
 	}
 	
 	@Override
