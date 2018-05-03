@@ -6,8 +6,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.api.controls.IUnbreakable;
 import net.tardis.mod.tileentity.TileEntityTardis;
@@ -19,7 +17,6 @@ public class Console extends BlockContainer implements IUnbreakable{
 	public Console() {
 		super(Material.ANVIL);
 		this.setBlockUnbreakable();
-		this.setLightOpacity(0);
 	}
 
 	@Override
@@ -29,16 +26,16 @@ public class Console extends BlockContainer implements IUnbreakable{
 
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
+		return EnumBlockRenderType.INVISIBLE;
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return BB;
+	public boolean isNormalCube(IBlockState state) {
+		return false;
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return BB;
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
 	}
 }
