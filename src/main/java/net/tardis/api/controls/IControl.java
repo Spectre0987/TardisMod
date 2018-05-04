@@ -7,6 +7,4 @@ public interface IControl {
 	String getName();
 	
 	Vec3d getOffset();
-	
-	Vec3d getRotation();
 }

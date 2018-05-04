@@ -36,11 +36,6 @@ public class ControlDoor extends EntityControl{
 	}
 
 	@Override
-	public Vec3d getRotation() {
-		return null;
-	}
-
-	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote&&this.getConsolePos()!=null) {
 			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.getConsolePos());

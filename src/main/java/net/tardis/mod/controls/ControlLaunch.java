@@ -25,11 +25,6 @@ public class ControlLaunch extends EntityControl{
 	}
 
 	@Override
-	public Vec3d getRotation() {
-		return new Vec3d(20,0,0);
-	}
-
-	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
 			TileEntity te=world.getTileEntity(this.getConsolePos());

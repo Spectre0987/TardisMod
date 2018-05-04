@@ -25,11 +25,6 @@ public class ControlDimChange extends EntityControl{
 	}
 
 	@Override
-	public Vec3d getRotation() {
-		return null;
-	}
-
-	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
 			Integer[] ids=DimensionManager.getIDs(true);
@@ -38,7 +33,8 @@ public class ControlDimChange extends EntityControl{
 				++tardis.dimIndex;
 			else 
 				--tardis.dimIndex;
-			if(tardis.dimIndex>=ids.length||tardis.dimIndex<0)tardis.dimIndex=0;
+			if(tardis.dimIndex>=ids.length||tardis.dimIndex<0)
+				tardis.dimIndex=0;
 			tardis.setTargetDimension(ids[tardis.dimIndex]!=TDimensions.id?ids[tardis.dimIndex]:0);
 		}
 		else this.ticks=20;

@@ -91,9 +91,6 @@ public abstract class EntityControl extends Entity implements IControl{
 	
 	@Override
 	public abstract Vec3d getOffset();
-
-	@Override
-	public abstract Vec3d getRotation();
 	
 	@Override
 	public boolean isGlowing() {

@@ -21,12 +21,6 @@ public class ControlZ extends EntityControl{
 	public Vec3d getOffset() {
 		return Helper.convertToPixels(-7,-0.5,5.5);
 	}
-
-	@Override
-	public Vec3d getRotation() {
-		return null;
-	}
-
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if(!world.isRemote) {
