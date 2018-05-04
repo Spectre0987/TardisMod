@@ -56,7 +56,6 @@ public class TardisBlockTop extends BlockContainer implements IUnbreakable{
 
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		System.out.println("Entity hit");
 		TileEntityDoor door=(TileEntityDoor)worldIn.getTileEntity(pos);
 		if(door!=null&&!door.isLocked) {
 			if(!(entityIn instanceof EntityPlayer)) {
