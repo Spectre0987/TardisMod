@@ -10,7 +10,6 @@ public class ControlFuel extends EntityControl{
 
 	public ControlFuel(TileEntityTardis tardis) {
 		super(tardis);
-		this.setRotation(90, 130);
 	}
 	
 	public ControlFuel(World world) {
@@ -20,7 +19,7 @@ public class ControlFuel extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(-10,16,20);
+		return Helper.convertToPixels(0,0,0);
 	}
 
 	@Override

@@ -10,16 +10,16 @@ public class ControlZ extends EntityControl{
 
 	public ControlZ(TileEntityTardis tardis) {
 		super(tardis);
-		this.setRotation(-90, 45);
 	}
 
 	public ControlZ(World world) {
 		super(world);
+		this.setSize(0.0625F, 0.0625F);
 	}
 	
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(14,10,25);
+		return Helper.convertToPixels(-7,-0.5,5.5);
 	}
 
 	@Override

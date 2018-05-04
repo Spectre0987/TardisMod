@@ -15,7 +15,6 @@ public class ControlSTCLoad extends EntityControl{
 
 	public ControlSTCLoad(TileEntityTardis tardis) {
 		super(tardis);
-		this.setRotation(0,45);
 	}
 	
 	public ControlSTCLoad(World tardis) {
@@ -25,7 +24,7 @@ public class ControlSTCLoad extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(-4,16,24.5);
+		return Helper.convertToPixels(-12,-2,-3.4);
 	}
 
 	@Override

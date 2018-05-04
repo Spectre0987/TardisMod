@@ -78,7 +78,7 @@ public class Tardis
 {
     public static final String MODID = "tardis";
     public static final String NAME = "Tardis Mod";
-    public static final String VERSION = "2.0";
+    public static final String VERSION = "2.0Alpha";
     
     private static Logger logger;
     

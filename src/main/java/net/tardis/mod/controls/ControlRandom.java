@@ -12,18 +12,16 @@ public class ControlRandom extends EntityControl{
 
 	public ControlRandom(TileEntityTardis tardis) {
 		super(tardis);
-		this.setSize(0.0625F,0.0625F);
-		this.setRotation(90F, 45F);
 	}
 	
 	public ControlRandom(World world) {
 		super(world);
-		this.setSize(0.0625F,0.0625F);
+		this.setSize(0.1875F,0.125F);
 	}
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(-7.5,16,8);
+		return Helper.convertToPixels(0,-1,9);
 	}
 
 	@Override

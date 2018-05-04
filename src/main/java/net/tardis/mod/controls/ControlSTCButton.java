@@ -15,7 +15,6 @@ public class ControlSTCButton extends EntityControl{
 		super(tardis);
 		this.index=i;
 		this.vec=vec;
-		this.setRotation(0, 45);
 	}
 
 	public ControlSTCButton(World world) {
@@ -26,7 +25,7 @@ public class ControlSTCButton extends EntityControl{
 	
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(0,16,24.5).add(vec);
+		return Helper.convertToPixels(-8,-2,-8).add(vec);
 	}
 
 	@Override

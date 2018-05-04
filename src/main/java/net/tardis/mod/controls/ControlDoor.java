@@ -32,7 +32,7 @@ public class ControlDoor extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return new Vec3d(0.5,0,6.49);
+		return new Vec3d(0,-1,6);
 	}
 
 	@Override

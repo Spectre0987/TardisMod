@@ -290,7 +290,7 @@ public class TileEntityTardis extends TileEntity implements ITickable{
 		super.onLoad();
 		if(createControls()) {
 			for(EntityControl con:controls) {
-				con.setPosition(pos.getX()+con.getOffset().x, pos.getY()+con.getOffset().y, pos.getZ()+con.getOffset().z);
+				con.setPosition(pos.getX()+con.getOffset().x+0.5, pos.getY()+con.getOffset().y+1, pos.getZ()+con.getOffset().z+0.5);
 				if(!world.isRemote)world.spawnEntity(con);
 			}
 		}
@@ -310,16 +310,9 @@ public class TileEntityTardis extends TileEntity implements ITickable{
 					new ControlDoor(this),
 					new ControlSTCLoad(this),
 					new ControlSTCButton(this,0,Helper.convertToPixels(0,0,0)),
-					new ControlSTCButton(this,1,Helper.convertToPixels(1.5,0,0)),
-					new ControlSTCButton(this,2,Helper.convertToPixels(3,0,0)),
-					new ControlSTCButton(this,3,Helper.convertToPixels(4.5,0,0)),
-					new ControlSTCButton(this,4,Helper.convertToPixels(6,0,0)),
-					new ControlSTCButton(this,5,Helper.convertToPixels(0,-2,2.5)),
-					new ControlSTCButton(this,6,Helper.convertToPixels(1.5,-2,2.5)),
-					new ControlSTCButton(this,7,Helper.convertToPixels(3,-2,2.5)),
-					new ControlSTCButton(this,8,Helper.convertToPixels(4.5,-2,2.5)),
-					new ControlSTCButton(this,9,Helper.convertToPixels(6,-2,2.5)),
-					new ControlScanner(this),
+					new ControlSTCButton(this,1,Helper.convertToPixels(-1,0,1.1)),
+					new ControlSTCButton(this,2,Helper.convertToPixels(-1.6,0,2.5)),
+					new ControlSTCButton(this,3,Helper.convertToPixels(-2.3,0,3.7)),
 					new ControlFlight(this),
 					new ControlFuel(this)
 			};

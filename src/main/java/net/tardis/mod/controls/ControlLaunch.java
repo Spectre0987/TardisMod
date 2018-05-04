@@ -2,6 +2,7 @@ package net.tardis.mod.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.helpers.Helper;
@@ -11,17 +12,16 @@ public class ControlLaunch extends EntityControl{
 	
 	public ControlLaunch(TileEntityTardis tardis) {
 		super(tardis);
-		this.setRotation(-90, 45);
 	}
 
 	public ControlLaunch(World world) {
 		super(world);
-		this.setSize(0.4F,0.4F);
+		this.setSize(0.0625F,0.25F);
 	}
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(-7,16,0);
+		return Helper.convertToPixels(-7,0,7.5);
 	}
 
 	@Override
@@ -40,5 +40,10 @@ public class ControlLaunch extends EntityControl{
 		}
 		else ticks=30;
 	}
-
+	public void setSize(float x,float y,float z) {
+		float sx=x/2;
+		float sy=y/2;
+		float sz=z/2;
+		this.setEntityBoundingBox(new AxisAlignedBB(this.posX-sx,this.posY-sy,this.posZ-sz,this.posX+sx,this.posY+sy,this.posZ+sz));
+	}
 }

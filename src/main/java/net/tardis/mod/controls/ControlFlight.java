@@ -21,12 +21,12 @@ public class ControlFlight extends EntityControl{
 	
 	public ControlFlight(World world) {
 		super(world);
-		this.setSize(0.0625F, 0.5F);
+		this.setSize(0.25F, 0.125F);
 	}
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(-22,0,-6);
+		return Helper.convertToPixels(-4,-3,12);
 	}
 
 	@Override

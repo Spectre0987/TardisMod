@@ -2,7 +2,6 @@ package net.tardis.mod.models.console.contols;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelAllControls extends ModelBase
@@ -826,8 +825,6 @@ public class ModelAllControls extends ModelBase
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5,entity);
     
-    
-    
     DoNotGlow1.render(f5);
     DoNotGlow2.render(f5);
     DoNotGlow3.render(f5);
@@ -912,41 +909,39 @@ public class ModelAllControls extends ModelBase
     Panel6DNG24.render(f5);
     Panel6Lever.render(f5);
     
-    GlStateManager.disableLighting();
-    GlStateManager.color(0, 0, 0);
-    Glow1.render(f5);
-    Glow2.render(f5);
-    Glow3.render(f5);
-    Glow4.render(f5);
-    Glow5.render(f5);
-    Glow6.render(f5);
-    Glow7.render(f5);
-    Panel2Glow1.render(f5);
-    Panel2Glow2.render(f5);
-    Panel2Glow3.render(f5);
-    Panel2Glow4.render(f5);
-    Panel2Glow5.render(f5);
-    Panel2Glow6.render(f5);
-    Panel2Glow7.render(f5);
-    Panel2Glow8.render(f5);
-    Panel3Glow1.render(f5);
-    Panel3Glow2.render(f5);
-    Panel3Glow3.render(f5);
-    Panel3Glow4.render(f5);
-    Panel3Glow5.render(f5);
-    Panel3Glow6.render(f5);
-    Panel3Glow7.render(f5);
-    Panel3Glow8.render(f5);
-    Panel3Glow9.render(f5);
-    Panel3Glow10.render(f5);
-    Panel5Glow1.render(f5);
-    Panel5Glow2.render(f5);
-    Panel5Glow3.render(f5);
-    Panel5Glow4.render(f5);
-    Panel5Glow5.render(f5);
-    Panel5Glow6.render(f5);
-    Panel5Glow7.render(f5);
-    GlStateManager.enableLighting();
+	Glow1.render(f5);
+	Glow2.render(f5);
+	Glow3.render(f5);
+	Glow4.render(f5);
+	Glow5.render(f5);
+	Glow6.render(f5);
+	Glow7.render(f5);
+	Panel2Glow1.render(f5);
+	Panel2Glow2.render(f5);
+	Panel2Glow3.render(f5);
+	Panel2Glow4.render(f5);
+	Panel2Glow5.render(f5);
+	Panel2Glow6.render(f5);
+	Panel2Glow7.render(f5);
+	Panel2Glow8.render(f5);
+	Panel3Glow1.render(f5);
+	Panel3Glow2.render(f5);
+	Panel3Glow3.render(f5);
+	Panel3Glow4.render(f5);
+	Panel3Glow5.render(f5);
+	Panel3Glow6.render(f5);
+	Panel3Glow7.render(f5);
+	Panel3Glow8.render(f5);
+	Panel3Glow9.render(f5);
+	Panel3Glow10.render(f5);
+	Panel5Glow1.render(f5);
+	Panel5Glow2.render(f5);
+	Panel5Glow3.render(f5);
+	Panel5Glow4.render(f5);
+	Panel5Glow5.render(f5);
+	Panel5Glow6.render(f5);
+	Panel5Glow7.render(f5);
+	
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
