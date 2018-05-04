@@ -60,11 +60,6 @@ public class ControlDoor extends EntityControl{
 	}
 
 	@Override
-	public boolean isInRangeToRenderDist(double distance) {
-		return true;
-	}
-
-	@Override
 	public void applyEntityCollision(Entity entityIn) {
 		if(!(entityIn instanceof EntityPlayer)) {
 			if(!world.isRemote&&getConsolePos()!=null) {
