@@ -28,8 +28,6 @@ public class EntityAngel extends EntityMob{
 	@Override
 	protected void initEntityAI() {
 		super.initEntityAI();
-        //this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        //this.tasks.addTask(3, new EntityAILookIdle(this));
         this.tasks.addTask(1, new EntityAIAttackMelee(this,0.2F,true));
         this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, EntityPlayer.class,false));
         this.tasks.addTask(0, new EntityAIMoveTowardsTarget(this,0.4F,120));

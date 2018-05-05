@@ -55,15 +55,15 @@ public class EntityTardis extends EntityFlying{
 	}
 
 	public void setConsolePos(BlockPos consolePos) {
-		this.consolePos = consolePos;
-		this.consolePos.toImmutable();
+		this.consolePos = consolePos.toImmutable();
 	}
 
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		this.renderRotation+=4;
-		if(this.renderRotation>360)this.renderRotation=0;
+		if(this.renderRotation>360)
+			this.renderRotation=0;
 		if(!world.isRemote) {
 			Entity e=this.getControllingPassenger();
 			if(e!=null&&((EntityLivingBase)e).moveForward>0) {
@@ -76,7 +76,6 @@ public class EntityTardis extends EntityFlying{
 			if(this.getControllingPassenger()==null||this.getConsolePos()==null||this.getConsolePos().equals(BlockPos.ORIGIN)){
 				this.setDead();
 			}
-			
 		}
 	}
 
