@@ -30,6 +30,7 @@ public class TItems {
 	public static Item sonic_cane;
 	public static Item umbrella_closed;
 	public static Item umbrella_open;
+	public static Item vortex_manip;
 	
 	public static void register() {
 		
@@ -74,6 +75,9 @@ public class TItems {
 		
 		umbrella_open=new SUmbrella().setCreativeTab(null);
 		register(umbrella_open,"umbrella_open");
+		
+		vortex_manip=new VortexManipulator();
+		register(vortex_manip,"vortex_manip");
 	}
 	
 	public static void register(Item item,String name) {
