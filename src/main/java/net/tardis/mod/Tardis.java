@@ -47,11 +47,13 @@ import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageHandlerCam;
 import net.tardis.mod.packets.MessageHandlerProtocol;
 import net.tardis.mod.packets.MessageHandlerTR;
+import net.tardis.mod.packets.MessageHandlerTeleport;
 import net.tardis.mod.packets.MessageHelperAngel;
 import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageSB;
 import net.tardis.mod.packets.MessageSBHandler;
 import net.tardis.mod.packets.MessageTR;
+import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.protocols.TardisProtocolForceField;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.recipes.TemporalRecipe;
@@ -129,6 +131,7 @@ public class Tardis
         packet_instance.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
         packet_instance.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);
         packet_instance.registerMessage(MessageSBHandler.class, MessageSB.class, 4, Side.SERVER);
+        packet_instance.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 5, Side.SERVER);
         
         ScrewdriverMode.register(new RecallMode());
         ScrewdriverMode.register(new TransmatMode());
