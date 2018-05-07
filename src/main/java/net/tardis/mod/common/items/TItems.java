@@ -64,9 +64,6 @@ public class TItems {
 		bowtie = new ItemBowTie();
 		register(bowtie, "bowtie");
 		
-		sonic_blaster = new ItemSonicBlaster();
-		register(sonic_blaster, "sonic_blaster");
-		
 		sonic_cane = new ItemSScrewdriver();
 		register(sonic_cane, "cane");
 		

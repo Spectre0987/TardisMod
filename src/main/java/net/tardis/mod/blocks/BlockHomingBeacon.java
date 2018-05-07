@@ -15,7 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.dimensions.TDimensions;;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityTardis;

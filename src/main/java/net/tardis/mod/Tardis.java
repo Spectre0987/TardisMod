@@ -20,6 +20,12 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.api.protocols.TardisProtocol;
 import net.tardis.api.screwdriver.ScrewdriverMode;
 import net.tardis.mod.blocks.TBlocks;
+import net.tardis.mod.client.creativetabs.TardisTab;
+import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.EntityCam;
+import net.tardis.mod.common.entities.EntityDalekRay;
+import net.tardis.mod.common.entities.EntityForceField;
+import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlFlight;
@@ -33,15 +39,20 @@ import net.tardis.mod.common.entities.controls.ControlScreen;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
-import net.tardis.mod.client.creativetabs.TardisTab;
-import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.EntityCam;
-import net.tardis.mod.common.entities.EntityDalekRay;
-import net.tardis.mod.common.entities.EntityForceField;
-import net.tardis.mod.common.entities.EntityTardis;
-import net.tardis.mod.handlers.TEventHandler;
-import net.tardis.mod.util.helpers.EntityHelper;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.protocols.TardisProtocolForceField;
+import net.tardis.mod.common.recipes.TemporalRecipe;
+import net.tardis.mod.common.screwdriver.RecallMode;
+import net.tardis.mod.common.screwdriver.RoundelMode;
+import net.tardis.mod.common.screwdriver.TransmatMode;
+import net.tardis.mod.common.tileentity.TileEntityAlembic;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
+import net.tardis.mod.common.tileentity.TileEntityTimeRotor;
+import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.common.world.TardisLoadingCallback;
+import net.tardis.mod.handlers.TEventHandler;
 import net.tardis.mod.packets.MessageAngel;
 import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageHandlerCam;
@@ -50,24 +61,10 @@ import net.tardis.mod.packets.MessageHandlerTR;
 import net.tardis.mod.packets.MessageHandlerTeleport;
 import net.tardis.mod.packets.MessageHelperAngel;
 import net.tardis.mod.packets.MessageProtocol;
-import net.tardis.mod.packets.MessageSB;
-import net.tardis.mod.packets.MessageSBHandler;
 import net.tardis.mod.packets.MessageTR;
 import net.tardis.mod.packets.MessageTeleport;
-import net.tardis.mod.common.protocols.TardisProtocolForceField;
 import net.tardis.mod.proxy.ServerProxy;
-import net.tardis.mod.common.recipes.TemporalRecipe;
-import net.tardis.mod.common.screwdriver.RecallMode;
-import net.tardis.mod.common.screwdriver.RoundelMode;
-import net.tardis.mod.common.screwdriver.TransmatMode;
-import net.tardis.mod.common.tileentity.TileEntityAlembic;
-import net.tardis.mod.common.tileentity.TileEntityDoor;
-import net.tardis.mod.common.tileentity.TileEntitySonicGun;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
-import net.tardis.mod.common.tileentity.TileEntityTimeRotor;
-import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
-import net.tardis.mod.common.world.TardisLoadingCallback;
+import net.tardis.mod.util.helpers.EntityHelper;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION)
 public class Tardis {
@@ -79,7 +76,7 @@ public class Tardis {
 	
 	public static CreativeTabs tab;
 	
-	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);;
+	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	
 	@Instance
 	public static Tardis instance = new Tardis();
@@ -116,7 +113,6 @@ public class Tardis {
 		GameRegistry.registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		GameRegistry.registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
 		GameRegistry.registerTileEntity(TileEntityTemporalLab.class, "TileEntityTemporalLab");
-		GameRegistry.registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		GameRegistry.registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
 		GameRegistry.registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		GameRegistry.registerTileEntity(TileEntityTimeRotor.class, "TileEntityTimeRotor");
@@ -125,7 +121,6 @@ public class Tardis {
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
 		NETWORK.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);
-		NETWORK.registerMessage(MessageSBHandler.class, MessageSB.class, 4, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 5, Side.SERVER);
 		
 		ScrewdriverMode.register(new RecallMode());

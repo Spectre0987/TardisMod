@@ -64,9 +64,6 @@ public class TBlocks {
 		grate = new BlockGrate();
 		register(grate, "grate");
 		
-		sonic_block = new BlockSonic();
-		register(sonic_block, "sonic_block");
-		
 		umbrella_stand = new BlockUmbrellaStand();
 		register(umbrella_stand, "umbrella_stand");
 		
