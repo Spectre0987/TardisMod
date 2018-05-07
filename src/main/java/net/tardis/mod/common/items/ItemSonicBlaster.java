@@ -22,7 +22,7 @@ public class ItemSonicBlaster extends Item {
 		if (worldIn.isRemote) {
 			RayTraceResult ray = playerIn.rayTrace(64D, 0.5F);
 			if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
-				Tardis.packet_instance.sendToServer(new MessageSB(ray.getBlockPos()));
+				Tardis.NETWORK.sendToServer(new MessageSB(ray.getBlockPos()));
 			}
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);

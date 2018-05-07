@@ -29,7 +29,7 @@ public class GuiVortexM extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if (button == this.teleport) {
-			Tardis.packet_instance.sendToServer(new MessageTeleport(new BlockPos(Integer.parseInt(xCoord.getText()), Integer.parseInt(yCoord.getText()), Integer.parseInt(zCoord.getText())), mc.player.getEntityId()));
+			Tardis.NETWORK.sendToServer(new MessageTeleport(new BlockPos(Integer.parseInt(xCoord.getText()), Integer.parseInt(yCoord.getText()), Integer.parseInt(zCoord.getText())), mc.player.getEntityId()));
 		}
 		super.actionPerformed(button);
 	}

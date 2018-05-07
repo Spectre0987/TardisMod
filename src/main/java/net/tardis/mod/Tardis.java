@@ -20,19 +20,19 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.api.protocols.TardisProtocol;
 import net.tardis.api.screwdriver.ScrewdriverMode;
 import net.tardis.mod.blocks.TBlocks;
-import net.tardis.mod.controls.ControlDimChange;
-import net.tardis.mod.controls.ControlDoor;
-import net.tardis.mod.controls.ControlFlight;
-import net.tardis.mod.controls.ControlFuel;
-import net.tardis.mod.controls.ControlLaunch;
-import net.tardis.mod.controls.ControlRandom;
-import net.tardis.mod.controls.ControlSTCButton;
-import net.tardis.mod.controls.ControlSTCLoad;
-import net.tardis.mod.controls.ControlScanner;
-import net.tardis.mod.controls.ControlScreen;
-import net.tardis.mod.controls.ControlX;
-import net.tardis.mod.controls.ControlY;
-import net.tardis.mod.controls.ControlZ;
+import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlFlight;
+import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlRandom;
+import net.tardis.mod.common.entities.controls.ControlSTCButton;
+import net.tardis.mod.common.entities.controls.ControlSTCLoad;
+import net.tardis.mod.common.entities.controls.ControlScanner;
+import net.tardis.mod.common.entities.controls.ControlScreen;
+import net.tardis.mod.common.entities.controls.ControlX;
+import net.tardis.mod.common.entities.controls.ControlY;
+import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCam;
@@ -40,7 +40,7 @@ import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.handlers.TEventHandler;
-import net.tardis.mod.helpers.EntityHelper;
+import net.tardis.mod.util.helpers.EntityHelper;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.packets.MessageAngel;
 import net.tardis.mod.packets.MessageCam;
@@ -54,13 +54,12 @@ import net.tardis.mod.packets.MessageSB;
 import net.tardis.mod.packets.MessageSBHandler;
 import net.tardis.mod.packets.MessageTR;
 import net.tardis.mod.packets.MessageTeleport;
-import net.tardis.mod.protocols.TardisProtocolForceField;
+import net.tardis.mod.common.protocols.TardisProtocolForceField;
 import net.tardis.mod.proxy.ServerProxy;
-import net.tardis.mod.recipes.TemporalRecipe;
-import net.tardis.mod.screwdriver.RecallMode;
-import net.tardis.mod.screwdriver.RoundelMode;
-import net.tardis.mod.screwdriver.TransmatMode;
-import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.recipes.TemporalRecipe;
+import net.tardis.mod.common.screwdriver.RecallMode;
+import net.tardis.mod.common.screwdriver.RoundelMode;
+import net.tardis.mod.common.screwdriver.TransmatMode;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntitySonicGun;
@@ -80,7 +79,7 @@ public class Tardis {
 	
 	public static CreativeTabs tab;
 	
-	public static SimpleNetworkWrapper packet_instance;
+	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);;
 	
 	@Instance
 	public static Tardis instance = new Tardis();
@@ -92,13 +91,11 @@ public class Tardis {
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		tab = new TardisTab();
-		TSounds.register();
 		TBlocks.register();
 		TItems.register();
 		TDimensions.register();
 		EntityHelper.makeGoodBiomes();
 		MinecraftForge.EVENT_BUS.register(new TEventHandler());
-		packet_instance = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");
 		EntityHelper.registerStatic(ControlX.class, "x_valve");
 		EntityHelper.registerStatic(ControlY.class, "y_valve");
@@ -106,7 +103,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDimChange.class, "dim_change");
 		EntityHelper.registerStatic(ControlScreen.class, "screen");
 		EntityHelper.registerStatic(ControlRandom.class, "rand_control");
-		EntityHelper.registerStatic(ControlDoor.class, "tarids_door");
+		EntityHelper.registerStatic(ControlDoor.class, "tardis_door");
 		EntityHelper.registerStatic(ControlSTCLoad.class, "stc_load");
 		EntityHelper.registerStatic(ControlSTCButton.class, "stc_button");
 		EntityHelper.registerStatic(ControlScanner.class, "scanner");
@@ -124,12 +121,12 @@ public class Tardis {
 		GameRegistry.registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		GameRegistry.registerTileEntity(TileEntityTimeRotor.class, "TileEntityTimeRotor");
 		
-		packet_instance.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
-		packet_instance.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
-		packet_instance.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
-		packet_instance.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);
-		packet_instance.registerMessage(MessageSBHandler.class, MessageSB.class, 4, Side.SERVER);
-		packet_instance.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 5, Side.SERVER);
+		NETWORK.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
+		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
+		NETWORK.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
+		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);
+		NETWORK.registerMessage(MessageSBHandler.class, MessageSB.class, 4, Side.SERVER);
+		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 5, Side.SERVER);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());

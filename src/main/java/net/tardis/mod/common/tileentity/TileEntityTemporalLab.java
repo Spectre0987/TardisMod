@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.tardis.mod.recipes.TemporalRecipe;
+import net.tardis.mod.common.recipes.TemporalRecipe;
 
 public class TileEntityTemporalLab extends TileEntity implements ITickable {
 	

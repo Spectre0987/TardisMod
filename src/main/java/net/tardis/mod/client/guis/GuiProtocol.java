@@ -10,6 +10,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.tardis.api.protocols.ITardisProtocol;
 import net.tardis.api.protocols.TardisProtocol;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.guis.elements.ButtonText;
 import net.tardis.mod.packets.MessageProtocol;
 
 public class GuiProtocol extends GuiScreen {
@@ -49,7 +50,7 @@ public class GuiProtocol extends GuiScreen {
 	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		Tardis.packet_instance.sendToServer(new MessageProtocol(pos, button.id));
+		Tardis.NETWORK.sendToServer(new MessageProtocol(pos, button.id));
 		super.actionPerformed(button);
 	}
 	

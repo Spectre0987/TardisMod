@@ -16,8 +16,8 @@ import net.minecraft.world.WorldServer;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.helpers.Helper;
-import net.tardis.mod.helpers.TardisHelper;
+import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.TardisHelper;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class ItemKey extends Item {
@@ -72,7 +72,7 @@ public class ItemKey extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) tooltip.add("Console at: " + Helper.formatBlockPos(getPos(stack)));
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) tooltip.add("BlockConsole at: " + Helper.formatBlockPos(getPos(stack)));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

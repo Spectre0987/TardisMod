@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.controls.EntityControl;
+import net.tardis.mod.common.entities.controls.EntityControl;
 
 public abstract class RenderControl extends Render {
 	

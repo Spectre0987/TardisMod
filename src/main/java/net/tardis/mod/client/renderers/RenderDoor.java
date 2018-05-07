@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.blocks.TBlocks;
-import net.tardis.mod.helpers.Helper;
+import net.tardis.mod.util.helpers.Helper;
 
 public class RenderDoor extends Render {
 	

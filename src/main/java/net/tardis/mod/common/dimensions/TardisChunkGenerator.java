@@ -11,7 +11,7 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.tardis.mod.blocks.TBlocks;
-import net.tardis.mod.helpers.TardisHelper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TardisChunkGenerator implements IChunkGenerator {
 	

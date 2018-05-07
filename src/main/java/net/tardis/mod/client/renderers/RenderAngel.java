@@ -36,7 +36,7 @@ public class RenderAngel extends Render {
 		mc.getTextureManager().bindTexture(TEXTURE);
 		model.render(entity, 0, 0, 0, entityYaw, 0, 0.0625F);
 		GlStateManager.popMatrix();
-		if (((EntityAngel) entity).shouldMove) Tardis.packet_instance.sendToServer(new MessageAngel(entity, false));
+		if (((EntityAngel) entity).shouldMove) Tardis.NETWORK.sendToServer(new MessageAngel(entity, false));
 	}
 	
 }

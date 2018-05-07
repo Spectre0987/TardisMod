@@ -9,8 +9,8 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.controls.ControlScreen;
-import net.tardis.mod.helpers.Helper;
+import net.tardis.mod.common.entities.controls.ControlScreen;
+import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.client.models.console.contols.ModelScreen;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 

@@ -5,7 +5,7 @@ import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.tardis.mod.blocks.SonicBlock;
+import net.tardis.mod.blocks.BlockSonic;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientEventHandler {
@@ -14,7 +14,7 @@ public class ClientEventHandler {
 	public void highLightBlock(DrawBlockHighlightEvent e) {
 		if (e.getTarget() != null && e.getTarget().getBlockPos() != null) {
 			Block block = e.getPlayer().getEntityWorld().getBlockState(e.getTarget().getBlockPos()).getBlock();
-			e.setCanceled(block instanceof SonicBlock);
+			e.setCanceled(block instanceof BlockSonic);
 		}
 	}
 }

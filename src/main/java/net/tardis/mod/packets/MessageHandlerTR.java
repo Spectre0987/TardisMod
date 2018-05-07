@@ -4,7 +4,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.tardis.mod.recipes.TemporalRecipe;
+import net.tardis.mod.common.recipes.TemporalRecipe;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 
 public class MessageHandlerTR implements IMessageHandler<MessageTR, IMessage> {

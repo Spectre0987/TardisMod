@@ -34,49 +34,49 @@ public class TBlocks {
 	
 	public static void register() {
 		
-		tardis = new TardisBlock();
+		tardis = new BlockTardis();
 		register(tardis, "tardis");
 		
-		console = new Console();
+		console = new BlockConsole();
 		register(console, "console");
 		
-		door = new TBlock().setCreativeTab(null);
+		door = new BlockBase().setCreativeTab(null);
 		register(door, "door");
 		
-		panel = new TBlock().setLightOpacity(0);
+		panel = new BlockBase().setLightOpacity(0);
 		register(panel, "panel");
 		
-		tardis_top = new TardisBlockTop();
+		tardis_top = new BlockTardisTop();
 		register(tardis_top, "tardis_top");
 		
-		light = new TBlock().setLightLevel(1F);
+		light = new BlockBase().setLightLevel(1F);
 		register(light, "light");
 		
-		homing_beacon = new HomingBeacon();
+		homing_beacon = new BlockHomingBeacon();
 		register(homing_beacon, "homing_beacon");
 		
-		chronodine_generator = new ChronodineGenerator();
+		chronodine_generator = new BlockChronodineGenerator();
 		register(chronodine_generator, "chronodine_generator");
 		
-		temporal_lab = new TemporalLab();
+		temporal_lab = new BlockTemporalLab();
 		register(temporal_lab, "temporal_lab");
 		
-		grate = new Grate();
+		grate = new BlockGrate();
 		register(grate, "grate");
 		
-		sonic_block = new SonicBlock();
+		sonic_block = new BlockSonic();
 		register(sonic_block, "sonic_block");
 		
-		umbrella_stand = new UmbrellaStand();
+		umbrella_stand = new BlockUmbrellaStand();
 		register(umbrella_stand, "umbrella_stand");
 		
-		alembic = new Alembic();
+		alembic = new BlockAlembic();
 		register(alembic, "alembic");
 		
-		time_rotor = new TimeRotor();
+		time_rotor = new BlockTimeRotor();
 		register(time_rotor, "time_rotor");
 		
-		room_gen = new TBlock();
+		room_gen = new BlockBase();
 		register(room_gen, "room_gen");
 		
 		// Blocks That Exist Solely for Models

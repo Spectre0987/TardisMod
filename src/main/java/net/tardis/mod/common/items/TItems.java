@@ -6,9 +6,9 @@ import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.armor.BowTie;
-import net.tardis.mod.armor.Fez;
-import net.tardis.mod.armor.VoidSpecs;
+import net.tardis.mod.common.items.clothing.ItemBowTie;
+import net.tardis.mod.common.items.clothing.ItemFez;
+import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
 
 public class TItems {
 	
@@ -52,16 +52,16 @@ public class TItems {
 		ray_gun = new ItemBaseRayGun();
 		register(ray_gun, "ray_gun");
 		
-		void_specs = new VoidSpecs();
+		void_specs = new ItemVoidSpecs();
 		register(void_specs, "void_specs");
 		
 		fob_watch = new ItemBase();
 		register(fob_watch, "fob_watch");
 		
-		fez = new Fez();
+		fez = new ItemFez();
 		register(fez, "fez");
 		
-		bowtie = new BowTie();
+		bowtie = new ItemBowTie();
 		register(bowtie, "bowtie");
 		
 		sonic_blaster = new ItemSonicBlaster();
