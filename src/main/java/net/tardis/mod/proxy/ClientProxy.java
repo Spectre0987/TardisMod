@@ -14,30 +14,30 @@ import net.tardis.mod.controls.ControlScreen;
 import net.tardis.mod.controls.ControlX;
 import net.tardis.mod.controls.ControlY;
 import net.tardis.mod.controls.ControlZ;
-import net.tardis.mod.entities.EntityAngel;
-import net.tardis.mod.entities.EntityDalekRay;
-import net.tardis.mod.entities.EntityForceField;
-import net.tardis.mod.entities.EntityTardis;
-import net.tardis.mod.renderers.RenderAngel;
-import net.tardis.mod.renderers.RenderConsole;
-import net.tardis.mod.renderers.RenderDoor;
-import net.tardis.mod.renderers.RenderFField;
-import net.tardis.mod.renderers.RenderInvis;
-import net.tardis.mod.renderers.RenderRay;
-import net.tardis.mod.renderers.RenderScreen;
-import net.tardis.mod.renderers.RenderTardis;
-import net.tardis.mod.renderers.RenderUmbrellaStand;
-import net.tardis.mod.tileentity.TileEntityTardis;
-import net.tardis.mod.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.common.entities.EntityAngel;
+import net.tardis.mod.common.entities.EntityDalekRay;
+import net.tardis.mod.common.entities.EntityForceField;
+import net.tardis.mod.common.entities.EntityTardis;
+import net.tardis.mod.client.renderers.RenderAngel;
+import net.tardis.mod.client.renderers.RenderConsole;
+import net.tardis.mod.client.renderers.RenderDoor;
+import net.tardis.mod.client.renderers.RenderFField;
+import net.tardis.mod.client.renderers.RenderInvis;
+import net.tardis.mod.client.renderers.RenderRay;
+import net.tardis.mod.client.renderers.RenderScreen;
+import net.tardis.mod.client.renderers.RenderTardis;
+import net.tardis.mod.client.renderers.RenderUmbrellaStand;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 
-public class ClientProxy extends ServerProxy{
-
+public class ClientProxy extends ServerProxy {
+	
 	@Override
 	public void renderEntities() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUmbrellaStand.class, new RenderUmbrellaStand());
 		
-		//Controls
+		// Controls
 		RenderingRegistry.registerEntityRenderingHandler(ControlScreen.class, new RenderScreen());
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, new RenderDoor());
 		RenderingRegistry.registerEntityRenderingHandler(ControlX.class, new RenderInvis());
@@ -56,8 +56,8 @@ public class ClientProxy extends ServerProxy{
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
 		RenderingRegistry.registerEntityRenderingHandler(EntityForceField.class, new RenderFField());
 		
-		//Not needed currently.
-		//OBJLoader.INSTANCE.addDomain(Tardis.MODID);
+		// Not needed currently.
+		// OBJLoader.INSTANCE.addDomain(Tardis.MODID);
 	}
-
+	
 }

@@ -9,10 +9,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.helpers.Helper;
-import net.tardis.mod.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class ControlScanner extends EntityControl{
-
+public class ControlScanner extends EntityControl {
+	
 	public ControlScanner(TileEntityTardis tardis) {
 		super(tardis);
 		this.setRotation(180, 43);
@@ -22,22 +22,22 @@ public class ControlScanner extends EntityControl{
 		super(world);
 		this.setSize(0.25F, 0.25F);
 	}
-
+	
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(23,16,0);
+		return Helper.convertToPixels(23, 16, 0);
 	}
-
+	
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if(!world.isRemote) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(getConsolePos());
-			if(!tardis.isInFlight()) {
-				WorldServer ws=DimensionManager.getWorld(tardis.dimension);
-				IBlockState state=ws.getBlockState(tardis.getLocation().down().north());
-				player.sendMessage(new TextComponentTranslation(state.getBlock()!=Blocks.AIR?"scanner.safe":"scanner.unsafe"));
+		if (!world.isRemote) {
+			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
+			if (!tardis.isInFlight()) {
+				WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+				IBlockState state = ws.getBlockState(tardis.getLocation().down().north());
+				player.sendMessage(new TextComponentTranslation(state.getBlock() != Blocks.AIR ? "scanner.safe" : "scanner.unsafe"));
 			}
 		}
 	}
-
+	
 }

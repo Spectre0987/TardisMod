@@ -12,44 +12,44 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.items.SUmbrella;
-import net.tardis.mod.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.common.items.ItemSUmbrella;
+import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 
 public class UmbrellaStand extends BlockContainer {
-
+	
 	public UmbrellaStand() {
 		super(Material.CLAY);
 		this.setCreativeTab(Tardis.tab);
 	}
-
+	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileEntityUmbrellaStand();
 	}
-
+	
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
 	}
-
+	
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(playerIn.getHeldItem(hand).getItem() instanceof SUmbrella||playerIn.getHeldItem(hand).isEmpty()) {
-			TileEntityUmbrellaStand te=(TileEntityUmbrellaStand)worldIn.getTileEntity(pos);
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (playerIn.getHeldItem(hand).getItem() instanceof ItemSUmbrella || playerIn.getHeldItem(hand).isEmpty()) {
+			TileEntityUmbrellaStand te = (TileEntityUmbrellaStand) worldIn.getTileEntity(pos);
 			te.setItem(playerIn.getHeldItem(hand));
 			playerIn.setHeldItem(hand, ItemStack.EMPTY);
 		}
 		return true;
 	}
-
+	
 }

@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public interface IScrewAction extends IScrew{
+public interface IScrewAction extends IScrew {
 	
-	void preform(World world,EntityPlayer player,EnumHand hand);
+	void preform(World world, EntityPlayer player, EnumHand hand);
 }

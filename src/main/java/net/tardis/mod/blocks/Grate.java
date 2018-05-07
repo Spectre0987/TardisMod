@@ -11,23 +11,22 @@ import net.minecraft.world.IBlockAccess;
 import net.tardis.mod.Tardis;
 
 public class Grate extends Block {
-
+	
 	public Grate() {
 		super(Material.IRON);
 		this.setCreativeTab(Tardis.tab);
 	}
-
+	
 	@Override
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
-
-
+	
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
@@ -39,7 +38,7 @@ public class Grate extends Block {
 	}
 	
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		drops.add(new ItemStack(this));
 	}
 }

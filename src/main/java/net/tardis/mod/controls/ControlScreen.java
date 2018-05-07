@@ -6,11 +6,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.guis.GuiProtocol;
+import net.tardis.mod.client.guis.GuiProtocol;
 import net.tardis.mod.helpers.Helper;
-import net.tardis.mod.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class ControlScreen extends EntityControl{
+public class ControlScreen extends EntityControl {
 	
 	public ControlScreen(TileEntityTardis tardis) {
 		super(tardis);
@@ -27,12 +27,12 @@ public class ControlScreen extends EntityControl{
 	
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(0,8,0);
+		return Helper.convertToPixels(0, 8, 0);
 	}
-
+	
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if(world.isRemote) {
+		if (world.isRemote) {
 			openGui();
 		}
 	}

@@ -7,11 +7,11 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.items.TItems;
+import net.tardis.mod.common.items.TItems;
 
-public class TBlocks{
+public class TBlocks {
 	
-	public static List<Block> blocks=new ArrayList<Block>();
+	public static List<Block> blocks = new ArrayList<Block>();
 	
 	public static Block tardis;
 	public static Block tardis_top;
@@ -34,66 +34,66 @@ public class TBlocks{
 	
 	public static void register() {
 		
-		tardis=new TardisBlock();
-		register(tardis,"tardis");
+		tardis = new TardisBlock();
+		register(tardis, "tardis");
 		
-		console=new Console();
-		register(console,"console");
+		console = new Console();
+		register(console, "console");
 		
-		door=new TBlock().setCreativeTab(null);
-		register(door,"door");
+		door = new TBlock().setCreativeTab(null);
+		register(door, "door");
 		
-		panel=new TBlock().setLightOpacity(0);
-		register(panel,"panel");
+		panel = new TBlock().setLightOpacity(0);
+		register(panel, "panel");
 		
-		tardis_top=new TardisBlockTop();
-		register(tardis_top,"tardis_top");
+		tardis_top = new TardisBlockTop();
+		register(tardis_top, "tardis_top");
 		
-		light=new TBlock().setLightLevel(1F);
-		register(light,"light");
+		light = new TBlock().setLightLevel(1F);
+		register(light, "light");
 		
-		homing_beacon=new HomingBeacon();
-		register(homing_beacon,"homing_beacon");
+		homing_beacon = new HomingBeacon();
+		register(homing_beacon, "homing_beacon");
 		
-		chronodine_generator=new ChronodineGenerator();
-		register(chronodine_generator,"chronodine_generator");
+		chronodine_generator = new ChronodineGenerator();
+		register(chronodine_generator, "chronodine_generator");
 		
-		temporal_lab=new TemporalLab();
-		register(temporal_lab,"temporal_lab");
+		temporal_lab = new TemporalLab();
+		register(temporal_lab, "temporal_lab");
 		
-		grate=new Grate();
-		register(grate,"grate");
+		grate = new Grate();
+		register(grate, "grate");
 		
-		sonic_block=new SonicBlock();
-		register(sonic_block,"sonic_block");
+		sonic_block = new SonicBlock();
+		register(sonic_block, "sonic_block");
 		
-		umbrella_stand=new UmbrellaStand();
-		register(umbrella_stand,"umbrella_stand");
+		umbrella_stand = new UmbrellaStand();
+		register(umbrella_stand, "umbrella_stand");
 		
-		alembic=new Alembic();
-		register(alembic,"alembic");
+		alembic = new Alembic();
+		register(alembic, "alembic");
 		
-		time_rotor=new TimeRotor();
-		register(time_rotor,"time_rotor");
+		time_rotor = new TimeRotor();
+		register(time_rotor, "time_rotor");
 		
-		room_gen=new TBlock();
-		register(room_gen,"room_gen");
+		room_gen = new TBlock();
+		register(room_gen, "room_gen");
 		
-		//Blocks That Exist Solely for Models
-		time_rotor_interior=new BlockModel();
-		register(time_rotor_interior,"time_rotor_interior");
+		// Blocks That Exist Solely for Models
+		time_rotor_interior = new BlockModel();
+		register(time_rotor_interior, "time_rotor_interior");
 		
-		force_field=new BlockModel();
-		register(force_field,"force_field");
+		force_field = new BlockModel();
+		register(force_field, "force_field");
 		
 	}
 	
-	public static void register(Block block,String name) {
-		ResourceLocation rl=new ResourceLocation(Tardis.MODID,name);
+	public static void register(Block block, String name) {
+		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
 		block.setUnlocalizedName(name);
 		block.setRegistryName(rl);
 		blocks.add(block);
 		TItems.items.add(new ItemBlock(block).setRegistryName(rl));
 	}
-
+	
 }

@@ -13,13 +13,14 @@ import net.tardis.mod.Tardis;
 public class TBlock extends Block {
 	
 	public TBlock() {
-		super(Material.WOOD,MapColor.BLUE);
+		super(Material.WOOD, MapColor.BLUE);
 		this.setCreativeTab(Tardis.tab);
 		this.setHardness(1F);
 		this.setResistance(99999F);
 	}
+	
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		drops.add(new ItemStack(this));
 	}
 }
