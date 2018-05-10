@@ -24,7 +24,7 @@ import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.api.controls.SpaceTimeCoord;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.blocks.TBlocks;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlFlight;

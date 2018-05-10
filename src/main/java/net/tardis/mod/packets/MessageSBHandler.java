@@ -6,7 +6,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.tardis.mod.blocks.TBlocks;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.tileentity.TileEntitySonicGun;
 
 public class MessageSBHandler implements IMessageHandler<MessageSB, IMessage> {

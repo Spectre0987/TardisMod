@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.tardis.mod.blocks.TBlocks;
+import net.tardis.mod.common.blocks.TBlocks;
 
 public class RenderFField extends Render {
 	

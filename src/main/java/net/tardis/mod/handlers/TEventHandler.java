@@ -1,5 +1,6 @@
 package net.tardis.mod.handlers;
 
+import java.lang.reflect.Field;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -15,10 +16,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.api.controls.IUnbreakable;
-import net.tardis.mod.blocks.TBlocks;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.TItems;
@@ -30,27 +32,28 @@ public class TEventHandler {
 	public static TardisWorldSavedData data;
 	
 	public static Random rand = new Random();
-	
-	@SubscribeEvent
-	public void registerBlocks(RegistryEvent.Register<Block> event) {
-		for (Block block : TBlocks.blocks) {
-			event.getRegistry().register(block);
-		}
-	}
-	
-	@SubscribeEvent
-	public void registerItems(RegistryEvent.Register<Item> event) {
-		for (Item Item : TItems.items) {
-			event.getRegistry().register(Item);
-		}
-	}
 
 	@SubscribeEvent
 	public void registerModels(ModelRegistryEvent event) {
-		for (Block block : TBlocks.blocks) {
+
+		//Blocks
+		for(Field field : TBlocks.class.getDeclaredFields()) {
+			Block block = null;
+			try {
+				block = (Block) field.get(null);
+			} catch (IllegalAccessException e) {
+				//No log spam
+			}
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "normal"));
 		}
-		for (Item item : TItems.items) {
+
+		for(Field field : TItems.class.getDeclaredFields()) {
+			Item item = null;
+			try {
+				item = (Item) field.get(null);
+			} catch (IllegalAccessException e) {
+
+			}
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 	}

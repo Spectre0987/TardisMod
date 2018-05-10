@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.api.protocols.TardisProtocol;
 import net.tardis.api.screwdriver.ScrewdriverMode;
-import net.tardis.mod.blocks.TBlocks;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlFlight;
@@ -91,8 +91,6 @@ public class Tardis {
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		tab = new TardisTab();
-		TBlocks.register();
-		TItems.register();
 		TDimensions.register();
 		EntityHelper.makeGoodBiomes();
 		MinecraftForge.EVENT_BUS.register(new TEventHandler());

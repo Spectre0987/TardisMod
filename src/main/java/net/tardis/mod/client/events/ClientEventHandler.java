@@ -5,7 +5,7 @@ import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.tardis.mod.blocks.BlockSonic;
+import net.tardis.mod.common.blocks.BlockSonic;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientEventHandler {
