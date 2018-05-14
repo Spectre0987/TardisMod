@@ -27,6 +27,7 @@ import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlEngine;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
@@ -75,7 +76,7 @@ public class Tardis {
 	
 	public static CreativeTabs tab;
 	
-	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);;
+	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	
 	@Instance
 	public static Tardis instance = new Tardis();
@@ -87,6 +88,7 @@ public class Tardis {
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		tab = new TardisTab();
+		TItems.register();
 		TDimensions.register();
 		EntityHelper.makeGoodBiomes();
 		MinecraftForge.EVENT_BUS.register(new TEventHandler());
@@ -103,6 +105,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlScanner.class, "scanner");
 		EntityHelper.registerStatic(ControlFlight.class, "control_flight");
 		EntityHelper.registerStatic(ControlFuel.class, "fuel");
+		EntityHelper.registerStatic(ControlEngine.class, "tardis_engine");
 		EntityHelper.registerStatic(EntityCam.class, "cam");
 		EntityHelper.registerStatic(EntityForceField.class, "force_field");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");

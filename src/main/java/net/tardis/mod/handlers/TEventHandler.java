@@ -47,13 +47,7 @@ public class TEventHandler {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "normal"));
 		}
 
-		for(Field field : TItems.class.getDeclaredFields()) {
-			Item item = null;
-			try {
-				item = (Item) field.get(null);
-			} catch (IllegalAccessException e) {
-
-			}
+		for(Item item:TItems.items) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 	}
