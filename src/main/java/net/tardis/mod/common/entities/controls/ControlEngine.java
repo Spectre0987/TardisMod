@@ -1,20 +1,25 @@
 package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tardis.mod.common.items.ItemComponent;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.info.CrashType;
 
 public class ControlEngine extends EntityControl{
 
+	private NonNullList<ItemStack> inv=NonNullList.create().withSize(9, ItemStack.EMPTY);
+	
 	public ControlEngine(World world) {
 		super(world);
-		// TODO Auto-generated constructor stub
+		this.setSize(1F, 1F);
 	}
 	
 	public ControlEngine(TileEntityTardis tardis) {
 		super(tardis);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -24,5 +29,13 @@ public class ControlEngine extends EntityControl{
 
 	@Override
 	public void preformAction(EntityPlayer player) {}
+	
+	public void onCrash(CrashType type) {
+		for(ItemStack stack:inv) {
+			if(stack.getItem() instanceof ItemComponent) {
+				((ItemComponent)stack.getItem()).damageItem(type, stack);
+			}
+		}
+	}
 
 }
