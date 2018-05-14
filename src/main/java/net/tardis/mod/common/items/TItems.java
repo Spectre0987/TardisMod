@@ -34,6 +34,9 @@ public class TItems {
 	
 	//Componenets
 	
+	public static Item fluid_link;
+	public static Item artron_capacitor;
+	
 	public static void register() {
 		key=new ItemKey();
 		register(key,"key");

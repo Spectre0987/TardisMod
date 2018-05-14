@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -25,6 +26,7 @@ import net.minecraftforge.common.util.Constants;
 import net.tardis.api.controls.SpaceTimeCoord;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlFlight;
@@ -38,9 +40,8 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
-import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.util.helpers.Helper;
 
 public class TileEntityTardis extends TileEntity implements ITickable {
 	
@@ -57,6 +58,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	/** Time To Travel in Blocks/Tick **/
 	private static final int MAX_TARDIS_SPEED = 1;
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
+	public NonNullList<ItemStack> components=NonNullList.create().withSize(9, ItemStack.EMPTY);
 	public EntityControl[] controls;
 	public float fuel = 1F;
 	private boolean isFueling = false;
@@ -145,6 +147,13 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				saveCoords.set(i, SpaceTimeCoord.readFromNBT((NBTTagCompound) base));
 				++i;
 			}
+			//Components
+			NBTTagList componentList=tardisTag.getTagList(NBT.COMPOENET_LIST, Constants.NBT.TAG_COMPOUND);
+			int cListIndex=0;
+			for(NBTBase comp:componentList) {
+				this.components.set(cListIndex, new ItemStack((NBTTagCompound)comp));
+				++cListIndex;
+			}
 		}
 	}
 	
@@ -164,6 +173,12 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				cList.appendTag(co.writeToNBT(new NBTTagCompound()));
 			}
 			tardisTag.setTag("coordList", cList);
+			//Compoenents
+			NBTTagList compoentList=new NBTTagList();
+			for(ItemStack stack:components) {
+				compoentList.appendTag(stack.writeToNBT(new NBTTagCompound()));
+			}
+			tardisTag.setTag(NBT.COMPOENET_LIST, compoentList);
 		}
 		tag.setTag("tardis", tardisTag);
 		return super.writeToNBT(tag);
@@ -177,7 +192,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 440);
+		return (int) ((dist / MAX_TARDIS_SPEED) + 440/*The Time in tick it takes the launch sound to play*/);
 	}
 	
 	public BlockPos getDestination() {
@@ -353,5 +368,8 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	@Override
 	public void markDirty() {
 		super.markDirty();
+	}
+	public class NBT{
+		public static final String COMPOENET_LIST="componentList";
 	}
 }
