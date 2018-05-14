@@ -9,7 +9,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemSUmbrella extends ItemSScrewdriver {
+public class ItemSUmbrella extends ItemSonic {
 	
 	public ItemSUmbrella() {
 		

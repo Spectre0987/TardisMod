@@ -6,9 +6,9 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.tardis.mod.Tardis;
 
-public class ItemBowTie extends ItemArmor {
+public class ItemBowtie extends ItemArmor {
 	
-	public ItemBowTie() {
+	public ItemBowtie() {
 		super(ArmorMaterial.LEATHER, 1, EntityEquipmentSlot.CHEST);
 		this.setCreativeTab(Tardis.tab);
 	}
