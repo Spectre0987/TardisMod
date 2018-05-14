@@ -1,6 +1,5 @@
 package net.tardis.mod.handlers;
 
-import java.lang.reflect.Field;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -36,16 +35,9 @@ public class TEventHandler {
 	public void registerModels(ModelRegistryEvent event) {
 
 		//Blocks
-		for(Field field : TBlocks.class.getDeclaredFields()) {
-			Block block = null;
-			try {
-				block = (Block) field.get(null);
-			} catch (IllegalAccessException e) {
-				//No log spam
-			}
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "normal"));
+		for(Block block:TBlocks.blocks) {
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(),"normal"));
 		}
-
 		for(Item item:TItems.items) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
@@ -55,6 +47,13 @@ public class TEventHandler {
 	public void registerItems(RegistryEvent.Register<Item> event) {
 		for(Item item:TItems.items) {
 			event.getRegistry().register(item);
+		}
+	}
+	
+	@SubscribeEvent
+	public void registerBlocks(RegistryEvent.Register<Block> event) {
+		for(Block block:TBlocks.blocks) {
+			event.getRegistry().register(block);
 		}
 	}
 	

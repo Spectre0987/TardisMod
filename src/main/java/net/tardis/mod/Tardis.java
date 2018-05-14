@@ -20,6 +20,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.api.protocols.TardisProtocol;
 import net.tardis.api.screwdriver.ScrewdriverMode;
 import net.tardis.mod.client.creativetabs.TardisTab;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityDalekRay;
@@ -89,6 +90,7 @@ public class Tardis {
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
+		TBlocks.register();
 		TDimensions.register();
 		EntityHelper.makeGoodBiomes();
 		MinecraftForge.EVENT_BUS.register(new TEventHandler());
