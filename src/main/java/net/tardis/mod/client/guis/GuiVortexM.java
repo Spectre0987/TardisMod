@@ -8,8 +8,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.math.BlockPos;
-import net.tardis.mod.Tardis;
-import net.tardis.mod.packets.MessageTeleport;
 
 public class GuiVortexM extends GuiScreen {
 	
@@ -29,17 +27,38 @@ public class GuiVortexM extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if (button == this.teleport) {
-			Tardis.NETWORK.sendToServer(new MessageTeleport(new BlockPos(Integer.parseInt(xCoord.getText()), Integer.parseInt(yCoord.getText()), Integer.parseInt(zCoord.getText())), mc.player.getEntityId()));
+			BlockPos tpPos=new BlockPos(getInt(xCoord.getText(),COORD_TYPE.X),getInt(yCoord.getText(),COORD_TYPE.Y),getInt(zCoord.getText(),COORD_TYPE.Z));
 		}
 		super.actionPerformed(button);
 	}
-	
+	private int getInt(String num, COORD_TYPE type) {
+		if(num!=null && !num.isEmpty()) {
+			return Integer.parseInt(num);
+		}
+		else {
+			switch(type) {
+				case X: return (int)mc.player.posX;
+				case Y: return (int)mc.player.posY;
+				case Z: return (int)mc.player.posZ;
+				default: return 0;
+			}
+		}
+	}
+	public enum COORD_TYPE{
+		X,
+		Y,
+		Z
+	}
 	@Override
 	public void initGui() {
-		xCoord = new GuiTextField(0, fr, width / 2, height / 2, 30, fr.FONT_HEIGHT);
-		yCoord = new GuiTextField(1, fr, width / 2, (height / 2) + fr.FONT_HEIGHT + 1, 30, fr.FONT_HEIGHT);
-		zCoord = new GuiTextField(2, fr, width / 2, (height / 2) + fr.FONT_HEIGHT * 2 + 1, 30, fr.FONT_HEIGHT);
-		teleport = new GuiButton(3, width / 2, (height / 2) + fr.FONT_HEIGHT * 3 + 5, "Teleport");
+		int x=width/2-15;
+		int y=height/2-15;
+		String enterButton="Teleport";
+		
+		xCoord = new GuiTextField(0, fr, x,y, 30, fr.FONT_HEIGHT);
+		yCoord = new GuiTextField(1, fr,x,y+ fr.FONT_HEIGHT + 1, 30, fr.FONT_HEIGHT);
+		zCoord = new GuiTextField(2, fr, x, y + fr.FONT_HEIGHT * 2 + 1, 30, fr.FONT_HEIGHT);
+		teleport = new GuiButton(3,x, y + fr.FONT_HEIGHT * 3 + 5, enterButton);
 		xCoord.setFocused(true);
 		
 		this.buttonList.clear();
