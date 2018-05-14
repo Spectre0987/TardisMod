@@ -1,4 +1,4 @@
-package net.tardis.mod.common.items;
+package net.tardis.mod.common.items.components;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
