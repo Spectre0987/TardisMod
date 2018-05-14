@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.tardis.mod.common.items.ItemComponent;
+import net.tardis.mod.common.items.components.ItemComponent;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.info.CrashType;
 
