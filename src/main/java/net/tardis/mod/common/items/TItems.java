@@ -32,6 +32,8 @@ public class TItems {
 	public static Item vortex_manip;
 	public static Item sonic_screwdriver;
 	
+	//Componenets
+	
 	public static void register() {
 		key=new ItemKey();
 		register(key,"key");
