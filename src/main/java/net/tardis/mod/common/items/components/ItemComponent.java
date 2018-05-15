@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.tardis.mod.common.items.ItemBase;
 import net.tardis.mod.info.CrashType;
+import net.tardis.mod.systems.Systems;
 
 /**
  * All TARDIS Components must extend this class
@@ -11,7 +12,14 @@ import net.tardis.mod.info.CrashType;
  *
  */
 public abstract class ItemComponent extends ItemBase{
+	
+	/**
+	 * TARDIS Systems this Component is required for.**/
+	public Systems[] systems;
 
+	/**
+	 * The Base of all Components
+	 * **/
 	public ItemComponent() {
 		this.setMaxStackSize(1);
 		this.setMaxDamage(100);

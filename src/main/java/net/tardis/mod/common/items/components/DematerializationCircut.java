@@ -3,15 +3,15 @@ package net.tardis.mod.common.items.components;
 import net.minecraft.item.ItemStack;
 import net.tardis.mod.info.CrashType;
 
-public class FluidLink extends ItemComponent {
-	
-	public FluidLink() {
+public class DematerializationCircut extends ItemComponent {
+
+	public DematerializationCircut() {
 		
 	}
-
+	
 	@Override
 	public ItemStack damageItem(CrashType type, ItemStack stack) {
-		return null;
+		return stack;
 	}
 
 }
