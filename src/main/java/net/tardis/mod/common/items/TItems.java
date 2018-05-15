@@ -9,6 +9,8 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.clothing.ItemBowtie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
+import net.tardis.mod.common.items.components.ArtronCapacitor;
+import net.tardis.mod.common.items.components.FluidLink;
 
 public class TItems {
 	
@@ -73,6 +75,12 @@ public class TItems {
 		
 		sonic_screwdriver=new ItemSonic();
 		register(sonic_screwdriver,"sonic_screwdriver");
+		
+		fluid_link=new FluidLink();
+		register(fluid_link,"fluid_link");
+		
+		artron_capacitor=new ArtronCapacitor();
+		register(artron_capacitor,"artron_capacitor");
 	}
 
 	public static void register(Item item, String name) {
