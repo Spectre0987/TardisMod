@@ -2,6 +2,8 @@ package net.tardis.mod.client.models.console.contols;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
 
 public class ModelAllControls extends ModelBase {
@@ -906,6 +908,9 @@ public class ModelAllControls extends ModelBase {
 		Panel6DNG24.render(f5);
 		Panel6Lever.render(f5);
 		
+		//OpenGlHelper
+		GlStateManager.disableLighting();
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240F, 240F);
 		Glow1.render(f5);
 		Glow2.render(f5);
 		Glow3.render(f5);
@@ -938,7 +943,7 @@ public class ModelAllControls extends ModelBase {
 		Panel5Glow5.render(f5);
 		Panel5Glow6.render(f5);
 		Panel5Glow7.render(f5);
-		
+		GlStateManager.enableLighting();
 	}
 	
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
