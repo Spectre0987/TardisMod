@@ -5,8 +5,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.Helper;
 
 public class ControlDimChange extends EntityControl {
 	
@@ -27,7 +27,9 @@ public class ControlDimChange extends EntityControl {
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
-			Integer[] ids = DimensionManager.getIDs(true);
+			System.out.println("DIm");
+			Integer[] ids = DimensionManager.getStaticDimensionIDs();
+			System.out.println(ids);
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			if (!player.isSneaking())
 				++tardis.dimIndex;
