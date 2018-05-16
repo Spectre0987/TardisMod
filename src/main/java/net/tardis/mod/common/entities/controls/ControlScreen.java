@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiProtocol;
-import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.Helper;
 
 public class ControlScreen extends EntityControl {
 	
