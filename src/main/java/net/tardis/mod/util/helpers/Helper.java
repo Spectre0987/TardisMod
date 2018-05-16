@@ -2,8 +2,10 @@ package net.tardis.mod.util.helpers;
 
 import java.util.Random;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -46,19 +48,11 @@ public class Helper {
 		playerIn.sendMessage(new TextComponentString(string));
 	}
 	
-	public static BlockPos findTardisLandingSpot(World world, BlockPos pos) {
-		if (getLowestBlock(world, pos) != null) {
-			if (!world.getBlockState(pos.north()).causesSuffocation() && !world.getBlockState(pos.north().up()).causesSuffocation()) {
-				return pos;
-			}
-		}
-		return findTardisLandingSpot(world, pos.add(rand.nextInt(6) - 3, 0, rand.nextInt(6) - 3));
-	}
-	
 	public static BlockPos getLowestBlock(World world, BlockPos pos) {
 		pos = new BlockPos(pos.getX(), 0, pos.getZ());
 		for (int i = 0; i < 256; ++i) {
-			if (!world.getBlockState(pos).causesSuffocation() && !world.getBlockState(pos.up()).causesSuffocation()) return pos;
+			if (world.getBlockState(pos).getBlock()==Blocks.AIR && world.getBlockState(pos.up()).getBlock()==Blocks.AIR)
+				return pos;
 			pos = pos.up();
 		}
 		return null;
@@ -70,5 +64,12 @@ public class Helper {
 	
 	public static AxisAlignedBB createBB(BlockPos pos, double i) {
 		return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).grow(i);
+	}
+	
+	public static boolean isSafe(World world,BlockPos pos) {
+		if(world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR))
+			return true;
+		else 
+			return false;
 	}
 }

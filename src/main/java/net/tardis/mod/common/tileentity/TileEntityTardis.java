@@ -80,8 +80,10 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				this.shouldDelayLoop = false;
 				world.playSound(null, pos, TSounds.loop, SoundCategory.BLOCKS, 0.4F, 1F);
 			}
-			if (fuel <= 0.0) crash();
-		} else if (this.isFueling()) {
+			if (fuel <= 0.0)
+				crash();
+		}
+		else if (this.isFueling()) {
 			this.setFuel(fuel + 0.0001F);
 		}
 		++ticks;
@@ -107,7 +109,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			System.out.println("Traveled");
 			World dWorld = ((WorldServer) world).getMinecraftServer().getWorld(destDim);
 			World oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
-			BlockPos nPos = dWorld.getTopSolidOrLiquidBlock(tardisDestination);
+			BlockPos nPos = Helper.isSafe(dWorld, getDestination()) ? this.getDestination() : Helper.getLowestBlock(dWorld, getDestination());
 			if (nPos != null) {
 				boolean b = dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop);
