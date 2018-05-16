@@ -26,5 +26,13 @@ public interface ITardisCall {
 	 * @return SpaceTimeCoord
 	 */
 	SpaceTimeCoord getSpaceTimeCoords();
+	
+	/**
+	 * If it doesn't use the phone, it defaults to the scanner.
+	 * @return
+	 */
+	boolean usePhone();
+	
+	
 
 }
