@@ -14,12 +14,12 @@ public class ControlFuel extends EntityControl {
 	
 	public ControlFuel(World world) {
 		super(world);
-		this.setSize(0.2F, 0.2F);
+		this.setSize(0.2F, 0.1F);
 	}
 	
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(0, 0, 0);
+		return Helper.convertToPixels(-12, -4, 10);
 	}
 	
 	@Override
