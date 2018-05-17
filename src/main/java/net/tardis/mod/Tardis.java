@@ -56,7 +56,9 @@ import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.handlers.TEventHandler;
 import net.tardis.mod.packets.MessageAngel;
 import net.tardis.mod.packets.MessageCam;
+import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageHandlerCam;
+import net.tardis.mod.packets.MessageHandlerDoorOpen;
 import net.tardis.mod.packets.MessageHandlerProtocol;
 import net.tardis.mod.packets.MessageHandlerTR;
 import net.tardis.mod.packets.MessageHandlerTeleport;
@@ -124,6 +126,7 @@ public class Tardis {
 		NETWORK.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 4, Side.SERVER);
+		NETWORK.registerMessage(MessageHandlerDoorOpen.class, MessageDoorOpen.class, 5, Side.CLIENT);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());

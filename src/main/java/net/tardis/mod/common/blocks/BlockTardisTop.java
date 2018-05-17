@@ -23,7 +23,6 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	public BlockTardisTop() {
 		super(Material.WOOD, MapColor.BLUE);
 		this.setBlockUnbreakable();
-		this.setLightLevel(1F);
 		this.setResistance(9999);
 	}
 	
@@ -51,7 +50,7 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
+		return EnumBlockRenderType.INVISIBLE;
 	}
 	
 	@Override

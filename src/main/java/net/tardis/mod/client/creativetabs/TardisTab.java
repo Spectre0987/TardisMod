@@ -12,7 +12,7 @@ public class TardisTab extends CreativeTabs {
 	
 	@Override
 	public ItemStack getTabIconItem() {
-		return new ItemStack(TBlocks.tardis);
+		return new ItemStack(TBlocks.tardis_top);
 	}
 	
 }

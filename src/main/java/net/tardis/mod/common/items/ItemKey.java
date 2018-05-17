@@ -16,9 +16,9 @@ import net.minecraft.world.WorldServer;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class ItemKey extends Item {
 	
@@ -53,12 +53,6 @@ public class ItemKey extends Item {
 				setPos(stack, cPos);
 				if (tw.getTileEntity(cPos) == null) {
 					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
-					tw.setBlockState(cPos.up(), TBlocks.time_rotor.getDefaultState());
-					BlockPos gPos = cPos.up(2);
-					for (int i = 0; i < 11; i++) {
-						tw.setBlockState(gPos, TBlocks.time_rotor.getDefaultState());
-						gPos = gPos.up();
-					}
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
 					te.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing().getOpposite(), 1), playerIn.dimension);
 					te.startFlight();
