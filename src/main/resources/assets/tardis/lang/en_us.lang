@@ -16,6 +16,7 @@ item.umbrella_closed.name=Sonic Umbrella
 item.sonic_blaster.name=Sonic Blaster
 item.cane.name=Sonic Cane
 item.vortex_manip.name=Vortex Manipulator
+item.fluid_link.name=Fluid Links
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console

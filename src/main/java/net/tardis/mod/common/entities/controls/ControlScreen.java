@@ -27,7 +27,7 @@ public class ControlScreen extends EntityControl {
 	
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(0, 8, 0);
+		return Helper.convertToPixels(101, 8, 0);
 	}
 	
 	@Override

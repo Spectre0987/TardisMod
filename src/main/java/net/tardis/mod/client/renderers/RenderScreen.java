@@ -9,10 +9,10 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.entities.controls.ControlScreen;
-import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.client.models.console.contols.ModelScreen;
+import net.tardis.mod.common.entities.controls.ControlScreen;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.Helper;
 
 public class RenderScreen extends Render {
 	
@@ -33,7 +33,8 @@ public class RenderScreen extends Render {
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y - 1.5, z);
+		GlStateManager.translate(x, y - 2.5, z);
+		GlStateManager.scale(1.5, 1.5, 1.5);
 		GlStateManager.rotate(90, 0, 1, 0);
 		GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
 		mc.getTextureManager().bindTexture(TEXTURE);

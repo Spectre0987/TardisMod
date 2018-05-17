@@ -42,7 +42,7 @@ public class ControlDoor extends EntityControl {
 			if (!tardis.isInFlight()) {
 				if (!player.isSneaking()) {
 					WorldServer ws = (WorldServer) world;
-					BlockPos tp = tardis.getLocation().north();
+					BlockPos tp = tardis.getLocation().south();
 					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, tardis.dimension, new TardisTeleporter(ws));
 					player.setPositionAndUpdate(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5);
 					player.setSpawnPoint(tardis.getLocation().north(), true);
@@ -51,7 +51,8 @@ public class ControlDoor extends EntityControl {
 					WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
 					((TileEntityDoor) ws.getTileEntity(tardis.getLocation().up())).toggleLockedNoKey(player);
 				}
-			} else {
+			}
+			else {
 				world.playSound(null, this.getPosition(), TSounds.door_locked, SoundCategory.BLOCKS, 1F, 1F);
 			}
 		}
