@@ -18,6 +18,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.api.controls.IUnbreakable;
+import net.tardis.mod.client.renderers.RendererItemTardis;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -46,6 +47,9 @@ public class TEventHandler {
 	@SubscribeEvent
 	public void registerItems(RegistryEvent.Register<Item> event) {
 		for(Item item:TItems.items) {
+			if(item==Item.getItemFromBlock(TBlocks.tardis_top)) {
+				item.setTileEntityItemStackRenderer(new RendererItemTardis());
+			}
 			event.getRegistry().register(item);
 		}
 	}
