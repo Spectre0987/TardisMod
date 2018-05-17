@@ -24,11 +24,13 @@ import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TileEntityDoor extends TileEntity implements ITickable {
 	
+	public static final float[] alphas= {1.0F,0.9F,0.8F,0.9F,0.1F};
 	public BlockPos consolePos;
-	public boolean isLocked = false;
+	public boolean isLocked = true;
 	public int ticks = 0;
 	public int lockCooldown = 0;
 	private int updateTicks=0;
+	public float alpha=1F;
 	
 	public TileEntityDoor() {
 		
@@ -126,6 +128,9 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return new AxisAlignedBB(getPos().getX(),getPos().getY()-1,getPos().getZ(),getPos().getX()+1,getPos().getY()+1,getPos().getZ()+1);
+	}
+
+	public void fadeIn() {
 	}
 	
 }

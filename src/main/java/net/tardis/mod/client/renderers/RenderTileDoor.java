@@ -34,6 +34,9 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 			GlStateManager.translate(x+0.5, y+0.5, z+0.5);
 			GlStateManager.rotate(180, 10, 0, 0);
 			mc.getTextureManager().bindTexture(TEXTURE);
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			GlStateManager.color(1F, 1F, 1F,((TileEntityDoor)te).alpha);
 			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.pushMatrix();
 			{
@@ -61,6 +64,9 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 			}
 			GlStateManager.popMatrix();
 		}
+		GlStateManager.color(1F, 1F, 1F, 1F);
+		GlStateManager.disableAlpha();
+		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 	}
 

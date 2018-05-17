@@ -53,6 +53,7 @@ public class ItemKey extends Item {
 				setPos(stack, cPos);
 				if (tw.getTileEntity(cPos) == null) {
 					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
+					tw.setBlockState(cPos.down(5), TBlocks.temporal_lab.getDefaultState());
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
 					te.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing().getOpposite(), 1), playerIn.dimension);
 					te.startFlight();
