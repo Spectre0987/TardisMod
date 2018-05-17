@@ -6,12 +6,15 @@ import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.renderers.RendererItemTardis;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.items.clothing.ItemBowtie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
 import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
+import net.tardis.mod.handlers.TEventHandler;
 
 public class TItems {
 	
