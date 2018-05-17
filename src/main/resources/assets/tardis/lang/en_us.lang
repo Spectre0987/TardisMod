@@ -17,6 +17,7 @@ item.sonic_blaster.name=Sonic Blaster
 item.cane.name=Sonic Cane
 item.vortex_manip.name=Vortex Manipulator
 item.fluid_link.name=Fluid Links
+item.demat_circut.name=Dematerialization Circut
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console

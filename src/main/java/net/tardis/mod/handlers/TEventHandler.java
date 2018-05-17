@@ -1,10 +1,13 @@
 package net.tardis.mod.handlers;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
@@ -18,7 +21,6 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.api.controls.IUnbreakable;
-import net.tardis.mod.client.renderers.RendererItemTardis;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -29,27 +31,31 @@ import net.tardis.mod.common.world.TardisWorldSavedData;
 public class TEventHandler {
 	
 	public static TardisWorldSavedData data;
-	
 	public static Random rand = new Random();
+	public static Map<Item, TileEntityItemStackRenderer> TEISR=new HashMap<Item, TileEntityItemStackRenderer>();
 
 	@SubscribeEvent
 	public void registerModels(ModelRegistryEvent event) {
-
+		CustomModels.register();
 		//Blocks
 		for(Block block:TBlocks.blocks) {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(),"normal"));
 		}
 		for(Item item:TItems.items) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+			if(TEISR.containsKey(item)) {
+				item.setTileEntityItemStackRenderer(TEISR.get(item));
+				System.out.println(item+" :Was registered with: "+TEISR.get(item));
+			}
+			/*if(item==Item.getItemFromBlock(TBlocks.tardis_top))
+				item.setTileEntityItemStackRenderer(new RendererItemTardis());*/
 		}
+		System.out.println(TEISR.toString());
 	}
 	
 	@SubscribeEvent
 	public void registerItems(RegistryEvent.Register<Item> event) {
 		for(Item item:TItems.items) {
-			if(item==Item.getItemFromBlock(TBlocks.tardis_top)) {
-				item.setTileEntityItemStackRenderer(new RendererItemTardis());
-			}
 			event.getRegistry().register(item);
 		}
 	}
