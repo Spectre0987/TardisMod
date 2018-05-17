@@ -840,6 +840,9 @@ public class ModelConsole extends ModelBase
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5,entity);
+    Minecraft mc=Minecraft.getMinecraft();
+    GlStateManager.disableLighting();
+    mc.entityRenderer.disableLightmap();
     Rotor1.render(f5);
     Rotor2.render(f5);
     Rotor3.render(f5);
@@ -852,6 +855,8 @@ public class ModelConsole extends ModelBase
     Rotor10.render(f5);
     Rotor11.render(f5);
     Rotor12.render(f5);
+    mc.entityRenderer.enableLightmap();
+    GlStateManager.enableLighting();
     P1.render(f5);
     P2.render(f5);
     P3.render(f5);
