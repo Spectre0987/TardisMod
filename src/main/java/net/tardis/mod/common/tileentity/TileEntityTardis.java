@@ -25,6 +25,7 @@ import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.api.controls.SpaceTimeCoord;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -66,6 +67,8 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	private Ticket tardisTicket;
 	public Ticket tardisLocTicket;
 	private boolean chunkLoadTick = true;
+	public int rotorUpdate=0;
+	public int frame=0;
 	
 	public TileEntityTardis() {}
 	
@@ -82,6 +85,11 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			}
 			if (fuel <= 0.0)
 				crash();
+			if(world.isRemote) {
+				if(frame+1>=ModelConsole.frames.length)
+					frame=0;
+				else ++frame;
+			}
 		}
 		else if (this.isFueling()) {
 			this.setFuel(fuel + 0.0001F);
@@ -101,6 +109,10 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				ForgeChunkManager.forceChunk(tardisLocTicket, ws.getChunkFromBlockCoords(tardisLocation).getPos());
 			}
 		}
+		if(world.isRemote && !this.isInFlight()) {
+			frame=0;
+		}
+		
 	}
 	
 	public void travel() {

@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.client.models.console.contols.ModelAllControls;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class RenderConsole extends TileEntitySpecialRenderer {
 	
@@ -30,7 +31,7 @@ public class RenderConsole extends TileEntitySpecialRenderer {
 		GlStateManager.rotate(180, 1, 0, 0);
 		controlModel.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		mc.getTextureManager().bindTexture(CONSOLE_TEXTURE);
-		consoleModel.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		consoleModel.render(null, ((TileEntityTardis)te).frame, partialTicks, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
 	

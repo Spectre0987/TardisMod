@@ -908,11 +908,6 @@ public class ModelAllControls extends ModelBase {
 		Panel6DNG24.render(f5);
 		Panel6Lever.render(f5);
 		
-		Panel5Glow2.render(f5);
-		Panel5Glow3.render(f5);
-		Panel5Glow4.render(f5);
-		Panel5Glow5.render(f5);
-		
 		//OpenGlHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.disableLighting();
@@ -943,6 +938,10 @@ public class ModelAllControls extends ModelBase {
 			Panel3Glow8.render(f5);
 			Panel3Glow9.render(f5);
 			Panel3Glow10.render(f5);
+			Panel5Glow2.render(f5);
+			Panel5Glow3.render(f5);
+			Panel5Glow4.render(f5);
+			Panel5Glow5.render(f5);
 			Panel5Glow1.render(f5);
 			Panel5Glow6.render(f5);
 			Panel5Glow7.render(f5);
