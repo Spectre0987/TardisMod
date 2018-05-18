@@ -10,8 +10,13 @@ import net.tardis.mod.common.items.TItems;
 public class CustomModels {
 	
 	public static void register() {
-		register(Item.getItemFromBlock(TBlocks.tardis_top), new RendererItemTardis());
-		register(TItems.demat_circut, new RendererItemDemat());
+		try{
+			register(Item.getItemFromBlock(TBlocks.tardis_top), new RendererItemTardis());
+			register(TItems.demat_circut, new RendererItemDemat());
+		}
+		catch(Exception e) {
+			System.err.println("TARDIS:An Item Has failed to register it's custom Model");
+		}
 		
 	}
 	

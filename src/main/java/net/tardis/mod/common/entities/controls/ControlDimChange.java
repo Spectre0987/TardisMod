@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -36,7 +35,8 @@ public class ControlDimChange extends EntityControl {
 			else
 				--tardis.dimIndex;
 			if (tardis.dimIndex >= ids.length || tardis.dimIndex < 0) tardis.dimIndex = 0;
-			tardis.setTargetDimension(ids[tardis.dimIndex] != TDimensions.id ? ids[tardis.dimIndex] : 0);
+			int dim=ids[tardis.dimIndex];
+			tardis.setTargetDimension(Helper.isDimensionBlocked(dim)?0:dim);
 		} else
 			this.ticks = 20;
 	}
