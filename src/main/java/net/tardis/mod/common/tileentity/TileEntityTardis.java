@@ -32,6 +32,7 @@ import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
@@ -67,6 +68,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	private Ticket tardisTicket;
 	public Ticket tardisLocTicket;
 	private boolean chunkLoadTick = true;
+	public boolean landOnSurface = true;
 	public int rotorUpdate=0;
 	public int frame=0;
 	
@@ -121,7 +123,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			System.out.println("Traveled");
 			World dWorld = ((WorldServer) world).getMinecraftServer().getWorld(destDim);
 			World oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
-			BlockPos nPos = Helper.isSafe(dWorld, getDestination()) ? this.getDestination() : Helper.getLowestBlock(dWorld, getDestination());
+			BlockPos nPos = Helper.isSafe(dWorld, getDestination()) ? this.getDestination() : this.getLandingBlock(dWorld,getDestination());
 			if (nPos != null) {
 				boolean b = dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop);
@@ -144,6 +146,12 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		}
 	}
 	
+	public BlockPos getLandingBlock(World world,BlockPos pos) {
+		if(this.landOnSurface) {
+			return world.getTopSolidOrLiquidBlock(pos);
+		}
+		return Helper.getLowestBlock(world, pos);
+	}
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
@@ -155,6 +163,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			this.dimension = tardisTag.getInteger("dim");
 			this.destDim = tardisTag.getInteger("destDim");
 			this.fuel = tardisTag.getFloat("fuel");
+			this.landOnSurface = tardisTag.getBoolean(NBT.LAND_ON_SURFACE);
 			NBTTagList coordList = tardisTag.getTagList("coordList", Constants.NBT.TAG_COMPOUND);
 			int i = 0;
 			for (NBTBase base : coordList) {
@@ -171,6 +180,10 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		}
 	}
 	
+	public void setShouldLandOnSurface(boolean b) {
+		this.landOnSurface = b;
+	}
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		
@@ -182,6 +195,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			tardisTag.setInteger("dim", this.dimension);
 			tardisTag.setInteger("destDim", this.destDim);
 			tardisTag.setFloat("fuel", fuel);
+			tardisTag.setBoolean(NBT.LAND_ON_SURFACE,this.landOnSurface);
 			NBTTagList cList = new NBTTagList();
 			for (SpaceTimeCoord co : saveCoords) {
 				cList.appendTag(co.writeToNBT(new NBTTagCompound()));
@@ -265,6 +279,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		if (this.getDestination().equals(BlockPos.ORIGIN)) return false;
 		if (fuel <= 0.0F) return false;
 		this.ticksToTravel = this.calcTimeToTravel();
+		this.setLoading(false);
 		world.playSound(null, this.pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 		if (!world.isRemote) {
 			WorldServer oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
@@ -325,7 +340,23 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	
 	public boolean createControls() {
 		if (controls == null) {
-			controls = new EntityControl[] { new ControlLaunch(this), new ControlX(this), new ControlY(this), new ControlZ(this), new ControlDimChange(this), new ControlScreen(this), new ControlRandom(this), new ControlDoor(this), new ControlSTCLoad(this), new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)), new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)), new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)), new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)), new ControlFlight(this), new ControlFuel(this) };
+			controls = new EntityControl[] { new ControlLaunch(this),
+					new ControlX(this),
+					new ControlY(this),
+					new ControlZ(this),
+					new ControlDimChange(this),
+					new ControlScreen(this),
+					new ControlRandom(this),
+					new ControlDoor(this),
+					new ControlSTCLoad(this),
+					new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)),
+					new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)),
+					new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)),
+					new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)),
+					new ControlFlight(this),
+					new ControlFuel(this),
+					new ControlLandType(this)
+				};
 			return true;
 		}
 		return false;
@@ -385,5 +416,6 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	}
 	public class NBT{
 		public static final String COMPOENET_LIST="componentList";
+		public static final String LAND_ON_SURFACE="landOnGround";
 	}
 }

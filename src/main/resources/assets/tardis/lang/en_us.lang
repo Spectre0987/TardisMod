@@ -52,5 +52,5 @@ entity.weeping_angel.name=Weeping Angel
 
 tardis.gui.protocol.force_field=Force Field Protocol
 
-scanner.safe=It is safe to exit
-scanner.unsafe=Safety Unknown
+tardis.console.land.true=TARDIS is set to land on the highest point avalible
+tardis.console.land.false=TARDIS is set to land on the lowest point avalible

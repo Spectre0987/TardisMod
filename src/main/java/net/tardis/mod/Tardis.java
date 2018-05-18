@@ -31,6 +31,7 @@ import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlEngine;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
@@ -96,7 +97,7 @@ public class Tardis {
 		TItems.register();
 		TBlocks.register();
 		TDimensions.register();
-		BLOCKED_DIMENSIONS=new int[]{TDimensions.id,1};
+		BLOCKED_DIMENSIONS=new int[]{TDimensions.id, 1};
 		EntityHelper.makeGoodBiomes();
 		MinecraftForge.EVENT_BUS.register(new TEventHandler());
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");
@@ -115,6 +116,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlEngine.class, "tardis_engine");
 		EntityHelper.registerStatic(EntityCam.class, "cam");
 		EntityHelper.registerStatic(EntityForceField.class, "force_field");
+		EntityHelper.registerStatic(ControlLandType.class, "land_type");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		GameRegistry.registerTileEntity(TileEntityTardis.class, "TileEntityTardis");

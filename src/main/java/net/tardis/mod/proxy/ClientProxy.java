@@ -20,6 +20,7 @@ import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
@@ -53,6 +54,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, new RenderInvis());
+		RenderingRegistry.registerEntityRenderingHandler(ControlLandType.class, new RenderInvis());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityAngel.class, new RenderAngel());
