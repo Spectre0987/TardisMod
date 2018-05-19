@@ -89,6 +89,7 @@ public class Tardis {
 	public static ServerProxy proxy;
 	
 	public static int[] BLOCKED_DIMENSIONS;
+	public static boolean USE_ENTITIES;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

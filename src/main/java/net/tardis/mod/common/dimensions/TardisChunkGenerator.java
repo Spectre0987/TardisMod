@@ -3,20 +3,26 @@ package net.tardis.mod.common.dimensions;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.tardis.mod.common.blocks.TBlocks;
+import net.minecraft.world.gen.structure.template.PlacementSettings;
+import net.minecraft.world.gen.structure.template.Template;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TardisChunkGenerator implements IChunkGenerator {
 	
 	private World world;
 	private Random rand;
+
 	
 	public TardisChunkGenerator(World world, long seed) {
 		this.world = world;
@@ -27,7 +33,7 @@ public class TardisChunkGenerator implements IChunkGenerator {
 	public Chunk generateChunk(int x, int z) {
 		Chunk c = new Chunk(world, x, z);
 		if (TardisHelper.isConsoleChunk(c)) {
-			for (int bx = 0; bx < 16; ++bx) {
+			/*for (int bx = 0; bx < 16; ++bx) {
 				for (int bz = 0; bz < 16; ++bz) {
 					IBlockState panel = TBlocks.panel.getDefaultState();
 					IBlockState light = TBlocks.light.getDefaultState();
@@ -78,7 +84,8 @@ public class TardisChunkGenerator implements IChunkGenerator {
 				for (int bz = 4; bz <= 11; bz++) {
 					c.setBlockState(new BlockPos(bx, 19, bz), bx % 2 == 0 || bz % 2 == 0 ? light : panel);
 				}
-			}
+			}*/
+			
 		}
 		return c;
 	}

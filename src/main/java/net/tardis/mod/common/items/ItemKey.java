@@ -7,12 +7,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.gen.structure.template.PlacementSettings;
+import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -21,6 +25,8 @@ import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
 public class ItemKey extends Item {
+	
+	public static final ResourceLocation CONSOLE_ROOM=new ResourceLocation(Tardis.MODID,"console_room");
 	
 	public ItemKey() {
 		this.setCreativeTab(Tardis.tab);
@@ -50,8 +56,11 @@ public class ItemKey extends Item {
 				ItemStack stack = playerIn.getHeldItem(handIn);
 				BlockPos cPos = TardisHelper.getTardis(playerIn.getUniqueID());
 				WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.id);
+				MinecraftServer server=tw.getMinecraftServer();
 				setPos(stack, cPos);
 				if (tw.getTileEntity(cPos) == null) {
+					Template tem=tw.getStructureTemplateManager().get(server, CONSOLE_ROOM);
+					tem.addBlocksToWorld(tw, cPos.add(-7,-1,-7), new PlacementSettings());
 					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
 					tw.setBlockState(cPos.down(5), TBlocks.temporal_lab.getDefaultState());
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
