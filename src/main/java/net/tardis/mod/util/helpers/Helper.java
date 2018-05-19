@@ -13,8 +13,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
 
 public class Helper {
@@ -75,7 +75,9 @@ public class Helper {
 	}
 	
 	public static boolean isDimensionBlocked(int id) {
-		for(int i:Tardis.BLOCKED_DIMENSIONS) {
+		if(id==TDimensions.id)
+			return true;
+		for(int i:TardisConfig.BlockedDimensions.bDims) {
 			if(id==i)
 				return true;
 		}

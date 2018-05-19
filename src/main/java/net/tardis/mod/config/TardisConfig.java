@@ -6,7 +6,6 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.dimensions.TDimensions;
 
 @Config(modid=Tardis.MODID, name="TARDIS Mod")
 public class TardisConfig {
@@ -17,8 +16,7 @@ public class TardisConfig {
 	public static class BlockedDimensions{
 		
 		@Config.LangKey("config.dims")
-		@Config.Comment("comment.dims")
-		public int[] bDims=new int[] {TDimensions.id, 1};
+		public int[] bDims=new int[] {1};
 	}
 	
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)

@@ -47,9 +47,6 @@ raygun.ammo.none=No Ammo!
 tardis.none=You don't own a TARDIS
 tardis.flying=TARDIS in flight!
 
-entity.dalek.name=Dalek
-entity.weeping_angel.name=Weeping Angel
-
 tardis.gui.protocol.force_field=Force Field Protocol
 
 tardis.console.land.true=TARDIS is set to land on the highest point avalible
@@ -57,4 +54,3 @@ tardis.console.land.false=TARDIS is set to land on the lowest point avalible
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
-config.comment.dims=D
