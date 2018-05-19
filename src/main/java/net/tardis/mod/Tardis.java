@@ -88,7 +88,6 @@ public class Tardis {
 	@SidedProxy(clientSide = "net.tardis.mod.proxy.ClientProxy", serverSide = "net.tardis.mod.proxy.ServerProxy")
 	public static ServerProxy proxy;
 	
-	public static int[] BLOCKED_DIMENSIONS;
 	public static boolean USE_ENTITIES;
 	
 	@EventHandler
@@ -98,7 +97,6 @@ public class Tardis {
 		TItems.register();
 		TBlocks.register();
 		TDimensions.register();
-		BLOCKED_DIMENSIONS=new int[]{TDimensions.id, 1};
 		EntityHelper.makeGoodBiomes();
 		MinecraftForge.EVENT_BUS.register(new TEventHandler());
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");

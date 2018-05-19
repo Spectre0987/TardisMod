@@ -1,13 +1,13 @@
 [
 {
-  "modid": "tardis  ",
+  "modid": "tardis",
   "name": "Tardis Mod",
   "description": "A mod that adds a TARDIS from BBC's Doctor Who to Minecraft.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["Spectre0987"],
+  "authorList": ["Spectre0987", "Subpai", "The_Boognish"],
   "credits": "",
   "logoFile": "",
   "screenshots": [],
