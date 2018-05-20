@@ -45,7 +45,6 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 				EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 				float angle=Helper.getAngleFromFacing(facing);
 				GlStateManager.rotate(angle-180,0,1,0);
-				System.out.println("TARDIS Facing: "+facing+" Angle: "+angle);
 			}
 			else System.out.println("TARDIS: NO BLOCK AT: "+Helper.formatBlockPos(te.getPos()));
 			mc.getTextureManager().bindTexture(TEXTURE);
