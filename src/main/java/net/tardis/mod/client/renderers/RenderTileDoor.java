@@ -1,5 +1,6 @@
 package net.tardis.mod.client.renderers;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -7,12 +8,15 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelTardis;
 import net.tardis.mod.client.models.console.contols.ModelExteriorDoorL;
 import net.tardis.mod.client.models.console.contols.ModelExteriorDoorR;
+import net.tardis.mod.common.blocks.BlockTardisTop;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -35,7 +39,15 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 		GlStateManager.pushMatrix();
 		{
 			GlStateManager.translate(x+0.5, y+0.5, z+0.5);
-			GlStateManager.rotate(180, 10, 0, 0);
+			GlStateManager.rotate(180, 1, 0, 0);
+			IBlockState state=mc.world.getBlockState(te.getPos());
+			if(state.getBlock() == TBlocks.tardis_top) {
+				EnumFacing facing = state.getValue(BlockTardisTop.FACING);
+				float angle=Helper.getAngleFromFacing(facing);
+				GlStateManager.rotate(angle-180,0,1,0);
+				System.out.println("TARDIS Facing: "+facing+" Angle: "+angle);
+			}
+			else System.out.println("TARDIS: NO BLOCK AT: "+Helper.formatBlockPos(te.getPos()));
 			mc.getTextureManager().bindTexture(TEXTURE);
 			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.pushMatrix();

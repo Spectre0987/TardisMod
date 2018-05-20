@@ -55,7 +55,8 @@ public class TardisHelper {
 		ItemStack stack = player.getHeldItemMainhand();
 		if (stack.getItem() == TItems.key) {
 			BlockPos pos = ItemKey.getPos(stack);
-			if (pos != null && pos.equals(cPos)) return true;
+			if (pos != null && pos.equals(cPos))
+				return true;
 		}
 		return false;
 	}

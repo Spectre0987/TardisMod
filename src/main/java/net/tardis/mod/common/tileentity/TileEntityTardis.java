@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -26,6 +27,7 @@ import net.minecraftforge.common.util.Constants;
 import net.tardis.api.controls.SpaceTimeCoord;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelConsole;
+import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -69,6 +71,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	public Ticket tardisLocTicket;
 	private boolean chunkLoadTick = true;
 	public boolean landOnSurface = true;
+	public EnumFacing facing=EnumFacing.WEST;
 	public int rotorUpdate=0;
 	public int frame=0;
 	
@@ -126,7 +129,9 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination()) ? this.getDestination() : this.getLandingBlock(dWorld,getDestination());
 			if (nPos != null) {
 				boolean b = dWorld.setBlockState(nPos, blockBase);
-				dWorld.setBlockState(nPos.up(), blockTop);
+				Random rand=new Random();
+				facing=EnumFacing.Plane.HORIZONTAL.facings()[rand.nextInt(EnumFacing.Plane.HORIZONTAL.facings().length-1)];
+				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				((TileEntityDoor) dWorld.getTileEntity(nPos.up())).consolePos = pos.toImmutable();
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
@@ -152,6 +157,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		}
 		return Helper.getLowestBlock(world, pos);
 	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
@@ -283,6 +289,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.setLoading(false);
+		((ControlDoor)this.getControl(ControlDoor.class)).setOpen(false);
 		world.playSound(null, this.pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 		if (!world.isRemote) {
 			WorldServer oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);

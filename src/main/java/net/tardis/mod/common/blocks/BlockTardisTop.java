@@ -3,8 +3,12 @@ package net.tardis.mod.common.blocks;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -15,15 +19,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.api.controls.IUnbreakable;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 
 public class BlockTardisTop extends BlockContainer implements IUnbreakable {
+	
+	public static final PropertyDirection FACING=PropertyDirection.create("facing",EnumFacing.Plane.HORIZONTAL);
 	
 	public BlockTardisTop() {
 		super(Material.WOOD, MapColor.BLUE);
 		this.setBlockUnbreakable();
 		this.setResistance(9999);
+		this.setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 	}
 	
 	@Override
@@ -35,10 +41,7 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
 			TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
-			if (playerIn.isSneaking()) {
-				door.toggleLocked(playerIn);
-			} else
-				door.transferPlayerToTardis(playerIn);
+			door.toggleLocked(playerIn);
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
@@ -56,11 +59,11 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
-		if (door != null && !door.isLocked) {
-			if (!(entityIn instanceof EntityPlayer)) {
-				entityIn.removePassengers();
-				entityIn.setPosition(door.consolePos.getX(), door.consolePos.getY(), door.consolePos.getZ() - 4);
-				entityIn.changeDimension(TDimensions.id);
+		if (door != null && !door.getLocked()) {
+			if(entityIn.getHorizontalFacing().equals(state.getValue(FACING).getOpposite())) {
+				if (entityIn instanceof EntityPlayer) {
+					door.transferPlayerToTardis((EntityPlayer)entityIn);
+				}
 			}
 		}
 	}
@@ -87,6 +90,26 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 			((TileEntityDoor)worldIn.getTileEntity(pos)).fadeIn();
 		}
 		catch(Exception e) {}
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(FACING).getHorizontalIndex();
+	}
+
+	@Override
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer) {
+		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this,new IProperty[] {FACING});
 	}
 	
 }

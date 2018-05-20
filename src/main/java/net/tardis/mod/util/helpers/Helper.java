@@ -83,4 +83,16 @@ public class Helper {
 		}
 		return false;
 	}
+
+	public static float getAngleFromFacing(EnumFacing facing) {
+		float angle = 0;
+		if(facing.equals(EnumFacing.EAST))
+			angle = 90;
+		if(facing.equals(EnumFacing.SOUTH))
+			angle = 180;
+		if(facing.equals(EnumFacing.WEST))
+			angle = 270;
+		return angle;
+	}
+	
 }

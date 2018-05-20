@@ -1,19 +1,27 @@
 package net.tardis.mod.common.entities.controls;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
+import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
 
 public class ControlDoor extends EntityControl {
+	
+	public static final DataParameter<Boolean> IS_OPEN=EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
 	
 	public ControlDoor(TileEntityTardis tardis) {
 		super(tardis);
@@ -26,6 +34,12 @@ public class ControlDoor extends EntityControl {
 	}
 	
 	@Override
+	protected void entityInit() {
+		super.entityInit();
+		this.dataManager.register(IS_OPEN, false);
+	}
+	
+	@Override
 	public boolean canBePushed() {
 		return true;
 	}
@@ -35,19 +49,28 @@ public class ControlDoor extends EntityControl {
 		return new Vec3d(0, -1, 6);
 	}
 	
+	public void setOpen(boolean b) {
+		this.dataManager.set(IS_OPEN, b);
+		if(!world.isRemote) {
+			TileEntityTardis tardis=((TileEntityTardis)world.getTileEntity(getConsolePos()));
+			WorldServer ws=DimensionManager.getWorld(tardis.dimension);
+			TileEntityDoor door=(TileEntityDoor)ws.getTileEntity(tardis.getLocation().up());
+			door.setLocked(!this.isOpen());
+		}
+	}
+	
+	public boolean isOpen() {
+		return this.dataManager.get(IS_OPEN);
+	}
+	
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if (!world.isRemote && this.getConsolePos() != null) {
+		if (this.getConsolePos() != null) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			if (!tardis.isInFlight()) {
 				if (!player.isSneaking()) {
-					WorldServer ws = (WorldServer) world;
-					BlockPos tp = tardis.getLocation().south();
-					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, tardis.dimension, new TardisTeleporter(ws));
-					player.setPositionAndUpdate(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5);
-					player.setSpawnPoint(tardis.getLocation().north(), true);
-					player.setSpawnDimension(tardis.dimension);
-				} else {
+					this.setOpen(this.isOpen() ? false : true);
+				} else if(!world.isRemote){
 					WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
 					((TileEntityDoor) ws.getTileEntity(tardis.getLocation().up())).toggleLockedNoKey(player);
 				}
@@ -60,13 +83,16 @@ public class ControlDoor extends EntityControl {
 	
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
-		if (!(entityIn instanceof EntityPlayer)) {
-			if (!world.isRemote && getConsolePos() != null) {
-				TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
-				BlockPos pos = tardis.getLocation().north(3);
-				entityIn.setPosition(pos.getX(), pos.getY(), pos.getZ());
-				entityIn.changeDimension(tardis.dimension);
+		if(!world.isRemote && this.isOpen()) {
+			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(getConsolePos());
+			if(entityIn instanceof EntityPlayer) {
+				WorldServer ws=DimensionManager.getWorld(tardis.dimension);
+				IBlockState state=ws.getBlockState(tardis.getLocation().up());
+				BlockPos pos=tardis.getLocation().offset(state.getValue(BlockTardisTop.FACING), 2);
+				entityIn.setPositionAndUpdate(pos.getX()-0.5,pos.getY(),pos.getZ()+0.5);
+				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)entityIn, tardis.dimension, new TardisTeleporter(ws));
 			}
 		}
 	}
+
 }
