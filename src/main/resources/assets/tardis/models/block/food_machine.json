@@ -7,7 +7,7 @@
             "scale":[0.7,0.7,0.7]
         },
         "gui":{
-            "translation":[0,7,0],
+            "translation":[0,8,0],
             "rotation":[23.5,-45,0]
         }
     }
