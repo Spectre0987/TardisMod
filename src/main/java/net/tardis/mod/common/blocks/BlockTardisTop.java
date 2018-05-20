@@ -40,8 +40,10 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
-			TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
-			door.toggleLocked(playerIn);
+			TileEntity te=worldIn.getTileEntity(pos);
+			if(te instanceof TileEntityDoor) {
+				((TileEntityDoor)te).toggleLocked(playerIn);
+			}
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
