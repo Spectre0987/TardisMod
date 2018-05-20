@@ -28,6 +28,7 @@ public class TBlocks {
 	public static Block alembic;
 	public static Block time_rotor;
 	public static Block room_gen;
+	public static Block food_machine;
 
 	public static Block force_field;
 	public static Block time_rotor_interior;
@@ -75,8 +76,8 @@ public class TBlocks {
 		alembic = new BlockAlembic();
 		register(alembic,"alembic");
 		
-		time_rotor = new BlockTimeRotor();
-		register(time_rotor,"time_rotor");
+		food_machine=new BlockFoodMachine();
+		register(food_machine,"food_machine");
 
 		//Blocks that exist for models only
 		force_field = new BlockModel();

@@ -3,7 +3,9 @@ package net.tardis.mod.client.renderers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -21,6 +23,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 	ModelExteriorDoorR door_r=new ModelExteriorDoorR();
 	ModelExteriorDoorL door_l=new ModelExteriorDoorL();
 	public static final ResourceLocation TEXTURE=new ResourceLocation(Tardis.MODID,"textures/controls/tardis.png");
+	public static final ResourceLocation BLACK_DOOR=new ResourceLocation(Tardis.MODID,"textures/blocks/door.png");
 	
 	public RenderTileDoor() {
 		mc=Minecraft.getMinecraft();
@@ -60,6 +63,24 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 				door_r.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			}
 			GlStateManager.popMatrix();
+			//Renders black behind doors
+			{
+				GlStateManager.pushMatrix();
+				GlStateManager.rotate(180,0,1,0);
+				GlStateManager.translate(-0.5, -0.5, 0.1625);
+				mc.getTextureManager().bindTexture(BLACK_DOOR);
+				Tessellator tes=Tessellator.getInstance();
+				BufferBuilder buf = tes.getBuffer();
+				buf.begin(7, DefaultVertexFormats.POSITION_TEX);
+				GlStateManager.color(0F, 0F, 0F);
+				buf.pos(1, 2, 0).tex(0, 0).endVertex();
+				buf.pos(0, 2, 0).tex(1, 0).endVertex();
+				buf.pos(0, 0, 0).tex(1, 1).endVertex();
+				buf.pos(1, 0, 0).tex(0, 1).endVertex();
+				tes.draw();
+				GlStateManager.color(1F, 1F, 1F);
+				GlStateManager.popMatrix();
+			}
 		}
 		GlStateManager.popMatrix();
 	}

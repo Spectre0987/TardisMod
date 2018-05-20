@@ -276,8 +276,11 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	}
 	
 	public boolean startFlight() {
-		if (this.getDestination().equals(BlockPos.ORIGIN)) return false;
-		if (fuel <= 0.0F) return false;
+		if (this.getDestination().equals(BlockPos.ORIGIN))
+			return false;
+		if (fuel <= 0.0F)
+			return false;
+		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.setLoading(false);
 		world.playSound(null, this.pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);

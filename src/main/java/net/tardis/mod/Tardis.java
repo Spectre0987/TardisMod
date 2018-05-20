@@ -44,14 +44,15 @@ import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.TardisProtocolForceField;
 import net.tardis.mod.common.recipes.TemporalRecipe;
+import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.RecallMode;
 import net.tardis.mod.common.screwdriver.RoundelMode;
 import net.tardis.mod.common.screwdriver.TransmatMode;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
-import net.tardis.mod.common.tileentity.TileEntityTimeRotor;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.handlers.TEventHandler;
@@ -123,7 +124,7 @@ public class Tardis {
 		GameRegistry.registerTileEntity(TileEntityTemporalLab.class, "TileEntityTemporalLab");
 		GameRegistry.registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
 		GameRegistry.registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
-		GameRegistry.registerTileEntity(TileEntityTimeRotor.class, "TileEntityTimeRotor");
+		GameRegistry.registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
 		
 		NETWORK.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
@@ -135,6 +136,7 @@ public class Tardis {
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());
 		ScrewdriverMode.register(new RoundelMode());
+		ScrewdriverMode.register(new HallwayMode());
 		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		

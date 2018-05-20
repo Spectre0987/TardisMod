@@ -6,6 +6,7 @@ import net.tardis.mod.client.renderers.RenderAngel;
 import net.tardis.mod.client.renderers.RenderConsole;
 import net.tardis.mod.client.renderers.RenderDoor;
 import net.tardis.mod.client.renderers.RenderFField;
+import net.tardis.mod.client.renderers.RenderFoodMachine;
 import net.tardis.mod.client.renderers.RenderInvis;
 import net.tardis.mod.client.renderers.RenderRay;
 import net.tardis.mod.client.renderers.RenderScreen;
@@ -30,6 +31,7 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 
@@ -40,6 +42,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUmbrellaStand.class, new RenderUmbrellaStand());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor.class, new RenderTileDoor());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoodMachine.class, new RenderFoodMachine());
 		
 		// Controls
 		RenderingRegistry.registerEntityRenderingHandler(ControlScreen.class, new RenderScreen());

@@ -41,8 +41,10 @@ public class RenderScreen extends Render {
 		GlStateManager.scale(1.5, 1.5, 1.5);
 		model.render(entity, 0.0625F);
 		if (tardis != null) {
+			GlStateManager.disableLighting();
+			mc.entityRenderer.disableLightmap();
 			line = 0;
-			GlStateManager.translate(0.375, 1.4, 0);
+			GlStateManager.translate(0.375, 1.4, 0.06);
 			GlStateManager.rotate(180, 0, 0, 1);
 			GlStateManager.scale(0.005, 0.005, 0.005);
 			drawString("TARDIS Location: " + Helper.formatBlockPos(tardis.getLocation()));
@@ -51,6 +53,8 @@ public class RenderScreen extends Render {
 			drawString("Dimension Target: [" + tardis.getTargetDim() + "]");
 			String fuelS = tardis.fuel * 100 + "";
 			drawString("Artron Banks: " + fuelS.substring(0, fuelS.indexOf(".")) + "%");
+			mc.entityRenderer.enableLightmap();
+			GlStateManager.enableLighting();
 		}
 		tardis = ((TileEntityTardis) mc.world.getTileEntity(((ControlScreen) entity).getConsolePos()));
 		GlStateManager.popMatrix();

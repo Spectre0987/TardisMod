@@ -20,8 +20,8 @@ import net.tardis.api.screwdriver.IScrewAction;
 import net.tardis.api.screwdriver.IScrewable;
 import net.tardis.api.screwdriver.ScrewdriverMode;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.util.helpers.Helper;
 
 public class ItemSonic extends Item {
 	
@@ -52,7 +52,7 @@ public class ItemSonic extends Item {
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverMode.modes.get(getMode(held));
 			if (sc != null && sc instanceof IScrewable) {
-				((IScrewable) sc).screw(worldIn, pos, worldIn.getBlockState(pos));
+				((IScrewable) sc).screw(worldIn, pos, worldIn.getBlockState(pos),player);
 				worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
 			}
 		}
