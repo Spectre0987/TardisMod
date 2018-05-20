@@ -55,7 +55,8 @@ public class ControlDoor extends EntityControl {
 			TileEntityTardis tardis=((TileEntityTardis)world.getTileEntity(getConsolePos()));
 			WorldServer ws=DimensionManager.getWorld(tardis.dimension);
 			TileEntityDoor door=(TileEntityDoor)ws.getTileEntity(tardis.getLocation().up());
-			door.setLocked(!this.isOpen());
+			if(door != null)
+				door.setLocked(!this.isOpen());
 		}
 	}
 	

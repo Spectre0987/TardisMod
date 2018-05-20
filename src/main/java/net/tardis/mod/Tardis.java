@@ -27,6 +27,7 @@ import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlEngine;
 import net.tardis.mod.common.entities.controls.ControlFlight;
@@ -117,6 +118,7 @@ public class Tardis {
 		EntityHelper.registerStatic(EntityCam.class, "cam");
 		EntityHelper.registerStatic(EntityForceField.class, "force_field");
 		EntityHelper.registerStatic(ControlLandType.class, "land_type");
+		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		GameRegistry.registerTileEntity(TileEntityTardis.class, "TileEntityTardis");

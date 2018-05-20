@@ -53,5 +53,11 @@ tardis.gui.protocol.force_field=Force Field Protocol
 tardis.console.land.true=TARDIS is set to land on the highest point avalible
 tardis.console.land.false=TARDIS is set to land on the lowest point avalible
 
+tardis.direction.north=TARDIS is facing north
+tardis.direction.east=TARDIS is facing east
+tardis.direction.south=TARDIS is facing south
+tardis.direction.west=TARDIS is facing west
+
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
+

@@ -58,11 +58,13 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
-		if (door != null && !door.getLocked()) {
-			if(entityIn.getHorizontalFacing().equals(state.getValue(FACING).getOpposite())) {
-				if (entityIn instanceof EntityPlayer) {
-					door.transferPlayerToTardis((EntityPlayer)entityIn);
+		if(!worldIn.isRemote) {
+			TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
+			if (door != null && !door.getLocked()) {
+				if(entityIn.getHorizontalFacing().equals(state.getValue(FACING).getOpposite())) {
+					if (entityIn instanceof EntityPlayer) {
+						door.transferPlayerToTardis((EntityPlayer)entityIn);
+					}
 				}
 			}
 		}

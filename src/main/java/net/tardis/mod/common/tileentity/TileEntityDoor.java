@@ -25,7 +25,7 @@ import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TileEntityDoor extends TileEntity implements ITickable {
 	
-	public BlockPos consolePos;
+	public BlockPos consolePos=BlockPos.ORIGIN;
 	public boolean isLocked = true;
 	public int ticks = 0;
 	public int lockCooldown = 0;
@@ -49,12 +49,12 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	}
 	
 	public void transferPlayerToTardis(EntityPlayer player) {
-		if (!world.isRemote) {
+		if (!world.isRemote && consolePos != null) {
 			if (!this.isLocked || TardisHelper.hasValidKey(player, consolePos)) {
-				WorldServer s = DimensionManager.getWorld(TDimensions.id);
-				BlockPos pos = consolePos.south(4);
-				s.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, TDimensions.id, new TardisTeleporter(s));
-				player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+				WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+				BlockPos pos=consolePos.south(5);
+				player.setPosition(pos.getX(),pos.getY(),pos.getZ());
+				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)player, TDimensions.id, new TardisTeleporter(ws));
 			}
 			else if (this.isLocked) {
 				world.playSound(null, this.getPos(), TSounds.door_locked, SoundCategory.BLOCKS, 1F, 1F);

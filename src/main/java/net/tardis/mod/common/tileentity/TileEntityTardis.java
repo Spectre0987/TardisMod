@@ -31,6 +31,7 @@ import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
@@ -129,8 +130,6 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination()) ? this.getDestination() : this.getLandingBlock(dWorld,getDestination());
 			if (nPos != null) {
 				boolean b = dWorld.setBlockState(nPos, blockBase);
-				Random rand=new Random();
-				facing=EnumFacing.Plane.HORIZONTAL.facings()[rand.nextInt(EnumFacing.Plane.HORIZONTAL.facings().length-1)];
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				((TileEntityDoor) dWorld.getTileEntity(nPos.up())).consolePos = pos.toImmutable();
 				this.setLocation(nPos);
@@ -289,6 +288,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.setLoading(false);
+		this.setFueling(false);
 		((ControlDoor)this.getControl(ControlDoor.class)).setOpen(false);
 		world.playSound(null, this.pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 		if (!world.isRemote) {
@@ -365,7 +365,8 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 					new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)),
 					new ControlFlight(this),
 					new ControlFuel(this),
-					new ControlLandType(this)
+					new ControlLandType(this),
+					new ControlDirection(this)
 				};
 			return true;
 		}
@@ -427,5 +428,14 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	public class NBT{
 		public static final String COMPOENET_LIST="componentList";
 		public static final String LAND_ON_SURFACE="landOnGround";
+	}
+	
+	public EnumFacing getFacing() {
+		return this.facing;
+	}
+	
+	public void setFacing(EnumFacing facing) {
+		this.facing=facing;
+		this.markDirty();
 	}
 }
