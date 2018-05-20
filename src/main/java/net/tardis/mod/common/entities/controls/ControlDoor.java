@@ -51,13 +51,6 @@ public class ControlDoor extends EntityControl {
 	
 	public void setOpen(boolean b) {
 		this.dataManager.set(IS_OPEN, b);
-		if(!world.isRemote) {
-			TileEntityTardis tardis=((TileEntityTardis)world.getTileEntity(getConsolePos()));
-			WorldServer ws=DimensionManager.getWorld(tardis.dimension);
-			TileEntityDoor door=(TileEntityDoor)ws.getTileEntity(tardis.getLocation().up());
-			if(door != null)
-				door.setLocked(!this.isOpen());
-		}
 	}
 	
 	public boolean isOpen() {

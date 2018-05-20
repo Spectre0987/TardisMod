@@ -50,14 +50,16 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	
 	public void transferPlayerToTardis(EntityPlayer player) {
 		if (!world.isRemote && consolePos != null) {
-			if (!this.isLocked || TardisHelper.hasValidKey(player, consolePos)) {
-				WorldServer ws = DimensionManager.getWorld(TDimensions.id);
-				BlockPos pos=consolePos.south(5);
-				player.setPosition(pos.getX(),pos.getY(),pos.getZ());
-				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)player, TDimensions.id, new TardisTeleporter(ws));
-			}
-			else if (this.isLocked) {
-				world.playSound(null, this.getPos(), TSounds.door_locked, SoundCategory.BLOCKS, 1F, 1F);
+			if(player!=null && player instanceof EntityPlayerMP) {
+				if (!this.isLocked || TardisHelper.hasValidKey(player, consolePos)) {
+					WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+					BlockPos pos=consolePos.south(5);
+					player.setPosition(pos.getX(),pos.getY(),pos.getZ());
+					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)player, TDimensions.id, new TardisTeleporter(ws));
+				}
+				else if (this.isLocked) {
+					world.playSound(null, this.getPos(), TSounds.door_locked, SoundCategory.BLOCKS, 1F, 1F);
+				}
 			}
 		}
 	}
