@@ -102,8 +102,9 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		}
 		++ticks;
 		if (ticks >= 20) {
-			this.updateServer();
 			ticks = 0;
+			this.updateServer();
+			this.createControls();
 		}
 		if (chunkLoadTick) {
 			chunkLoadTick = false;
@@ -146,7 +147,8 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	
 	public void updateServer() {
 		if (!world.isRemote) {
-			((WorldServer) world).getMinecraftServer().getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 8, TDimensions.id, this.getUpdatePacket());
+			if(this !=null && !this.isInvalid())
+				((WorldServer) world).getMinecraftServer().getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 8, TDimensions.id, this.getUpdatePacket());
 		}
 	}
 	

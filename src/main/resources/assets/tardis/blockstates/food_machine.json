@@ -6,11 +6,9 @@
     "variants":{
         "normal":[{}],
         "inventory":[{}],
-        "facing":{
-            "north":[{}],
-            "east":[{}],
-            "south":[{}],
-            "west":[{}]
-        }
+        "facing=north":[{}],
+        "facing=east":[{}],
+        "facing=south":[{}],
+        "facing=west":[{}]
     }
 }

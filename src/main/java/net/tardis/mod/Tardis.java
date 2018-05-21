@@ -47,7 +47,6 @@ import net.tardis.mod.common.protocols.TardisProtocolForceField;
 import net.tardis.mod.common.recipes.TemporalRecipe;
 import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.RecallMode;
-import net.tardis.mod.common.screwdriver.RoundelMode;
 import net.tardis.mod.common.screwdriver.TransmatMode;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -56,6 +55,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.world.TardisLoadingCallback;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.TEventHandler;
 import net.tardis.mod.packets.MessageAngel;
 import net.tardis.mod.packets.MessageCam;
@@ -89,8 +89,6 @@ public class Tardis {
 	
 	@SidedProxy(clientSide = "net.tardis.mod.proxy.ClientProxy", serverSide = "net.tardis.mod.proxy.ServerProxy")
 	public static ServerProxy proxy;
-	
-	public static boolean USE_ENTITIES;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -137,7 +135,6 @@ public class Tardis {
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());
-		ScrewdriverMode.register(new RoundelMode());
 		ScrewdriverMode.register(new HallwayMode());
 		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
@@ -146,6 +143,10 @@ public class Tardis {
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.isotope_64), 1200));
 		
 		TardisProtocol.register(new TardisProtocolForceField());
+		
+		if(TardisConfig.USE_ENTITIES.entities) {
+			//Register All Mobs Here.
+		}
 		
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 	}

@@ -5,6 +5,18 @@
         },
         "inventory":{
             "model":"tardis:tardis"
+        },
+        "facing=north":{
+            "model":"tardis:teisr"
+        },
+        "facing=east":{
+            "model":"tardis:teisr"
+        },
+        "facing=south":{
+            "model":"tardis:teisr"
+        },
+        "facing=west":{
+            "model":"tardis:teisr"
         }
     }
 }

@@ -4,6 +4,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 
 public class ItemBowtie extends ItemArmor {
@@ -13,6 +15,7 @@ public class ItemBowtie extends ItemArmor {
 		this.setCreativeTab(Tardis.tab);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
 		return Tardis.MODID + ":textures/clothing/bowtie.png";

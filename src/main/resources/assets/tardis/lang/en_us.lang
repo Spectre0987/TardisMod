@@ -18,6 +18,7 @@ item.sonic_cane.name=Sonic Cane
 item.vortex_manip.name=Vortex Manipulator
 item.fluid_link.name=Fluid Links
 item.demat_circut.name=Dematerialization Circut
+item.artron_capacitor.name=Artron Capacitor
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -41,6 +42,7 @@ death.attack.dalek=Killed by a Dalek Ray gun
 screw.recall=Recall Mode
 screw.transmat=Transmat
 screw.lamp=Tinker Mode
+screwdriver.hallway=Room Gen - Hallway
 
 raygun.ammo=Ammo Left
 raygun.ammo.none=No Ammo!
@@ -63,3 +65,5 @@ tardis.missing=The outer plasmic shell cannot be found! Please land again.
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
 
+config.entity=Entities
+config.entity.allowed=Should this mod add Mobs?

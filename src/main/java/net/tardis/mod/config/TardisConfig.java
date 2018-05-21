@@ -13,10 +13,20 @@ public class TardisConfig {
 	@Config.LangKey("config.category.dims")
 	public static final BlockedDimensions BlockedDimensions=new BlockedDimensions();
 	
+	@Config.LangKey("config.entity")
+	public static final UseEntities USE_ENTITIES = new UseEntities();
+	
 	public static class BlockedDimensions{
 		
 		@Config.LangKey("config.dims")
 		public int[] bDims=new int[] {1};
+	}
+	
+	public static class UseEntities{
+		
+		@Config.LangKey("config.entity.allowed")
+		@Config.Comment("config.entity.allowed")
+		public boolean entities = true;
 	}
 	
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)

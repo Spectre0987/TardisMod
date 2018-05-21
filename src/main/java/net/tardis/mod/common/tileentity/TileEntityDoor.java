@@ -76,13 +76,15 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	
 	@Override
 	public void update() {
-		ticks++;
-		if (lockCooldown > 0)
-			--lockCooldown;
-		++this.updateTicks;
-		if(this.updateTicks>20) {
-			Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(),this.isLocked()),new TargetPoint(this.world.provider.getDimension(),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),64D));
-			this.updateTicks = 0;
+		if(!world.isRemote) {
+			ticks++;
+			if (lockCooldown > 0)
+				--lockCooldown;
+			++this.updateTicks;
+			if(this.updateTicks>20) {
+				Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(),this.isLocked()),new TargetPoint(this.world.provider.getDimension(),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),64D));
+				this.updateTicks = 0;
+			}
 		}
 	}
 	public boolean isLocked() {

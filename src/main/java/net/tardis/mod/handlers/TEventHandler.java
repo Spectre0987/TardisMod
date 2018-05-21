@@ -20,6 +20,8 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.api.controls.IUnbreakable;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCam;
@@ -83,6 +85,7 @@ public class TEventHandler {
 		event.getRegistry().register(new RecipeKey("spare_key"));
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public void stopRender(RenderPlayerEvent.Pre event) {
 		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityCam || event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {

@@ -1,8 +1,6 @@
 package net.tardis.mod.common.sounds;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -38,7 +36,6 @@ public class TSounds {
 			} catch (IllegalAccessException e1) {
 				//No log spam
 			}
-			System.out.println(sound.getSoundName());
 			e.getRegistry().register(sound);
 		}
 	}
