@@ -7,9 +7,9 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -18,8 +18,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.tardis.api.controls.IUnbreakable;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.util.TardisTeleporter;
 
 public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
@@ -40,9 +43,12 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
-			TileEntity te=worldIn.getTileEntity(pos);
-			if(te instanceof TileEntityDoor) {
-				((TileEntityDoor)te).toggleLocked(playerIn);
+			TileEntityDoor door=(TileEntityDoor) worldIn.getTileEntity(pos);
+			if(!playerIn.isSneaking()) {
+				WorldServer ws = (WorldServer)worldIn;
+				BlockPos cPos=door.getConsolePos().south(4);
+				playerIn.setPositionAndUpdate(cPos.getX(), cPos.getY(), cPos.getZ());
+				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)playerIn, TDimensions.id, new TardisTeleporter(ws));
 			}
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
@@ -56,20 +62,6 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.INVISIBLE;
-	}
-	
-	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		if(!worldIn.isRemote) {
-			TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
-			if (door != null && !door.getLocked()) {
-				if(entityIn.getHorizontalFacing().equals(state.getValue(FACING).getOpposite())) {
-					if (entityIn instanceof EntityPlayer) {
-						door.transferPlayerToTardis((EntityPlayer)entityIn);
-					}
-				}
-			}
-		}
 	}
 	
 	@Override

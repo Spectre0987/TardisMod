@@ -2,25 +2,18 @@ package net.tardis.mod.common.tileentity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.packets.MessageDoorOpen;
-import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TileEntityDoor extends TileEntity implements ITickable {
@@ -46,23 +39,6 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 		tag.setLong("tPos", consolePos.toLong());
 		tag.setBoolean("locked", isLocked);
 		return super.writeToNBT(tag);
-	}
-	
-	public void transferPlayerToTardis(EntityPlayer player) {
-		if (!world.isRemote && consolePos != null) {
-			if(player!=null && player instanceof EntityPlayerMP) {
-				if (!this.isLocked || TardisHelper.hasValidKey(player, consolePos)) {
-					WorldServer ws = DimensionManager.getWorld(TDimensions.id);
-					BlockPos pos=consolePos.south(5);
-					//((EntityPlayerMP)player).setPosition(pos.getX(),pos.getY(),pos.getZ());
-					((EntityPlayerMP)player).connection.setPlayerLocation(pos.getX(),pos.getY(),pos.getZ(),0,0);
-					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)player, TDimensions.id, new TardisTeleporter(ws));
-				}
-				else if (this.isLocked) {
-					world.playSound(null, this.getPos(), TSounds.door_locked, SoundCategory.BLOCKS, 1F, 1F);
-				}
-			}
-		}
 	}
 	
 	public void toggleLocked(EntityPlayer player) {
@@ -129,7 +105,14 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 		return new AxisAlignedBB(getPos().getX(),getPos().getY()-1,getPos().getZ(),getPos().getX()+1,getPos().getY()+1.5,getPos().getZ()+1);
 	}
 
-	public void fadeIn() {
+	public void fadeIn() {}
+	
+	public void setConsolePos(BlockPos pos) {
+		this.consolePos = pos.toImmutable();
+	}
+	
+	public BlockPos getConsolePos() {
+		return this.consolePos;
 	}
 	
 }
