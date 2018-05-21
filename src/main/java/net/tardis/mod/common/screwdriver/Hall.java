@@ -1,6 +1,7 @@
 package net.tardis.mod.common.screwdriver;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +23,7 @@ public class Hall implements IScrewable {
 	}
 	
 	@Override
-	public void screw(World world, BlockPos pos, IBlockState state) {
+	public void screw(World world, BlockPos pos, IBlockState state,EntityPlayer player) {
 		if (!world.isRemote) {
 			if (world.getBlockState(pos).getBlock() == TBlocks.room_gen) {
 				WorldServer ws = (WorldServer) world;
