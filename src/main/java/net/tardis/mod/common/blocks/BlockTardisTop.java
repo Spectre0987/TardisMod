@@ -45,11 +45,17 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 		if (!worldIn.isRemote) {
 			TileEntityDoor door=(TileEntityDoor) worldIn.getTileEntity(pos);
 			if(!playerIn.isSneaking()) {
-				WorldServer ws = (WorldServer)worldIn;
-				BlockPos cPos=door.getConsolePos().south(4);
-				playerIn.setPositionAndUpdate(cPos.getX(), cPos.getY(), cPos.getZ());
-				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)playerIn, TDimensions.id, new TardisTeleporter(ws));
+				if(!door.isLocked()) {
+					WorldServer ws = (WorldServer)worldIn;
+					BlockPos cPos=door.getConsolePos().south(4);
+					playerIn.setPositionAndUpdate(cPos.getX()+0.5, cPos.getY(), cPos.getZ()+0.5);
+					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)playerIn, TDimensions.id, new TardisTeleporter(ws));
+				}
 			}
+			else {
+				door.toggleLocked(playerIn);
+			}
+			
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
@@ -76,7 +82,7 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.9, 0.1);
+		return new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.9, 0.9);
 	}
 
 	@Override
@@ -106,6 +112,11 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this,new IProperty[] {FACING});
+	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 	
 }

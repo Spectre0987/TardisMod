@@ -72,7 +72,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	public Ticket tardisLocTicket;
 	private boolean chunkLoadTick = true;
 	public boolean landOnSurface = true;
-	public EnumFacing facing=EnumFacing.WEST;
+	public EnumFacing facing = EnumFacing.WEST;
 	public int rotorUpdate=0;
 	public int frame=0;
 	
@@ -349,8 +349,9 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	}
 	
 	public boolean createControls() {
-		if (controls == null) {
-			controls = new EntityControl[] { new ControlLaunch(this),
+		if (controls == null || controls.length == 0) {
+			controls = new EntityControl[] {
+					new ControlLaunch(this),
 					new ControlX(this),
 					new ControlY(this),
 					new ControlZ(this),

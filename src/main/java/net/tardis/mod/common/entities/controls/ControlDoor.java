@@ -10,6 +10,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
@@ -82,9 +83,12 @@ public class ControlDoor extends EntityControl {
 			if(entityIn instanceof EntityPlayer) {
 				WorldServer ws=DimensionManager.getWorld(tardis.dimension);
 				IBlockState state=ws.getBlockState(tardis.getLocation().up());
-				BlockPos pos=tardis.getLocation().offset(state.getValue(BlockTardisTop.FACING), 2);
-				entityIn.setPositionAndUpdate(pos.getX()-0.5,pos.getY(),pos.getZ()+0.5);
-				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)entityIn, tardis.dimension, new TardisTeleporter(ws));
+				if(state.getBlock() instanceof BlockTardisTop) {
+					BlockPos pos=tardis.getLocation().offset(state.getValue(BlockTardisTop.FACING), 1);
+					entityIn.setPositionAndUpdate(pos.getX()-0.5,pos.getY(),pos.getZ()+0.5);
+					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)entityIn, tardis.dimension, new TardisTeleporter(ws));
+				}
+				else ((EntityPlayer)entityIn).sendMessage(new TextComponentTranslation("tardis.missing"));
 			}
 		}
 	}

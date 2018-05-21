@@ -153,6 +153,7 @@ public class Tardis {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.renderEntities();
+		
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.isotope_64);
 	}

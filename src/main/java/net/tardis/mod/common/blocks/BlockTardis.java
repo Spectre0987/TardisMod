@@ -37,5 +37,10 @@ public class BlockTardis extends Block implements IUnbreakable {
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return new AxisAlignedBB(0.1,0,0.1,0.9,1,0.9); 
 	}
+
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
 	
 }

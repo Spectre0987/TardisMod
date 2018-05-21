@@ -35,7 +35,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		boolean open=!((TileEntityDoor)te).getLocked();
+		boolean open=!((TileEntityDoor)te).isLocked();
 		GlStateManager.pushMatrix();
 		{
 			GlStateManager.translate(x+0.5, y+0.5, z+0.5);

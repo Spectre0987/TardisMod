@@ -47,7 +47,7 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 			isLocked = isLocked ? false : true;
 			this.markDirty();
 			if(!world.isRemote)
-				Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(),this.getLocked()), world.provider.getDimension());
+				Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(),this.isLocked()), world.provider.getDimension());
 			player.sendMessage(new TextComponentTranslation("tardis.locked." + isLocked));
 		}
 	}
@@ -81,11 +81,11 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 			--lockCooldown;
 		++this.updateTicks;
 		if(this.updateTicks>20) {
-			Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(),this.getLocked()),new TargetPoint(this.world.provider.getDimension(),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),64D));
+			Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(),this.isLocked()),new TargetPoint(this.world.provider.getDimension(),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),64D));
 			this.updateTicks = 0;
 		}
 	}
-	public boolean getLocked() {
+	public boolean isLocked() {
 		return this.isLocked;
 	}
 	
@@ -97,7 +97,7 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	public void onLoad() {
 		super.onLoad();
 		if(!world.isRemote)
-			Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(),this.getLocked()),world.provider.getDimension());
+			Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(),this.isLocked()),world.provider.getDimension());
 	}
 
 	@Override

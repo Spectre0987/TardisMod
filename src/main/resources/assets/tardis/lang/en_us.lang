@@ -58,6 +58,8 @@ tardis.direction.east=TARDIS is facing east
 tardis.direction.south=TARDIS is facing south
 tardis.direction.west=TARDIS is facing west
 
+tardis.missing=The outer plasmic shell cannot be found! Please land again.
+
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
 
