@@ -17,7 +17,7 @@ public class EntityHelper {
 	public static List<Biome> biomes = new ArrayList<Biome>();
 	
 	public static void registerStatic(Class entityClass, String name) {
-		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 32, 10, false);
+		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 120, 10, false);
 	}
 	
 	public static void registerMob(Class entityClass, String name) {

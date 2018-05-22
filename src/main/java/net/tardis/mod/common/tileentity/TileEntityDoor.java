@@ -22,8 +22,8 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	public boolean isLocked = true;
 	public int ticks = 0;
 	public int lockCooldown = 0;
-	private int updateTicks=0;
-	public float alpha=1F;
+	private int updateTicks = 0;
+	public float alpha = 1F;
 	
 	public TileEntityDoor() {}
 	
@@ -92,7 +92,7 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	}
 	
 	public class NBT{
-		public static final String LOCKED="locked";
+		public static final String LOCKED = "locked";
 	}
 
 	@Override

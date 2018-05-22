@@ -45,6 +45,7 @@ import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.TardisProtocolForceField;
 import net.tardis.mod.common.recipes.TemporalRecipe;
+import net.tardis.mod.common.screwdriver.GRoomMode;
 import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.RecallMode;
 import net.tardis.mod.common.screwdriver.TransmatMode;
@@ -136,6 +137,7 @@ public class Tardis {
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());
 		ScrewdriverMode.register(new HallwayMode());
+		ScrewdriverMode.register(new GRoomMode());
 		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		

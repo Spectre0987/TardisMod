@@ -23,6 +23,7 @@ import net.tardis.api.controls.IUnbreakable;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.TardisTeleporter;
+import net.tardis.mod.util.helpers.Helper;
 
 public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
@@ -48,8 +49,8 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 				if(!door.isLocked()) {
 					WorldServer ws = (WorldServer)worldIn;
 					BlockPos cPos=door.getConsolePos().south(4);
-					playerIn.setPositionAndUpdate(cPos.getX()+0.5, cPos.getY(), cPos.getZ()+0.5);
 					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)playerIn, TDimensions.id, new TardisTeleporter(ws));
+					((EntityPlayerMP)playerIn).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
 				}
 			}
 			else {

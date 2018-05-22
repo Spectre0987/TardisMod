@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -19,6 +20,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
+import net.tardis.mod.util.helpers.Helper;
 
 public class ControlDoor extends EntityControl {
 	
@@ -65,7 +67,8 @@ public class ControlDoor extends EntityControl {
 			if (!tardis.isInFlight()) {
 				if (!player.isSneaking()) {
 					this.setOpen(this.isOpen() ? false : true);
-				} else if(!world.isRemote){
+				}
+				else if(!world.isRemote){
 					WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
 					((TileEntityDoor) ws.getTileEntity(tardis.getLocation().up())).toggleLockedNoKey(player);
 				}
@@ -84,9 +87,10 @@ public class ControlDoor extends EntityControl {
 				WorldServer ws=DimensionManager.getWorld(tardis.dimension);
 				IBlockState state=ws.getBlockState(tardis.getLocation().up());
 				if(state.getBlock() instanceof BlockTardisTop) {
-					BlockPos pos=tardis.getLocation().offset(state.getValue(BlockTardisTop.FACING), 1);
-					entityIn.setPositionAndUpdate(pos.getX()-0.5,pos.getY(),pos.getZ()+0.5);
+					EnumFacing facing = state.getValue(BlockTardisTop.FACING);
+					BlockPos pos=tardis.getLocation().offset(facing, 2);
 					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)entityIn, tardis.dimension, new TardisTeleporter(ws));
+					((EntityPlayerMP)entityIn).connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 				}
 				else ((EntityPlayer)entityIn).sendMessage(new TextComponentTranslation("tardis.missing"));
 			}

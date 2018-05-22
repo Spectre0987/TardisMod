@@ -43,6 +43,7 @@ screw.recall=Recall Mode
 screw.transmat=Transmat
 screw.lamp=Tinker Mode
 screwdriver.hallway=Room Gen - Hallway
+screw.generic_room=Room Gen - Small Room
 
 raygun.ammo=Ammo Left
 raygun.ammo.none=No Ammo!

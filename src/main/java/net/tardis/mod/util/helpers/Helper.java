@@ -68,11 +68,13 @@ public class Helper {
 		return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).grow(i);
 	}
 	
-	public static boolean isSafe(World world,BlockPos pos) {
-		if(world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR))
-			return true;
-		else 
-			return false;
+	public static boolean isSafe(World world,BlockPos pos, EnumFacing facing) {
+		if(world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR)) {
+			if(world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static boolean isDimensionBlocked(int id) {
@@ -103,6 +105,15 @@ public class Helper {
 			case SOUTH: return Rotation.CLOCKWISE_180;
 			case WEST: return Rotation.COUNTERCLOCKWISE_90;
 			default: return Rotation.NONE;
+		}
+	}
+	
+	public static float get360FromFacing(EnumFacing facing) {
+		switch(facing) {
+		case NORTH: return 180;
+		case EAST: return -90;
+		case SOUTH: return 0;
+		default: return 90;
 		}
 	}
 	

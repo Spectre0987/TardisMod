@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.tardis.api.screwdriver.IScrewAction;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.util.helpers.TardisHelper;
 import net.tardis.mod.util.TardisTeleporter;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TransmatMode implements IScrewAction {
 	
@@ -25,7 +25,7 @@ public class TransmatMode implements IScrewAction {
 			if (TardisHelper.hasTardis(player.getUniqueID())) {
 				BlockPos pos = TardisHelper.getTardis(player.getUniqueID());
 				WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(TDimensions.id);
-				player.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+				((EntityPlayerMP)player).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
 				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, TDimensions.id, new TardisTeleporter((WorldServer) world));
 			} else
 				player.sendMessage(new TextComponentTranslation("tardis.none"));

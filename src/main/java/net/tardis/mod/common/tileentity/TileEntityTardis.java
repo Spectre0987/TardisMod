@@ -19,6 +19,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -104,7 +105,16 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		if (ticks >= 20) {
 			ticks = 0;
 			this.updateServer();
-			this.createControls();
+			if(this.createControls()) {
+				System.out.println("Created Controls");
+				for(EntityControl control : controls) {
+					if(!world.isRemote) {
+						Vec3d off = control.getOffset();
+						control.setPosition(0.5 + off.x, 1 + off.y, 0.5 + off.z);
+						world.spawnEntity(control);
+					}
+				}
+			}
 		}
 		if (chunkLoadTick) {
 			chunkLoadTick = false;
@@ -128,7 +138,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			System.out.println("Traveled");
 			World dWorld = ((WorldServer) world).getMinecraftServer().getWorld(destDim);
 			World oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
-			BlockPos nPos = Helper.isSafe(dWorld, getDestination()) ? this.getDestination() : this.getLandingBlock(dWorld,getDestination());
+			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld,getDestination());
 			if (nPos != null) {
 				boolean b = dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
