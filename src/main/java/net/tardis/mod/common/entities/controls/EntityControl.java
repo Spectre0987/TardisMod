@@ -107,5 +107,12 @@ public abstract class EntityControl extends Entity implements IControl {
 		if (ticks > 0) --ticks;
 		super.onUpdate();
 	}
-	
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		return new NBTTagCompound();
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {}
 }
