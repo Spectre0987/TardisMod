@@ -25,7 +25,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.util.Constants;
-import net.tardis.api.controls.SpaceTimeCoord;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.common.blocks.BlockTardisTop;
@@ -47,6 +46,7 @@ import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
 
 public class TileEntityTardis extends TileEntity implements ITickable {

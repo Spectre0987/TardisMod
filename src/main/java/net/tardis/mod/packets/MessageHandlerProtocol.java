@@ -5,7 +5,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.tardis.api.protocols.TardisProtocol;
+import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class MessageHandlerProtocol implements IMessageHandler<MessageProtocol, IMessage> {

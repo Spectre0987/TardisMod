@@ -7,10 +7,10 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.tardis.api.protocols.ITardisProtocol;
-import net.tardis.api.protocols.TardisProtocol;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.elements.ButtonText;
+import net.tardis.mod.common.protocols.ITardisProtocol;
+import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.packets.MessageProtocol;
 
 public class GuiProtocol extends GuiScreen {

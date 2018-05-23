@@ -3,7 +3,7 @@ package net.tardis.mod.common.calls;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.api.controls.SpaceTimeCoord;
+import net.tardis.mod.util.SpaceTimeCoord;
 
 /**
  * 

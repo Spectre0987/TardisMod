@@ -11,9 +11,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.api.controls.IUnbreakable;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.IUnbreakable;
 
 public class BlockConsole extends BlockContainer implements IUnbreakable {
 	

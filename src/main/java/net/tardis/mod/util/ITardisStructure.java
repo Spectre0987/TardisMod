@@ -1,4 +1,4 @@
-package net.tardis.api;
+package net.tardis.mod.util;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;

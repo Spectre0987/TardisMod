@@ -15,11 +15,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.tardis.api.screwdriver.IScrew;
-import net.tardis.api.screwdriver.IScrewAction;
-import net.tardis.api.screwdriver.IScrewable;
-import net.tardis.api.screwdriver.ScrewdriverMode;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.screwdriver.IScrew;
+import net.tardis.mod.common.screwdriver.IScrewAction;
+import net.tardis.mod.common.screwdriver.IScrewable;
+import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.helpers.Helper;
 

@@ -8,7 +8,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.tardis.api.controls.IUnbreakable;
+import net.tardis.mod.util.IUnbreakable;
 
 public class BlockTardis extends Block implements IUnbreakable {
 	

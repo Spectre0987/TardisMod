@@ -2,7 +2,6 @@ package net.tardis.mod.common.protocols;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.tardis.api.protocols.ITardisProtocol;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 

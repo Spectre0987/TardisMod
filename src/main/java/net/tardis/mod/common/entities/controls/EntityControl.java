@@ -10,7 +10,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.tardis.api.controls.IControl;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public abstract class EntityControl extends Entity implements IControl {

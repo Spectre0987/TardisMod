@@ -3,7 +3,7 @@ package net.tardis.mod.common.entities.controls;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.tardis.api.controls.SpaceTimeCoord;
+import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
