@@ -66,6 +66,7 @@ public class ItemKey extends Item {
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
 					te.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing().getOpposite(), 1), playerIn.dimension);
 					te.setShouldLandOnSurface(true);
+					te.setFacing(playerIn.getHorizontalFacing());
 					te.startFlight();
 					te.travel();
 				}
@@ -78,7 +79,7 @@ public class ItemKey extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos"))
-			tooltip.add("BlockConsole at: " + Helper.formatBlockPos(getPos(stack)));
+			tooltip.add("Console at: " + Helper.formatBlockPos(getPos(stack)));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	
