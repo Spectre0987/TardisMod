@@ -14,6 +14,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
+import net.tardis.mod.common.blocks.BlockPanel;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.world.Structures;
 
 public class GRoomMode implements IScrewable {
@@ -26,16 +28,18 @@ public class GRoomMode implements IScrewable {
 	@Override
 	public void screw(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		if(!world.isRemote) {
-			WorldServer ws = (WorldServer) world;
-			MinecraftServer server = ws.getMinecraftServer();
-			EnumFacing facing = player.getHorizontalFacing();
-			
-			Template temp = ws.getStructureTemplateManager().get(server, Structures.GENERIC_ROOM);
-			temp.addBlocksToWorld(ws, pos.add(getOffset(facing)), new PlacementSettings().setRotation(getRotation(facing)));
-			ChunkPos cPos = world.getChunkFromBlockCoords(pos).getPos();
-			for(int x=-1; x<3; ++x) {
-				for(int z=-1; z<3; ++z) {
-					((EntityPlayerMP)player).connection.sendPacket(new SPacketChunkData(world.getChunkFromChunkCoords(cPos.x + x, cPos.z + z),65535));
+			if(state.getBlock() == TBlocks.panel && state.getValue(BlockPanel.TYPE) == 1) {
+				WorldServer ws = (WorldServer) world;
+				MinecraftServer server = ws.getMinecraftServer();
+				EnumFacing facing = player.getHorizontalFacing();
+				
+				Template temp = ws.getStructureTemplateManager().get(server, Structures.GENERIC_ROOM);
+				temp.addBlocksToWorld(ws, pos.add(getOffset(facing)), new PlacementSettings().setRotation(getRotation(facing)));
+				ChunkPos cPos = world.getChunkFromBlockCoords(pos).getPos();
+				for(int x=-1; x<3; ++x) {
+					for(int z=-1; z<3; ++z) {
+						((EntityPlayerMP)player).connection.sendPacket(new SPacketChunkData(world.getChunkFromChunkCoords(cPos.x + x, cPos.z + z),65535));
+					}
 				}
 			}
 		}

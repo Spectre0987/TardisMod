@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
+import net.tardis.mod.common.blocks.BlockPanel;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.world.Structures;
 
@@ -26,19 +27,21 @@ public class HallwayMode implements IScrewable {
 	@Override
 	public void screw(World world, BlockPos pos, IBlockState state,EntityPlayer player) {
 		if(!world.isRemote) {
-			if(state.getBlock() == TBlocks.panel) {
-				WorldServer ws=(WorldServer)world;
-				MinecraftServer server=ws.getMinecraftServer();
-				
-				Template temp = ws.getStructureTemplateManager().get(server, Structures.HALLWAY);
-				EnumFacing facing = player.getHorizontalFacing();
-				Rotation rot = this.getRotationFromFacing(facing);
-				PlacementSettings sett = new PlacementSettings().setRotation(this.getRotationFromFacing(facing));
-				temp.addBlocksToWorld(ws, pos.add(this.getOffsetFromFacing(facing)), sett, 2);
-				ChunkPos cPos=world.getChunkFromBlockCoords(pos).getPos();
-				for(int x=-1;x<3;++x) {
-					for(int z=-1;z<3;++z) {
-						((EntityPlayerMP)player).connection.sendPacket(new SPacketChunkData(world.getChunkFromChunkCoords(cPos.x+x, cPos.z+z),65535));
+			if(state.getBlock() == TBlocks.panel && state.getValue(BlockPanel.TYPE) == 1) {
+				if(state.getBlock() == TBlocks.panel) {
+					WorldServer ws=(WorldServer)world;
+					MinecraftServer server=ws.getMinecraftServer();
+					
+					Template temp = ws.getStructureTemplateManager().get(server, Structures.HALLWAY);
+					EnumFacing facing = player.getHorizontalFacing();
+					Rotation rot = this.getRotationFromFacing(facing);
+					PlacementSettings sett = new PlacementSettings().setRotation(this.getRotationFromFacing(facing));
+					temp.addBlocksToWorld(ws, pos.add(this.getOffsetFromFacing(facing)), sett, 2);
+					ChunkPos cPos=world.getChunkFromBlockCoords(pos).getPos();
+					for(int x=-1;x<3;++x) {
+						for(int z=-1;z<3;++z) {
+							((EntityPlayerMP)player).connection.sendPacket(new SPacketChunkData(world.getChunkFromChunkCoords(cPos.x+x, cPos.z+z),65535));
+						}
 					}
 				}
 			}

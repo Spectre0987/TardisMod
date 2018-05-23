@@ -55,7 +55,7 @@ public class TBlocks {
 		door = new BlockBase().setCreativeTab(null);
 		register(door,"door");
 		
-		panel = new BlockBase().setLightOpacity(0);
+		panel = new BlockPanel();
 		register(panel,"panel");
 		
 		light = new BlockBase().setLightLevel(1F);
