@@ -28,18 +28,28 @@ public class ControlDimChange extends EntityControl {
 		if (!world.isRemote) {
 			System.out.println("DIm");
 			Integer[] ids = DimensionManager.getStaticDimensionIDs();
-			System.out.println(ids);
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			if (!player.isSneaking())
 				++tardis.dimIndex;
 			else
 				--tardis.dimIndex;
-			if (tardis.dimIndex >= ids.length || tardis.dimIndex < 0) tardis.dimIndex = 0;
+			
+			if (tardis.dimIndex >= ids.length || tardis.dimIndex < 0)
+				tardis.dimIndex = 0;
+			
 			int dim=ids[tardis.dimIndex];
-			tardis.setTargetDimension(Helper.isDimensionBlocked(dim)?0:dim);
+			if(Helper.isDimensionBlocked(dim))
+				tardis.dimIndex = this.nextDI(tardis.dimIndex, ids.length);
+			tardis.setTargetDimension(ids[tardis.dimIndex]);
 		}
 		else
 			this.ticks = 20;
 	}
-	
+	public int nextDI(int index, int size) {
+		index+=1;
+		if(index < 0 || index > size) {
+			return 0;
+		}
+		return index;
+	}
 }

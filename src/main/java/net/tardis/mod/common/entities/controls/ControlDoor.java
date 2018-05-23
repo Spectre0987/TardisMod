@@ -86,6 +86,9 @@ public class ControlDoor extends EntityControl {
 			if(entityIn instanceof EntityPlayer) {
 				WorldServer ws=DimensionManager.getWorld(tardis.dimension);
 				IBlockState state=ws.getBlockState(tardis.getLocation().up());
+				entityIn.motionX = 0;
+				entityIn.motionY = 0;
+				entityIn.motionZ = 0;
 				if(state.getBlock() instanceof BlockTardisTop) {
 					EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 					BlockPos pos=tardis.getLocation().offset(facing, 2);

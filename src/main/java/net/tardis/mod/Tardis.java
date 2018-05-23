@@ -149,7 +149,6 @@ public class Tardis {
 		if(TardisConfig.USE_ENTITIES.entities) {
 			//Register All Mobs Here.
 		}
-		
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 	}
 	
