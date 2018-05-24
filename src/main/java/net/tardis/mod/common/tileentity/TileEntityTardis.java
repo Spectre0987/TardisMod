@@ -388,9 +388,6 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	
 	@Override
 	public void invalidate() {
-		for (EntityControl e : controls) {
-			e.setDead();
-		}
 		ForgeChunkManager.releaseTicket(tardisTicket);
 		ForgeChunkManager.releaseTicket(tardisLocTicket);
 		super.invalidate();
