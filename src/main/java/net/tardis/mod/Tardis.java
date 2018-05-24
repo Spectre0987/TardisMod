@@ -4,8 +4,10 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -44,6 +46,7 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.protocols.TardisProtocolForceField;
 import net.tardis.mod.common.recipes.TemporalRecipe;
+import net.tardis.mod.common.screwdriver.ElectricPanelMode;
 import net.tardis.mod.common.screwdriver.GRoomMode;
 import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.RecallMode;
@@ -51,6 +54,7 @@ import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.screwdriver.TransmatMode;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
@@ -73,17 +77,20 @@ import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
 
-@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION)
+@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies=Tardis.DEP)
 public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
-	public static final String VERSION = "2.0 Alpha";
+	public static final String VERSION = "0.0.1A";
+	public static final String DEP = "after:ic2";
 	
 	private static Logger logger;
 	
 	public static CreativeTabs tab;
 	
 	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+	
+	public static boolean hasIC2 = false;
 	
 	@Instance
 	public static Tardis instance = new Tardis();
@@ -93,6 +100,8 @@ public class Tardis {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		if(Loader.isModLoaded("ic2"))
+			hasIC2 = true;
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
@@ -120,12 +129,17 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
-		GameRegistry.registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
-		GameRegistry.registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
-		GameRegistry.registerTileEntity(TileEntityTemporalLab.class, "TileEntityTemporalLab");
-		GameRegistry.registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
-		GameRegistry.registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
-		GameRegistry.registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
+		
+		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
+		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
+		registerTileEntity(TileEntityTemporalLab.class, "TileEntityTemporalLab");
+		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
+		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
+		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
+		if(hasIC2) {
+			registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
+			ScrewdriverMode.register(new ElectricPanelMode());
+		}
 		
 		NETWORK.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
@@ -158,5 +172,9 @@ public class Tardis {
 		
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.isotope_64);
+	}
+	
+	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
+		GameRegistry.registerTileEntity(clazz, Tardis.MODID + ":" + name);
 	}
 }

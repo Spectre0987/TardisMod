@@ -1,9 +1,9 @@
 [
 {
   "modid": "tardis",
-  "name": "Tardis Mod",
+  "name": "TARDIS Mod",
   "description": "A mod that adds a TARDIS from BBC's Doctor Who to Minecraft.",
-  "version": "2.0",
+  "version": "0.0.1A",
   "mcversion": "1.12.2",
   "url": "https://minecraft.curseforge.com/projects/new-tardis-mod",
   "updateUrl": "",
