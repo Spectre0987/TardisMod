@@ -1,6 +1,7 @@
 package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.util.helpers.Helper;
@@ -31,6 +32,18 @@ public class ControlZ extends EntityControl {
 			ticks = 20;
 			direction = player.isSneaking() ? -1 : 1;
 		}
+	}
+
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound compound) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound compound) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

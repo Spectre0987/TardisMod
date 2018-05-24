@@ -6,6 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.IUnbreakable;
@@ -37,5 +38,17 @@ public class BlockConsole extends BlockContainer implements IUnbreakable {
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
+	}
+
+	@Override
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+		super.onBlockAdded(worldIn, pos, state);
+		try {
+			TileEntityTardis tardis = (TileEntityTardis)worldIn.getTileEntity(pos);
+			tardis.createControls();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

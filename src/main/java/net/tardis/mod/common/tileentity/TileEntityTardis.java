@@ -1,6 +1,9 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.SoundEvents;
@@ -19,7 +22,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -65,7 +67,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	private static final int MAX_TARDIS_SPEED = 1;
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> components=NonNullList.create().withSize(9, ItemStack.EMPTY);
-	public EntityControl[] controls;
+	public UUID[] controls;
 	public float fuel = 1F;
 	private boolean isFueling = false;
 	private boolean shouldDelayLoop = true;
@@ -105,16 +107,6 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		if (ticks >= 20) {
 			ticks = 0;
 			this.updateServer();
-			if(this.createControls()) {
-				System.out.println("Created Controls");
-				for(EntityControl control : controls) {
-					if(!world.isRemote) {
-						Vec3d off = control.getOffset();
-						control.setPosition(0.5 + off.x, 1 + off.y, 0.5 + off.z);
-						world.spawnEntity(control);
-					}
-				}
-			}
 		}
 		if (chunkLoadTick) {
 			chunkLoadTick = false;
@@ -194,6 +186,13 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				this.components.set(cListIndex, new ItemStack((NBTTagCompound)comp));
 				++cListIndex;
 			}
+			
+			List<UUID> listIDs = new ArrayList<UUID>();
+			NBTTagList controlList = tardisTag.getTagList(NBT.CONTROLS_UUID, Constants.NBT.TAG_COMPOUND);
+			for(NBTBase base : controlList) {
+				listIDs.add(UUID.fromString(((NBTTagCompound)base).getString("con")));
+			}
+			this.controls = listIDs.toArray(new UUID[listIDs.size()-1]);
 		}
 	}
 	
@@ -224,6 +223,14 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				compoentList.appendTag(stack.writeToNBT(new NBTTagCompound()));
 			}
 			tardisTag.setTag(NBT.COMPOENET_LIST, compoentList);
+			
+			NBTTagList controlList = new NBTTagList();
+			for(UUID id : controls) {
+				NBTTagCompound control_tag = new NBTTagCompound();
+				control_tag.setString("con", id.toString());
+				controlList.appendTag(control_tag);
+			}
+			tardisTag.setTag(NBT.CONTROLS_UUID, controlList);
 		}
 		tag.setTag("tardis", tardisTag);
 		return super.writeToNBT(tag);
@@ -301,12 +308,14 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.setLoading(false);
 		this.setFueling(false);
-		((ControlDoor)this.getControl(ControlDoor.class)).setOpen(false);
 		world.playSound(null, this.pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 		if (!world.isRemote) {
 			WorldServer oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
 			oWorld.setBlockToAir(this.tardisLocation);
 			oWorld.setBlockToAir(this.tardisLocation.up());
+			EntityControl door = this.getControl(ControlDoor.class);
+			if(door != null)
+				((ControlDoor)door).setOpen(false);
 			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunkFromBlockCoords(getLocation()).getPos());
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 		}
@@ -351,18 +360,13 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	@Override
 	public void onLoad() {
 		super.onLoad();
-		if (createControls()) {
-			for (EntityControl con : controls) {
-				con.setPosition(pos.getX() + con.getOffset().x + 0.5, pos.getY() + con.getOffset().y + 1, pos.getZ() + con.getOffset().z + 0.5);
-				if (!world.isRemote) world.spawnEntity(con);
-			}
-		}
 		updateServer();
 	}
 	
 	public boolean createControls() {
 		if (controls == null || controls.length == 0) {
-			controls = new EntityControl[] {
+			List<UUID> idList = new ArrayList<UUID>();
+			EntityControl[] ec = new EntityControl[] {
 					new ControlLaunch(this),
 					new ControlX(this),
 					new ControlY(this),
@@ -381,6 +385,13 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 					new ControlLandType(this),
 					new ControlDirection(this)
 				};
+			for(EntityControl con : ec) {
+				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1,this.getPos().getZ() + con.getOffset().z + 0.5);
+				if(!world.isRemote)
+					world.spawnEntity(con);
+				idList.add(con.getUniqueID());
+			}
+			this.controls = idList.toArray(new UUID[1]);
 			return true;
 		}
 		return false;
@@ -399,15 +410,17 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	}
 	
 	public EntityControl getControl(Class clazz) {
-		for (EntityControl e : controls) {
-			if (e.getClass() == clazz) return e;
+		if(!world.isRemote) {
+			WorldServer ws = (WorldServer)world;
+			if(controls != null) {
+				for(UUID id : controls) {
+					EntityControl control = (EntityControl)ws.getEntityFromUuid(id);
+					if(controls.getClass() == clazz)
+						return control;
+				}
+			}
 		}
 		return null;
-	}
-	
-	@Override
-	public void onChunkUnload() {
-		super.onChunkUnload();
 	}
 	
 	public void crash() {
@@ -427,14 +440,10 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			}
 		}
 	}
-	
-	@Override
-	public void markDirty() {
-		super.markDirty();
-	}
 	public class NBT{
-		public static final String COMPOENET_LIST="componentList";
-		public static final String LAND_ON_SURFACE="landOnGround";
+		public static final String COMPOENET_LIST = "componentList";
+		public static final String LAND_ON_SURFACE = "landOnGround";
+		public static final String CONTROLS_UUID = "controls_id";
 	}
 	
 	public EnumFacing getFacing() {

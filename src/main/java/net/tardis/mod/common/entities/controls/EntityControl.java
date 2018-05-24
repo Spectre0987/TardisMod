@@ -52,16 +52,10 @@ public abstract class EntityControl extends Entity implements IControl {
 	}
 	
 	@Override
-	protected void readEntityFromNBT(NBTTagCompound tag) {}
-	
-	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
 		this.preformAction(player);
 		return true;
 	}
-	
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound tag) {}
 	
 	@Override
 	public boolean canBeCollidedWith() {
@@ -97,22 +91,26 @@ public abstract class EntityControl extends Entity implements IControl {
 	}
 	
 	public abstract void preformAction(EntityPlayer player);
-	
-	@Override
-	public void onUpdate() {
-		if (!world.isRemote) {
-			if (getConsolePos() == null || getConsolePos().equals(BlockPos.ORIGIN)) this.setDead();
-			if (getConsolePos() != null && world.getTileEntity(this.getConsolePos()) == null) this.setDead();
-		}
-		if (ticks > 0) --ticks;
-		super.onUpdate();
-	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		return new NBTTagCompound();
+		tag.setLong(NBT.CONSOLE_POS, this.getConsolePos().toLong());
+		return super.writeToNBT(tag);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {}
+	public void readFromNBT(NBTTagCompound tag) {
+		this.setConsolePos(BlockPos.fromLong(tag.getLong(NBT.CONSOLE_POS)));
+		super.readFromNBT(tag);
+	}
+	
+	public class NBT{
+		public static final String CONSOLE_POS = "CONSOELPOS";
+	}
+
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound compound) {}
+
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound compound) {}
 }
