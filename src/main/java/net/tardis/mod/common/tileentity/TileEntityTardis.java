@@ -410,9 +410,6 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	
 	@Override
 	public void onChunkUnload() {
-		for (EntityControl c : controls) {
-			c.setDead();
-		}
 		super.onChunkUnload();
 	}
 	
