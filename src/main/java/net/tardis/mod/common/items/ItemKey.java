@@ -3,6 +3,7 @@ package net.tardis.mod.common.items;
 import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -54,7 +55,7 @@ public class ItemKey extends Item {
 			if (!worldIn.isRemote) {
 				WorldServer ws = (WorldServer) worldIn;
 				ItemStack stack = playerIn.getHeldItem(handIn);
-				BlockPos cPos = TardisHelper.getTardis(playerIn.getUniqueID());
+				BlockPos cPos = TardisHelper.getTardis(playerIn.getUUID(playerIn.getGameProfile()));
 				WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.id);
 				MinecraftServer server=tw.getMinecraftServer();
 				setPos(stack, cPos);
@@ -63,6 +64,8 @@ public class ItemKey extends Item {
 					tem.addBlocksToWorld(tw, cPos.add(-7,-1,-7), new PlacementSettings());
 					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
 					tw.setBlockState(cPos.down(5), TBlocks.temporal_lab.getDefaultState());
+					EntityItem entitySonic = new EntityItem(tw,cPos.getX(),cPos.getY(),cPos.getZ(),new ItemStack(TItems.sonic_screwdriver));
+					tw.spawnEntity(entitySonic);
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
 					te.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing().getOpposite(), 1), playerIn.dimension);
 					te.setShouldLandOnSurface(true);
