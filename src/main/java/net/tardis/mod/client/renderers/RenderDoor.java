@@ -31,9 +31,9 @@ public class RenderDoor extends Render {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x-0.5, y, z+0.48);
 		mc.getTextureManager().bindTexture(TEXTURE);
-		boolean open = true;
+		boolean open = ((ControlDoor)entity).isOpen();
 		GlStateManager.pushMatrix();
-			if(((ControlDoor)entity).isOpen()) {
+			if(open) {
 				GlStateManager.rotate(90, 0, 1, 0);
 			}
 			this.drawDoorShape();
@@ -42,9 +42,11 @@ public class RenderDoor extends Render {
 			this.drawDoorShape();
 		GlStateManager.popMatrix();
 		GlStateManager.translate(0, 0, 0.01);
-		GlStateManager.color(0F, 0F, 0F);
-		this.drawDoorShape();
-		GlStateManager.color(1F, 1F, 1F);
+		if(open) {
+			GlStateManager.color(0F, 0F, 0F);
+			this.drawDoorShape();
+			GlStateManager.color(1F, 1F, 1F);
+		}
 		
 		GlStateManager.popMatrix();
 	}
