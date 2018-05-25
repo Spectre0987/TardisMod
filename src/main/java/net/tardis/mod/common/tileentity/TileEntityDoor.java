@@ -111,6 +111,7 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	
 	public void setConsolePos(BlockPos pos) {
 		this.consolePos = pos.toImmutable();
+		this.markDirty();
 	}
 	
 	public BlockPos getConsolePos() {

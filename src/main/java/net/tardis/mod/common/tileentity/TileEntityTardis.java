@@ -134,7 +134,10 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			if (nPos != null) {
 				boolean b = dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
-				((TileEntityDoor) dWorld.getTileEntity(nPos.up())).consolePos = pos.toImmutable();
+				TileEntity door = dWorld.getTileEntity(nPos.up());
+				if(door != null && door instanceof TileEntityDoor) {
+					((TileEntityDoor)door).setConsolePos(this.getPos());
+				}
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
 			}
