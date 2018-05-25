@@ -26,6 +26,7 @@ import net.tardis.mod.util.helpers.Helper;
 public class ControlDoor extends EntityControl {
 	
 	public static final DataParameter<Boolean> IS_OPEN=EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
+	public int antiSpamTicks = 0;
 	
 	public ControlDoor(TileEntityTardis tardis) {
 		super(tardis);
@@ -87,7 +88,7 @@ public class ControlDoor extends EntityControl {
 	public void applyEntityCollision(Entity entityIn) {
 		if(!world.isRemote && this.isOpen()) {
 			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(getConsolePos());
-			if(entityIn instanceof EntityPlayer) {
+			if(entityIn instanceof EntityPlayer && !tardis.isInFlight()) {
 				WorldServer ws=DimensionManager.getWorld(tardis.dimension);
 				IBlockState state=ws.getBlockState(tardis.getLocation().up());
 				entityIn.motionX = 0;
@@ -102,9 +103,19 @@ public class ControlDoor extends EntityControl {
 					player.setSpawnPoint(pos, true);
 					player.setSpawnDimension(tardis.dimension);
 				}
-				else ((EntityPlayer)entityIn).sendMessage(new TextComponentTranslation("tardis.missing"));
+				else if(antiSpamTicks == 0) {
+					((EntityPlayer)entityIn).sendMessage(new TextComponentTranslation("tardis.missing"));
+					antiSpamTicks = 20;
+				}
 			}
 		}
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if(antiSpamTicks > 0)
+			--antiSpamTicks;
 	}
 
 }

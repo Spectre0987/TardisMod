@@ -50,5 +50,19 @@
             "name":"tardis:locked",
             "stream":true
         }]
+    },
+    "door_open":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:door_open",
+            "stream": true
+        }]
+    },
+    "door_closed":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:door_close",
+            "stream": true
+        }]
     }
 }

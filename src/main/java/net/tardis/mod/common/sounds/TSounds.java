@@ -19,6 +19,8 @@ public class TSounds {
 	public static SoundEvent dalek = register("dalek");
 	public static SoundEvent force_field = register("force_field");
 	public static SoundEvent door_locked = register("locked");
+	public static SoundEvent door_open = register("door_open");
+	public static SoundEvent door_closed = register("door_closed");
 
 	public static SoundEvent register(String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
