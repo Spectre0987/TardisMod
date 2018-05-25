@@ -77,7 +77,7 @@ import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
 
-@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies=Tardis.DEP)
+@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP)
 public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
