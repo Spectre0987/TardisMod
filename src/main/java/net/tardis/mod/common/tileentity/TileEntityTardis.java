@@ -179,6 +179,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				saveCoords.set(i, SpaceTimeCoord.readFromNBT((NBTTagCompound) base));
 				++i;
 			}
+			
 			//Components
 			NBTTagList componentList=tardisTag.getTagList(NBT.COMPOENET_LIST, Constants.NBT.TAG_COMPOUND);
 			int cListIndex=0;
