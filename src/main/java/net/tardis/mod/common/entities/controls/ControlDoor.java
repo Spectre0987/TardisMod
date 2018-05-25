@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -70,7 +71,10 @@ public class ControlDoor extends EntityControl {
 				}
 				else if(!world.isRemote){
 					WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
-					((TileEntityDoor) ws.getTileEntity(tardis.getLocation().up())).toggleLockedNoKey(player);
+					TileEntity te = ws.getTileEntity(tardis.getLocation().up());
+					if(te != null && te instanceof TileEntityDoor) {
+						((TileEntityDoor) te).toggleLockedNoKey(player);
+					}
 				}
 			}
 			else {
@@ -92,8 +96,11 @@ public class ControlDoor extends EntityControl {
 				if(state.getBlock() instanceof BlockTardisTop) {
 					EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 					BlockPos pos=tardis.getLocation().offset(facing, 2);
-					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)entityIn, tardis.dimension, new TardisTeleporter(ws));
-					((EntityPlayerMP)entityIn).connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
+					EntityPlayerMP player = (EntityPlayerMP)entityIn;
+					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, tardis.dimension, new TardisTeleporter(ws));
+					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
+					player.setSpawnPoint(pos, true);
+					player.setSpawnDimension(tardis.dimension);
 				}
 				else ((EntityPlayer)entityIn).sendMessage(new TextComponentTranslation("tardis.missing"));
 			}

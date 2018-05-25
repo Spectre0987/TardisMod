@@ -18,7 +18,7 @@ import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TileEntityDoor extends TileEntity implements ITickable {
 	
-	public BlockPos consolePos=BlockPos.ORIGIN;
+	public BlockPos consolePos = BlockPos.ORIGIN;
 	public boolean isLocked = true;
 	public int ticks = 0;
 	public int lockCooldown = 0;
@@ -111,10 +111,10 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	
 	public void setConsolePos(BlockPos pos) {
 		this.consolePos = pos.toImmutable();
+		this.markDirty();
 	}
 	
 	public BlockPos getConsolePos() {
 		return this.consolePos;
 	}
-	
 }
