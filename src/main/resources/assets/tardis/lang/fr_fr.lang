@@ -1,0 +1,70 @@
+itemGroup.tardis=TARDIS Mod
+
+item.key.name=Clé de TARDIS
+item.pos_setter.name=Enregistreur de coordonnées
+item.circuts.name=Circuit Exotronic
+item.sonic_screwdriver.name=Tournevis sonique
+item.gunstick.name=Canon Dalek
+item.isotope_64.name=Isotope 64
+item.ray_gun.name=Rayon laser Dalek
+item.void_specs.name=Void Specs
+item.fob_watch.name=Montre Gallifreyenne Fob
+item.fez.name=Fez
+item.bowtie.name=Noeud papillon
+item.umbrella_open.name=Parapluie sonique
+item.umbrella_closed.name=Parapluie sonique
+item.sonic_blaster.name=Dynamiteur sonique
+item.sonic_cane.name=Canne sonique
+item.vortex_manip.name=Manipulateur de Vortex
+item.fluid_link.name=Branchement de liquide
+item.demat_circut.name=Circuit de dématérialisation
+item.artron_capacitor.name=Batterie d'Artron
+
+tile.tardis.name=TARDIS
+tile.time_rotor.name=Console
+tile.panel.name=Rondelle
+tile.door.name=Porte de TARDIS
+tile.tardis_top.name=TARDIS
+tile.light.name=Lampe
+tile.homing_beacon.name=Balise d'arrivée
+tile.chronodine_generator.name=Générateur de Chronodine
+tile.grate.name=Grate
+tile.temporal_lab.name=Laboratoire temporel
+tile.umbrella_stand.name=Support de parapluie
+tile.alembic.name=Alembic
+tile.food_machine.name=Machine à nourriture
+
+tardis.locked.true=TARDIS fermé !
+tardis.locked.false=TARDIS à été ouvert.
+
+death.attack.dalek=Tué par un rayon laser Dalek
+screw.recall=Mode de rappel
+screw.transmat=Transmat
+screw.lamp=Mode bricoleur
+screwdriver.hallway=Générateur de pièce - Hall d'entrée
+screw.generic_room=Générateur de pièce - Petite pièce
+screw.electric=Démonter le panneau de la rondelle
+
+raygun.ammo=Munitions restantes
+raygun.ammo.none=Pas de munitions!
+
+tardis.none=Vous ne possédez pas de TARDIS
+tardis.flying=TARDIS en vol!
+
+tardis.gui.protocol.force_field=Protocole de champs de force
+
+tardis.console.land.true=TARDIS est réglé pour attérir sur le point le plus haut disponible
+tardis.console.land.false=TARDIS est réglé pour attérir sur le point le plus bas disponible
+
+tardis.direction.north=TARDIS est tourné vers le nord
+tardis.direction.east=TARDIS est tourné vers l'est
+tardis.direction.south=TARDIS est tounée vers le sud
+tardis.direction.west=TARDIS est tournée vers l'ouest
+
+tardis.missing=L'enveloppe plasmique extérieure est introuvable ! Veuillez atterrir à nouveau.
+
+config.category.dims=Dimensions
+config.dims=Blacklisted Dimensions
+
+config.entity=Entitées
+config.entity.allowed=Ce mod doit-il ajouter des Mobs ?
