@@ -415,15 +415,11 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	}
 	
 	public EntityControl getControl(Class clazz) {
-		System.out.println("Getting Control");
 		if(!world.isRemote) {
-			System.out.println("On Server");
 			WorldServer ws = (WorldServer)world;
 			if(controls != null) {
-				System.out.println("Controls Exist");
 				for(UUID id : controls) {
 					EntityControl control = (EntityControl) ws.getEntityFromUuid(id);
-					System.out.println("Found Control: "+control);
 					if(control.getClass() == clazz)
 						return control;
 				}
