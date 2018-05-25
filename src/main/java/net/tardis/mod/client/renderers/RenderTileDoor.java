@@ -54,7 +54,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 				if(open) {
 					Vec3d origin=Helper.convertToPixels(-6.5, 0, -8.5);
 					GlStateManager.translate(origin.x, origin.y, origin.z);
-					GlStateManager.rotate(-90,0,1,0);
+					GlStateManager.rotate(-85,0,1,0);
 					origin=origin.scale(-1);
 					GlStateManager.translate(origin.x, origin.y, origin.z);
 				}
