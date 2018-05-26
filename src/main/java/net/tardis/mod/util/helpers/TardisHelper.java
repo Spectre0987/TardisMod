@@ -19,7 +19,8 @@ public class TardisHelper {
 	public static final int TARDIS_SIZE = 16;
 	
 	public static boolean isConsoleChunk(Chunk c) {
-		if (c.x % TARDIS_SIZE == 0 && c.z % TARDIS_SIZE == 0) return true;
+		if (c.x % TARDIS_SIZE == 0 && c.z % TARDIS_SIZE == 0)
+			return true;
 		return false;
 	}
 	
