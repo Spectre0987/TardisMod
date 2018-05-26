@@ -34,11 +34,14 @@ tile.umbrella_stand.name=Support de parapluie
 tile.alembic.name=Alembic
 tile.food_machine.name=Machine à nourriture
 tile.electric_panel.name=Tableau électrique
+tile.megalos.name=Meglos
+tile.console.name=Console
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=TARDIS à été ouvert.
 
 death.attack.dalek=Tué par un rayon laser Dalek
+
 screw.recall=Mode de rappel
 screw.transmat=Transmat
 screw.lamp=Mode bricoleur
@@ -66,6 +69,24 @@ tardis.missing=L'enveloppe plasmique extérieure est introuvable ! Veuillez atte
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
+config.setdim=Parametrer un ID de dimension pour le TARDIS?
+config.tDim=Dimension TARDIS
 
 config.entity=Entitées
 config.entity.allowed=Ce mod doit-il ajouter des Mobs ?
+
+entity.launch_lever.name=Espace - Accélérateur temporel
+entity.x_valve.name=Contrôle spatial - X
+entity.y_valve.name=Contrôle spatial - Y
+entity.z_valve.name=Contrôle spatial - Z
+entity.dim_change.name=Contrôleur de dimension
+entity.screen.name=Écran
+entity.rand_control.name=Contrôleur aléatoire
+entity.tardis_door.name=Porte
+entity.stc_load.name=Activateur de point de repère
+entity.stc_button.name=Selecteur de point de repère
+entity.control_flight.name=Réel - Interface de vol
+entity.fuel.name=Ravitailleur
+entity.land_type.name=Sélecteur de type d'atterissage
+entity.direction_control.name=Contrôleur de direction
+entity.tardis.name=TARDIS
