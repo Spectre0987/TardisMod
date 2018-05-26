@@ -61,7 +61,7 @@ public class BlockFoodMachine extends BlockContainer {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if(meta<3&&meta>0)
+		if(meta < 3 && meta > 0)
 			return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
 		return this.getDefaultState();
 	}
@@ -73,9 +73,7 @@ public class BlockFoodMachine extends BlockContainer {
 
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer) {
-		if(!facing.equals(EnumFacing.DOWN)&&!facing.equals(EnumFacing.UP))
-			return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
-		return this.getDefaultState();
+		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 
 	@Override
