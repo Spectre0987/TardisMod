@@ -120,4 +120,10 @@ public abstract class EntityControl extends Entity implements IControl {
 		if(ticks > 0)
 			--ticks;
 	}
+
+	@Override
+	public void setDead() {
+		super.setDead();
+		System.out.println(this+": was killed on "+world);
+	}
 }
