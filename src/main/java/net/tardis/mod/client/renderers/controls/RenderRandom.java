@@ -24,13 +24,13 @@ public class RenderRandom extends RenderControl {
 		Vec3d offset = Helper.convertToPixels(-1.5, -1.5, 0);
 		int ticks = entity.ticks;
 		float rot = 0F;
-		if(Helper.isIntInRange(0, 21, ticks))
+		if(Helper.isIntInRange(0, 6, ticks))
 			rot = 0;
-		if(Helper.isIntInRange(20, 41, ticks))
+		if(Helper.isIntInRange(5, 11, ticks))
 			rot = -90;
-		if(Helper.isIntInRange(40, 61, ticks))
+		if(Helper.isIntInRange(10, 16, ticks))
 			rot = -180;
-		if(Helper.isIntInRange(60, 81, ticks))
+		if(Helper.isIntInRange(15, 20, ticks))
 			rot = -270;
 		GlStateManager.rotate(rot,0,0,1);
 		GlStateManager.translate(offset.x, offset.y, offset.z);

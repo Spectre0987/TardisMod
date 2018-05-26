@@ -32,7 +32,7 @@ public class ControlRandom extends EntityControl {
 			BlockPos loc = tardis.getLocation();
 			tardis.setDesination(new BlockPos(loc.getX() + (rand.nextInt(1000) - 500), rand.nextInt(100), loc.getZ() + (rand.nextInt(1000) - 500)), tardis.getTargetDim());
 		} else
-			this.ticks = 80;
+			this.ticks = 20;
 	}
 	
 }
