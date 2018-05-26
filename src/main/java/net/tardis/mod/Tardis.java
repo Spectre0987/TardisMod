@@ -82,7 +82,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String VERSION = "0.0.2A";
-	public static final String DEP = "after:ic2";
+	public static final String DEP = "after:ic2,forge@[14.23.2.2638,)";
 	
 	private static Logger logger;
 	
@@ -100,8 +100,7 @@ public class Tardis {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		if(Loader.isModLoaded("ic2"))
-			hasIC2 = true;
+		hasIC2 = Loader.isModLoaded("ic2");
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
