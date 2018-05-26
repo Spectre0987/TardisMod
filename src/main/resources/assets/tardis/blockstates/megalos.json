@@ -104,6 +104,15 @@
                 "top":"tardis:blocks/meglos/meglos_blankwall"
             }
         },
+        "type=15":{
+            "model":"half_slab",
+            "textures":{
+                "side":"tardis:blocks/meglos/meglos_blankwall",
+                "bottom":"tardis:blocks/meglos/meglos_blankwall",
+                "top":"tardis:blocks/meglos/meglos_blankwall"
+            },
+            "x": 180
+        },
         "normal":{
             "model":"cube_all",
             "textures":{

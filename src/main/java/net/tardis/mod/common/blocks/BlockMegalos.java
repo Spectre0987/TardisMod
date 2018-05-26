@@ -17,9 +17,11 @@ import net.minecraft.world.World;
 
 public class BlockMegalos extends BlockBase {
 	
-	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 14);
+	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
 	
-	public BlockMegalos(){}
+	public BlockMegalos(){
+		this.setLightOpacity(0);
+	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
@@ -38,7 +40,10 @@ public class BlockMegalos extends BlockBase {
 
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return this.getDefaultState().withProperty(TYPE, placer.getHeldItem(hand).getMetadata());
+		int type = placer.getHeldItem(hand).getMetadata();
+		if(type == 14)
+			return facing == EnumFacing.DOWN ? this.getDefaultState().withProperty(TYPE, 15) : this.getDefaultState().withProperty(TYPE, 14);
+		return this.getDefaultState().withProperty(TYPE, type);
 	}
 
 	@Override
@@ -55,7 +60,12 @@ public class BlockMegalos extends BlockBase {
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return state.getValue(TYPE) == 14 ? new AxisAlignedBB(0,0,0,1,0.5,1) : super.getBoundingBox(state, source, pos);
+		int meta = state.getValue(TYPE);
+		if(meta == 14)
+			return new AxisAlignedBB(0,0,0,1,0.5,1);
+		else if(meta == 15)
+			return new AxisAlignedBB(0,0.5,0,1,1,1);
+		return super.getBoundingBox(state, source, pos);
 	}
 
 	@Override
@@ -65,23 +75,12 @@ public class BlockMegalos extends BlockBase {
 
 	@Override
 	public boolean isNormalCube(IBlockState state) {
-		return state.getValue(TYPE) == 14 ? false : true;
+		return state.getValue(TYPE) >= 14 ? false : true;
 	}
 
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
-		return state.getValue(TYPE) == 14 ? false : true;
-	}
-
-	@Override
-	public int getLightValue(IBlockState state) {
-		int meta = state.getValue(TYPE);
-		return meta >=2 && meta <= 6 ? 15: 0;
-	}
-
-	@Override
-	public int getLightOpacity(IBlockState state) {
-		return 0;
+		return state.getValue(TYPE) >= 14 ? false : true;
 	}
 
 }
