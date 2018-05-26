@@ -86,8 +86,10 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - 0.0001F);
-			if (ticksToTravel <= 0) this.travel();
-			int mt = shouldDelayLoop ? 420 : 40;
+			if (ticksToTravel <= 0)
+				this.travel();
+			
+			int mt = shouldDelayLoop ? 440 : 40;
 			if (ticksToTravel % mt == 0) {
 				this.shouldDelayLoop = false;
 				world.playSound(null, pos, TSounds.loop, SoundCategory.BLOCKS, 0.4F, 1F);
@@ -95,7 +97,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			if (fuel <= 0.0)
 				crash();
 			if(world.isRemote) {
-				if(frame+1>=ModelConsole.frames.length)
+				if(frame + 1 >= ModelConsole.frames.length)
 					frame=0;
 				else ++frame;
 			}
@@ -318,7 +320,8 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			oWorld.setBlockToAir(this.tardisLocation);
 			oWorld.setBlockToAir(this.tardisLocation.up());
 			EntityControl door = this.getControl(ControlDoor.class);
-			if(door != null)
+			if(door != null && door instanceof ControlDoor)
+				System.out.println("door: "+door);
 				((ControlDoor)door).setOpen(false);
 			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunkFromBlockCoords(getLocation()).getPos());
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
@@ -418,11 +421,12 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			WorldServer ws = (WorldServer)world;
 			if(controls != null) {
 				for(UUID id : controls) {
-					EntityControl control = (EntityControl)ws.getEntityFromUuid(id);
-					if(controls.getClass() == clazz)
+					EntityControl control = (EntityControl) ws.getEntityFromUuid(id);
+					if(control.getClass() == clazz)
 						return control;
 				}
 			}
+			else System.out.println("No controls!");
 		}
 		return null;
 	}

@@ -22,7 +22,6 @@ public class RenderScreen extends Render {
 	Minecraft mc;
 	FontRenderer fr;
 	int line = 0;
-	TileEntityTardis tardis;
 	
 	public RenderScreen() {
 		super(Minecraft.getMinecraft().getRenderManager());
@@ -40,6 +39,7 @@ public class RenderScreen extends Render {
 		mc.getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.scale(1.5, 1.5, 1.5);
 		model.render(entity, 0.0625F);
+		TileEntityTardis tardis = ((TileEntityTardis) mc.world.getTileEntity(((ControlScreen) entity).getConsolePos()));
 		if (tardis != null) {
 			GlStateManager.disableLighting();
 			mc.entityRenderer.disableLightmap();
@@ -56,7 +56,6 @@ public class RenderScreen extends Render {
 			mc.entityRenderer.enableLightmap();
 			GlStateManager.enableLighting();
 		}
-		tardis = ((TileEntityTardis) mc.world.getTileEntity(((ControlScreen) entity).getConsolePos()));
 		GlStateManager.popMatrix();
 	}
 	

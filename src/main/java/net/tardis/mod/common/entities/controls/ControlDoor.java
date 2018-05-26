@@ -26,6 +26,7 @@ import net.tardis.mod.util.helpers.Helper;
 public class ControlDoor extends EntityControl {
 	
 	public static final DataParameter<Boolean> IS_OPEN=EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
+	public int antiSpamTicks = 0;
 	
 	public ControlDoor(TileEntityTardis tardis) {
 		super(tardis);
@@ -68,12 +69,15 @@ public class ControlDoor extends EntityControl {
 			if (!tardis.isInFlight()) {
 				if (!player.isSneaking()) {
 					this.setOpen(this.isOpen() ? false : true);
-				}
-				else if(!world.isRemote){
-					WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
-					TileEntity te = ws.getTileEntity(tardis.getLocation().up());
-					if(te != null && te instanceof TileEntityDoor) {
-						((TileEntityDoor) te).toggleLockedNoKey(player);
+					if(!world.isRemote) {
+						if(this.isOpen())
+							world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
+						else world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
+						WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+						TileEntity te = ws.getTileEntity(tardis.getLocation().up());
+						if(te !=null && te instanceof TileEntityDoor) {
+							((TileEntityDoor)te).setLocked(!this.isOpen());
+						}
 					}
 				}
 			}
@@ -86,8 +90,8 @@ public class ControlDoor extends EntityControl {
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
 		if(!world.isRemote && this.isOpen()) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(getConsolePos());
-			if(entityIn instanceof EntityPlayer) {
+			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(getConsolePos());
+			if(entityIn instanceof EntityPlayer && !tardis.isInFlight()) {
 				WorldServer ws=DimensionManager.getWorld(tardis.dimension);
 				IBlockState state=ws.getBlockState(tardis.getLocation().up());
 				entityIn.motionX = 0;
@@ -102,9 +106,19 @@ public class ControlDoor extends EntityControl {
 					player.setSpawnPoint(pos, true);
 					player.setSpawnDimension(tardis.dimension);
 				}
-				else ((EntityPlayer)entityIn).sendMessage(new TextComponentTranslation("tardis.missing"));
+				else if(antiSpamTicks == 0) {
+					((EntityPlayer)entityIn).sendMessage(new TextComponentTranslation("tardis.missing"));
+					antiSpamTicks = 20;
+				}
 			}
 		}
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if(antiSpamTicks > 0)
+			--antiSpamTicks;
 	}
 
 }

@@ -5,8 +5,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.Helper;
 
 public class ControlLaunch extends EntityControl {
 	
@@ -30,9 +30,11 @@ public class ControlLaunch extends EntityControl {
 			TileEntity te = world.getTileEntity(this.getConsolePos());
 			if (te != null) {
 				TileEntityTardis tardis = (TileEntityTardis) te;
-				if (!tardis.isInFlight()) tardis.startFlight();
+				if (!tardis.isInFlight())
+					tardis.startFlight();
 			}
-		} else
+		}
+		else
 			ticks = 30;
 	}
 	

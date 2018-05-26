@@ -11,7 +11,8 @@ import net.tardis.mod.Tardis;
 public class TardisConfig {
 
 	@Config.LangKey("config.category.dims")
-	public static final BlockedDimensions BlockedDimensions=new BlockedDimensions();
+	@Config.RequiresMcRestart
+	public static final BlockedDimensions BlockedDimensions = new BlockedDimensions();
 	
 	@Config.LangKey("config.entity")
 	public static final UseEntities USE_ENTITIES = new UseEntities();
@@ -20,6 +21,15 @@ public class TardisConfig {
 		
 		@Config.LangKey("config.dims")
 		public int[] bDims=new int[] {1};
+		
+		@Config.LangKey("config.setdim")
+		public boolean setDimension = false;
+		@Config.LangKey("config.tDim")
+		public int tardisDimension = 10;
+	}
+	
+	public static class ChangeDimension{
+		
 	}
 	
 	public static class UseEntities{

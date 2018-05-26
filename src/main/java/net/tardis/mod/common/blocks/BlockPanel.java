@@ -1,7 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -11,15 +9,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
 
-public class BlockPanel extends Block {
+public class BlockPanel extends BlockBase {
 
 	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 2);
 	
 	public BlockPanel() {
-		super(Material.IRON);
-		this.setCreativeTab(Tardis.tab);
 		this.setLightOpacity(0);
 	}
 	

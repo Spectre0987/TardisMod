@@ -2,6 +2,7 @@ package net.tardis.mod.common.dimensions;
 
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.DimensionManager;
+import net.tardis.mod.config.TardisConfig;
 
 public class TDimensions {
 	
@@ -9,7 +10,9 @@ public class TDimensions {
 	public static DimensionType tardisType;
 	
 	public static void register() {
-		id = DimensionManager.getNextFreeDimId();
+		if(TardisConfig.BlockedDimensions.setDimension)
+			id = TardisConfig.BlockedDimensions.tardisDimension;
+		else id = DimensionManager.getNextFreeDimId();
 		tardisType = DimensionType.register("tardis", "_tardis", id, TardisProvider.class, false);
 		DimensionManager.registerDimension(id, tardisType);
 	}

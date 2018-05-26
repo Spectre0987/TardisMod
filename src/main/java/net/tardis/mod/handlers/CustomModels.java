@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.tardis.mod.client.renderers.RenderItemFoodMachine;
 import net.tardis.mod.client.renderers.RendererItemDemat;
 import net.tardis.mod.client.renderers.RendererItemTardis;
+import net.tardis.mod.client.renderers.RendererKey;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.items.TItems;
 
@@ -15,6 +16,8 @@ public class CustomModels {
 			register(Item.getItemFromBlock(TBlocks.tardis_top), new RendererItemTardis());
 			register(Item.getItemFromBlock(TBlocks.food_machine),new RenderItemFoodMachine());
 			register(TItems.demat_circut, new RendererItemDemat());
+			register(TItems.key, new RendererKey());
+			Item.getItemFromBlock(TBlocks.megalos).setHasSubtypes(true);
 		}
 		catch(Exception e) {
 			System.err.println("TARDIS:An Item Has failed to register it's custom Model");

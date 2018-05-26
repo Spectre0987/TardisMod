@@ -1,0 +1,73 @@
+itemGroup.tardis=TARDIS Mod
+
+item.key.name=Ключ от TARDIS
+item.pos_setter.name=Регистр Координат
+item.circuts.name=Экзотронная Плата
+item.sonic_screwdriver.name=Звуковая Отвертка
+item.gunstick.name=Пушка Далеков
+item.isotope_64.name=Изотоп 64
+item.ray_gun.name=Лучемет Далеков
+item.void_specs.name=Пустотные Очки
+item.fob_watch.name=Карманные Часы
+item.fez.name=Феска
+item.bowtie.name=Галстук Бабочка
+item.umbrella_open.name=Звуковой Зонтик
+item.umbrella_closed.name=Звуковой Зонтик
+item.sonic_blaster.name=Звуковой Бластер
+item.sonic_cane.name=Звуковая Трость
+item.vortex_manip.name=Манипулятор Временной Воронки
+item.fluid_link.name=Жидкостный Связитель
+item.demat_circut.name=Дематериализационная схема 
+item.artron_capacitor.name=Артроновый Конденсатор
+
+tile.tardis.name=TARDIS
+tile.time_rotor.name=Консоль
+tile.panel.name=Круглая Панель
+tile.door.name=Дверь TARDIS
+tile.tardis_top.name=TARDIS
+tile.light.name=Лампа
+tile.homing_beacon.name=Маяк Наводки
+tile.chronodine_generator.name=Хронодиновый Генератор
+tile.grate.name=Решетка
+tile.temporal_lab.name=Темпоральная Лаборатория
+tile.umbrella_stand.name=Стойка для Зонтика
+tile.alembic.name=Смеситель
+tile.food_machine.name=Автомат с едой
+tile.electric_panel.name=Электронная панель
+tile.megalos.name=Meglos
+
+tardis.locked.true=TARDIS заперта!
+tardis.locked.false=TARDIS открыта.
+
+death.attack.dalek=Были убиты лучеметом Далека
+
+screw.recall=Режим Возврата
+screw.transmat=Трансмат
+screw.lamp=Режим Механика
+screwdriver.hallway=Генератор Комнат - Корридор
+screw.generic_room=Генератор Комнат - Маленькая Комната
+screw.electric=Разобрать Круглую Панель
+
+raygun.ammo=Патронов
+raygun.ammo.none=Патронов нет!
+
+tardis.none=У вас нету TARDIS
+tardis.flying=TARDIS сейчас в полете!
+
+tardis.gui.protocol.force_field=Force Field Protocol
+
+tardis.console.land.true=TARDIS настроена на посадку в самой высокой точке
+tardis.console.land.false=TARDIS настроена на посадку в самой низкой точке
+
+tardis.direction.north=TARDIS направлена на север
+tardis.direction.east=TARDIS направлена на восток
+tardis.direction.south=TARDIS направлена на юг
+tardis.direction.west=TARDIS направлена на запад
+
+tardis.missing=Внешняя плазмовая оболочка не сформирована! Пожалуйста приземлитесь еще раз.
+
+config.category.dims=Dimensions
+config.dims=Blacklisted Dimensions
+
+config.entity=Entities
+config.entity.allowed=Should this mod add Mobs?

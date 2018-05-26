@@ -14,6 +14,7 @@ public class BlockEPanel extends BlockContainer {
 	public BlockEPanel() {
 		super(Material.IRON);
 		this.setCreativeTab(Tardis.tab);
+		this.setHardness(1F);
 	}
 
 	@Override

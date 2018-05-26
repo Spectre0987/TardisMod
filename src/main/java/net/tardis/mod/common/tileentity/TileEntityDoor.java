@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.util.helpers.TardisHelper;
 
@@ -46,8 +48,12 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 			lockCooldown = 20;
 			isLocked = isLocked ? false : true;
 			this.markDirty();
-			if(!world.isRemote)
+			if(!world.isRemote) {
 				Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(),this.isLocked()), world.provider.getDimension());
+				if(isLocked)
+					world.playSound(null, getPos(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 1F);
+				else world.playSound(null, getPos(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 1F);
+			}
 			player.sendMessage(new TextComponentTranslation("tardis.locked." + isLocked));
 		}
 	}

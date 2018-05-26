@@ -77,11 +77,11 @@ import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
 
-@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies=Tardis.DEP)
+@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP)
 public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
-	public static final String VERSION = "0.0.1A";
+	public static final String VERSION = "0.0.2A";
 	public static final String DEP = "after:ic2";
 	
 	private static Logger logger;
@@ -158,7 +158,7 @@ public class Tardis {
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.isotope_64), 1200));
 		
-		TardisProtocol.register(new TardisProtocolForceField());
+		//TardisProtocol.register(new TardisProtocolForceField());
 		
 		if(TardisConfig.USE_ENTITIES.entities) {
 			//Register All Mobs Here.

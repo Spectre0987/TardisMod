@@ -887,7 +887,7 @@ public class ModelAllControls extends ModelBase {
 		Panel6DNG3.render(f5);
 		Panel6DNG4.render(f5);
 		Panel6DNG5.render(f5);
-		Panel6DNG6.render(f5);
+		//Panel6DNG6.render(f5);
 		Panel6DNG7.render(f5);
 		Panel6DNG8.render(f5);
 		Panel6DNG9.render(f5);
@@ -906,7 +906,7 @@ public class ModelAllControls extends ModelBase {
 		Panel6DNG22.render(f5);
 		Panel6DNG23.render(f5);
 		Panel6DNG24.render(f5);
-		Panel6Lever.render(f5);
+		//Panel6Lever.render(f5);
 		
 		//OpenGlHelper
 		GlStateManager.pushMatrix();
@@ -914,7 +914,7 @@ public class ModelAllControls extends ModelBase {
 		Minecraft mc=Minecraft.getMinecraft();
 		mc.entityRenderer.disableLightmap();
 			Glow1.render(f5);
-			Glow2.render(f5);
+			//Glow2.render(f5);
 			Glow3.render(f5);
 			Glow4.render(f5);
 			Glow5.render(f5);

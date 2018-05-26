@@ -113,4 +113,27 @@ public abstract class EntityControl extends Entity implements IControl {
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if(ticks > 0)
+			--ticks;
+	}
+
+	@Override
+	public boolean isInRangeToRender3d(double x, double y, double z) {
+		return true;
+	}
+
+	@Override
+	public boolean isInRangeToRenderDist(double distance) {
+		return true;
+	}
+
+	@Override
+	public boolean isInvisibleToPlayer(EntityPlayer player) {
+		return false;
+	}
+	
 }
