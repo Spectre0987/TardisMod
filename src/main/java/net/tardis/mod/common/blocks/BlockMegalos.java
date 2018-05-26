@@ -79,4 +79,9 @@ public class BlockMegalos extends BlockBase {
 		return meta >=2 && meta <= 6 ? 15: 0;
 	}
 
+	@Override
+	public int getLightOpacity(IBlockState state) {
+		return 0;
+	}
+
 }
