@@ -35,6 +35,7 @@ tile.alembic.name=Alembic
 tile.food_machine.name=Food Machine
 tile.electric_panel.name=Electric Interface Panel
 tile.megalos.name=Meglos
+tile.console.name=Console
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS has been unlocked.
@@ -68,6 +69,25 @@ tardis.missing=The outer plasmic shell cannot be found! Please land again.
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
+config.setdim=Set a Dimension ID for the TARDIS?
+config.tDim=TARDIS Dimension
 
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
+
+
+entity.launch_lever.name=Space - Time Throttle
+entity.x_valve.name=Space Control - X
+entity.y_valve.name=Space Control - Y
+entity.z_valve.name=Space Control - Z
+entity.dim_change.name=Dimensional Control
+entity.screen.name=Screen
+entity.rand_control.name=Control Randomizer
+entity.tardis_door.name=Door
+entity.stc_load.name=Waypoint Setter
+entity.stc_button.name=Waypoint Selector
+entity.control_flight.name=Real - World Flight Interface
+entity.fuel.name=Refueler
+entity.land_type.name=Landing Type Selector
+entity.direction_control.name=Directional Control
+entity.tardis.name=TARDIS
