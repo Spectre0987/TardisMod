@@ -122,12 +122,6 @@ public abstract class EntityControl extends Entity implements IControl {
 	}
 
 	@Override
-	public void setDead() {
-		super.setDead();
-		System.out.println(this+": was killed on "+world);
-	}
-
-	@Override
 	public boolean isInRangeToRender3d(double x, double y, double z) {
 		return true;
 	}
