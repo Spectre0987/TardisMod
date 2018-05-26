@@ -64,5 +64,12 @@
             "name":"tardis:door_close",
             "stream": true
         }]
+    },
+    "interior_hum_80":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:interior_hum_80",
+            "stream": true
+        }]
     }
 }
