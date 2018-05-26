@@ -34,6 +34,7 @@ tile.umbrella_stand.name=Umbrella Stand
 tile.alembic.name=Alembic
 tile.food_machine.name=Food Machine
 tile.electric_panel.name=Electric Interface Panel
+tile.megalos.name=Meglos
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS has been unlocked.

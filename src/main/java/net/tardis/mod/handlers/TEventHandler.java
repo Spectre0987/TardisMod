@@ -10,7 +10,12 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -22,6 +27,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -44,13 +50,18 @@ public class TEventHandler {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(),"normal"));
 		}
 		for(Item item:TItems.items) {
-			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 			if(TEISR.containsKey(item)) {
 				item.setTileEntityItemStackRenderer(TEISR.get(item));
 				System.out.println(item+" :Was registered with: "+TEISR.get(item));
 			}
-			/*if(item==Item.getItemFromBlock(TBlocks.tardis_top))
-				item.setTileEntityItemStackRenderer(new RendererItemTardis());*/
+			if(item.getHasSubtypes()) {
+				NonNullList<ItemStack> list = NonNullList.create();
+				item.getSubItems(item.getCreativeTab(), list);
+				for(int i=0; i<list.size(); i++) {
+					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(),"type="+i));
+				}
+			}
+			else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 		System.out.println(TEISR.toString());
 	}
@@ -109,4 +120,15 @@ public class TEventHandler {
 		}
 	}
 	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void cancelBBRender(DrawBlockHighlightEvent event) {
+		World world = event.getPlayer().world;
+		BlockPos pos = event.getTarget().getBlockPos();
+		if(pos != null && !pos.equals(BlockPos.ORIGIN)) {
+			if(world.getBlockState(pos).getBlock() instanceof BlockConsole)
+				event.setCanceled(true);
+		}
+			
+	}
 }

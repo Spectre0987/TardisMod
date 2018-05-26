@@ -69,6 +69,11 @@ public class ControlDoor extends EntityControl {
 			if (!tardis.isInFlight()) {
 				if (!player.isSneaking()) {
 					this.setOpen(this.isOpen() ? false : true);
+					if(!world.isRemote) {
+						if(this.isOpen())
+							world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
+						else world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
+					}
 				}
 				else if(!world.isRemote){
 					WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
@@ -87,7 +92,7 @@ public class ControlDoor extends EntityControl {
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
 		if(!world.isRemote && this.isOpen()) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(getConsolePos());
+			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(getConsolePos());
 			if(entityIn instanceof EntityPlayer && !tardis.isInFlight()) {
 				WorldServer ws=DimensionManager.getWorld(tardis.dimension);
 				IBlockState state=ws.getBlockState(tardis.getLocation().up());

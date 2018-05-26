@@ -6,13 +6,15 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.models.console.contols.ModelAllControls;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.info.TardisType;
 
 public abstract class RenderControl extends Render {
 	
-	private Minecraft mc;
+	protected Minecraft mc;
 	public static final ResourceLocation CONTROL_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/control_sheet.png");
+	public ModelAllControls control_model = new ModelAllControls();
 	
 	public RenderControl() {
 		super(Minecraft.getMinecraft().getRenderManager());

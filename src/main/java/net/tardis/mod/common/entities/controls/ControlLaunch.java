@@ -33,7 +33,8 @@ public class ControlLaunch extends EntityControl {
 				if (!tardis.isInFlight())
 					tardis.startFlight();
 			}
-		} else
+		}
+		else
 			ticks = 30;
 	}
 	

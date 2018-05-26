@@ -113,4 +113,11 @@ public abstract class EntityControl extends Entity implements IControl {
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if(ticks > 0)
+			--ticks;
+	}
 }

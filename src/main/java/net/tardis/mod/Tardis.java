@@ -158,7 +158,7 @@ public class Tardis {
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.isotope_64), 1200));
 		
-		TardisProtocol.register(new TardisProtocolForceField());
+		//TardisProtocol.register(new TardisProtocolForceField());
 		
 		if(TardisConfig.USE_ENTITIES.entities) {
 			//Register All Mobs Here.

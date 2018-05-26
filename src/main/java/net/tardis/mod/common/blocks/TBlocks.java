@@ -29,6 +29,7 @@ public class TBlocks {
 	public static Block time_rotor;
 	public static Block room_gen;
 	public static Block food_machine;
+	public static Block megalos;
 
 	public static Block force_field;
 	public static Block time_rotor_interior;
@@ -88,14 +89,14 @@ public class TBlocks {
 		time_rotor_interior = new BlockModel();
 		register(time_rotor_interior,"time_rotor_interior");
 		
-		if(Tardis.hasIC2) {
+		if(Tardis.hasIC2)
 			electric_panel = new BlockEPanel();
-			register(electric_panel, "electric_panel");
-		}
-		else {
-			electric_panel = panel;
-		}
+		else 
+			electric_panel = new BlockPanel();
+		register(electric_panel, "electric_panel");
 		
+		megalos = new BlockMegalos();
+		register(megalos,"megalos");
 	}
 	
 }

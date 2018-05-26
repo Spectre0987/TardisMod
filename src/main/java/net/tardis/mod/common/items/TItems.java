@@ -6,15 +6,9 @@ import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.renderers.RendererItemTardis;
-import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.items.clothing.ItemBowtie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
-import net.tardis.mod.common.items.components.ArtronCapacitor;
-import net.tardis.mod.common.items.components.DematerializationCircut;
-import net.tardis.mod.common.items.components.FluidLink;
-import net.tardis.mod.handlers.TEventHandler;
 
 public class TItems {
 	
@@ -82,14 +76,14 @@ public class TItems {
 		register(sonic_screwdriver,"sonic_screwdriver");
 		
 		//TARDIS Components
-		fluid_link=new FluidLink();
+		/*fluid_link=new FluidLink();
 		register(fluid_link,"fluid_link");
 		
 		artron_capacitor=new ArtronCapacitor();
 		register(artron_capacitor,"artron_capacitor");
 		
 		demat_circut=new DematerializationCircut();
-		register(demat_circut,"demat_circut");
+		register(demat_circut,"demat_circut");*/
 	}
 
 	public static void register(Item item, String name) {
