@@ -10,5 +10,8 @@
             "translation":[0,8,0],
             "rotation":[23.5,-45,0]
         }
+    },
+    "textures":{
+        "particles":"minecraft:blocks/iron_block"
     }
 }
