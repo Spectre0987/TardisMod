@@ -7,6 +7,9 @@
         "gui":{
             "rotation":[23.5,23.5,0],
             "translation":[4,-3,0]
+        },
+        "thirdperson_righthand":{
+            "translation":[0,0,8]
         }
     }
 }
