@@ -4,29 +4,29 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelLever extends ModelBase
+public class ModelRandom extends ModelBase
 {
   //fields
-    ModelRenderer Panel6Lever;
+    ModelRenderer Glow2;
   
-  public ModelLever()
+  public ModelRandom()
   {
     textureWidth = 80;
     textureHeight = 80;
     
-      Panel6Lever = new ModelRenderer(this, 18, 4);
-      Panel6Lever.addBox(0F, 0F, 0F, 1, 1, 4);
-      Panel6Lever.setRotationPoint(0F, 0F, 0F);
-      Panel6Lever.setTextureSize(80, 80);
-      Panel6Lever.mirror = true;
-      setRotation(Panel6Lever, -1.012291F, 0, 0F);
+      Glow2 = new ModelRenderer(this, 0, 4);
+      Glow2.addBox(0F, 0F, 0F, 3, 3, 1);
+      Glow2.setRotationPoint(0F, 0F, 0F);
+      Glow2.setTextureSize(80, 80);
+      Glow2.mirror = true;
+      setRotation(Glow2, 0F, 0F, 0F);
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(f, f1, f2, f3, f4, f5,entity);
-    Panel6Lever.render(f5);
+    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    Glow2.render(f5);
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

@@ -73,4 +73,10 @@ public class BlockMegalos extends BlockBase {
 		return state.getValue(TYPE) == 14 ? false : true;
 	}
 
+	@Override
+	public int getLightValue(IBlockState state) {
+		int meta = state.getValue(TYPE);
+		return meta >=2 && meta <= 6 ? 15: 0;
+	}
+
 }

@@ -1,6 +1,12 @@
 {
-    "parent":"item/generated",
-    "textures":{
-        "layer0":"tardis:items/key"
+    "parent":"builtin/entity",
+    "display":{
+        "firstperson_righthand":{
+            "translation":[12,0,0]
+        },
+        "gui":{
+            "rotation":[23.5,23.5,0],
+            "translation":[4,-3,0]
+        }
     }
 }
