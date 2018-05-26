@@ -73,13 +73,11 @@ public class ControlDoor extends EntityControl {
 						if(this.isOpen())
 							world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
 						else world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
-					}
-				}
-				else if(!world.isRemote){
-					WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
-					TileEntity te = ws.getTileEntity(tardis.getLocation().up());
-					if(te != null && te instanceof TileEntityDoor) {
-						((TileEntityDoor) te).toggleLockedNoKey(player);
+						WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+						TileEntity te = ws.getTileEntity(tardis.getLocation().up());
+						if(te !=null && te instanceof TileEntityDoor) {
+							((TileEntityDoor)te).setLocked(!this.isOpen());
+						}
 					}
 				}
 			}
