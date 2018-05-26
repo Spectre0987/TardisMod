@@ -126,4 +126,20 @@ public abstract class EntityControl extends Entity implements IControl {
 		super.setDead();
 		System.out.println(this+": was killed on "+world);
 	}
+
+	@Override
+	public boolean isInRangeToRender3d(double x, double y, double z) {
+		return true;
+	}
+
+	@Override
+	public boolean isInRangeToRenderDist(double distance) {
+		return true;
+	}
+
+	@Override
+	public boolean isInvisibleToPlayer(EntityPlayer player) {
+		return false;
+	}
+	
 }
