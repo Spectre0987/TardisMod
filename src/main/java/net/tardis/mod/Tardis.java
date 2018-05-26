@@ -81,7 +81,7 @@ import net.tardis.mod.util.helpers.EntityHelper;
 public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
-	public static final String VERSION = "0.0.1A";
+	public static final String VERSION = "0.0.2A";
 	public static final String DEP = "after:ic2";
 	
 	private static Logger logger;
