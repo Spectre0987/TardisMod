@@ -1,5 +1,6 @@
 package net.tardis.mod.client.models.console.contols;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -26,7 +27,10 @@ public class ModelRandom extends ModelBase
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    
+    Minecraft.getMinecraft().entityRenderer.disableLightmap();
     Glow2.render(f5);
+    Minecraft.getMinecraft().entityRenderer.enableLightmap();
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

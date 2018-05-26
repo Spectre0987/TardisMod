@@ -22,7 +22,17 @@ public class RenderRandom extends RenderControl {
 		GlStateManager.rotate(180,1,0,0);
 		GlStateManager.rotate(-58,1,0,0);
 		Vec3d offset = Helper.convertToPixels(-1.5, -1.5, 0);
-		GlStateManager.rotate(entity.ticks,0,0,1);
+		int ticks = entity.ticks;
+		float rot = 0F;
+		if(Helper.isIntInRange(0, 21, ticks))
+			rot = 0;
+		if(Helper.isIntInRange(20, 41, ticks))
+			rot = -90;
+		if(Helper.isIntInRange(40, 61, ticks))
+			rot = -180;
+		if(Helper.isIntInRange(60, 81, ticks))
+			rot = -270;
+		GlStateManager.rotate(rot,0,0,1);
 		GlStateManager.translate(offset.x, offset.y, offset.z);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();

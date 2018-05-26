@@ -116,5 +116,7 @@ public class Helper {
 		default: return 90;
 		}
 	}
-	
+	public static boolean isIntInRange(int min, int max, int num) {
+		return num < max && num > min;
+	}
 }
