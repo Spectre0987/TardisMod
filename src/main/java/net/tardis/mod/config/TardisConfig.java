@@ -10,32 +10,28 @@ import net.tardis.mod.Tardis;
 @Config(modid=Tardis.MODID, name="TARDIS Mod")
 public class TardisConfig {
 
-	@Config.LangKey("config.category.dims")
 	@Config.RequiresMcRestart
-	public static final BlockedDimensions BlockedDimensions = new BlockedDimensions();
+	@Config.LangKey("config.category.dims")
+	public static final Dimensions BlockedDimensions = new Dimensions();
 	
 	@Config.LangKey("config.entity")
 	public static final UseEntities USE_ENTITIES = new UseEntities();
 	
-	public static class BlockedDimensions{
+	public static class Dimensions{
 		
 		@Config.LangKey("config.dims")
 		public int[] bDims=new int[] {1};
 		
 		@Config.LangKey("config.setdim")
 		public boolean setDimension = false;
+		
 		@Config.LangKey("config.tDim")
 		public int tardisDimension = 10;
-	}
-	
-	public static class ChangeDimension{
-		
 	}
 	
 	public static class UseEntities{
 		
 		@Config.LangKey("config.entity.allowed")
-		@Config.Comment("config.entity.allowed")
 		public boolean entities = true;
 	}
 	
