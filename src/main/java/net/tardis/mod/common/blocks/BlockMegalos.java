@@ -83,4 +83,10 @@ public class BlockMegalos extends BlockBase {
 		return state.getValue(TYPE) >= 14 ? false : true;
 	}
 
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		int meta = state.getValue(TYPE);
+		return meta == 14 || meta == 15 ? false : true;
+	}
+
 }

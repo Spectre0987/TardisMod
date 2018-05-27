@@ -9,9 +9,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.tardis.mod.common.entities.EntityTardis;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
+import net.tardis.mod.util.helpers.Helper;
 
 public class ControlFlight extends EntityControl {
 	
@@ -47,7 +48,7 @@ public class ControlFlight extends EntityControl {
 				ForgeChunkManager.unforceChunk(tardis.tardisLocTicket, world.getChunkFromBlockCoords(getConsolePos()).getPos());
 				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, tardis.dimension, new TardisTeleporter((WorldServer) world));
 			} else
-				player.sendMessage(new TextComponentTranslation("tardis.flying"));
+				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_IN_FLIGHT),true);
 		}
 	}
 	

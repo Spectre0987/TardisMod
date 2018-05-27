@@ -15,6 +15,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.util.helpers.TardisHelper;
 
@@ -54,7 +55,7 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 					world.playSound(null, getPos(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 1F);
 				else world.playSound(null, getPos(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 1F);
 			}
-			player.sendMessage(new TextComponentTranslation("tardis.locked." + isLocked));
+			player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + isLocked),true);
 		}
 	}
 	
@@ -63,7 +64,7 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 			lockCooldown = 20;
 			isLocked = isLocked ? false : true;
 			this.markDirty();
-			player.sendMessage(new TextComponentTranslation("tardis.locked." + isLocked));
+			player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + isLocked),true);
 		}
 	}
 	
