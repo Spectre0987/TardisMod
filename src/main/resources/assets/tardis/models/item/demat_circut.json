@@ -10,7 +10,7 @@
             "translation":[10,-4,0]
         },
         "ground":{
-            "translation":[-10,0,0]
+            "translation":[0,0,8]
         },
         "thirdperson_righthand":{
             "translation":[5,0,6],
