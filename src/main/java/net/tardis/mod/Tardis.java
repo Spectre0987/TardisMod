@@ -19,7 +19,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
-import net.tardis.mod.client.boti.EntityCamera;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -80,7 +79,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String VERSION = "0.0.2A";
-	public static final String DEP = "after:ic2,forge@[14.23.2.2638,)";
+	public static final String DEP = "after:ic2, forge@[14.23.2.2638,)";
 	
 	private static Logger logger;
 	
@@ -120,7 +119,6 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlFlight.class, "control_flight");
 		EntityHelper.registerStatic(ControlFuel.class, "fuel");
 		EntityHelper.registerStatic(ControlEngine.class, "tardis_engine");
-		EntityHelper.registerStatic(EntityCamera.class, "cam");
 		EntityHelper.registerStatic(EntityForceField.class, "force_field");
 		EntityHelper.registerStatic(ControlLandType.class, "land_type");
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
