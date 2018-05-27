@@ -30,6 +30,7 @@ public class TBlocks {
 	public static Block room_gen;
 	public static Block food_machine;
 	public static Block megalos;
+	public static Block meglos_slab;
 
 	public static Block force_field;
 	public static Block time_rotor_interior;
