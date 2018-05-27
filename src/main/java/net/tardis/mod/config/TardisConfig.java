@@ -38,7 +38,7 @@ public class TardisConfig {
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)
 	private static class EventHandler {
 		@SubscribeEvent
-		public static void onConfigChanged(final ConfigChangedEvent.OnConfigChangedEvent event) {
+		public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
 			if (event.getModID().equals(Tardis.MODID)) {
 				ConfigManager.sync(Tardis.MODID, Config.Type.INSTANCE);
 			}
