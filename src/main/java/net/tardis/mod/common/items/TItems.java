@@ -15,7 +15,7 @@ import net.tardis.mod.common.items.components.FluidLink;
 
 public class TItems {
 	
-	public static List<Item> items=new ArrayList<>();
+	public static List<Item> items = new ArrayList<>();
 	
 	public static Item key;
 	public static Item circuts;

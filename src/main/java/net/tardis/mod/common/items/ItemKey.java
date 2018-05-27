@@ -19,6 +19,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.renderers.RendererKey;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -32,6 +33,7 @@ public class ItemKey extends Item {
 	public ItemKey() {
 		this.setCreativeTab(Tardis.tab);
 		this.setMaxStackSize(1);
+		this.setTileEntityItemStackRenderer(new RendererKey());
 	}
 	
 	public static void setPos(ItemStack stack, BlockPos pos) {

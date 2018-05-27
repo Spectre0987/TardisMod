@@ -1,9 +1,9 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -12,11 +12,13 @@ import net.tardis.mod.Tardis;
 
 public class BlockBase extends Block {
 	
+	public ItemBlock item = new ItemBlock(this);
+	
 	public BlockBase() {
-		super(Material.WOOD, MapColor.BLUE);
-		this.setCreativeTab(Tardis.tab);
+		super(Material.IRON);
 		this.setHardness(1F);
 		this.setResistance(99999F);
+		this.item.setCreativeTab(Tardis.tab);
 	}
 	
 	@Override

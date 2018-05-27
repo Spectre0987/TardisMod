@@ -3,6 +3,7 @@ package net.tardis.mod.common.blocks;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -14,10 +15,12 @@ import net.tardis.mod.util.IUnbreakable;
 public class BlockConsole extends BlockContainer implements IUnbreakable {
 	
 	public static final AxisAlignedBB BB = new AxisAlignedBB(-1, 0, -1, 2, 0.7, 2);
+	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockConsole() {
 		super(Material.ANVIL);
 		this.setBlockUnbreakable();
+		item.setCreativeTab(null);
 	}
 	
 	@Override

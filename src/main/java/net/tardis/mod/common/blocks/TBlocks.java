@@ -1,5 +1,6 @@
 package net.tardis.mod.common.blocks;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,22 +19,12 @@ public class TBlocks {
 	public static Block tardis;
 	public static Block tardis_top;
 	public static Block console;
-	public static Block door ;
+	public static Block door;
 	public static Block panel;
-	public static Block light;
-	public static Block chronodine_generator;
 	public static Block temporal_lab;
-	public static Block grate;
-	public static Block umbrella_stand;
-	public static Block alembic;
-	public static Block time_rotor;
-	public static Block room_gen;
 	public static Block food_machine;
 	public static Block megalos;
 	public static Block meglos_slab;
-
-	public static Block force_field;
-	public static Block time_rotor_interior;
 	
 	public static Block electric_panel;
 
@@ -42,7 +33,18 @@ public class TBlocks {
 		block.setUnlocalizedName(name);
 		block.setRegistryName(rl);
 		blocks.add(block);
-		TItems.items.add(new ItemBlock(block).setRegistryName(rl));
+		try {
+			Field[] fields = block.getClass().getDeclaredFields();
+			for(Field f : fields) {
+				Object o = f.get(block);
+				if(o instanceof ItemBlock) {
+					TItems.items.add(((ItemBlock)o).setRegistryName(rl));
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void register() {
@@ -56,39 +58,17 @@ public class TBlocks {
 		console = new BlockConsole();
 		register(console,"console");
 		
-		door = new BlockBase().setCreativeTab(null);
+		door = new BlockBase();
 		register(door,"door");
 		
 		panel = new BlockPanel();
 		register(panel,"panel");
 		
-		light = new BlockBase().setLightLevel(1F);
-		register(light,"light");
-		
-		chronodine_generator = new BlockChronodineGenerator();
-		register(chronodine_generator,"chronodine_generator");
-		
 		temporal_lab = new BlockTemporalLab();
 		register(temporal_lab,"temporal_lab");
 		
-		grate = new BlockGrate();
-		register(grate,"grate");
-		
-		umbrella_stand = new BlockUmbrellaStand();
-		register(umbrella_stand,"umbrella_stand");
-		
-		alembic = new BlockAlembic();
-		register(alembic,"alembic");
-		
 		food_machine=new BlockFoodMachine();
 		register(food_machine,"food_machine");
-
-		//Blocks that exist for models only
-		force_field = new BlockModel();
-		register(force_field,"force_field");
-		
-		time_rotor_interior = new BlockModel();
-		register(time_rotor_interior,"time_rotor_interior");
 		
 		if(Tardis.hasIC2)
 			electric_panel = new BlockEPanel();

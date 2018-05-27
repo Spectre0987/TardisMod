@@ -6,6 +6,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -14,13 +15,18 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.tardis.mod.Tardis;
 
 public class BlockMegalos extends BlockBase {
 	
 	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
+	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockMegalos(){
 		this.setLightOpacity(0);
+		this.setCreativeTab(Tardis.tab);
+		item.setCreativeTab(Tardis.tab);
+		item.setHasSubtypes(true);
 	}
 
 	@Override
