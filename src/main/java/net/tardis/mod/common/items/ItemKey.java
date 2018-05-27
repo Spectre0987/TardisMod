@@ -55,7 +55,7 @@ public class ItemKey extends Item {
 			if (!worldIn.isRemote) {
 				WorldServer ws = (WorldServer) worldIn;
 				ItemStack stack = playerIn.getHeldItem(handIn);
-				BlockPos cPos = TardisHelper.getTardis(playerIn.getUUID(playerIn.getGameProfile()));
+				BlockPos cPos = TardisHelper.getTardis(playerIn.getGameProfile().getId());
 				WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.id);
 				MinecraftServer server=tw.getMinecraftServer();
 				setPos(stack, cPos);
@@ -63,7 +63,6 @@ public class ItemKey extends Item {
 					Template tem=tw.getStructureTemplateManager().get(server, CONSOLE_ROOM);
 					tem.addBlocksToWorld(tw, cPos.add(-((int)tem.getSize().getX()/2),-1,-((int)tem.getSize().getZ()/2)), new PlacementSettings());
 					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
-					tw.setBlockState(cPos.down(5), TBlocks.temporal_lab.getDefaultState());
 					EntityItem entitySonic = new EntityItem(tw,cPos.getX(),cPos.getY(),cPos.getZ(),new ItemStack(TItems.sonic_screwdriver));
 					tw.spawnEntity(entitySonic);
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
