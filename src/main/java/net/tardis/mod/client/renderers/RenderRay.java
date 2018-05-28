@@ -33,7 +33,9 @@ public class RenderRay extends Render {
 		mc.getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.disableFog();
 		GlStateManager.disableLighting();
+		mc.entityRenderer.disableLightmap();
 		model.render(entity, 0, 0, 0, 0, 0, 0.0625F);
+		mc.entityRenderer.enableLightmap();
 		GlStateManager.enableFog();
 		GlStateManager.enableLighting();
 		GlStateManager.popMatrix();

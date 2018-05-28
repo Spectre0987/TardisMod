@@ -71,5 +71,12 @@
             "name":"tardis:interior_hum_80",
             "stream": true
         }]
+    },
+    "cloister_bell":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:cloister_bell",
+            "stream": true
+        }]
     }
 }
