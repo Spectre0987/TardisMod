@@ -90,3 +90,6 @@ entity.fuel.name=Ravitailleur
 entity.land_type.name=Sélecteur de type d'atterissage
 entity.direction_control.name=Contrôleur de direction
 entity.tardis.name=TARDIS
+
+key.notwheretardis=CE N'EST PAS LÀ OÙ SE TROUVE LE TARDIS!
+key.console.location=Console à: 
