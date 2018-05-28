@@ -151,7 +151,7 @@ public class Tardis {
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
-		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.isotope_64), 1200));
+		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.power_cell), 1200));
 		
 		//TardisProtocol.register(new TardisProtocolForceField());
 		
@@ -166,7 +166,7 @@ public class Tardis {
 		proxy.renderEntities();
 		
 		// Ore Dictionary
-		OreDictionary.registerOre("oreUranium", TItems.isotope_64);
+		OreDictionary.registerOre("oreUranium", TItems.power_cell);
 	}
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {

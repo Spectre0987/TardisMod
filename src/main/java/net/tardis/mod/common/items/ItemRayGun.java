@@ -37,7 +37,7 @@ public class ItemRayGun extends ItemBase {
 				return ActionResult.newResult(EnumActionResult.SUCCESS, gun);
 			}
 		} else {
-			ItemStack ammo = getAmmoInInventory(playerIn.inventory.mainInventory, TItems.isotope_64);
+			ItemStack ammo = getAmmoInInventory(playerIn.inventory.mainInventory, TItems.power_cell);
 			if (!ammo.isEmpty()) {
 				setAmmo(gun, getAmmo(gun) + (ammo.getCount() * 5));
 				ammo.shrink(ammo.getCount());

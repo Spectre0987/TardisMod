@@ -20,7 +20,7 @@ public class TItems {
 	public static Item key;
 	public static Item circuts;
 	public static Item gunstick;
-	public static Item isotope_64;
+	public static Item power_cell;
 	public static Item fob_watch;
 	
 	public static Item ray_gun;
@@ -51,8 +51,8 @@ public class TItems {
 		gunstick=new ItemBase();
 		register(gunstick,"gunstick");
 		
-		isotope_64=new ItemBase();
-		register(isotope_64,"isotope_64");
+		power_cell=new ItemBase();
+		register(power_cell,"power_cell");
 		
 		fob_watch=new ItemBase();
 		register(fob_watch,"fob_watch");
