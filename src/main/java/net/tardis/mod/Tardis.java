@@ -59,6 +59,7 @@ import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.TEventHandler;
+import net.tardis.mod.handlers.compat.GalacticraftEventHandler;
 import net.tardis.mod.packets.MessageAngel;
 import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageDoorOpen;
@@ -79,7 +80,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String VERSION = "0.0.2A";
-	public static final String DEP = "after:ic2, forge@[14.23.2.2638,)";
+	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
 	
 	private static Logger logger;
 	
@@ -98,6 +99,8 @@ public class Tardis {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		hasIC2 = Loader.isModLoaded("ic2");
+		if(Loader.isModLoaded("galacticraftcore"))
+			MinecraftForge.EVENT_BUS.register(new GalacticraftEventHandler());
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
