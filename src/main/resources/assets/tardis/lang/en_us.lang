@@ -75,7 +75,6 @@ config.tDim=TARDIS Dimension
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
 
-
 entity.launch_lever.name=Space - Time Throttle
 entity.x_valve.name=Space Control - X
 entity.y_valve.name=Space Control - Y
