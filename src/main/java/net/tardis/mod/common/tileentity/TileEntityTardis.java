@@ -133,6 +133,10 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	}
 	
 	public void travel() {
+		this.travel(true);
+	}
+	
+	public void travel(boolean makeSound) {
 		if (!world.isRemote) {
 			this.ticksToTravel = 0;
 			System.out.println("Traveled");
@@ -152,12 +156,12 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 			tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, dWorld, ForgeChunkManager.Type.NORMAL);
 			ForgeChunkManager.forceChunk(tardisLocTicket, dWorld.getChunkFromBlockCoords(tardisLocation).getPos());
-			world.playSound(null, pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
+			if(makeSound)
+				world.playSound(null, pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 			this.markDirty();
 		}
 		shouldDelayLoop = true;
 	}
-	
 	public void updateServer() {
 		if (!world.isRemote) {
 			if(this !=null && !this.isInvalid())
@@ -445,7 +449,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			this.setDesination(getLocation(), dimension);
 			BlockPos pos = getLocation();
 			ws.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 3F, true);
-			this.travel();
+			this.travel(false);
 			world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
 			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
 		} else {
