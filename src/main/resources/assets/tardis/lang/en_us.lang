@@ -90,3 +90,6 @@ entity.fuel.name=Refueler
 entity.land_type.name=Landing Type Selector
 entity.direction_control.name=Directional Control
 entity.tardis.name=TARDIS
+
+key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
+key.console.location=Console at: 

@@ -13,6 +13,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -22,6 +25,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.renderers.RendererKey;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
@@ -68,7 +72,7 @@ public class ItemKey extends Item {
 					EntityItem entitySonic = new EntityItem(tw,cPos.getX(),cPos.getY(),cPos.getZ(),new ItemStack(TItems.sonic_screwdriver));
 					tw.spawnEntity(entitySonic);
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
-					te.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing().getOpposite(), 1), playerIn.dimension);
+					te.setDesination(playerIn.getPosition().down().offset(playerIn.getHorizontalFacing().getOpposite(), 1), playerIn.dimension);
 					te.setShouldLandOnSurface(true);
 					te.setFacing(playerIn.getHorizontalFacing());
 					te.startFlight();
@@ -82,8 +86,10 @@ public class ItemKey extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos"))
-			tooltip.add("Console at: " + Helper.formatBlockPos(getPos(stack)));
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) {
+			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText()+ Helper.formatBlockPos(getPos(stack)));
+			tooltip.add(new TextComponentTranslation("key.notwheretardis").setStyle(new Style().setColor(TextFormatting.RED)).getFormattedText());
+		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

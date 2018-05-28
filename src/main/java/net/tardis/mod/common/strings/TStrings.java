@@ -10,5 +10,6 @@ public class TStrings {
 	/**Add an EnumFacing.getName()**/
 	public static final String TARDIS_FACING = "tardis.direction.";
 	public static final String TARDIS_MISSING = "tardis.none";
+	public static final String KEY_CONSOLE_LOCATION = "key.console.location";
 
 }
