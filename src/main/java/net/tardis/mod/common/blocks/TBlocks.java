@@ -78,6 +78,7 @@ public class TBlocks {
 		
 		megalos = new BlockMegalos();
 		register(megalos,"megalos");
+		
 	}
 	
 }
