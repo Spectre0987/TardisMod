@@ -447,6 +447,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			ws.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 3F, true);
 			this.travel();
 			world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
+			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
 		} else {
 			Random rand = new Random();
 			for (int i = 0; i < 300; ++i) {
