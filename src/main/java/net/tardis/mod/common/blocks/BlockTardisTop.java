@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -19,21 +20,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
+import net.tardis.mod.client.renderers.RendererItemTardis;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.IUnbreakable;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 
 public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
-	public static final PropertyDirection FACING=PropertyDirection.create("facing",EnumFacing.Plane.HORIZONTAL);
+	public static final PropertyDirection FACING=PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockTardisTop() {
 		super(Material.WOOD, MapColor.BLUE);
 		this.setBlockUnbreakable();
 		this.setResistance(9999);
 		this.setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
+		item.setTileEntityItemStackRenderer(new RendererItemTardis());
 	}
 	
 	@Override
@@ -55,6 +63,14 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 			}
 			else {
 				door.toggleLocked(playerIn);
+				WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+				TileEntity te = ws.getTileEntity(door.getConsolePos());
+				if(te != null && te instanceof TileEntityTardis) {
+					EntityControl control= ((TileEntityTardis)te).getControl(ControlDoor.class);
+					if(control != null) {
+						((ControlDoor)control).setOpen(!door.isLocked());
+					}
+				}
 			}
 			
 		}

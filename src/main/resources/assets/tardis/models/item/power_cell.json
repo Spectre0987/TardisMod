@@ -1,6 +1,6 @@
 {
     "parent":"item/generated",
     "textures":{
-        "layer0":"tardis:items/isotope_64"
+        "layer0":"tardis:items/power_cell"
     }
 }

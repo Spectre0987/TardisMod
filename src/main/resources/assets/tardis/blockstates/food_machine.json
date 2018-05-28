@@ -1,7 +1,10 @@
 {
     "forge_marker":1,
     "defaults":{
-        "model":"tardis:food_machine"
+        "model":"tardis:food_machine",
+        "textures":{
+            "particles":"blocks/iron_block"
+        }
     },
     "variants":{
         "normal":[{}],

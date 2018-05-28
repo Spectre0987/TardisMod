@@ -61,7 +61,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob {
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 		Random rand = new Random();
-		ItemStack[] items = new ItemStack[] { new ItemStack(TItems.isotope_64, 20 + rand.nextInt(11)), new ItemStack(TItems.gunstick, 1), new ItemStack(TItems.circuts, 7 + rand.nextInt(3)) };
+		ItemStack[] items = new ItemStack[] { new ItemStack(TItems.power_cell, 20 + rand.nextInt(11)), new ItemStack(TItems.gunstick, 1), new ItemStack(TItems.circuts, 7 + rand.nextInt(3)) };
 		int index = rand.nextInt(items.length);
 		System.out.println("index: " + index);
 		EntityItem ei = new EntityItem(world, posX, posY, posZ, items[index]);

@@ -1,13 +1,10 @@
 package net.tardis.mod.handlers;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,20 +37,14 @@ public class TEventHandler {
 	
 	public static TardisWorldSavedData data;
 	public static Random rand = new Random();
-	public static Map<Item, TileEntityItemStackRenderer> TEISR=new HashMap<Item, TileEntityItemStackRenderer>();
 
 	@SubscribeEvent
 	public void registerModels(ModelRegistryEvent event) {
-		CustomModels.register();
 		//Blocks
 		for(Block block:TBlocks.blocks) {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(),"normal"));
 		}
 		for(Item item:TItems.items) {
-			if(TEISR.containsKey(item)) {
-				item.setTileEntityItemStackRenderer(TEISR.get(item));
-				System.out.println(item+" :Was registered with: "+TEISR.get(item));
-			}
 			if(item.getHasSubtypes()) {
 				NonNullList<ItemStack> list = NonNullList.create();
 				item.getSubItems(item.getCreativeTab(), list);
@@ -63,7 +54,6 @@ public class TEventHandler {
 			}
 			else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
-		System.out.println(TEISR.toString());
 	}
 	
 	@SubscribeEvent
@@ -75,7 +65,7 @@ public class TEventHandler {
 	
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event) {
-		for(Block block:TBlocks.blocks) {
+		for(Block block : TBlocks.blocks) {
 			event.getRegistry().register(block);
 		}
 	}

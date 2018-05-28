@@ -78,6 +78,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	public EnumFacing facing = EnumFacing.WEST;
 	public int rotorUpdate=0;
 	public int frame=0;
+	public int musicTicks = 0;
 	
 	public TileEntityTardis() {}
 	
@@ -123,7 +124,12 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		if(world.isRemote && !this.isInFlight()) {
 			frame=0;
 		}
-		
+		++musicTicks;
+		if(musicTicks >= 375) {
+			musicTicks = 0;
+			if(!world.isRemote)
+				world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
+		}
 	}
 	
 	public void travel() {

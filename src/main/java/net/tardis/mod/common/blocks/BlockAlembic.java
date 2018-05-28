@@ -3,6 +3,7 @@ package net.tardis.mod.common.blocks;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -12,9 +13,11 @@ import net.tardis.mod.common.tileentity.TileEntityAlembic;
 
 public class BlockAlembic extends BlockContainer {
 	
+	public ItemBlock item = new ItemBlock(this);
+	
 	public BlockAlembic() {
 		super(Material.GLASS);
-		this.setCreativeTab(Tardis.tab);
+		item.setCreativeTab(Tardis.tab);
 	}
 	
 	@Override

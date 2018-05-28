@@ -22,7 +22,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -43,8 +42,6 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.protocols.TardisProtocol;
-import net.tardis.mod.common.protocols.TardisProtocolForceField;
 import net.tardis.mod.common.recipes.TemporalRecipe;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
 import net.tardis.mod.common.screwdriver.GRoomMode;
@@ -82,7 +79,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String VERSION = "0.0.2A";
-	public static final String DEP = "after:ic2";
+	public static final String DEP = "after:ic2, forge@[14.23.2.2638,)";
 	
 	private static Logger logger;
 	
@@ -100,8 +97,7 @@ public class Tardis {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		if(Loader.isModLoaded("ic2"))
-			hasIC2 = true;
+		hasIC2 = Loader.isModLoaded("ic2");
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
@@ -123,7 +119,6 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlFlight.class, "control_flight");
 		EntityHelper.registerStatic(ControlFuel.class, "fuel");
 		EntityHelper.registerStatic(ControlEngine.class, "tardis_engine");
-		EntityHelper.registerStatic(EntityCam.class, "cam");
 		EntityHelper.registerStatic(EntityForceField.class, "force_field");
 		EntityHelper.registerStatic(ControlLandType.class, "land_type");
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
@@ -156,7 +151,7 @@ public class Tardis {
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
-		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.isotope_64), 1200));
+		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.power_cell), 1200));
 		
 		//TardisProtocol.register(new TardisProtocolForceField());
 		
@@ -171,7 +166,7 @@ public class Tardis {
 		proxy.renderEntities();
 		
 		// Ore Dictionary
-		OreDictionary.registerOre("oreUranium", TItems.isotope_64);
+		OreDictionary.registerOre("oreUranium", TItems.power_cell);
 	}
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {

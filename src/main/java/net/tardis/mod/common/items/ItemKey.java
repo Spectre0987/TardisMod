@@ -19,6 +19,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.renderers.RendererKey;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -32,6 +33,7 @@ public class ItemKey extends Item {
 	public ItemKey() {
 		this.setCreativeTab(Tardis.tab);
 		this.setMaxStackSize(1);
+		this.setTileEntityItemStackRenderer(new RendererKey());
 	}
 	
 	public static void setPos(ItemStack stack, BlockPos pos) {
@@ -55,7 +57,7 @@ public class ItemKey extends Item {
 			if (!worldIn.isRemote) {
 				WorldServer ws = (WorldServer) worldIn;
 				ItemStack stack = playerIn.getHeldItem(handIn);
-				BlockPos cPos = TardisHelper.getTardis(playerIn.getUUID(playerIn.getGameProfile()));
+				BlockPos cPos = TardisHelper.getTardis(playerIn.getGameProfile().getId());
 				WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.id);
 				MinecraftServer server=tw.getMinecraftServer();
 				setPos(stack, cPos);
@@ -63,7 +65,6 @@ public class ItemKey extends Item {
 					Template tem=tw.getStructureTemplateManager().get(server, CONSOLE_ROOM);
 					tem.addBlocksToWorld(tw, cPos.add(-((int)tem.getSize().getX()/2),-1,-((int)tem.getSize().getZ()/2)), new PlacementSettings());
 					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
-					tw.setBlockState(cPos.down(5), TBlocks.temporal_lab.getDefaultState());
 					EntityItem entitySonic = new EntityItem(tw,cPos.getX(),cPos.getY(),cPos.getZ(),new ItemStack(TItems.sonic_screwdriver));
 					tw.spawnEntity(entitySonic);
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);

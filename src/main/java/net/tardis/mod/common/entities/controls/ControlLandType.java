@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -28,7 +29,7 @@ public class ControlLandType extends EntityControl{
 		if(!world.isRemote) {
 			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			tardis.setShouldLandOnSurface(tardis.landOnSurface?false:true);
-			player.sendMessage(new TextComponentTranslation("tardis.console.land."+tardis.landOnSurface));
+			player.sendStatusMessage(new TextComponentTranslation(TStrings.LAND_ON_GROUND+tardis.landOnSurface),true);
 		}
 	}
 

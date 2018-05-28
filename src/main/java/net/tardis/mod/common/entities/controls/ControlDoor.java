@@ -18,6 +18,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
@@ -77,6 +78,7 @@ public class ControlDoor extends EntityControl {
 						TileEntity te = ws.getTileEntity(tardis.getLocation().up());
 						if(te !=null && te instanceof TileEntityDoor) {
 							((TileEntityDoor)te).setLocked(!this.isOpen());
+							player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED+!this.isOpen()), true);
 						}
 					}
 				}
@@ -107,7 +109,7 @@ public class ControlDoor extends EntityControl {
 					player.setSpawnDimension(tardis.dimension);
 				}
 				else if(antiSpamTicks == 0) {
-					((EntityPlayer)entityIn).sendMessage(new TextComponentTranslation("tardis.missing"));
+					((EntityPlayer)entityIn).sendStatusMessage(new TextComponentTranslation("tardis.missing"),true);
 					antiSpamTicks = 20;
 				}
 			}

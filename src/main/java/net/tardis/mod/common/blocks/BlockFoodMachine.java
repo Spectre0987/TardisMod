@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -17,17 +18,20 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.renderers.RenderItemFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 
 public class BlockFoodMachine extends BlockContainer {
 
 	public static final PropertyDirection FACING=PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockFoodMachine() {
 		super(Material.ANVIL);
 		this.setCreativeTab(Tardis.tab);
 		this.setLightOpacity(0);
 		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
+		item.setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 	}
 
 	@Override
@@ -61,7 +65,7 @@ public class BlockFoodMachine extends BlockContainer {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if(meta<3&&meta>0)
+		if(meta < 3 && meta > 0)
 			return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
 		return this.getDefaultState();
 	}
@@ -73,9 +77,7 @@ public class BlockFoodMachine extends BlockContainer {
 
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer) {
-		if(!facing.equals(EnumFacing.DOWN)&&!facing.equals(EnumFacing.UP))
-			return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
-		return this.getDefaultState();
+		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 
 	@Override

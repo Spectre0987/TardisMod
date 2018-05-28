@@ -4,18 +4,23 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.util.IUnbreakable;
 
 public class BlockTardis extends Block implements IUnbreakable {
+	
+	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockTardis() {
 		super(Material.WOOD, MapColor.BLUE);
 		this.setBlockUnbreakable();
 		this.setResistance(999);
+		item.setCreativeTab(Tardis.tab);
 	}
 	
 	@Override
