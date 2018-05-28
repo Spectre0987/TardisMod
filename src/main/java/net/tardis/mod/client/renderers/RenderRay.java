@@ -27,6 +27,7 @@ public class RenderRay extends Render {
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
+		mc.entityRenderer.disableLightmap();
 		GlStateManager.translate(x, y + 0.1, z);
 		GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
 		GlStateManager.rotate(-entity.rotationPitch, 1, 0, 0);
@@ -36,6 +37,7 @@ public class RenderRay extends Render {
 		model.render(entity, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.enableFog();
 		GlStateManager.enableLighting();
+		mc.entityRenderer.enableLightmap();
 		GlStateManager.popMatrix();
 	}
 	
