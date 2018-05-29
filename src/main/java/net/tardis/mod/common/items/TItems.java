@@ -3,12 +3,15 @@ package net.tardis.mod.common.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.clothing.ItemBowtie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
+import net.tardis.mod.common.items.clothing.SpaceSuit;
 import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
@@ -34,6 +37,8 @@ public class TItems {
 	public static Item umbrella_open;
 	public static Item vortex_manip;
 	public static Item sonic_screwdriver;
+	
+	public static Item space_helm;
 	
 	//Componenets
 	
@@ -77,6 +82,9 @@ public class TItems {
 		
 		sonic_screwdriver=new ItemSonic();
 		register(sonic_screwdriver,"sonic_screwdriver");
+		
+		space_helm = new SpaceSuit(ArmorMaterial.LEATHER,0,EntityEquipmentSlot.HEAD);
+		register(space_helm,"space_helm");
 		
 		//TARDIS Components
 		fluid_link=new FluidLink();
