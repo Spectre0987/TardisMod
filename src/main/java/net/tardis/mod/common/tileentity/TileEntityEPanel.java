@@ -6,10 +6,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
 public class TileEntityEPanel extends TileEntity implements ITickable{
-	
-	public BasicSource source = new BasicSource(this, 10000, 1);
+
+	public BasicSource source = new BasicSource(this, 10000,1);
 	
 	public TileEntityEPanel() {}
+
+	@Override
+	public void update() {
+		source.update();
+		source.addEnergy(10);
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -40,11 +46,5 @@ public class TileEntityEPanel extends TileEntity implements ITickable{
 		super.onLoad();
 		source.onLoad();
 	}
-
-	@Override
-	public void update() {
-		source.update();
-		source.addEnergy(10);
-	}
-
+	
 }

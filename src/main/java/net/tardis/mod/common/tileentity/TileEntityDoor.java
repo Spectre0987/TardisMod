@@ -26,7 +26,7 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	public int ticks = 0;
 	public int lockCooldown = 0;
 	private int updateTicks = 0;
-	public float alpha = 1F;
+	public int fadeTicks = 0;
 	
 	public TileEntityDoor() {}
 	
@@ -93,6 +93,8 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 				this.updateTicks = 0;
 			}
 		}
+		if(fadeTicks > 0)
+			--fadeTicks;
 	}
 	public boolean isLocked() {
 		return this.isLocked;
@@ -114,7 +116,9 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 		return new AxisAlignedBB(getPos().getX(),getPos().getY()-1,getPos().getZ(),getPos().getX()+1,getPos().getY()+1.5,getPos().getZ()+1);
 	}
 
-	public void fadeIn() {}
+	public void fadeIn() {
+		this.fadeTicks = 60;
+	}
 	
 	public void setConsolePos(BlockPos pos) {
 		this.consolePos = pos.toImmutable();

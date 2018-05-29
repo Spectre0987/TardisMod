@@ -49,6 +49,7 @@ import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.RecallMode;
 import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.screwdriver.TransmatMode;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
@@ -59,6 +60,7 @@ import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.TEventHandler;
+import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.packets.MessageAngel;
 import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageDoorOpen;
@@ -79,7 +81,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String VERSION = "0.0.2A";
-	public static final String DEP = "after:ic2, forge@[14.23.2.2638,)";
+	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
 	
 	private static Logger logger;
 	
@@ -98,6 +100,8 @@ public class Tardis {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		hasIC2 = Loader.isModLoaded("ic2");
+		if(Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT))
+			Galacticraft.preInit();
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
@@ -131,10 +135,8 @@ public class Tardis {
 		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
 		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
-		if(hasIC2) {
+		if(hasIC2)
 			registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
-			ScrewdriverMode.register(new ElectricPanelMode());
-		}
 		
 		NETWORK.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
@@ -147,6 +149,7 @@ public class Tardis {
 		ScrewdriverMode.register(new TransmatMode());
 		ScrewdriverMode.register(new HallwayMode());
 		ScrewdriverMode.register(new GRoomMode());
+		ScrewdriverMode.register(new ElectricPanelMode());
 		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		
