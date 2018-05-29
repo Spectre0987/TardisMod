@@ -11,5 +11,10 @@ public class TStrings {
 	public static final String TARDIS_FACING = "tardis.direction.";
 	public static final String TARDIS_MISSING = "tardis.none";
 	public static final String KEY_CONSOLE_LOCATION = "key.console.location";
+	
+	public static class ModIds{
+		public static final String GALACTICRAFT = "galacticraftcore";
+		public static final String INDUSTRIAL_CRAFT = "ic2";
+	}
 
 }

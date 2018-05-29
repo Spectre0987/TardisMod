@@ -59,7 +59,6 @@ import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.TEventHandler;
-import net.tardis.mod.handlers.compat.GalacticraftEventHandler;
 import net.tardis.mod.packets.MessageAngel;
 import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageDoorOpen;
@@ -99,8 +98,6 @@ public class Tardis {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		hasIC2 = Loader.isModLoaded("ic2");
-		if(Loader.isModLoaded("galacticraftcore"))
-			MinecraftForge.EVENT_BUS.register(new GalacticraftEventHandler());
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
@@ -134,10 +131,8 @@ public class Tardis {
 		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
 		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
-		if(hasIC2) {
+		if(hasIC2)
 			registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
-			ScrewdriverMode.register(new ElectricPanelMode());
-		}
 		
 		NETWORK.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
@@ -150,6 +145,7 @@ public class Tardis {
 		ScrewdriverMode.register(new TransmatMode());
 		ScrewdriverMode.register(new HallwayMode());
 		ScrewdriverMode.register(new GRoomMode());
+		ScrewdriverMode.register(new ElectricPanelMode());
 		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		
