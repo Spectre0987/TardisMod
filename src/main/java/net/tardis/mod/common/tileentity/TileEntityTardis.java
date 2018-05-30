@@ -78,6 +78,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean chunkLoadTick = true;
 	public boolean landOnSurface = true;
 	public EnumFacing facing = EnumFacing.WEST;
+	public int totalTimeToTravel;
 	public int rotorUpdate=0;
 	public int frame=0;
 	public int musicTicks = 0;
@@ -211,6 +212,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				listIDs.add(UUID.fromString(((NBTTagCompound)base).getString("con")));
 			}
 			this.controls = listIDs.toArray(new UUID[listIDs.size()-1]);
+			
+			this.totalTimeToTravel = tardisTag.getInteger(NBT.MAX_TIME);
 		}
 	}
 	
@@ -249,8 +252,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				controlList.appendTag(control_tag);
 			}
 			tardisTag.setTag(NBT.CONTROLS_UUID, controlList);
+			
+			tardisTag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		}
 		tag.setTag("tardis", tardisTag);
+		
+		
 		return super.writeToNBT(tag);
 	}
 	
@@ -324,6 +331,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			return false;
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
+		this.totalTimeToTravel = this.ticksToTravel;
 		this.setLoading(false);
 		this.setFueling(false);
 		world.playSound(null, this.pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
@@ -356,6 +364,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setLong("dest", this.getDestination().toLong());
 		tag.setFloat("fuel", fuel);
 		tag.setInteger("timeLeft", ticksToTravel);
+		tag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		return tag;
 	}
 	
@@ -369,6 +378,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.tardisLocation = BlockPos.fromLong(tag.getLong("loc"));
 			this.fuel = tag.getFloat("fuel");
 			this.ticksToTravel = tag.getInteger("timeLeft");
+			this.totalTimeToTravel = tag.getInteger(NBT.MAX_TIME);
 		}
 	}
 	
@@ -461,10 +471,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 		}
 	}
-	public class NBT{
+	public static class NBT{
 		public static final String COMPOENET_LIST = "componentList";
 		public static final String LAND_ON_SURFACE = "landOnGround";
 		public static final String CONTROLS_UUID = "controls_id";
+		public static final String MAX_TIME = "maxTime";
 	}
 	
 	public EnumFacing getFacing() {
