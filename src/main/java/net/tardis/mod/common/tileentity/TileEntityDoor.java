@@ -2,6 +2,8 @@ package net.tardis.mod.common.tileentity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -10,16 +12,19 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.util.helpers.TardisHelper;
 
-public class TileEntityDoor extends TileEntity implements ITickable {
+public class TileEntityDoor extends TileEntity implements ITickable, IInventory{
 	
 	public BlockPos consolePos = BlockPos.ORIGIN;
 	public boolean isLocked = true;
@@ -127,5 +132,94 @@ public class TileEntityDoor extends TileEntity implements ITickable {
 	
 	public BlockPos getConsolePos() {
 		return this.consolePos;
+	}
+	
+	public TileEntityTardis getLinkedInv() {
+		if(!world.isRemote) {
+			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+			TileEntity te = ws.getTileEntity(getConsolePos());
+			if(te !=null && te instanceof TileEntityTardis)
+				return ((TileEntityTardis)te);
+		}
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return this.getLinkedInv().getName();
+	}
+
+	@Override
+	public boolean hasCustomName() {
+		return false;
+	}
+
+	@Override
+	public int getSizeInventory() {
+		return this.getLinkedInv().getSizeInventory();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return this.getLinkedInv().isEmpty();
+	}
+
+	@Override
+	public ItemStack getStackInSlot(int index) {
+		return this.getLinkedInv().getStackInSlot(index);
+	}
+
+	@Override
+	public ItemStack decrStackSize(int index, int count) {
+		return this.getLinkedInv().decrStackSize(index, count);
+	}
+
+	@Override
+	public ItemStack removeStackFromSlot(int index) {
+		return this.getLinkedInv().removeStackFromSlot(index);
+	}
+
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack) {
+		this.getLinkedInv().setInventorySlotContents(index, stack);
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		return this.getLinkedInv().getInventoryStackLimit();
+	}
+
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer player) {
+		return false;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer player) {}
+
+	@Override
+	public void closeInventory(EntityPlayer player) {}
+
+	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		return true;
+	}
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		this.getLinkedInv().clear();
 	}
 }
