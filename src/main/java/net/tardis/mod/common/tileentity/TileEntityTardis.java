@@ -92,11 +92,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.setFuel(fuel - 0.0001F);
 			if (ticksToTravel <= 0)
 				this.travel();
-			
-			int mt = shouldDelayLoop ? 440 : 40;
-			if (ticksToTravel % mt == 0) {
-				this.shouldDelayLoop = false;
-				world.playSound(null, pos, TSounds.loop, SoundCategory.BLOCKS, 0.4F, 1F);
+			if(this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 440)
+				world.playSound(null, this.getPos(), TSounds.takeoff, SoundCategory.BLOCKS, 0.5F, 1F);
+			else if(this.ticksToTravel > 440 && this.ticksToTravel < this.totalTimeToTravel - 440) {
+				if(this.ticksToTravel % 40 == 0)
+					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 			}
 			if (fuel <= 0.0)
 				crash();
@@ -159,8 +159,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 			tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, dWorld, ForgeChunkManager.Type.NORMAL);
 			ForgeChunkManager.forceChunk(tardisLocTicket, dWorld.getChunkFromBlockCoords(tardisLocation).getPos());
-			if(makeSound)
-				world.playSound(null, pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 			this.markDirty();
 		}
 		shouldDelayLoop = true;
@@ -269,7 +267,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 440/*The Time in tick it takes the launch sound to play*/);
+		return (int) ((dist / MAX_TARDIS_SPEED) + 880/*The Time in tick it takes the launch sound to play*/);
 	}
 	
 	public BlockPos getDestination() {
@@ -334,7 +332,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.totalTimeToTravel = this.ticksToTravel;
 		this.setLoading(false);
 		this.setFueling(false);
-		world.playSound(null, this.pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 		if (!world.isRemote) {
 			WorldServer oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
 			oWorld.setBlockToAir(this.tardisLocation);
