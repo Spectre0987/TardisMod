@@ -6,7 +6,9 @@ import java.util.Random;
 import java.util.UUID;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -51,7 +53,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
 
-public class TileEntityTardis extends TileEntity implements ITickable {
+public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
 	private int ticksToTravel = 0;
 	private int ticks = 0;
@@ -66,7 +68,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	/** Time To Travel in Blocks/Tick **/
 	private static final int MAX_TARDIS_SPEED = 1;
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
-	public NonNullList<ItemStack> components=NonNullList.create().withSize(9, ItemStack.EMPTY);
+	public NonNullList<ItemStack> buffer = NonNullList.create().withSize(9, ItemStack.EMPTY);
 	public UUID[] controls;
 	public float fuel = 1F;
 	private boolean isFueling = false;
@@ -76,6 +78,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	private boolean chunkLoadTick = true;
 	public boolean landOnSurface = true;
 	public EnumFacing facing = EnumFacing.WEST;
+	public int totalTimeToTravel;
 	public int rotorUpdate=0;
 	public int frame=0;
 	public int musicTicks = 0;
@@ -199,7 +202,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			NBTTagList componentList=tardisTag.getTagList(NBT.COMPOENET_LIST, Constants.NBT.TAG_COMPOUND);
 			int cListIndex=0;
 			for(NBTBase comp:componentList) {
-				this.components.set(cListIndex, new ItemStack((NBTTagCompound)comp));
+				this.buffer.set(cListIndex, new ItemStack((NBTTagCompound)comp));
 				++cListIndex;
 			}
 			
@@ -209,6 +212,8 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				listIDs.add(UUID.fromString(((NBTTagCompound)base).getString("con")));
 			}
 			this.controls = listIDs.toArray(new UUID[listIDs.size()-1]);
+			
+			this.totalTimeToTravel = tardisTag.getInteger(NBT.MAX_TIME);
 		}
 	}
 	
@@ -235,7 +240,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			tardisTag.setTag("coordList", cList);
 			//Compoenents
 			NBTTagList compoentList=new NBTTagList();
-			for(ItemStack stack:components) {
+			for(ItemStack stack: buffer) {
 				compoentList.appendTag(stack.writeToNBT(new NBTTagCompound()));
 			}
 			tardisTag.setTag(NBT.COMPOENET_LIST, compoentList);
@@ -247,8 +252,12 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 				controlList.appendTag(control_tag);
 			}
 			tardisTag.setTag(NBT.CONTROLS_UUID, controlList);
+			
+			tardisTag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		}
 		tag.setTag("tardis", tardisTag);
+		
+		
 		return super.writeToNBT(tag);
 	}
 	
@@ -322,6 +331,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			return false;
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
+		this.totalTimeToTravel = this.ticksToTravel;
 		this.setLoading(false);
 		this.setFueling(false);
 		world.playSound(null, this.pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
@@ -354,6 +364,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 		tag.setLong("dest", this.getDestination().toLong());
 		tag.setFloat("fuel", fuel);
 		tag.setInteger("timeLeft", ticksToTravel);
+		tag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		return tag;
 	}
 	
@@ -367,6 +378,7 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			this.tardisLocation = BlockPos.fromLong(tag.getLong("loc"));
 			this.fuel = tag.getFloat("fuel");
 			this.ticksToTravel = tag.getInteger("timeLeft");
+			this.totalTimeToTravel = tag.getInteger(NBT.MAX_TIME);
 		}
 	}
 	
@@ -459,10 +471,11 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 			}
 		}
 	}
-	public class NBT{
+	public static class NBT{
 		public static final String COMPOENET_LIST = "componentList";
 		public static final String LAND_ON_SURFACE = "landOnGround";
 		public static final String CONTROLS_UUID = "controls_id";
+		public static final String MAX_TIME = "maxTime";
 	}
 	
 	public EnumFacing getFacing() {
@@ -472,5 +485,95 @@ public class TileEntityTardis extends TileEntity implements ITickable {
 	public void setFacing(EnumFacing facing) {
 		this.facing=facing;
 		this.markDirty();
+	}
+
+	@Override
+	public String getName() {
+		return "TARDIS";
+	}
+
+	@Override
+		public boolean hasCustomName() {
+		return false;
+	}
+
+	@Override
+	public int getSizeInventory() {
+		return buffer.size();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return buffer.isEmpty();
+	}
+
+	@Override
+	public ItemStack getStackInSlot(int index) {
+		if(index >= 0 && index < buffer.size()) {
+			return buffer.get(index);
+		}
+		else return ItemStack.EMPTY;
+	}
+
+	@Override
+	public ItemStack decrStackSize(int index, int count) {
+		ItemStack stack = this.getStackInSlot(index);
+		ItemStack newStack = stack.splitStack(count);
+		this.setInventorySlotContents(index, stack);
+		this.markDirty();
+		return newStack;
+	}
+
+	@Override
+	public ItemStack removeStackFromSlot(int index) {
+		ItemStack stack = this.getStackInSlot(index);
+		this.setInventorySlotContents(index, ItemStack.EMPTY);
+		return stack;
+	}
+
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack) {
+		if(index >= 0 && index < buffer.size())
+			buffer.set(index, stack);
+		this.markDirty();
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		return 64;
+	}
+
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer player) {
+		return false;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer player) {}
+
+	@Override
+	public void closeInventory(EntityPlayer player) {}
+
+	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		return true;
+	}
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		buffer.clear();
 	}
 }
