@@ -134,14 +134,16 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory{
 		return this.consolePos;
 	}
 	
-	public TileEntityTardis getLinkedInv() {
-		if(!world.isRemote) {
+	public IInventory getLinkedInv() {
+		if(!world.isRemote && this.getConsolePos() != null) {
 			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
-			TileEntity te = ws.getTileEntity(getConsolePos());
-			if(te !=null && te instanceof TileEntityTardis)
-				return ((TileEntityTardis)te);
+			if(ws != null) {
+				TileEntity te = ws.getTileEntity(getConsolePos());
+				if(te !=null && te instanceof TileEntityTardis)
+					return ((TileEntityTardis)te);
+			}
 		}
-		return null;
+		return DummyTardis.INSTANCE;
 	}
 
 	@Override
