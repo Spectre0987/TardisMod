@@ -16,7 +16,7 @@ public class RenderFoodMachine extends TileEntitySpecialRenderer {
 	
 	Minecraft mc;
 	public ModelFoodMachine model=new ModelFoodMachine();
-	public static final ResourceLocation TEXTURE=new ResourceLocation(Tardis.MODID,"textures/blocks/food_machine.png");
+	public static final ResourceLocation TEXTURE=new ResourceLocation(Tardis.MODID, "textures/blocks/food_machine.png");
 	
 	public RenderFoodMachine() {
 		mc=Minecraft.getMinecraft();
@@ -26,7 +26,7 @@ public class RenderFoodMachine extends TileEntitySpecialRenderer {
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x+0.5, y+1.5, z+0.5);
-		IBlockState state=mc.world.getBlockState(te.getPos());
+		IBlockState state = mc.world.getBlockState(te.getPos());
 		float angle = 0;
 		if(state.getBlock() == TBlocks.food_machine) {
 			EnumFacing facing = state.getValue(BlockFoodMachine.FACING);
