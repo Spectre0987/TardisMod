@@ -18,7 +18,7 @@ public class TardisProvider extends WorldProvider {
 	
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks) {
-		return super.calculateCelestialAngle(worldTime, partialTicks);
+		return 0.5F;
 	}
 	
 	@Override
