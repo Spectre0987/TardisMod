@@ -24,8 +24,10 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.util.Constants;
@@ -78,6 +80,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean chunkLoadTick = true;
 	public boolean landOnSurface = true;
 	public EnumFacing facing = EnumFacing.WEST;
+	public String currentDimName = "";
+	public String targetDimName = "";
 	public int totalTimeToTravel;
 	public int rotorUpdate=0;
 	public int frame=0;
@@ -142,7 +146,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void travel(boolean makeSound) {
 		if (!world.isRemote) {
 			this.ticksToTravel = 0;
-			System.out.println("Traveled");
 			World dWorld = ((WorldServer) world).getMinecraftServer().getWorld(destDim);
 			World oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld,getDestination());
@@ -160,6 +163,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, dWorld, ForgeChunkManager.Type.NORMAL);
 			ForgeChunkManager.forceChunk(tardisLocTicket, dWorld.getChunkFromBlockCoords(tardisLocation).getPos());
 			this.markDirty();
+			DimensionType type = DimensionManager.getProviderType(dimension);
+			if(type != null)
+				this.currentDimName = type.getName();
 		}
 		shouldDelayLoop = true;
 	}
@@ -263,6 +269,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.tardisDestination = pos.up().toImmutable();
 		this.destDim = dimension;
 		this.markDirty();
+		if(!world.isRemote) {
+			DimensionType type = DimensionManager.getProviderType(dimension);
+			if(type != null)
+				this.targetDimName = type.getName();
+			DimensionType currentType = DimensionManager.getProviderType(this.dimension);
+			if(type != null)
+				this.currentDimName = currentType.getName();
+		}
 	}
 	
 	public int calcTimeToTravel() {
@@ -362,6 +376,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setFloat("fuel", fuel);
 		tag.setInteger("timeLeft", ticksToTravel);
 		tag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
+		tag.setString(NBT.CURRENT_DIM_NAME, this.currentDimName);
+		tag.setString(NBT.TARGET_DIM_NAME, this.targetDimName);
 		return tag;
 	}
 	
@@ -376,6 +392,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.fuel = tag.getFloat("fuel");
 			this.ticksToTravel = tag.getInteger("timeLeft");
 			this.totalTimeToTravel = tag.getInteger(NBT.MAX_TIME);
+			this.targetDimName = tag.getString(NBT.TARGET_DIM_NAME);
+			this.currentDimName = tag.getString(NBT.CURRENT_DIM_NAME);
 		}
 	}
 	
@@ -473,6 +491,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		public static final String LAND_ON_SURFACE = "landOnGround";
 		public static final String CONTROLS_UUID = "controls_id";
 		public static final String MAX_TIME = "maxTime";
+		public static final String TARGET_DIM_NAME = "targetDimName";
+		public static final String CURRENT_DIM_NAME = "currentDimName";
 	}
 	
 	public EnumFacing getFacing() {
