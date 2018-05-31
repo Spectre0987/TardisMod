@@ -17,6 +17,9 @@ public class TardisConfig {
 	@Config.LangKey("config.entity")
 	public static final UseEntities USE_ENTITIES = new UseEntities();
 	
+	@Config.LangKey("config.misc")
+	public static final Misc MISC = new Misc();
+	
 	public static class Dimensions{
 		
 		@Config.LangKey("config.dims")
@@ -33,6 +36,12 @@ public class TardisConfig {
 		
 		@Config.LangKey("config.entity.allowed")
 		public boolean entities = true;
+	}
+	
+	public static class Misc{
+		
+		@Config.LangKey("config.misc.givekey")
+		public boolean givePlayerKey = false;
 	}
 	
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)

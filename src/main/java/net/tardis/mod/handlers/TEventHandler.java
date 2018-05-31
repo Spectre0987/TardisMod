@@ -6,6 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -17,6 +19,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -31,6 +34,7 @@ import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.IUnbreakable;
 
 public class TEventHandler {
@@ -120,5 +124,19 @@ public class TEventHandler {
 				event.setCanceled(true);
 		}
 			
+	}
+	
+	@SubscribeEvent
+	public void givePlayerKey(EntityJoinWorldEvent event) {
+		if(TardisConfig.MISC.givePlayerKey) {
+			if(event.getEntity() instanceof EntityPlayer) {
+				World world=event.getEntity().world;
+				EntityPlayer player = (EntityPlayer)event.getEntity();
+				if(!player.inventory.hasItemStack(new ItemStack(TItems.key))) {
+					EntityItem ei = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.key));
+					world.spawnEntity(ei);
+				}
+			}
+		}
 	}
 }

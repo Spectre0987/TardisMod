@@ -48,9 +48,13 @@ public class RenderScreen extends Render {
 			GlStateManager.rotate(180, 0, 0, 1);
 			GlStateManager.scale(0.005, 0.005, 0.005);
 			drawString("TARDIS Location: " + Helper.formatBlockPos(tardis.getLocation()));
-			drawString("TARDIS Dimension: [" + tardis.dimension + "]");
+			if(tardis.currentDimName !=null && !tardis.currentDimName.equals(""))
+				drawString("TARDIS Dimension: [" + tardis.currentDimName.replace('_',' ') + "]");
+			else drawString("TARDIS Dimension: [" + tardis.dimension + "]");
 			drawString("Nav-Com Target: " + Helper.formatBlockPos(tardis.getDestination()));
-			drawString("Dimension Target: [" + tardis.getTargetDim() + "]");
+			if(tardis.targetDimName != null && !tardis.targetDimName.equals(""))
+				drawString("Dimension Target: [" + tardis.targetDimName.replace('_', ' ') + "]");
+			else drawString("Dimension Target: [" + tardis.getTargetDim() + "]");
 			String fuelS = tardis.fuel * 100 + "";
 			drawString("Artron Banks: " + fuelS.substring(0, fuelS.indexOf(".")) + "%");
 			if(tardis.totalTimeToTravel > 0 && tardis.getTicks() > 0)
