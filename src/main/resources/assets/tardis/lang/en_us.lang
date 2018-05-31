@@ -75,6 +75,9 @@ config.tDim=TARDIS Dimension
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
 
+config.misc=Misc
+config.misc.givekey=Should give Player A TARDIS key when they join the world?
+
 entity.launch_lever.name=Space - Time Throttle
 entity.x_valve.name=Space Control - X
 entity.y_valve.name=Space Control - Y
