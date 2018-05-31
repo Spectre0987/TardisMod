@@ -75,6 +75,9 @@ config.tDim=Dimension TARDIS
 config.entity=Entitées
 config.entity.allowed=Ce mod doit-il ajouter des Mobs ?
 
+config.misc=Divers
+config.misc.givekey=Donner une clef de TARDIS quand un joueur rejoint pour la première fois ?
+
 entity.launch_lever.name=Espace - Accélérateur temporel
 entity.x_valve.name=Contrôle spatial - X
 entity.y_valve.name=Contrôle spatial - Y
