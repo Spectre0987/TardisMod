@@ -3,6 +3,7 @@ package net.tardis.mod.common.tileentity;
 import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -103,14 +104,21 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 				
 				AxisAlignedBB bounds = aabb.offset(getPos());
 				
-				List<EntityPlayerMP> entities = world.getEntitiesWithinAABB(EntityPlayerMP.class, bounds);
+				List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, bounds);
 				
 				if (entities != null) {
 					if (entities.size() > 0) {
-						for (EntityPlayerMP p : entities) {
-							p.setVelocity(0, 0, 0);
-							ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
-							p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+						for (EntityLivingBase entity : entities) {
+							if(entity instanceof EntityPlayerMP) {
+								EntityPlayerMP p = (EntityPlayerMP) entity;
+								p.setVelocity(0, 0, 0);
+								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
+								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+							}
+							else {
+								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
+								entity.changeDimension(TDimensions.id);
+							}
 						}
 					}
 				}
