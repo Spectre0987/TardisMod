@@ -93,28 +93,32 @@ public class ControlDoor extends EntityControl {
 	public void applyEntityCollision(Entity entityIn) {
 		if (!world.isRemote && this.isOpen()) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
-			if (entityIn instanceof EntityPlayer && !tardis.isInFlight()) {
-				WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+			if (!tardis.isInFlight()) {
 				IBlockState state = ws.getBlockState(tardis.getLocation().up());
-				entityIn.motionX = 0;
-				entityIn.motionY = 0;
-				entityIn.motionZ = 0;
 				if (state.getBlock() instanceof BlockTardisTop) {
 					EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 					BlockPos pos = tardis.getLocation().offset(facing, 2);
-					EntityPlayerMP player = (EntityPlayerMP) entityIn;
-					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, tardis.dimension, new TardisTeleporter(ws));
-					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
-					player.setSpawnPoint(pos, true);
-					player.setSpawnDimension(tardis.dimension);
-				} else if (antiSpamTicks == 0) {
+					if(entityIn instanceof EntityPlayer) {
+						EntityPlayerMP player = (EntityPlayerMP) entityIn;
+						player.setVelocity(0, 0, 0);
+						ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, tardis.dimension, new TardisTeleporter(ws));
+						player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
+						player.setSpawnPoint(pos, true);
+						player.setSpawnDimension(tardis.dimension);
+					}
+					else {
+						entityIn.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+						entityIn.changeDimension(tardis.dimension);
+					}
+				}
+				else if (antiSpamTicks == 0) {
 					((EntityPlayer) entityIn).sendStatusMessage(new TextComponentTranslation("tardis.missing"), true);
 					antiSpamTicks = 20;
 				}
 			}
 		}
 	}
-	
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
