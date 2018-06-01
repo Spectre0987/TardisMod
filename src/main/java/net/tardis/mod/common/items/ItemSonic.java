@@ -52,7 +52,7 @@ public class ItemSonic extends Item {
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverMode.modes.get(getMode(held));
 			if (sc != null && sc instanceof IScrewable) {
-				((IScrewable) sc).screw(worldIn, pos, worldIn.getBlockState(pos),player);
+				((IScrewable) sc).screw(worldIn, pos, worldIn.getBlockState(pos), player);
 				worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
 			}
 		}

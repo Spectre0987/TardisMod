@@ -32,7 +32,7 @@ import net.tardis.mod.util.helpers.TardisHelper;
 
 public class ItemKey extends Item {
 	
-	public static final ResourceLocation CONSOLE_ROOM=new ResourceLocation(Tardis.MODID,"console_room");
+	public static final ResourceLocation CONSOLE_ROOM = new ResourceLocation(Tardis.MODID, "console_room");
 	
 	public ItemKey() {
 		this.setCreativeTab(Tardis.tab);
@@ -63,13 +63,13 @@ public class ItemKey extends Item {
 				ItemStack stack = playerIn.getHeldItem(handIn);
 				BlockPos cPos = TardisHelper.getTardis(playerIn.getGameProfile().getId());
 				WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.id);
-				MinecraftServer server=tw.getMinecraftServer();
+				MinecraftServer server = tw.getMinecraftServer();
 				setPos(stack, cPos);
 				if (tw.getTileEntity(cPos) == null) {
-					Template tem=tw.getStructureTemplateManager().get(server, CONSOLE_ROOM);
-					tem.addBlocksToWorld(tw, cPos.add(-((int)tem.getSize().getX()/2),-1,-((int)tem.getSize().getZ()/2)), new PlacementSettings());
+					Template tem = tw.getStructureTemplateManager().get(server, CONSOLE_ROOM);
+					tem.addBlocksToWorld(tw, cPos.add(-((int) tem.getSize().getX() / 2), -1, -((int) tem.getSize().getZ() / 2)), new PlacementSettings());
 					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
-					EntityItem entitySonic = new EntityItem(tw,cPos.getX(),cPos.getY(),cPos.getZ(),new ItemStack(TItems.sonic_screwdriver));
+					EntityItem entitySonic = new EntityItem(tw, cPos.getX(), cPos.getY(), cPos.getZ(), new ItemStack(TItems.sonic_screwdriver));
 					tw.spawnEntity(entitySonic);
 					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
 					te.setDesination(playerIn.getPosition().down().offset(playerIn.getHorizontalFacing().getOpposite(), 1), playerIn.dimension);
@@ -87,7 +87,7 @@ public class ItemKey extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) {
-			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText()+ Helper.formatBlockPos(getPos(stack)));
+			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText() + Helper.formatBlockPos(getPos(stack)));
 			tooltip.add(new TextComponentTranslation("key.notwheretardis").setStyle(new Style().setColor(TextFormatting.RED)).getFormattedText());
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);

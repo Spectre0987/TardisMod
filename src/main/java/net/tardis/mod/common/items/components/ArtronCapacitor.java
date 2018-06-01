@@ -8,11 +8,11 @@ public class ArtronCapacitor extends ItemComponent {
 	public ArtronCapacitor() {
 		
 	}
-
+	
 	@Override
 	public ItemStack damageItem(CrashType type, ItemStack stack) {
 		stack.damageItem(1, null);
 		return stack;
 	}
-
+	
 }

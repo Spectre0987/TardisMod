@@ -10,7 +10,7 @@ import net.tardis.mod.info.TardisType;
 import net.tardis.mod.util.helpers.Helper;
 
 public class RenderButton extends RenderControl {
-
+	
 	public ModelButton model = new ModelButton();
 	
 	@Override
@@ -19,18 +19,18 @@ public class RenderButton extends RenderControl {
 		GlStateManager.translate(x, y + 0.0625, z);
 		mc.getTextureManager().bindTexture(CONTROL_TEXTURE);
 		GlStateManager.rotate(180, 1, 0, 0);
-		Vec3d offset = Helper.convertToPixels(0.5,0,0);
+		Vec3d offset = Helper.convertToPixels(0.5, 0, 0);
 		GlStateManager.translate(offset.x, offset.y, offset.z);
-		GlStateManager.rotate(120,0,1,0);
-		GlStateManager.rotate(-58,1,0,0);
+		GlStateManager.rotate(120, 0, 1, 0);
+		GlStateManager.rotate(-58, 1, 0, 0);
 		
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
-
+	
 	@Override
-	public void renderControl(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks,TardisType tType) {
+	public void renderControl(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks, TardisType tType) {
 		
 	}
-
+	
 }

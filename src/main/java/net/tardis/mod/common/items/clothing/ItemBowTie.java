@@ -8,9 +8,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 
-public class ItemBowtie extends ItemArmor {
+public class ItemBowTie extends ItemArmor {
 	
-	public ItemBowtie() {
+	public ItemBowTie() {
 		super(ArmorMaterial.LEATHER, 1, EntityEquipmentSlot.CHEST);
 		this.setCreativeTab(Tardis.tab);
 	}

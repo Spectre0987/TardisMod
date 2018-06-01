@@ -14,18 +14,16 @@ public class ARS {
 	}
 	
 	public static TardisStructure getStructure(int id) {
-		if(id >= rooms.size() || id < 0)
-			return null;
+		if (id >= rooms.size() || id < 0) return null;
 		return rooms.get(id);
 	}
 	
 	public static int getID(TardisStructure structure) {
 		int id = 0;
-		for(TardisStructure comp : rooms) {
-			if(comp.equals(structure))
-				return id;
+		for (TardisStructure comp : rooms) {
+			if (comp.equals(structure)) return id;
 		}
 		return -1;
 	}
-
+	
 }

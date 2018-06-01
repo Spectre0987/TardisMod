@@ -8,10 +8,10 @@ public class FluidLink extends ItemComponent {
 	public FluidLink() {
 		
 	}
-
+	
 	@Override
 	public ItemStack damageItem(CrashType type, ItemStack stack) {
 		return null;
 	}
-
+	
 }

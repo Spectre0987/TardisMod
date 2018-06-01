@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.elements.ButtonRecipe;
-import net.tardis.mod.packets.MessageTR;
 import net.tardis.mod.common.recipes.TemporalRecipe;
+import net.tardis.mod.packets.MessageTR;
 
 public class GuiTRecipe extends GuiScreen {
 	

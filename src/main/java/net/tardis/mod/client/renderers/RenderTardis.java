@@ -14,10 +14,10 @@ import net.tardis.mod.common.entities.EntityTardis;
 public class RenderTardis extends Render {
 	
 	Minecraft mc;
-	public static final ResourceLocation TEXTURE=new ResourceLocation(Tardis.MODID,"textures/controls/tardis.png");
-	public ModelTardis model=new ModelTardis();
-	public ModelExteriorDoorR door_r=new ModelExteriorDoorR();
-	public ModelExteriorDoorL door_l=new ModelExteriorDoorL();
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/tardis.png");
+	public ModelTardis model = new ModelTardis();
+	public ModelExteriorDoorR door_r = new ModelExteriorDoorR();
+	public ModelExteriorDoorL door_l = new ModelExteriorDoorL();
 	
 	public RenderTardis() {
 		super(Minecraft.getMinecraft().getRenderManager());

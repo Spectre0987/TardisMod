@@ -9,9 +9,9 @@ import net.tardis.mod.common.items.components.ItemComponent;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.info.CrashType;
 
-public class ControlEngine extends EntityControl{
-
-	private NonNullList<ItemStack> inv=NonNullList.create().withSize(9, ItemStack.EMPTY);
+public class ControlEngine extends EntityControl {
+	
+	private NonNullList<ItemStack> inv = NonNullList.create().withSize(9, ItemStack.EMPTY);
 	
 	public ControlEngine(World world) {
 		super(world);
@@ -21,21 +21,21 @@ public class ControlEngine extends EntityControl{
 	public ControlEngine(TileEntityTardis tardis) {
 		super(tardis);
 	}
-
+	
 	@Override
 	public Vec3d getOffset() {
-		return new Vec3d(0,-1,0);
+		return new Vec3d(0, -1, 0);
 	}
-
+	
 	@Override
 	public void preformAction(EntityPlayer player) {}
 	
 	public void onCrash(CrashType type) {
-		for(ItemStack stack:inv) {
-			if(stack.getItem() instanceof ItemComponent) {
-				((ItemComponent)stack.getItem()).damageItem(type, stack);
+		for (ItemStack stack : inv) {
+			if (stack.getItem() instanceof ItemComponent) {
+				((ItemComponent) stack.getItem()).damageItem(type, stack);
 			}
 		}
 	}
-
+	
 }

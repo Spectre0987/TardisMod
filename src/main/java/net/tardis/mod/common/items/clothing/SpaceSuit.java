@@ -9,20 +9,20 @@ import net.minecraft.item.ItemStack;
 import net.tardis.mod.Tardis;
 
 public class SpaceSuit extends ItemArmor {
-
+	
 	public SpaceSuit(ArmorMaterial materialIn, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
 		super(materialIn, renderIndexIn, equipmentSlotIn);
 		this.setCreativeTab(Tardis.tab);
 	}
-
+	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
 		return super.getArmorTexture(stack, entity, slot, type);
 	}
-
+	
 	@Override
-	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot,ModelBiped _default) {
+	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
 		return super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
 	}
-
+	
 }

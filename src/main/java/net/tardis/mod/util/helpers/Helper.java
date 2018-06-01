@@ -53,8 +53,7 @@ public class Helper {
 	public static BlockPos getLowestBlock(World world, BlockPos pos) {
 		pos = new BlockPos(pos.getX(), 0, pos.getZ());
 		for (int i = 0; i < 256; ++i) {
-			if (world.getBlockState(pos).getBlock()==Blocks.AIR && world.getBlockState(pos.up()).getBlock()==Blocks.AIR)
-				return pos;
+			if (world.getBlockState(pos).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == Blocks.AIR) return pos;
 			pos = pos.up();
 		}
 		return null;
@@ -68,9 +67,9 @@ public class Helper {
 		return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).grow(i);
 	}
 	
-	public static boolean isSafe(World world,BlockPos pos, EnumFacing facing) {
-		if(world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR)) {
-			if(world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR)) {
+	public static boolean isSafe(World world, BlockPos pos, EnumFacing facing) {
+		if (world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR)) {
+			if (world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR)) {
 				return true;
 			}
 		}
@@ -78,44 +77,49 @@ public class Helper {
 	}
 	
 	public static boolean isDimensionBlocked(int id) {
-		if(id==TDimensions.id)
-			return true;
-		for(int i:TardisConfig.BlockedDimensions.bDims) {
-			if(id==i)
-				return true;
+		if (id == TDimensions.id) return true;
+		for (int i : TardisConfig.BlockedDimensions.bDims) {
+			if (id == i) return true;
 		}
 		return false;
 	}
-
+	
 	public static float getAngleFromFacing(EnumFacing facing) {
 		float angle = 0;
-		if(facing.equals(EnumFacing.EAST))
-			angle = 90;
-		if(facing.equals(EnumFacing.SOUTH))
-			angle = 180;
-		if(facing.equals(EnumFacing.WEST))
-			angle = 270;
+		if (facing.equals(EnumFacing.EAST)) angle = 90;
+		if (facing.equals(EnumFacing.SOUTH)) angle = 180;
+		if (facing.equals(EnumFacing.WEST)) angle = 270;
 		return angle;
 	}
-
+	
 	public static Rotation getRotationFromFacing(EnumFacing facing) {
-		switch(facing) {
-			case NORTH:return Rotation.COUNTERCLOCKWISE_90;
-			case EAST: return Rotation.CLOCKWISE_90;
-			case SOUTH: return Rotation.CLOCKWISE_180;
-			case WEST: return Rotation.COUNTERCLOCKWISE_90;
-			default: return Rotation.NONE;
+		switch (facing) {
+			case NORTH:
+				return Rotation.COUNTERCLOCKWISE_90;
+			case EAST:
+				return Rotation.CLOCKWISE_90;
+			case SOUTH:
+				return Rotation.CLOCKWISE_180;
+			case WEST:
+				return Rotation.COUNTERCLOCKWISE_90;
+			default:
+				return Rotation.NONE;
 		}
 	}
 	
 	public static float get360FromFacing(EnumFacing facing) {
-		switch(facing) {
-		case NORTH: return 180;
-		case EAST: return -90;
-		case SOUTH: return 0;
-		default: return 90;
+		switch (facing) {
+			case NORTH:
+				return 180;
+			case EAST:
+				return -90;
+			case SOUTH:
+				return 0;
+			default:
+				return 90;
 		}
 	}
+	
 	public static boolean isIntInRange(int min, int max, int num) {
 		return num < max && num > min;
 	}

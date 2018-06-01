@@ -48,7 +48,7 @@ public class ControlFlight extends EntityControl {
 				ForgeChunkManager.unforceChunk(tardis.tardisLocTicket, world.getChunkFromBlockCoords(getConsolePos()).getPos());
 				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, tardis.dimension, new TardisTeleporter((WorldServer) world));
 			} else
-				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_IN_FLIGHT),true);
+				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_IN_FLIGHT), true);
 		}
 	}
 	

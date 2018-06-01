@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.items.clothing.ItemBowtie;
+import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
 import net.tardis.mod.common.items.clothing.SpaceSuit;
@@ -40,63 +40,63 @@ public class TItems {
 	
 	public static Item space_helm;
 	
-	//Componenets
+	// Componenets
 	
 	public static Item fluid_link;
 	public static Item artron_capacitor;
 	public static Item demat_circut;
 	
 	public static void register() {
-		key=new ItemKey();
-		register(key,"key");
+		key = new ItemKey();
+		register(key, "key");
 		
-		circuts=new ItemBase();
-		register(circuts,"circuts");
+		circuts = new ItemBase();
+		register(circuts, "circuts");
 		
-		gunstick=new ItemBase();
-		register(gunstick,"gunstick");
+		gunstick = new ItemBase();
+		register(gunstick, "gunstick");
 		
-		power_cell=new ItemBase();
-		register(power_cell,"power_cell");
+		power_cell = new ItemBase();
+		register(power_cell, "power_cell");
 		
-		fob_watch=new ItemBase();
-		register(fob_watch,"fob_watch");
+		fob_watch = new ItemBase();
+		register(fob_watch, "fob_watch");
 		
-		ray_gun=new ItemRayGun();
-		register(ray_gun,"ray_gun");
+		ray_gun = new ItemRayGun();
+		register(ray_gun, "ray_gun");
 		
-		void_specs=new ItemVoidSpecs();
-		register(void_specs,"void_specs");
+		void_specs = new ItemVoidSpecs();
+		register(void_specs, "void_specs");
 		
-		fez=new ItemFez();
-		register(fez,"fez");
+		fez = new ItemFez();
+		register(fez, "fez");
 		
-		bowtie=new ItemBowtie();
-		register(bowtie,"bowtie");
+		bowtie = new ItemBowTie();
+		register(bowtie, "bowtie");
 		
-		sonic_cane=new ItemSonic();
-		register(sonic_cane,"sonic_cane");
+		sonic_cane = new ItemSonic();
+		register(sonic_cane, "sonic_cane");
 		
-		vortex_manip=new ItemVortexManipulator();
-		register(vortex_manip,"vortex_manip");
+		vortex_manip = new ItemVortexManipulator();
+		register(vortex_manip, "vortex_manip");
 		
-		sonic_screwdriver=new ItemSonic();
-		register(sonic_screwdriver,"sonic_screwdriver");
+		sonic_screwdriver = new ItemSonic();
+		register(sonic_screwdriver, "sonic_screwdriver");
 		
-		space_helm = new SpaceSuit(ArmorMaterial.LEATHER,0,EntityEquipmentSlot.HEAD);
-		register(space_helm,"space_helm");
+		space_helm = new SpaceSuit(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
+		register(space_helm, "space_helm");
 		
-		//TARDIS Components
-		fluid_link=new FluidLink();
-		register(fluid_link,"fluid_link");
+		// TARDIS Components
+		fluid_link = new FluidLink();
+		register(fluid_link, "fluid_link");
 		
-		artron_capacitor=new ArtronCapacitor();
-		register(artron_capacitor,"artron_capacitor");
+		artron_capacitor = new ArtronCapacitor();
+		register(artron_capacitor, "artron_capacitor");
 		
-		demat_circut=new DematerializationCircut();
-		register(demat_circut,"demat_circut");
+		demat_circut = new DematerializationCircut();
+		register(demat_circut, "demat_circut");
 	}
-
+	
 	public static void register(Item item, String name) {
 		item.setUnlocalizedName(name);
 		item.setRegistryName(new ResourceLocation(Tardis.MODID, name));

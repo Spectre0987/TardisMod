@@ -38,7 +38,7 @@ tile.megalos.name=Meglos
 tile.console.name=Console
 
 tardis.locked.true=TARDIS Locked!
-tardis.locked.false=TARDIS has been unlocked.
+tardis.locked.false=TARDIS has been unlocked!
 
 death.attack.dalek=Killed by a Dalek Ray gun
 
@@ -57,8 +57,8 @@ tardis.flying=TARDIS in flight!
 
 tardis.gui.protocol.force_field=Force Field Protocol
 
-tardis.console.land.true=TARDIS is set to land on the highest point avalible
-tardis.console.land.false=TARDIS is set to land on the lowest point avalible
+tardis.console.land.true=TARDIS is set to land on the highest point available
+tardis.console.land.false=TARDIS is set to land on the lowest point available
 
 tardis.direction.north=TARDIS is facing north
 tardis.direction.east=TARDIS is facing east

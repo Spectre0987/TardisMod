@@ -5,7 +5,7 @@ import net.tardis.mod.client.renderers.RendererItemDemat;
 import net.tardis.mod.info.CrashType;
 
 public class DematerializationCircut extends ItemComponent {
-
+	
 	public DematerializationCircut() {
 		this.setTileEntityItemStackRenderer(new RendererItemDemat());
 	}
@@ -14,5 +14,5 @@ public class DematerializationCircut extends ItemComponent {
 	public ItemStack damageItem(CrashType type, ItemStack stack) {
 		return stack;
 	}
-
+	
 }

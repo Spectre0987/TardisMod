@@ -42,15 +42,14 @@ public class BlockConsole extends BlockContainer implements IUnbreakable {
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		super.onBlockAdded(worldIn, pos, state);
 		try {
-			TileEntityTardis tardis = (TileEntityTardis)worldIn.getTileEntity(pos);
+			TileEntityTardis tardis = (TileEntityTardis) worldIn.getTileEntity(pos);
 			tardis.createControls();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

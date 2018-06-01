@@ -22,7 +22,7 @@ public abstract class RenderControl extends Render {
 	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		renderControl((EntityControl) entity, x, y, z,entityYaw, partialTicks, TardisType.Type80s);
+		renderControl((EntityControl) entity, x, y, z, entityYaw, partialTicks, TardisType.Type80s);
 	}
 	
 	public abstract void renderControl(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks, TardisType tType);

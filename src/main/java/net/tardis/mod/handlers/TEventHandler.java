@@ -15,6 +15,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -41,35 +42,35 @@ public class TEventHandler {
 	
 	public static TardisWorldSavedData data;
 	public static Random rand = new Random();
-
+	
 	@SubscribeEvent
 	public void registerModels(ModelRegistryEvent event) {
-		//Blocks
-		for(Block block:TBlocks.blocks) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(),"normal"));
+		// Blocks
+		for (Block block : TBlocks.blocks) {
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "normal"));
 		}
-		for(Item item:TItems.items) {
-			if(item.getHasSubtypes()) {
+		for (Item item : TItems.items) {
+			if (item.getHasSubtypes()) {
 				NonNullList<ItemStack> list = NonNullList.create();
 				item.getSubItems(item.getCreativeTab(), list);
-				for(int i=0; i<list.size(); i++) {
-					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(),"type="+i));
+				for (int i = 0; i < list.size(); i++) {
+					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "type=" + i));
 				}
-			}
-			else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+			} else
+				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 	}
 	
 	@SubscribeEvent
 	public void registerItems(RegistryEvent.Register<Item> event) {
-		for(Item item:TItems.items) {
+		for (Item item : TItems.items) {
 			event.getRegistry().register(item);
 		}
 	}
 	
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event) {
-		for(Block block : TBlocks.blocks) {
+		for (Block block : TBlocks.blocks) {
 			event.getRegistry().register(block);
 		}
 	}
@@ -88,6 +89,14 @@ public class TEventHandler {
 	@SubscribeEvent
 	public void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 		event.getRegistry().register(new RecipeKey("spare_key"));
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void camera(CameraSetup e) {
+		if (Minecraft.getMinecraft().player.getRidingEntity() instanceof EntityTardis) {
+			
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -119,20 +128,19 @@ public class TEventHandler {
 	public void cancelBBRender(DrawBlockHighlightEvent event) {
 		World world = event.getPlayer().world;
 		BlockPos pos = event.getTarget().getBlockPos();
-		if(pos != null && !pos.equals(BlockPos.ORIGIN)) {
-			if(world.getBlockState(pos).getBlock() instanceof BlockConsole)
-				event.setCanceled(true);
+		if (pos != null && !pos.equals(BlockPos.ORIGIN)) {
+			if (world.getBlockState(pos).getBlock() instanceof BlockConsole) event.setCanceled(true);
 		}
-			
+		
 	}
 	
 	@SubscribeEvent
 	public void givePlayerKey(EntityJoinWorldEvent event) {
-		if(TardisConfig.MISC.givePlayerKey) {
-			if(event.getEntity() instanceof EntityPlayer) {
-				World world=event.getEntity().world;
-				EntityPlayer player = (EntityPlayer)event.getEntity();
-				if(!player.inventory.hasItemStack(new ItemStack(TItems.key))) {
+		if (TardisConfig.MISC.givePlayerKey) {
+			if (event.getEntity() instanceof EntityPlayer) {
+				World world = event.getEntity().world;
+				EntityPlayer player = (EntityPlayer) event.getEntity();
+				if (!player.inventory.hasItemStack(new ItemStack(TItems.key))) {
 					EntityItem ei = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.key));
 					world.spawnEntity(ei);
 				}

@@ -22,8 +22,8 @@ import net.tardis.mod.client.renderers.RenderItemFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 
 public class BlockFoodMachine extends BlockContainer {
-
-	public static final PropertyDirection FACING=PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	
+	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockFoodMachine() {
@@ -33,57 +33,55 @@ public class BlockFoodMachine extends BlockContainer {
 		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 		item.setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 	}
-
+	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileEntityFoodMachine();
 	}
-
+	
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!worldIn.isRemote) {
-			EntityItem ei=new EntityItem(worldIn,pos.getX()+0.5,pos.getY()+1,pos.getZ()+0.5,new ItemStack(Items.BREAD));
+		if (!worldIn.isRemote) {
+			EntityItem ei = new EntityItem(worldIn, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, new ItemStack(Items.BREAD));
 			worldIn.spawnEntity(ei);
 		}
 		return true;
 	}
-
+	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if(meta < 3 && meta > 0)
-			return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+		if (meta < 3 && meta > 0) return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
 		return this.getDefaultState();
 	}
-
+	
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(FACING).getHorizontalIndex();
 	}
-
+	
 	@Override
-	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer) {
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
-
+	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {FACING});
+		return new BlockStateContainer(this, new IProperty[] { FACING });
 	}
 	
-
 }

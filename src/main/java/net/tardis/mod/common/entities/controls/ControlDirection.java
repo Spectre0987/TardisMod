@@ -8,8 +8,8 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
-public class ControlDirection extends EntityControl{
-
+public class ControlDirection extends EntityControl {
+	
 	public ControlDirection(TileEntityTardis tardis) {
 		super(tardis);
 	}
@@ -18,19 +18,19 @@ public class ControlDirection extends EntityControl{
 		super(world);
 		this.setSize(0.125F, 0.125F);
 	}
-
+	
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(9.5,-3.5,10);
+		return Helper.convertToPixels(9.5, -3.5, 10);
 	}
-
+	
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if(!world.isRemote) {
-			TileEntityTardis tardis=(TileEntityTardis)world.getTileEntity(getConsolePos());
+		if (!world.isRemote) {
+			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			tardis.setFacing(tardis.getFacing().rotateY());
-			player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_FACING+tardis.getFacing().getName()),true);
+			player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_FACING + tardis.getFacing().getName()), true);
 		}
 	}
-
+	
 }

@@ -100,8 +100,7 @@ public class Tardis {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		hasIC2 = Loader.isModLoaded("ic2");
-		if(Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT))
-			Galacticraft.preInit();
+		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
@@ -135,8 +134,7 @@ public class Tardis {
 		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
 		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
-		if(hasIC2)
-			registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
+		if (hasIC2) registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
 		
 		NETWORK.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
@@ -156,10 +154,10 @@ public class Tardis {
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.power_cell), 1200));
 		
-		//TardisProtocol.register(new TardisProtocolForceField());
+		// TardisProtocol.register(new TardisProtocolForceField());
 		
-		if(TardisConfig.USE_ENTITIES.entities) {
-			//Register All Mobs Here.
+		if (TardisConfig.USE_ENTITIES.entities) {
+			// Register All Mobs Here.
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 	}

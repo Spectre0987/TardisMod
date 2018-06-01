@@ -14,11 +14,12 @@ public interface ITardisCall {
 	
 	/**
 	 * Perform a function when a player answers a call
+	 * 
 	 * @param world World in which player anwsers a call (Usually the TARDIS Dimension)
 	 * @param player The Player that answers the call
 	 * @param consolePos Position of the console this call was sent to
 	 */
-	void onAwnsered(World world, EntityPlayer player, BlockPos consolePos);
+	void onAnswered(World world, EntityPlayer player, BlockPos consolePos);
 	
 	/**
 	 * Gets Space-Time Coordinate of the event
@@ -29,10 +30,9 @@ public interface ITardisCall {
 	
 	/**
 	 * If it doesn't use the phone, it defaults to the scanner.
+	 * 
 	 * @return
 	 */
 	boolean usePhone();
 	
-	
-
 }
