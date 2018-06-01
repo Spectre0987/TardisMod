@@ -108,7 +108,7 @@ public class ControlDoor extends EntityControl {
 						player.setSpawnDimension(tardis.dimension);
 					}
 					else {
-						entityIn.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+						entityIn.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing),0);
 						entityIn.changeDimension(tardis.dimension);
 					}
 				}
