@@ -7,7 +7,18 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.renderers.RenderItemFoodMachine;
+import net.tardis.mod.client.renderers.RendererItemDemat;
+import net.tardis.mod.client.renderers.RendererItemTardis;
+import net.tardis.mod.client.renderers.RendererKey;
+import net.tardis.mod.common.blocks.BlockTardisTop;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
@@ -16,6 +27,7 @@ import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
 
+@Mod.EventBusSubscriber
 public class TItems {
 	
 	public static List<Item> items = new ArrayList<>();
@@ -101,5 +113,16 @@ public class TItems {
 		item.setUnlocalizedName(name);
 		item.setRegistryName(new ResourceLocation(Tardis.MODID, name));
 		items.add(item);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public static void setUprenders(ModelBakeEvent e) {
+		System.out.println("renders");
+		demat_circut.setTileEntityItemStackRenderer(new RendererItemDemat());
+		key.setTileEntityItemStackRenderer(new RendererKey());
+		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RendererItemTardis());
+
+		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 	}
 }

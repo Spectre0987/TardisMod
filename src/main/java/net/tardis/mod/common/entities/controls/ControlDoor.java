@@ -99,26 +99,25 @@ public class ControlDoor extends EntityControl {
 				if (state.getBlock() instanceof BlockTardisTop) {
 					EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 					BlockPos pos = tardis.getLocation().offset(facing, 2);
-					if(entityIn instanceof EntityPlayer) {
+					if (entityIn instanceof EntityPlayer) {
 						EntityPlayerMP player = (EntityPlayerMP) entityIn;
 						player.setVelocity(0, 0, 0);
 						ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, tardis.dimension, new TardisTeleporter(ws));
 						player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 						player.setSpawnPoint(pos, true);
 						player.setSpawnDimension(tardis.dimension);
-					}
-					else {
-						entityIn.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing),0);
+					} else {
+						entityIn.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 						entityIn.changeDimension(tardis.dimension);
 					}
-				}
-				else if (antiSpamTicks == 0) {
+				} else if (antiSpamTicks == 0) {
 					((EntityPlayer) entityIn).sendStatusMessage(new TextComponentTranslation("tardis.missing"), true);
 					antiSpamTicks = 20;
 				}
 			}
 		}
 	}
+	
 	@Override
 	public void onUpdate() {
 		super.onUpdate();

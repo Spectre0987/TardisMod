@@ -7,7 +7,6 @@ import net.tardis.mod.info.CrashType;
 public class DematerializationCircut extends ItemComponent {
 	
 	public DematerializationCircut() {
-		this.setTileEntityItemStackRenderer(new RendererItemDemat());
 	}
 	
 	@Override

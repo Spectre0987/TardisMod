@@ -31,7 +31,6 @@ public class BlockFoodMachine extends BlockContainer {
 		this.setCreativeTab(Tardis.tab);
 		this.setLightOpacity(0);
 		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
-		item.setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 	}
 	
 	@Override
