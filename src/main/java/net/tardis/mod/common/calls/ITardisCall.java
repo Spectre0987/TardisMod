@@ -3,7 +3,6 @@ package net.tardis.mod.common.calls;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.util.SpaceTimeCoord;
 
 /**
  * 
@@ -20,13 +19,6 @@ public interface ITardisCall {
 	 * @param consolePos Position of the console this call was sent to
 	 */
 	void onAnswered(World world, EntityPlayer player, BlockPos consolePos);
-	
-	/**
-	 * Gets Space-Time Coordinate of the event
-	 * 
-	 * @return SpaceTimeCoord
-	 */
-	SpaceTimeCoord getSpaceTimeCoords();
 	
 	/**
 	 * If it doesn't use the phone, it defaults to the scanner.

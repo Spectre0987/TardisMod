@@ -35,6 +35,10 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 	
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+		this.renderHumanNautureExterior(te, x, y, z, partialTicks, destroyStage, alpha);
+	}
+	
+	public void renderHumanNautureExterior(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		boolean open = !((TileEntityDoor) te).isLocked();
 		GlStateManager.pushMatrix();
 		{
@@ -95,7 +99,6 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 		}
 		GlStateManager.popMatrix();
 	}
-	
 	@Override
 	public void renderTileEntityFast(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
 		// TODO Auto-generated method stub

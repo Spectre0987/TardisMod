@@ -13,6 +13,7 @@ import net.tardis.mod.packets.MessageTeleport;
 
 public class GuiVortexM extends GuiScreen {
 	
+
 	public GuiTextField xCoord;
 	public GuiTextField yCoord;
 	public GuiTextField zCoord;
@@ -57,7 +58,6 @@ public class GuiVortexM extends GuiScreen {
 			}
 		}
 	}
-	
 	public enum COORD_TYPE {
 		X, Y, Z
 	}
@@ -68,10 +68,13 @@ public class GuiVortexM extends GuiScreen {
 		int y = height / 2 - 15;
 		String enterButton = "Teleport";
 		
-		xCoord = new GuiTextField(0, fr, x, y, 30, fr.FONT_HEIGHT);
-		yCoord = new GuiTextField(1, fr, x, y + fr.FONT_HEIGHT + 1, 30, fr.FONT_HEIGHT);
-		zCoord = new GuiTextField(2, fr, x, y + fr.FONT_HEIGHT * 2 + 1, 30, fr.FONT_HEIGHT);
-		teleport = new GuiButton(3, x, y + fr.FONT_HEIGHT * 3 + 5, enterButton);
+		int yOffset = fr.FONT_HEIGHT + 3;
+		
+		xCoord = new GuiTextField(0, fr, x - 15, y, 30, fr.FONT_HEIGHT);
+		yCoord = new GuiTextField(1, fr, x - 15, y + yOffset, 30, fr.FONT_HEIGHT);
+		zCoord = new GuiTextField(2, fr, x - 15, y + yOffset * 2 + 1, 30, fr.FONT_HEIGHT);
+		teleport = new GuiButton(3, x, y + yOffset * 3, enterButton);
+		teleport.x -= teleport.width/2;
 		xCoord.setFocused(true);
 		
 		this.buttonList.clear();

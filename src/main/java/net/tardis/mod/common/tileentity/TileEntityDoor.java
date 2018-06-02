@@ -93,7 +93,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 		return EnumFacing.NORTH;
 	}
 	
-	public static AxisAlignedBB aabb = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
+	public static AxisAlignedBB aabb = new AxisAlignedBB(0.25, 0, 0.25, 0.75, 2, 0.75);
 	
 	@Override
 	public void update() {
@@ -102,7 +102,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 				WorldServer ws = (WorldServer) world;
 				BlockPos cPos = getConsolePos().south(4);
 				
-				AxisAlignedBB bounds = aabb.offset(getPos());
+				AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
 				
 				List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, bounds);
 				

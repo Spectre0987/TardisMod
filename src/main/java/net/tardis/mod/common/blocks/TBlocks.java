@@ -72,7 +72,7 @@ public class TBlocks {
 		if (Tardis.hasIC2)
 			electric_panel = new BlockEPanel();
 		else
-			electric_panel = new BlockPanel();
+			electric_panel = new BlockBase();
 		register(electric_panel, "electric_panel");
 		
 		megalos = new BlockMegalos();

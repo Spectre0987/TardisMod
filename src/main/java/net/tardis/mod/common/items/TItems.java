@@ -37,6 +37,7 @@ public class TItems {
 	public static Item umbrella_open;
 	public static Item vortex_manip;
 	public static Item sonic_screwdriver;
+	public static Item scanner;
 	
 	public static Item space_helm;
 	
@@ -85,6 +86,9 @@ public class TItems {
 		
 		space_helm = new SpaceSuit(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
 		register(space_helm, "space_helm");
+		
+		scanner = new ItemScanner();
+		register(scanner, "scanner");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();

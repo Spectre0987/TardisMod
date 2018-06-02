@@ -8,9 +8,6 @@
     },
     "variants":{
         "normal":[{}],
-        "inventory":[{}],
-        "type=0":[{}],
-        "type=1":[{}],
-        "type=2":[{}]
+        "inventory":[{}]
     }
 }

@@ -21,7 +21,9 @@ public class ARS {
 	public static int getID(TardisStructure structure) {
 		int id = 0;
 		for (TardisStructure comp : rooms) {
-			if (comp.equals(structure)) return id;
+			if (comp.equals(structure))
+				return id;
+			++id;
 		}
 		return -1;
 	}

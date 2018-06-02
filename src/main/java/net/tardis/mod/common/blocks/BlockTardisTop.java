@@ -9,7 +9,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -30,8 +29,6 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.IUnbreakable;
-import net.tardis.mod.util.TardisTeleporter;
-import net.tardis.mod.util.helpers.Helper;
 
 public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
@@ -90,7 +87,7 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.9, 0.9);
+		return new AxisAlignedBB(0,0,0,1,1,1);
 	}
 	
 	@Override
