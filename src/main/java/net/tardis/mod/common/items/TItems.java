@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +16,6 @@ import net.tardis.mod.client.renderers.RenderItemFoodMachine;
 import net.tardis.mod.client.renderers.RendererItemDemat;
 import net.tardis.mod.client.renderers.RendererItemTardis;
 import net.tardis.mod.client.renderers.RendererKey;
-import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
@@ -96,7 +94,7 @@ public class TItems {
 		sonic_screwdriver = new ItemSonic();
 		register(sonic_screwdriver, "sonic_screwdriver");
 		
-		space_helm = new SpaceSuit(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
+		space_helm = new SpaceSuit(SpaceSuit.material, 0, EntityEquipmentSlot.HEAD);
 		register(space_helm, "space_helm");
 		
 		scanner = new ItemScanner();
