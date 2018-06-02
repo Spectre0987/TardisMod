@@ -37,7 +37,6 @@ public class ItemKey extends Item {
 	public ItemKey() {
 		this.setCreativeTab(Tardis.tab);
 		this.setMaxStackSize(1);
-		this.setTileEntityItemStackRenderer(new RendererKey());
 	}
 	
 	public static void setPos(ItemStack stack, BlockPos pos) {

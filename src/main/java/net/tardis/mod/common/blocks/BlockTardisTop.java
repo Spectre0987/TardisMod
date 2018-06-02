@@ -40,9 +40,12 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 		this.setBlockUnbreakable();
 		this.setResistance(9999);
 		this.setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
-		item.setTileEntityItemStackRenderer(new RendererItemTardis());
 	}
-	
+
+	public ItemBlock getItem() {
+		return item;
+	}
+
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileEntityDoor();

@@ -109,13 +109,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 				if (entities != null) {
 					if (entities.size() > 0) {
 						for (EntityLivingBase entity : entities) {
-							if(entity instanceof EntityPlayerMP) {
+							if (entity instanceof EntityPlayerMP) {
 								EntityPlayerMP p = (EntityPlayerMP) entity;
 								p.setVelocity(0, 0, 0);
 								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
 								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
-							}
-							else {
+							} else {
 								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
 								entity.changeDimension(TDimensions.id);
 							}
