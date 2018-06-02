@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -114,6 +115,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 								p.motionX = 0;
 								p.motionY = 0;
 								p.motionZ = 0;
+								p.connection.sendPacket(new SPacketEntityVelocity(p));
 								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
 								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
 							} else {
