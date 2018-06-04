@@ -1044,10 +1044,9 @@ public class ModelTardis extends ModelBase {
 		
 		GlStateManager.disableLighting();
 		Minecraft.getMinecraft().entityRenderer.disableLightmap();
-		// OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240F, 240F);
 		LampGlow.render(f5);
-		GlStateManager.enableLighting();
 		Minecraft.getMinecraft().entityRenderer.enableLightmap();
+		GlStateManager.enableLighting();
 	}
 	
 	private void setRotation(ModelRenderer model, float x, float y, float z) {

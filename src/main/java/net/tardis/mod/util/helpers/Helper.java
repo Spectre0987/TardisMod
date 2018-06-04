@@ -78,7 +78,7 @@ public class Helper {
 	
 	public static boolean isDimensionBlocked(int id) {
 		if (id == TDimensions.id) return true;
-		for (int i : TardisConfig.BlockedDimensions.bDims) {
+		for (int i : TardisConfig.Dimensions.bDims) {
 			if (id == i) return true;
 		}
 		return false;

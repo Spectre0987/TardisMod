@@ -2,7 +2,6 @@ package net.tardis.mod.proxy;
 
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.tardis.mod.client.renderers.RenderAngel;
 import net.tardis.mod.client.renderers.RenderConsole;
 import net.tardis.mod.client.renderers.RenderDoor;
 import net.tardis.mod.client.renderers.RenderFoodMachine;
@@ -15,7 +14,6 @@ import net.tardis.mod.client.renderers.RenderUmbrellaStand;
 import net.tardis.mod.client.renderers.controls.RenderLever;
 import net.tardis.mod.client.renderers.controls.RenderRandom;
 import net.tardis.mod.client.renderers.controls.RenderZ;
-import net.tardis.mod.common.entities.EntityAngel;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -63,7 +61,6 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, new RenderInvis());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
-		RenderingRegistry.registerEntityRenderingHandler(EntityAngel.class, new RenderAngel());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
 		
 		// Not needed currently.

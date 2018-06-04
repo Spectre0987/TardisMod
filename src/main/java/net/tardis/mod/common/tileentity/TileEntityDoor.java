@@ -99,7 +99,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 	@Override
 	public void update() {
 		if (!world.isRemote) {
-			if (!isLocked()) {
 				WorldServer ws = (WorldServer) world;
 				BlockPos cPos = getConsolePos().south(4);
 				
@@ -111,21 +110,24 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 					if (entities.size() > 0) {
 						for (EntityLivingBase entity : entities) {
 							if (entity instanceof EntityPlayerMP) {
-								EntityPlayerMP p = (EntityPlayerMP) entity;
-								p.motionX = 0;
-								p.motionY = 0;
-								p.motionZ = 0;
-								p.connection.sendPacket(new SPacketEntityVelocity(p));
-								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
-								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+								if(!this.isLocked()) {
+									EntityPlayerMP p = (EntityPlayerMP) entity;
+									p.motionX = 0;
+									p.motionY = 0;
+									p.motionZ = 0;
+									p.connection.sendPacket(new SPacketEntityVelocity(p));
+									ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
+									p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+								}
 							} else {
-								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
-								entity.changeDimension(TDimensions.id);
+								if(!this.isLocked() || TardisHelper.hasValidKey(entity, this.getConsolePos())) {
+									entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
+									entity.changeDimension(TDimensions.id);
+								}
 							}
 						}
 					}
 				}
-			}
 		}
 		
 		if (!world.isRemote) {

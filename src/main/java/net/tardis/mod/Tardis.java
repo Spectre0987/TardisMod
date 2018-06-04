@@ -61,7 +61,7 @@ import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.TEventHandler;
 import net.tardis.mod.integrations.Galacticraft;
-import net.tardis.mod.packets.MessageAngel;
+import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageHandlerCam;
@@ -69,7 +69,6 @@ import net.tardis.mod.packets.MessageHandlerDoorOpen;
 import net.tardis.mod.packets.MessageHandlerProtocol;
 import net.tardis.mod.packets.MessageHandlerTR;
 import net.tardis.mod.packets.MessageHandlerTeleport;
-import net.tardis.mod.packets.MessageHelperAngel;
 import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageTR;
 import net.tardis.mod.packets.MessageTeleport;
@@ -80,7 +79,6 @@ import net.tardis.mod.util.helpers.EntityHelper;
 public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
-	public static final String VERSION = "0.0.3A";
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
 	
 	private static Logger logger;
@@ -99,8 +97,9 @@ public class Tardis {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		hasIC2 = Loader.isModLoaded("ic2");
+		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
+		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
@@ -136,7 +135,6 @@ public class Tardis {
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
 		if (hasIC2) registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
 		
-		NETWORK.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
 		NETWORK.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);

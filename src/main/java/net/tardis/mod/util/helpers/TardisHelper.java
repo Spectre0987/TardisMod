@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
@@ -51,7 +51,7 @@ public class TardisHelper {
 		return getLastPos().add(TARDIS_SIZE * 16, 0, TARDIS_SIZE * 16);
 	}
 	
-	public static boolean hasValidKey(EntityPlayer player, BlockPos cPos) {
+	public static boolean hasValidKey(EntityLivingBase player, BlockPos cPos) {
 		ItemStack stack = player.getHeldItemMainhand();
 		if (stack.getItem() == TItems.key) {
 			BlockPos pos = ItemKey.getPos(stack);

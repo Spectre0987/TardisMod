@@ -10,8 +10,8 @@ public class TDimensions {
 	public static DimensionType tardisType;
 	
 	public static void register() {
-		if (TardisConfig.BlockedDimensions.setDimension)
-			id = TardisConfig.BlockedDimensions.tardisDimension;
+		if (TardisConfig.Dimensions.setDimension)
+			id = TardisConfig.Dimensions.tardisDimension;
 		else
 			id = DimensionManager.getNextFreeDimId();
 		tardisType = DimensionType.register("tardis", "_tardis", id, TardisProvider.class, false);

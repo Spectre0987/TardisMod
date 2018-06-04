@@ -32,6 +32,7 @@ public class RendererItemTardis extends TileEntityItemStackRenderer {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		door_r.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		door_l.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.popMatrix();
 	}
 }

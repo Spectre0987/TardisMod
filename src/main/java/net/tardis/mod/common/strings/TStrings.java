@@ -15,6 +15,7 @@ public class TStrings {
 	public static class ModIds {
 		public static final String GALACTICRAFT = "galacticraftcore";
 		public static final String INDUSTRIAL_CRAFT = "ic2";
+		public static final String WEEPING_ANGELS = "weeping-angels";
 	}
 	
 }

@@ -12,7 +12,7 @@ public class TardisConfig {
 	
 	@Config.RequiresMcRestart
 	@Config.LangKey("config.category.dims")
-	public static final Dimensions BlockedDimensions = new Dimensions();
+	public static final Dimensions Dimensions = new Dimensions();
 	
 	@Config.LangKey("config.entity")
 	public static final UseEntities USE_ENTITIES = new UseEntities();
