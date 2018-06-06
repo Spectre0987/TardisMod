@@ -2,8 +2,8 @@ package net.tardis.mod.common.items.components;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.tardis.mod.common.info.CrashType;
 import net.tardis.mod.common.items.ItemBase;
-import net.tardis.mod.info.CrashType;
 import net.tardis.mod.systems.Systems;
 
 /**

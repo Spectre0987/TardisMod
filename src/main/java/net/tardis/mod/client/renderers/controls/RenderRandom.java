@@ -5,7 +5,7 @@ import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.models.console.contols.ModelRandom;
 import net.tardis.mod.client.renderers.RenderControl;
 import net.tardis.mod.common.entities.controls.EntityControl;
-import net.tardis.mod.info.TardisType;
+import net.tardis.mod.common.info.TardisType;
 import net.tardis.mod.util.helpers.Helper;
 
 public class RenderRandom extends RenderControl {

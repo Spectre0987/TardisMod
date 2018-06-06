@@ -39,7 +39,8 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 	}
 	
 	public void renderHumanNautureExterior(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		boolean open = !((TileEntityDoor) te).isLocked();
+		TileEntityDoor door = (TileEntityDoor)te;
+		boolean open = !door.isLocked();
 		GlStateManager.pushMatrix();
 		{
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);

@@ -35,10 +35,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 	
 	public BlockPos consolePos = BlockPos.ORIGIN;
 	public boolean isLocked = true;
-	public int ticks = 0;
 	public int lockCooldown = 0;
 	private int updateTicks = 0;
 	public int fadeTicks = 0;
+	public int openingTicks = 0;
 	
 	public TileEntityDoor() {}
 	
@@ -99,39 +99,35 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 	@Override
 	public void update() {
 		if (!world.isRemote) {
-				WorldServer ws = (WorldServer) world;
-				BlockPos cPos = getConsolePos().south(4);
-				
-				AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
-				
-				List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, bounds);
-				
-				if (entities != null) {
-					if (entities.size() > 0) {
-						for (EntityLivingBase entity : entities) {
-							if (entity instanceof EntityPlayerMP) {
-								if(!this.isLocked()) {
-									EntityPlayerMP p = (EntityPlayerMP) entity;
-									p.motionX = 0;
-									p.motionY = 0;
-									p.motionZ = 0;
-									p.connection.sendPacket(new SPacketEntityVelocity(p));
-									ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
-									p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
-								}
-							} else {
-								if(!this.isLocked() || TardisHelper.hasValidKey(entity, this.getConsolePos())) {
-									entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
-									entity.changeDimension(TDimensions.id);
-								}
+			WorldServer ws = (WorldServer) world;
+			BlockPos cPos = getConsolePos().south(4);
+			
+			AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
+			
+			List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, bounds);
+			
+			if (entities != null) {
+				if (entities.size() > 0) {
+					for (EntityLivingBase entity : entities) {
+						if (entity instanceof EntityPlayerMP) {
+							if(!this.isLocked()) {
+								EntityPlayerMP p = (EntityPlayerMP) entity;
+								p.motionX = 0;
+								p.motionY = 0;
+								p.motionZ = 0;
+								p.connection.sendPacket(new SPacketEntityVelocity(p));
+								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
+								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+							}
+						} else {
+							if(!this.isLocked() || TardisHelper.hasValidKey(entity, this.getConsolePos())) {
+								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
+								entity.changeDimension(TDimensions.id);
 							}
 						}
 					}
 				}
-		}
-		
-		if (!world.isRemote) {
-			ticks++;
+			}
 			if (lockCooldown > 0) --lockCooldown;
 			++this.updateTicks;
 			if (this.updateTicks > 20) {
@@ -140,6 +136,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 			}
 		}
 		if (fadeTicks > 0) --fadeTicks;
+		if(openingTicks > 0) {
+			--openingTicks;
+		}
 	}
 	
 	public boolean isLocked() {

@@ -1,7 +1,7 @@
 package net.tardis.mod.common.items.components;
 
 import net.minecraft.item.ItemStack;
-import net.tardis.mod.info.CrashType;
+import net.tardis.mod.common.info.CrashType;
 
 public class FluidLink extends ItemComponent {
 	

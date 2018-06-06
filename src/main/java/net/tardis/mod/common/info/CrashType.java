@@ -1,4 +1,4 @@
-package net.tardis.mod.info;
+package net.tardis.mod.common.info;
 
 public enum CrashType {
 	FUEL, ATTACK, PILOT, UNKNOWN
