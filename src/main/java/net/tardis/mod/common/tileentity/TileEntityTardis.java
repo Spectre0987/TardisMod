@@ -119,7 +119,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (!world.isRemote) {
 				tardisTicket = ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisTicket, world.getChunkFromBlockCoords(this.getPos()).getPos());
-				WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(this.dimension);
+				WorldServer ws = world.getMinecraftServer().getWorld(this.dimension);
 				this.tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, ws, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisLocTicket, ws.getChunkFromBlockCoords(tardisLocation).getPos());
 			}
@@ -142,14 +142,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void travel(boolean makeSound) {
 		if (!world.isRemote) {
 			this.ticksToTravel = 0;
-			World dWorld = ((WorldServer) world).getMinecraftServer().getWorld(destDim);
-			World oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
+			World dWorld = world.getMinecraftServer().getWorld(destDim);
+			World oWorld = world.getMinecraftServer().getWorld(dimension);
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld, getDestination());
 			if (nPos != null) {
 				boolean b = dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				TileEntity door = dWorld.getTileEntity(nPos.up());
-				if (door != null && door instanceof TileEntityDoor) {
+				if (door instanceof TileEntityDoor) {
 					((TileEntityDoor) door).setConsolePos(this.getPos());
 				}
 				this.setLocation(nPos);
@@ -167,7 +167,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void updateServer() {
 		if (!world.isRemote) {
-			if (this != null && !this.isInvalid()) ((WorldServer) world).getMinecraftServer().getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 8, TDimensions.id, this.getUpdatePacket());
+			if (this != null && !this.isInvalid()) world.getMinecraftServer().getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 8, TDimensions.id, this.getUpdatePacket());
 		}
 	}
 	
@@ -321,7 +321,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.setLoading(false);
 		this.setFueling(false);
 		if (!world.isRemote) {
-			WorldServer oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
+			WorldServer oWorld = world.getMinecraftServer().getWorld(dimension);
 			oWorld.setBlockToAir(this.tardisLocation);
 			oWorld.setBlockToAir(this.tardisLocation.up());
 			EntityControl door = this.getControl(ControlDoor.class);
@@ -437,7 +437,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void crash() {
 		if (!world.isRemote) {
 			ChunkPos cPos = world.getChunkFromBlockCoords(this.getLocation()).getPos();
-			WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
+			WorldServer ws = world.getMinecraftServer().getWorld(dimension);
 			ws.getChunkProvider().loadChunk(cPos.x, cPos.z);
 			this.setDesination(getLocation(), dimension);
 			BlockPos pos = getLocation();

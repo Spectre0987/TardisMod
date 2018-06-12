@@ -21,8 +21,8 @@ public class EntityDalekRay extends EntityThrowable {
 	
 	@Override
 	protected void onImpact(RayTraceResult res) {
-		if (res != null && res.entityHit != null && res.entityHit instanceof EntityLivingBase) {
-			((EntityLivingBase) res.entityHit).attackEntityFrom(this.getThrower() != null ? DamageSource.causeIndirectDamage(this, getThrower()) : DamageSource.FIREWORKS, 10F);
+		if (res != null && res.entityHit instanceof EntityLivingBase) {
+			res.entityHit.attackEntityFrom(this.getThrower() != null ? DamageSource.causeIndirectDamage(this, getThrower()) : DamageSource.FIREWORKS, 10F);
 		}
 		if (res.typeOfHit == res.typeOfHit.BLOCK) this.setDead();
 	}

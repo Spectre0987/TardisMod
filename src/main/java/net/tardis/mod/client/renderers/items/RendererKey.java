@@ -1,4 +1,4 @@
-package net.tardis.mod.client.renderers;
+package net.tardis.mod.client.renderers.items;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

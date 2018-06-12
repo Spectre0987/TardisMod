@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.models.console.contols.ModelButton;
-import net.tardis.mod.client.renderers.RenderControl;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.info.TardisType;
 import net.tardis.mod.util.helpers.Helper;
@@ -14,7 +13,7 @@ public class RenderButton extends RenderControl {
 	public ModelButton model = new ModelButton();
 	
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y + 0.0625, z);
 		mc.getTextureManager().bindTexture(CONTROL_TEXTURE);

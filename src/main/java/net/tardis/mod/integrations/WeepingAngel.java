@@ -31,7 +31,7 @@ public class WeepingAngel {
 					BlockPos consolePos = ItemKey.getPos(stack);
 					if(consolePos != null && ws !=null) {
 						TileEntity te = ws.getTileEntity(consolePos);
-						if(te != null && te instanceof TileEntityTardis) {
+						if(te instanceof TileEntityTardis) {
 							BlockPos pos = ((TileEntityTardis)te).getLocation();
 							angel.setAttackTarget(null);
 							angel.setRevengeTarget(null);

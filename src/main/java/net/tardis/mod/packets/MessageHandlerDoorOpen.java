@@ -18,7 +18,7 @@ public class MessageHandlerDoorOpen implements IMessageHandler<MessageDoorOpen, 
 			public void run() {
 				Minecraft mc = Minecraft.getMinecraft();
 				TileEntity te = mc.world.getTileEntity(mes.pos);
-				if (te != null && te instanceof TileEntityDoor) {
+				if (te instanceof TileEntityDoor) {
 					((TileEntityDoor) te).isLocked = mes.isOpen;
 				}
 			}

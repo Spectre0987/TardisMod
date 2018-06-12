@@ -35,7 +35,7 @@ public class ControlFlight extends EntityControl {
 		if (!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			if (!tardis.isInFlight()) {
-				WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
+				WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 				BlockPos wPos = tardis.getLocation();
 				ws.setBlockToAir(tardis.getLocation());
 				ws.setBlockToAir(tardis.getLocation().up());

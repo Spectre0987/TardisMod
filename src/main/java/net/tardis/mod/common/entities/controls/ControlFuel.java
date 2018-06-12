@@ -5,6 +5,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.PlayerHelper;
 
 public class ControlFuel extends EntityControl {
 	
@@ -26,7 +27,8 @@ public class ControlFuel extends EntityControl {
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
 			TileEntityTardis t = (TileEntityTardis) world.getTileEntity(getConsolePos());
-			t.setFueling(t.isFueling() ? false : true);
+			t.setFueling(!t.isFueling());
+			PlayerHelper.sendMessage(player, t.isFueling() ? "Tardis no longer fueling" : "Tardis now fueling", false);
 		} else
 			ticks = 20;
 	}
