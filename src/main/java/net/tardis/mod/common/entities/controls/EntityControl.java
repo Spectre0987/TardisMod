@@ -94,19 +94,11 @@ public abstract class EntityControl extends Entity implements IControl {
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		tag.setLong(NBT.CONSOLE_POS, this.getConsolePos().toLong());
-		return super.writeToNBT(tag);
+		return new NBTTagCompound();
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {
-		this.setConsolePos(BlockPos.fromLong(tag.getLong(NBT.CONSOLE_POS)));
-		super.readFromNBT(tag);
-	}
-	
-	public class NBT {
-		public static final String CONSOLE_POS = "CONSOELPOS";
-	}
+	public void readFromNBT(NBTTagCompound tag) {}
 	
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {}
@@ -118,6 +110,10 @@ public abstract class EntityControl extends Entity implements IControl {
 	public void onUpdate() {
 		super.onUpdate();
 		if (ticks > 0) --ticks;
+		if(!this.world.isRemote) {
+			if(this.getConsolePos() == null || this.getConsolePos().equals(BlockPos.ORIGIN))
+				this.setDead();
+		}
 	}
 	
 	@Override

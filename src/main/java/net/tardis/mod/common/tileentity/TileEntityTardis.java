@@ -1,13 +1,9 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -40,6 +36,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
@@ -54,7 +51,6 @@ import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.SpaceTimeCoord;
-import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
@@ -73,7 +69,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private static final int MAX_TARDIS_SPEED = 1;
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> buffer = NonNullList.create().withSize(9, ItemStack.EMPTY);
-	public UUID[] controls;
+	public EntityControl[] controls;
 	public float fuel = 1F;
 	private boolean isFueling = false;
 	private boolean shouldDelayLoop = true;
@@ -136,6 +132,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			musicTicks = 0;
 			if (!world.isRemote) world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
 		}
+		this.createControls();
 	}
 	
 	public void travel() {
@@ -207,14 +204,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				this.buffer.set(cListIndex, new ItemStack((NBTTagCompound) comp));
 				++cListIndex;
 			}
-			
-			List<UUID> listIDs = new ArrayList<UUID>();
-			NBTTagList controlList = tardisTag.getTagList(NBT.CONTROLS_UUID, Constants.NBT.TAG_COMPOUND);
-			for (NBTBase base : controlList) {
-				listIDs.add(UUID.fromString(((NBTTagCompound) base).getString("con")));
-			}
-			this.controls = listIDs.toArray(new UUID[listIDs.size() - 1]);
-			
 			this.totalTimeToTravel = tardisTag.getInteger(NBT.MAX_TIME);
 		}
 	}
@@ -246,14 +235,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				compoentList.appendTag(stack.writeToNBT(new NBTTagCompound()));
 			}
 			tardisTag.setTag(NBT.COMPOENET_LIST, compoentList);
-			
-			NBTTagList controlList = new NBTTagList();
-			for (UUID id : controls) {
-				NBTTagCompound control_tag = new NBTTagCompound();
-				control_tag.setString("con", id.toString());
-				controlList.appendTag(control_tag);
-			}
-			tardisTag.setTag(NBT.CONTROLS_UUID, controlList);
 			
 			tardisTag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		}
@@ -344,8 +325,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			oWorld.setBlockToAir(this.tardisLocation);
 			oWorld.setBlockToAir(this.tardisLocation.up());
 			EntityControl door = this.getControl(ControlDoor.class);
-			if (door != null && door instanceof ControlDoor) System.out.println("door: " + door);
 			((ControlDoor) door).setOpen(false);
+			this.saveCoords.set(this.saveCoords.size() - 1, new SpaceTimeCoord(this.getLocation(), this.dimension));
 			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunkFromBlockCoords(getLocation()).getPos());
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 		}
@@ -401,14 +382,33 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public boolean createControls() {
 		if (controls == null || controls.length == 0) {
-			List<UUID> idList = new ArrayList<UUID>();
-			EntityControl[] ec = new EntityControl[] { new ControlLaunch(this), new ControlX(this), new ControlY(this), new ControlZ(this), new ControlDimChange(this), new ControlScreen(this), new ControlRandom(this), new ControlDoor(this), new ControlSTCLoad(this), new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)), new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)), new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)), new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)), new ControlFlight(this), new ControlFuel(this), new ControlLandType(this), new ControlDirection(this) };
+			EntityControl[] ec = new EntityControl[] { 
+					new ControlLaunch(this),
+					new ControlX(this),
+					new ControlY(this),
+					new ControlZ(this),
+					new ControlDimChange(this),
+					new ControlScreen(this),
+					new ControlRandom(this),
+					new ControlDoor(this),
+					new ControlSTCLoad(this),
+					new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)),
+					new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)),
+					new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)),
+					new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)),
+					new ControlFlight(this),
+					new ControlFuel(this),
+					new ControlLandType(this),
+					new ControlDirection(this),
+					new ControlFastReturn(this)
+					};
 			for (EntityControl con : ec) {
 				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
-				if (!world.isRemote) world.spawnEntity(con);
-				idList.add(con.getUniqueID());
+				if (!world.isRemote)
+					world.spawnEntity(con);
+				
 			}
-			this.controls = idList.toArray(new UUID[1]);
+			this.controls = ec;
 			return true;
 		}
 		return false;
@@ -427,15 +427,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public EntityControl getControl(Class clazz) {
-		if (!world.isRemote) {
-			WorldServer ws = (WorldServer) world;
-			if (controls != null) {
-				for (UUID id : controls) {
-					EntityControl control = (EntityControl) ws.getEntityFromUuid(id);
-					if (control.getClass() == clazz) return control;
-				}
-			} else
-				System.out.println("No controls!");
+		for(EntityControl c : this.controls) {
+			if(c.getClass() == clazz)
+				return c;
 		}
 		return null;
 	}
@@ -462,7 +456,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public static class NBT {
 		public static final String COMPOENET_LIST = "componentList";
 		public static final String LAND_ON_SURFACE = "landOnGround";
-		public static final String CONTROLS_UUID = "controls_id";
 		public static final String MAX_TIME = "maxTime";
 		public static final String TARGET_DIM_NAME = "targetDimName";
 		public static final String CURRENT_DIM_NAME = "currentDimName";

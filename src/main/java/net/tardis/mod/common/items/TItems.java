@@ -50,6 +50,9 @@ public class TItems {
 	public static Item scanner;
 	
 	public static Item space_helm;
+	public static Item space_chest;
+	public static Item space_legs;
+	public static Item space_boots;
 	
 	// Componenets
 	
@@ -96,6 +99,15 @@ public class TItems {
 		
 		space_helm = new SpaceSuit(SpaceSuit.material, 0, EntityEquipmentSlot.HEAD);
 		register(space_helm, "space_helm");
+		
+		space_chest = new SpaceSuit(SpaceSuit.material, 1, EntityEquipmentSlot.CHEST);
+		register(space_chest, "space_chest");
+		
+		space_legs = new SpaceSuit(SpaceSuit.material, 2, EntityEquipmentSlot.LEGS);
+		register(space_legs, "space_legs");
+		
+		space_boots = new SpaceSuit(SpaceSuit.material, 3, EntityEquipmentSlot.FEET);
+		register(space_boots, "space_boots");
 		
 		scanner = new ItemScanner();
 		register(scanner, "scanner");
