@@ -11,7 +11,6 @@ public class ControlFastReturn extends EntityControl{
 	public ControlFastReturn(TileEntityTardis tardis) {
 		super(tardis);
 	}
-	
 	public ControlFastReturn(World world) {
 		super(world);
 		this.setSize(0.0625F, 0.0625F);
