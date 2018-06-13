@@ -14,10 +14,10 @@ public class RenderConsole extends TileEntitySpecialRenderer {
 	
 	Minecraft mc;
 	ModelAllControls controlModel = new ModelAllControls();
-	ModelConsole consoleModel=new ModelConsole();
+	ModelConsole consoleModel = new ModelConsole();
 	
-	public static final ResourceLocation CONTROL_TEXTURE=new ResourceLocation(Tardis.MODID,"textures/controls/control_sheet.png");
-	public static final ResourceLocation CONSOLE_TEXTURE=new ResourceLocation(Tardis.MODID,"textures/controls/console.png");
+	public static final ResourceLocation CONTROL_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/control_sheet.png");
+	public static final ResourceLocation CONSOLE_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/console.png");
 	
 	public RenderConsole() {
 		mc = Minecraft.getMinecraft();
@@ -31,7 +31,7 @@ public class RenderConsole extends TileEntitySpecialRenderer {
 		GlStateManager.rotate(180, 1, 0, 0);
 		controlModel.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		mc.getTextureManager().bindTexture(CONSOLE_TEXTURE);
-		consoleModel.render(null, ((TileEntityTardis)te).frame, partialTicks, 0, 0, 0, 0.0625F);
+		consoleModel.render(null, ((TileEntityTardis) te).frame, partialTicks, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
 	

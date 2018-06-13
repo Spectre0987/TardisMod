@@ -33,20 +33,18 @@ public class ControlDimChange extends EntityControl {
 			else
 				--tardis.dimIndex;
 			
-			if (tardis.dimIndex >= ids.length || tardis.dimIndex < 0)
-				tardis.dimIndex = 0;
+			if (tardis.dimIndex >= ids.length || tardis.dimIndex < 0) tardis.dimIndex = 0;
 			
-			int dim=ids[tardis.dimIndex];
-			if(Helper.isDimensionBlocked(dim))
-				tardis.dimIndex = this.nextDI(tardis.dimIndex, ids.length);
+			int dim = ids[tardis.dimIndex];
+			if (Helper.isDimensionBlocked(dim)) tardis.dimIndex = this.nextDI(tardis.dimIndex, ids.length);
 			tardis.setTargetDimension(ids[tardis.dimIndex]);
-		}
-		else
+		} else
 			this.ticks = 20;
 	}
+	
 	public int nextDI(int index, int size) {
-		index+=1;
-		if(index < 0 || index > size) {
+		index += 1;
+		if (index < 0 || index > size) {
 			return 0;
 		}
 		return index;

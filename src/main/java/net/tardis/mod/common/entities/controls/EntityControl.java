@@ -91,46 +91,41 @@ public abstract class EntityControl extends Entity implements IControl {
 	}
 	
 	public abstract void preformAction(EntityPlayer player);
-
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		tag.setLong(NBT.CONSOLE_POS, this.getConsolePos().toLong());
-		return super.writeToNBT(tag);
-	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound tag) {
-		this.setConsolePos(BlockPos.fromLong(tag.getLong(NBT.CONSOLE_POS)));
-		super.readFromNBT(tag);
+		return new NBTTagCompound();
 	}
 	
-	public class NBT{
-		public static final String CONSOLE_POS = "CONSOELPOS";
-	}
-
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {}
+	
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {}
-
+	
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {}
-
+	
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if(ticks > 0)
-			--ticks;
+		if (ticks > 0) --ticks;
+		if(!this.world.isRemote) {
+			if(this.getConsolePos() == null || this.getConsolePos().equals(BlockPos.ORIGIN))
+				this.setDead();
+		}
 	}
-
+	
 	@Override
 	public boolean isInRangeToRender3d(double x, double y, double z) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean isInRangeToRenderDist(double distance) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean isInvisibleToPlayer(EntityPlayer player) {
 		return false;

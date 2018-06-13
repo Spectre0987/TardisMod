@@ -13,8 +13,8 @@ import net.tardis.mod.common.items.TItems;
 
 @Mod.EventBusSubscriber
 public class TBlocks {
-
-	public static List<Block> blocks=new ArrayList<Block>();
+	
+	public static List<Block> blocks = new ArrayList<Block>();
 	
 	public static Block tardis;
 	public static Block tardis_top;
@@ -27,7 +27,7 @@ public class TBlocks {
 	public static Block meglos_slab;
 	
 	public static Block electric_panel;
-
+	
 	public static void register(Block block, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
 		block.setUnlocalizedName(name);
@@ -35,49 +35,48 @@ public class TBlocks {
 		blocks.add(block);
 		try {
 			Field[] fields = block.getClass().getDeclaredFields();
-			for(Field f : fields) {
+			for (Field f : fields) {
 				Object o = f.get(block);
-				if(o instanceof ItemBlock) {
-					TItems.items.add(((ItemBlock)o).setRegistryName(rl));
+				if (o instanceof ItemBlock) {
+					TItems.items.add(((ItemBlock) o).setRegistryName(rl));
 				}
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static void register() {
 		
 		tardis = new BlockTardis();
-		register(tardis,"tardis");
+		register(tardis, "tardis");
 		
 		tardis_top = new BlockTardisTop();
-		register(tardis_top,"tardis_top");
+		register(tardis_top, "tardis_top");
 		
 		console = new BlockConsole();
-		register(console,"console");
+		register(console, "console");
 		
 		door = new BlockBase();
-		register(door,"door");
+		register(door, "door");
 		
 		panel = new BlockPanel();
-		register(panel,"panel");
+		register(panel, "panel");
 		
 		temporal_lab = new BlockTemporalLab();
-		register(temporal_lab,"temporal_lab");
+		register(temporal_lab, "temporal_lab");
 		
-		food_machine=new BlockFoodMachine();
-		register(food_machine,"food_machine");
+		food_machine = new BlockFoodMachine();
+		register(food_machine, "food_machine");
 		
-		if(Tardis.hasIC2)
+		if (Tardis.hasIC2)
 			electric_panel = new BlockEPanel();
-		else 
-			electric_panel = new BlockPanel();
+		else
+			electric_panel = new BlockBase();
 		register(electric_panel, "electric_panel");
 		
 		megalos = new BlockMegalos();
-		register(megalos,"megalos");
+		register(megalos, "megalos");
 	}
 	
 }

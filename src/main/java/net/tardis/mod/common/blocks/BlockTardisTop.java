@@ -9,7 +9,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -22,7 +21,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.tardis.mod.client.renderers.RendererItemTardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.EntityControl;
@@ -30,12 +28,10 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.IUnbreakable;
-import net.tardis.mod.util.TardisTeleporter;
-import net.tardis.mod.util.helpers.Helper;
 
 public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
-	public static final PropertyDirection FACING=PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockTardisTop() {
@@ -43,9 +39,12 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 		this.setBlockUnbreakable();
 		this.setResistance(9999);
 		this.setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
-		item.setTileEntityItemStackRenderer(new RendererItemTardis());
 	}
-	
+
+	public ItemBlock getItem() {
+		return item;
+	}
+
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileEntityDoor();
@@ -54,27 +53,16 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
-			TileEntityDoor door=(TileEntityDoor) worldIn.getTileEntity(pos);
-			if(!playerIn.isSneaking()) {
-				if(!door.isLocked()) {
-					WorldServer ws = (WorldServer)worldIn;
-					BlockPos cPos=door.getConsolePos().south(4);
-					ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)playerIn, TDimensions.id, new TardisTeleporter(ws));
-					((EntityPlayerMP)playerIn).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+			TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
+			door.toggleLocked(playerIn);
+			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+			TileEntity te = ws.getTileEntity(door.getConsolePos());
+			if (te instanceof TileEntityTardis) {
+				EntityControl control = ((TileEntityTardis) te).getControl(ControlDoor.class);
+				if (control != null) {
+					((ControlDoor) control).setOpen(!door.isLocked());
 				}
 			}
-			else {
-				door.toggleLocked(playerIn);
-				WorldServer ws = DimensionManager.getWorld(TDimensions.id);
-				TileEntity te = ws.getTileEntity(door.getConsolePos());
-				if(te != null && te instanceof TileEntityTardis) {
-					EntityControl control= ((TileEntityTardis)te).getControl(ControlDoor.class);
-					if(control != null) {
-						((ControlDoor)control).setOpen(!door.isLocked());
-					}
-				}
-			}
-			
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
@@ -101,41 +89,40 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.9, 0.9);
+		return new AxisAlignedBB(0,0,0,1,1,1);
 	}
-
+	
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		super.onBlockAdded(worldIn, pos, state);
 		try {
-			((TileEntityDoor)worldIn.getTileEntity(pos)).fadeIn();
-			if(!worldIn.isRemote) {
-				worldIn.playSound(null, pos, TSounds.takeoff, SoundCategory.BLOCKS,1F,1F);
+			((TileEntityDoor) worldIn.getTileEntity(pos)).fadeIn();
+			if (!worldIn.isRemote) {
+				worldIn.playSound(null, pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 			}
-		}
-		catch(Exception e) {}
+		} catch (Exception e) {}
 	}
-
+	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
 	}
-
+	
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(FACING).getHorizontalIndex();
 	}
-
+	
 	@Override
-	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer) {
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
-
+	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this,new IProperty[] {FACING});
+		return new BlockStateContainer(this, new IProperty[] { FACING });
 	}
-
+	
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
 		return false;

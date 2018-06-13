@@ -1,9 +1,6 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,6 +36,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
@@ -71,7 +69,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private static final int MAX_TARDIS_SPEED = 1;
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> buffer = NonNullList.create().withSize(9, ItemStack.EMPTY);
-	public UUID[] controls;
+	public EntityControl[] controls;
 	public float fuel = 1F;
 	private boolean isFueling = false;
 	private boolean shouldDelayLoop = true;
@@ -83,34 +81,32 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public String currentDimName = "";
 	public String targetDimName = "";
 	public int totalTimeToTravel;
-	public int rotorUpdate=0;
-	public int frame=0;
+	public int rotorUpdate = 0;
+	public int frame = 0;
 	public int musicTicks = 0;
 	
 	public TileEntityTardis() {}
 	
 	@Override
 	public void update() {
+		
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - 0.0001F);
-			if (ticksToTravel <= 0)
-				this.travel();
-			if(this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 440)
+			if (ticksToTravel <= 0) this.travel();
+			if (this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 440)
 				world.playSound(null, this.getPos(), TSounds.takeoff, SoundCategory.BLOCKS, 0.5F, 1F);
-			else if(this.ticksToTravel > 440 && this.ticksToTravel < this.totalTimeToTravel - 440) {
-				if(this.ticksToTravel % 40 == 0)
-					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
+			else if (this.ticksToTravel > 440 && this.ticksToTravel < this.totalTimeToTravel - 440) {
+				if (this.ticksToTravel % 40 == 0) world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 			}
-			if (fuel <= 0.0)
-				crash();
-			if(world.isRemote) {
-				if(frame + 1 >= ModelConsole.frames.length)
-					frame=0;
-				else ++frame;
+			if (fuel <= 0.0) crash();
+			if (world.isRemote) {
+				if (frame + 1 >= ModelConsole.frames.length)
+					frame = 0;
+				else
+					++frame;
 			}
-		}
-		else if (this.isFueling()) {
+		} else if (this.isFueling()) {
 			this.setFuel(fuel + 0.0001F);
 		}
 		++ticks;
@@ -123,20 +119,20 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (!world.isRemote) {
 				tardisTicket = ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisTicket, world.getChunkFromBlockCoords(this.getPos()).getPos());
-				WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(this.dimension);
+				WorldServer ws = world.getMinecraftServer().getWorld(this.dimension);
 				this.tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, ws, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisLocTicket, ws.getChunkFromBlockCoords(tardisLocation).getPos());
 			}
 		}
-		if(world.isRemote && !this.isInFlight()) {
-			frame=0;
+		if (world.isRemote && !this.isInFlight()) {
+			frame = 0;
 		}
 		++musicTicks;
-		if(musicTicks >= 375) {
+		if (musicTicks >= 375) {
 			musicTicks = 0;
-			if(!world.isRemote)
-				world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
+			if (!world.isRemote) world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
 		}
+		this.createControls();
 	}
 	
 	public void travel() {
@@ -146,15 +142,15 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void travel(boolean makeSound) {
 		if (!world.isRemote) {
 			this.ticksToTravel = 0;
-			World dWorld = ((WorldServer) world).getMinecraftServer().getWorld(destDim);
-			World oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
-			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld,getDestination());
+			World dWorld = world.getMinecraftServer().getWorld(destDim);
+			World oWorld = world.getMinecraftServer().getWorld(dimension);
+			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld, getDestination());
 			if (nPos != null) {
 				boolean b = dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				TileEntity door = dWorld.getTileEntity(nPos.up());
-				if(door != null && door instanceof TileEntityDoor) {
-					((TileEntityDoor)door).setConsolePos(this.getPos());
+				if (door instanceof TileEntityDoor) {
+					((TileEntityDoor) door).setConsolePos(this.getPos());
 				}
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
@@ -164,20 +160,19 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			ForgeChunkManager.forceChunk(tardisLocTicket, dWorld.getChunkFromBlockCoords(tardisLocation).getPos());
 			this.markDirty();
 			DimensionType type = DimensionManager.getProviderType(dimension);
-			if(type != null)
-				this.currentDimName = type.getName();
+			if (type != null) this.currentDimName = type.getName();
 		}
 		shouldDelayLoop = true;
 	}
+	
 	public void updateServer() {
 		if (!world.isRemote) {
-			if(this !=null && !this.isInvalid())
-				((WorldServer) world).getMinecraftServer().getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 8, TDimensions.id, this.getUpdatePacket());
+			if (this != null && !this.isInvalid()) world.getMinecraftServer().getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 8, TDimensions.id, this.getUpdatePacket());
 		}
 	}
 	
-	public BlockPos getLandingBlock(World world,BlockPos pos) {
-		if(this.landOnSurface) {
+	public BlockPos getLandingBlock(World world, BlockPos pos) {
+		if (this.landOnSurface) {
 			return world.getTopSolidOrLiquidBlock(pos);
 		}
 		return Helper.getLowestBlock(world, pos);
@@ -202,21 +197,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				++i;
 			}
 			
-			//Components
-			NBTTagList componentList=tardisTag.getTagList(NBT.COMPOENET_LIST, Constants.NBT.TAG_COMPOUND);
-			int cListIndex=0;
-			for(NBTBase comp:componentList) {
-				this.buffer.set(cListIndex, new ItemStack((NBTTagCompound)comp));
+			// Components
+			NBTTagList componentList = tardisTag.getTagList(NBT.COMPOENET_LIST, Constants.NBT.TAG_COMPOUND);
+			int cListIndex = 0;
+			for (NBTBase comp : componentList) {
+				this.buffer.set(cListIndex, new ItemStack((NBTTagCompound) comp));
 				++cListIndex;
 			}
-			
-			List<UUID> listIDs = new ArrayList<UUID>();
-			NBTTagList controlList = tardisTag.getTagList(NBT.CONTROLS_UUID, Constants.NBT.TAG_COMPOUND);
-			for(NBTBase base : controlList) {
-				listIDs.add(UUID.fromString(((NBTTagCompound)base).getString("con")));
-			}
-			this.controls = listIDs.toArray(new UUID[listIDs.size()-1]);
-			
 			this.totalTimeToTravel = tardisTag.getInteger(NBT.MAX_TIME);
 		}
 	}
@@ -236,31 +223,22 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setInteger("dim", this.dimension);
 			tardisTag.setInteger("destDim", this.destDim);
 			tardisTag.setFloat("fuel", fuel);
-			tardisTag.setBoolean(NBT.LAND_ON_SURFACE,this.landOnSurface);
+			tardisTag.setBoolean(NBT.LAND_ON_SURFACE, this.landOnSurface);
 			NBTTagList cList = new NBTTagList();
 			for (SpaceTimeCoord co : saveCoords) {
 				cList.appendTag(co.writeToNBT(new NBTTagCompound()));
 			}
 			tardisTag.setTag("coordList", cList);
-			//Compoenents
-			NBTTagList compoentList=new NBTTagList();
-			for(ItemStack stack: buffer) {
+			// Compoenents
+			NBTTagList compoentList = new NBTTagList();
+			for (ItemStack stack : buffer) {
 				compoentList.appendTag(stack.writeToNBT(new NBTTagCompound()));
 			}
 			tardisTag.setTag(NBT.COMPOENET_LIST, compoentList);
 			
-			NBTTagList controlList = new NBTTagList();
-			for(UUID id : controls) {
-				NBTTagCompound control_tag = new NBTTagCompound();
-				control_tag.setString("con", id.toString());
-				controlList.appendTag(control_tag);
-			}
-			tardisTag.setTag(NBT.CONTROLS_UUID, controlList);
-			
 			tardisTag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		}
 		tag.setTag("tardis", tardisTag);
-		
 		
 		return super.writeToNBT(tag);
 	}
@@ -269,19 +247,17 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.tardisDestination = pos.up().toImmutable();
 		this.destDim = dimension;
 		this.markDirty();
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 			DimensionType type = DimensionManager.getProviderType(dimension);
-			if(type != null)
-				this.targetDimName = type.getName();
+			if (type != null) this.targetDimName = type.getName();
 			DimensionType currentType = DimensionManager.getProviderType(this.dimension);
-			if(type != null)
-				this.currentDimName = currentType.getName();
+			if (type != null) this.currentDimName = currentType.getName();
 		}
 	}
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 880/*The Time in tick it takes the launch sound to play*/);
+		return (int) ((dist / MAX_TARDIS_SPEED) + 880/* The Time in tick it takes the launch sound to play */);
 	}
 	
 	public BlockPos getDestination() {
@@ -337,23 +313,20 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public boolean startFlight() {
-		if (this.getDestination().equals(BlockPos.ORIGIN))
-			return false;
-		if (fuel <= 0.0F)
-			return false;
+		if (this.getDestination().equals(BlockPos.ORIGIN)) return false;
+		if (fuel <= 0.0F) return false;
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;
 		this.setLoading(false);
 		this.setFueling(false);
 		if (!world.isRemote) {
-			WorldServer oWorld = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
+			WorldServer oWorld = world.getMinecraftServer().getWorld(dimension);
 			oWorld.setBlockToAir(this.tardisLocation);
 			oWorld.setBlockToAir(this.tardisLocation.up());
 			EntityControl door = this.getControl(ControlDoor.class);
-			if(door != null && door instanceof ControlDoor)
-				System.out.println("door: "+door);
-				((ControlDoor)door).setOpen(false);
+			((ControlDoor) door).setOpen(false);
+			this.saveCoords.set(this.saveCoords.size() - 1, new SpaceTimeCoord(this.getLocation(), this.dimension));
 			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunkFromBlockCoords(getLocation()).getPos());
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 		}
@@ -409,8 +382,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public boolean createControls() {
 		if (controls == null || controls.length == 0) {
-			List<UUID> idList = new ArrayList<UUID>();
-			EntityControl[] ec = new EntityControl[] {
+			EntityControl[] ec = new EntityControl[] { 
 					new ControlLaunch(this),
 					new ControlX(this),
 					new ControlY(this),
@@ -427,15 +399,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					new ControlFlight(this),
 					new ControlFuel(this),
 					new ControlLandType(this),
-					new ControlDirection(this)
-				};
-			for(EntityControl con : ec) {
-				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1,this.getPos().getZ() + con.getOffset().z + 0.5);
-				if(!world.isRemote)
+					new ControlDirection(this),
+					new ControlFastReturn(this)
+					};
+			for (EntityControl con : ec) {
+				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
+				if (!world.isRemote)
 					world.spawnEntity(con);
-				idList.add(con.getUniqueID());
+				
 			}
-			this.controls = idList.toArray(new UUID[1]);
+			this.controls = ec;
 			return true;
 		}
 		return false;
@@ -454,16 +427,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public EntityControl getControl(Class clazz) {
-		if(!world.isRemote) {
-			WorldServer ws = (WorldServer)world;
-			if(controls != null) {
-				for(UUID id : controls) {
-					EntityControl control = (EntityControl) ws.getEntityFromUuid(id);
-					if(control.getClass() == clazz)
-						return control;
-				}
-			}
-			else System.out.println("No controls!");
+		for(EntityControl c : this.controls) {
+			if(c.getClass() == clazz)
+				return c;
 		}
 		return null;
 	}
@@ -471,7 +437,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void crash() {
 		if (!world.isRemote) {
 			ChunkPos cPos = world.getChunkFromBlockCoords(this.getLocation()).getPos();
-			WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(dimension);
+			WorldServer ws = world.getMinecraftServer().getWorld(dimension);
 			ws.getChunkProvider().loadChunk(cPos.x, cPos.z);
 			this.setDesination(getLocation(), dimension);
 			BlockPos pos = getLocation();
@@ -486,10 +452,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 		}
 	}
-	public static class NBT{
+	
+	public static class NBT {
 		public static final String COMPOENET_LIST = "componentList";
 		public static final String LAND_ON_SURFACE = "landOnGround";
-		public static final String CONTROLS_UUID = "controls_id";
 		public static final String MAX_TIME = "maxTime";
 		public static final String TARGET_DIM_NAME = "targetDimName";
 		public static final String CURRENT_DIM_NAME = "currentDimName";
@@ -500,38 +466,38 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void setFacing(EnumFacing facing) {
-		this.facing=facing;
+		this.facing = facing;
 		this.markDirty();
 	}
-
+	
 	@Override
 	public String getName() {
 		return "TARDIS";
 	}
-
+	
 	@Override
-		public boolean hasCustomName() {
+	public boolean hasCustomName() {
 		return false;
 	}
-
+	
 	@Override
 	public int getSizeInventory() {
 		return buffer.size();
 	}
-
+	
 	@Override
 	public boolean isEmpty() {
 		return buffer.isEmpty();
 	}
-
+	
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		if(index >= 0 && index < buffer.size()) {
+		if (index >= 0 && index < buffer.size()) {
 			return buffer.get(index);
-		}
-		else return ItemStack.EMPTY;
+		} else
+			return ItemStack.EMPTY;
 	}
-
+	
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
 		ItemStack stack = this.getStackInSlot(index);
@@ -540,55 +506,54 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.markDirty();
 		return newStack;
 	}
-
+	
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		ItemStack stack = this.getStackInSlot(index);
 		this.setInventorySlotContents(index, ItemStack.EMPTY);
 		return stack;
 	}
-
+	
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		if(index >= 0 && index < buffer.size())
-			buffer.set(index, stack);
+		if (index >= 0 && index < buffer.size()) buffer.set(index, stack);
 		this.markDirty();
 	}
-
+	
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
-
+	
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
 		return false;
 	}
-
+	
 	@Override
 	public void openInventory(EntityPlayer player) {}
-
+	
 	@Override
 	public void closeInventory(EntityPlayer player) {}
-
+	
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		return true;
 	}
-
+	
 	@Override
 	public int getField(int id) {
 		return 0;
 	}
-
+	
 	@Override
 	public void setField(int id, int value) {}
-
+	
 	@Override
 	public int getFieldCount() {
 		return 0;
 	}
-
+	
 	@Override
 	public void clear() {
 		buffer.clear();

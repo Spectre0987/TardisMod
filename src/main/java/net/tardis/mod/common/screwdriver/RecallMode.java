@@ -23,14 +23,13 @@ public class RecallMode implements IScrewAction {
 		if (!world.isRemote && player.dimension != TDimensions.id) {
 			if (TardisHelper.hasTardis(player.getUniqueID())) {
 				BlockPos pos = TardisHelper.getTardis(player.getUniqueID());
-				WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(TDimensions.id);
+				WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.id);
 				TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(pos);
-				tardis.setDesination(player.getPosition().down().offset(player.getHorizontalFacing(),2), player.dimension);
+				tardis.setDesination(player.getPosition().down().offset(player.getHorizontalFacing(), 2), player.dimension);
 				tardis.setFacing(player.getHorizontalFacing().getOpposite());
-				if (tardis.startFlight())
-					tardis.travel();
+				if (tardis.startFlight()) tardis.travel();
 			} else
-				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_MISSING),true);
+				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_MISSING), true);
 		}
 	}
 	

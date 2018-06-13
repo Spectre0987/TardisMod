@@ -13,6 +13,7 @@ import net.tardis.mod.packets.MessageTeleport;
 
 public class GuiVortexM extends GuiScreen {
 	
+
 	public GuiTextField xCoord;
 	public GuiTextField yCoord;
 	public GuiTextField zCoord;
@@ -29,46 +30,51 @@ public class GuiVortexM extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if (button == this.teleport) {
-			BlockPos tpPos=new BlockPos(getInt(xCoord.getText(),COORD_TYPE.X),getInt(yCoord.getText(),COORD_TYPE.Y),getInt(zCoord.getText(),COORD_TYPE.Z));
-			Tardis.NETWORK.sendToServer(new MessageTeleport(tpPos,mc.player.getEntityId()));
+			BlockPos tpPos = new BlockPos(getInt(xCoord.getText(), COORD_TYPE.X), getInt(yCoord.getText(), COORD_TYPE.Y), getInt(zCoord.getText(), COORD_TYPE.Z));
+			Tardis.NETWORK.sendToServer(new MessageTeleport(tpPos, mc.player.getEntityId()));
 		}
 		super.actionPerformed(button);
 	}
+	
 	private int getInt(String num, COORD_TYPE type) {
-		if(num!=null && !num.isEmpty()) {
+		if (num != null && !num.isEmpty()) {
 			int i;
 			try {
-				i=Integer.parseInt(num);
-			}
-			catch(Exception e) {
-				i=0;
+				i = Integer.parseInt(num);
+			} catch (Exception e) {
+				i = 0;
 			}
 			return i;
-		}
-		else {
-			switch(type) {
-				case X: return (int)mc.player.posX;
-				case Y: return (int)mc.player.posY;
-				case Z: return (int)mc.player.posZ;
-				default: return 0;
+		} else {
+			switch (type) {
+				case X:
+					return (int) mc.player.posX;
+				case Y:
+					return (int) mc.player.posY;
+				case Z:
+					return (int) mc.player.posZ;
+				default:
+					return 0;
 			}
 		}
 	}
-	public enum COORD_TYPE{
-		X,
-		Y,
-		Z
+	public enum COORD_TYPE {
+		X, Y, Z
 	}
+	
 	@Override
 	public void initGui() {
-		int x=width/2-15;
-		int y=height/2-15;
-		String enterButton="Teleport";
+		int x = width / 2 - 15;
+		int y = height / 2 - 15;
+		String enterButton = "Teleport";
 		
-		xCoord = new GuiTextField(0, fr, x,y, 30, fr.FONT_HEIGHT);
-		yCoord = new GuiTextField(1, fr,x,y+ fr.FONT_HEIGHT + 1, 30, fr.FONT_HEIGHT);
-		zCoord = new GuiTextField(2, fr, x, y + fr.FONT_HEIGHT * 2 + 1, 30, fr.FONT_HEIGHT);
-		teleport = new GuiButton(3,x, y + fr.FONT_HEIGHT * 3 + 5, enterButton);
+		int yOffset = fr.FONT_HEIGHT + 3;
+		
+		xCoord = new GuiTextField(0, fr, x - 15, y, 30, fr.FONT_HEIGHT);
+		yCoord = new GuiTextField(1, fr, x - 15, y + yOffset, 30, fr.FONT_HEIGHT);
+		zCoord = new GuiTextField(2, fr, x - 15, y + yOffset * 2 + 1, 30, fr.FONT_HEIGHT);
+		teleport = new GuiButton(3, x, y + yOffset * 3, enterButton);
+		teleport.x -= teleport.width/2;
 		xCoord.setFocused(true);
 		
 		this.buttonList.clear();

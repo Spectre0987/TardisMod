@@ -38,7 +38,25 @@ public class TardisProvider extends WorldProvider {
 	
 	@Override
 	public void calculateInitialWeather() {}
-	
+
+	@Override
+	protected void generateLightBrightnessTable() {
+		for (int i = 0; i <= 15; ++i) {
+			float f1 = 1.0F - i / 15.0F;
+			this.lightBrightnessTable[i] = (1.0F - f1) / (f1 * 3.0F + 1.0F) * 1.0F + 0.0F;
+		}
+	}
+
+	@Override
+	public float getSunBrightness(float par1) {
+		return 0.3f;
+	}
+
+	@Override
+	public float getSunBrightnessFactor(float par1) {
+		return 0;
+	}
+
 	@Override
 	public void updateWeather() {}
 	
@@ -51,6 +69,5 @@ public class TardisProvider extends WorldProvider {
 	public boolean canRespawnHere() {
 		return false;
 	}
-	
 	
 }

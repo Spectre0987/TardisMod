@@ -35,7 +35,7 @@ public class ControlFlight extends EntityControl {
 		if (!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			if (!tardis.isInFlight()) {
-				WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(tardis.dimension);
+				WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 				BlockPos wPos = tardis.getLocation();
 				ws.setBlockToAir(tardis.getLocation());
 				ws.setBlockToAir(tardis.getLocation().up());
@@ -48,7 +48,7 @@ public class ControlFlight extends EntityControl {
 				ForgeChunkManager.unforceChunk(tardis.tardisLocTicket, world.getChunkFromBlockCoords(getConsolePos()).getPos());
 				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, tardis.dimension, new TardisTeleporter((WorldServer) world));
 			} else
-				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_IN_FLIGHT),true);
+				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_IN_FLIGHT), true);
 		}
 	}
 	

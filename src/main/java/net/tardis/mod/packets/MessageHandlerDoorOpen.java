@@ -7,8 +7,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 
-public class MessageHandlerDoorOpen implements IMessageHandler<MessageDoorOpen,IMessage>{
-
+public class MessageHandlerDoorOpen implements IMessageHandler<MessageDoorOpen, IMessage> {
+	
 	public MessageHandlerDoorOpen() {}
 	
 	@Override
@@ -16,13 +16,14 @@ public class MessageHandlerDoorOpen implements IMessageHandler<MessageDoorOpen,I
 		Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 			@Override
 			public void run() {
-				Minecraft mc=Minecraft.getMinecraft();
-				TileEntity te=mc.world.getTileEntity(mes.pos);
-				if(te!=null && te instanceof TileEntityDoor) {
-					((TileEntityDoor)te).isLocked=mes.isOpen;
+				Minecraft mc = Minecraft.getMinecraft();
+				TileEntity te = mc.world.getTileEntity(mes.pos);
+				if (te instanceof TileEntityDoor) {
+					((TileEntityDoor) te).isLocked = mes.isOpen;
 				}
-			}});
+			}
+		});
 		return null;
 	}
-
+	
 }

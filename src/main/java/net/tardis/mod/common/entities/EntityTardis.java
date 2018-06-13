@@ -90,7 +90,7 @@ public class EntityTardis extends EntityFlying {
 			if (pas instanceof EntityPlayer) {
 				world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
 				world.setBlockState(this.getPosition().up(), TBlocks.tardis_top.getDefaultState());
-				WorldServer ws = ((WorldServer) world).getMinecraftServer().getWorld(TDimensions.id);
+				WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.id);
 				System.out.println("BlockPos is" + this.getConsolePos());
 				((TileEntityTardis) ws.getTileEntity(getConsolePos())).setLocation(this.getPosition());
 				;

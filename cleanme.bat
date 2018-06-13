@@ -1,4 +1,5 @@
 @ECHO OFF
+git pull
 IF NOT EXIST formatter/ (
 	echo Formatter not found, downloading...
 	powershell -Command "Invoke-WebRequest http://download1941.mediafire.com/44352k91t6cg/mb88ia9mh4b5wps/atg-formatter.zip -OutFile atg-formatter.zip"

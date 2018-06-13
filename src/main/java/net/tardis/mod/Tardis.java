@@ -29,6 +29,7 @@ import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlEngine;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
@@ -61,7 +62,7 @@ import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.TEventHandler;
 import net.tardis.mod.integrations.Galacticraft;
-import net.tardis.mod.packets.MessageAngel;
+import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageHandlerCam;
@@ -69,18 +70,16 @@ import net.tardis.mod.packets.MessageHandlerDoorOpen;
 import net.tardis.mod.packets.MessageHandlerProtocol;
 import net.tardis.mod.packets.MessageHandlerTR;
 import net.tardis.mod.packets.MessageHandlerTeleport;
-import net.tardis.mod.packets.MessageHelperAngel;
 import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageTR;
 import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
 
-@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP)
+@Mod(modid = Tardis.MODID, name = Tardis.NAME, useMetadata = true, dependencies = Tardis.DEP)
 public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
-	public static final String VERSION = "0.0.2A";
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
 	
 	private static Logger logger;
@@ -99,16 +98,15 @@ public class Tardis {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		hasIC2 = Loader.isModLoaded("ic2");
-		if(Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT))
-			Galacticraft.preInit();
+		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
+		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
+		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.register();
 		TBlocks.register();
 		TDimensions.register();
 		EntityHelper.makeGoodBiomes();
-		MinecraftForge.EVENT_BUS.register(new TEventHandler());
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");
 		EntityHelper.registerStatic(ControlX.class, "x_valve");
 		EntityHelper.registerStatic(ControlY.class, "y_valve");
@@ -126,6 +124,7 @@ public class Tardis {
 		EntityHelper.registerStatic(EntityForceField.class, "force_field");
 		EntityHelper.registerStatic(ControlLandType.class, "land_type");
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
+		EntityHelper.registerStatic(ControlFastReturn.class, "tardis_fast_return");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		
@@ -135,10 +134,8 @@ public class Tardis {
 		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
 		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
-		if(hasIC2)
-			registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
+		if (hasIC2) registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
 		
-		NETWORK.registerMessage(MessageHelperAngel.class, MessageAngel.class, 0, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
 		NETWORK.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);
@@ -156,10 +153,10 @@ public class Tardis {
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.power_cell), 1200));
 		
-		//TardisProtocol.register(new TardisProtocolForceField());
+		// TardisProtocol.register(new TardisProtocolForceField());
 		
-		if(TardisConfig.USE_ENTITIES.entities) {
-			//Register All Mobs Here.
+		if (TardisConfig.USE_ENTITIES.entities) {
+			// Register All Mobs Here.
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 	}

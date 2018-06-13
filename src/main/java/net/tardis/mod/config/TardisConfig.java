@@ -7,12 +7,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 
-@Config(modid=Tardis.MODID, name="TARDIS Mod")
+@Config(modid = Tardis.MODID, name = "TARDIS Mod")
 public class TardisConfig {
-
+	
 	@Config.RequiresMcRestart
 	@Config.LangKey("config.category.dims")
-	public static final Dimensions BlockedDimensions = new Dimensions();
+	public static final Dimensions Dimensions = new Dimensions();
 	
 	@Config.LangKey("config.entity")
 	public static final UseEntities USE_ENTITIES = new UseEntities();
@@ -20,10 +20,10 @@ public class TardisConfig {
 	@Config.LangKey("config.misc")
 	public static final Misc MISC = new Misc();
 	
-	public static class Dimensions{
+	public static class Dimensions {
 		
 		@Config.LangKey("config.dims")
-		public int[] bDims=new int[] {1};
+		public int[] bDims = new int[] { 1 };
 		
 		@Config.LangKey("config.setdim")
 		public boolean setDimension = false;
@@ -32,13 +32,13 @@ public class TardisConfig {
 		public int tardisDimension = 10;
 	}
 	
-	public static class UseEntities{
+	public static class UseEntities {
 		
 		@Config.LangKey("config.entity.allowed")
 		public boolean entities = true;
 	}
 	
-	public static class Misc{
+	public static class Misc {
 		
 		@Config.LangKey("config.misc.givekey")
 		public boolean givePlayerKey = false;

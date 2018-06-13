@@ -4,8 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.Helper;
 import scala.util.Random;
 
 public class ControlRandom extends EntityControl {
