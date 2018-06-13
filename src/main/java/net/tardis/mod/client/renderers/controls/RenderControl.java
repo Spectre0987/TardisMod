@@ -1,7 +1,6 @@
 package net.tardis.mod.client.renderers.controls;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -10,8 +9,6 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.console.contols.ModelAllControls;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.info.TardisType;
-
-import java.awt.font.FontRenderContext;
 
 public abstract class RenderControl extends Render<EntityControl> {
 	
@@ -27,10 +24,10 @@ public abstract class RenderControl extends Render<EntityControl> {
 	@Override
 	public void doRender(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		renderControl(entity, x, y, z, entityYaw, partialTicks, TardisType.Type80s);
-		if (Minecraft.getMinecraft().objectMouseOver.entityHit == entity) {
+		Entity look = Minecraft.getMinecraft().objectMouseOver.entityHit;
+		if (look != null && look == entity) {
 			GlStateManager.pushMatrix();
-			//GlStateManager.scale(15, 15, 15);
-			renderLivingLabel(entity, entity.getClass().getSimpleName(), x, y, z, 45);
+			renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 45);
 			GlStateManager.popMatrix();
 		}
 	}
