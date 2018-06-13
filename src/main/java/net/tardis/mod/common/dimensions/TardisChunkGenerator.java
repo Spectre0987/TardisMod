@@ -18,7 +18,17 @@ public class TardisChunkGenerator implements IChunkGenerator {
 	
 	private World world;
 	private Random rand;
-	
+
+	public TardisChunkGenerator(World world) {
+		super();
+		this.world = world;
+		this.rand = new Random(world.getSeed());
+		world.rainingStrength = 0;
+		world.setRainStrength(0);
+		world.setSeaLevel(64);
+	}
+
+
 	public TardisChunkGenerator(World world, long seed) {
 		super();
 		this.world = world;
