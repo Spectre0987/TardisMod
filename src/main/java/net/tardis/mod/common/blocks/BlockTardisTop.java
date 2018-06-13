@@ -21,7 +21,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.tardis.mod.client.renderers.RendererItemTardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.EntityControl;
@@ -58,7 +57,7 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 			door.toggleLocked(playerIn);
 			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
 			TileEntity te = ws.getTileEntity(door.getConsolePos());
-			if (te != null && te instanceof TileEntityTardis) {
+			if (te instanceof TileEntityTardis) {
 				EntityControl control = ((TileEntityTardis) te).getControl(ControlDoor.class);
 				if (control != null) {
 					((ControlDoor) control).setOpen(!door.isLocked());

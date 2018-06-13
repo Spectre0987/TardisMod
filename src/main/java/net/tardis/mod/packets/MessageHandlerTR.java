@@ -15,7 +15,7 @@ public class MessageHandlerTR implements IMessageHandler<MessageTR, IMessage> {
 			@Override
 			public void run() {
 				TileEntity te = ctx.getServerHandler().player.getServerWorld().getTileEntity(mes.pos);
-				if (te != null && te instanceof TileEntityTemporalLab) {
+				if (te instanceof TileEntityTemporalLab) {
 					((TileEntityTemporalLab) te).currentRecipe = TemporalRecipe.recipes.get(mes.id);
 				}
 			}

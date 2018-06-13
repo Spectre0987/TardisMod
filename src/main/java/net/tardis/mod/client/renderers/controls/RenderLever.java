@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.models.console.contols.ModelLever;
-import net.tardis.mod.client.renderers.RenderControl;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.info.TardisType;
 import net.tardis.mod.util.helpers.Helper;
@@ -24,7 +23,7 @@ public class RenderLever extends RenderControl {
 		GlStateManager.rotate(180, 1, 0, 0);
 		GlStateManager.rotate(60F, 0, 1, 0);
 		Vec3d offset;
-		if (((EntityControl) entity).ticks == 0)
+		if (entity.ticks == 0)
 			offset = Helper.convertToPixels(-0.5, -2.5, 0);
 		else
 			offset = Helper.convertToPixels(-0.5, -1.5, -2);
@@ -34,7 +33,7 @@ public class RenderLever extends RenderControl {
 	}
 	
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 	}
 	

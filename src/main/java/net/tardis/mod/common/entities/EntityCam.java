@@ -57,7 +57,7 @@ public class EntityCam extends Entity {
 			BlockPos nConsolePos = consolePos.east(3);
 			pas.setPosition(nConsolePos.getX(), nConsolePos.getY(), nConsolePos.getZ());
 			pas.setInvisible(false);
-			((WorldServer) world).getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.id, new TardisTeleporter((WorldServer) world));
+			world.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.id, new TardisTeleporter((WorldServer) world));
 		}
 		super.removePassenger(pas);
 	}

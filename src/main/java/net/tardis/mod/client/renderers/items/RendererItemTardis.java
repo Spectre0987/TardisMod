@@ -1,4 +1,4 @@
-package net.tardis.mod.client.renderers;
+package net.tardis.mod.client.renderers.items;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.tardis.mod.client.models.ModelTardis;
 import net.tardis.mod.client.models.console.contols.ModelExteriorDoorL;
 import net.tardis.mod.client.models.console.contols.ModelExteriorDoorR;
+import net.tardis.mod.client.renderers.RenderTardis;
 
 public class RendererItemTardis extends TileEntityItemStackRenderer {
 	

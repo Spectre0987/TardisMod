@@ -69,7 +69,7 @@ public class ControlDoor extends EntityControl {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			if (!tardis.isInFlight()) {
 				if (!player.isSneaking()) {
-					this.setOpen(this.isOpen() ? false : true);
+					this.setOpen(!this.isOpen());
 					if (!world.isRemote) {
 						if (this.isOpen())
 							world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
@@ -77,7 +77,7 @@ public class ControlDoor extends EntityControl {
 							world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
 						WorldServer ws = DimensionManager.getWorld(tardis.dimension);
 						TileEntity te = ws.getTileEntity(tardis.getLocation().up());
-						if (te != null && te instanceof TileEntityDoor) {
+						if (te instanceof TileEntityDoor) {
 							((TileEntityDoor) te).setLocked(!this.isOpen());
 							player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + !this.isOpen()), true);
 						}

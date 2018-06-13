@@ -116,7 +116,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 								p.motionY = 0;
 								p.motionZ = 0;
 								p.connection.sendPacket(new SPacketEntityVelocity(p));
-								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) p, TDimensions.id, new TardisTeleporter(ws));
+								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(p, TDimensions.id, new TardisTeleporter(ws));
 								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
 							}
 						} else {
@@ -178,7 +178,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
 			if (ws != null) {
 				TileEntity te = ws.getTileEntity(getConsolePos());
-				if (te != null && te instanceof TileEntityTardis) return ((TileEntityTardis) te);
+				if (te instanceof TileEntityTardis) return ((TileEntityTardis) te);
 			}
 		}
 		return DummyTardis.INSTANCE;

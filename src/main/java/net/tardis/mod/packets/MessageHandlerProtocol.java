@@ -17,7 +17,7 @@ public class MessageHandlerProtocol implements IMessageHandler<MessageProtocol, 
 			public void run() {
 				WorldServer ws = ctx.getServerHandler().player.getServerWorld();
 				TileEntity te = ws.getTileEntity(mes.consolePos);
-				if (te != null && te instanceof TileEntityTardis) {
+				if (te instanceof TileEntityTardis) {
 					TardisProtocol.getProtocolFromId(mes.id).onActivated(ws, (TileEntityTardis) te);
 					System.out.println(mes.id);
 				}

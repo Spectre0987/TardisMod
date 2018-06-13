@@ -22,7 +22,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.renderers.RendererKey;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
@@ -66,7 +65,7 @@ public class ItemKey extends Item {
 				setPos(stack, cPos);
 				if (tw.getTileEntity(cPos) == null) {
 					Template tem = tw.getStructureTemplateManager().get(server, CONSOLE_ROOM);
-					tem.addBlocksToWorld(tw, cPos.add(-((int) tem.getSize().getX() / 2), -1, -((int) tem.getSize().getZ() / 2)), new PlacementSettings());
+					tem.addBlocksToWorld(tw, cPos.add(-(tem.getSize().getX() / 2), -1, -(tem.getSize().getZ() / 2)), new PlacementSettings());
 					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
 					EntityItem entitySonic = new EntityItem(tw, cPos.getX(), cPos.getY(), cPos.getZ(), new ItemStack(TItems.sonic_screwdriver));
 					tw.spawnEntity(entitySonic);

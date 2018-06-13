@@ -107,7 +107,6 @@ public class Tardis {
 		TBlocks.register();
 		TDimensions.register();
 		EntityHelper.makeGoodBiomes();
-		MinecraftForge.EVENT_BUS.register(new TEventHandler());
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");
 		EntityHelper.registerStatic(ControlX.class, "x_valve");
 		EntityHelper.registerStatic(ControlY.class, "y_valve");
