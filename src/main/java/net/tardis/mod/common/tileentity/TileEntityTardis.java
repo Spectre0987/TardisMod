@@ -97,7 +97,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 440)
 				world.playSound(null, this.getPos(), TSounds.takeoff, SoundCategory.BLOCKS, 0.5F, 1F);
 			else if (this.ticksToTravel > 440 && this.ticksToTravel < this.totalTimeToTravel - 440) {
-				if (this.ticksToTravel % 40 == 0) world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
+				if (this.ticksToTravel % 40 == 0) {
+					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
+					world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
+				}
 			}
 			if (fuel <= 0.0) crash();
 			if (world.isRemote) {
@@ -106,10 +109,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				else
 					++frame;
 			}
-		} else {
-			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
-		}
-		if (this.isFueling()) {
+		} else if (this.isFueling()) {
 			this.setFuel(fuel + 0.0001F);
 		}
 		++ticks;
