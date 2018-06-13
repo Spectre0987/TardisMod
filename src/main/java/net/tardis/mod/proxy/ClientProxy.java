@@ -6,6 +6,7 @@ import net.tardis.mod.client.renderers.RenderConsole;
 import net.tardis.mod.client.renderers.RenderDoor;
 import net.tardis.mod.client.renderers.RenderFoodMachine;
 import net.tardis.mod.client.renderers.RenderInvis;
+import net.tardis.mod.client.renderers.RenderItemSonicPen;
 import net.tardis.mod.client.renderers.RenderRay;
 import net.tardis.mod.client.renderers.RenderScreen;
 import net.tardis.mod.client.renderers.RenderTardis;
@@ -31,6 +32,7 @@ import net.tardis.mod.common.entities.controls.ControlScreen;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
+import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -64,6 +66,8 @@ public class ClientProxy extends ServerProxy {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
+		
+		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
 		
 		// Not needed currently.
 		// OBJLoader.INSTANCE.addDomain(Tardis.MODID);

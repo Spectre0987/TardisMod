@@ -48,6 +48,7 @@ public class TItems {
 	public static Item vortex_manip;
 	public static Item sonic_screwdriver;
 	public static Item scanner;
+	public static Item sonic_pen;
 	
 	public static Item space_helm;
 	public static Item space_chest;
@@ -111,6 +112,9 @@ public class TItems {
 		
 		scanner = new ItemScanner();
 		register(scanner, "scanner");
+		
+		sonic_pen = new ItemSonic();
+		register(sonic_pen, "sonic_pen");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();
