@@ -7,7 +7,7 @@ item.sonic_screwdriver.name=Tournevis sonique
 item.gunstick.name=Canon Dalek
 item.power_cell.name=Cellule de puissance trionique
 item.ray_gun.name=Rayon laser Dalek
-item.void_specs.name=Void Specs
+item.void_specs.name=Lunettes du Vide
 item.fob_watch.name=Montre à gousset Gallifreyenne
 item.fez.name=Fez
 item.bowtie.name=Noeud papillon
@@ -24,7 +24,7 @@ item.sonic_pen.name=Stylo torche sonique
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
 tile.panel.name=Rondelle
-tile.door.name=Porte de TARDIS
+tile.door.name=Porte du TARDIS
 tile.tardis_top.name=TARDIS
 tile.light.name=Lampe
 tile.homing_beacon.name=Balise d'arrivée
@@ -39,7 +39,7 @@ tile.megalos.name=Meglos
 tile.console.name=Console
 
 tardis.locked.true=TARDIS fermé !
-tardis.locked.false=TARDIS à été ouvert.
+tardis.locked.false=TARDIS a été ouvert.
 
 death.attack.dalek=Tué par un rayon laser Dalek
 
@@ -58,15 +58,15 @@ tardis.flying=TARDIS en vol!
 
 tardis.gui.protocol.force_field=Protocole de champs de force
 
-tardis.console.land.true=TARDIS est réglé pour attérir sur le point le plus haut disponible
-tardis.console.land.false=TARDIS est réglé pour attérir sur le point le plus bas disponible
+tardis.console.land.true=TARDIS est réglé pour atterrir sur le point le plus haut disponible
+tardis.console.land.false=TARDIS est réglé pour atterrir sur le point le plus bas disponible
 
-tardis.direction.north=TARDIS est tourné vers le nord
-tardis.direction.east=TARDIS est tourné vers l'est
-tardis.direction.south=TARDIS est tounée vers le sud
-tardis.direction.west=TARDIS est tournée vers l'ouest
+tardis.direction.north=Le TARDIS est tourné vers le nord
+tardis.direction.east=Le TARDIS est tourné vers l'est
+tardis.direction.south=Le TARDIS est touné vers le sud
+tardis.direction.west=Le TARDIS est tourné vers l'ouest
 
-tardis.missing=L'enveloppe plasmique extérieure est introuvable ! Veuillez atterrir à nouveau.
+tardis.missing=L'enveloppe plasmique externe est introuvable ! Veuillez atterrir à nouveau.
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
