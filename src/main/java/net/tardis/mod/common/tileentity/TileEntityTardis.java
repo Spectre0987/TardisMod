@@ -106,7 +106,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				else
 					++frame;
 			}
-		} else if (this.isFueling()) {
+		} else {
+			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
+		}
+		if (this.isFueling()) {
 			this.setFuel(fuel + 0.0001F);
 		}
 		++ticks;

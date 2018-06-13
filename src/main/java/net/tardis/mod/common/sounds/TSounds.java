@@ -23,6 +23,7 @@ public class TSounds {
 	public static SoundEvent door_closed = register("door_closed");
 	public static SoundEvent interior_hum_80 = register("interior_hum_80");
 	public static SoundEvent cloister_bell = register("cloister_bell");
+	public static SoundEvent drum_beat = register("drum_beat");
 	
 	public static SoundEvent register(String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
