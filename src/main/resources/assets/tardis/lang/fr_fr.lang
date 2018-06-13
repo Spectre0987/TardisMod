@@ -19,6 +19,7 @@ item.vortex_manip.name=Manipulateur de Vortex
 item.fluid_link.name=Branchement de liquide
 item.demat_circut.name=Circuit de dématérialisation
 item.artron_capacitor.name=Batterie d'Artron
+item.sonic_pen.name=Stylo torche sonique
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -93,6 +94,7 @@ entity.fuel.name=Ravitailleur
 entity.land_type.name=Sélecteur de type d'atterissage
 entity.direction_control.name=Contrôleur de direction
 entity.tardis.name=TARDIS
+entity.tardis_fast_return.name=Retour rapide
 
 key.notwheretardis=CE N'EST PAS LÀ OÙ SE TROUVE LE TARDIS!
 key.console.location=Console à: 
