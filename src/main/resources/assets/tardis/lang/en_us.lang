@@ -20,6 +20,7 @@ item.fluid_link.name=Fluid Links
 item.demat_circut.name=Dematerialization Circut
 item.artron_capacitor.name=Artron Capacitor
 item.sonic_pen.name=Sonic Torch Pen
+item.tardis_manual.name=TARDIS Manual
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
