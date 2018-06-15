@@ -99,7 +99,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			else if (this.ticksToTravel > 440 && this.ticksToTravel < this.totalTimeToTravel - 440) {
 				if (this.ticksToTravel % 40 == 0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
-					world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
 			if (fuel <= 0.0) crash();
@@ -164,6 +163,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.markDirty();
 			DimensionType type = DimensionManager.getProviderType(dimension);
 			if (type != null) this.currentDimName = type.getName();
+			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
 		}
 		shouldDelayLoop = true;
 	}

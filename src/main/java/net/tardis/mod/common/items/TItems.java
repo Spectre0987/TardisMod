@@ -47,7 +47,7 @@ public class TItems {
 	public static Item umbrella_open;
 	public static Item vortex_manip;
 	public static Item sonic_screwdriver;
-	public static Item scanner;
+	public static Item manual;
 	public static Item sonic_pen;
 	
 	public static Item space_helm;
@@ -110,8 +110,8 @@ public class TItems {
 		space_boots = new SpaceSuit(SpaceSuit.material, 3, EntityEquipmentSlot.FEET);
 		register(space_boots, "space_boots");
 		
-		scanner = new ItemScanner();
-		register(scanner, "scanner");
+		manual = new ItemManual();
+		register(manual, "tardis_manual");
 		
 		sonic_pen = new ItemSonic();
 		register(sonic_pen, "sonic_pen");

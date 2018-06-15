@@ -9,6 +9,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.models.clothing.ModelSpaceHelm;
 
 public class SpaceSuit extends ItemArmor {
 	
@@ -21,12 +22,12 @@ public class SpaceSuit extends ItemArmor {
 	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return super.getArmorTexture(stack, entity, slot, type);
+		return Tardis.MODID+":textures/clothing/space_suit.png";
 	}
 	
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
-		return super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
+		return new ModelSpaceHelm();
 	}
 	
 }
