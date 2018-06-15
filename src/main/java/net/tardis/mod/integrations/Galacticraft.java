@@ -16,7 +16,9 @@ public class Galacticraft {
 		
 		@SubscribeEvent
 		public void stopSuffication(GCCoreOxygenSuffocationEvent.Pre event) {
-			if (event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() instanceof SpaceSuit) event.setCanceled(true);
+			if (event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() instanceof SpaceSuit) {
+				event.setCanceled(true);
+			}
 		}
 	}
 }
