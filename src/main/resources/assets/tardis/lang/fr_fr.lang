@@ -39,7 +39,7 @@ tile.megalos.name=Meglos
 tile.console.name=Console
 
 tardis.locked.true=TARDIS fermé !
-tardis.locked.false=TARDIS a été ouvert.
+tardis.locked.false=Le TARDIS a été ouvert.
 
 death.attack.dalek=Tué par un rayon laser Dalek
 
