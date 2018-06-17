@@ -21,6 +21,8 @@ item.demat_circut.name=Circuit de dématérialisation
 item.artron_capacitor.name=Batterie d'Artron
 item.sonic_pen.name=Stylo torche sonique
 item.tardis_manual.name=Manuel de TARDIS
+item.space_helm.name=Casque de combinaison spatiale
+item.space_chest.name=Plastron de combinaison spatiale
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -96,6 +98,7 @@ entity.land_type.name=Sélecteur de type d'atterissage
 entity.direction_control.name=Contrôleur de direction
 entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Retour rapide
+entity.telepathic_circuts.name=Circuits télépathiques
 
 key.notwheretardis=CE N'EST PAS LÀ OÙ SE TROUVE LE TARDIS!
 key.console.location=Console à: 
