@@ -45,6 +45,7 @@ import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlScreen;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
@@ -403,7 +404,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					new ControlFuel(this),
 					new ControlLandType(this),
 					new ControlDirection(this),
-					new ControlFastReturn(this)
+					new ControlFastReturn(this),
+					new ControlTelepathicCircuts(this)
 					};
 			for (EntityControl con : ec) {
 				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);

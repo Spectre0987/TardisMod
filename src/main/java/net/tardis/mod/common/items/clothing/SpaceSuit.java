@@ -9,6 +9,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.models.clothing.ModelSpaceChest;
 import net.tardis.mod.client.models.clothing.ModelSpaceHelm;
 
 public class SpaceSuit extends ItemArmor {
@@ -27,6 +28,9 @@ public class SpaceSuit extends ItemArmor {
 	
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
+		if(armorSlot == EntityEquipmentSlot.CHEST) {
+			return new ModelSpaceChest();
+		}
 		return new ModelSpaceHelm();
 	}
 	

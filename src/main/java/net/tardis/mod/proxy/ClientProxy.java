@@ -16,6 +16,7 @@ import net.tardis.mod.client.renderers.RenderUmbrellaStand;
 import net.tardis.mod.client.renderers.controls.RenderLever;
 import net.tardis.mod.client.renderers.controls.RenderRandom;
 import net.tardis.mod.client.renderers.controls.RenderZ;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceChest;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -30,6 +31,7 @@ import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlScreen;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
@@ -64,12 +66,14 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlLandType.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlFastReturn.class, new RenderInvis());
+		RenderingRegistry.registerEntityRenderingHandler(ControlTelepathicCircuts.class, new RenderInvis());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
 		
 		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
+		TItems.space_chest.setTileEntityItemStackRenderer(new RenderItemSpaceChest());
 		
 		// Not needed currently.
 		// OBJLoader.INSTANCE.addDomain(Tardis.MODID);

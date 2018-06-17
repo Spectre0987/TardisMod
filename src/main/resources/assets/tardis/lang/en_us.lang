@@ -21,6 +21,8 @@ item.demat_circut.name=Dematerialization Circut
 item.artron_capacitor.name=Artron Capacitor
 item.sonic_pen.name=Sonic Torch Pen
 item.tardis_manual.name=TARDIS Manual
+item.space_helm.name=Space Suit Helmet
+item.space_chest.name=Space Suit Chestpiece
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
