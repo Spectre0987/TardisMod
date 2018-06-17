@@ -20,6 +20,7 @@ item.fluid_link.name=Branchement de liquide
 item.demat_circut.name=Circuit de dématérialisation
 item.artron_capacitor.name=Batterie d'Artron
 item.sonic_pen.name=Stylo torche sonique
+item.tardis_manual.name=Manuel de TARDIS
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
