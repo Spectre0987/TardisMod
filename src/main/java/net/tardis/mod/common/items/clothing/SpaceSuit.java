@@ -11,6 +11,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.clothing.ModelSpaceChest;
 import net.tardis.mod.client.models.clothing.ModelSpaceHelm;
+import net.tardis.mod.client.models.clothing.ModelSpaceLegs;
 
 public class SpaceSuit extends ItemArmor {
 	
@@ -28,10 +29,12 @@ public class SpaceSuit extends ItemArmor {
 	
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
-		if(armorSlot == EntityEquipmentSlot.CHEST) {
-			return new ModelSpaceChest();
+		switch(armorSlot) {
+			case CHEST: return new ModelSpaceChest();
+			case HEAD: return new ModelSpaceHelm();
+			case LEGS: return new ModelSpaceLegs();
+			default: return new ModelSpaceHelm();
 		}
-		return new ModelSpaceHelm();
 	}
 	
 }

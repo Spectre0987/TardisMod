@@ -246,37 +246,10 @@ public class ModelSpaceChest extends ModelBiped
       LeftArm11.setTextureSize(128, 128);
       LeftArm11.mirror = true;
       setRotation(LeftArm11, 0F, 0F, 0F);
-      
-      try {
-    	  Field[] fields = ModelSpaceChest.class.getDeclaredFields();
-    	  for(Field f : fields) {
-    		  f.setAccessible(true);
-    		  Object obj = f.get(this);
-    		  if(obj != null && obj instanceof ModelRenderer) {
-    			  ModelRenderer mr = (ModelRenderer)obj;
-	    		  if(f.getName().toLowerCase().contains("right")) {
-	    			  mr.offsetX += 0.31;
-	    			  mr.offsetY -= 0.1225;
-	    			  this.bipedRightArm.addChild(mr);
-	    		  }
-	    		  if(f.getName().toLowerCase().contains("left")) {
-	    			  ModelUtil.setChild(this.bipedLeftArm, mr);
-	    		  }
-	    		  else {
-	    			  this.bipedBody.addChild(mr);
-	    		  }
-    		  }
-    	  }
-      }
-      catch(Exception e) {}
   }
   
   @Override
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5){
-	this.bipedHead.isHidden = true;
-	this.bipedHeadwear.isHidden = true;
-	this.bipedLeftLeg.isHidden = true;
-	this.bipedRightLeg.isHidden = true;
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     try {
   	  Field[] fields = ModelSpaceChest.class.getDeclaredFields();

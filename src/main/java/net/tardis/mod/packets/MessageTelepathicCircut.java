@@ -25,7 +25,9 @@ public class MessageTelepathicCircut implements IMessage {
 	
 	public MessageTelepathicCircut(BlockPos tardisPos, String name) {
 		pos = tardisPos.toImmutable();
-		this.name = name;
+		if(name !=null) {
+			this.name = name;
+		}
 	}
 	
 	@Override
