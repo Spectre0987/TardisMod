@@ -24,6 +24,7 @@ import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
 import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
@@ -72,6 +73,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlFastReturn.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlTelepathicCircuts.class, new RenderInvis());
+		RenderingRegistry.registerEntityRenderingHandler(ControlDoorSwitch.class, new RenderInvis());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());

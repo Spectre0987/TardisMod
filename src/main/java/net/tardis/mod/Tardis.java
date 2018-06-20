@@ -27,6 +27,7 @@ import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
 import net.tardis.mod.common.entities.controls.ControlEngine;
 import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
@@ -127,6 +128,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
 		EntityHelper.registerStatic(ControlFastReturn.class, "tardis_fast_return");
 		EntityHelper.registerStatic(ControlTelepathicCircuts.class, "telepathic_circuts");
+		EntityHelper.registerStatic(ControlDoorSwitch.class, "tardis_door_control");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		

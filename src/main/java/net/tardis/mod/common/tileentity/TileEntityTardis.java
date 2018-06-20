@@ -36,6 +36,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
 import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
@@ -405,7 +406,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					new ControlLandType(this),
 					new ControlDirection(this),
 					new ControlFastReturn(this),
-					new ControlTelepathicCircuts(this)
+					new ControlTelepathicCircuts(this),
+					new ControlDoorSwitch(this)
 					};
 			for (EntityControl con : ec) {
 				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);

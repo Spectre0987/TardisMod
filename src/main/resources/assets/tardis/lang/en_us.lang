@@ -100,6 +100,7 @@ entity.direction_control.name=Directional Control
 entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Fast Return
 entity.telepathic_circuts.name=Telepathic Circuts
+entity.tardis_door_control.name=Door Switch
 
 key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
 key.console.location=Console at: 
