@@ -6,7 +6,7 @@
             "rotation":[22.5, -135,0]
         },
         "ground":{
-            "translation":[6,5,1],
+            "translation":[4,5,4],
             "scale":[0.5,0.5,0.5]
         },
         "firstperson_righthand":{

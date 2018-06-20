@@ -23,6 +23,7 @@ item.sonic_pen.name=Sonic Torch Pen
 item.tardis_manual.name=TARDIS Manual
 item.space_helm.name=Space Suit Helmet
 item.space_chest.name=Space Suit Chestpiece
+item.space_legs.name=Space Suit Leggings
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console

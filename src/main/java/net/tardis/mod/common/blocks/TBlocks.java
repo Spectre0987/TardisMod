@@ -28,6 +28,8 @@ public class TBlocks {
 	
 	public static Block electric_panel;
 	
+	public static Block json_tester;
+	
 	public static void register(Block block, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
 		block.setUnlocalizedName(name);
@@ -77,6 +79,9 @@ public class TBlocks {
 		
 		megalos = new BlockMegalos();
 		register(megalos, "megalos");
+		
+		json_tester = new BlockJsonTester();
+		register(json_tester, "json_tester");
 	}
 	
 }

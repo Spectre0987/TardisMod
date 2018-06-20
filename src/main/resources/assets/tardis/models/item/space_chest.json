@@ -17,7 +17,17 @@
             "scale":[0.5,0.5,0.5]
         },
         "ground":{
-            "translation":[0,5,10],
+            "translation":[-4,5,4],
+            "rotation":[0,0,180],
+            "scale":[0.5,0.5,0.5]
+        },
+        "thirdperson_righthand":{
+            "translation":[-4.5,0,3.5],
+            "rotation":[0,0,180],
+            "scale":[0.5,0.5,0.5]
+        },
+        "thirdperson_lefthand":{
+            "translation":[5,0,3.5],
             "rotation":[0,0,180],
             "scale":[0.5,0.5,0.5]
         }
