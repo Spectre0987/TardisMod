@@ -3,6 +3,7 @@ package net.tardis.mod.common.tileentity;
 import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -104,11 +105,13 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 			
 			AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
 			
-			List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, bounds);
+			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
 			
 			if (entities != null) {
 				if (entities.size() > 0) {
-					for (EntityLivingBase entity : entities) {
+					for (Entity entity : entities) {
+						entity.dismountRidingEntity();
+						entity.removePassengers();
 						if (entity instanceof EntityPlayerMP) {
 							if(!this.isLocked()) {
 								EntityPlayerMP p = (EntityPlayerMP) entity;
@@ -120,7 +123,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
 							}
 						} else {
-							if(!this.isLocked() || TardisHelper.hasValidKey(entity, this.getConsolePos())) {
+							if(!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase)entity), this.getConsolePos())) {
 								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
 								entity.changeDimension(TDimensions.id);
 							}

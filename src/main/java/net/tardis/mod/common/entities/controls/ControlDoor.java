@@ -99,6 +99,8 @@ public class ControlDoor extends EntityControl {
 				if (state.getBlock() instanceof BlockTardisTop) {
 					EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 					BlockPos pos = tardis.getLocation().offset(facing, 2);
+					entityIn.dismountRidingEntity();
+					entityIn.removePassengers();
 					if (entityIn instanceof EntityPlayer) {
 						EntityPlayerMP player = (EntityPlayerMP) entityIn;
 						player.motionX = 0;

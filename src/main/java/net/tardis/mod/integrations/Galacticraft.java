@@ -1,7 +1,7 @@
 package net.tardis.mod.integrations;
 
 import micdoodle8.mods.galacticraft.api.event.oxygen.GCCoreOxygenSuffocationEvent;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.common.items.clothing.SpaceSuit;
@@ -16,7 +16,14 @@ public class Galacticraft {
 		
 		@SubscribeEvent
 		public void stopSuffication(GCCoreOxygenSuffocationEvent.Pre event) {
-			if (event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() instanceof SpaceSuit) {
+			Iterable<ItemStack> armor = event.getEntityLiving().getArmorInventoryList();
+			int count = 0;
+			for(ItemStack stack : armor) {
+				if(stack.getItem() instanceof SpaceSuit) {
+					++count;
+				}
+			}
+			if(count >= 3) {
 				event.setCanceled(true);
 			}
 		}

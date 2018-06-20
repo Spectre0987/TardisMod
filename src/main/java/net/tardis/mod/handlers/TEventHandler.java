@@ -1,13 +1,13 @@
 package net.tardis.mod.handlers;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -21,8 +21,8 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -34,12 +34,12 @@ import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityTardis;
-import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.IUnbreakable;
+import net.tardis.mod.util.helpers.Helper;
 
 @Mod.EventBusSubscriber
 public class TEventHandler {
@@ -146,6 +146,25 @@ public class TEventHandler {
 				if (!player.inventory.hasItemStack(new ItemStack(TItems.key))) {
 					EntityItem ei = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.key));
 					world.spawnEntity(ei);
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void giveManual(PlayerInteractEvent.RightClickBlock event) {
+		if(!event.getWorld().isRemote) {
+			if(event.getItemStack().getItem() == Items.BOOK) {
+				World world = event.getWorld();
+				IBlockState state = world.getBlockState(event.getPos());
+				if(state.getBlock() instanceof BlockConsole) {
+					EntityPlayer player = event.getEntityPlayer();
+					int slot = Helper.getSlotForItem(player, Items.BOOK);
+					if(slot != -1) {
+						player.inventory.getStackInSlot(slot).shrink(1);
+						EntityItem ei = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.manual));
+						world.spawnEntity(ei);
+					}
 				}
 			}
 		}

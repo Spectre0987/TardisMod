@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -122,5 +123,14 @@ public class Helper {
 	
 	public static boolean isIntInRange(int min, int max, int num) {
 		return num < max && num > min;
+	}
+
+	public static int getSlotForItem(EntityPlayer player, Item item) {
+		for(int i = 0; i < player.inventory.mainInventory.size(); ++i) {
+			if(player.inventory.getStackInSlot(i).getItem() == item) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }
