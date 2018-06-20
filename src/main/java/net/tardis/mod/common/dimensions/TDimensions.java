@@ -9,11 +9,17 @@ public class TDimensions {
 	public static int id;
 	public static DimensionType tardisType;
 	
+	public static int BLACK_HOLE_ID;
+	
 	public static void register() {
-		if (TardisConfig.Dimensions.setDimension)
+		if (TardisConfig.Dimensions.setDimension) {
 			id = TardisConfig.Dimensions.tardisDimension;
-		else
+			BLACK_HOLE_ID = TardisConfig.Dimensions.blackHoleDimension;
+		}
+		else {
 			id = DimensionManager.getNextFreeDimId();
+			BLACK_HOLE_ID = DimensionManager.getNextFreeDimId();
+		}
 		tardisType = DimensionType.register("tardis", "_tardis", id, TardisProvider.class, false);
 		DimensionManager.registerDimension(id, tardisType);
 	}
