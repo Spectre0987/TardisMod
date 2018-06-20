@@ -22,7 +22,6 @@ public class RenderButton extends RenderControl {
 		GlStateManager.translate(offset.x, offset.y, offset.z);
 		GlStateManager.rotate(120, 0, 1, 0);
 		GlStateManager.rotate(-58, 1, 0, 0);
-		
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
