@@ -80,8 +80,8 @@ public class TBlocks {
 		megalos = new BlockMegalos();
 		register(megalos, "megalos");
 		
-		json_tester = new BlockJsonTester();
-		register(json_tester, "json_tester");
+		/*json_tester = new BlockJsonTester();
+		register(json_tester, "json_tester");*/
 	}
 	
 }
