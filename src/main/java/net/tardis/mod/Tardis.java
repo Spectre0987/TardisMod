@@ -44,8 +44,6 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.protocols.TardisProtocol;
-import net.tardis.mod.common.protocols.TardisProtocolReset;
 import net.tardis.mod.common.recipes.TemporalRecipe;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
 import net.tardis.mod.common.screwdriver.GRoomMode;
@@ -67,7 +65,6 @@ import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.packets.MessageCam;
-import net.tardis.mod.packets.MessageControlReset;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageHandlerCam;
 import net.tardis.mod.packets.MessageHandlerDoorOpen;
@@ -151,7 +148,6 @@ public class Tardis {
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 4, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerDoorOpen.class, MessageDoorOpen.class, 5, Side.CLIENT);
 		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 6, Side.SERVER);
-		NETWORK.registerMessage(MessageControlReset.Handler.class, MessageControlReset.class, 7, Side.SERVER);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());
@@ -165,7 +161,6 @@ public class Tardis {
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.power_cell), 1200));
 		
 		// TardisProtocol.register(new TardisProtocolForceField());
-		TardisProtocol.register(new TardisProtocolReset());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.

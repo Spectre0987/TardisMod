@@ -1,5 +1,6 @@
 package net.tardis.mod.util.helpers;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
@@ -132,5 +134,17 @@ public class Helper {
 			}
 		}
 		return -1;
+	}
+
+	public static Biome findBiomeByName(String string) {
+		Iterator it = Biome.REGISTRY.iterator();
+		while(it.hasNext()) {
+			Biome b = (Biome)it.next();
+			if(b != null && b.getBiomeName().toLowerCase().trim().equals(string)) {
+				System.out.println("Biome Found");
+				return b;
+			}
+		}
+		return null;
 	}
 }

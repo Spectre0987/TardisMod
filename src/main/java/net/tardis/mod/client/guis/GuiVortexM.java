@@ -96,6 +96,7 @@ public class GuiVortexM extends GuiScreen {
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		this.drawDefaultBackground();
 		xCoord.drawTextBox();
 		yCoord.drawTextBox();
 		zCoord.drawTextBox();

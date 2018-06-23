@@ -1,11 +1,15 @@
 package net.tardis.mod.packets;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -13,6 +17,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.Helper;
 
 public class MessageTelepathicCircut implements IMessage {
 
@@ -52,12 +57,29 @@ public class MessageTelepathicCircut implements IMessage {
 					MinecraftServer server = ctx.getServerHandler().player.getServer();
 					WorldServer ws = DimensionManager.getWorld(TDimensions.id);
 					EntityPlayer player = server.getPlayerList().getPlayerByUsername(message.name);
-					if(player != null) {
-						TileEntity te = ws.getTileEntity(message.pos);
-						if(te != null && te instanceof TileEntityTardis) {
-							TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(message.pos);
+					TileEntity te = ws.getTileEntity(message.pos);
+					if(te != null && te instanceof TileEntityTardis) {
+						TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(message.pos);
+						if(player != null) {
 							tardis.setDesination(player.getPosition(), player.dimension);
 							tardis.startFlight();
+						}
+						else {
+							WorldServer locationWorld = DimensionManager.getWorld(tardis.dimension);
+							Biome b = Helper.findBiomeByName(message.name.toLowerCase().trim());
+							if(b != null) {
+								ArrayList<Biome> biomes = new ArrayList<>();
+								biomes.add(b);
+								BlockPos biomePos = locationWorld.getBiomeProvider().findBiomePosition(tardis.getLocation().getX(), tardis.getLocation().getZ(), 1000, biomes, new Random());
+								if(biomePos != null && !biomePos.equals(BlockPos.ORIGIN)) {
+									biomePos.add(0, locationWorld.getSeaLevel(), 0);
+									tardis.setDesination(biomePos, tardis.dimension);
+									tardis.startFlight();
+								}
+							}
+							else {
+								System.out.println("Biome doesn't exist");
+							}
 						}
 					}
 				}});
