@@ -8,6 +8,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.clothing.ModelSpaceChest;
 import net.tardis.mod.client.models.clothing.ModelSpaceHelm;
@@ -27,6 +29,7 @@ public class SpaceSuit extends ItemArmor {
 		return Tardis.MODID+":textures/clothing/space_suit.png";
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
 		switch(armorSlot) {
