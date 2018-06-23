@@ -22,8 +22,6 @@ public class TardisChunkGenerator implements IChunkGenerator {
 		super();
 		this.world = world;
 		this.rand = new Random(world.getSeed());
-		world.rainingStrength = 0;
-		world.setRainStrength(0);
 		world.setSeaLevel(64);
 	}
 
@@ -32,8 +30,6 @@ public class TardisChunkGenerator implements IChunkGenerator {
 		super();
 		this.world = world;
 		this.rand = new Random(seed);
-		world.rainingStrength = 0;
-		world.setRainStrength(0);
 		world.setSeaLevel(64);
 	}
 
