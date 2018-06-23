@@ -68,7 +68,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private static IBlockState blockBase = TBlocks.tardis.getDefaultState();
 	private static IBlockState blockTop = TBlocks.tardis_top.getDefaultState();
 	/** Time To Travel in Blocks/Tick **/
-	private static final int MAX_TARDIS_SPEED = 1;
+	private static final int MAX_TARDIS_SPEED = 8;
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> buffer = NonNullList.create().withSize(9, ItemStack.EMPTY);
 	public EntityControl[] controls;

@@ -60,12 +60,12 @@ public class MessageTelepathicCircut implements IMessage {
 					TileEntity te = ws.getTileEntity(message.pos);
 					if(te != null && te instanceof TileEntityTardis) {
 						TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(message.pos);
+						WorldServer locationWorld = DimensionManager.getWorld(tardis.dimension);
 						if(player != null) {
 							tardis.setDesination(player.getPosition(), player.dimension);
 							tardis.startFlight();
 						}
 						else {
-							WorldServer locationWorld = DimensionManager.getWorld(tardis.dimension);
 							Biome b = Helper.findBiomeByName(message.name.toLowerCase().trim());
 							if(b != null) {
 								ArrayList<Biome> biomes = new ArrayList<>();
@@ -78,7 +78,11 @@ public class MessageTelepathicCircut implements IMessage {
 								}
 							}
 							else {
-								System.out.println("Biome doesn't exist");
+								BlockPos structurePos = locationWorld.findNearestStructure(message.name.trim(), tardis.getLocation(), true);
+								if(structurePos != null && !BlockPos.ORIGIN.equals(structurePos)) {
+									tardis.setDesination(structurePos, tardis.dimension);
+									tardis.startFlight();
+								}
 							}
 						}
 					}

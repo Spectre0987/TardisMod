@@ -1,6 +1,7 @@
 package net.tardis.mod.util.helpers;
 
-import java.util.Iterator;
+import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
@@ -8,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -137,14 +139,24 @@ public class Helper {
 	}
 
 	public static Biome findBiomeByName(String string) {
-		Iterator it = Biome.REGISTRY.iterator();
-		while(it.hasNext()) {
-			Biome b = (Biome)it.next();
-			if(b != null && b.getBiomeName().toLowerCase().trim().equals(string)) {
-				System.out.println("Biome Found");
-				return b;
+		List<Biome> biomes = EntityHelper.biomes;
+		try {
+			Field field; 
+			if((Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
+				field = Biome.class.getDeclaredField("biomeName");
+			}
+			else {
+				field = Biome.class.getDeclaredField("field_76791_y");
+			}
+			field.setAccessible(true);
+			for(Biome b : biomes) {
+				Object obj = field.get(b);
+				if(((String)obj).trim().toLowerCase().equals(string)) {
+					return b;
+				}
 			}
 		}
+		catch(Exception e) {}
 		return null;
 	}
 }
