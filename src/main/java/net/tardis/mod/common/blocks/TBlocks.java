@@ -28,7 +28,7 @@ public class TBlocks {
 	
 	public static Block electric_panel;
 	
-	public static Block json_tester;
+	//public static Block json_tester;
 	
 	public static void register(Block block, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);

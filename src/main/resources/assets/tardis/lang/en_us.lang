@@ -2,7 +2,7 @@ itemGroup.tardis=TARDIS Mod
 
 item.key.name=TARDIS Key
 item.pos_setter.name=Coordnate Logger
-item.circuts.name=Exotronic Circutry
+item.circuts.name=Exotronic Circuitry
 item.sonic_screwdriver.name=Sonic Screwdriver
 item.gunstick.name=Dalek Gunstick
 item.power_cell.name=Trionic Power Cell 
@@ -17,7 +17,7 @@ item.sonic_blaster.name=Sonic Blaster
 item.sonic_cane.name=Sonic Cane
 item.vortex_manip.name=Vortex Manipulator
 item.fluid_link.name=Fluid Links
-item.demat_circut.name=Dematerialization Circut
+item.demat_circut.name=Dematerialization Circuit
 item.artron_capacitor.name=Artron Capacitor
 item.sonic_pen.name=Sonic Torch Pen
 item.tardis_manual.name=TARDIS Manual
@@ -99,7 +99,7 @@ entity.land_type.name=Landing Type Selector
 entity.direction_control.name=Directional Control
 entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Fast Return
-entity.telepathic_circuts.name=Telepathic Circuts
+entity.telepathic_circuts.name=Telepathic Circuits
 entity.tardis_door_control.name=Door Switch
 
 key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
