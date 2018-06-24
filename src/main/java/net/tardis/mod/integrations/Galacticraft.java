@@ -9,7 +9,7 @@ import net.tardis.mod.common.items.clothing.SpaceSuit;
 public class Galacticraft {
 	
 	public static void preInit() {
-		MinecraftForge.EVENT_BUS.register(new EventHandler());
+		MinecraftForge.EVENT_BUS.register(new Galacticraft.EventHandler());
 	}
 	
 	public static class EventHandler {
