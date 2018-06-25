@@ -27,7 +27,7 @@ public abstract class RenderControl extends Render<EntityControl> {
 		renderControl(entity, x, y, z, entityYaw, partialTicks, TardisType.Type80s);
 		if(mc.player.getHeldItemMainhand().getItem() == TItems.manual) {
 			Entity look = mc.objectMouseOver.entityHit;
-			if(look != null && look == entity) {
+			if(look != null && entity != null && look.getEntityId() == entity.getEntityId()) {
 				GlStateManager.pushMatrix();
 				this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 16);
 				GlStateManager.popMatrix();

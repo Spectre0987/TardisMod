@@ -21,6 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -164,6 +165,7 @@ public class Tardis {
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
+			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman");
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 	}

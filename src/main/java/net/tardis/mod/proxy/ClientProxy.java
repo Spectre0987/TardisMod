@@ -3,6 +3,7 @@ package net.tardis.mod.proxy;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.tardis.mod.client.renderers.RenderConsole;
+import net.tardis.mod.client.renderers.RenderCybermanInvasion;
 import net.tardis.mod.client.renderers.RenderDoor;
 import net.tardis.mod.client.renderers.RenderFoodMachine;
 import net.tardis.mod.client.renderers.RenderInvis;
@@ -19,6 +20,7 @@ import net.tardis.mod.client.renderers.controls.RenderRandom;
 import net.tardis.mod.client.renderers.controls.RenderZ;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceChest;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceLegs;
+import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -77,6 +79,7 @@ public class ClientProxy extends ServerProxy {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
+		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanInvasion.class, new RenderCybermanInvasion());
 		
 		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());

@@ -434,6 +434,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public EntityControl getControl(Class clazz) {
+		if(this.controls == null || this.controls.length == 0) {
+			this.createControls();
+		}
 		for(EntityControl c : this.controls) {
 			if(c.getClass() == clazz)
 				return c;
