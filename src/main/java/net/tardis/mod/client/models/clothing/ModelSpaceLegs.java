@@ -277,10 +277,10 @@ public class ModelSpaceLegs extends ModelBiped
     		if(obj !=null && obj instanceof ModelRenderer) {
     			ModelRenderer mr = (ModelRenderer)obj;
     			if(fi.getName().toLowerCase().contains("right")) {
-    				ModelUtil.setChild(this.bipedRightLeg, mr);
+    				ModelUtil.copyAngle(this.bipedRightLeg, mr);
     			}
     			if(fi.getName().toLowerCase().contains("left")) {
-    				ModelUtil.setChild(this.bipedLeftLeg, mr);
+    				ModelUtil.copyAngle(this.bipedLeftLeg, mr);
     			}
     		}
     	}

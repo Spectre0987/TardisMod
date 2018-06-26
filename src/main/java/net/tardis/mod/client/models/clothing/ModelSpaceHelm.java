@@ -349,7 +349,7 @@ public class ModelSpaceHelm extends ModelBiped
 		for(Field fi : fields) {
 			Object obj = fi.get(this);
 			if(obj !=null && obj instanceof ModelRenderer) {
-				ModelUtil.setChild(this.bipedHead, (ModelRenderer)obj);
+				ModelUtil.copyAngle(this.bipedHead, (ModelRenderer)obj);
 			}
 		}
 	}

@@ -259,10 +259,10 @@ public class ModelSpaceChest extends ModelBiped
   		  if(obj != null && obj instanceof ModelRenderer) {
   			  ModelRenderer mr = (ModelRenderer)obj;
 	    		  if(fi.getName().toLowerCase().contains("right")) {
-	    			  ModelUtil.setChild(this.bipedRightArm, mr);
+	    			  ModelUtil.copyAngle(this.bipedRightArm, mr);
 	    		  }
 	    		  if(fi.getName().toLowerCase().contains("left")) {
-	    			  ModelUtil.setChild(this.bipedLeftArm, mr);
+	    			  ModelUtil.copyAngle(this.bipedLeftArm, mr);
 	    		  }
   		  }
   	  }

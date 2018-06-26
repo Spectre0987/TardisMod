@@ -1,12 +1,11 @@
 package net.tardis.mod.client.models;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.tardis.mod.client.util.ModelUtil;
 
 public class ModelCybermanInvasion extends ModelBiped
@@ -340,64 +339,55 @@ public class ModelCybermanInvasion extends ModelBiped
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5){
 	
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    try {
-    	Field[] fields = ModelCybermanInvasion.class.getDeclaredFields();
-    	for(Field fi : fields) {
-    		Object obj = fi.get(this);
-    		if(obj != null && obj instanceof ModelRenderer) {
-    			if(fi.getName().toLowerCase().contains("head")) {
-    				ModelUtil.setChild(this.bipedHead, (ModelRenderer)obj);
-    			}
-    		}
-    	}
+    ModelUtil.copyAngle(this.bipedLeftArm, this.LeftArm);
+    ModelUtil.copyAngle(this.bipedRightArm, this.RightArm);
+    ModelUtil.copyAngle(this.bipedLeftLeg, this.LeftLeg);
+    ModelUtil.copyAngle(this.bipedLeftLeg, this.LeftBoot);
+    ModelUtil.copyAngle(this.bipedLeftLeg, this.LeftToe);
+    ModelUtil.copyAngle(this.bipedRightLeg, this.RightBoot);
+    ModelUtil.copyAngle(this.bipedRightLeg, this.RightLeg);
+    ModelUtil.copyAngle(this.bipedRightLeg, this.RightToe);
+    if(entity != null && entity instanceof EntityLivingBase) {
+	    GlStateManager.pushMatrix();
+	    GlStateManager.rotate(((EntityLivingBase)entity).rotationYawHead,0,1,0);
+	    GlStateManager.rotate(entity.rotationPitch,1,0,0);
+	    {
+	    	GlStateManager.pushMatrix();
+	    	Minecraft mc = Minecraft.getMinecraft();
+	    	GlStateManager.disableLighting();
+	    	mc.entityRenderer.disableLightmap();
+	    	LampGlow.render(f5);
+	        EyeGlow1.render(f5);
+	        EyeGlow2.render(f5);
+	    	mc.entityRenderer.enableLightmap();
+	    	GlStateManager.enableLighting();
+	    	GlStateManager.popMatrix();
+	    }
+	    Head1.render(f5);
+	    Head2.render(f5);
+	    Head3.render(f5);
+	    Head4.render(f5);
+	    Head5.render(f5);
+	    Head6.render(f5);
+	    Head7.render(f5);
+	    Head8.render(f5);
+	    Head9.render(f5);
+	    Head10.render(f5);
+	    Head11.render(f5);
+	    Head12.render(f5);
+	    Head13.render(f5);
+	    Head14.render(f5);
+	    Head15.render(f5);
+	    Head16.render(f5);
+	    Head17.render(f5);
+	    Head18.render(f5);
+	    Head19.render(f5);
+	    Head20.render(f5);
+	    Head21.render(f5);
+	    Head22.render(f5);
+	    Head23.render(f5);
+	    GlStateManager.popMatrix();
     }
-    catch(Exception e) {}
-    ModelUtil.setChild(this.bipedHead, this.LampGlow);
-    ModelUtil.setChild(this.bipedHead, this.EyeGlow1);
-    ModelUtil.setChild(this.bipedHead, this.EyeGlow2);
-    ModelUtil.setChild(this.bipedLeftArm, this.LeftArm);
-    ModelUtil.setChild(this.bipedRightArm, this.RightArm);
-    ModelUtil.setChild(this.bipedLeftLeg, this.LeftLeg);
-    ModelUtil.setChild(this.bipedLeftLeg, this.LeftBoot);
-    ModelUtil.setChild(this.bipedLeftLeg, this.LeftToe);
-    ModelUtil.setChild(this.bipedRightLeg, this.RightBoot);
-    ModelUtil.setChild(this.bipedRightLeg, this.RightLeg);
-    ModelUtil.setChild(this.bipedRightLeg, this.RightToe);
-    {
-    	GlStateManager.pushMatrix();
-    	Minecraft mc = Minecraft.getMinecraft();
-    	GlStateManager.disableLighting();
-    	mc.entityRenderer.disableLightmap();
-    	LampGlow.render(f5);
-        EyeGlow1.render(f5);
-        EyeGlow2.render(f5);
-    	mc.entityRenderer.enableLightmap();
-    	GlStateManager.enableLighting();
-    	GlStateManager.popMatrix();
-    }
-    Head1.render(f5);
-    Head2.render(f5);
-    Head3.render(f5);
-    Head4.render(f5);
-    Head5.render(f5);
-    Head6.render(f5);
-    Head7.render(f5);
-    Head8.render(f5);
-    Head9.render(f5);
-    Head10.render(f5);
-    Head11.render(f5);
-    Head12.render(f5);
-    Head13.render(f5);
-    Head14.render(f5);
-    Head15.render(f5);
-    Head16.render(f5);
-    Head17.render(f5);
-    Head18.render(f5);
-    Head19.render(f5);
-    Head20.render(f5);
-    Head21.render(f5);
-    Head22.render(f5);
-    Head23.render(f5);
     GlStateManager.pushMatrix();
     GlStateManager.rotate(entity.rotationYaw,0,1,0);
     Neck.render(f5);
