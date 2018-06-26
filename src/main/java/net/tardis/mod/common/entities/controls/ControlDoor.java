@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -106,6 +107,7 @@ public class ControlDoor extends EntityControl {
 						player.motionX = 0;
 						player.motionY = 0;
 						player.motionZ = 0;
+						player.connection.sendPacket(new SPacketEntityVelocity(player));
 						ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, tardis.dimension, new TardisTeleporter(ws));
 						player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 						player.setSpawnPoint(pos, true);
