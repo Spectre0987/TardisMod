@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -109,10 +110,13 @@ public class ItemKey extends Item {
 					WorldServer ws = DimensionManager.getWorld(TDimensions.id);
 					BlockPos pos = ItemKey.getPos(entityItem.getItem());
 					if(pos != null && !pos.equals(BlockPos.ORIGIN)) {
-						TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(ItemKey.getPos(entityItem.getItem()));
-						tardis.setDesination(entityItem.getPosition(), entityItem.dimension);
-						tardis.startFlight();
-						tardis.travel();
+						TileEntity te = ws.getTileEntity(pos);
+						if(te != null && te instanceof TileEntityTardis) {
+							TileEntityTardis tardis = (TileEntityTardis)te;
+							tardis.setDesination(entityItem.getPosition(), entityItem.dimension);
+							tardis.startFlight();
+							tardis.travel();
+						}
 					}
 				}
 			}
