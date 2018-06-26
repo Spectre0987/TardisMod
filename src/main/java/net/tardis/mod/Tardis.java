@@ -165,7 +165,7 @@ public class Tardis {
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
-			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman");
+			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 	}

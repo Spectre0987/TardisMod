@@ -20,9 +20,9 @@ public class EntityHelper {
 		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 120, 10, false);
 	}
 	
-	public static void registerMob(Class entityClass, String name) {
+	public static void registerMob(Class entityClass, String name, int chance) {
 		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 120, 5, true);
-		EntityRegistry.addSpawn(entityClass, 50, 0, 1, EnumCreatureType.MONSTER, biomes.toArray(new Biome[1]));
+		EntityRegistry.addSpawn(entityClass, chance, 1, 1, EnumCreatureType.MONSTER, biomes.toArray(new Biome[1]));
 	}
 	
 	public static void registerNoSpawn(Class entityClass, String name) {
