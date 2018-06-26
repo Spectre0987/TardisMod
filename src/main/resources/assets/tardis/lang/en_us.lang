@@ -105,7 +105,7 @@ entity.tardis_door_control.name=Door Switch
 
 entity.invasion_cyberman.name=Invasion Cyberman
 
-death.cyberman.generic=Was converted
+death.cyberman.generic=was converted
 
 key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
 key.console.location=Console at: 
