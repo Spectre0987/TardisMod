@@ -67,7 +67,8 @@ public class EntityCybermanInvasion extends EntityCyberman
 
     public boolean attackEntityAsMob(Entity entityIn)
     {
-       return super.attackEntityAsMob(entityIn);
+    	entityIn.attackEntityFrom(new EntityCyberman.DamageSourceCyber(), 2F);
+       return true;
     }
 
     @Nullable

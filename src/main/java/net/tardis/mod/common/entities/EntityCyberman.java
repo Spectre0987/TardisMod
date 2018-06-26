@@ -19,13 +19,13 @@ public class EntityCyberman extends EntityMob{
 
 	public static class DamageSourceCyber extends DamageSource{
 
-		public DamageSourceCyber(String damageTypeIn) {
-			super("cyberman");
+		public DamageSourceCyber() {
+			super("death.cyberman.generic");
 		}
 
 		@Override
 		public ITextComponent getDeathMessage(EntityLivingBase entity) {
-			return new TextComponentString(entity.getDisplayName().getFormattedText() + (new TextComponentTranslation("cyberman").getFormattedText()));
+			return new TextComponentString(entity.getDisplayName().getFormattedText() + " "+(new TextComponentTranslation("death.cyberman.generic").getFormattedText()));
 		}
 		
 	}
