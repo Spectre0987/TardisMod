@@ -79,6 +79,7 @@ config.tDim=TARDIS Dimension
 
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
+config.entity.cybermen.spawnchance=Chance That A Cyberman Will Spawn (Per Chunk)
 
 config.misc=Misc
 config.misc.givekey=Should give Player A TARDIS key when they join the world?
@@ -102,5 +103,11 @@ entity.tardis_fast_return.name=Fast Return
 entity.telepathic_circuts.name=Telepathic Circuits
 entity.tardis_door_control.name=Door Switch
 
+entity.invasion_cyberman.name=Invasion Cyberman
+
+death.cyberman.generic=Was converted
+
 key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
 key.console.location=Console at: 
+
+tardis.damage.demat=The Dematerialization Circuit has been fried!
