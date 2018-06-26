@@ -1,16 +1,17 @@
 package net.tardis.mod.common.entities.controls;
 
-import net.minecraft.block.state.IBlockState;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -48,7 +49,7 @@ public class ControlDoor extends EntityControl {
 	
 	@Override
 	public boolean canBePushed() {
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -92,42 +93,35 @@ public class ControlDoor extends EntityControl {
 	
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
-		if (!world.isRemote && this.isOpen()) {
-			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
-			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
-			if (!tardis.isInFlight()) {
-				IBlockState state = ws.getBlockState(tardis.getLocation().up());
-				if (state.getBlock() instanceof BlockTardisTop) {
-					EnumFacing facing = state.getValue(BlockTardisTop.FACING);
-					BlockPos pos = tardis.getLocation().offset(facing, 2);
-					entityIn.dismountRidingEntity();
-					entityIn.removePassengers();
-					if (entityIn instanceof EntityPlayer) {
-						EntityPlayerMP player = (EntityPlayerMP) entityIn;
-						player.motionX = 0;
-						player.motionY = 0;
-						player.motionZ = 0;
-						player.connection.sendPacket(new SPacketEntityVelocity(player));
-						ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, tardis.dimension, new TardisTeleporter(ws));
-						player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
-						player.setSpawnPoint(pos, true);
-						player.setSpawnDimension(tardis.dimension);
-					} else {
-						entityIn.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
-						entityIn.changeDimension(tardis.dimension);
-					}
-				} else if (antiSpamTicks == 0) {
-					((EntityPlayer) entityIn).sendStatusMessage(new TextComponentTranslation("tardis.missing"), true);
-					antiSpamTicks = 20;
-				}
-			}
-		}
+		
 	}
 	
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
+		if(!world.isRemote && this.isOpen()) {
+			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
+			AxisAlignedBB bb = this.getEntityBoundingBox();
+			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
+				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
+				EnumFacing facing = ws.getBlockState(tardis.getLocation().up()).getValue(BlockTardisTop.FACING);
+				BlockPos pos = tardis.getLocation().offset(facing, 2);
+				for(Entity e : entities) {
+					if(e instanceof EntityPlayerMP) {
+						EntityPlayerMP mp = (EntityPlayerMP)e;
+						ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, tardis.dimension, new TardisTeleporter());
+						mp.connection.setPlayerLocation(pos.getX(),pos.getY(),pos.getZ(), Helper.get360FromFacing(facing), 0);
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public boolean canBeCollidedWith() {
+		return true;
 	}
 	
 }

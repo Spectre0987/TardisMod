@@ -1,29 +1,27 @@
 package net.tardis.mod.util;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.world.Teleporter;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.ITeleporter;
 
-public class TardisTeleporter extends Teleporter {
-	
-	public TardisTeleporter(WorldServer worldIn) {
-		super(worldIn);
+public class TardisTeleporter implements ITeleporter {
+
+	public TardisTeleporter() {
+		
 	}
 	
-	@Override
-	public void placeInPortal(Entity entityIn, float rotationYaw) {}
+	public TardisTeleporter(WorldServer es) {}
 	
 	@Override
-	public boolean placeInExistingPortal(Entity entityIn, float rotationYaw) {
-		return true;
+	public void placeEntity(World world, Entity entity, float yaw) {
+		if(!world.isRemote) {
+			((WorldServer)world).addScheduledTask(new Runnable() {
+				@Override
+				public void run() {
+					entity.setEntityInvulnerable(false);
+					entity.extinguish();
+				}});
+		}
 	}
-	
-	@Override
-	public boolean makePortal(Entity entityIn) {
-		return true;
-	}
-	
-	@Override
-	public void removeStalePortalLocations(long worldTime) {}
-	
 }
