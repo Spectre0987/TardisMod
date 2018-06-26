@@ -38,8 +38,12 @@ public class TardisConfig {
 	
 	public static class UseEntities {
 		
+		@Config.RequiresMcRestart
 		@Config.LangKey("config.entity.allowed")
 		public boolean entities = true;
+		
+		@Config.LangKey("config.entity.cybermen.spawnchance")
+		public int cybermanSpawnChance = 50;
 	}
 	
 	public static class Misc {
