@@ -30,7 +30,7 @@ public class RenderCybermanInvasion extends Render<EntityCybermanInvasion> {
 		GlStateManager.translate(x, y + 1.5, z);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.rotate(180,0,0,1);
-		GlStateManager.rotate(180, 0, 1, 0);
+		GlStateManager.rotate(180,0,1,0);
 		model.render(entity, entity.limbSwing, entity.limbSwingAmount, entity.ticksExisted,entity.getRotationYawHead(), entity.rotationPitch, 0.0625F);
 		GlStateManager.popMatrix();
 		

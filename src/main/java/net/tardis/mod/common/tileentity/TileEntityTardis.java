@@ -79,7 +79,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public Ticket tardisLocTicket;
 	private boolean chunkLoadTick = true;
 	public boolean landOnSurface = true;
-	public EnumFacing facing = EnumFacing.WEST;
+	public EnumFacing facing = EnumFacing.NORTH;
 	public String currentDimName = "";
 	public String targetDimName = "";
 	public int totalTimeToTravel;
@@ -134,7 +134,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		++musicTicks;
 		if (musicTicks >= 375) {
 			musicTicks = 0;
-			if (!world.isRemote) world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
+			if (!world.isRemote) world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 2F, 1F);
 		}
 		this.createControls();
 	}

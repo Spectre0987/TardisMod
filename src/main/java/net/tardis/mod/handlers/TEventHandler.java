@@ -15,7 +15,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -94,13 +93,6 @@ public class TEventHandler {
 		event.getRegistry().register(new RecipeKey("spare_key"));
 	}
 	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public static void camera(CameraSetup e) {
-		if (Minecraft.getMinecraft().player.getRidingEntity() instanceof EntityTardis) {
-			
-		}
-	}
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)

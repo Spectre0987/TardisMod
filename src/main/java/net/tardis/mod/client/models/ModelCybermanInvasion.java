@@ -2,8 +2,10 @@ package net.tardis.mod.client.models;
 
 import java.lang.reflect.Field;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.tardis.mod.client.util.ModelUtil;
 
@@ -52,9 +54,9 @@ public class ModelCybermanInvasion extends ModelBiped
     ModelRenderer LeftLeg;
     ModelRenderer LeftToe;
     ModelRenderer LeftBoot;
-    ModelRenderer LeftLeg1;
-    ModelRenderer LeftToe1;
-    ModelRenderer LeftBoot1;
+    ModelRenderer RightLeg;
+    ModelRenderer RightToe;
+    ModelRenderer RightBoot;
     
   
   public ModelCybermanInvasion()
@@ -314,29 +316,29 @@ public class ModelCybermanInvasion extends ModelBiped
       LeftBoot.setTextureSize(128, 128);
       LeftBoot.mirror = true;
       setRotation(LeftBoot, 0F, 0F, 0F);
-      LeftLeg1 = new ModelRenderer(this, 0, 16);
-      LeftLeg1.addBox(-1.5F, 0F, -1.5F, 3, 11, 3);
-      LeftLeg1.setRotationPoint(-2F, 13F, 0F);
-      LeftLeg1.setTextureSize(128, 128);
-      LeftLeg1.mirror = true;
-      setRotation(LeftLeg1, 0F, 0F, 0F);
-      LeftToe1 = new ModelRenderer(this, 0, 50);
-      LeftToe1.addBox(-1.5F, 9.5F, -2F, 3, 1, 1);
-      LeftToe1.setRotationPoint(-2F, 13F, 0F);
-      LeftToe1.setTextureSize(128, 128);
-      LeftToe1.mirror = true;
-      setRotation(LeftToe1, 0F, 0F, 0F);
-      LeftBoot1 = new ModelRenderer(this, 0, 48);
-      LeftBoot1.addBox(-1.5F, 10F, -2.5F, 3, 1, 1);
-      LeftBoot1.setRotationPoint(-2F, 13F, 0F);
-      LeftBoot1.setTextureSize(128, 128);
-      LeftBoot1.mirror = true;
-      setRotation(LeftBoot1, 0F, 0F, 0F);
+      RightLeg = new ModelRenderer(this, 0, 16);
+      RightLeg.addBox(-1.5F, 0F, -1.5F, 3, 11, 3);
+      RightLeg.setRotationPoint(-2F, 13F, 0F);
+      RightLeg.setTextureSize(128, 128);
+      RightLeg.mirror = true;
+      setRotation(RightLeg, 0F, 0F, 0F);
+      RightToe = new ModelRenderer(this, 0, 50);
+      RightToe.addBox(-1.5F, 9.5F, -2F, 3, 1, 1);
+      RightToe.setRotationPoint(-2F, 13F, 0F);
+      RightToe.setTextureSize(128, 128);
+      RightToe.mirror = true;
+      setRotation(RightToe, 0F, 0F, 0F);
+      RightBoot = new ModelRenderer(this, 0, 48);
+      RightBoot.addBox(-1.5F, 10F, -2.5F, 3, 1, 1);
+      RightBoot.setRotationPoint(-2F, 13F, 0F);
+      RightBoot.setTextureSize(128, 128);
+      RightBoot.mirror = true;
+      setRotation(RightBoot, 0F, 0F, 0F);
   }
   
   @Override
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5){
-	this.bipedHead.isHidden = true;
+	
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     try {
     	Field[] fields = ModelCybermanInvasion.class.getDeclaredFields();
@@ -353,10 +355,26 @@ public class ModelCybermanInvasion extends ModelBiped
     ModelUtil.setChild(this.bipedHead, this.LampGlow);
     ModelUtil.setChild(this.bipedHead, this.EyeGlow1);
     ModelUtil.setChild(this.bipedHead, this.EyeGlow2);
-    ModelUtil.setChild(this.bipedBody, this.Torso);
-    LampGlow.render(f5);
-    EyeGlow1.render(f5);
-    EyeGlow2.render(f5);
+    ModelUtil.setChild(this.bipedLeftArm, this.LeftArm);
+    ModelUtil.setChild(this.bipedRightArm, this.RightArm);
+    ModelUtil.setChild(this.bipedLeftLeg, this.LeftLeg);
+    ModelUtil.setChild(this.bipedLeftLeg, this.LeftBoot);
+    ModelUtil.setChild(this.bipedLeftLeg, this.LeftToe);
+    ModelUtil.setChild(this.bipedRightLeg, this.RightBoot);
+    ModelUtil.setChild(this.bipedRightLeg, this.RightLeg);
+    ModelUtil.setChild(this.bipedRightLeg, this.RightToe);
+    {
+    	GlStateManager.pushMatrix();
+    	Minecraft mc = Minecraft.getMinecraft();
+    	GlStateManager.disableLighting();
+    	mc.entityRenderer.disableLightmap();
+    	LampGlow.render(f5);
+        EyeGlow1.render(f5);
+        EyeGlow2.render(f5);
+    	mc.entityRenderer.enableLightmap();
+    	GlStateManager.enableLighting();
+    	GlStateManager.popMatrix();
+    }
     Head1.render(f5);
     Head2.render(f5);
     Head3.render(f5);
@@ -380,9 +398,20 @@ public class ModelCybermanInvasion extends ModelBiped
     Head21.render(f5);
     Head22.render(f5);
     Head23.render(f5);
+    GlStateManager.pushMatrix();
+    GlStateManager.rotate(entity.rotationYaw,0,1,0);
     Neck.render(f5);
     Torso.render(f5);
-    ChestUnitGlow.render(f5);
+    {
+    	GlStateManager.pushMatrix();
+    	Minecraft mc = Minecraft.getMinecraft();
+    	GlStateManager.disableLighting();
+    	mc.entityRenderer.disableLightmap();
+    	ChestUnitGlow.render(f5);
+    	mc.entityRenderer.enableLightmap();
+    	GlStateManager.enableLighting();
+    	GlStateManager.popMatrix();
+    }
     ChestUnit1.render(f5);
     ChestUnit2.render(f5);
     ChestUnit3.render(f5);
@@ -391,14 +420,19 @@ public class ModelCybermanInvasion extends ModelBiped
     ChestUnit6.render(f5);
     ChestUnit7.render(f5);
     Crotch.render(f5);
+    
+    this.LeftArm.offsetX = -0.125F;
+    this.RightArm.offsetX = 0.125F;
+    
     LeftArm.render(f5);
     RightArm.render(f5);
     LeftLeg.render(f5);
-    LeftToe.render(f5);
     LeftBoot.render(f5);
-    LeftLeg.render(f5);
     LeftToe.render(f5);
-    LeftBoot.render(f5);
+    RightLeg.render(f5);
+    RightToe.render(f5);
+    RightBoot.render(f5);
+    GlStateManager.popMatrix();
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
