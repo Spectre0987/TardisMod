@@ -19,7 +19,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -27,12 +26,14 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityTardis;
+import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
@@ -130,14 +131,19 @@ public class TEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void givePlayerKey(EntityJoinWorldEvent event) {
+	public static void givePlayerKey(PlayerLoggedInEvent event) {
 		if (TardisConfig.MISC.givePlayerKey) {
-			if (event.getEntity() instanceof EntityPlayer) {
-				World world = event.getEntity().world;
-				EntityPlayer player = (EntityPlayer) event.getEntity();
-				if (!player.inventory.hasItemStack(new ItemStack(TItems.key))) {
-					EntityItem ei = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.key));
-					world.spawnEntity(ei);
+			EntityPlayer player = event.player;
+			boolean hasKey = false;
+			for(ItemStack stack : player.inventory.mainInventory) {
+				if(stack.getItem() instanceof ItemKey) {
+					hasKey = true;
+				}
+			}
+			if(!hasKey) {
+				EntityItem ei = new EntityItem(player.world, player.posX, player.posY, player.posZ, new ItemStack(TItems.key));
+				if(!player.world.isRemote) {
+					player.world.spawnEntity(ei);
 				}
 			}
 		}
