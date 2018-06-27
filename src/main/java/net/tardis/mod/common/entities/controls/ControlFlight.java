@@ -44,9 +44,14 @@ public class ControlFlight extends EntityControl {
 				eT.setPosition(wPos.getX(), wPos.getY() + 1, wPos.getZ());
 				ws.spawnEntity(eT);
 				player.setInvisible(true);
-				player.setPosition(wPos.getX(), wPos.getY(), wPos.getZ());
 				ForgeChunkManager.unforceChunk(tardis.tardisLocTicket, world.getChunkFromBlockCoords(getConsolePos()).getPos());
 				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, tardis.dimension, new TardisTeleporter((WorldServer) world));
+				((EntityPlayerMP)player).setLocationAndAngles(wPos.getX(), wPos.getY(), wPos.getZ(), 0, 0);
+				ws.addScheduledTask(new Runnable() {
+					@Override
+					public void run() {
+						player.startRiding(eT, true);
+					}});
 			} else
 				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_IN_FLIGHT), true);
 		}

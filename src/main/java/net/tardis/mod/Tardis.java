@@ -21,12 +21,14 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
 import net.tardis.mod.common.entities.controls.ControlEngine;
 import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
@@ -55,6 +57,7 @@ import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
+import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
@@ -71,6 +74,7 @@ import net.tardis.mod.packets.MessageHandlerTR;
 import net.tardis.mod.packets.MessageHandlerTeleport;
 import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageTR;
+import net.tardis.mod.packets.MessageTelepathicCircut;
 import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
@@ -125,6 +129,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
 		EntityHelper.registerStatic(ControlFastReturn.class, "tardis_fast_return");
 		EntityHelper.registerStatic(ControlTelepathicCircuts.class, "telepathic_circuts");
+		EntityHelper.registerStatic(ControlDoorSwitch.class, "tardis_door_control");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		
@@ -136,11 +141,14 @@ public class Tardis {
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
 		if (hasIC2) registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
 		
+		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
+		
 		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
 		NETWORK.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 4, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerDoorOpen.class, MessageDoorOpen.class, 5, Side.CLIENT);
+		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 6, Side.SERVER);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());
@@ -157,6 +165,7 @@ public class Tardis {
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
+			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 	}

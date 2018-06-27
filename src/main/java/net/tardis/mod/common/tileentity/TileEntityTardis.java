@@ -36,6 +36,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
 import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
@@ -45,6 +46,7 @@ import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlScreen;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
@@ -66,7 +68,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private static IBlockState blockBase = TBlocks.tardis.getDefaultState();
 	private static IBlockState blockTop = TBlocks.tardis_top.getDefaultState();
 	/** Time To Travel in Blocks/Tick **/
-	private static final int MAX_TARDIS_SPEED = 1;
+	private static final int MAX_TARDIS_SPEED = 8;
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> buffer = NonNullList.create().withSize(9, ItemStack.EMPTY);
 	public EntityControl[] controls;
@@ -77,7 +79,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public Ticket tardisLocTicket;
 	private boolean chunkLoadTick = true;
 	public boolean landOnSurface = true;
-	public EnumFacing facing = EnumFacing.WEST;
+	public EnumFacing facing = EnumFacing.NORTH;
 	public String currentDimName = "";
 	public String targetDimName = "";
 	public int totalTimeToTravel;
@@ -132,7 +134,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		++musicTicks;
 		if (musicTicks >= 375) {
 			musicTicks = 0;
-			if (!world.isRemote) world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
+			if (!world.isRemote) world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 2F, 1F);
 		}
 		this.createControls();
 	}
@@ -403,7 +405,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					new ControlFuel(this),
 					new ControlLandType(this),
 					new ControlDirection(this),
-					new ControlFastReturn(this)
+					new ControlFastReturn(this),
+					new ControlTelepathicCircuts(this),
+					new ControlDoorSwitch(this)
 					};
 			for (EntityControl con : ec) {
 				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
@@ -430,6 +434,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public EntityControl getControl(Class clazz) {
+		if(this.controls == null || this.controls.length == 0) {
+			this.createControls();
+		}
 		for(EntityControl c : this.controls) {
 			if(c.getClass() == clazz)
 				return c;

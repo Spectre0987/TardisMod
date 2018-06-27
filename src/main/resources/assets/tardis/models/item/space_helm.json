@@ -2,8 +2,22 @@
     "parent":"builtin/entity",
     "display":{
         "gui":{
-            "translation":[-11,15,0],
+            "translation":[-11,3.5,0],
             "rotation":[22.5, -135,0]
+        },
+        "ground":{
+            "translation":[4,5,4],
+            "scale":[0.5,0.5,0.5]
+        },
+        "firstperson_righthand":{
+            "translation":[20,0,0]
+        },
+        "firstperson_lefthand":{
+            "translation":[8,0,0]
+        },
+        "thirdperson_righthand":{
+            "translation":[1,0,10],
+            "rotation":[85,0,0]
         }
     }
 }

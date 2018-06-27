@@ -26,6 +26,7 @@ import net.tardis.mod.util.helpers.Helper;
 public class ItemSonic extends Item {
 	
 	public static final String MODE_KEY = "mode";
+	public static final String CONSOLE_POS = "console_pos";
 	
 	public ItemSonic() {
 		this.setCreativeTab(Tardis.tab);
@@ -41,7 +42,7 @@ public class ItemSonic extends Item {
 		} else {
 			IScrew sc = (ScrewdriverMode.modes.get(getMode(held)));
 			if (sc instanceof IScrewAction) ((IScrewAction) sc).preform(worldIn, player, handIn);
-			worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
+			worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
 		}
 		return super.onItemRightClick(worldIn, player, handIn);
 	}
@@ -73,6 +74,23 @@ public class ItemSonic extends Item {
 		}
 		setMode(stack, 0);
 		return getMode(stack);
+	}
+	
+	public static BlockPos getConsolePos(ItemStack stack) {
+		if(stack.hasTagCompound()) {
+			if(stack.getTagCompound().hasKey(CONSOLE_POS)) {
+				return BlockPos.fromLong(stack.getTagCompound().getLong(CONSOLE_POS));
+			}
+		}
+		return BlockPos.ORIGIN;
+	}
+	
+	public static void setConsolePos(ItemStack stack, BlockPos pos) {
+		if(!stack.hasTagCompound()) {
+			stack.setTagCompound(new NBTTagCompound());
+		}
+		NBTTagCompound tag = stack.getTagCompound();
+		tag.setLong(CONSOLE_POS, pos.toLong());
 	}
 	
 	@Override

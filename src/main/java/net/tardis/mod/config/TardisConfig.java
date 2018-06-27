@@ -22,6 +22,7 @@ public class TardisConfig {
 	
 	public static class Dimensions {
 		
+
 		@Config.LangKey("config.dims")
 		public int[] bDims = new int[] { 1 };
 		
@@ -30,12 +31,19 @@ public class TardisConfig {
 		
 		@Config.LangKey("config.tDim")
 		public int tardisDimension = 10;
+		
+		@Config.LangKey("config.bhDim")
+		public int blackHoleDimension = 22;
 	}
 	
 	public static class UseEntities {
 		
+		@Config.RequiresMcRestart
 		@Config.LangKey("config.entity.allowed")
 		public boolean entities = true;
+		
+		@Config.LangKey("config.entity.cybermen.spawnchance")
+		public int cybermanSpawnChance = 50;
 	}
 	
 	public static class Misc {

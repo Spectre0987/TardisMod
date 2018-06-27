@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.tardis.mod.common.items.ItemManual;
+import net.tardis.mod.common.items.TItems;
 
 public class RenderInvis extends Render {
 	
@@ -15,11 +15,14 @@ public class RenderInvis extends Render {
 	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		Entity look = Minecraft.getMinecraft().objectMouseOver.entityHit;
-		if (look != null && look == entity && Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() instanceof ItemManual	) {
-			GlStateManager.pushMatrix();
-			renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 45);
-			GlStateManager.popMatrix();
+		Minecraft mc = Minecraft.getMinecraft();
+		if(mc.player.getHeldItemMainhand().getItem() == TItems.manual) {
+			Entity look = mc.objectMouseOver.entityHit;
+			if(look != null && look == entity) {
+				GlStateManager.pushMatrix();
+				this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 16);
+				GlStateManager.popMatrix();
+			}
 		}
 	}
 	

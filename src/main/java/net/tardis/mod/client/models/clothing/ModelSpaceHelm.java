@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.tardis.mod.client.util.ModelUtil;
 
 public class ModelSpaceHelm extends ModelBiped
 {
@@ -337,83 +338,68 @@ public class ModelSpaceHelm extends ModelBiped
       Head46.setTextureSize(128, 128);
       Head46.mirror = true;
       setRotation(Head46, 0F, 0F, 0F);
-      
-      this.bipedHead.setTextureSize(0, 0);
-      this.bipedHead.setTextureOffset(0, 35);
-      
-      try {
-    	  Field[] fields = ModelSpaceHelm.class.getDeclaredFields();
-    	  for(Field f : fields) {
-    		  f.setAccessible(true);
-    		  Object obj = f.get(this);
-    		  if(obj != null && obj instanceof ModelRenderer) {
-    			  this.bipedHead.addChild((ModelRenderer)obj);
-    		  }
-    	  }
-      }
-      catch(Exception e) {}
   }
   
+  @Override
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
-	 this.bipedHeadwear.isHidden = true;
-	 this.bipedHead.setTextureOffset(0, 36);
-	 this.bipedBody.isHidden = true;
-	 this.bipedLeftArm.isHidden = true;
-	 this.bipedLeftLeg.isHidden = true;
-	 this.bipedRightArm.isHidden = true;
-	 this.bipedRightLeg.isHidden = true;
-	 super.render(entity, f, f1, f2, f3, f4, f5);
-	 setRotationAngles(f, f1, f2, f3, f4, f5,entity);
-    
-    /*if(entity == null) {
-	    Head1.render(f5);
-	    Head2.render(f5);
-	    Head3.render(f5);
-	    Head4.render(f5);
-	    Head5.render(f5);
-	    Head6.render(f5);
-	    Head7.render(f5);
-	    Head8.render(f5);
-	    Head9.render(f5);
-	    Head10.render(f5);
-	    Head11.render(f5);
-	    Head12.render(f5);
-	    Head13.render(f5);
-	    Head14.render(f5);
-	    Head15.render(f5);
-	    Head16.render(f5);
-	    Head17.render(f5);
-	    Head18.render(f5);
-	    Head19.render(f5);
-	    Head20.render(f5);
-	    Head21.render(f5);
-	    Head22.render(f5);
-	    Head23.render(f5);
-	    Head24.render(f5);
-	    Head25.render(f5);
-	    Head26.render(f5);
-	    Head27.render(f5);
-	    Head28.render(f5);
-	    Head29.render(f5);
-	    Head30.render(f5);
-	    Head31.render(f5);
-	    Head32.render(f5);
-	    Head33.render(f5);
-	    Head34.render(f5);
-	    Head35.render(f5);
-	    Head36.render(f5);
-	    Head37.render(f5);
-	    Head38.render(f5);
-	    Head39.render(f5);
-	    Head40.render(f5);
-	    Head41.render(f5);
-	    Head42.render(f5);
-	    Head43.render(f5);
-	    Head44.render(f5);
-	    Head45.render(f5);
-	    Head46.render(f5);
-    }*/
+	setRotationAngles(f, f1, f2, f3, f4, f5,entity);
+	try {
+		Field[] fields = ModelSpaceHelm.class.getDeclaredFields();
+		for(Field fi : fields) {
+			Object obj = fi.get(this);
+			if(obj !=null && obj instanceof ModelRenderer) {
+				ModelUtil.copyAngle(this.bipedHead, (ModelRenderer)obj);
+			}
+		}
+	}
+	catch(Exception e) {}
+	Head1.render(f5);
+	Head2.render(f5);
+	Head3.render(f5);
+	Head4.render(f5);
+	Head5.render(f5);
+	Head6.render(f5);
+	Head7.render(f5);
+	Head8.render(f5);
+	Head9.render(f5);
+	Head10.render(f5);
+	Head11.render(f5);
+	Head12.render(f5);
+	Head13.render(f5);
+	Head14.render(f5);
+	Head15.render(f5);
+	Head16.render(f5);
+	Head17.render(f5);
+	Head18.render(f5);
+	Head19.render(f5);
+	Head20.render(f5);
+	Head21.render(f5);
+	Head22.render(f5);
+	Head23.render(f5);
+	Head24.render(f5);
+	Head25.render(f5);
+	Head26.render(f5);
+	Head27.render(f5);
+	Head28.render(f5);
+	Head29.render(f5);
+	Head30.render(f5);
+	Head31.render(f5);
+	Head32.render(f5);
+	Head33.render(f5);
+	Head34.render(f5);
+	Head35.render(f5);
+	Head36.render(f5);
+	Head37.render(f5);
+	Head38.render(f5);
+	Head39.render(f5);
+	Head40.render(f5);
+	Head41.render(f5);
+	Head42.render(f5);
+	Head43.render(f5);
+	Head44.render(f5);
+	Head45.render(f5);
+	Head46.render(f5);
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

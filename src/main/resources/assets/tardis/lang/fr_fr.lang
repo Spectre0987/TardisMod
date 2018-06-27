@@ -21,6 +21,9 @@ item.demat_circut.name=Circuit de dématérialisation
 item.artron_capacitor.name=Batterie d'Artron
 item.sonic_pen.name=Stylo torche sonique
 item.tardis_manual.name=Manuel de TARDIS
+item.space_helm.name=Casque de combinaison spatiale
+item.space_chest.name=Plastron de combinaison spatiale
+item.space_legs.name=Jambières de combinaison spatiale
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -76,6 +79,7 @@ config.tDim=Dimension TARDIS
 
 config.entity=Entitées
 config.entity.allowed=Ce mod doit-il ajouter des Mobs ?
+config.entity.cybermen.spawnchance=Chance qu'un Cyberman apparaisse (par chunk)
 
 config.misc=Divers
 config.misc.givekey=Donner une clef de TARDIS quand un joueur rejoint pour la première fois ?
@@ -96,6 +100,14 @@ entity.land_type.name=Sélecteur de type d'atterissage
 entity.direction_control.name=Contrôleur de direction
 entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Retour rapide
+entity.telepathic_circuts.name=Circuits télépathiques
+entity.tardis_door_control.name=Interrupteur de porte
+
+entity.invasion_cyberman.name=Invasion de Cyberman
+
+death.cyberman.generic=a été converti
 
 key.notwheretardis=CE N'EST PAS LÀ OÙ SE TROUVE LE TARDIS!
 key.console.location=Console à: 
+
+tardis.damage.demat=Le circuit de dématérialisation a été grillé !

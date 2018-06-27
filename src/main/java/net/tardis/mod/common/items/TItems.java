@@ -53,7 +53,6 @@ public class TItems {
 	public static Item space_helm;
 	public static Item space_chest;
 	public static Item space_legs;
-	public static Item space_boots;
 	
 	// Componenets
 	
@@ -106,9 +105,6 @@ public class TItems {
 		
 		space_legs = new SpaceSuit(SpaceSuit.material, 2, EntityEquipmentSlot.LEGS);
 		register(space_legs, "space_legs");
-		
-		space_boots = new SpaceSuit(SpaceSuit.material, 3, EntityEquipmentSlot.FEET);
-		register(space_boots, "space_boots");
 		
 		manual = new ItemManual();
 		register(manual, "tardis_manual");

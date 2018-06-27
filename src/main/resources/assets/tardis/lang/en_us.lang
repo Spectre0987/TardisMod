@@ -2,13 +2,13 @@ itemGroup.tardis=TARDIS Mod
 
 item.key.name=TARDIS Key
 item.pos_setter.name=Coordnate Logger
-item.circuts.name=Exotronic Circutry
+item.circuts.name=Exotronic Circuitry
 item.sonic_screwdriver.name=Sonic Screwdriver
 item.gunstick.name=Dalek Gunstick
 item.power_cell.name=Trionic Power Cell 
 item.ray_gun.name=Dalek Ray Gun
 item.void_specs.name=Void Specs
-item.fob_watch.name=Galifrayian Fob Watch
+item.fob_watch.name=Gallifreyan Fob Watch
 item.fez.name=Fez
 item.bowtie.name=Bowtie
 item.umbrella_open.name=Sonic Umbrella
@@ -17,10 +17,13 @@ item.sonic_blaster.name=Sonic Blaster
 item.sonic_cane.name=Sonic Cane
 item.vortex_manip.name=Vortex Manipulator
 item.fluid_link.name=Fluid Links
-item.demat_circut.name=Dematerialization Circut
+item.demat_circut.name=Dematerialization Circuit
 item.artron_capacitor.name=Artron Capacitor
 item.sonic_pen.name=Sonic Torch Pen
 item.tardis_manual.name=TARDIS Manual
+item.space_helm.name=Space Suit Helmet
+item.space_chest.name=Space Suit Chestpiece
+item.space_legs.name=Space Suit Leggings
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -29,7 +32,7 @@ tile.door.name=TARDIS Door
 tile.tardis_top.name=TARDIS
 tile.light.name=Lamp
 tile.homing_beacon.name=Homing Beacon
-tile.chronodine_generator.name=Chronodine Generator
+tile.chronodine_generator.name=Chronodyne Generator
 tile.grate.name=Grate
 tile.temporal_lab.name=Temporal Laboratory
 tile.umbrella_stand.name=Umbrella Stand
@@ -76,6 +79,7 @@ config.tDim=TARDIS Dimension
 
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
+config.entity.cybermen.spawnchance=Chance That A Cyberman Will Spawn (Per Chunk)
 
 config.misc=Misc
 config.misc.givekey=Should give Player A TARDIS key when they join the world?
@@ -96,6 +100,14 @@ entity.land_type.name=Landing Type Selector
 entity.direction_control.name=Directional Control
 entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Fast Return
+entity.telepathic_circuts.name=Telepathic Circuits
+entity.tardis_door_control.name=Door Switch
+
+entity.invasion_cyberman.name=Invasion Cyberman
+
+death.cyberman.generic=was converted
 
 key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
 key.console.location=Console at: 
+
+tardis.damage.demat=The Dematerialization Circuit has been fried!

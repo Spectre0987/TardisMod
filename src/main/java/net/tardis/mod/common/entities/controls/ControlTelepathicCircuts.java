@@ -1,13 +1,13 @@
 package net.tardis.mod.common.entities.controls;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.tardis.mod.Tardis;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.client.guis.GuiTelepathicCircuts;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.packets.MessageGetPlayers;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlTelepathicCircuts extends EntityControl{
@@ -22,14 +22,19 @@ public class ControlTelepathicCircuts extends EntityControl{
 
 	@Override
 	public Vec3d getOffset() {
-		return Helper.convertToPixels(0,16,0);
+		return Helper.convertToPixels(10,-6,-6);
 	}
 
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if(!world.isRemote) {
-			Tardis.NETWORK.sendTo(new MessageGetPlayers(((WorldServer)world).getMinecraftServer().getPlayerList().getPlayers()), (EntityPlayerMP)player);
+		if(world.isRemote) {
+			openGui();
 		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void openGui() {
+		Minecraft.getMinecraft().displayGuiScreen(new GuiTelepathicCircuts(this.getConsolePos()));
 	}
 
 }

@@ -1,11 +1,15 @@
 package net.tardis.mod.util.helpers;
 
+import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -14,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
@@ -122,5 +127,36 @@ public class Helper {
 	
 	public static boolean isIntInRange(int min, int max, int num) {
 		return num < max && num > min;
+	}
+
+	public static int getSlotForItem(EntityPlayer player, Item item) {
+		for(int i = 0; i < player.inventory.mainInventory.size(); ++i) {
+			if(player.inventory.getStackInSlot(i).getItem() == item) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public static Biome findBiomeByName(String string) {
+		List<Biome> biomes = EntityHelper.biomes;
+		try {
+			Field field; 
+			if((Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
+				field = Biome.class.getDeclaredField("biomeName");
+			}
+			else {
+				field = Biome.class.getDeclaredField("field_76791_y");
+			}
+			field.setAccessible(true);
+			for(Biome b : biomes) {
+				Object obj = field.get(b);
+				if(((String)obj).trim().toLowerCase().equals(string)) {
+					return b;
+				}
+			}
+		}
+		catch(Exception e) {}
+		return null;
 	}
 }

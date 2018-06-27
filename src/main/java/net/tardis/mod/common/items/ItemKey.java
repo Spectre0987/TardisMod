@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -21,6 +22,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
+import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -94,5 +96,31 @@ public class ItemKey extends Item {
 	@Override
 	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
+	}
+
+	@Override
+	public boolean onEntityItemUpdate(EntityItem entityItem) {
+		World world = entityItem.world;
+		if(!world.isRemote) {
+			List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, entityItem.getEntityBoundingBox().grow(1D));
+			for(EntityItem item : items) {
+				if(item.getItem().getItem() == TItems.circuts) {
+					item.setDead();
+					entityItem.setDead();
+					WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+					BlockPos pos = ItemKey.getPos(entityItem.getItem());
+					if(pos != null && !pos.equals(BlockPos.ORIGIN)) {
+						TileEntity te = ws.getTileEntity(pos);
+						if(te != null && te instanceof TileEntityTardis) {
+							TileEntityTardis tardis = (TileEntityTardis)te;
+							tardis.setDesination(entityItem.getPosition(), entityItem.dimension);
+							tardis.startFlight();
+							tardis.travel();
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

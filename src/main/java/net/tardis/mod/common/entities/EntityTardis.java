@@ -1,5 +1,6 @@
 package net.tardis.mod.common.entities;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,8 +35,6 @@ public class EntityTardis extends EntityFlying {
 	
 	public EntityTardis(World worldIn, Entity e) {
 		this(worldIn);
-		e.setPositionAndUpdate(posX, posY, posZ);
-		e.startRiding(this);
 	}
 	
 	@Override
@@ -73,7 +72,10 @@ public class EntityTardis extends EntityFlying {
 				((EntityPlayerMP) e).connection.sendPacket(new SPacketEntityVelocity(this));
 			}
 			if (this.getControllingPassenger() == null || this.getConsolePos() == null || this.getConsolePos().equals(BlockPos.ORIGIN)) {
-				this.setDead();
+				++ticks;
+				if(ticks > 10) {
+					this.setDead();
+				}
 			}
 		}
 	}
