@@ -24,8 +24,9 @@ public class TransmatMode implements IScrewAction {
 		if (!world.isRemote) {
 			if (TardisHelper.hasTardis(player.getUniqueID())) {
 				BlockPos pos = TardisHelper.getTardis(player.getGameProfile().getId());
-				WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.id);
-				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, TDimensions.id, new TardisTeleporter((WorldServer) world));
+				if(player.dimension != TDimensions.id) {
+					((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, TDimensions.id, new TardisTeleporter());
+				}
 				((EntityPlayerMP) player).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
 			} else
 				player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_MISSING), true);
