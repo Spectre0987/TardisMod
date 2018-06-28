@@ -1,14 +1,18 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -356,6 +360,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		tag.setString(NBT.CURRENT_DIM_NAME, this.currentDimName);
 		tag.setString(NBT.TARGET_DIM_NAME, this.targetDimName);
+		
+		if(this.controls != null && this.controls.length > 0) {
+			NBTTagList list = new NBTTagList();
+			for(EntityControl e : this.controls) {
+				list.appendTag(new NBTTagInt(e.getEntityId()));
+			}
+			tag.setTag(NBT.CONTROL_IDS, list);
+		}
 		return tag;
 	}
 	
@@ -372,6 +384,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.totalTimeToTravel = tag.getInteger(NBT.MAX_TIME);
 			this.targetDimName = tag.getString(NBT.TARGET_DIM_NAME);
 			this.currentDimName = tag.getString(NBT.CURRENT_DIM_NAME);
+			
+			NBTTagList list = tag.getTagList(NBT.CONTROL_IDS, Constants.NBT.TAG_INT);
+			List<Entity> controls = new ArrayList<Entity>();
+			for(NBTBase base : list) {
+				if(base instanceof NBTTagInt) {
+					int i = ((NBTTagInt)base).getInt();
+					controls.add(world.getEntityByID(i));
+				}
+			}
+			this.controls = controls.toArray(new EntityControl[0]);
 		}
 	}
 	
@@ -464,6 +486,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public static class NBT {
+		public static final String CONTROL_IDS = "control_ids";
 		public static final String COMPOENET_LIST = "componentList";
 		public static final String LAND_ON_SURFACE = "landOnGround";
 		public static final String MAX_TIME = "maxTime";
