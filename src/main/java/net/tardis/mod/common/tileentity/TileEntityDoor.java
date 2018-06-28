@@ -126,6 +126,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 							if(!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase)entity), this.getConsolePos())) {
 								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
 								entity.changeDimension(TDimensions.id);
+								this.setLocked(false);
 							}
 						}
 					}
