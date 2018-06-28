@@ -25,7 +25,7 @@ public class EntityCyberman extends EntityMob{
 
 		@Override
 		public ITextComponent getDeathMessage(EntityLivingBase entity) {
-			return new TextComponentString(entity.getDisplayName().getFormattedText() + " "+(new TextComponentTranslation("death.cyberman.generic").getFormattedText()));
+			return new TextComponentString(entity.getDisplayName().getFormattedText() + " " + (new TextComponentTranslation("death.cyberman.generic").getFormattedText()));
 		}
 		
 	}
