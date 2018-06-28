@@ -408,37 +408,38 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public boolean createControls() {
-		if (controls == null || controls.length == 0) {
-			EntityControl[] ec = new EntityControl[] { 
-					new ControlLaunch(this),
-					new ControlX(this),
-					new ControlY(this),
-					new ControlZ(this),
-					new ControlDimChange(this),
-					new ControlScreen(this),
-					new ControlRandom(this),
-					new ControlDoor(this),
-					new ControlSTCLoad(this),
-					new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)),
-					new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)),
-					new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)),
-					new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)),
-					new ControlFlight(this),
-					new ControlFuel(this),
-					new ControlLandType(this),
-					new ControlDirection(this),
-					new ControlFastReturn(this),
-					new ControlTelepathicCircuts(this),
-					new ControlDoorSwitch(this)
-					};
-			for (EntityControl con : ec) {
-				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
-				if (!world.isRemote)
+		if(!world.isRemote) {
+			if (controls == null || controls.length == 0) {
+				EntityControl[] ec = new EntityControl[] { 
+						new ControlLaunch(this),
+						new ControlX(this),
+						new ControlY(this),
+						new ControlZ(this),
+						new ControlDimChange(this),
+						new ControlScreen(this),
+						new ControlRandom(this),
+						new ControlDoor(this),
+						new ControlSTCLoad(this),
+						new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)),
+						new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)),
+						new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)),
+						new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)),
+						new ControlFlight(this),
+						new ControlFuel(this),
+						new ControlLandType(this),
+						new ControlDirection(this),
+						new ControlFastReturn(this),
+						new ControlTelepathicCircuts(this),
+						new ControlDoorSwitch(this)
+						};
+				for (EntityControl con : ec) {
+					con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
 					world.spawnEntity(con);
-				
+					
+				}
+				this.controls = ec;
+				return true;
 			}
-			this.controls = ec;
-			return true;
 		}
 		return false;
 	}

@@ -94,11 +94,13 @@ public abstract class EntityControl extends Entity implements IControl {
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		return new NBTTagCompound();
+		return super.writeToNBT(tag);
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {}
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+	}
 	
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {}
