@@ -31,11 +31,13 @@ public class ButtonRecipe extends GuiButton {
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		mc.getRenderItem().renderItemIntoGUI(stackToRender, this.x + 1, this.y + 1);
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((this.x / 2) + 10, (this.y / 2), 0);
-		GlStateManager.scale(0.5, 0.5, 0.5);
-		this.drawCenteredString(mc.fontRenderer, time / 20 + "", x, y, Color.WHITE.getRGB());
-		GlStateManager.popMatrix();
+		if(time < 0) {
+			GlStateManager.pushMatrix();
+			GlStateManager.translate((this.x / 2) + 10, (this.y / 2), 0);
+			GlStateManager.scale(0.5, 0.5, 0.5);
+			this.drawCenteredString(mc.fontRenderer, time / 20 + "", x, y, Color.WHITE.getRGB());
+			GlStateManager.popMatrix();
+		}
 		
 	}
 	
