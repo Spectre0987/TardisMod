@@ -46,6 +46,7 @@ tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS has been unlocked!
 
 death.attack.dalek=Killed by a Dalek Ray gun
+death.cyberman.ray=was deleted.
 
 screw.recall=Recall Mode
 screw.transmat=Transmat
