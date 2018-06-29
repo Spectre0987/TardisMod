@@ -8,7 +8,7 @@ public class ItemManual extends ItemBase {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TextComponentTranslation("key.manual"));
+		tooltip.add(new TextComponentTranslation("item.manual"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	
