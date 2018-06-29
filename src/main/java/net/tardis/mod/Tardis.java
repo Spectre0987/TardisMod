@@ -24,6 +24,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
+import net.tardis.mod.common.entities.EntityRayCyberman;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -134,6 +135,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDoorSwitch.class, "tardis_door_control");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
+		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");

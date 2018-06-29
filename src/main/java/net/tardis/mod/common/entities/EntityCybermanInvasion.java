@@ -3,9 +3,11 @@ package net.tardis.mod.common.entities;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
@@ -17,10 +19,11 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public class EntityCybermanInvasion extends EntityCyberman
+public class EntityCybermanInvasion extends EntityCyberman implements IRangedAttackMob
 {
 
     public EntityCybermanInvasion(World worldIn)
@@ -32,7 +35,8 @@ public class EntityCybermanInvasion extends EntityCyberman
     protected void initEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIAttackMelee(this, 0.75D, false));
+        //this.tasks.addTask(2, new EntityAIAttackMelee(this, 0.75D, false));
+        this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 40, 30F));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
@@ -76,5 +80,19 @@ public class EntityCybermanInvasion extends EntityCyberman
     {
         return super.onInitialSpawn(difficulty, livingdata);
     }
+
+	@Override
+	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
+		
+		Vec3d targetPos = this.getPositionVector().subtract(target.getPositionVector());
+		
+		//EntityRayCyberman ray = new EntityRayCyberman(world, targetPos.x, targetPos.y, targetPos.z);
+		EntityRayCyberman ray = new EntityRayCyberman(world, this);
+		ray.setPosition(posX + this.getForward().x, posY + this.getEyeHeight(), posZ + this.getForward().z);
+		world.spawnEntity(ray);
+	}
+
+	@Override
+	public void setSwingingArms(boolean swingingArms) {}
     
 }
