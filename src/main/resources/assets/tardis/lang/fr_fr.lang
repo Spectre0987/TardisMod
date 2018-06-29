@@ -46,6 +46,7 @@ tardis.locked.true=TARDIS fermé !
 tardis.locked.false=TARDIS a été ouvert.
 
 death.attack.dalek=Tué par un rayon laser Dalek
+death.cyberman.ray=a été supprimé.
 
 screw.recall=Mode de rappel
 screw.transmat=Transmat
