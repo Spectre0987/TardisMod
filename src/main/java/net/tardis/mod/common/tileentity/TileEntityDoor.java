@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -35,6 +37,7 @@ import net.tardis.mod.util.helpers.TardisHelper;
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory {
 	
 	public BlockPos consolePos = BlockPos.ORIGIN;
+	public SoundEvent knockSound = SoundEvents.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD;
 	public boolean isLocked = true;
 	public int lockCooldown = 0;
 	private int updateTicks = 0;
@@ -175,6 +178,15 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 	
 	public BlockPos getConsolePos() {
 		return this.consolePos;
+	}
+	
+	public void knock() {
+		if(!world.isRemote && this.getConsolePos() != null) {
+			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+			if(ws != null) {
+				ws.playSound(null, getConsolePos(), knockSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			}
+		}
 	}
 	
 	public IInventory getLinkedInv() {
