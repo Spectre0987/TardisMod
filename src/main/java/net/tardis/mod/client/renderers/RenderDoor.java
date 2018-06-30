@@ -46,7 +46,7 @@ public class RenderDoor extends Render<ControlDoor> {
 		GlStateManager.translate(0, 0, 0.01);
 		if (open) {
 			TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
-			if(tardis.dimension == TDimensions.BLACK_HOLE_ID) {
+			if(tardis.dimension == TDimensions.SPACE_ID) {
 				GlStateManager.pushMatrix();
 				mc.getTextureManager().bindTexture(BLACK_HOLE_TEXTURE);
 				mc.entityRenderer.disableLightmap();
