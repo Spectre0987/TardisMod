@@ -84,6 +84,7 @@ config.entity.cybermen.spawnchance=Chance qu'un Cyberman apparaisse (par chunk)
 
 config.misc=Divers
 config.misc.givekey=Donner une clef de TARDIS quand un joueur rejoint pour la première fois ?
+config.misc.maxrand=Nombre de blocs maximum que le TARDIS pourra voyager quand on utilise le Contrôleur aléatoire
 
 entity.launch_lever.name=Espace - Accélérateur temporel
 entity.x_valve.name=Contrôle spatial - X
