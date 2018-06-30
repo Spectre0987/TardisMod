@@ -114,7 +114,7 @@ public class ControlDoor extends EntityControl {
 						ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, tardis.dimension, new TardisTeleporter());
 						mp.connection.setPlayerLocation(pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 					}
-					else {
+					else if(e != this){
 						e.setPosition(pos.getX(), pos.getY(), pos.getZ());
 						e.changeDimension(tardis.dimension);
 					}
