@@ -109,13 +109,15 @@ public class ItemKey extends Item {
 					entityItem.setDead();
 					WorldServer ws = DimensionManager.getWorld(TDimensions.id);
 					BlockPos pos = ItemKey.getPos(entityItem.getItem());
-					if(pos != null && !pos.equals(BlockPos.ORIGIN)) {
-						TileEntity te = ws.getTileEntity(pos);
-						if(te != null && te instanceof TileEntityTardis) {
-							TileEntityTardis tardis = (TileEntityTardis)te;
-							tardis.setDesination(entityItem.getPosition(), entityItem.dimension);
-							tardis.startFlight();
-							tardis.travel();
+					if(ws != null) {
+						if(pos != null && !pos.equals(BlockPos.ORIGIN)) {
+							TileEntity te = ws.getTileEntity(pos);
+							if(te != null && te instanceof TileEntityTardis) {
+								TileEntityTardis tardis = (TileEntityTardis)te;
+								tardis.setDesination(entityItem.getPosition(), entityItem.dimension);
+								tardis.startFlight();
+								tardis.travel();
+							}
 						}
 					}
 				}

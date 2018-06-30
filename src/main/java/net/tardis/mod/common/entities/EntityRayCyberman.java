@@ -30,7 +30,7 @@ public class EntityRayCyberman extends EntityThrowable{
 			}
 		}
 		else if(result.entityHit != null) {
-			result.entityHit.attackEntityFrom(new EntityCyberman.DamageSourceCyberGun(), 10F);
+			result.entityHit.attackEntityFrom(new EntityCyberman.DamageSourceCyberGun(), 2F);
 		}
 	}
 

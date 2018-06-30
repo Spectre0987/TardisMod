@@ -56,6 +56,7 @@ import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.systems.Systems;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -76,6 +77,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> buffer = NonNullList.create().withSize(9, ItemStack.EMPTY);
 	public EntityControl[] controls;
+	public Systems[] systems = {};
 	public float fuel = 1F;
 	private boolean isFueling = false;
 	private boolean shouldDelayLoop = true;
@@ -144,10 +146,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void travel() {
-		this.travel(true);
-	}
-	
-	public void travel(boolean makeSound) {
 		if (!world.isRemote) {
 			this.ticksToTravel = 0;
 			World dWorld = world.getMinecraftServer().getWorld(destDim);
@@ -475,7 +473,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.setDesination(getLocation(), dimension);
 			BlockPos pos = getLocation();
 			ws.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 3F, true);
-			this.travel(false);
+			this.travel();
 			world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
 			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
 		} else {
