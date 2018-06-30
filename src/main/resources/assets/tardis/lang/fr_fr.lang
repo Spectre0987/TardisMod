@@ -75,8 +75,9 @@ tardis.missing=L'enveloppe plasmique externe est introuvable ! Veuillez atterrir
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
-config.setdim=Parametrer un ID de dimension pour le TARDIS?
+config.setdim=Paramétrer des IDs de dimensions pour le TARDIS?
 config.tDim=Dimension TARDIS
+config.bhDim=Dimension spatiale
 
 config.entity=Entitées
 config.entity.allowed=Ce mod doit-il ajouter des Mobs ?
