@@ -11,6 +11,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.elements.ButtonText;
 import net.tardis.mod.common.protocols.ITardisProtocol;
 import net.tardis.mod.common.protocols.TardisProtocol;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.packets.MessageProtocol;
 
 public class GuiProtocol extends GuiScreen {
@@ -51,6 +52,7 @@ public class GuiProtocol extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		Tardis.NETWORK.sendToServer(new MessageProtocol(pos, button.id));
+		TardisProtocol.getProtocolFromId(button.id).onActivated(mc.world, (TileEntityTardis)mc.world.getTileEntity(pos));
 		super.actionPerformed(button);
 	}
 	

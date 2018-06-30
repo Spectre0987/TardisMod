@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -94,11 +95,13 @@ public abstract class EntityControl extends Entity implements IControl {
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		return new NBTTagCompound();
+		return super.writeToNBT(tag);
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {}
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+	}
 	
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {}
@@ -128,6 +131,11 @@ public abstract class EntityControl extends Entity implements IControl {
 	
 	@Override
 	public boolean isInvisibleToPlayer(EntityPlayer player) {
+		return false;
+	}
+
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
 		return false;
 	}
 	

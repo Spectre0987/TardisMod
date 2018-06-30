@@ -1,11 +1,10 @@
 package net.tardis.mod.client.renderers.controls;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.models.console.contols.ModelButton;
 import net.tardis.mod.common.entities.controls.EntityControl;
-import net.tardis.mod.info.TardisType;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
 public class RenderButton extends RenderControl {
@@ -27,7 +26,7 @@ public class RenderButton extends RenderControl {
 	}
 	
 	@Override
-	public void renderControl(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks, TardisType tType) {
+	public void renderControl(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks, TileEntityTardis tType) {
 		
 	}
 	

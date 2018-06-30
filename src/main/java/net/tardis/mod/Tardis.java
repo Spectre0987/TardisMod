@@ -24,17 +24,18 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
+import net.tardis.mod.common.entities.EntityRayCyberman;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
-import net.tardis.mod.common.entities.controls.ControlEngine;
 import net.tardis.mod.common.entities.controls.ControlFastReturn;
 import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
@@ -45,6 +46,8 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.protocols.ProtocolConsoleChange;
+import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.recipes.TemporalRecipe;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
 import net.tardis.mod.common.screwdriver.GRoomMode;
@@ -77,6 +80,7 @@ import net.tardis.mod.packets.MessageTR;
 import net.tardis.mod.packets.MessageTelepathicCircut;
 import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
+import net.tardis.mod.systems.Systems;
 import net.tardis.mod.util.helpers.EntityHelper;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, useMetadata = true, dependencies = Tardis.DEP)
@@ -123,15 +127,16 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlScanner.class, "scanner");
 		EntityHelper.registerStatic(ControlFlight.class, "control_flight");
 		EntityHelper.registerStatic(ControlFuel.class, "fuel");
-		EntityHelper.registerStatic(ControlEngine.class, "tardis_engine");
 		EntityHelper.registerStatic(EntityForceField.class, "force_field");
 		EntityHelper.registerStatic(ControlLandType.class, "land_type");
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
 		EntityHelper.registerStatic(ControlFastReturn.class, "tardis_fast_return");
 		EntityHelper.registerStatic(ControlTelepathicCircuts.class, "telepathic_circuts");
 		EntityHelper.registerStatic(ControlDoorSwitch.class, "tardis_door_control");
+		EntityHelper.registerStatic(ControlPhone.class, "tardis_phone");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
+		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -161,13 +166,17 @@ public class Tardis {
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.power_cell), 1200));
 		
-		// TardisProtocol.register(new TardisProtocolForceField());
+		TardisProtocol.register(new ProtocolConsoleChange());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
+		
+		Systems.register(new Systems(TItems.artron_capacitor));
+		Systems.register(new Systems(TItems.fluid_link));
+		Systems.register(new Systems(TItems.demat_circut));
 	}
 	
 	@EventHandler

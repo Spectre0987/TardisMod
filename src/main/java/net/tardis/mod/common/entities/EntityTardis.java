@@ -1,6 +1,5 @@
 package net.tardis.mod.common.entities;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,17 +9,20 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
+import net.tardis.mod.util.helpers.Helper;
 
 public class EntityTardis extends EntityFlying {
 	
@@ -92,17 +94,16 @@ public class EntityTardis extends EntityFlying {
 			if (pas instanceof EntityPlayer) {
 				world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
 				world.setBlockState(this.getPosition().up(), TBlocks.tardis_top.getDefaultState());
-				WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.id);
+				WorldServer ws = DimensionManager.getWorld(TDimensions.id);
 				System.out.println("BlockPos is" + this.getConsolePos());
 				((TileEntityTardis) ws.getTileEntity(getConsolePos())).setLocation(this.getPosition());
-				;
 				((TileEntityDoor) world.getTileEntity(this.getPosition().up())).consolePos = this.getConsolePos();
-				this.setDead();
 				BlockPos cPos = this.consolePos.west(3);
-				pas.setPosition(cPos.getX(), cPos.getY(), cPos.getZ());
 				pas.setInvisible(false);
 				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());
-				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.id, new TardisTeleporter((WorldServer) world));
+				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.id, new TardisTeleporter());
+				((EntityPlayerMP) pas).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.EAST), 0);
+				this.setDead();
 			}
 		}
 		super.removePassenger(pas);

@@ -1,14 +1,18 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -52,6 +56,7 @@ import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.systems.Systems;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -72,6 +77,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> buffer = NonNullList.create().withSize(9, ItemStack.EMPTY);
 	public EntityControl[] controls;
+	public Systems[] systems = {};
 	public float fuel = 1F;
 	private boolean isFueling = false;
 	private boolean shouldDelayLoop = true;
@@ -140,10 +146,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void travel() {
-		this.travel(true);
-	}
-	
-	public void travel(boolean makeSound) {
 		if (!world.isRemote) {
 			this.ticksToTravel = 0;
 			World dWorld = world.getMinecraftServer().getWorld(destDim);
@@ -356,6 +358,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		tag.setString(NBT.CURRENT_DIM_NAME, this.currentDimName);
 		tag.setString(NBT.TARGET_DIM_NAME, this.targetDimName);
+		
+		if(this.controls != null && this.controls.length > 0) {
+			NBTTagList list = new NBTTagList();
+			for(EntityControl e : this.controls) {
+				list.appendTag(new NBTTagInt(e.getEntityId()));
+			}
+			tag.setTag(NBT.CONTROL_IDS, list);
+		}
 		return tag;
 	}
 	
@@ -372,6 +382,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.totalTimeToTravel = tag.getInteger(NBT.MAX_TIME);
 			this.targetDimName = tag.getString(NBT.TARGET_DIM_NAME);
 			this.currentDimName = tag.getString(NBT.CURRENT_DIM_NAME);
+			
+			NBTTagList list = tag.getTagList(NBT.CONTROL_IDS, Constants.NBT.TAG_INT);
+			List<Entity> controls = new ArrayList<Entity>();
+			for(NBTBase base : list) {
+				if(base instanceof NBTTagInt) {
+					int i = ((NBTTagInt)base).getInt();
+					controls.add(world.getEntityByID(i));
+				}
+			}
+			this.controls = controls.toArray(new EntityControl[0]);
 		}
 	}
 	
@@ -386,37 +406,38 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public boolean createControls() {
-		if (controls == null || controls.length == 0) {
-			EntityControl[] ec = new EntityControl[] { 
-					new ControlLaunch(this),
-					new ControlX(this),
-					new ControlY(this),
-					new ControlZ(this),
-					new ControlDimChange(this),
-					new ControlScreen(this),
-					new ControlRandom(this),
-					new ControlDoor(this),
-					new ControlSTCLoad(this),
-					new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)),
-					new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)),
-					new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)),
-					new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)),
-					new ControlFlight(this),
-					new ControlFuel(this),
-					new ControlLandType(this),
-					new ControlDirection(this),
-					new ControlFastReturn(this),
-					new ControlTelepathicCircuts(this),
-					new ControlDoorSwitch(this)
-					};
-			for (EntityControl con : ec) {
-				con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
-				if (!world.isRemote)
+		if(!world.isRemote) {
+			if (controls == null || controls.length == 0) {
+				EntityControl[] ec = new EntityControl[] { 
+						new ControlLaunch(this),
+						new ControlX(this),
+						new ControlY(this),
+						new ControlZ(this),
+						new ControlDimChange(this),
+						new ControlScreen(this),
+						new ControlRandom(this),
+						new ControlDoor(this),
+						new ControlSTCLoad(this),
+						new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)),
+						new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)),
+						new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)),
+						new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)),
+						new ControlFlight(this),
+						new ControlFuel(this),
+						new ControlLandType(this),
+						new ControlDirection(this),
+						new ControlFastReturn(this),
+						new ControlTelepathicCircuts(this),
+						new ControlDoorSwitch(this)
+						};
+				for (EntityControl con : ec) {
+					con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
 					world.spawnEntity(con);
-				
+					
+				}
+				this.controls = ec;
+				return true;
 			}
-			this.controls = ec;
-			return true;
 		}
 		return false;
 	}
@@ -452,7 +473,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.setDesination(getLocation(), dimension);
 			BlockPos pos = getLocation();
 			ws.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 3F, true);
-			this.travel(false);
+			this.travel();
 			world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
 			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
 		} else {
@@ -464,6 +485,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public static class NBT {
+		public static final String CONTROL_IDS = "control_ids";
 		public static final String COMPOENET_LIST = "componentList";
 		public static final String LAND_ON_SURFACE = "landOnGround";
 		public static final String MAX_TIME = "maxTime";
