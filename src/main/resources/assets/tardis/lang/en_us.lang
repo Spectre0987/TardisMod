@@ -113,10 +113,6 @@ death.cyberman.generic=was converted
 key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
 key.console.location=Console at: 
 
-<<<<<<< HEAD
 manual.help=Mouse over controls to learn about them.
-=======
-manual.help=Move your mouse over the controls to get more information about them.
->>>>>>> 077acaad6fbe71e75b7ddfb1af1f74ad17e9b2a5
 
 tardis.damage.demat=The Dematerialization Circuit has been fried!
