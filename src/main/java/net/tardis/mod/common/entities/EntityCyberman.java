@@ -13,6 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 
@@ -71,6 +72,7 @@ public class EntityCyberman extends EntityMob{
 		public EntityAIMoveToTARDIS(EntityMob base, double speed) {
 			this.entity = base;
 			this.speed = speed;
+			this.setMutexBits(1);
 		}
 		
 		@Override
@@ -80,6 +82,9 @@ public class EntityCyberman extends EntityMob{
 
 		@Override
 		public boolean shouldContinueExecuting() {
+			if(entity.dimension == TDimensions.id) {
+				return false;
+			}
 			for(TileEntity te : entity.world.loadedTileEntityList) {
 				if(te instanceof TileEntityDoor) {
 					Vec3d tePos = new Vec3d(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ());
