@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.collect.BiMap;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -50,16 +48,23 @@ public class WorldShell implements IBlockAccess {
 
 	@Override
 	public int getCombinedLight(BlockPos pos, int lightValue) {
-		return blockMap.get(pos).light;
+		//return blockMap.get(pos).light;
+		BlockStorage stor = this.blockMap.get(pos);
+		if(stor != null) {
+			return stor.light + lightValue;
+		}
+		return lightValue;
 	}
 
 	@Override
 	public IBlockState getBlockState(BlockPos pos) {
 		if (blockMap.get(pos) != null) {
-			return blockMap.get(pos.add(offset)).blockstate;
-		} else {
-			return Blocks.AIR.getDefaultState();
+			BlockStorage stor = blockMap.get(pos);
+			if(stor != null && stor.blockstate != null) {
+				return stor.blockstate;
+			}
 		}
+		return Blocks.AIR.getDefaultState();
 	}
 
 	@Override
