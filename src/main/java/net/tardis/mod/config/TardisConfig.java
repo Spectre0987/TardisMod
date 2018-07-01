@@ -11,7 +11,7 @@ import net.tardis.mod.Tardis;
 public class TardisConfig {
 	
 	@Config.RequiresMcRestart
-	@Config.LangKey("config.category.dims")
+	@Config.LangKey("config.dims")
 	public static final Dimensions Dimensions = new Dimensions();
 	
 	@Config.LangKey("config.entity")

@@ -75,8 +75,9 @@ tardis.missing=The outer plasmic shell cannot be found! Please land again.
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
-config.setdim=Set a Dimension ID for the TARDIS?
+config.setdim=Set Dimension IDs for this mod?
 config.tDim=TARDIS Dimension
+config.bhDim=Space Dimension
 
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
