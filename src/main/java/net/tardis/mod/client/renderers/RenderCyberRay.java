@@ -31,6 +31,7 @@ public class RenderCyberRay extends Render<EntityRayCyberman> {
 		mc.getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
 		GlStateManager.rotate(-entity.rotationPitch, 0, 0, 1);
+		GlStateManager.color(1F, 0F, -1F);
 		model.render(entity, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}

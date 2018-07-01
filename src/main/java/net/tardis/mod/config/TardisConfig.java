@@ -11,7 +11,7 @@ import net.tardis.mod.Tardis;
 public class TardisConfig {
 	
 	@Config.RequiresMcRestart
-	@Config.LangKey("config.category.dims")
+	@Config.LangKey("config.dims")
 	public static final Dimensions Dimensions = new Dimensions();
 	
 	@Config.LangKey("config.entity")
@@ -33,7 +33,7 @@ public class TardisConfig {
 		public int tardisDimension = 10;
 		
 		@Config.LangKey("config.bhDim")
-		public int blackHoleDimension = 22;
+		public int spaceDimension = 22;
 	}
 	
 	public static class UseEntities {
@@ -50,6 +50,10 @@ public class TardisConfig {
 		
 		@Config.LangKey("config.misc.givekey")
 		public boolean givePlayerKey = false;
+		
+		@Config.LangKey("config.misc.maxrand")
+		@Config.Comment("Set to Zero to make it anywher in the world.")
+		public int maxRandom = 5000;
 	}
 	
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)
