@@ -23,7 +23,12 @@ public class TDimensions {
 		tardisType = DimensionType.register("tardis", "_tardis", id, TardisProvider.class, false);
 		DimensionManager.registerDimension(id, tardisType);
 		
-		SPACE_ID = DimensionManager.getNextFreeDimId();
+		if(TardisConfig.Dimensions.setDimension) {
+			SPACE_ID = TardisConfig.Dimensions.spaceDimension;
+		}
+		else {
+			SPACE_ID = DimensionManager.getNextFreeDimId();
+		}
 		spaceType = DimensionType.register("space", "_space", SPACE_ID, SpaceProvider.class, false);
 		DimensionManager.registerDimension(SPACE_ID, spaceType);
 	}

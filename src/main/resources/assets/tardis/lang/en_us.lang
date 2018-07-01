@@ -75,8 +75,9 @@ tardis.missing=The outer plasmic shell cannot be found! Please land again.
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
-config.setdim=Set a Dimension ID for the TARDIS?
+config.setdim=Set Dimension IDs for this mod?
 config.tDim=TARDIS Dimension
+config.bhDim=Space Dimension
 
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
@@ -84,6 +85,7 @@ config.entity.cybermen.spawnchance=Chance That A Cyberman Will Spawn (Per Chunk)
 
 config.misc=Misc
 config.misc.givekey=Should give Player A TARDIS key when they join the world?
+config.misc.maxrand=Maxium number of block the TARDIS should travel when using the randomizer
 
 entity.launch_lever.name=Space - Time Throttle
 entity.x_valve.name=Space Control - X
@@ -111,10 +113,6 @@ death.cyberman.generic=was converted
 key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
 key.console.location=Console at: 
 
-<<<<<<< HEAD
 manual.help=Mouse over controls to learn about them.
-=======
-manual.help=Move your mouse over the controls to get more information about them.
->>>>>>> 077acaad6fbe71e75b7ddfb1af1f74ad17e9b2a5
 
 tardis.damage.demat=The Dematerialization Circuit has been fried!

@@ -159,4 +159,8 @@ public class Helper {
 		catch(Exception e) {}
 		return null;
 	}
+
+	public static Vec3d blockPosToVec3d(BlockPos pos) {
+		return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+	}
 }
