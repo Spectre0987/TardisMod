@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class RenderWorldShell extends Render {
 
-	protected RenderWorldShell(RenderManager renderManager) {
+	public RenderWorldShell(RenderManager renderManager) {
 		super(renderManager);
 	}
 
