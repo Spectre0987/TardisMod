@@ -1043,11 +1043,11 @@ public class ModelTardis extends ModelBase {
 		P127.render(f5);
 		
 		GlStateManager.pushMatrix();
-			Minecraft.getMinecraft().entityRenderer.disableLightmap();
-			GlStateManager.disableLighting();
-			LampGlow.render(f5);
-			GlStateManager.enableLighting();
-			Minecraft.getMinecraft().entityRenderer.enableLightmap();
+		GlStateManager.disableLighting();
+		Minecraft.getMinecraft().entityRenderer.disableLightmap();
+		LampGlow.render(f5);
+		Minecraft.getMinecraft().entityRenderer.enableLightmap();
+		GlStateManager.enableLighting();
 		GlStateManager.popMatrix();
 	}
 	

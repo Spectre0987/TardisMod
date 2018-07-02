@@ -152,7 +152,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			if(world.getTotalWorldTime() % 5 == 0) {
 				worldShell = new WorldShell(this.getConsolePos());
 				WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.id);
-				for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius,4)))) {
+				for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {
 					IBlockState state = tardisWorld.getBlockState(pos);
 					if(state.getBlock() != Blocks.AIR) {
 						worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), tardisWorld.getLight(pos)));

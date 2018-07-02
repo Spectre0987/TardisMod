@@ -40,10 +40,11 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 	
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y - 1, z + 0.35);
+		GlStateManager.pushMatrix();
 		
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y - 1, z + 0.5);
-		GlStateManager.pushMatrix();
+		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
 		
 		// Always write to stencil buffer
@@ -62,7 +63,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 		// Draw scene from portal view
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(180,0,1,0);
-		renderShell.doRender((TileEntityDoor)te, -1, 0, -4, 0, partialTicks);
+		renderShell.doRender((TileEntityDoor)te, -1, 0, -7, 0, partialTicks);
 		GlStateManager.popMatrix();
 
 		GL11.glPopMatrix();
@@ -71,12 +72,14 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 		// Draw portal stencils so portals wont be drawn over
 		GL11.glColorMask(false, false, false, false);
 		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-		//GL11.glEnable(GL11.GL_DEPTH_TEST);
 		this.drawOutline();
 		
 		GL11.glColorMask(true, true, true, true);
 	    GlStateManager.popMatrix();
+	    
+	    GlStateManager.pushMatrix();
 	    this.renderHumanNautureExterior(te, x, y, z, partialTicks, destroyStage, alpha);
+	    GlStateManager.popMatrix();
 	}
 	
 	public void drawOutline() {
@@ -131,7 +134,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 				door_r.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			}
 			GlStateManager.popMatrix();
-			GlStateManager.popMatrix();
+		GlStateManager.popMatrix();
 		}
 	}
 	@Override

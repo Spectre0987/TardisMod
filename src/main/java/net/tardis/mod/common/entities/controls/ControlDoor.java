@@ -131,11 +131,16 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				}
 			}
 			this.shell = new WorldShell(tardis.getLocation());
-			WorldServer tardisWorld = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 			Vec3i r = new Vec3i(10,10,10);
-			for(BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(r), shell.getOffset().add(r))) {
+			IBlockState doorState = ws.getBlockState(shell.getOffset());
+			EnumFacing facing = EnumFacing.NORTH;
+			if(doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
+				facing = doorState.getValue(BlockTardisTop.FACING);
+			}
+			BlockPos nPos = shell.getOffset().offset(facing, 10);
+			for(BlockPos pos : BlockPos.getAllInBox(nPos.subtract(r), nPos.add(r))) {
 				IBlockState state = ws.getBlockState(pos);
-				if(state.getBlock() != Blocks.AIR) {
+				if(state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
 					this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
 				}
 			}
@@ -156,6 +161,11 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	@Override
 	public void setWorldShell(WorldShell worldShell) {
 		this.shell = worldShell;
+	}
+
+	@Override
+	public boolean shouldRenderInPass(int pass) {
+		return true;
 	}
 	
 }
