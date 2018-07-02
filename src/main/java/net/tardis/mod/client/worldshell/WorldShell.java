@@ -15,9 +15,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
 public class WorldShell implements IBlockAccess {
 
@@ -50,9 +53,21 @@ public class WorldShell implements IBlockAccess {
 
 	@Override
 	public int getCombinedLight(BlockPos pos, int lightValue) {
-		return Minecraft.getMinecraft().world.getCombinedLight(pos, lightValue);
-	}
+		int sky = getLightSet(EnumSkyBlock.SKY, pos);
+        int map = getLightSet(EnumSkyBlock.BLOCK, pos);
 
+        return sky << 20 | map << 4;
+	}
+	
+	public int getLightSet(EnumSkyBlock type, BlockPos pos)
+    {
+		if(type == EnumSkyBlock.SKY) {
+        return 15;
+		}else {
+		return blockMap.get(pos).light;
+		}
+    }
+	
 	@Override
 	public IBlockState getBlockState(BlockPos pos) {
 		if (blockMap.get(pos) != null) {
