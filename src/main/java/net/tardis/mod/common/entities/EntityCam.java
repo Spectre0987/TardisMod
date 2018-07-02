@@ -55,7 +55,7 @@ public class EntityCam extends Entity implements IContainsWorldShell{
 			for (BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(new Vec3i(radius,radius,radius)), shell.getOffset().add(new Vec3i(radius,radius,radius)))) {
 				IBlockState state = ws.getBlockState(pos);
 				if(state.getBlock() != Blocks.AIR) {
-					shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getCombinedLight(pos, 0)));
+					shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
 				}
 			}
 			for(EntityPlayerMP mp : world.getEntitiesWithinAABB(EntityPlayerMP.class, this.getEntityBoundingBox().grow(16D))) {
