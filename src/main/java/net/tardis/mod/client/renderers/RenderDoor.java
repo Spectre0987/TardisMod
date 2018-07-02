@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -16,11 +17,13 @@ public class RenderDoor extends Render<ControlDoor> {
 	
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/door.png");
 	public static final ResourceLocation BLACK_HOLE_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/black_hole.png");
+	RenderWorldShell shellRender;
 	Minecraft mc;
 	
 	public RenderDoor() {
 		super(Minecraft.getMinecraft().getRenderManager());
 		mc = Minecraft.getMinecraft();
+		shellRender = new RenderWorldShell();
 	}
 	
 	@Override
@@ -62,9 +65,11 @@ public class RenderDoor extends Render<ControlDoor> {
 				GlStateManager.popMatrix();
 			}
 			else {
-				GlStateManager.color(0F, 0F, 0F);
-				this.drawDoorShape();
-				GlStateManager.color(1F, 1F, 1F);
+				GlStateManager.pushMatrix();
+				mc.entityRenderer.disableLightmap();
+				shellRender.doRender(entity, 0, 0, 0, 0, partialTicks);
+				mc.entityRenderer.enableLightmap();
+				GlStateManager.popMatrix();
 			}
 		}
 		

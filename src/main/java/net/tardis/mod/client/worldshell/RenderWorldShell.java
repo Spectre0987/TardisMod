@@ -36,7 +36,7 @@ public class RenderWorldShell {
 					if (bp == null)
 						continue;
 					Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(
-							container.getWorldShell().getBlockState(bp), bp, entity.getEntityWorld(), bb);
+							container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
 				}
 				container.getWorldShell().bufferstate = bb.getVertexState();
 			} else {

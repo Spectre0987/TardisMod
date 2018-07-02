@@ -31,7 +31,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
@@ -98,7 +97,7 @@ public class TEventHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public static void stopRender(RenderPlayerEvent.Pre event) {
-		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityCam || event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
+		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
 			Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 			event.setCanceled(true);
 		}
@@ -108,7 +107,7 @@ public class TEventHandler {
 	public static void stopHurt(LivingHurtEvent event) {
 		if (event.getEntityLiving().getRidingEntity() != null) {
 			Entity e = event.getEntityLiving().getRidingEntity();
-			if (e instanceof EntityTardis || e instanceof EntityCam) event.setCanceled(true);
+			if (e instanceof EntityTardis) event.setCanceled(true);
 		}
 	}
 	

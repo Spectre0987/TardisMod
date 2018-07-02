@@ -22,7 +22,6 @@ import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.EntityCam;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
@@ -137,7 +136,6 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDoorSwitch.class, "tardis_door_control");
 		EntityHelper.registerStatic(ControlPhone.class, "tardis_phone");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
-		EntityHelper.registerStatic(EntityCam.class, "camera");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
 		

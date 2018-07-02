@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -15,6 +16,7 @@ public class MessageSyncWorldShell implements IMessage {
 	//Sync the world shell from client to server
 
 	public WorldShell worldShell;
+	public BlockPos tilePos = BlockPos.ORIGIN;
 	public int id;
 	
 	public MessageSyncWorldShell(WorldShell ws, int id) {
@@ -22,11 +24,18 @@ public class MessageSyncWorldShell implements IMessage {
 		worldShell = ws;
 	}
 	
+	public MessageSyncWorldShell(WorldShell ws, BlockPos pos) {
+		this.tilePos = pos.toImmutable();
+		this.worldShell = ws;
+		this.id = -1;
+	}
+	
 	public MessageSyncWorldShell() {}
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.id = buf.readInt();
+		this.tilePos = BlockPos.fromLong(buf.readLong());
 		int s = buf.readInt();
 		worldShell = new WorldShell(BlockPos.fromLong(buf.readLong()));
 		for (int i = 0; i < s; ++i) {
@@ -42,6 +51,7 @@ public class MessageSyncWorldShell implements IMessage {
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(id);
+		buf.writeLong(tilePos.toLong());
 		buf.writeInt(worldShell.blockMap.size());
 		buf.writeLong(worldShell.getOffset().toLong());
 		for(Entry<BlockPos,BlockStorage> e:worldShell.blockMap.entrySet()) {
@@ -60,9 +70,17 @@ public class MessageSyncWorldShell implements IMessage {
 				@Override
 				public void run() {
 					World world = Minecraft.getMinecraft().world;
-					Entity entity = world.getEntityByID(mes.id);
-					if(entity != null && entity instanceof IContainsWorldShell){
-						((IContainsWorldShell)entity).setWorldShell(mes.worldShell);
+					if(mes.id == -1) {
+						TileEntity te = world.getTileEntity(mes.tilePos);
+						if(te != null && te instanceof IContainsWorldShell) {
+							((IContainsWorldShell)te).setWorldShell(mes.worldShell);
+						}
+					}
+					else {
+						Entity entity = world.getEntityByID(mes.id);
+						if(entity != null && entity instanceof IContainsWorldShell){
+							((IContainsWorldShell)entity).setWorldShell(mes.worldShell);
+						}
 					}
 				}});
 			return null;
