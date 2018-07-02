@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.tardis.mod.Tardis;
@@ -48,13 +49,13 @@ public class EntityCam extends Entity implements IContainsWorldShell{
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if(!world.isRemote ) {
+		if(!world.isRemote) {
 			shell = new WorldShell(new BlockPos(264, 6, 264));
 			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.id);
 			for (BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(new Vec3i(radius,radius,radius)), shell.getOffset().add(new Vec3i(radius,radius,radius)))) {
 				IBlockState state = ws.getBlockState(pos);
 				if(state.getBlock() != Blocks.AIR) {
-					shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
+					shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getCombinedLight(pos, 0)));
 				}
 			}
 			for(EntityPlayerMP mp : world.getEntitiesWithinAABB(EntityPlayerMP.class, this.getEntityBoundingBox().grow(16D))) {
