@@ -6,8 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -16,14 +14,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
-public class RenderWorldShell extends Render {
+public class RenderWorldShell {
 
-	public RenderWorldShell(RenderManager renderManager) {
-		super(renderManager);
-	}
-
-	@Override
-	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public RenderWorldShell(){}
+	
+	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		if(entity instanceof IContainsWorldShell) {
 		BufferBuilder bb = Tessellator.getInstance().getBuffer();
@@ -61,7 +56,11 @@ public class RenderWorldShell extends Render {
 		}
 	}
 
-	@Override
+	private void bindTexture(ResourceLocation locationBlocksTexture) {
+		Minecraft.getMinecraft().getTextureManager().bindTexture(locationBlocksTexture);
+	}
+
+	
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		return TextureMap.LOCATION_BLOCKS_TEXTURE;
 	}
