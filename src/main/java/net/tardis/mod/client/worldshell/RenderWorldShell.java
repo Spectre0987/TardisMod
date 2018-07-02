@@ -20,39 +20,39 @@ public class RenderWorldShell {
 	
 	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		if(entity instanceof IContainsWorldShell) {
-		BufferBuilder bb = Tessellator.getInstance().getBuffer();
-		
-		IContainsWorldShell container = (IContainsWorldShell) entity;
-		
-		GlStateManager.pushMatrix();
-		bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+		if (entity instanceof IContainsWorldShell) {
+			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 
-		GlStateManager.translate(x, y, z);
-		BlockPos offset = container.getWorldShell().getOffset();
+			IContainsWorldShell container = (IContainsWorldShell) entity;
 
-		if (container.getWorldShell().bufferstate == null || container.getWorldShell().updateRequired) {
-			for (BlockPos bp : container.getWorldShell().blockMap.keySet()) {
-				if (bp == null)
-					continue;
-				Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp),
-						bp.subtract(offset), container.getWorldShell(), bb);
+			GlStateManager.pushMatrix();
+			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+
+			BlockPos offset = container.getWorldShell().getOffset();
+			GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());
+			
+			if (container.getWorldShell().bufferstate == null || container.getWorldShell().updateRequired) {
+				for (BlockPos bp : container.getWorldShell().blockMap.keySet()) {
+					if (bp == null)
+						continue;
+					Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(
+							container.getWorldShell().getBlockState(bp), bp, entity.getEntityWorld(), bb);
+				}
+				container.getWorldShell().bufferstate = bb.getVertexState();
+			} else {
+				bb.setVertexState(container.getWorldShell().bufferstate);
 			}
-			container.getWorldShell().bufferstate = bb.getVertexState();
-		} else {
-			bb.setVertexState(container.getWorldShell().bufferstate);
-		}
 
-		Tessellator.getInstance().draw();
+			Tessellator.getInstance().draw();
 
-		for (TileEntity t : container.getWorldShell().getTESRs()) {
-			if (t != null) {
-				TileEntityRendererDispatcher.instance.render(t, t.getPos().getX() - offset.getX(),
-						t.getPos().getY() - offset.getY(), t.getPos().getZ() - offset.getZ(), partialTicks);
+			for (TileEntity t : container.getWorldShell().getTESRs()) {
+				if (t != null) {
+					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),
+							t.getPos().getZ(), partialTicks);
+				}
 			}
-		}
 
-		GlStateManager.popMatrix();
+			GlStateManager.popMatrix();
 		}
 	}
 
