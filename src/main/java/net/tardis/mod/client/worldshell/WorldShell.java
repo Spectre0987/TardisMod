@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -25,7 +26,8 @@ public class WorldShell implements IBlockAccess {
 	// Contains every TESR to speed up rendering
 	private List<TileEntity> tesrs;
 	// The distance between the root of the worldShell and (0,0,0). Subtracting this
-	// from the coords in BlockMap should give you positions in relative terms for rendering
+	// from the coords in BlockMap should give you positions in relative terms for
+	// rendering
 	private BlockPos offset;
 
 	public BufferBuilder.State bufferstate;
@@ -48,23 +50,16 @@ public class WorldShell implements IBlockAccess {
 
 	@Override
 	public int getCombinedLight(BlockPos pos, int lightValue) {
-		//return blockMap.get(pos).light;
-		BlockStorage stor = this.blockMap.get(pos);
-		if(stor != null) {
-			return stor.light + lightValue;
-		}
-		return lightValue;
+		return Minecraft.getMinecraft().world.getCombinedLight(pos, lightValue);
 	}
 
 	@Override
 	public IBlockState getBlockState(BlockPos pos) {
 		if (blockMap.get(pos) != null) {
-			BlockStorage stor = blockMap.get(pos);
-			if(stor != null && stor.blockstate != null) {
-				return stor.blockstate;
-			}
+			return blockMap.get(pos).blockstate;
+		} else {
+			return Blocks.AIR.getDefaultState();
 		}
-		return Blocks.AIR.getDefaultState();
 	}
 
 	@Override
