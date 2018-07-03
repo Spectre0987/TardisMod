@@ -73,6 +73,8 @@ tardis.direction.west=Le TARDIS est tourné vers l'ouest
 
 tardis.missing=L'enveloppe plasmique externe est introuvable ! Veuillez atterrir à nouveau.
 
+protocol.ccircut=Circuit caméléon
+
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
 config.setdim=Paramétrer des IDs de dimensions pour le TARDIS?
