@@ -11,7 +11,7 @@ import net.tardis.mod.Tardis;
 public class TardisConfig {
 	
 	@Config.RequiresMcRestart
-	@Config.LangKey("config.dims")
+	@Config.LangKey("config.category.dims")
 	public static final Dimensions Dimensions = new Dimensions();
 	
 	@Config.LangKey("config.entity")
@@ -52,7 +52,7 @@ public class TardisConfig {
 		public boolean givePlayerKey = false;
 		
 		@Config.LangKey("config.misc.maxrand")
-		@Config.Comment("Set to Zero to make it anywher in the world.")
+		@Config.Comment("Set to Zero to make it anywhere in the world.")
 		public int maxRandom = 5000;
 	}
 	

@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -19,11 +20,16 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.worldshell.BlockStorage;
+import net.tardis.mod.client.worldshell.IContainsWorldShell;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -34,7 +40,7 @@ import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
-public class TileEntityDoor extends TileEntity implements ITickable, IInventory {
+public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
 	public BlockPos consolePos = BlockPos.ORIGIN;
 	public SoundEvent knockSound = SoundEvents.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD;
@@ -43,6 +49,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 	private int updateTicks = 0;
 	public int fadeTicks = 0;
 	public int openingTicks = 0;
+	public static int radius = 10;
+	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	
 	public TileEntityDoor() {}
 	
@@ -103,6 +111,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 	@Override
 	public void update() {
 		if (!world.isRemote) {
+			if(world.getTotalWorldTime() % 5 == 0) {
+				world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
+			}
 			WorldServer ws = (WorldServer) world;
 			BlockPos cPos = getConsolePos().south(4);
 			
@@ -140,6 +151,17 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 			if (this.updateTicks > 20) {
 				Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(), this.isLocked()), new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64D));
 				this.updateTicks = 0;
+			}
+			if(world.getTotalWorldTime() % 5 == 0) {
+				worldShell = new WorldShell(this.getConsolePos());
+				WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.id);
+				for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {
+					IBlockState state = tardisWorld.getBlockState(pos);
+					if(state.getBlock() != Blocks.AIR) {
+						worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), tardisWorld.getLight(pos)));
+					}
+				}
+				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(), 16D));
 			}
 		}
 		if (fadeTicks > 0) --fadeTicks;
@@ -277,5 +299,15 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory 
 	@Override
 	public void clear() {
 		this.getLinkedInv().clear();
+	}
+
+	@Override
+	public WorldShell getWorldShell() {
+		return this.worldShell;
+	}
+
+	@Override
+	public void setWorldShell(WorldShell worldShell) {
+		this.worldShell = worldShell;
 	}
 }

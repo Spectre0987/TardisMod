@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.mod.client.creativetabs.TardisTab;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
@@ -154,6 +155,7 @@ public class Tardis {
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 4, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerDoorOpen.class, MessageDoorOpen.class, 5, Side.CLIENT);
 		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 6, Side.SERVER);
+		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 7, Side.CLIENT);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());
@@ -177,6 +179,8 @@ public class Tardis {
 		Systems.register(new Systems(TItems.artron_capacitor));
 		Systems.register(new Systems(TItems.fluid_link));
 		Systems.register(new Systems(TItems.demat_circut));
+		
+		proxy.preInit();
 	}
 	
 	@EventHandler

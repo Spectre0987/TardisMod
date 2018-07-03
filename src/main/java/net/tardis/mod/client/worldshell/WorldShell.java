@@ -5,17 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.collect.BiMap;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
@@ -26,8 +26,11 @@ public class WorldShell implements IBlockAccess {
 	public Map<BlockPos, BlockStorage> blockMap;
 	// Contains every TESR to speed up rendering
 	private List<TileEntity> tesrs;
+	//Entities to render
+	private List<Entity> entities;
 	// The distance between the root of the worldShell and (0,0,0). Subtracting this
-	// from the coords in BlockMap should give you positions in relative terms for rendering
+	// from the coords in BlockMap should give you positions in relative terms for
+	// rendering
 	private BlockPos offset;
 
 	public BufferBuilder.State bufferstate;
@@ -50,13 +53,26 @@ public class WorldShell implements IBlockAccess {
 
 	@Override
 	public int getCombinedLight(BlockPos pos, int lightValue) {
-		return blockMap.get(pos).light;
+		int sky = getLightSet(EnumSkyBlock.SKY, pos);
+		int map = getLightSet(EnumSkyBlock.BLOCK, pos);
+
+		return sky << 20 | map << 4;
+	}
+
+	public int getLightSet(EnumSkyBlock type, BlockPos pos) {
+		if (type == EnumSkyBlock.SKY) {
+			return 15;
+		} else if (blockMap.get(pos) != null) {
+			return blockMap.get(pos).light;
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
 	public IBlockState getBlockState(BlockPos pos) {
 		if (blockMap.get(pos) != null) {
-			return blockMap.get(pos.add(offset)).blockstate;
+			return blockMap.get(pos).blockstate;
 		} else {
 			return Blocks.AIR.getDefaultState();
 		}

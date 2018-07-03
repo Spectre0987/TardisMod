@@ -2,9 +2,11 @@ package net.tardis.mod.common.entities.controls;
 
 import java.util.List;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -14,10 +16,17 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.tardis.mod.Tardis;
+import net.tardis.mod.client.worldshell.BlockStorage;
+import net.tardis.mod.client.worldshell.IContainsWorldShell;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
@@ -26,10 +35,12 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 
-public class ControlDoor extends EntityControl {
+public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
+	public static final DataParameter<EnumFacing> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FACING);
 	public int antiSpamTicks = 0;
+	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 	
 	public ControlDoor(TileEntityTardis tardis) {
 		super(tardis);
@@ -45,6 +56,7 @@ public class ControlDoor extends EntityControl {
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(IS_OPEN, false);
+		this.dataManager.register(FACING, EnumFacing.NORTH);
 	}
 	
 	@Override
@@ -55,6 +67,14 @@ public class ControlDoor extends EntityControl {
 	@Override
 	public Vec3d getOffset() {
 		return new Vec3d(0, -1, 6);
+	}
+	
+	public void setFacing(EnumFacing facing) {
+		this.dataManager.set(FACING, facing);
+	}
+	
+	public EnumFacing getFacing() {
+		return this.dataManager.get(FACING);
 	}
 	
 	public void setOpen(boolean b) {
@@ -103,7 +123,7 @@ public class ControlDoor extends EntityControl {
 		if(!world.isRemote && this.isOpen()) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			AxisAlignedBB bb = this.getEntityBoundingBox();
-			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
 				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
 				EnumFacing facing = ws.getBlockState(tardis.getLocation().up()).getValue(BlockTardisTop.FACING);
@@ -120,11 +140,45 @@ public class ControlDoor extends EntityControl {
 					}
 				}
 			}
+			if(this.ticksExisted % 5 == 0) {
+				this.shell = new WorldShell(tardis.getLocation());
+				Vec3i r = new Vec3i(10,10,10);
+				IBlockState doorState = ws.getBlockState(shell.getOffset());
+				EnumFacing facing = EnumFacing.NORTH;
+				if(doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
+					facing = doorState.getValue(BlockTardisTop.FACING);
+				}
+				for(BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(r), shell.getOffset().add(r))) {
+					IBlockState state = ws.getBlockState(pos);
+					if(state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
+						this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
+					}
+					else if(state.getBlock() instanceof BlockTardisTop) {
+						this.setFacing(state.getValue(BlockTardisTop.FACING));
+					}
+				}
+				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
+			}
 		}
 	}
 
 	@Override
 	public boolean canBeCollidedWith() {
+		return true;
+	}
+
+	@Override
+	public WorldShell getWorldShell() {
+		return this.shell;
+	}
+
+	@Override
+	public void setWorldShell(WorldShell worldShell) {
+		this.shell = worldShell;
+	}
+
+	@Override
+	public boolean shouldRenderInPass(int pass) {
 		return true;
 	}
 	

@@ -6,6 +6,6 @@ public interface IContainsWorldShell {
 	
 	public WorldShell getWorldShell();
 	
-	public void setWorldShell();
+	public void setWorldShell(WorldShell worldShell);
 	
 }
