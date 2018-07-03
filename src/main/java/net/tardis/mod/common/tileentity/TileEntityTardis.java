@@ -103,9 +103,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			--ticksToTravel;
 			this.setFuel(fuel - 0.0001F);
 			if (ticksToTravel <= 0) this.travel();
-			if (this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 440)
+			if (this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 200)
 				world.playSound(null, this.getPos(), TSounds.takeoff, SoundCategory.BLOCKS, 0.5F, 1F);
-			else if (this.ticksToTravel > 440 && this.ticksToTravel < this.totalTimeToTravel - 440) {
+			else if (this.ticksToTravel > 200 && this.ticksToTravel < this.totalTimeToTravel - 200) {
 				if (this.ticksToTravel % 40 == 0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
@@ -265,7 +265,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 880/* The Time in tick it takes the launch sound to play */);
+		return (int) ((dist / MAX_TARDIS_SPEED) + 400/* The Time in tick it takes the launch sound to play */);
 	}
 	
 	public BlockPos getDestination() {
