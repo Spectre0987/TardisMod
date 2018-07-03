@@ -110,7 +110,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
-			if (fuel <= 0.0) crash();
+			if (fuel <= 0.0 && this.ticksToTravel % 5 == 0) crash();
 			if (world.isRemote) {
 				if (frame + 1 >= ModelConsole.frames.length)
 					frame = 0;
@@ -322,7 +322,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public boolean startFlight() {
 		if (this.getDestination().equals(BlockPos.ORIGIN)) return false;
-		if (fuel <= 0.0F) return false;
+		if (fuel <= 0.0F) {
+			world.playSound(null, this.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
+			return false;
+		}
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;
