@@ -13,8 +13,8 @@ public class ProtocolConsoleChange implements ITardisProtocol {
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
 		System.out.println(world);
-		if(world.isRemote) {
-			this.openGui(tardis.getPos());
+		if(!world.isRemote) {
+			((TileEntityTardis)world.getTileEntity(tardis.getPos())).travel();;
 		}
 	}
 	

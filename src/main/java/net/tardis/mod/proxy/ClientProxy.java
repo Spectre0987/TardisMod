@@ -1,5 +1,6 @@
 package net.tardis.mod.proxy;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.tardis.mod.client.renderers.RenderConsole;
@@ -88,9 +89,13 @@ public class ClientProxy extends ServerProxy {
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
 		TItems.space_chest.setTileEntityItemStackRenderer(new RenderItemSpaceChest());
 		TItems.space_legs.setTileEntityItemStackRenderer(new RenderItemSpaceLegs());
-		
-		// Not needed currently.
-		// OBJLoader.INSTANCE.addDomain(Tardis.MODID);
+	}
+
+	@Override
+	public void preInit() {
+		if(!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
+			Minecraft.getMinecraft().getFramebuffer().enableStencil();
+		}
 	}
 	
 }

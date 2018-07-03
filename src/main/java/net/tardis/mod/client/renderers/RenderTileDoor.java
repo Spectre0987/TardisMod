@@ -45,23 +45,25 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 		IBlockState state = mc.world.getBlockState(te.getPos());
 		if (state.getBlock() instanceof BlockTardisTop) {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
-			float angle = Helper.getAngleFromFacing(facing) - 180;
-			GlStateManager.rotate(angle, 0, 1, 0);
 			switch(facing){
-				case WEST: GlStateManager.translate(-1, 0, 0.35);
-				case EAST: GlStateManager.translate(0,0, -0.65);
+				case WEST: {
+					GlStateManager.rotate(180, 0, 1, 0);
+					GlStateManager.translate(-1,0,-1);
+				}
+				case EAST: {
+					GlStateManager.rotate(90,0,1,0);
+					GlStateManager.translate(-1,0,0);
+				}
 				case SOUTH: {
 					GlStateManager.rotate(180, 0, 1, 0);
-					GlStateManager.translate(-1,0, -0.6);
+					GlStateManager.translate( -1,0, -1);
 				}
 				default: {
-					GlStateManager.rotate(180, 0, 1, 0);
-					GlStateManager.translate(0,0,0.35);
+					GlStateManager.translate(0,0,0.4);
 				}
 			}
 		}
-			GlStateManager.pushMatrix();
-			
+		GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			
 			// Always write to stencil buffer
@@ -142,7 +144,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 				if (open) {
 					Vec3d origin = Helper.convertToPixels(6.5, 0, -8.5);
 					GlStateManager.translate(origin.x, origin.y, origin.z);
-					GlStateManager.rotate(90, 0, 1, 0);
+					GlStateManager.rotate(85, 0, 1, 0);
 					origin = origin.scale(-1);
 					GlStateManager.translate(origin.x, origin.y, origin.z);
 				}

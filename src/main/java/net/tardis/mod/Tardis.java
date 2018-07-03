@@ -179,6 +179,8 @@ public class Tardis {
 		Systems.register(new Systems(TItems.artron_capacitor));
 		Systems.register(new Systems(TItems.fluid_link));
 		Systems.register(new Systems(TItems.demat_circut));
+		
+		proxy.preInit();
 	}
 	
 	@EventHandler

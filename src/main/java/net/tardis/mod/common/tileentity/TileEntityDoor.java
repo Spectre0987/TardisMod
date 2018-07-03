@@ -111,6 +111,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public void update() {
 		if (!world.isRemote) {
+			if(world.getTotalWorldTime() % 5 == 0) {
+				world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
+			}
 			WorldServer ws = (WorldServer) world;
 			BlockPos cPos = getConsolePos().south(4);
 			

@@ -35,11 +35,12 @@ public class RenderDoor extends Render<ControlDoor> {
 	@Override
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x - 0.5, y, z + 0.48);
+		GlStateManager.translate(x - 0.5, y, z + 0.41);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		boolean open = entity.isOpen();
 		if(open) {
 			GlStateManager.pushMatrix();
+			GlStateManager.translate(0,0, 1);
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			
 			// Always write to stencil buffer
@@ -57,10 +58,12 @@ public class RenderDoor extends Render<ControlDoor> {
 	
 			// Draw scene from portal view
 			GlStateManager.pushMatrix();
+			mc.entityRenderer.disableLightmap();
 			GlStateManager.rotate(180,0,1,0);
-			GlStateManager.translate(-1, 0, -3);
+			GlStateManager.translate(0, 0, -3);
 			GlStateManager.rotate(Helper.getAngleFromFacing(entity.getFacing()), 0, 1, 0);
 			shellRender.doRender(entity, 0,0,0, 0, partialTicks);
+			mc.entityRenderer.enableLightmap();
 			GlStateManager.popMatrix();
 	
 			GL11.glDisable(GL11.GL_STENCIL_TEST);

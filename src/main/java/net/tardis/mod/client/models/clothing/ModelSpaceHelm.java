@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.tardis.mod.client.util.ModelUtil;
 
@@ -344,7 +345,7 @@ public class ModelSpaceHelm extends ModelBiped
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
 	setRotationAngles(f, f1, f2, f3, f4, f5,entity);
-	try {
+	/*try {
 		Field[] fields = ModelSpaceHelm.class.getDeclaredFields();
 		for(Field fi : fields) {
 			Object obj = fi.get(this);
@@ -353,7 +354,9 @@ public class ModelSpaceHelm extends ModelBiped
 			}
 		}
 	}
-	catch(Exception e) {}
+	catch(Exception e) {}*/
+	GlStateManager.rotate(f3, 0, 1, 0);
+	GlStateManager.rotate(f4, 1, 0, 0);
 	Head1.render(f5);
 	Head2.render(f5);
 	Head3.render(f5);

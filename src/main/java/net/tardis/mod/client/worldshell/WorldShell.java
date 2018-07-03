@@ -7,10 +7,10 @@ import java.util.Map;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -19,8 +19,6 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
 public class WorldShell implements IBlockAccess {
 
@@ -28,6 +26,8 @@ public class WorldShell implements IBlockAccess {
 	public Map<BlockPos, BlockStorage> blockMap;
 	// Contains every TESR to speed up rendering
 	private List<TileEntity> tesrs;
+	//Entities to render
+	private List<Entity> entities;
 	// The distance between the root of the worldShell and (0,0,0). Subtracting this
 	// from the coords in BlockMap should give you positions in relative terms for
 	// rendering

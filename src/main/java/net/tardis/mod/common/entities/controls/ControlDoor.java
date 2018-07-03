@@ -56,6 +56,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(IS_OPEN, false);
+		this.dataManager.register(FACING, EnumFacing.NORTH);
 	}
 	
 	@Override
@@ -139,24 +140,25 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 					}
 				}
 			}
-			this.shell = new WorldShell(tardis.getLocation());
-			Vec3i r = new Vec3i(10,10,10);
-			IBlockState doorState = ws.getBlockState(shell.getOffset());
-			EnumFacing facing = EnumFacing.NORTH;
-			if(doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
-				facing = doorState.getValue(BlockTardisTop.FACING);
-			}
-			BlockPos nPos = shell.getOffset().offset(facing, 10);
-			for(BlockPos pos : BlockPos.getAllInBox(nPos.subtract(r), nPos.add(r))) {
-				IBlockState state = ws.getBlockState(pos);
-				if(state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
-					this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
+			if(this.ticksExisted % 5 == 0) {
+				this.shell = new WorldShell(tardis.getLocation());
+				Vec3i r = new Vec3i(10,10,10);
+				IBlockState doorState = ws.getBlockState(shell.getOffset());
+				EnumFacing facing = EnumFacing.NORTH;
+				if(doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
+					facing = doorState.getValue(BlockTardisTop.FACING);
 				}
-				else if(state.getBlock() instanceof BlockTardisTop) {
-					this.setFacing(state.getValue(BlockTardisTop.FACING));
+				for(BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(r), shell.getOffset().add(r))) {
+					IBlockState state = ws.getBlockState(pos);
+					if(state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
+						this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
+					}
+					else if(state.getBlock() instanceof BlockTardisTop) {
+						this.setFacing(state.getValue(BlockTardisTop.FACING));
+					}
 				}
+				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
-			Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 		}
 	}
 

@@ -43,7 +43,7 @@ tile.megalos.name=Meglos
 tile.console.name=Console
 
 tardis.locked.true=TARDIS Locked!
-tardis.locked.false=TARDIS has been unlocked!
+tardis.locked.false=TARDIS unlocked!
 
 death.attack.dalek=Killed by a Dalek Ray gun
 death.cyberman.ray=was deleted.
