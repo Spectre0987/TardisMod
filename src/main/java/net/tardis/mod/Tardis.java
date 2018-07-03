@@ -47,7 +47,7 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.protocols.ProtocolConsoleChange;
+import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.recipes.TemporalRecipe;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
@@ -168,7 +168,7 @@ public class Tardis {
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
 		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.power_cell), 1200));
 		
-		TardisProtocol.register(new ProtocolConsoleChange());
+		TardisProtocol.register(new ProtocolCCircuit());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
