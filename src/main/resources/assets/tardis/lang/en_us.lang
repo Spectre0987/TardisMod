@@ -73,6 +73,8 @@ tardis.direction.west=TARDIS is facing west
 
 tardis.missing=The outer plasmic shell cannot be found! Please land again.
 
+protocol.ccircut=Chameleon Circuit
+
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
 config.setdim=Set Dimension IDs for this mod?

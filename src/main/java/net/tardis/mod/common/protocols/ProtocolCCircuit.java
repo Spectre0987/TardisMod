@@ -25,7 +25,7 @@ public class ProtocolCCircuit implements ITardisProtocol {
 
 	@Override
 	public String getNameKey() {
-		return "protocol.consolechange";
+		return "protocol.ccircut";
 	}
 
 }
