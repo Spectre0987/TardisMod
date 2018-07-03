@@ -41,39 +41,55 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y - 1, z + 0.35);
-		GlStateManager.pushMatrix();
-		
-		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glEnable(GL11.GL_STENCIL_TEST);
-		
-		// Always write to stencil buffer
-		GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
-		GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
-		GL11.glStencilMask(0xFF);
-		GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-
-		this.drawOutline();
-
-		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-		// Only pass stencil test if equal to 1
-		GL11.glStencilMask(0x00);
-		GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
-
-		// Draw scene from portal view
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(180,0,1,0);
-		renderShell.doRender((TileEntityDoor)te, -1, 0, -7, 0, partialTicks);
-		GlStateManager.popMatrix();
-
-		GL11.glPopMatrix();
-		GL11.glDisable(GL11.GL_STENCIL_TEST);
-
+		GlStateManager.translate(x, y - 1, z);
+		IBlockState state = mc.world.getBlockState(te.getPos());
+		if (state.getBlock() instanceof BlockTardisTop) {
+			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
+			float angle = Helper.getAngleFromFacing(facing) - 180;
+			GlStateManager.rotate(angle, 0, 1, 0);
+			switch(facing){
+				case WEST: GlStateManager.translate(-1, 0, 0.35);
+				case EAST: GlStateManager.translate(0,0, -0.65);
+				case SOUTH: {
+					GlStateManager.rotate(180, 0, 1, 0);
+					GlStateManager.translate(-1,0, -0.6);
+				}
+				default: {
+					GlStateManager.rotate(180, 0, 1, 0);
+					GlStateManager.translate(0,0,0.35);
+				}
+			}
+		}
+			GlStateManager.pushMatrix();
+			
+			GL11.glEnable(GL11.GL_STENCIL_TEST);
+			
+			// Always write to stencil buffer
+			GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
+			GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
+			GL11.glStencilMask(0xFF);
+			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
+	
+			this.drawOutline();
+	
+			// Only pass stencil test if equal to 1
+			GL11.glStencilMask(0x00);
+			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
+	
+			// Draw scene from portal view
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(180,0,1,0);
+			renderShell.doRender((TileEntityDoor)te, -1, 0, -7, 0, partialTicks);
+			GlStateManager.popMatrix();
+	
+			GL11.glDisable(GL11.GL_STENCIL_TEST);
+			GL11.glPopMatrix();
+			
 		// Draw portal stencils so portals wont be drawn over
 		GL11.glColorMask(false, false, false, false);
-		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 		this.drawOutline();
 		
+		//Set things back
 		GL11.glColorMask(true, true, true, true);
 	    GlStateManager.popMatrix();
 	    
@@ -100,8 +116,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 		GlStateManager.pushMatrix();
 		{
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
-			GlStateManager.rotate(180, 1, 0, 0);
-			IBlockState state = mc.world.getBlockState(te.getPos());
+			GlStateManager.rotate(180, 1, 0, 0);IBlockState state = mc.world.getBlockState(te.getPos());
 			if (state.getBlock() == TBlocks.tardis_top) {
 				EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 				float angle = Helper.getAngleFromFacing(facing);

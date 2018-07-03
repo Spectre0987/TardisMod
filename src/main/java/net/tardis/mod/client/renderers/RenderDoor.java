@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.util.helpers.Helper;
 
 public class RenderDoor extends Render<ControlDoor> {
 	
@@ -38,7 +39,7 @@ public class RenderDoor extends Render<ControlDoor> {
 		mc.getTextureManager().bindTexture(TEXTURE);
 		boolean open = entity.isOpen();
 		if(open) {
-			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			
 			// Always write to stencil buffer
@@ -46,35 +47,36 @@ public class RenderDoor extends Render<ControlDoor> {
 			GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
 			GL11.glStencilMask(0xFF);
 			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
+	
 			this.drawDoorShape();
-
-			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+	
+			//GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 			// Only pass stencil test if equal to 1
 			GL11.glStencilMask(0x00);
 			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
-
+	
 			// Draw scene from portal view
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(180,0,1,0);
-			mc.renderGlobal.renderSky(partialTicks, 1);
-			shellRender.doRender((ControlDoor)entity, -1, 0, 1, 0, partialTicks);
+			GlStateManager.translate(-1, 0, -3);
+			GlStateManager.rotate(Helper.getAngleFromFacing(entity.getFacing()), 0, 1, 0);
+			shellRender.doRender(entity, 0,0,0, 0, partialTicks);
 			GlStateManager.popMatrix();
-
+	
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
-
-			// Draw portal stencils so portals wont be drawn over
-			GL11.glColorMask(false, false, false, false);
-			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-			this.drawDoorShape();
+			GL11.glPopMatrix();
 			
-			GL11.glColorMask(true, true, true, true);
-			GL11.glDepthMask(true);
+		// Draw portal stencils so portals wont be drawn over
+		GL11.glColorMask(false, false, false, false);
+		this.drawDoorShape();
+		
+		//Set things back
+		GL11.glColorMask(true, true, true, true);
 		}
 		else {
-			
 			Tessellator tes = Tessellator.getInstance();
 			BufferBuilder buf = tes.getBuffer();
-			buf.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+			buf.begin(7, DefaultVertexFormats.POSITION_TEX);
 			mc.getTextureManager().bindTexture(TEXTURE);
 			buf.pos(0, 0, 0).tex(0, 0).endVertex();
 			buf.pos(0, 2, 0).tex(0, 2).endVertex();
@@ -86,6 +88,7 @@ public class RenderDoor extends Render<ControlDoor> {
 	}
 	
 	public void drawDoorShape() {
+		GlStateManager.translate(0, 0, -1);
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
 		buf.begin(7, DefaultVertexFormats.POSITION_TEX);
