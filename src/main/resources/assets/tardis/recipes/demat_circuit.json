@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IPI",
+    "RCR",
+    "PRP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "I":{
+        "item":"minecraft:iron_ingot"
+    },
+    "R":{
+        "item":"minecraft:redstone"
+    },
+    "C":{
+        "item":"tardis:circuts"
+    }
+  },
+  "result": {
+    "item": "tardis:demat_circut"
+  }
+}
