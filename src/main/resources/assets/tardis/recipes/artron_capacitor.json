@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " R ",
+    " C ",
+    "T T"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "C":{
+        "C":"tardis:circuts"
+    },
+    "T":{
+        "T":"minecraft:redstone_torch"
+    }
+  },
+  "result": {
+    "item": "tardis:artron_capacitor"
+  }
+}
