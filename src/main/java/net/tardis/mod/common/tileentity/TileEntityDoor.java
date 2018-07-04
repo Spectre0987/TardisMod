@@ -152,7 +152,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(), this.isLocked()), new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64D));
 				this.updateTicks = 0;
 			}
-			if(world.getTotalWorldTime() % 5 == 0) {
+			if(!this.isLocked() && world.getTotalWorldTime() % 5 == 0) {
 				worldShell = new WorldShell(this.getConsolePos());
 				WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.id);
 				for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {

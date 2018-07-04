@@ -47,6 +47,7 @@ import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlMag;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
@@ -93,6 +94,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int rotorUpdate = 0;
 	public int frame = 0;
 	public int musicTicks = 0;
+	public int magnitude = 10;
 	
 	public TileEntityTardis() {}
 	
@@ -161,6 +163,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				}
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
+				this.setDesination(nPos, dimension);
+				
 			}
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 			tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, dWorld, ForgeChunkManager.Type.NORMAL);
@@ -213,6 +217,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				++cListIndex;
 			}
 			this.totalTimeToTravel = tardisTag.getInteger(NBT.MAX_TIME);
+			this.magnitude = tardisTag.getInteger(NBT.MAGNITUDE);
 		}
 	}
 	
@@ -245,6 +250,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setTag(NBT.COMPOENET_LIST, compoentList);
 			
 			tardisTag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
+			tardisTag.setInteger(NBT.MAGNITUDE, this.magnitude);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -432,7 +438,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 						new ControlDirection(this),
 						new ControlFastReturn(this),
 						new ControlTelepathicCircuts(this),
-						new ControlDoorSwitch(this)
+						new ControlDoorSwitch(this),
+						new ControlMag(this)
 						};
 				for (EntityControl con : ec) {
 					con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
@@ -500,6 +507,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		public static final String MAX_TIME = "maxTime";
 		public static final String TARGET_DIM_NAME = "targetDimName";
 		public static final String CURRENT_DIM_NAME = "currentDimName";
+		public static final String MAGNITUDE = "magnitude";
 	}
 	
 	public EnumFacing getFacing() {
