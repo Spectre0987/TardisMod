@@ -58,7 +58,7 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 			door.toggleLocked(playerIn);
 			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
 			TileEntity te = ws.getTileEntity(door.getConsolePos());
-			if (te instanceof TileEntityTardis) {
+			if (te != null && te instanceof TileEntityTardis) {
 				EntityControl control = ((TileEntityTardis) te).getControl(ControlDoor.class);
 				if (control != null) {
 					((ControlDoor) control).setOpen(!door.isLocked());

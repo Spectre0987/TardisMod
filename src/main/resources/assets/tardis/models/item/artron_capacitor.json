@@ -1,6 +1,6 @@
 {
     "parent":"item/generated",
     "textures":{
-        "layer0":"tardis:artron_capacitor"
+        "layer0":"tardis:items/artron_capacitor"
     }
 }
