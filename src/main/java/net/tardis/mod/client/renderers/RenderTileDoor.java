@@ -79,10 +79,13 @@ public class RenderTileDoor extends TileEntitySpecialRenderer {
 			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
 	
 			// Draw scene from portal view
+			try {
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(180,0,1,0);
 			renderShell.doRender((TileEntityDoor)te, -1, 0, -7, 0, partialTicks);
 			GlStateManager.popMatrix();
+			}
+			catch(Exception e) {}
 	
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			GL11.glPopMatrix();

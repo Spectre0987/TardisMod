@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers;
 
+import java.util.logging.Logger;
+
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -39,35 +41,40 @@ public class RenderDoor extends Render<ControlDoor> {
 		mc.getTextureManager().bindTexture(TEXTURE);
 		boolean open = entity.isOpen();
 		if(open) {
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(0,0, 1);
-			GL11.glEnable(GL11.GL_STENCIL_TEST);
-			
-			// Always write to stencil buffer
-			GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
-			GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
-			GL11.glStencilMask(0xFF);
-			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-	
-			this.drawDoorShape();
-	
-			//GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-			// Only pass stencil test if equal to 1
-			GL11.glStencilMask(0x00);
-			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
-	
-			// Draw scene from portal view
-			GlStateManager.pushMatrix();
-			mc.entityRenderer.disableLightmap();
-			GlStateManager.rotate(180,0,1,0);
-			GlStateManager.translate(0, 0, -3);
-			GlStateManager.rotate(Helper.getAngleFromFacing(entity.getFacing()), 0, 1, 0);
-			shellRender.doRender(entity, 0,0,0, 0, partialTicks);
-			mc.entityRenderer.enableLightmap();
-			GlStateManager.popMatrix();
-	
-			GL11.glDisable(GL11.GL_STENCIL_TEST);
-			GL11.glPopMatrix();
+			try {
+				GlStateManager.pushMatrix();
+				GlStateManager.translate(0,0, 1);
+				GL11.glEnable(GL11.GL_STENCIL_TEST);
+				
+				// Always write to stencil buffer
+				GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
+				GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
+				GL11.glStencilMask(0xFF);
+				GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
+		
+				this.drawDoorShape();
+		
+				//GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+				// Only pass stencil test if equal to 1
+				GL11.glStencilMask(0x00);
+				GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
+		
+				// Draw scene from portal view
+				GlStateManager.pushMatrix();
+				mc.entityRenderer.disableLightmap();
+				GlStateManager.rotate(180,0,1,0);
+				GlStateManager.translate(0, 0, -3);
+				GlStateManager.rotate(Helper.getAngleFromFacing(entity.getFacing()), 0, 1, 0);
+				shellRender.doRender(entity, 0,0,0, 0, partialTicks);
+				mc.entityRenderer.enableLightmap();
+				GlStateManager.popMatrix();
+		
+				GL11.glDisable(GL11.GL_STENCIL_TEST);
+				GL11.glPopMatrix();
+			}
+			catch(Exception e) {
+				System.out.println("BOTI Rendering Failed!");
+			}
 			
 		// Draw portal stencils so portals wont be drawn over
 		GL11.glColorMask(false, false, false, false);
