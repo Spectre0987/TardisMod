@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I  ",
+    "IS ",
+    "I  "
+  ],
+  "key": {
+    "I":{
+        "item":"minecraft:iron_ingot"
+    },
+    "S":{
+        "item":"tardis:sonic_screwdriver"
+    }
+  },
+  "result": {
+    "item": "tardis:sonic_pen"
+  }
+}
