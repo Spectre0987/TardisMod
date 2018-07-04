@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "CDA",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "C":{
+        "item":"tardis:circuts"
+    },
+    "D":{
+        "item":"tardis:demat_circut"
+    },
+    "A":{
+        "item":"tardis:artron_capacitor"
+    }
+  },
+  "result": {
+    "item": "tardis:vortex_manip"
+  }
+}
