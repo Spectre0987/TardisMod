@@ -53,20 +53,11 @@ public class WorldShell implements IBlockAccess {
 
 	@Override
 	public int getCombinedLight(BlockPos pos, int lightValue) {
-		int sky = getLightSet(EnumSkyBlock.SKY, pos);
-		int map = getLightSet(EnumSkyBlock.BLOCK, pos);
-
-		return sky << 20 | map << 4;
+		return 15;
 	}
 
 	public int getLightSet(EnumSkyBlock type, BlockPos pos) {
-		if (type == EnumSkyBlock.SKY) {
-			return 15;
-		} else if (blockMap.get(pos) != null) {
-			return blockMap.get(pos).light;
-		} else {
-			return 0;
-		}
+		return 15;
 	}
 
 	@Override
@@ -118,5 +109,13 @@ public class WorldShell implements IBlockAccess {
 					tesrs.add(bs.tileentity);
 			}
 		}
+	}
+	
+	public List<Entity> getEntities(){
+		return this.entities;
+	}
+	
+	public void setEntities(List<Entity> entity) {
+		this.entities = entity;
 	}
 }

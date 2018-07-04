@@ -26,6 +26,8 @@ public class TBlocks {
 	public static Block megalos;
 	public static Block meglos_slab;
 	
+	public static Block sonicRedstone;
+	
 	public static Block electric_panel;
 	
 	//public static Block json_tester;

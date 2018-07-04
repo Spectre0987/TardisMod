@@ -10,17 +10,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.client.guis.elements.ButtonRecipe;
 
-public class GuiConsoleChange extends GuiScreen {
+public class GuiCCircuit extends GuiScreen {
 	
 	Minecraft mc;
 	public BlockPos pos = BlockPos.ORIGIN;
 	public ButtonRecipe console1;
 	
-	public GuiConsoleChange() {
+	public GuiCCircuit() {
 		mc = Minecraft.getMinecraft();
 	}
 	
-	public GuiConsoleChange(BlockPos pos) {
+	public GuiCCircuit(BlockPos pos) {
 		this();
 		this.pos = pos.toImmutable();
 	}

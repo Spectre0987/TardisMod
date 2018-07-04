@@ -85,5 +85,12 @@
             "name":"tardis:drum_beat",
             "stream": true
         }]
+    },
+    "stutter":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:stutter",
+            "stream":true
+        }]
     }
 }

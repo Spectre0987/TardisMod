@@ -163,4 +163,24 @@ public class Helper {
 	public static Vec3d blockPosToVec3d(BlockPos pos) {
 		return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
 	}
+	
+	public static BlockPos getSafePosLower(BlockPos pos, World world, EnumFacing facing) {
+		for(int y = pos.getY(); y > 0; --y) {
+			BlockPos lPos = new BlockPos(pos.getX(), y, pos.getZ());
+			if(Helper.isSafe(world, lPos, facing)) {
+				return lPos;
+			}
+		}
+		return Helper.getSafeHigherPos(world, pos, facing);
+	}
+	
+	public static BlockPos getSafeHigherPos(World world, BlockPos pos, EnumFacing facing) {
+		for(int y = pos.getY(); y < world.getHeight(); ++y) {
+			BlockPos lPos = new BlockPos(pos.getX(), y, pos.getZ());
+			if(Helper.isSafe(world, lPos, facing)) {
+				return lPos;
+			}
+		}
+		return Helper.getSafePosLower(pos, world, facing);
+	}
 }

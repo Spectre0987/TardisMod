@@ -26,7 +26,7 @@ public class ControlY extends EntityControl {
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
 			TileEntityTardis tardis = ((TileEntityTardis) world.getTileEntity(this.getConsolePos()));
-			tardis.setDesination(tardis.getDestination().add(0, player.isSneaking() ? -10 : 10, 0), tardis.getTargetDim());
+			tardis.setDesination(tardis.getDestination().add(0, player.isSneaking() ? -tardis.magnitude : tardis.magnitude, 0), tardis.getTargetDim());
 		} else if (this.ticks <= 0) {
 			ticks = 20;
 			direction = player.isSneaking() ? -1 : 1;

@@ -137,6 +137,8 @@ public class ModelTardis extends ModelBase {
 	ModelRenderer P126;
 	ModelRenderer P127;
 	
+	boolean light = true;
+	
 	public ModelTardis() {
 		textureWidth = 256;
 		textureHeight = 256;
@@ -1041,14 +1043,20 @@ public class ModelTardis extends ModelBase {
 		P125.render(f5);
 		P126.render(f5);
 		P127.render(f5);
-		
-		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
-		Minecraft.getMinecraft().entityRenderer.disableLightmap();
-		LampGlow.render(f5);
-		Minecraft.getMinecraft().entityRenderer.enableLightmap();
-		GlStateManager.enableLighting();
-		GlStateManager.popMatrix();
+		if(light) {
+			GlStateManager.pushMatrix();
+			GlStateManager.disableLighting();
+			Minecraft.getMinecraft().entityRenderer.disableLightmap();
+			LampGlow.render(f5);
+			Minecraft.getMinecraft().entityRenderer.enableLightmap();
+			GlStateManager.enableLighting();
+			GlStateManager.popMatrix();
+		}
+		else this.LampGlow.render(f5);
+	}
+	
+	public void setLight(boolean b) {
+		this.light = b;
 	}
 	
 	private void setRotation(ModelRenderer model, float x, float y, float z) {

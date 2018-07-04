@@ -47,6 +47,7 @@ import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlMag;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
@@ -93,6 +94,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int rotorUpdate = 0;
 	public int frame = 0;
 	public int musicTicks = 0;
+	public int magnitude = 10;
 	
 	public TileEntityTardis() {}
 	
@@ -103,14 +105,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			--ticksToTravel;
 			this.setFuel(fuel - 0.0001F);
 			if (ticksToTravel <= 0) this.travel();
-			if (this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 440)
+			if (this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 200)
 				world.playSound(null, this.getPos(), TSounds.takeoff, SoundCategory.BLOCKS, 0.5F, 1F);
-			else if (this.ticksToTravel > 440 && this.ticksToTravel < this.totalTimeToTravel - 440) {
+			else if (this.ticksToTravel > 200 && this.ticksToTravel < this.totalTimeToTravel - 200) {
 				if (this.ticksToTravel % 40 == 0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
-			if (fuel <= 0.0) crash();
+			if (fuel <= 0.0 && this.ticksToTravel % 5 == 0) crash();
 			if (world.isRemote) {
 				if (frame + 1 >= ModelConsole.frames.length)
 					frame = 0;
@@ -161,6 +163,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				}
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
+				this.setDesination(nPos, dimension);
+				
 			}
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 			tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, dWorld, ForgeChunkManager.Type.NORMAL);
@@ -213,6 +217,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				++cListIndex;
 			}
 			this.totalTimeToTravel = tardisTag.getInteger(NBT.MAX_TIME);
+			this.magnitude = tardisTag.getInteger(NBT.MAGNITUDE);
 		}
 	}
 	
@@ -245,6 +250,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setTag(NBT.COMPOENET_LIST, compoentList);
 			
 			tardisTag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
+			tardisTag.setInteger(NBT.MAGNITUDE, this.magnitude);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -265,7 +271,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 880/* The Time in tick it takes the launch sound to play */);
+		return (int) ((dist / MAX_TARDIS_SPEED) + 400/* The Time in tick it takes the launch sound to play */);
 	}
 	
 	public BlockPos getDestination() {
@@ -322,7 +328,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public boolean startFlight() {
 		if (this.getDestination().equals(BlockPos.ORIGIN)) return false;
-		if (fuel <= 0.0F) return false;
+		if (fuel <= 0.0F) {
+			world.playSound(null, this.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
+			return false;
+		}
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;
@@ -429,7 +438,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 						new ControlDirection(this),
 						new ControlFastReturn(this),
 						new ControlTelepathicCircuts(this),
-						new ControlDoorSwitch(this)
+						new ControlDoorSwitch(this),
+						new ControlMag(this)
 						};
 				for (EntityControl con : ec) {
 					con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
@@ -497,6 +507,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		public static final String MAX_TIME = "maxTime";
 		public static final String TARGET_DIM_NAME = "targetDimName";
 		public static final String CURRENT_DIM_NAME = "currentDimName";
+		public static final String MAGNITUDE = "magnitude";
 	}
 	
 	public EnumFacing getFacing() {

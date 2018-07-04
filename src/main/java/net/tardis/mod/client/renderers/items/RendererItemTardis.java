@@ -30,6 +30,7 @@ public class RendererItemTardis extends TileEntityItemStackRenderer {
 		GlStateManager.rotate(180, 1, 0, 0);
 		GlStateManager.rotate(23.5F, 1, 0, 0);
 		GlStateManager.rotate(45, 0, 1, 0);
+		model.setLight(false);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		door_r.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		door_l.render(null, 0, 0, 0, 0, 0, 0.0625F);

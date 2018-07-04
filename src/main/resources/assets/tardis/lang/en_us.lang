@@ -63,8 +63,8 @@ tardis.flying=TARDIS in flight!
 
 tardis.gui.protocol.force_field=Force Field Protocol
 
-tardis.console.land.true=TARDIS is set to land on the highest point available
-tardis.console.land.false=TARDIS is set to land on the lowest point available
+tardis.console.land.true=TARDIS will search upwards for a landing spot
+tardis.console.land.false=TARDIS will search downwards for a landing spot
 
 tardis.direction.north=TARDIS is facing north
 tardis.direction.east=TARDIS is facing east
@@ -72,6 +72,10 @@ tardis.direction.south=TARDIS is facing south
 tardis.direction.west=TARDIS is facing west
 
 tardis.missing=The outer plasmic shell cannot be found! Please land again.
+
+tardis.magnitude=TARDIS Coordinate modifier is
+
+protocol.ccircut=Chameleon Circuit
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
@@ -105,6 +109,7 @@ entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Fast Return
 entity.telepathic_circuts.name=Telepathic Circuits
 entity.tardis_door_control.name=Door Switch
+entity.tardis_magnitude.name=Coordinate Magnitude Adjuster
 
 entity.invasion_cyberman.name=Invasion Cyberman
 
