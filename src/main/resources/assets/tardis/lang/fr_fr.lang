@@ -73,6 +73,8 @@ tardis.direction.west=Le TARDIS est tourné vers l'ouest
 
 tardis.missing=L'enveloppe plasmique externe est introuvable ! Veuillez atterrir à nouveau.
 
+tardis.magnitude=Le modificateur de coordonnées TARDIS est
+
 protocol.ccircut=Circuit caméléon
 
 config.category.dims=Dimensions
@@ -107,6 +109,7 @@ entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Retour rapide
 entity.telepathic_circuts.name=Circuits télépathiques
 entity.tardis_door_control.name=Interrupteur de porte
+entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 
 entity.invasion_cyberman.name=Invasion de Cyberman
 
