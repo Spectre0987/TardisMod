@@ -63,8 +63,8 @@ tardis.flying=TARDIS in flight!
 
 tardis.gui.protocol.force_field=Force Field Protocol
 
-tardis.console.land.true=TARDIS is set to land on the highest point available
-tardis.console.land.false=TARDIS is set to land on the lowest point available
+tardis.console.land.true=TARDIS will search upwards for a landing spot
+tardis.console.land.false=TARDIS will search downwards for a landing spot
 
 tardis.direction.north=TARDIS is facing north
 tardis.direction.east=TARDIS is facing east
