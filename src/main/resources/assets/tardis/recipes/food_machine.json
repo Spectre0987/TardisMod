@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IPI",
+    "IRI",
+    "ICI"
+  ],
+  "key": {
+    "I":{
+        "item":"minecraft:iron_ingot"
+    },
+    "P":{
+        "item":"minecraft:ender_pearl"
+    },
+    "R":{
+        "item":"minecraft:redstone_block"
+    },
+    "C":{
+        "item":"tardis:circuts"
+    }
+  },
+  "result": {
+    "item": "tardis:food_machine"
+  }
+}
