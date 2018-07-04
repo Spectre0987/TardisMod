@@ -110,4 +110,12 @@ public class WorldShell implements IBlockAccess {
 			}
 		}
 	}
+	
+	public List<Entity> getEntities(){
+		return this.entities;
+	}
+	
+	public void setEntities(List<Entity> entity) {
+		this.entities = entity;
+	}
 }

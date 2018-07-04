@@ -51,8 +51,8 @@ public class RenderWorldShell {
 							t.getPos().getZ(), partialTicks);
 				}
 			}
-
 			GlStateManager.popMatrix();
+			
 		}
 	}
 
