@@ -75,7 +75,11 @@ tardis.missing=L'enveloppe plasmique externe est introuvable ! Veuillez atterrir
 
 tardis.magnitude=Le modificateur de coordonnées TARDIS est
 
+tardis.hads.enabled.true=H.A.D.S a été activé
+tardis.hads.enabled.false=H.A.D.S a été désactivé
+
 protocol.ccircut=Circuit caméléon
+protocol.hads=Basculer le H.A.D.S
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
