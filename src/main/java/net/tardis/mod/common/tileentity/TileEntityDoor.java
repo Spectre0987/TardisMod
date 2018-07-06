@@ -2,9 +2,12 @@ package net.tardis.mod.common.tileentity;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -111,9 +114,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public void update() {
 		if (!world.isRemote) {
-			if(world.getTotalWorldTime() % 5 == 0) {
-				world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
-			}
 			WorldServer ws = (WorldServer) world;
 			BlockPos cPos = getConsolePos().south(4);
 			
@@ -144,6 +144,17 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 							}
 						}
 					}
+				}
+			}
+			//HADS
+			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(1D));
+			for(Entity e : projectiles) {
+				if(e instanceof IProjectile || e instanceof IMob) {
+					try{
+						((TileEntityTardis)DimensionManager.getWorld(TDimensions.id).getTileEntity(getConsolePos())).startHADS();
+						e.setDead();
+					}
+					catch(Exception exc) {}
 				}
 			}
 			if (lockCooldown > 0) --lockCooldown;

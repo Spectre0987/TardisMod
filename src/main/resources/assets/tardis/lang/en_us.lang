@@ -75,7 +75,11 @@ tardis.missing=The outer plasmic shell cannot be found! Please land again.
 
 tardis.magnitude=TARDIS Coordinate modifier is
 
+tardis.hads.enabled.true=H.A.D.S has been enabled
+tardis.hads.enabled.false=H.A.D.S has been disabled
+
 protocol.ccircut=Chameleon Circuit
+protocol.hads=Toggle H.A.D.S
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions

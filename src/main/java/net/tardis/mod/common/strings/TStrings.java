@@ -13,6 +13,7 @@ public class TStrings {
 	public static final String KEY_CONSOLE_LOCATION = "key.console.location";
 	//Add in int
 	public static final String MAGNITUDE = "tardis.magnitude";
+	public static final String HADS_ENABLED = "tardis.hads.enabled.";
 	
 	public static class ModIds {
 		public static final String GALACTICRAFT = "galacticraftcore";
