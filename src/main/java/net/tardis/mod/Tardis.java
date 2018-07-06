@@ -3,7 +3,6 @@ package net.tardis.mod;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.Loader;
@@ -49,10 +48,11 @@ import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
+import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.TardisProtocol;
-import net.tardis.mod.common.recipes.TemporalRecipe;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
 import net.tardis.mod.common.screwdriver.GRoomMode;
+import net.tardis.mod.common.screwdriver.HADSMode;
 import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.RecallMode;
 import net.tardis.mod.common.screwdriver.ScrewdriverMode;
@@ -72,6 +72,7 @@ import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageDoorOpen;
+import net.tardis.mod.packets.MessageExteriorChange;
 import net.tardis.mod.packets.MessageHandlerCam;
 import net.tardis.mod.packets.MessageHandlerDoorOpen;
 import net.tardis.mod.packets.MessageHandlerProtocol;
@@ -82,6 +83,7 @@ import net.tardis.mod.packets.MessageTR;
 import net.tardis.mod.packets.MessageTelepathicCircut;
 import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
+import net.tardis.mod.systems.SystemDemat;
 import net.tardis.mod.systems.Systems;
 import net.tardis.mod.util.helpers.EntityHelper;
 
@@ -98,6 +100,8 @@ public class Tardis {
 	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	
 	public static boolean hasIC2 = false;
+	
+	public static final int ID_GUI_TEMPORAL_LAB = 0;
 	
 	@Instance
 	public static Tardis instance = new Tardis();
@@ -158,19 +162,19 @@ public class Tardis {
 		NETWORK.registerMessage(MessageHandlerDoorOpen.class, MessageDoorOpen.class, 5, Side.CLIENT);
 		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 6, Side.SERVER);
 		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 7, Side.CLIENT);
+		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 8, Side.SERVER);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());
 		ScrewdriverMode.register(new HallwayMode());
 		ScrewdriverMode.register(new GRoomMode());
 		ScrewdriverMode.register(new ElectricPanelMode());
+		ScrewdriverMode.register(new HADSMode());
 		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		
-		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.circuts), 400));
-		TemporalRecipe.register(new TemporalRecipe(new ItemStack(TItems.power_cell), 1200));
-		
 		TardisProtocol.register(new ProtocolCCircuit());
+		TardisProtocol.register(new ProtocolEnabledHADS());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
@@ -178,9 +182,7 @@ public class Tardis {
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 		
-		Systems.register(new Systems(TItems.artron_capacitor));
-		Systems.register(new Systems(TItems.fluid_link));
-		Systems.register(new Systems(TItems.demat_circut));
+		Systems.register("hads", new SystemDemat());
 		
 		proxy.preInit();
 	}
