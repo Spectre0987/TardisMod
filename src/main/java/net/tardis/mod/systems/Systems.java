@@ -1,60 +1,66 @@
 package net.tardis.mod.systems;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class Systems{
 	
-	private static ArrayList<Systems> systems = new ArrayList<Systems>();
+	private static HashMap<String, Systems> systems = new HashMap<String, Systems>();
 	
 	private Item item;
 	private boolean isDamaged = false;
+	private boolean preventFight = false;
+	private String name = "";
 	
 	public Systems(Item item) {
 		this.item = item;
 	}
 	
-	public static Systems getSystemByID(int id) {
-		if(id > systems.size()) {
-			return systems.get(id);
-		}
-		return null;
-	}
-	
-	public static int getIDForSystem(Systems system) {
-		int id = 0;
-		for(Systems s : systems) {
-			if(s.equals(system)) {
-				return id;
-			}
-			++id;
-		}
-		return -1;
-	}
-
-	/**
-	 * Gets the Item that repairs this system
-	 * @return
-	 */
 	public Item getItem() {
 		return this.item;
 	}
 	
-	public void writeToNBT(NBTTagCompound tag) {
-		NBTTagCompound nt = new NBTTagCompound();
-		nt.setInteger("id", this.getIDForSystem(this));
-		nt.setBoolean("damaged", isDamaged);
-		tag.setTag("system", nt);
+	public boolean getDamaged() {
+		return this.isDamaged;
+	}
+	
+	public boolean getPreventFlight() {
+		return this.preventFight;
+	}
+	
+	public void onDamaged() {
+		this.isDamaged = true;
+		this.preventFight = true;
 	}
 	
 	public static Systems readFromNBT(NBTTagCompound tag) {
-		NBTTagCompound nt = (NBTTagCompound) tag.getTag("system");
-		Systems system = Systems.getSystemByID(tag.getInteger("id"));
-		system.isDamaged = nt.getBoolean("damaged");
-		return system;
+		NBTTagCompound nTag = (NBTTagCompound)tag.getTag(NBT.TAG);
+		Systems sys = systems.get(nTag.getString(NBT.ID));
+		sys.isDamaged = nTag.getBoolean(NBT.DAMAGED);
+		sys.preventFight = nTag.getBoolean(nTag.getString(NBT.PREVENT_FIGHT));
+		sys.item = Item.getByNameOrId(nTag.getString(NBT.ITEM));
+		return sys;
 	}
+	
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		NBTTagCompound nTag = new NBTTagCompound();
+		nTag.setBoolean(NBT.DAMAGED, this.isDamaged);
+		nTag.setBoolean(NBT.PREVENT_FIGHT, this.preventFight);
+		nTag.setString(NBT.ITEM, this.item.getRegistryName().toString());
+		nTag.setString(NBT.ID, this.name);
+		tag.setTag(NBT.TAG, nTag);
+		return tag;
+	}
+	public static class NBT{
+		public static final String ID = "id";
+		public static final String TAG = "SystemName";
+		public static final String DAMAGED = "is_damaged";
+		public static final String PREVENT_FIGHT = "preventFlight";
+		public static final String ITEM = "item";
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) {
@@ -69,7 +75,8 @@ public class Systems{
 		return false;
 	}
 
-	public static void register(Systems sys) {
-		systems.add(sys);
+	public static void register(String name, Systems sys) {
+		sys.name = name;
+		systems.put(name, sys);
 	}
 }

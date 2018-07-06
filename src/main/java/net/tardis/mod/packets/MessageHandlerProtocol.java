@@ -19,7 +19,6 @@ public class MessageHandlerProtocol implements IMessageHandler<MessageProtocol, 
 				TileEntity te = ws.getTileEntity(mes.consolePos);
 				if (te instanceof TileEntityTardis) {
 					TardisProtocol.getProtocolFromId(mes.id).onActivated(ws, (TileEntityTardis) te);
-					System.out.println(mes.id);
 				}
 			}
 		});

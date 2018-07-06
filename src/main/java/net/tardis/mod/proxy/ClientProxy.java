@@ -50,6 +50,7 @@ import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.config.TardisConfig;
 
 public class ClientProxy extends ServerProxy {
 	
@@ -98,6 +99,10 @@ public class ClientProxy extends ServerProxy {
 		if(!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
 		}
+	}
+	
+	public static boolean getRenderBOTI() {
+		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.BOTI.enable;
 	}
 	
 }
