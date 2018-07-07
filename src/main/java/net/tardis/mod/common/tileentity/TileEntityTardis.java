@@ -95,7 +95,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int totalTimeToTravel;
 	public int rotorUpdate = 0;
 	public int frame = 0;
-	private boolean wasHADS = false;
 	private boolean hadsEnabled = false;
 	public int magnitude = 10;
 	
@@ -219,7 +218,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			this.totalTimeToTravel = tardisTag.getInteger(NBT.MAX_TIME);
 			this.magnitude = tardisTag.getInteger(NBT.MAGNITUDE);
-			this.wasHADS = tardisTag.getBoolean(NBT.HADS);
 			this.hadsEnabled = tardisTag.getBoolean(NBT.HADS_ENABLED);
 			this.blockTop = Block.getStateById(tardisTag.getInteger(NBT.EXTERIOR));
 		}
@@ -256,7 +254,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			
 			tardisTag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 			tardisTag.setInteger(NBT.MAGNITUDE, this.magnitude);
-			tardisTag.setBoolean(NBT.HADS, this.wasHADS);
 			tardisTag.setBoolean(NBT.HADS_ENABLED, this.hadsEnabled);
 			tardisTag.setInteger(NBT.EXTERIOR, Block.getStateId(this.blockTop));
 		}
@@ -526,18 +523,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			ws.setBlockState(getLocation(), Blocks.AIR.getDefaultState());
 			ws.setBlockState(getLocation().up(), Blocks.AIR.getDefaultState());
 			this.fuel -= 0.1;
-			this.wasHADS = true;
 			this.markDirty();
 		}
 	}
 	
 	public void returnFromHADS() {
-		if(this.wasHADS) {
-			this.setDesination(this.getLocation(), dimension);
-			this.startFlight();
-			this.travel();
-			this.wasHADS = false;
-		}
+		this.setDesination(this.getLocation(), dimension);
+		this.startFlight();
+		this.travel();
 	}
 	
 	public static class NBT {
@@ -549,7 +542,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		public static final String TARGET_DIM_NAME = "targetDimName";
 		public static final String CURRENT_DIM_NAME = "currentDimName";
 		public static final String MAGNITUDE = "magnitude";
-		public static final String HADS = "HADSTeleport";
 		public static final String EXTERIOR = "exterior";
 	}
 	
