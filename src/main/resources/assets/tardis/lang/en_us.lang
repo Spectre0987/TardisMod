@@ -125,3 +125,19 @@ key.console.location=Console at:
 manual.help=Mouse over controls to learn about them.
 
 tardis.damage.demat=The Dematerialization Circuit has been fried!
+
+
+tardis.subtitle.vworp=Vworp
+tardis.subtitle.flying=TARDIS flying
+tardis.subtitle.sonic=Sonic
+tardis.subtitle.dalek_ray=Dalek Ray
+tardis.subtitle.dalek=Dalek
+tardis.subtitle.force_field=Force Field
+tardis.subtitle.locked=Locked
+tardis.subtitle.door_open=Door Opens
+tardis.subtitle.door_closed=Door Closes
+tardis.subtitle.interior_hum_80=80's Interior hum
+tardis.subtitle.cloister_bell=Cloister bell
+tardis.subtitle.drum_beat=Drum beat
+tardis.subtitle.stutter=Stutter
+tardis.subtitle.vm_teleport=Vortex Manipulator

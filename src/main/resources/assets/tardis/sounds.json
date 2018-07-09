@@ -1,7 +1,7 @@
 {
     "takeoff":{
         "category":"block",
-        "subtitle":"Vworp",
+        "subtitle":"tardis.subtitle.vworp",
         "sounds":[{
             "name":"tardis:takeoff",
             "stream":true
@@ -9,7 +9,7 @@
     },
     "loop":{
         "category":"block",
-        "subtitle":"TARDIS flying",
+        "subtitle":"tardis.subtitle.flying",
         "sounds":[{
             "name":"tardis:loop",
             "stream":true
@@ -17,7 +17,7 @@
     },
     "sonic":{
         "category":"players",
-        "subtitle":"Sonic",
+        "subtitle":"tardis.subtitle.sonic",
         "sounds":[{
             "name":"tardis:sonic",
             "stream":true
@@ -25,6 +25,7 @@
     },
     "dalek_ray":{
         "category":"hostile",
+		"subtitle":"tardis.subtitle.dalek_ray",
         "sounds":[{
             "name":"tardis:dalek_ray",
             "stream":true
@@ -32,6 +33,7 @@
     },
     "dalek":{
         "category":"hostile",
+		"subtitle":"tardis.subtitle.dalek",
         "sounds":[{
             "name":"tardis:dalek",
             "stream":true
@@ -39,6 +41,7 @@
     },
     "force_field":{
         "category":"players",
+		"subtitle":"tardis.subtitle.force_field",
         "sounds":[{
             "name":"tardis:force_field",
             "stream":true
@@ -46,6 +49,7 @@
     },
     "locked":{
         "category":"blocks",
+		"subtitle":"tardis.subtitle.locked",
         "sounds":[{
             "name":"tardis:locked",
             "stream":true
@@ -53,6 +57,7 @@
     },
     "door_open":{
         "category":"blocks",
+		"subtitle":"tardis.subtitle.door_open",
         "sounds":[{
             "name":"tardis:door_open",
             "stream": true
@@ -60,6 +65,7 @@
     },
     "door_closed":{
         "category":"blocks",
+		"subtitle":"tardis.subtitle.door_closed",
         "sounds":[{
             "name":"tardis:door_close",
             "stream": true
@@ -67,6 +73,7 @@
     },
     "interior_hum_80":{
         "category":"blocks",
+		"subtitle":"tardis.subtitle.interior_hum_80",
         "sounds":[{
             "name":"tardis:interior_hum_80",
             "stream": true
