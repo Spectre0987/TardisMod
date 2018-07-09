@@ -22,8 +22,7 @@ public class RenderWorldShell {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		if (entity instanceof IContainsWorldShell) {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
-			
-			
+
 			IContainsWorldShell container = (IContainsWorldShell) entity;
 
 			GlStateManager.pushMatrix();
@@ -52,7 +51,7 @@ public class RenderWorldShell {
 					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),
 							t.getPos().getZ(), partialTicks);
 				}
-				GlStateManager.disableDepth();
+				//GlStateManager.disableDepth();
 			}
 			GlStateManager.enableDepth();
 			GlStateManager.popMatrix();
