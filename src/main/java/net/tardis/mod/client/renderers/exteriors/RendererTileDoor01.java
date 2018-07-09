@@ -1,7 +1,5 @@
 package net.tardis.mod.client.renderers.exteriors;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -17,6 +15,7 @@ import net.tardis.mod.client.models.exteriors.ModelLeftDoor02;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor02;
 import net.tardis.mod.client.models.exteriors.ModelTardis02;
 import net.tardis.mod.client.renderers.RenderDoor;
+import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -61,39 +60,7 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 			};
 			}
 		}
-		GL11.glEnable(GL11.GL_STENCIL_TEST);
-		
-		// Always write to stencil buffer
-		GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
-		GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
-		GL11.glStencilMask(0xFF);
-		GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-
-		this.drawOutline();
-
-		// Only pass stencil test if equal to 1
-		GL11.glStencilMask(0x00);
-		GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
-
-		// Draw scene from portal view
-		try {
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(180,0,1,0);
-		mc.entityRenderer.disableLightmap();
-		renderShell.doRender((TileEntityDoor)te, -1, 0, -7, 0, partialTicks);
-		mc.entityRenderer.enableLightmap();
-		GlStateManager.popMatrix();
-		}
-		catch(Exception e) {}
-
-		GL11.glDisable(GL11.GL_STENCIL_TEST);
-		
-	// Draw portal stencils so portals wont be drawn over
-		GL11.glColorMask(false, false, false, false);
-		this.drawOutline();
-		
-		//Set things back
-		GL11.glColorMask(true, true, true, true);
+		RenderHelper.renderPortal(renderShell, te, partialTicks);
 	    GlStateManager.popMatrix();
 	    //RenderDoor
 	    {

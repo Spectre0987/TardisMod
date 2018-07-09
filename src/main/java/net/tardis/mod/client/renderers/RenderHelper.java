@@ -19,7 +19,7 @@ public class RenderHelper {
 	}
 	
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks) {
-		
+		GlStateManager.pushMatrix();
 		Minecraft mc = Minecraft.getMinecraft();
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
 		
@@ -48,7 +48,7 @@ public class RenderHelper {
 
 		GL11.glDisable(GL11.GL_STENCIL_TEST);
 		
-	// Draw portal stencils so portals wont be drawn over
+		// Draw portal stencils so portals wont be drawn over
 		GL11.glColorMask(false, false, false, false);
 		drawOutline();
 		

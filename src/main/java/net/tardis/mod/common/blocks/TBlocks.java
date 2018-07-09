@@ -92,7 +92,7 @@ public class TBlocks {
 		tardis_top_01 = new BlockTardisTop(TileEntityDoor01.class);
 		register(tardis_top_01, "tardis_top_01");
 		
-		tardis_top_02 = new BlockTardisTop(TileEntityDoor03.class).setCreativeTab(Tardis.tab);
+		tardis_top_02 = new BlockTardisTop(TileEntityDoor03.class);
 		register(tardis_top_02, "tardis_top_02");
 		
 		/*json_tester = new BlockJsonTester();
