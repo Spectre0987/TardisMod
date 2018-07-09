@@ -30,7 +30,12 @@ public class ControlLaunch extends EntityControl {
 			TileEntity te = world.getTileEntity(this.getConsolePos());
 			if (te != null) {
 				TileEntityTardis tardis = (TileEntityTardis) te;
-				if (!tardis.isInFlight()) tardis.startFlight();
+				if (!tardis.isInFlight()) {
+					tardis.startFlight();
+				}
+				else {
+					tardis.crash(false);
+				}
 			}
 		} else
 			ticks = 30;
