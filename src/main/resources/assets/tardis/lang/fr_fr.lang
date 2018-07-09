@@ -125,3 +125,19 @@ key.console.location=Console à:
 manual.help=Passez la souris sur un contrôle pour en savoir plus.
 
 tardis.damage.demat=Le circuit de dématérialisation a été grillé !
+
+
+tardis.subtitle.vworp=Vworp
+tardis.subtitle.flying=TARDIS en vol
+tardis.subtitle.sonic=Sonique
+tardis.subtitle.dalek_ray=Rayon Dalek
+tardis.subtitle.dalek=Dalek
+tardis.subtitle.force_field=Champs de force
+tardis.subtitle.locked=Vérouillé
+tardis.subtitle.door_open=Porte ouverte
+tardis.subtitle.door_closed=Porte fermée
+tardis.subtitle.interior_hum_80=Ambiance intérieure 80's
+tardis.subtitle.cloister_bell=Cloche du cloître
+tardis.subtitle.drum_beat=Battement de tambour
+tardis.subtitle.stutter=Bégaiement
+tardis.subtitle.vm_teleport=Manipulateur de Vortex
