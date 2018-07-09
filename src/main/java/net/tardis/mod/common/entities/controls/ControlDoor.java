@@ -163,6 +163,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				EnumFacing facing = EnumFacing.NORTH;
 				if(doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
 					facing = doorState.getValue(BlockTardisTop.FACING);
+					this.setFacing(facing);
 				}
 				for(BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(r), shell.getOffset().add(r))) {
 					IBlockState state = ws.getBlockState(pos);

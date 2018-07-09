@@ -45,19 +45,26 @@ public class RenderDoor extends Render<ControlDoor> {
 	@Override
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x - 0.5, y, z + 0.41);
+		GlStateManager.translate(x - 0.5, y, z + 0.499);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		boolean open = entity.isOpen();
 		if(open) {
 			try {
-				EnumFacing facing = entity.getFacing();
 				Vec3d offset = null;
-				switch(facing) {
-				case EAST: offset = new Vec3d(0,1,0);
-				case SOUTH: offset = new Vec3d(0,0,-10);
-				case WEST: offset = null;
-				default: offset = new Vec3d(-1, 1, -12);
+				EnumFacing facing = entity.getFacing();
+				if(facing == EnumFacing.NORTH) {
+					offset = new Vec3d(-1,1,-12);
 				}
+				else if(facing == EnumFacing.EAST){
+					offset = new Vec3d(11,1, -1);
+				}
+				else if(facing == EnumFacing.SOUTH) {
+					offset = new Vec3d(0,1, 11);
+				}
+				else if(facing == EnumFacing.WEST) {
+					offset = new Vec3d(-12,1,0);
+				}
+				//System.out.println(facing + " : " + offset);
 				RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset);
 				try {
 					TileEntityTardis te = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
