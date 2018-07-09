@@ -39,12 +39,12 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 			switch(facing) {
 			case EAST:{
-				GlStateManager.translate(0, 0, 1);
-				GlStateManager.rotate(90,0,1,0);
+				GlStateManager.translate(1, 0, 0);
+				GlStateManager.rotate(-90,0,1,0);
 			};
 			case SOUTH:{
-				GlStateManager.translate(0, 0, 1);
-				GlStateManager.rotate(90,0,1, 0);
+				GlStateManager.translate(1, 0, 1);
+				GlStateManager.rotate(180,0,1, 0);
 			};
 			case WEST:{
 				GlStateManager.translate(0, 0, 1);
