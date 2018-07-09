@@ -11,7 +11,6 @@ import net.minecraft.profiler.Profiler;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.GameType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
@@ -45,7 +44,7 @@ public class RenderDoor extends Render<ControlDoor> {
 	@Override
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x - 0.5, y, z + 0.41);
+		GlStateManager.translate(x - 0.5, y, z + 0.499);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		boolean open = entity.isOpen();
 		if(open) {
@@ -75,16 +74,17 @@ public class RenderDoor extends Render<ControlDoor> {
 						WorldClient wc = mc.world;
 						
 						GlStateManager.pushMatrix();
-						mc.world = new WorldClient(mc.getConnection(), new WorldSettings(wc.getSeed(), GameType.NOT_SET, true, false, wc.getWorldType()), te.dimension, EnumDifficulty.EASY, new Profiler());
+						mc.world = new WorldClient(mc.getConnection(), new WorldSettings(wc.getSeed(), GameType.NOT_SET, true, false, wc.getWorldType()), te.dimension, wc.getDifficulty(), new Profiler());
 						mc.world.setWorldTime(entity.getTime());
 						WorldProvider wp = DimensionManager.createProviderFor(te.dimension);
-						Vec3d fog = mc.world.getSkyColorBody(mc.player, partialTicks);
+						Vec3d fog = mc.world.getFogColor(partialTicks);
 						if(fog != null) {
 							GlStateManager.color((float)fog.x, (float)fog.y, (float)fog.z);
 						}
+						GlStateManager.pushMatrix();
+						GlStateManager.rotate(mc.world.getCelestialAngle(partialTicks) * 360, 1, 0, 0);
 						mc.renderGlobal.renderSky(partialTicks, 0);
-						mc.renderGlobal.renderSky(partialTicks, 1);
-						mc.renderGlobal.renderSky(partialTicks, 2);
+						GlStateManager.popMatrix();
 						GlStateManager.color(1F,1F,1F);
 						GlStateManager.popMatrix();
 						
