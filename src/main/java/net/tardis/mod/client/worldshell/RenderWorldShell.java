@@ -22,10 +22,12 @@ public class RenderWorldShell {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		if (entity instanceof IContainsWorldShell) {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
-
+			
+			
 			IContainsWorldShell container = (IContainsWorldShell) entity;
 
 			GlStateManager.pushMatrix();
+			GlStateManager.disableDepth();
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
 			BlockPos offset = container.getWorldShell().getOffset();
@@ -44,13 +46,15 @@ public class RenderWorldShell {
 			}
 
 			Tessellator.getInstance().draw();
-
+			GlStateManager.enableDepth();
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
 					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),
 							t.getPos().getZ(), partialTicks);
 				}
+				GlStateManager.disableDepth();
 			}
+			GlStateManager.enableDepth();
 			GlStateManager.popMatrix();
 			
 		}
