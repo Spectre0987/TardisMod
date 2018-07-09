@@ -173,6 +173,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 						this.setFacing(state.getValue(BlockTardisTop.FACING));
 					}
 				}
+				this.setFacing(facing);
 				this.setTime(ws.getWorldTime());
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
