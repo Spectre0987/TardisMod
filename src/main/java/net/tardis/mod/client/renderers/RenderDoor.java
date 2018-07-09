@@ -11,10 +11,13 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.GameType;
+import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
 import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -74,10 +77,6 @@ public class RenderDoor extends Render<ControlDoor> {
 				shellRender.doRender(entity, 0,0,0, 0, partialTicks);
 				mc.entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
-		
-				GL11.glDisable(GL11.GL_STENCIL_TEST);
-				GL11.glPopMatrix();
-				GlStateManager.pushMatrix();
 				try {
 					TileEntityTardis te = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
 					Class<? extends IRenderHandler> renderer = ClientProxy.skyRenderers.get(te.dimension);
@@ -86,14 +85,29 @@ public class RenderDoor extends Render<ControlDoor> {
 					}
 					else {
 						WorldClient wc = mc.world;
+						
+						GlStateManager.pushMatrix();
 						mc.world = new WorldClient(mc.getConnection(), new WorldSettings(wc.getSeed(), GameType.NOT_SET, true, false, wc.getWorldType()), te.dimension, EnumDifficulty.EASY, new Profiler());
 						mc.world.setWorldTime(entity.getTime());
+						WorldProvider wp = DimensionManager.createProviderFor(te.dimension);
+						Vec3d fog = mc.world.getSkyColorBody(mc.player, partialTicks);
+						if(fog != null) {
+							GlStateManager.color((float)fog.x, (float)fog.y, (float)fog.z);
+						}
 						mc.renderGlobal.renderSky(partialTicks, 0);
-
+						mc.renderGlobal.renderSky(partialTicks, 1);
+						mc.renderGlobal.renderSky(partialTicks, 2);
+						GlStateManager.color(1F,1F,1F);
+						GlStateManager.popMatrix();
+						
 						mc.world = wc;
 					}
 				}
 				catch(Exception e) {}
+		
+				GL11.glDisable(GL11.GL_STENCIL_TEST);
+				GL11.glPopMatrix();
+				GlStateManager.pushMatrix();
 				GlStateManager.popMatrix();
 			}
 			catch(Exception e) {
