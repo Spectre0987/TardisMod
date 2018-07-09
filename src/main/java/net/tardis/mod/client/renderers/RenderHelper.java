@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers;
 
+import javax.annotation.Nullable;
+
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -7,6 +9,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 
@@ -18,7 +21,8 @@ public class RenderHelper {
 		mc = Minecraft.getMinecraft();
 	}
 	
-	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks) {
+	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset) {
+		if(offset == null)offset = new Vec3d(-1, 0, -7);
 		GlStateManager.pushMatrix();
 		Minecraft mc = Minecraft.getMinecraft();
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
@@ -39,8 +43,9 @@ public class RenderHelper {
 		try {
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(180,0,1,0);
+		GlStateManager.rotate(rotation, 0, 1, 0);
 		mc.entityRenderer.disableLightmap();
-		renderShell.doRender(te, -1, 0, -7, 0, partialTicks);
+		renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
 		mc.entityRenderer.enableLightmap();
 		GlStateManager.popMatrix();
 		}
@@ -55,6 +60,14 @@ public class RenderHelper {
 		//Set things back
 		GL11.glColorMask(true, true, true, true);
 	    GlStateManager.popMatrix();
+	}
+	
+	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks) {
+		RenderHelper.renderPortal(renderShell, te, partialTicks, 0F, null);
+	}
+	
+	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rot) {
+		RenderHelper.renderPortal(renderShell, te, partialTicks, rot, null);
 	}
 	
 	public static void drawOutline() {

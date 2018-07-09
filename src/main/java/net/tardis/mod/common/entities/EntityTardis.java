@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SPacketEntityVelocity;
+import net.minecraft.network.play.server.SPacketMoveVehicle;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -89,11 +89,11 @@ public class EntityTardis extends EntityFlying {
 		if (!world.isRemote) {
 			Entity e = this.getControllingPassenger();
 			if (e != null && ((EntityLivingBase) e).moveForward > 0) {
-				Vec3d look = e.getLookVec();
+				Vec3d look = e.getLookVec().scale(0.5);
 				motionX = look.x;
 				motionY = look.y;
 				motionZ = look.z;
-				((EntityPlayerMP) e).connection.sendPacket(new SPacketEntityVelocity(this));
+				((EntityPlayerMP) e).connection.sendPacket(new SPacketMoveVehicle(this));
 			}
 			if (this.getControllingPassenger() == null || this.getConsolePos() == null || this.getConsolePos().equals(BlockPos.ORIGIN)) {
 				++ticks;
@@ -122,13 +122,12 @@ public class EntityTardis extends EntityFlying {
 				((TileEntityDoor) world.getTileEntity(this.getPosition().up())).consolePos = this.getConsolePos();
 				BlockPos cPos = this.consolePos.west(3);
 				pas.setInvisible(false);
-				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());
-				((EntityPlayerMP) pas).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.EAST), 0);
+				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());				
 				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.id, new TardisTeleporter());
+				((EntityPlayerMP) pas).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.EAST), 0);
 				this.setDead();
 			}
 		}
-		//super.removePassenger(pas);
 	}
 	
 	@Override
@@ -138,6 +137,10 @@ public class EntityTardis extends EntityFlying {
 	
 	@Override
 	public void onDeath(DamageSource cause) {
+		if(this.getControllingPassenger() != null) {
+			this.removePassenger(this.getControllingPassenger());
+			System.out.println("Cats");
+		}
 		super.onDeath(cause);
 		if (!world.isRemote) {
 			world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());

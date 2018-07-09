@@ -55,9 +55,9 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 				GlStateManager.rotate(0,0,0,0);
 			};
 			}
-			if(open)RenderHelper.renderPortal(renderShell, te, partialTicks);
-			GlStateManager.popMatrix();
 		}
+		if(open)RenderHelper.renderPortal(renderShell, te, partialTicks);
+		GlStateManager.popMatrix();
 	    //RenderDoor
 	    {
 			GlStateManager.pushMatrix();
