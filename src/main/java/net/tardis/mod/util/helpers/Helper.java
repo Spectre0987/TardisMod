@@ -15,6 +15,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -160,7 +161,7 @@ public class Helper {
 		return null;
 	}
 
-	public static Vec3d blockPosToVec3d(BlockPos pos) {
+	public static Vec3d blockPosToVec3d(Vec3i pos) {
 		return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
 	}
 	

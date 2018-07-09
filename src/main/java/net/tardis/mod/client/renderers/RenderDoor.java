@@ -1,19 +1,25 @@
 package net.tardis.mod.client.renderers;
 
-import java.util.logging.Logger;
-
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.GameType;
+import net.minecraft.world.WorldSettings;
+import net.minecraftforge.client.IRenderHandler;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.proxy.ClientProxy;
 import net.tardis.mod.util.helpers.Helper;
 
 public class RenderDoor extends Render<ControlDoor> {
@@ -71,6 +77,24 @@ public class RenderDoor extends Render<ControlDoor> {
 		
 				GL11.glDisable(GL11.GL_STENCIL_TEST);
 				GL11.glPopMatrix();
+				GlStateManager.pushMatrix();
+				try {
+					TileEntityTardis te = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
+					Class<? extends IRenderHandler> renderer = ClientProxy.skyRenderers.get(te.dimension);
+					if(renderer != null) {
+						renderer.newInstance().render(partialTicks, mc.world, mc);
+					}
+					else {
+						WorldClient wc = mc.world;
+						mc.world = new WorldClient(mc.getConnection(), new WorldSettings(wc.getSeed(), GameType.NOT_SET, true, false, wc.getWorldType()), te.dimension, EnumDifficulty.EASY, new Profiler());
+						mc.world.setWorldTime(entity.getTime());
+						mc.renderGlobal.renderSky(partialTicks, 0);
+
+						mc.world = wc;
+					}
+				}
+				catch(Exception e) {}
+				GlStateManager.popMatrix();
 			}
 			catch(Exception e) {
 				System.out.println("BOTI Rendering Failed!");
@@ -110,5 +134,4 @@ public class RenderDoor extends Render<ControlDoor> {
 		
 		tes.draw();
 	}
-	
 }

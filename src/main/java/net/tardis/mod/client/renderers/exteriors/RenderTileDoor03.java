@@ -1,4 +1,4 @@
-package net.tardis.mod.client.renderers;
+package net.tardis.mod.client.renderers.exteriors;
 
 import org.lwjgl.opengl.GL11;
 
@@ -13,24 +13,25 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
-import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
-import net.tardis.mod.client.models.exteriors.ModelTardis01;
+import net.tardis.mod.client.models.exteriors.ModelLeftDoor03;
+import net.tardis.mod.client.models.exteriors.ModelRightDoor03;
+import net.tardis.mod.client.models.exteriors.ModelTardis03;
+import net.tardis.mod.client.renderers.RenderDoor;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.helpers.Helper;
 
-public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
+public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> {
 
 	Minecraft mc;
 	RenderWorldShell renderShell = new RenderWorldShell();
-	public ModelTardis01 model = new ModelTardis01();
-	public ModelRightDoor01 rd = new ModelRightDoor01();
-	public ModelLeftDoor01 ld = new ModelLeftDoor01();
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/exteriors/01.png");
+	ModelTardis03 model = new ModelTardis03();
+	ModelRightDoor03 rd = new ModelRightDoor03();
+	ModelLeftDoor03 ld = new ModelLeftDoor03();
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/exteriors/03.png");
 	
-	public RenderTileDoor() {
+	public RenderTileDoor03() {
 		mc = Minecraft.getMinecraft();
 	}
 	
@@ -43,12 +44,12 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 			switch(facing) {
 			case EAST:{
-				GlStateManager.translate(1, 0, 0);
-				GlStateManager.rotate(-90,0,1,0);
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(90,0,1,0);
 			};
 			case SOUTH:{
-				GlStateManager.translate(1, 0, 1);
-				GlStateManager.rotate(180,0,1, 0);
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(90,0,1, 0);
 			};
 			case WEST:{
 				GlStateManager.translate(0, 0, 1);
@@ -107,7 +108,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.pushMatrix();
 			if (open) {
-				Vec3d origin = Helper.convertToPixels(7, 0, -8.5);
+				Vec3d origin = Helper.convertToPixels(7.5, 0, -8.5);
 				GlStateManager.translate(origin.x, origin.y, origin.z);
 				GlStateManager.rotate(85, 0, 1, 0);
 				origin = origin.scale(-1);
@@ -117,7 +118,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			GlStateManager.popMatrix();
 			GlStateManager.pushMatrix();
 				if (open) {
-					Vec3d origin = Helper.convertToPixels(-7, 0, -8.5);
+					Vec3d origin = Helper.convertToPixels(-7.5, 0, -8.5);
 					GlStateManager.translate(origin.x, origin.y, origin.z);
 					GlStateManager.rotate(-85, 0, 1, 0);
 					origin = origin.scale(-1);

@@ -66,25 +66,20 @@ import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
-import net.tardis.mod.packets.MessageCam;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageExteriorChange;
-import net.tardis.mod.packets.MessageHandlerCam;
-import net.tardis.mod.packets.MessageHandlerDoorOpen;
 import net.tardis.mod.packets.MessageHandlerProtocol;
-import net.tardis.mod.packets.MessageHandlerTR;
 import net.tardis.mod.packets.MessageHandlerTeleport;
 import net.tardis.mod.packets.MessageProtocol;
-import net.tardis.mod.packets.MessageTR;
 import net.tardis.mod.packets.MessageTelepathicCircut;
 import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
-import net.tardis.mod.systems.SystemDemat;
-import net.tardis.mod.systems.Systems;
 import net.tardis.mod.util.helpers.EntityHelper;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, useMetadata = true, dependencies = Tardis.DEP)
@@ -155,14 +150,16 @@ public class Tardis {
 		
 		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
 		
-		NETWORK.registerMessage(MessageHandlerCam.class, MessageCam.class, 1, Side.CLIENT);
-		NETWORK.registerMessage(MessageHandlerTR.class, MessageTR.class, 2, Side.SERVER);
-		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 3, Side.SERVER);
-		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 4, Side.SERVER);
-		NETWORK.registerMessage(MessageHandlerDoorOpen.class, MessageDoorOpen.class, 5, Side.CLIENT);
-		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 6, Side.SERVER);
-		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 7, Side.CLIENT);
-		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 8, Side.SERVER);
+		//Exteriors
+		registerTileEntity(TileEntityDoor01.class, "TileEntityDoor01");
+		registerTileEntity(TileEntityDoor03.class, "TileEntityDoor03");
+		
+		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 1, Side.SERVER);
+		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 2, Side.SERVER);
+		NETWORK.registerMessage(MessageDoorOpen.Handler.class, MessageDoorOpen.class, 3, Side.CLIENT);
+		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 4, Side.SERVER);
+		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 5, Side.CLIENT);
+		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new TransmatMode());
@@ -181,8 +178,6 @@ public class Tardis {
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
-		
-		Systems.register("hads", new SystemDemat());
 		
 		proxy.preInit();
 	}

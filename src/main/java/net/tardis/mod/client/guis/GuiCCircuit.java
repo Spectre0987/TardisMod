@@ -17,6 +17,8 @@ public class GuiCCircuit extends GuiScreen {
 	Minecraft mc;
 	public BlockPos pos = BlockPos.ORIGIN;
 	public ButtonRecipe console1;
+	public ButtonRecipe console2;
+	public ButtonRecipe console3;
 	private int buttonSize = 18;
 	
 	public GuiCCircuit() {
@@ -32,13 +34,15 @@ public class GuiCCircuit extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		console1.drawButton(mc, mouseX, mouseY, partialTicks);
+		console2.drawButton(mc, mouseX, mouseY, partialTicks);
+		console3.drawButton(mc, mouseX, mouseY, partialTicks);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		if(button == this.console1) {
-			Tardis.NETWORK.sendToServer(new MessageExteriorChange(pos,TBlocks.tardis_top.getDefaultState()));
+		if(button instanceof ButtonRecipe) {
+			Tardis.NETWORK.sendToServer(new MessageExteriorChange(pos, ((ButtonRecipe)button).getBlock()));
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 		super.actionPerformed(button);
@@ -48,8 +52,9 @@ public class GuiCCircuit extends GuiScreen {
 	public void initGui() {
 		super.initGui();
 		this.buttonList.clear();
-		console1 = new ButtonRecipe(0, (width / 2) - (buttonSize / 2), (height / 2) - (buttonSize / 2), new ItemStack(TBlocks.tardis_top));
-		this.addButton(console1);
+		this.addButton(console1 = new ButtonRecipe(0, (width / 2) - (buttonSize / 2), (height / 2) - (buttonSize / 2), new ItemStack(TBlocks.tardis_top)));
+		this.addButton(console2 = new ButtonRecipe(1, (width / 2) - (buttonSize / 2), ((height / 2) - (buttonSize / 2)) - buttonSize, new ItemStack(TBlocks.tardis_top_01)));
+		this.addButton(console3 = new ButtonRecipe(3,(width / 2) - (buttonSize / 2), ((height / 2) - (buttonSize / 2)) - buttonSize * 2, new ItemStack(TBlocks.tardis_top_02)));
 	}
 
 	@Override

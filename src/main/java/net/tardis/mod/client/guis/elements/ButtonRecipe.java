@@ -1,8 +1,11 @@
 package net.tardis.mod.client.guis.elements;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
@@ -21,5 +24,12 @@ public class ButtonRecipe extends GuiButton {
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		mc.getRenderItem().renderItemIntoGUI(stackToRender, this.x + 1, this.y + 1);
+	}
+	
+	public IBlockState getBlock() {
+		if(this.stackToRender.getItem() instanceof ItemBlock) {
+			return ((ItemBlock)this.stackToRender.getItem()).getBlock().getDefaultState();
+		}
+		return Blocks.AIR.getDefaultState();
 	}
 }

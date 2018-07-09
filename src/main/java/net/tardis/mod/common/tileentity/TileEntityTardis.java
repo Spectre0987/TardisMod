@@ -26,8 +26,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -60,7 +58,6 @@ import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.sounds.TSounds;
-import net.tardis.mod.systems.Systems;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -81,7 +78,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.create().withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> buffer = NonNullList.create().withSize(9, ItemStack.EMPTY);
 	public EntityControl[] controls;
-	public Systems[] systems = {};
 	public float fuel = 1F;
 	private boolean isFueling = false;
 	private boolean shouldDelayLoop = true;
@@ -357,11 +353,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public boolean getCanFly() {
-		for(Systems s : this.systems) {
-			if(s.getPreventFlight()) {
-				return false;
-			}
-		}
 		return true;
 	}
 
@@ -490,31 +481,27 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return null;
 	}
 	
-	public void crash() {
+	public void crash(boolean explode) {
 		if (!world.isRemote) {
-			ChunkPos cPos = world.getChunkFromBlockCoords(this.getLocation()).getPos();
 			WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-			ws.getChunkProvider().loadChunk(cPos.x, cPos.z);
-			double scaleFactor = this.ticksToTravel / this.totalTimeToTravel;
-			Vec3d direction = Helper.blockPosToVec3d(this.getLocation().subtract(this.getDestination())).normalize();
-			direction.scale(this.getDestination().getDistance(this.getLocation().getX(), this.getLocation().getY(), this.getLocation().getZ()));
-			direction.scale(scaleFactor);
-			BlockPos crashSite = new BlockPos(direction.x, direction.y, direction.z);
-			this.setDesination(crashSite, dimension);
-			BlockPos pos = getLocation();
-			ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
-			this.travel();
-			world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
-			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
-			for(Systems s : this.systems) {
-				s.onDamaged();
+			BlockPos crashSite = this.getLocation();
+			this.setDesination(crashSite == null ? getLocation() : crashSite, dimension);
+			if(explode) {
+				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
+				world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
 			}
-		} else {
+			this.travel();
+			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
+		} else if(explode){
 			Random rand = new Random();
 			for (int i = 0; i < 300; ++i) {
 				world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, getPos().getX() + (rand.nextInt(3) - 1), getPos().getY() + (rand.nextInt(3) - 1), getPos().getZ() + (rand.nextInt(3) - 1), 0, 1, 0, 0);
 			}
 		}
+	}
+	
+	public void crash() {
+		crash(true);
 	}
 	
 	public void startHADS() {
@@ -655,5 +642,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public boolean isHADSEnabled() {
 		return this.hadsEnabled;
+	}
+	
+	public IBlockState getTopBlock() {
+		return this.blockTop;
 	}
 }

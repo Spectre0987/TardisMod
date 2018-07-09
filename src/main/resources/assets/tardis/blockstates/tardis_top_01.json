@@ -1,0 +1,22 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:tardis02"
+        },
+        "inventory":{
+            "model":"tardis:tardis02"
+        },
+        "facing=north":{
+            "model":"tardis:tardis02"
+        },
+        "facing=east":{
+            "model":"tardis:tardis02"
+        },
+        "facing=south":{
+            "model":"tardis:tardis02"
+        },
+        "facing=west":{
+            "model":"tardis:tardis02"
+        }
+    }
+}

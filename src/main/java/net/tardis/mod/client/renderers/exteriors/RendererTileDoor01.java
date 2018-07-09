@@ -1,4 +1,4 @@
-package net.tardis.mod.client.renderers;
+package net.tardis.mod.client.renderers.exteriors;
 
 import org.lwjgl.opengl.GL11;
 
@@ -13,24 +13,25 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
-import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
-import net.tardis.mod.client.models.exteriors.ModelTardis01;
+import net.tardis.mod.client.models.exteriors.ModelLeftDoor02;
+import net.tardis.mod.client.models.exteriors.ModelRightDoor02;
+import net.tardis.mod.client.models.exteriors.ModelTardis02;
+import net.tardis.mod.client.renderers.RenderDoor;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.helpers.Helper;
 
-public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
+public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor> {
 
 	Minecraft mc;
 	RenderWorldShell renderShell = new RenderWorldShell();
-	public ModelTardis01 model = new ModelTardis01();
-	public ModelRightDoor01 rd = new ModelRightDoor01();
-	public ModelLeftDoor01 ld = new ModelLeftDoor01();
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/exteriors/01.png");
+	ModelTardis02 model = new ModelTardis02();
+	ModelRightDoor02 rd = new ModelRightDoor02();
+	ModelLeftDoor02 ld = new ModelLeftDoor02();
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/exteriors/02.png");
 	
-	public RenderTileDoor() {
+	public RendererTileDoor01() {
 		mc = Minecraft.getMinecraft();
 	}
 	
@@ -43,12 +44,12 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 			switch(facing) {
 			case EAST:{
-				GlStateManager.translate(1, 0, 0);
-				GlStateManager.rotate(-90,0,1,0);
+				GlStateManager.translate(0, 0, 0);
+				GlStateManager.rotate(0,0,1,0);
 			};
 			case SOUTH:{
-				GlStateManager.translate(1, 0, 1);
-				GlStateManager.rotate(180,0,1, 0);
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(90,0,1, 0);
 			};
 			case WEST:{
 				GlStateManager.translate(0, 0, 1);

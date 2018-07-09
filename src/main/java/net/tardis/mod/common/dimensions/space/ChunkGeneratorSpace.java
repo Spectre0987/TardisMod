@@ -4,20 +4,24 @@ import java.util.List;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraft.world.gen.structure.template.PlacementSettings;
+import net.minecraft.world.gen.structure.template.Template;
+import net.tardis.mod.common.world.Structures;
 
 public class ChunkGeneratorSpace implements IChunkGenerator {
 
 	private World world;
 	
-	public ChunkGeneratorSpace() {
-	}
+	public ChunkGeneratorSpace() {}
 	
 	public ChunkGeneratorSpace(World world) {
 		this.world = world;

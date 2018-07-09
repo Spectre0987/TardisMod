@@ -34,7 +34,6 @@ import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
-import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
@@ -103,7 +102,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	public EnumFacing getFacing() {
 		IBlockState state = world.getBlockState(this.getPos());
-		if (state.getBlock() == TBlocks.tardis_top) {
+		if (state.getBlock() instanceof BlockTardisTop) {
 			return state.getValue(BlockTardisTop.FACING);
 		}
 		return EnumFacing.NORTH;
