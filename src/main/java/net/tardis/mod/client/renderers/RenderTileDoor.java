@@ -1,14 +1,9 @@
 package net.tardis.mod.client.renderers;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -59,41 +54,8 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 				GlStateManager.rotate(0,0,0,0);
 			};
 			}
+			RenderHelper.renderPortal(renderShell, te, partialTicks);
 		}
-		GL11.glEnable(GL11.GL_STENCIL_TEST);
-		
-		// Always write to stencil buffer
-		GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
-		GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
-		GL11.glStencilMask(0xFF);
-		GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-
-		this.drawOutline();
-
-		// Only pass stencil test if equal to 1
-		GL11.glStencilMask(0x00);
-		GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
-
-		// Draw scene from portal view
-		try {
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(180,0,1,0);
-		mc.entityRenderer.disableLightmap();
-		renderShell.doRender((TileEntityDoor)te, -1, 0, -7, 0, partialTicks);
-		mc.entityRenderer.enableLightmap();
-		GlStateManager.popMatrix();
-		}
-		catch(Exception e) {}
-
-		GL11.glDisable(GL11.GL_STENCIL_TEST);
-		
-	// Draw portal stencils so portals wont be drawn over
-		GL11.glColorMask(false, false, false, false);
-		this.drawOutline();
-		
-		//Set things back
-		GL11.glColorMask(true, true, true, true);
-	    GlStateManager.popMatrix();
 	    //RenderDoor
 	    {
 			GlStateManager.pushMatrix();
@@ -128,15 +90,5 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			GlStateManager.popMatrix();
 	    }
 	}
-	public void drawOutline() {
-		mc.getTextureManager().bindTexture(RenderDoor.TEXTURE);
-		Tessellator tes = Tessellator.getInstance();
-		BufferBuilder buf = tes.getBuffer();
-		buf.begin(7, DefaultVertexFormats.POSITION_TEX);
-		buf.pos(0, 0, 0).tex(0, 0).endVertex();
-		buf.pos(0, 2, 0).tex(0, 1).endVertex();
-		buf.pos(1, 2, 0).tex(1, 1).endVertex();
-		buf.pos(1, 0, 0).tex(1, 0).endVertex();
-		tes.draw();
-	}
+	
 }

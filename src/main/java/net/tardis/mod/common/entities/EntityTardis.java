@@ -1,6 +1,5 @@
 package net.tardis.mod.common.entities;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,7 +29,7 @@ import net.tardis.mod.util.helpers.Helper;
 
 public class EntityTardis extends EntityFlying {
 	
-	public static final DataParameter<Byte> STATE = EntityDataManager.createKey(EntityTardis.class, DataSerializers.BYTE);
+	public static final DataParameter<NBTTagCompound> STATE = EntityDataManager.createKey(EntityTardis.class, DataSerializers.COMPOUND_TAG);
 	public BlockPos consolePos = BlockPos.ORIGIN;
 	public int renderRotation = 0;
 	int ticks;
@@ -47,7 +46,7 @@ public class EntityTardis extends EntityFlying {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataManager.register(STATE, (byte)Block.getStateId(TBlocks.tardis_top.getDefaultState()));
+		this.dataManager.register(STATE, new NBTTagCompound());
 	}
 	
 	@Override
@@ -61,7 +60,7 @@ public class EntityTardis extends EntityFlying {
 	public void readEntityFromNBT(NBTTagCompound tag) {
 		super.readEntityFromNBT(tag);
 		consolePos = BlockPos.fromLong(tag.getLong("tPos"));
-		this.setState((int)tag.getInteger("state"));
+		this.setState(tag.getInteger("state"));
 	}
 	
 	public BlockPos getConsolePos() {
@@ -73,11 +72,14 @@ public class EntityTardis extends EntityFlying {
 	}
 	
 	public int getState() {
-		return (int)this.dataManager.get(STATE);
+		return this.dataManager.get(STATE).getInteger("block");
 	}
 	
 	public void setState(int state) {
-		this.dataManager.set(STATE, (byte)state);
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setInteger("block", state);
+		this.dataManager.set(STATE, tag);
+		this.dataManager.setDirty(STATE);
 	}
 	@Override
 	public void onEntityUpdate() {
