@@ -38,6 +38,7 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
+		boolean open = !te.isLocked();
 		IBlockState state = mc.world.getBlockState(te.getPos());
 		if(state.getBlock() instanceof BlockTardisTop) {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
@@ -60,14 +61,13 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 			};
 			}
 		}
-		RenderHelper.renderPortal(renderShell, te, partialTicks);
+		if(open)RenderHelper.renderPortal(renderShell, te, partialTicks);
 	    GlStateManager.popMatrix();
 	    //RenderDoor
 	    {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 			GlStateManager.rotate(180, 0, 0, 1);
-			boolean open = !te.isLocked();
 			if(mc.world.getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
 				GlStateManager.rotate(Helper.getAngleFromFacing(mc.world.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 			}
