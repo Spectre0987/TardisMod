@@ -26,7 +26,7 @@ public class RenderWorldShell {
 			IContainsWorldShell container = (IContainsWorldShell) entity;
 
 			GlStateManager.pushMatrix();
-			GlStateManager.disableDepth();
+			//GlStateManager.disableDepth();
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
 			BlockPos offset = container.getWorldShell().getOffset();
@@ -36,8 +36,7 @@ public class RenderWorldShell {
 				for (BlockPos bp : container.getWorldShell().blockMap.keySet()) {
 					if (bp == null)
 						continue;
-					Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(
-							container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
+					Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
 				}
 				container.getWorldShell().bufferstate = bb.getVertexState();
 			} else {
@@ -45,15 +44,13 @@ public class RenderWorldShell {
 			}
 
 			Tessellator.getInstance().draw();
-			GlStateManager.enableDepth();
+			//GlStateManager.enableDepth();
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
 					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),
 							t.getPos().getZ(), partialTicks);
 				}
-				//GlStateManager.disableDepth();
 			}
-			GlStateManager.enableDepth();
 			GlStateManager.popMatrix();
 			
 		}

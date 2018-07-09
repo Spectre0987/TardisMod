@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -56,7 +58,9 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			};
 			}
 		}
-		if(open)RenderHelper.renderPortal(renderShell, te, partialTicks);
+		if(open) {
+			RenderHelper.renderPortal(renderShell, te, partialTicks);
+		}
 		GlStateManager.popMatrix();
 	    //RenderDoor
 	    {
