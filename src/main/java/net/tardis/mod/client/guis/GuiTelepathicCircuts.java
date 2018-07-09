@@ -47,7 +47,6 @@ public class GuiTelepathicCircuts extends GuiScreen {
 
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		System.out.println("cat "+keyCode);
 		super.keyTyped(typedChar, keyCode);
 		if(keyCode != 28) {
 			name.textboxKeyTyped(typedChar, keyCode);
