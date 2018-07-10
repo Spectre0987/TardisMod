@@ -127,6 +127,8 @@ manual.help=Mouse over controls to learn about them.
 
 tardis.damage.demat=The Dematerialization Circuit has been fried!
 
+tardis.message.refuelling=Tardis now fueling..
+tardis.message.no_longer_refuelling=Tardis no longer fueling
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS flying

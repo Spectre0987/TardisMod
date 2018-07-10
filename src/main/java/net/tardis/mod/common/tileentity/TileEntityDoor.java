@@ -27,8 +27,10 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.events.TardisEnterEvent;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
@@ -120,8 +122,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
 			
-			if (entities != null) {
-				if (entities.size() > 0) {
+			if (!entities.isEmpty()) {
 					for (Entity entity : entities) {
 						entity.dismountRidingEntity();
 						entity.removePassengers();
@@ -134,17 +135,19 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 								p.connection.sendPacket(new SPacketEntityVelocity(p));
 								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(p, TDimensions.id, new TardisTeleporter(ws));
 								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+								MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
 							}
 						} else {
-							if(!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase)entity), this.getConsolePos())) {
+							if (!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase) entity), this.getConsolePos())) {
 								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
 								entity.changeDimension(TDimensions.id);
+								MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
 								this.setLocked(false);
 							}
 						}
-					}
 				}
 			}
+
 			//HADS
 			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(1D));
 			for(Entity e : projectiles) {
