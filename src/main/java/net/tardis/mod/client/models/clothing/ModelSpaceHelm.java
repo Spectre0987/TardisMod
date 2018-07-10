@@ -1,12 +1,9 @@
 package net.tardis.mod.client.models.clothing;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.tardis.mod.client.util.ModelUtil;
 
 public class ModelSpaceHelm extends ModelBiped
 {
@@ -355,6 +352,7 @@ public class ModelSpaceHelm extends ModelBiped
 		}
 	}
 	catch(Exception e) {}*/
+	GlStateManager.pushMatrix();
 	GlStateManager.rotate(f3, 0, 1, 0);
 	GlStateManager.rotate(f4, 1, 0, 0);
 	Head1.render(f5);
@@ -403,6 +401,7 @@ public class ModelSpaceHelm extends ModelBiped
 	Head44.render(f5);
 	Head45.render(f5);
 	Head46.render(f5);
+	GlStateManager.popMatrix();
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

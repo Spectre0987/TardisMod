@@ -3,6 +3,7 @@ package net.tardis.mod;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.Loader;
@@ -20,6 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.blocks.TileEntityHoloprojector;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalekRay;
@@ -146,6 +148,7 @@ public class Tardis {
 		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
 		if (hasIC2) registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
+		registerTileEntity(TileEntityHoloprojector.class, "TileEntityHoloprojector");
 		
 		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
 		
@@ -190,5 +193,9 @@ public class Tardis {
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
 		GameRegistry.registerTileEntity(clazz, Tardis.MODID + ":" + name);
+	}
+	
+	public static boolean getIsDev() {
+		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
 	}
 }

@@ -27,6 +27,7 @@ public class TBlocks {
 	public static Block food_machine;
 	public static Block megalos;
 	public static Block meglos_slab;
+	public static Block holoprojector;
 	
 	public static Block sonicRedstone;
 	
@@ -86,6 +87,9 @@ public class TBlocks {
 		
 		megalos = new BlockMegalos();
 		register(megalos, "megalos");
+		
+		holoprojector = new BlockHoloprojector();
+		register(holoprojector, "holoprojector");
 		
 		//Exteriors
 		

@@ -4,10 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.tardis.mod.common.blocks.TBlocks;
 
 public class RenderTESIRItem extends TileEntityItemStackRenderer {
 
@@ -32,7 +30,6 @@ public class RenderTESIRItem extends TileEntityItemStackRenderer {
 			mc.getTextureManager().bindTexture(this.texture);
 		}
 		base.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		System.out.println("Rendering: " + Item.getItemFromBlock(TBlocks.console).getRegistryName());
 		GlStateManager.popMatrix();
 	}
 

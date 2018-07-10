@@ -251,19 +251,19 @@ public class ModelSpaceChest extends ModelBiped
   @Override
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5){
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    if(entity != null)this.isSneak = entity.isSneaking();
     try {
   	  Field[] fields = ModelSpaceChest.class.getDeclaredFields();
   	  for(Field fi : fields) {
-  		  fi.setAccessible(true);
   		  Object obj = fi.get(this);
   		  if(obj != null && obj instanceof ModelRenderer) {
   			  ModelRenderer mr = (ModelRenderer)obj;
-	    		  if(fi.getName().toLowerCase().contains("right")) {
-	    			  ModelUtil.copyAngle(this.bipedRightArm, mr);
-	    		  }
-	    		  if(fi.getName().toLowerCase().contains("left")) {
-	    			  ModelUtil.copyAngle(this.bipedLeftArm, mr);
-	    		  }
+    		  if(fi.getName().toLowerCase().contains("right")) {
+    			  ModelUtil.copyAngle(this.bipedRightArm, mr);
+    		  }
+    		  if(fi.getName().toLowerCase().contains("left")) {
+    			  ModelUtil.copyAngle(this.bipedLeftArm, mr);
+    		  }
   		  }
   	  }
     }
