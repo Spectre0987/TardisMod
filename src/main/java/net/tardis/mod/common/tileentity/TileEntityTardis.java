@@ -35,6 +35,7 @@ import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelConsole;
+import net.tardis.mod.common.animations.AnimationObject;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -93,6 +94,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int frame = 0;
 	private boolean hadsEnabled = false;
 	public int magnitude = 10;
+	public AnimationObject aniObj = new AnimationObject();
 	
 	public TileEntityTardis() {}
 	

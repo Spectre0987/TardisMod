@@ -28,8 +28,8 @@ public class TardisWorldSavedData extends WorldSavedData {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		int size = TardisHelper.tardisOwners.size();
-		String[] names = TardisHelper.tardisOwners.keySet().toArray(new String[1]);
-		BlockPos[] poses = TardisHelper.tardisOwners.values().toArray(new BlockPos[1]);
+		String[] names = TardisHelper.tardisOwners.keySet().toArray(new String[] {});
+		BlockPos[] poses = TardisHelper.tardisOwners.values().toArray(new BlockPos[] {});
 		NBTTagList list = new NBTTagList();
 		for (int i = 0; i < names.length; ++i) {
 			if (names[i] != null && poses[i] != null) {

@@ -184,4 +184,8 @@ public class Helper {
 		}
 		return Helper.getSafePosLower(pos, world, facing);
 	}
+
+	public static float precentToPixels(float f) {
+		return f / 16.0F;
+	}
 }
