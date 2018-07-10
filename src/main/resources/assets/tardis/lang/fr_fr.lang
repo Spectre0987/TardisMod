@@ -54,6 +54,7 @@ screw.lamp=Mode bricoleur
 screwdriver.hallway=Générateur de pièce - Hall d'entrée
 screw.generic_room=Générateur de pièce - Petite pièce
 screw.electric=Démonter le panneau de la rondelle
+screwdriver.hads=Retour depuis le H.A.D.S
 
 raygun.ammo=Munitions restantes
 raygun.ammo.none=Pas de munitions!
@@ -126,6 +127,8 @@ manual.help=Passez la souris sur un contrôle pour en savoir plus.
 
 tardis.damage.demat=Le circuit de dématérialisation a été grillé !
 
+tardis.message.refuelling=Le TARDIS se recharge...
+tardis.message.no_longer_refuelling=Le TARDIS ne se recharge plus
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS en vol
