@@ -4,17 +4,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
-import net.tardis.mod.client.models.ModelTardis;
-import net.tardis.mod.client.models.console.contols.ModelExteriorDoorL;
-import net.tardis.mod.client.models.console.contols.ModelExteriorDoorR;
-import net.tardis.mod.client.renderers.RenderTardis;
+import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
+import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
+import net.tardis.mod.client.models.exteriors.ModelTardis01;
+import net.tardis.mod.client.renderers.RenderTileDoor;
 
 public class RendererItemTardis extends TileEntityItemStackRenderer {
 	
 	Minecraft mc;
-	ModelTardis model = new ModelTardis();
-	ModelExteriorDoorR door_r = new ModelExteriorDoorR();
-	ModelExteriorDoorL door_l = new ModelExteriorDoorL();
+	ModelTardis01 model = new ModelTardis01();
+	ModelRightDoor01 door_r = new ModelRightDoor01();
+	ModelLeftDoor01 door_l = new ModelLeftDoor01();
 	
 	public RendererItemTardis() {
 		mc = Minecraft.getMinecraft();
@@ -23,7 +23,7 @@ public class RendererItemTardis extends TileEntityItemStackRenderer {
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();
-		mc.getTextureManager().bindTexture(RenderTardis.TEXTURE);
+		mc.getTextureManager().bindTexture(RenderTileDoor.TEXTURE);
 		double scale = 0.35D;
 		GlStateManager.scale(scale, scale, scale);
 		GlStateManager.translate(1.5, 2, 0);
@@ -34,7 +34,6 @@ public class RendererItemTardis extends TileEntityItemStackRenderer {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		door_r.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		door_l.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.popMatrix();
 	}
 }

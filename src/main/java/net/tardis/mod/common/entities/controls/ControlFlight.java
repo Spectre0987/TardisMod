@@ -1,5 +1,6 @@
 package net.tardis.mod.common.entities.controls;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
@@ -42,6 +43,7 @@ public class ControlFlight extends EntityControl {
 				EntityTardis eT = new EntityTardis(ws, player);
 				eT.setConsolePos(getConsolePos());
 				eT.setPosition(wPos.getX(), wPos.getY() + 1, wPos.getZ());
+				eT.setState(Block.getStateId(tardis.getTopBlock()));
 				ws.spawnEntity(eT);
 				player.setInvisible(true);
 				ForgeChunkManager.unforceChunk(tardis.tardisLocTicket, world.getChunkFromBlockCoords(getConsolePos()).getPos());

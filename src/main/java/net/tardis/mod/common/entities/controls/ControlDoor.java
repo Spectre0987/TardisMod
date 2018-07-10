@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -39,6 +40,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<EnumFacing> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FACING);
+	public static final DataParameter<NBTTagCompound> WORLD_TIME = EntityDataManager.createKey(ControlDoor.class, DataSerializers.COMPOUND_TAG);
 	public int antiSpamTicks = 0;
 	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 	
@@ -57,6 +59,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		super.entityInit();
 		this.dataManager.register(IS_OPEN, false);
 		this.dataManager.register(FACING, EnumFacing.NORTH);
+		this.dataManager.register(WORLD_TIME, new NBTTagCompound());
 	}
 	
 	@Override
@@ -85,6 +88,16 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		return this.dataManager.get(IS_OPEN);
 	}
 	
+	public void setTime(long time) {
+		NBTTagCompound tag = this.dataManager.get(WORLD_TIME);
+		tag.setLong("time", time);
+		this.dataManager.set(WORLD_TIME, tag);
+		this.dataManager.setDirty(WORLD_TIME);
+	}
+	
+	public long getTime() {
+		return this.dataManager.get(WORLD_TIME).getLong("time");
+	}
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if (this.getConsolePos() != null) {
@@ -131,8 +144,11 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				for(Entity e : entities) {
 					if(e instanceof EntityPlayerMP) {
 						EntityPlayerMP mp = (EntityPlayerMP)e;
-						ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, tardis.dimension, new TardisTeleporter());
-						mp.connection.setPlayerLocation(pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
+						if(!mp.isSneaking()) {
+							ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, tardis.dimension, new TardisTeleporter());
+							mp.connection.setPlayerLocation(pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
+							mp.setSpawnPoint(pos, true);
+						}
 					}
 					else if(e != this){
 						e.setPosition(pos.getX(), pos.getY(), pos.getZ());
@@ -141,9 +157,9 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				}
 			}
 			if(this.ticksExisted % 5 == 0) {
-				this.shell = new WorldShell(tardis.getLocation().up());
-				Vec3i r = new Vec3i(10,10,10);
-				IBlockState doorState = ws.getBlockState(shell.getOffset());
+				this.shell = new WorldShell(tardis.getLocation().up().offset(this.getFacing(), 11));
+				Vec3i r = new Vec3i(10, 10, 10);
+				IBlockState doorState = ws.getBlockState(tardis.getLocation().up());
 				EnumFacing facing = EnumFacing.NORTH;
 				if(doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
 					facing = doorState.getValue(BlockTardisTop.FACING);
@@ -157,6 +173,8 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 						this.setFacing(state.getValue(BlockTardisTop.FACING));
 					}
 				}
+				this.setFacing(facing);
+				this.setTime(ws.getWorldTime());
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
 		}

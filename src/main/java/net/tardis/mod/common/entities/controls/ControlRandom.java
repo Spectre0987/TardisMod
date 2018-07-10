@@ -43,7 +43,7 @@ public class ControlRandom extends EntityControl {
 					tardis.setDesination(new BlockPos(rand.nextInt(size) - size / 2, 64, rand.nextInt(size) - size / 2), tardis.getTargetDim());
 				}
 			}
-			else tardis.setDesination(new BlockPos((loc.getX() + maxDist) - maxDist / 2, 64, (loc.getZ() + maxDist) - maxDist / 2), tardis.getTargetDim());
+			else tardis.setDesination(new BlockPos((loc.getX() + rand.nextInt(rand.nextInt(maxDist))) - rand.nextInt(maxDist) / 2, 64, (loc.getZ() + rand.nextInt(maxDist)) - rand.nextInt(maxDist) / 2), tardis.getTargetDim());
 		} else
 			this.ticks = 20;
 	}

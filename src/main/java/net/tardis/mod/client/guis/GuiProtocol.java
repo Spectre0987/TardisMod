@@ -2,6 +2,7 @@ package net.tardis.mod.client.guis;
 
 import java.io.IOException;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -45,12 +46,13 @@ public class GuiProtocol extends GuiScreen {
 		int ch = height / 2 - GUI_HEIGHT / 2;
 		int id = 0;
 		for (ITardisProtocol p : TardisProtocol.protocols.values()) {
-			this.addButton(new ButtonText(id++, width / 2, height / 2 - (GUI_HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT, mc.fontRenderer, (new TextComponentTranslation(p.getNameKey()).getFormattedText())));
+			this.addButton(new ButtonText(id++, width / 2, (height / 2 - GUI_HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT * id, mc.fontRenderer, (new TextComponentTranslation(p.getNameKey()).getFormattedText())));
 		}
 	}
 	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
+		Minecraft.getMinecraft().displayGuiScreen(null);
 		Tardis.NETWORK.sendToServer(new MessageProtocol(pos, button.id));
 		TardisProtocol.getProtocolFromId(button.id).onActivated(mc.world, (TileEntityTardis)mc.world.getTileEntity(pos));
 		super.actionPerformed(button);

@@ -7,7 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.SPacketEntityVelocity;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.server.SPacketMoveVehicle;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -26,6 +29,7 @@ import net.tardis.mod.util.helpers.Helper;
 
 public class EntityTardis extends EntityFlying {
 	
+	public static final DataParameter<NBTTagCompound> STATE = EntityDataManager.createKey(EntityTardis.class, DataSerializers.COMPOUND_TAG);
 	public BlockPos consolePos = BlockPos.ORIGIN;
 	public int renderRotation = 0;
 	int ticks;
@@ -40,8 +44,15 @@ public class EntityTardis extends EntityFlying {
 	}
 	
 	@Override
+	protected void entityInit() {
+		super.entityInit();
+		this.dataManager.register(STATE, new NBTTagCompound());
+	}
+	
+	@Override
 	public void writeEntityToNBT(NBTTagCompound tag) {
 		tag.setLong("tPos", consolePos.toLong());
+		tag.setInteger("state", this.getState());
 		super.writeEntityToNBT(tag);
 	}
 	
@@ -49,6 +60,7 @@ public class EntityTardis extends EntityFlying {
 	public void readEntityFromNBT(NBTTagCompound tag) {
 		super.readEntityFromNBT(tag);
 		consolePos = BlockPos.fromLong(tag.getLong("tPos"));
+		this.setState(tag.getInteger("state"));
 	}
 	
 	public BlockPos getConsolePos() {
@@ -59,6 +71,16 @@ public class EntityTardis extends EntityFlying {
 		this.consolePos = consolePos.toImmutable();
 	}
 	
+	public int getState() {
+		return this.dataManager.get(STATE).getInteger("block");
+	}
+	
+	public void setState(int state) {
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setInteger("block", state);
+		this.dataManager.set(STATE, tag);
+		this.dataManager.setDirty(STATE);
+	}
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
@@ -67,11 +89,11 @@ public class EntityTardis extends EntityFlying {
 		if (!world.isRemote) {
 			Entity e = this.getControllingPassenger();
 			if (e != null && ((EntityLivingBase) e).moveForward > 0) {
-				Vec3d look = e.getLookVec();
+				Vec3d look = e.getLookVec().scale(0.5);
 				motionX = look.x;
 				motionY = look.y;
 				motionZ = look.z;
-				((EntityPlayerMP) e).connection.sendPacket(new SPacketEntityVelocity(this));
+				((EntityPlayerMP) e).connection.sendPacket(new SPacketMoveVehicle(this));
 			}
 			if (this.getControllingPassenger() == null || this.getConsolePos() == null || this.getConsolePos().equals(BlockPos.ORIGIN)) {
 				++ticks;
@@ -92,21 +114,20 @@ public class EntityTardis extends EntityFlying {
 	protected void removePassenger(Entity pas) {
 		if (!world.isRemote) {
 			if (pas instanceof EntityPlayer) {
-				world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
-				world.setBlockState(this.getPosition().up(), TBlocks.tardis_top.getDefaultState());
 				WorldServer ws = DimensionManager.getWorld(TDimensions.id);
-				System.out.println("BlockPos is" + this.getConsolePos());
-				((TileEntityTardis) ws.getTileEntity(getConsolePos())).setLocation(this.getPosition());
+				TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(getConsolePos());
+				world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
+				world.setBlockState(this.getPosition().up(), tardis.getTopBlock());
+				tardis.setLocation(this.getPosition());
 				((TileEntityDoor) world.getTileEntity(this.getPosition().up())).consolePos = this.getConsolePos();
 				BlockPos cPos = this.consolePos.west(3);
 				pas.setInvisible(false);
-				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());
+				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());				
 				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.id, new TardisTeleporter());
 				((EntityPlayerMP) pas).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.EAST), 0);
 				this.setDead();
 			}
 		}
-		super.removePassenger(pas);
 	}
 	
 	@Override
@@ -116,11 +137,15 @@ public class EntityTardis extends EntityFlying {
 	
 	@Override
 	public void onDeath(DamageSource cause) {
+		if(this.getControllingPassenger() != null) {
+			this.removePassenger(this.getControllingPassenger());
+			System.out.println("Cats");
+		}
 		super.onDeath(cause);
 		if (!world.isRemote) {
 			world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
 			world.setBlockState(this.getPosition().up(), TBlocks.tardis_top.getDefaultState());
-			((TileEntityDoor) world.getTileEntity(this.getPosition().up())).consolePos = this.getConsolePos();
+			((TileEntityDoor) world.getTileEntity(this.getPosition().up())).consolePos = this.getConsolePos().toImmutable();
 		}
 	}
 	
@@ -145,5 +170,6 @@ public class EntityTardis extends EntityFlying {
 	public double getSpeed() {
 		return (Math.abs(motionX) + Math.abs(motionY) + Math.abs(motionZ)) / 3;
 	}
+
 	
 }

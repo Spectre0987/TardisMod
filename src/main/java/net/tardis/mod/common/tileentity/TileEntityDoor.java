@@ -2,9 +2,12 @@ package net.tardis.mod.common.tileentity;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -24,14 +27,15 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.events.TardisEnterEvent;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
-import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
@@ -100,7 +104,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	public EnumFacing getFacing() {
 		IBlockState state = world.getBlockState(this.getPos());
-		if (state.getBlock() == TBlocks.tardis_top) {
+		if (state.getBlock() instanceof BlockTardisTop) {
 			return state.getValue(BlockTardisTop.FACING);
 		}
 		return EnumFacing.NORTH;
@@ -111,9 +115,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public void update() {
 		if (!world.isRemote) {
-			if(world.getTotalWorldTime() % 5 == 0) {
-				world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 1F, 1F);
-			}
 			WorldServer ws = (WorldServer) world;
 			BlockPos cPos = getConsolePos().south(4);
 			
@@ -121,8 +122,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
 			
-			if (entities != null) {
-				if (entities.size() > 0) {
+			if (!entities.isEmpty()) {
 					for (Entity entity : entities) {
 						entity.dismountRidingEntity();
 						entity.removePassengers();
@@ -135,15 +135,28 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 								p.connection.sendPacket(new SPacketEntityVelocity(p));
 								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(p, TDimensions.id, new TardisTeleporter(ws));
 								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+								MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
 							}
 						} else {
-							if(!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase)entity), this.getConsolePos())) {
+							if (!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase) entity), this.getConsolePos())) {
 								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
 								entity.changeDimension(TDimensions.id);
+								MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
 								this.setLocked(false);
 							}
 						}
+				}
+			}
+
+			//HADS
+			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(1D));
+			for(Entity e : projectiles) {
+				if(e instanceof IProjectile || e instanceof IMob) {
+					try{
+						((TileEntityTardis)DimensionManager.getWorld(TDimensions.id).getTileEntity(getConsolePos())).startHADS();
+						e.setDead();
 					}
+					catch(Exception exc) {}
 				}
 			}
 			if (lockCooldown > 0) --lockCooldown;

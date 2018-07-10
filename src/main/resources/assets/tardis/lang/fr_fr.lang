@@ -54,6 +54,7 @@ screw.lamp=Mode bricoleur
 screwdriver.hallway=Générateur de pièce - Hall d'entrée
 screw.generic_room=Générateur de pièce - Petite pièce
 screw.electric=Démonter le panneau de la rondelle
+screwdriver.hads=Retour depuis le H.A.D.S
 
 raygun.ammo=Munitions restantes
 raygun.ammo.none=Pas de munitions!
@@ -73,7 +74,13 @@ tardis.direction.west=Le TARDIS est tourné vers l'ouest
 
 tardis.missing=L'enveloppe plasmique externe est introuvable ! Veuillez atterrir à nouveau.
 
+tardis.magnitude=Le modificateur de coordonnées TARDIS est
+
+tardis.hads.enabled.true=H.A.D.S a été activé
+tardis.hads.enabled.false=H.A.D.S a été désactivé
+
 protocol.ccircut=Circuit caméléon
+protocol.hads=Basculer le H.A.D.S
 
 config.category.dims=Dimensions
 config.dims=Blacklisted Dimensions
@@ -107,6 +114,7 @@ entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Retour rapide
 entity.telepathic_circuts.name=Circuits télépathiques
 entity.tardis_door_control.name=Interrupteur de porte
+entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 
 entity.invasion_cyberman.name=Invasion de Cyberman
 
@@ -118,3 +126,21 @@ key.console.location=Console à:
 manual.help=Passez la souris sur un contrôle pour en savoir plus.
 
 tardis.damage.demat=Le circuit de dématérialisation a été grillé !
+
+tardis.message.refuelling=Le TARDIS se recharge...
+tardis.message.no_longer_refuelling=Le TARDIS ne se recharge plus
+
+tardis.subtitle.vworp=Vworp
+tardis.subtitle.flying=TARDIS en vol
+tardis.subtitle.sonic=Sonique
+tardis.subtitle.dalek_ray=Rayon Dalek
+tardis.subtitle.dalek=Dalek
+tardis.subtitle.force_field=Champs de force
+tardis.subtitle.locked=Vérouillé
+tardis.subtitle.door_open=Porte ouverte
+tardis.subtitle.door_closed=Porte fermée
+tardis.subtitle.interior_hum_80=Ambiance intérieure 80's
+tardis.subtitle.cloister_bell=Cloche du cloître
+tardis.subtitle.drum_beat=Battement de tambour
+tardis.subtitle.stutter=Bégaiement
+tardis.subtitle.vm_teleport=Manipulateur de Vortex

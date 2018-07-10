@@ -10,6 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 
 @Mod.EventBusSubscriber
 public class TBlocks {
@@ -30,6 +32,9 @@ public class TBlocks {
 	
 	public static Block electric_panel;
 	
+	//Exteriors
+	public static Block tardis_top_01;
+	public static Block tardis_top_02;
 	//public static Block json_tester;
 	
 	public static void register(Block block, String name) {
@@ -81,6 +86,14 @@ public class TBlocks {
 		
 		megalos = new BlockMegalos();
 		register(megalos, "megalos");
+		
+		//Exteriors
+		
+		tardis_top_01 = new BlockTardisTop(TileEntityDoor01.class);
+		register(tardis_top_01, "tardis_top_01");
+		
+		tardis_top_02 = new BlockTardisTop(TileEntityDoor03.class);
+		register(tardis_top_02, "tardis_top_02");
 		
 		/*json_tester = new BlockJsonTester();
 		register(json_tester, "json_tester");*/

@@ -132,7 +132,6 @@ public class TItems {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void setUprenders(ModelBakeEvent e) {
-		System.out.println("renders");
 		demat_circut.setTileEntityItemStackRenderer(new RendererItemDemat());
 		key.setTileEntityItemStackRenderer(new RendererKey());
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RendererItemTardis());

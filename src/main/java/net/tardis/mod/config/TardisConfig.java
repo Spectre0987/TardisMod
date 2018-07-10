@@ -20,6 +20,9 @@ public class TardisConfig {
 	@Config.LangKey("config.misc")
 	public static final Misc MISC = new Misc();
 	
+	@Config.LangKey("config.boti")
+	public static final BOTI BOTI = new BOTI();
+	
 	public static class Dimensions {
 		
 
@@ -54,6 +57,12 @@ public class TardisConfig {
 		@Config.LangKey("config.misc.maxrand")
 		@Config.Comment("Set to Zero to make it anywhere in the world.")
 		public int maxRandom = 5000;
+	}
+	
+	public static class BOTI{
+		
+		@Config.LangKey("config.boti.enabled")
+		public boolean enable = true;
 	}
 	
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)

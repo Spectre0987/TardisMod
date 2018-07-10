@@ -1,6 +1,12 @@
 package net.tardis.mod.proxy;
 
+import java.util.HashMap;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
+import net.minecraft.world.WorldProvider;
+import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.tardis.mod.client.renderers.RenderConsole;
@@ -20,8 +26,13 @@ import net.tardis.mod.client.renderers.RenderUmbrellaStand;
 import net.tardis.mod.client.renderers.controls.RenderLever;
 import net.tardis.mod.client.renderers.controls.RenderRandom;
 import net.tardis.mod.client.renderers.controls.RenderZ;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
+import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceChest;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceLegs;
+import net.tardis.mod.client.renderers.items.RenderItemTardis02;
+import net.tardis.mod.client.renderers.items.RenderItemTardis03;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityRayCyberman;
@@ -50,8 +61,13 @@ import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+import net.tardis.mod.config.TardisConfig;
 
 public class ClientProxy extends ServerProxy {
+	
+	public static HashMap<Integer, Class<? extends IRenderHandler>> skyRenderers = new HashMap<>();
 	
 	@Override
 	public void renderEntities() {
@@ -59,6 +75,10 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUmbrellaStand.class, new RenderUmbrellaStand());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor.class, new RenderTileDoor());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoodMachine.class, new RenderFoodMachine());
+		
+		//Exteriors
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor03.class, new RenderTileDoor03());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 		
@@ -91,6 +111,9 @@ public class ClientProxy extends ServerProxy {
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
 		TItems.space_chest.setTileEntityItemStackRenderer(new RenderItemSpaceChest());
 		TItems.space_legs.setTileEntityItemStackRenderer(new RenderItemSpaceLegs());
+		
+		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
+		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
 	}
 
 	@Override
@@ -98,6 +121,19 @@ public class ClientProxy extends ServerProxy {
 		if(!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
 		}
+		
+		for(int i : DimensionManager.getStaticDimensionIDs()) {
+			WorldProvider wp = DimensionManager.createProviderFor(i);
+			if(wp != null && wp.getSkyRenderer() != null) {
+				skyRenderers.put(i, wp.getSkyRenderer().getClass());
+				System.out.println(DimensionManager.createProviderFor(i).getSkyRenderer().getClass() + " : " + i);
+			}
+			else System.out.println(i + " " + wp + " is null.");
+		}
+	}
+	
+	public static boolean getRenderBOTI() {
+		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.BOTI.enable;
 	}
 	
 }

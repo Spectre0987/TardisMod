@@ -28,7 +28,7 @@ public class ControlFuel extends EntityControl {
 		if (!world.isRemote) {
 			TileEntityTardis t = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			t.setFueling(!t.isFueling());
-			PlayerHelper.sendMessage(player, t.isFueling() ? "Tardis now fueling" : "Tardis no longer fueling", true);
+			PlayerHelper.sendMessage(player, t.isFueling() ? "tardis.message.refuelling" : "tardis.message.no_longer_refuelling", true);
 		} else
 			ticks = 20;
 	}

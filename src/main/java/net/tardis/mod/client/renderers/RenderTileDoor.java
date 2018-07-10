@@ -4,163 +4,97 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelTardis;
-import net.tardis.mod.client.models.console.contols.ModelExteriorDoorL;
-import net.tardis.mod.client.models.console.contols.ModelExteriorDoorR;
+import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
+import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
+import net.tardis.mod.client.models.exteriors.ModelTardis01;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
-import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.helpers.Helper;
 
-public class RenderTileDoor extends TileEntitySpecialRenderer {
-	
+public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
+
 	Minecraft mc;
-	ModelTardis model = new ModelTardis();
-	RenderWorldShell renderShell;
-	ModelExteriorDoorR door_r = new ModelExteriorDoorR();
-	ModelExteriorDoorL door_l = new ModelExteriorDoorL();
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/tardis.png");
-	public static final ResourceLocation BLACK_DOOR = new ResourceLocation(Tardis.MODID, "textures/blocks/door.png");
+	RenderWorldShell renderShell = new RenderWorldShell();
+	public ModelTardis01 model = new ModelTardis01();
+	public ModelRightDoor01 rd = new ModelRightDoor01();
+	public ModelLeftDoor01 ld = new ModelLeftDoor01();
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/exteriors/01.png");
 	
 	public RenderTileDoor() {
 		mc = Minecraft.getMinecraft();
-		renderShell = new RenderWorldShell();
 	}
 	
 	@Override
-	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y - 1, z);
+		GlStateManager.translate(x, y, z);
+		boolean open = !te.isLocked();
 		IBlockState state = mc.world.getBlockState(te.getPos());
-		if (state.getBlock() instanceof BlockTardisTop) {
+		if(state.getBlock() instanceof BlockTardisTop) {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
-			switch(facing){
-				case WEST: {
-					GlStateManager.rotate(180, 0, 1, 0);
-					GlStateManager.translate(-1,0,-1);
-				}
-				case EAST: {
-					GlStateManager.rotate(90,0,1,0);
-					GlStateManager.translate(-1,0,0);
-				}
-				case SOUTH: {
-					GlStateManager.rotate(180, 0, 1, 0);
-					GlStateManager.translate( -1,0, -1);
-				}
-				default: {
-					GlStateManager.translate(0,0,0.4);
-				}
+			switch(facing) {
+			case EAST:{
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(90,0,1,0);
+			};
+			case SOUTH:{
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(90,0,1, 0);
+			};
+			case WEST:{
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(90,0,1,0);
+			};
+			default:{
+				GlStateManager.translate(0, -1, 0.5);
+				GlStateManager.rotate(0,0,0,0);
+			};
 			}
 		}
-		GlStateManager.pushMatrix();
-			GL11.glEnable(GL11.GL_STENCIL_TEST);
-			
-			// Always write to stencil buffer
-			GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
-			GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
-			GL11.glStencilMask(0xFF);
-			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-	
-			this.drawOutline();
-	
-			// Only pass stencil test if equal to 1
-			GL11.glStencilMask(0x00);
-			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
-	
-			// Draw scene from portal view
-			try {
+		if(open) {
+			RenderHelper.renderPortal(renderShell, te, partialTicks);
+		}
+		GlStateManager.popMatrix();
+	    //RenderDoor
+	    {
 			GlStateManager.pushMatrix();
-			GlStateManager.rotate(180,0,1,0);
-			renderShell.doRender((TileEntityDoor)te, -1, 0, -7, 0, partialTicks);
-			GlStateManager.popMatrix();
-			}
-			catch(Exception e) {}
-	
-			GL11.glDisable(GL11.GL_STENCIL_TEST);
-			GL11.glPopMatrix();
-			
-		// Draw portal stencils so portals wont be drawn over
-		GL11.glColorMask(false, false, false, false);
-		this.drawOutline();
-		
-		//Set things back
-		GL11.glColorMask(true, true, true, true);
-	    GlStateManager.popMatrix();
-	    
-	    GlStateManager.pushMatrix();
-	    this.renderHumanNautureExterior(te, x, y, z, partialTicks, destroyStage, alpha);
-	    GlStateManager.popMatrix();
-	}
-	
-	public void drawOutline() {
-		mc.getTextureManager().bindTexture(BLACK_DOOR);
-		Tessellator tes = Tessellator.getInstance();
-		BufferBuilder buf = tes.getBuffer();
-		buf.begin(7, DefaultVertexFormats.POSITION_TEX);
-		buf.pos(0, 0, 0).tex(0, 0).endVertex();
-		buf.pos(0, 2, 0).tex(0, 1).endVertex();
-		buf.pos(1, 2, 0).tex(1, 1).endVertex();
-		buf.pos(1, 0, 0).tex(1, 0).endVertex();
-		tes.draw();
-	}
-	
-	public void renderHumanNautureExterior(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		TileEntityDoor door = (TileEntityDoor)te;
-		boolean open = !door.isLocked();
-		GlStateManager.pushMatrix();
-		{
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
-			GlStateManager.rotate(180, 1, 0, 0);IBlockState state = mc.world.getBlockState(te.getPos());
-			if (state.getBlock() == TBlocks.tardis_top) {
-				EnumFacing facing = state.getValue(BlockTardisTop.FACING);
-				float angle = Helper.getAngleFromFacing(facing);
-				GlStateManager.rotate(angle - 180, 0, 1, 0);
+			GlStateManager.rotate(180, 0, 0, 1);
+			if(mc.world.getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
+				GlStateManager.rotate(Helper.getAngleFromFacing(mc.world.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 			}
 			mc.getTextureManager().bindTexture(TEXTURE);
 			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.translate(0, -0.03125F, 0);
 			GlStateManager.pushMatrix();
-			{
+			if (open) {
+				Vec3d origin = Helper.convertToPixels(7, 0, -8.5);
+				GlStateManager.translate(origin.x, origin.y, origin.z);
+				GlStateManager.rotate(85, 0, 1, 0);
+				origin = origin.scale(-1);
+				GlStateManager.translate(origin.x, origin.y, origin.z);
+			}
+			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.popMatrix();
+			GlStateManager.pushMatrix();
 				if (open) {
-					Vec3d origin = Helper.convertToPixels(-6.5, 0, -8.5);
+					Vec3d origin = Helper.convertToPixels(-7, 0, -8.5);
 					GlStateManager.translate(origin.x, origin.y, origin.z);
 					GlStateManager.rotate(-85, 0, 1, 0);
 					origin = origin.scale(-1);
 					GlStateManager.translate(origin.x, origin.y, origin.z);
 				}
-				door_l.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			}
+				ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();
-			
-			GlStateManager.pushMatrix();
-			{
-				if (open) {
-					Vec3d origin = Helper.convertToPixels(6.5, 0, -8.5);
-					GlStateManager.translate(origin.x, origin.y, origin.z);
-					GlStateManager.rotate(85, 0, 1, 0);
-					origin = origin.scale(-1);
-					GlStateManager.translate(origin.x, origin.y, origin.z);
-				}
-				door_r.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			}
 			GlStateManager.popMatrix();
-		GlStateManager.popMatrix();
-		}
-	}
-	@Override
-	public void renderTileEntityFast(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
-		// TODO Auto-generated method stub
-		super.renderTileEntityFast(te, x, y, z, partialTicks, destroyStage, partial, buffer);
+	    }
 	}
 	
 }
