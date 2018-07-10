@@ -4,8 +4,8 @@ public interface IContainsWorldShell {
 	
 	//implement in entity's that contain world shells to allow them to be rendered using RenderWorldShell
 	
-	public WorldShell getWorldShell();
+	WorldShell getWorldShell();
 	
-	public void setWorldShell(WorldShell worldShell);
+	void setWorldShell(WorldShell worldShell);
 	
 }
