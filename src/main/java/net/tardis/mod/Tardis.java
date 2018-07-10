@@ -56,7 +56,6 @@ import net.tardis.mod.common.screwdriver.HADSMode;
 import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.RecallMode;
 import net.tardis.mod.common.screwdriver.ScrewdriverMode;
-import net.tardis.mod.common.screwdriver.TransmatMode;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -162,7 +161,6 @@ public class Tardis {
 		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
 		
 		ScrewdriverMode.register(new RecallMode());
-		ScrewdriverMode.register(new TransmatMode());
 		ScrewdriverMode.register(new HallwayMode());
 		ScrewdriverMode.register(new GRoomMode());
 		ScrewdriverMode.register(new ElectricPanelMode());
