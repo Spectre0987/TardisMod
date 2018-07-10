@@ -82,7 +82,6 @@ public class RenderDoor extends Render<ControlDoor> {
 							GlStateManager.color((float)fog.x, (float)fog.y, (float)fog.z);
 						}
 						GlStateManager.pushMatrix();
-						GlStateManager.rotate(mc.world.getCelestialAngle(partialTicks) * 360, 1, 0, 0);
 						mc.renderGlobal.renderSky(partialTicks, 0);
 						GlStateManager.popMatrix();
 						GlStateManager.color(1F,1F,1F);
