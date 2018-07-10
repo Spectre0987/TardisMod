@@ -34,12 +34,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob {
 		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityLivingBase.class, 30.0F));
 		this.tasks.addTask(0, new EntityAIAttackRanged(this, 0.023D, 60, 30F));
 		this.targetTasks.addTask(0, new EntityAIMoveTowardsTarget(this, 0.023D, 30));
-		this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 100, true, false, new Predicate() {
-			@Override
-			public boolean apply(Object input) {
-				return (input instanceof EntityDalek) ? false : true;
-			}
-		}));
+		this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 100, true, false, input -> (input instanceof EntityDalek) ? false : true));
 	}
 	
 	@Override
