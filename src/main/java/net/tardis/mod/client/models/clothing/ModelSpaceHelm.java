@@ -3,63 +3,63 @@ package net.tardis.mod.client.models.clothing;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
+import net.tardis.mod.client.models.BodyPartHook;
 
 public class ModelSpaceHelm extends ModelBiped
 {
   //fields
-    ModelRenderer Head1;
-    ModelRenderer Head2;
-    ModelRenderer Head3;
-    ModelRenderer Head4;
-    ModelRenderer Head5;
-    ModelRenderer Head6;
-    ModelRenderer Head7;
-    ModelRenderer Head8;
-    ModelRenderer Head9;
-    ModelRenderer Head10;
-    ModelRenderer Head11;
-    ModelRenderer Head12;
-    ModelRenderer Head13;
-    ModelRenderer Head14;
-    ModelRenderer Head15;
-    ModelRenderer Head16;
-    ModelRenderer Head17;
-    ModelRenderer Head18;
-    ModelRenderer Head19;
-    ModelRenderer Head20;
-    ModelRenderer Head21;
-    ModelRenderer Head22;
-    ModelRenderer Head23;
-    ModelRenderer Head24;
-    ModelRenderer Head25;
-    ModelRenderer Head26;
-    ModelRenderer Head27;
-    ModelRenderer Head28;
-    ModelRenderer Head29;
-    ModelRenderer Head30;
-    ModelRenderer Head31;
-    ModelRenderer Head32;
-    ModelRenderer Head33;
-    ModelRenderer Head34;
-    ModelRenderer Head35;
-    ModelRenderer Head36;
-    ModelRenderer Head37;
-    ModelRenderer Head38;
-    ModelRenderer Head39;
-    ModelRenderer Head40;
-    ModelRenderer Head41;
-    ModelRenderer Head42;
-    ModelRenderer Head43;
-    ModelRenderer Head44;
-    ModelRenderer Head45;
-    ModelRenderer Head46;
-  
+  private ModelRenderer Head1;
+  private ModelRenderer Head2;
+  private ModelRenderer Head3;
+  private ModelRenderer Head4;
+  private ModelRenderer Head5;
+  private ModelRenderer Head6;
+  private ModelRenderer Head7;
+  private ModelRenderer Head8;
+  private ModelRenderer Head9;
+  private ModelRenderer Head10;
+  private ModelRenderer Head11;
+  private ModelRenderer Head12;
+  private ModelRenderer Head13;
+  private ModelRenderer Head14;
+  private ModelRenderer Head15;
+  private ModelRenderer Head16;
+  private ModelRenderer Head17;
+  private ModelRenderer Head18;
+  private ModelRenderer Head19;
+  private ModelRenderer Head20;
+  private ModelRenderer Head21;
+  private ModelRenderer Head22;
+  private ModelRenderer Head23;
+  private ModelRenderer Head24;
+  private ModelRenderer Head25;
+  private ModelRenderer Head26;
+  private ModelRenderer Head27;
+  private ModelRenderer Head28;
+  private ModelRenderer Head29;
+  private ModelRenderer Head30;
+  private ModelRenderer Head31;
+  private ModelRenderer Head32;
+  private ModelRenderer Head33;
+  private ModelRenderer Head34;
+  private ModelRenderer Head35;
+  private ModelRenderer Head36;
+  private ModelRenderer Head37;
+  private ModelRenderer Head38;
+  private ModelRenderer Head39;
+  private ModelRenderer Head40;
+  private ModelRenderer Head41;
+  private ModelRenderer Head42;
+  private ModelRenderer Head43;
+  private ModelRenderer Head44;
+  private ModelRenderer Head45;
+  private ModelRenderer Head46;
+
   public ModelSpaceHelm()
   {
     textureWidth = 128;
     textureHeight = 128;
-    
+
       Head1 = new ModelRenderer(this, 38, 0);
       Head1.addBox(3.4F, -6F, -5.5F, 1, 5, 2);
       Head1.setRotationPoint(0F, 0F, 0F);
@@ -336,84 +336,69 @@ public class ModelSpaceHelm extends ModelBiped
       Head46.setTextureSize(128, 128);
       Head46.mirror = true;
       setRotation(Head46, 0F, 0F, 0F);
+
+    this.bipedHead = new BodyPartHook(this, 0, 0);
+    this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0);
+    this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
+
+    ((BodyPartHook) this.bipedHead).setRender(scale -> {
+      GlStateManager.pushMatrix();
+      Head1.render(scale);
+      Head2.render(scale);
+      Head3.render(scale);
+      Head4.render(scale);
+      Head5.render(scale);
+      Head6.render(scale);
+      Head7.render(scale);
+      Head8.render(scale);
+      Head9.render(scale);
+      Head10.render(scale);
+      Head11.render(scale);
+      Head12.render(scale);
+      Head13.render(scale);
+      Head14.render(scale);
+      Head15.render(scale);
+      Head16.render(scale);
+      Head17.render(scale);
+      Head18.render(scale);
+      Head19.render(scale);
+      Head20.render(scale);
+      Head21.render(scale);
+      Head22.render(scale);
+      Head23.render(scale);
+      Head24.render(scale);
+      Head25.render(scale);
+      Head26.render(scale);
+      Head27.render(scale);
+      Head28.render(scale);
+      Head29.render(scale);
+      Head30.render(scale);
+      Head31.render(scale);
+      Head32.render(scale);
+      Head33.render(scale);
+      Head34.render(scale);
+      Head35.render(scale);
+      Head36.render(scale);
+      Head37.render(scale);
+      Head38.render(scale);
+      Head39.render(scale);
+      Head40.render(scale);
+      Head41.render(scale);
+      Head42.render(scale);
+      Head43.render(scale);
+      Head44.render(scale);
+      Head45.render(scale);
+      Head46.render(scale);
+      GlStateManager.popMatrix();
+    });
   }
-  
-  @Override
-  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-  {
-	setRotationAngles(f, f1, f2, f3, f4, f5,entity);
-	/*try {
-		Field[] fields = ModelSpaceHelm.class.getDeclaredFields();
-		for(Field fi : fields) {
-			Object obj = fi.get(this);
-			if(obj !=null && obj instanceof ModelRenderer) {
-				ModelUtil.copyAngle(this.bipedHead, (ModelRenderer)obj);
-			}
-		}
-	}
-	catch(Exception e) {}*/
-	GlStateManager.pushMatrix();
-	GlStateManager.rotate(f3, 0, 1, 0);
-	GlStateManager.rotate(f4, 1, 0, 0);
-	Head1.render(f5);
-	Head2.render(f5);
-	Head3.render(f5);
-	Head4.render(f5);
-	Head5.render(f5);
-	Head6.render(f5);
-	Head7.render(f5);
-	Head8.render(f5);
-	Head9.render(f5);
-	Head10.render(f5);
-	Head11.render(f5);
-	Head12.render(f5);
-	Head13.render(f5);
-	Head14.render(f5);
-	Head15.render(f5);
-	Head16.render(f5);
-	Head17.render(f5);
-	Head18.render(f5);
-	Head19.render(f5);
-	Head20.render(f5);
-	Head21.render(f5);
-	Head22.render(f5);
-	Head23.render(f5);
-	Head24.render(f5);
-	Head25.render(f5);
-	Head26.render(f5);
-	Head27.render(f5);
-	Head28.render(f5);
-	Head29.render(f5);
-	Head30.render(f5);
-	Head31.render(f5);
-	Head32.render(f5);
-	Head33.render(f5);
-	Head34.render(f5);
-	Head35.render(f5);
-	Head36.render(f5);
-	Head37.render(f5);
-	Head38.render(f5);
-	Head39.render(f5);
-	Head40.render(f5);
-	Head41.render(f5);
-	Head42.render(f5);
-	Head43.render(f5);
-	Head44.render(f5);
-	Head45.render(f5);
-	Head46.render(f5);
-	GlStateManager.popMatrix();
-  }
-  
+
+
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
     model.rotateAngleX = x;
     model.rotateAngleY = y;
     model.rotateAngleZ = z;
-  }
-  
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-  {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
   }
 
 }
