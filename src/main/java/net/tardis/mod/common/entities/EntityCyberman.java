@@ -82,7 +82,7 @@ public class EntityCyberman extends EntityMob{
 
 		@Override
 		public boolean shouldContinueExecuting() {
-			if(entity.dimension == TDimensions.id) {
+            if (entity.dimension == TDimensions.TARDIS_ID) {
 				return false;
 			}
 			for(TileEntity te : entity.world.loadedTileEntityList) {

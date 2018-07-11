@@ -30,6 +30,9 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiVortexM;
+import net.tardis.mod.client.models.clothing.ModelVortexM;
+import net.tardis.mod.client.renderers.RenderItemSonicPen;
+import net.tardis.mod.client.renderers.items.*;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -62,6 +65,16 @@ public class TEventHandler {
 			} else
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
+
+		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
+		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
+		TItems.space_chest.setTileEntityItemStackRenderer(new RenderItemSpaceChest());
+		TItems.space_legs.setTileEntityItemStackRenderer(new RenderItemSpaceLegs());
+		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTESIRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
+
+		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
+		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
+
 	}
 	
 	@SubscribeEvent
@@ -108,15 +121,13 @@ public class TEventHandler {
 	public static void stopHurt(LivingHurtEvent event) {
 		if (event.getEntityLiving().getRidingEntity() != null) {
 			Entity e = event.getEntityLiving().getRidingEntity();
-			if (e instanceof EntityTardis) event.setCanceled(true);
+			event.setCanceled(e instanceof EntityTardis);
 		}
 	}
 	
 	@SubscribeEvent
 	public static  void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
-		if (e.getState().getBlock() instanceof IUnbreakable) {
-			e.setCanceled(true);
-		}
+		e.setCanceled(e.getState().getBlock() instanceof IUnbreakable);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -125,7 +136,7 @@ public class TEventHandler {
 		World world = event.getPlayer().world;
 		BlockPos pos = event.getTarget().getBlockPos();
 		if (pos != null && !pos.equals(BlockPos.ORIGIN)) {
-			if (world.getBlockState(pos).getBlock() instanceof BlockConsole) event.setCanceled(true);
+			event.setCanceled(world.getBlockState(pos).getBlock() instanceof BlockConsole);
 		}
 		
 	}

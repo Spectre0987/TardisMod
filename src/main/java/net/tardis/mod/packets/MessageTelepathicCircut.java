@@ -1,8 +1,5 @@
 package net.tardis.mod.packets;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
@@ -18,6 +15,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MessageTelepathicCircut implements IMessage {
 
@@ -53,7 +53,7 @@ public class MessageTelepathicCircut implements IMessage {
 		public IMessage onMessage(MessageTelepathicCircut message, MessageContext ctx) {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 MinecraftServer server = ctx.getServerHandler().player.getServer();
-                WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+                WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
                 EntityPlayer player = server.getPlayerList().getPlayerByUsername(message.name);
                 TileEntity te = ws.getTileEntity(message.pos);
                 if(te != null && te instanceof TileEntityTardis) {

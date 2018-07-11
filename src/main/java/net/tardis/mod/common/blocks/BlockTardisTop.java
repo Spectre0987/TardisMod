@@ -49,7 +49,7 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 		if (!worldIn.isRemote) {
 			TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
 			door.toggleLocked(playerIn);
-			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+			WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 			TileEntity te = ws.getTileEntity(door.getConsolePos());
 			if (te != null && te instanceof TileEntityTardis) {
 				EntityControl control = ((TileEntityTardis) te).getControl(ControlDoor.class);

@@ -47,7 +47,7 @@ public class MessageExteriorChange implements IMessage {
 		public IMessage onMessage(MessageExteriorChange mes, MessageContext ctx) {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 if(mes.state.getBlock() instanceof BlockTardisTop) {
-                    WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+                    WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
                     TileEntity te = ws.getTileEntity(mes.pos);
                     if(te != null && te instanceof TileEntityTardis) {
                         ((TileEntityTardis)te).setExterior(mes.state);
@@ -55,6 +55,7 @@ public class MessageExteriorChange implements IMessage {
                 }
             });
 			return null;
-		}};
+        }
+    }
 
 }

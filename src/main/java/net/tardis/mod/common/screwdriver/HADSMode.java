@@ -25,7 +25,7 @@ public class HADSMode implements IScrewAction {
 			try {
 				if(TardisHelper.hasTardis(player.getGameProfile().getId())) {
 					BlockPos pos = TardisHelper.getTardis(player.getGameProfile().getId());
-					WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+                    WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 					((TileEntityTardis)ws.getTileEntity(pos)).returnFromHADS();
 				}
 				else player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_MISSING), true);

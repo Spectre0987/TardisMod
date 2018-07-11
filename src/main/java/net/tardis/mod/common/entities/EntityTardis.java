@@ -114,7 +114,7 @@ public class EntityTardis extends EntityFlying {
 	protected void removePassenger(Entity pas) {
 		if (!world.isRemote) {
 			if (pas instanceof EntityPlayer) {
-				WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+                WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 				TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(getConsolePos());
 				world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
 				world.setBlockState(this.getPosition().up(), tardis.getTopBlock());
@@ -122,8 +122,8 @@ public class EntityTardis extends EntityFlying {
 				((TileEntityDoor) world.getTileEntity(this.getPosition().up())).consolePos = this.getConsolePos();
 				BlockPos cPos = this.consolePos.west(3);
 				pas.setInvisible(false);
-				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());				
-				ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.id, new TardisTeleporter());
+				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());
+                ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.TARDIS_ID, new TardisTeleporter());
 				((EntityPlayerMP) pas).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.EAST), 0);
 				this.setDead();
 			}

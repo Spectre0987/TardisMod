@@ -88,7 +88,7 @@ public class ModelDalek extends ModelBase {
 		eyestalk.addChild(eye);
 		eyestalk.render(f5);
 		setOffset(eye, (float) 0.5 / 16, (float) 5 / 16, 0.5F);
-		setRotation(eyestalk, (float) Math.toRadians((double) f), 0F, 0F);
+        setRotation(eyestalk, (float) Math.toRadians(f), 0F, 0F);
 		body.render(f5);
 	}
 	

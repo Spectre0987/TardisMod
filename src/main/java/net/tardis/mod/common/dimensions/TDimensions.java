@@ -6,8 +6,8 @@ import net.tardis.mod.common.dimensions.space.SpaceProvider;
 import net.tardis.mod.config.TardisConfig;
 
 public class TDimensions {
-	
-	public static int id;
+
+	public static int TARDIS_ID;
 	public static DimensionType tardisType;
 	
 	public static int SPACE_ID;
@@ -15,13 +15,13 @@ public class TDimensions {
 	
 	public static void register() {
 		if (TardisConfig.Dimensions.setDimension) {
-			id = TardisConfig.Dimensions.tardisDimension;
+			TARDIS_ID = TardisConfig.Dimensions.tardisDimension;
 		}
 		else {
-			id = DimensionManager.getNextFreeDimId();
+			TARDIS_ID = DimensionManager.getNextFreeDimId();
 		}
-		tardisType = DimensionType.register("tardis", "_tardis", id, TardisProvider.class, false);
-		DimensionManager.registerDimension(id, tardisType);
+		tardisType = DimensionType.register("tardis", "_tardis", TARDIS_ID, TardisProvider.class, false);
+		DimensionManager.registerDimension(TARDIS_ID, tardisType);
 		
 		if(TardisConfig.Dimensions.setDimension) {
 			SPACE_ID = TardisConfig.Dimensions.spaceDimension;

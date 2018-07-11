@@ -20,10 +20,10 @@ public class RecallMode implements IScrewAction {
 	
 	@Override
 	public void preform(World world, EntityPlayer player, EnumHand hand) {
-		if (!world.isRemote && player.dimension != TDimensions.id) {
+        if (!world.isRemote && player.dimension != TDimensions.TARDIS_ID) {
 			if (TardisHelper.hasTardis(player.getUniqueID())) {
 				BlockPos pos = TardisHelper.getTardis(player.getUniqueID());
-				WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.id);
+                WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 				TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(pos);
 				tardis.setDesination(player.getPosition().down().offset(player.getHorizontalFacing(), 2), player.dimension);
 				tardis.setFacing(player.getHorizontalFacing().getOpposite());

@@ -55,12 +55,12 @@ public class ItemKey extends Item {
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if (playerIn.dimension != TDimensions.id) {
+        if (playerIn.dimension != TDimensions.TARDIS_ID) {
 			if (!worldIn.isRemote) {
 				WorldServer ws = (WorldServer) worldIn;
 				ItemStack stack = playerIn.getHeldItem(handIn);
 				BlockPos cPos = TardisHelper.getTardis(playerIn.getGameProfile().getId());
-				WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.id);
+                WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 				MinecraftServer server = tw.getMinecraftServer();
 				setPos(stack, cPos);
 				if (tw.getTileEntity(cPos) == null) {
