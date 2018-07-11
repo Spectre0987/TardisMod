@@ -273,7 +273,7 @@ public class ModelSpaceLegs extends ModelBiped
 
     ((BodyPartHook) bipedRightLeg).setRender(scale -> {
       GlStateManager.pushMatrix();
-      GlStateManager.translate(0.1, -0.7, 0);
+      GlStateManager.translate(0.11, -0.735, 0);
       RightLeg1.render(scale);
       RightLeg2.render(scale);
       RightLeg3.render(scale);
@@ -296,7 +296,7 @@ public class ModelSpaceLegs extends ModelBiped
 
     ((BodyPartHook) bipedLeftLeg).setRender(scale -> {
       GlStateManager.pushMatrix();
-      GlStateManager.translate(-0.1, -0.7, 0);
+      GlStateManager.translate(-0.11, -0.735, 0);
       Leftleg1.render(scale);
       LeftLeg2.render(scale);
       LeftLeg3.render(scale);

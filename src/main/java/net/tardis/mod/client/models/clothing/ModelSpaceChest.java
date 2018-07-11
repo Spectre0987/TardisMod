@@ -274,7 +274,7 @@ public class ModelSpaceChest extends ModelBiped
         //Right Arm - Render
         ((BodyPartHook) bipedRightArm).setRender(scale -> {
             GlStateManager.pushMatrix();
-            GlStateManager.translate(0.3, -0.1, 0.1);
+            GlStateManager.translate(0.3, -0.11, 0);
             RightArm1.renderWithRotation(scale);
             RightArm2.renderWithRotation(scale);
             RightArm3.renderWithRotation(scale);
@@ -296,7 +296,7 @@ public class ModelSpaceChest extends ModelBiped
         //Left Arm - Init
         ((BodyPartHook) bipedLeftArm).setRender(scale -> {
             GlStateManager.pushMatrix();
-            GlStateManager.translate(-0.3, -0.1, 0.1);
+            GlStateManager.translate(-0.3, -0.11, 0);
             LeftArm1.renderWithRotation(scale);
             LeftArm2.renderWithRotation(scale);
             LeftArm3.renderWithRotation(scale);
