@@ -1,18 +1,19 @@
-package net.tardis.mod.client.renderers;
-
-import org.lwjgl.opengl.GL11;
+package net.tardis.mod.client.renderers.tiles;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
 import net.tardis.mod.client.models.exteriors.ModelTardis01;
+import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -33,34 +34,40 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 	
 	@Override
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+
+		boolean airBelow = mc.world.getBlockState(new BlockPos(x, y - 1, z)).getBlock() == Blocks.AIR;
+
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		boolean open = !te.isLocked();
 		IBlockState state = mc.world.getBlockState(te.getPos());
+
+
 		if(state.getBlock() instanceof BlockTardisTop) {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 			switch(facing) {
 			case EAST:{
 				GlStateManager.translate(0, 0, 1);
 				GlStateManager.rotate(90,0,1,0);
-			};
-			case SOUTH:{
+			}
+				case SOUTH: {
 				GlStateManager.translate(0, 0, 1);
 				GlStateManager.rotate(90,0,1, 0);
-			};
-			case WEST:{
+				}
+				case WEST: {
 				GlStateManager.translate(0, 0, 1);
 				GlStateManager.rotate(90,0,1,0);
-			};
-			default:{
+				}
+				default: {
 				GlStateManager.translate(0, -1, 0.5);
 				GlStateManager.rotate(0,0,0,0);
-			};
+				}
 			}
 		}
 		if(open) {
 			RenderHelper.renderPortal(renderShell, te, partialTicks);
 		}
+
 		GlStateManager.popMatrix();
 	    //RenderDoor
 	    {
@@ -68,6 +75,11 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 			GlStateManager.rotate(180, 0, 0, 1);
 			if(mc.world.getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
+
+				//	if(airBelow && !open) {
+				//		GlStateManager.rotate(getWorld().getTotalWorldTime(), 0, 1, 0);
+				//	}
+
 				GlStateManager.rotate(Helper.getAngleFromFacing(mc.world.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 			}
 			mc.getTextureManager().bindTexture(TEXTURE);

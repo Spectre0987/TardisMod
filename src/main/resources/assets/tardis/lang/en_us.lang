@@ -120,8 +120,7 @@ entity.invasion_cyberman.name=Invasion Cyberman
 
 death.cyberman.generic=was converted
 
-key.notwheretardis=THIS IS NOT WHERE THE TARDIS IS!
-key.console.location=Console at: 
+key.console.location=Interior Pos:
 
 manual.help=Mouse over controls to learn about them.
 

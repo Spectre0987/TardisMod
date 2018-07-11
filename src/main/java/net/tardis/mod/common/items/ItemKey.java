@@ -1,7 +1,5 @@
 package net.tardis.mod.common.items;
 
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,9 +11,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -30,6 +26,8 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
+
+import java.util.List;
 
 public class ItemKey extends Item {
 	
@@ -89,7 +87,6 @@ public class ItemKey extends Item {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) {
 			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText() + Helper.formatBlockPos(getPos(stack)));
-			tooltip.add(new TextComponentTranslation("key.notwheretardis").setStyle(new Style().setColor(TextFormatting.RED)).getFormattedText());
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}

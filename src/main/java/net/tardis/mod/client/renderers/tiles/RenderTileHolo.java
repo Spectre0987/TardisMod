@@ -1,6 +1,4 @@
-package net.tardis.mod.client.renderers;
-
-import org.lwjgl.opengl.GL11;
+package net.tardis.mod.client.renderers.tiles;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

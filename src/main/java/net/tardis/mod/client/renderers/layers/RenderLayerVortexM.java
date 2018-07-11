@@ -1,6 +1,4 @@
-package net.tardis.mod.client.renderers;
-
-import java.lang.reflect.Field;
+package net.tardis.mod.client.renderers.layers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,6 +11,8 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.util.ModelUtil;
 import net.tardis.mod.common.items.TItems;
+
+import java.lang.reflect.Field;
 
 public class RenderLayerVortexM implements LayerRenderer{
 
@@ -40,7 +40,7 @@ public class RenderLayerVortexM implements LayerRenderer{
 				catch(Exception e) {}
 				GlStateManager.pushMatrix();
 				if(!slim) GlStateManager.translate(-0.03125, 0, 0);
-				mc.getTextureManager().bindTexture(model.TEXTURE);
+                mc.getTextureManager().bindTexture(ModelVortexM.TEXTURE);
 				ModelUtil.copyAngle(renderPlayer.getMainModel().bipedRightArm, model.Cuff);
 				model.render(entity, f, f1, f2, f3, f4, f5);
 				GlStateManager.popMatrix();

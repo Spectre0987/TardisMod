@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.client.IRenderHandler;
-import net.tardis.mod.client.renderers.RenderDoor;
+import net.tardis.mod.client.renderers.controls.RenderDoor;
 
 public class RendererSpaceSky extends IRenderHandler {
 

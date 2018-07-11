@@ -14,8 +14,8 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor03;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor03;
 import net.tardis.mod.client.models.exteriors.ModelTardis03;
-import net.tardis.mod.client.renderers.RenderDoor;
 import net.tardis.mod.client.renderers.RenderHelper;
+import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -46,20 +46,20 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 			case EAST:{
 				GlStateManager.translate(0, 0, 1);
 				GlStateManager.rotate(90,0,1,0);
-			};
-			case SOUTH:{
+            }
+                case SOUTH: {
 				GlStateManager.translate(0, 0, 1);
 				GlStateManager.rotate(90,0,1, 0);
-			};
-			case WEST:{
+                }
+                case WEST: {
 				GlStateManager.translate(0, 0, 1);
 				GlStateManager.rotate(90,0,1,0);
-			};
-			default:{
+                }
+                default: {
 				GlStateManager.translate(0, -1, 0.5);
 				GlStateManager.rotate(0,0,0,0);
-			};
-			}
+                }
+            }
 		}
 		if(open)RenderHelper.renderPortal(renderShell, te, partialTicks);
 	    GlStateManager.popMatrix();

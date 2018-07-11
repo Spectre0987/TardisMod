@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
 import net.tardis.mod.client.models.exteriors.ModelTardis01;
-import net.tardis.mod.client.renderers.RenderTileDoor;
+import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 
 public class RendererItemTardis extends TileEntityItemStackRenderer {
 	

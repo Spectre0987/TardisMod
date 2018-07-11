@@ -1,4 +1,4 @@
-package net.tardis.mod.client.renderers;
+package net.tardis.mod.client.renderers.controls;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -17,6 +17,7 @@ import net.minecraft.world.WorldSettings;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;

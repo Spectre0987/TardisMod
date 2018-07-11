@@ -1,29 +1,15 @@
 package net.tardis.mod.integrations;
 
-import me.sub.angels.common.entities.EntityAngel;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.tardis.mod.common.blocks.BlockConsole;
-import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.items.ItemKey;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class WeepingAngel {
 	
 	public static void preInit() {
 		MinecraftForge.EVENT_BUS.register(new WeepingAngel());
 	}
-	
-	
-	@SubscribeEvent
+
+    // TODO - Re-write to work with new angel code, shouldn't take long
+    /**@SubscribeEvent
 	public void hijackAngel(LivingEvent.LivingUpdateEvent event) {
 		if(event.getEntityLiving() instanceof EntityAngel) {
 			if(!event.getEntityLiving().world.isRemote) {
@@ -65,5 +51,5 @@ public class WeepingAngel {
 			}
 		}
 	}
-
+     **/
 }

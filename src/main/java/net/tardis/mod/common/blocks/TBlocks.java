@@ -1,17 +1,18 @@
 package net.tardis.mod.common.blocks;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TBlocks {
@@ -60,8 +61,8 @@ public class TBlocks {
 		
 		tardis = new BlockTardis();
 		register(tardis, "tardis");
-		
-		tardis_top = new BlockTardisTop();
+
+		tardis_top = new BlockTardisTop(TileEntityDoor::new);
 		register(tardis_top, "tardis_top");
 		
 		console = new BlockConsole();
@@ -92,11 +93,11 @@ public class TBlocks {
 		register(holoprojector, "holoprojector");
 		
 		//Exteriors
-		
-		tardis_top_01 = new BlockTardisTop(TileEntityDoor01.class);
+
+		tardis_top_01 = new BlockTardisTop(TileEntityDoor01::new);
 		register(tardis_top_01, "tardis_top_01");
-		
-		tardis_top_02 = new BlockTardisTop(TileEntityDoor03.class);
+
+		tardis_top_02 = new BlockTardisTop(TileEntityDoor03::new);
 		register(tardis_top_02, "tardis_top_02");
 		
 		/*json_tester = new BlockJsonTester();
