@@ -1,10 +1,12 @@
 package net.tardis.mod.client.renderers;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
-import net.tardis.mod.common.blocks.TileEntityHoloprojector;
+import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 
 public class RenderTileHolo extends TileEntitySpecialRenderer<TileEntityHoloprojector> {
 
@@ -18,12 +20,12 @@ public class RenderTileHolo extends TileEntitySpecialRenderer<TileEntityHoloproj
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 1, z + 0.5);
 		GlStateManager.scale(0.06,0.06,0.06);
-		mc.entityRenderer.disableLightmap();
 		try {
+			mc.entityRenderer.disableLightmap();
 			renderShell.doRender(te, 0, 0, 0, 0, partialTicks);
+			mc.entityRenderer.enableLightmap();
 		}
 		catch(Exception e) {}
-		mc.entityRenderer.enableLightmap();
 		GlStateManager.popMatrix();
 	}
 

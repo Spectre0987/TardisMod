@@ -1,4 +1,4 @@
-package net.tardis.mod.common.blocks;
+package net.tardis.mod.common.tileentity;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +15,6 @@ import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class TileEntityHoloprojector extends TileEntity implements ITickable, IContainsWorldShell{
 	
