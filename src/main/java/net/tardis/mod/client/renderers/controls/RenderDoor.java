@@ -62,7 +62,7 @@ public class RenderDoor extends Render<ControlDoor> {
 				}
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0);
-				RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1.5,3,0));
+				RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1.5,2.5,0));
 				try {
 					TileEntityTardis te = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
 					Class<? extends IRenderHandler> renderer = ClientProxy.skyRenderers.get(te.dimension);

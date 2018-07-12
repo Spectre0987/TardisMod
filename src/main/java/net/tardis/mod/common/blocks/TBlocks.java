@@ -1,5 +1,9 @@
 package net.tardis.mod.common.blocks;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -10,10 +14,6 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 @Mod.EventBusSubscriber
 public class TBlocks {
 	
@@ -22,7 +22,6 @@ public class TBlocks {
 	public static Block tardis;
 	public static Block tardis_top;
 	public static Block console;
-	public static Block door;
 	public static Block panel;
 	public static Block temporal_lab;
 	public static Block food_machine;
@@ -37,7 +36,7 @@ public class TBlocks {
 	//Exteriors
 	public static Block tardis_top_01;
 	public static Block tardis_top_02;
-	//public static Block json_tester;
+	public static Block json_tester;
 	
 	public static void register(Block block, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
@@ -68,9 +67,6 @@ public class TBlocks {
 		console = new BlockConsole();
 		register(console, "console");
 		
-		door = new BlockBase();
-		register(door, "door");
-		
 		panel = new BlockPanel();
 		register(panel, "panel");
 		
@@ -100,8 +96,10 @@ public class TBlocks {
 		tardis_top_02 = new BlockTardisTop(TileEntityDoor03::new);
 		register(tardis_top_02, "tardis_top_02");
 		
-		/*json_tester = new BlockJsonTester();
-		register(json_tester, "json_tester");*/
+		if(Tardis.getIsDev()) {
+			json_tester = new BlockJsonTester();
+			register(json_tester, "json_tester");
+		}
 	}
 	
 }

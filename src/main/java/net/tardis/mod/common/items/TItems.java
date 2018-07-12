@@ -31,6 +31,7 @@ public class TItems {
 	public static List<Item> items = new ArrayList<>();
 	
 	public static Item key;
+	public static Item key_01;
 	public static Item circuts;
 	public static Item gunstick;
 	public static Item power_cell;
@@ -111,6 +112,9 @@ public class TItems {
 		
 		sonic_pen = new ItemSonic();
 		register(sonic_pen, "sonic_pen");
+		
+		key_01 = new ItemKey();
+		register(key_01, "key_01");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();

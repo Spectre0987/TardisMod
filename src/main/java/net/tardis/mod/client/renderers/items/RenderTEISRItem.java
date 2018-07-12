@@ -7,17 +7,17 @@ import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderTESIRItem extends TileEntityItemStackRenderer {
+public class RenderTEISRItem extends TileEntityItemStackRenderer {
 
 	Minecraft mc;
 	public ModelBase base;
 	public ResourceLocation texture;
 	
-	public RenderTESIRItem(){
+	public RenderTEISRItem(){
 		mc = Minecraft.getMinecraft();
 	}
 	
-	public RenderTESIRItem(ModelBase model, ResourceLocation rl) {
+	public RenderTEISRItem(ModelBase model, ResourceLocation rl) {
 		this();
 		this.base = model;
 		this.texture = rl;

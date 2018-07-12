@@ -39,7 +39,7 @@ import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceLegs;
 import net.tardis.mod.client.renderers.items.RenderItemTardis02;
 import net.tardis.mod.client.renderers.items.RenderItemTardis03;
-import net.tardis.mod.client.renderers.items.RenderTESIRItem;
+import net.tardis.mod.client.renderers.items.RenderTEISRItem;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -78,7 +78,7 @@ public class TEventHandler {
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
 		TItems.space_chest.setTileEntityItemStackRenderer(new RenderItemSpaceChest());
 		TItems.space_legs.setTileEntityItemStackRenderer(new RenderItemSpaceLegs());
-		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTESIRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
+		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
 
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
 		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
