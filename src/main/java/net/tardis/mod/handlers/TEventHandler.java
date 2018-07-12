@@ -5,6 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -19,6 +20,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -32,12 +34,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.renderers.RenderItemSonicPen;
-import net.tardis.mod.client.renderers.items.*;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceChest;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceLegs;
+import net.tardis.mod.client.renderers.items.RenderItemTardis02;
+import net.tardis.mod.client.renderers.items.RenderItemTardis03;
+import net.tardis.mod.client.renderers.items.RenderTESIRItem;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
@@ -184,6 +192,20 @@ public class TEventHandler {
 	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
 		if(e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
 			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void stopDrown(LivingUpdateEvent event) {
+		EntityLivingBase base = event.getEntityLiving();
+		int count = 0;
+		for(ItemStack stack : base.getArmorInventoryList()) {
+			if(stack.getItem() instanceof ItemSpaceSuit) {
+				count++;
+			}
+		}
+		if(count >= 3) {
+			base.setAir(200);
 		}
 	}
 }
