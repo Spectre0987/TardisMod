@@ -16,7 +16,7 @@ public class RenderTileHolo extends TileEntitySpecialRenderer<TileEntityHoloproj
 	public void render(TileEntityHoloprojector te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		Minecraft mc = Minecraft.getMinecraft();
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x + 0.5, y + 1, z + 0.5);
+		GlStateManager.translate(x + 0.4688, y + 1, z + 0.4688);
 		GlStateManager.scale(0.06,0.06,0.06);
 		try {
 			mc.entityRenderer.disableLightmap();
