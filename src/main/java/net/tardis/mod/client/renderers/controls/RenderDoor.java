@@ -17,6 +17,7 @@ import net.minecraft.world.WorldSettings;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.models.ModelInteriorDoors;
 import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -26,8 +27,9 @@ import net.tardis.mod.util.helpers.Helper;
 
 public class RenderDoor extends Render<ControlDoor> {
 	
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/door.png");
-	public static final ResourceLocation BLACK_HOLE_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/black_hole.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/doors.png");
+	public static final ResourceLocation BLACK = new ResourceLocation(Tardis.MODID, "textures/blocks/black.png");
+	ModelInteriorDoors model = new ModelInteriorDoors();
 	RenderWorldShell shellRender;
 	Minecraft mc;
 	
@@ -46,7 +48,7 @@ public class RenderDoor extends Render<ControlDoor> {
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x - 0.5, y, z + 0.499);
-		mc.getTextureManager().bindTexture(TEXTURE);
+		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
 		if(open) {
 			try {
@@ -98,15 +100,11 @@ public class RenderDoor extends Render<ControlDoor> {
 			}
 		}
 		else {
-			Tessellator tes = Tessellator.getInstance();
-			BufferBuilder buf = tes.getBuffer();
-			buf.begin(7, DefaultVertexFormats.POSITION_TEX);
 			mc.getTextureManager().bindTexture(TEXTURE);
-			buf.pos(0, 0, 0).tex(0, 0).endVertex();
-			buf.pos(0, 2, 0).tex(0, 2).endVertex();
-			buf.pos(1, 2, 0).tex(1, 2).endVertex();
-			buf.pos(1, 0, 0).tex(1, 0).endVertex();
-			tes.draw();
+			GlStateManager.rotate(180,1,0,0);
+			GlStateManager.rotate(180,0,1,0);
+			GlStateManager.translate(-0.6, -1.5, 0.5);
+			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		}
 		GlStateManager.popMatrix();
 	}

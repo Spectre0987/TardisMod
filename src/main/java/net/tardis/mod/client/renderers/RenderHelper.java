@@ -1,5 +1,9 @@
 package net.tardis.mod.client.renderers;
 
+import javax.annotation.Nullable;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,9 +13,6 @@ import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
-import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nullable;
 
 public class RenderHelper {
 	
@@ -70,7 +71,7 @@ public class RenderHelper {
 	}
 	
 	public static void drawOutline() {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(RenderDoor.TEXTURE);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(RenderDoor.BLACK);
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
 		buf.begin(7, DefaultVertexFormats.POSITION_TEX);
