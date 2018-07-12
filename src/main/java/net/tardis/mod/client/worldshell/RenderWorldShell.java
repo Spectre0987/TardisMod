@@ -27,7 +27,6 @@ public class RenderWorldShell {
 			IContainsWorldShell container = (IContainsWorldShell) entity;
 			
 			GlStateManager.pushMatrix();
-			//GlStateManager.disableDepth();
 			if(entity instanceof TileEntityDoor)GlStateManager.depthFunc(GL11.GL_ALWAYS);
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
@@ -47,7 +46,6 @@ public class RenderWorldShell {
 			}
 
 			Tessellator.getInstance().draw();
-			//GlStateManager.enableDepth();
 			GlStateManager.depthFunc(GL11.GL_LEQUAL);
 	        GlStateManager.enableNormalize();
 	        GlStateManager.enableLighting();
@@ -58,7 +56,6 @@ public class RenderWorldShell {
 				}
 			}
 			GlStateManager.popMatrix();
-			
 		}
 	}
 

@@ -1,21 +1,15 @@
 package net.tardis.mod.client.renderers.controls;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.profiler.Profiler;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameType;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldSettings;
 import net.minecraftforge.client.IRenderHandler;
-import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelInteriorDoors;
 import net.tardis.mod.client.renderers.RenderHelper;
@@ -66,50 +60,34 @@ public class RenderDoor extends Render<ControlDoor> {
 				else if(facing == EnumFacing.WEST) {
 					offset = new Vec3d(-12,1,0);
 				}
-				RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset);
+				mc.getTextureManager().bindTexture(BLACK);
+				GlStateManager.translate(-0.25, 0, 0);
+				RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1.5,3,0));
 				try {
 					TileEntityTardis te = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
 					Class<? extends IRenderHandler> renderer = ClientProxy.skyRenderers.get(te.dimension);
 					if(renderer != null) {
 						renderer.newInstance().render(partialTicks, mc.world, mc);
 					}
-					else {
-						WorldClient wc = mc.world;
-						
-						GlStateManager.pushMatrix();
-						mc.world = new WorldClient(mc.getConnection(), new WorldSettings(wc.getSeed(), GameType.NOT_SET, true, false, wc.getWorldType()), te.dimension, wc.getDifficulty(), new Profiler());
-						mc.world.setWorldTime(entity.getTime());
-						WorldProvider wp = DimensionManager.createProviderFor(te.dimension);
-						Vec3d fog = mc.world.getFogColor(partialTicks);
-						if(fog != null) {
-							GlStateManager.color((float)fog.x, (float)fog.y, (float)fog.z);
-						}
-						GlStateManager.pushMatrix();
-						mc.renderGlobal.renderSky(partialTicks, 0);
-						GlStateManager.popMatrix();
-						GlStateManager.color(1F,1F,1F);
-						GlStateManager.popMatrix();
-						
-						mc.world = wc;
-					}
 				}
 				catch(Exception e) {}
 			}
-			catch(Exception e) {
-				System.out.println("BOTI Rendering Failed!");
-			}
+			catch(Exception e) {}
 		}
 		else {
+			GlStateManager.pushMatrix();
 			mc.getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.rotate(180,1,0,0);
 			GlStateManager.rotate(180,0,1,0);
 			GlStateManager.translate(-0.6, -1.5, 0.5);
 			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.popMatrix();
 		}
 		GlStateManager.popMatrix();
 	}
 	
 	public void drawDoorShape() {
+		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, -1);
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
@@ -121,5 +99,6 @@ public class RenderDoor extends Render<ControlDoor> {
 		buf.pos(1, 0, 0).tex(1, 0).endVertex();
 		
 		tes.draw();
+		GlStateManager.popMatrix();
 	}
 }
