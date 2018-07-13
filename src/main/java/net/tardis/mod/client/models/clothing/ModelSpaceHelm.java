@@ -3,7 +3,7 @@ package net.tardis.mod.client.models.clothing;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.tardis.mod.client.models.BodyPartHook;
+import net.minecraft.entity.Entity;
 
 public class ModelSpaceHelm extends ModelBiped
 {
@@ -337,7 +337,7 @@ public class ModelSpaceHelm extends ModelBiped
       Head46.mirror = true;
       setRotation(Head46, 0F, 0F, 0F);
 
-    this.bipedHead = new BodyPartHook(this, 0, 0);
+    /*this.bipedHead = new BodyPartHook(this, 0, 0);
     this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0);
     this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
 
@@ -390,7 +390,7 @@ public class ModelSpaceHelm extends ModelBiped
       Head45.render(scale);
       Head46.render(scale);
       GlStateManager.popMatrix();
-    });
+    });*/
   }
 
 
@@ -400,5 +400,63 @@ public class ModelSpaceHelm extends ModelBiped
     model.rotateAngleY = y;
     model.rotateAngleZ = z;
   }
+
+
+	@Override
+	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,float headPitch, float scale) {
+		GlStateManager.pushMatrix();
+		if(entityIn != null && entityIn.isSneaking()) {
+			GlStateManager.translate(0, 0.2F, 0);
+		}
+		GlStateManager.rotate(netHeadYaw, 0, 1, 0);
+		GlStateManager.rotate(headPitch, 1, 0, 0);
+		  Head1.render(scale);
+		  Head2.render(scale);
+		  Head3.render(scale);
+		  Head4.render(scale);
+		  Head5.render(scale);
+		  Head6.render(scale);
+		  Head7.render(scale);
+		  Head8.render(scale);
+		  Head9.render(scale);
+		  Head10.render(scale);
+		  Head11.render(scale);
+		  Head12.render(scale);
+		  Head13.render(scale);
+		  Head14.render(scale);
+		  Head15.render(scale);
+		  Head16.render(scale);
+		  Head17.render(scale);
+		  Head18.render(scale);
+		  Head19.render(scale);
+		  Head20.render(scale);
+		  Head21.render(scale);
+		  Head22.render(scale);
+		  Head23.render(scale);
+		  Head24.render(scale);
+		  Head25.render(scale);
+		  Head26.render(scale);
+		  Head27.render(scale);
+		  Head28.render(scale);
+		  Head29.render(scale);
+		  Head30.render(scale);
+		  Head31.render(scale);
+		  Head32.render(scale);
+		  Head33.render(scale);
+		  Head34.render(scale);
+		  Head35.render(scale);
+		  Head36.render(scale);
+		  Head37.render(scale);
+		  Head38.render(scale);
+		  Head39.render(scale);
+		  Head40.render(scale);
+		  Head41.render(scale);
+		  Head42.render(scale);
+		  Head43.render(scale);
+		  Head44.render(scale);
+		  Head45.render(scale);
+		  Head46.render(scale);
+		  GlStateManager.popMatrix();
+	}
 
 }

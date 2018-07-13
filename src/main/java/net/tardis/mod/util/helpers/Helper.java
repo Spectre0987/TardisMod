@@ -20,6 +20,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.DimensionManager;
+import net.tardis.mod.api.dimensions.IBlockedDimension;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
@@ -82,6 +84,7 @@ public class Helper {
 	
 	public static boolean isDimensionBlocked(int id) {
         if (id == TDimensions.TARDIS_ID) return true;
+        if(DimensionManager.createProviderFor(id) instanceof IBlockedDimension)return true;
         boolean isW = TardisConfig.Dimensions.USE_WHITELIST;
 		for (int i : TardisConfig.Dimensions.bDims) {
 			if(isW) {

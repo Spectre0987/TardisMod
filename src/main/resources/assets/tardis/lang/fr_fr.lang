@@ -24,6 +24,7 @@ item.tardis_manual.name=Manuel de TARDIS
 item.space_helm.name=Casque de combinaison spatiale
 item.space_chest.name=Plastron de combinaison spatiale
 item.space_legs.name=Jambières de combinaison spatiale
+item.first_cane.name=Canne du Premier Docteur
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -83,10 +84,11 @@ protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S
 
 config.category.dims=Dimensions
-config.dims=Blacklisted Dimensions
+config.dims=Liste des dimensions
 config.setdim=Paramétrer des IDs de dimensions pour le TARDIS?
 config.tDim=Dimension TARDIS
 config.bhDim=Dimension spatiale
+config.dim.usewhitelist=Les dimensions de la liste doivent-elles être utilisées comme liste blanche ?
 
 config.entity=Entitées
 config.entity.allowed=Ce mod doit-il ajouter des Mobs ?
@@ -120,7 +122,6 @@ entity.invasion_cyberman.name=Invasion de Cyberman
 
 death.cyberman.generic=a été converti
 
-key.notwheretardis=CE N'EST PAS LÀ OÙ SE TROUVE LE TARDIS!
 key.console.location=Console à: 
 
 manual.help=Passez la souris sur un contrôle pour en savoir plus.

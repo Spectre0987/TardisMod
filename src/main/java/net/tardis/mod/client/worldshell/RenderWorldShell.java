@@ -28,7 +28,7 @@ public class RenderWorldShell {
 			IContainsWorldShell container = (IContainsWorldShell) entity;
 			
 			GlStateManager.pushMatrix();
-			if(entity instanceof TileEntityDoor || entity instanceof ControlDoor)GlStateManager.depthFunc(GL11.GL_ALWAYS);
+			if(entity instanceof TileEntityDoor || entity instanceof ControlDoor) GlStateManager.depthFunc(GL11.GL_ALWAYS);
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 

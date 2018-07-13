@@ -19,8 +19,8 @@ import net.tardis.mod.client.renderers.items.RendererKey;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
-import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
+import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
 import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
@@ -54,6 +54,8 @@ public class TItems {
 	public static Item space_helm;
 	public static Item space_chest;
 	public static Item space_legs;
+	
+	public static Item first_cane;
 	
 	// Componenets
 	
@@ -115,6 +117,9 @@ public class TItems {
 		
 		key_01 = new ItemKey();
 		register(key_01, "key_01");
+		
+		first_cane = new ItemCane();
+		register(first_cane, "first_cane");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();

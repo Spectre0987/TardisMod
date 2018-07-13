@@ -9,14 +9,11 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.IRenderHandler;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelInteriorDoors;
 import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.proxy.ClientProxy;
 import net.tardis.mod.util.helpers.Helper;
 
 public class RenderDoor extends Render<ControlDoor> {
@@ -62,15 +59,8 @@ public class RenderDoor extends Render<ControlDoor> {
 				}
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0);
+				RenderHelper.drawOutline(new Vec3d(1.5,2.5,0));
 				RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1.5,2.5,0));
-				try {
-					TileEntityTardis te = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
-					Class<? extends IRenderHandler> renderer = ClientProxy.skyRenderers.get(te.dimension);
-					if(renderer != null) {
-						renderer.newInstance().render(partialTicks, mc.world, mc);
-					}
-				}
-				catch(Exception e) {}
 			}
 			catch(Exception e) {}
 		}
