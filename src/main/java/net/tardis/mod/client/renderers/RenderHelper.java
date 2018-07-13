@@ -40,6 +40,7 @@ public class RenderHelper {
 		GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
 
 		// Draw scene from portal view
+		
 		try {
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(180,0,1,0);
