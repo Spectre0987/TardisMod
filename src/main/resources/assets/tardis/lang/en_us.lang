@@ -83,10 +83,11 @@ protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
 
 config.category.dims=Dimensions
-config.dims=Blacklisted Dimensions
+config.dims=Dimension List
 config.setdim=Set Dimension IDs for this mod?
 config.tDim=TARDIS Dimension
 config.bhDim=Space Dimension
+config.dim.usewhitelist=Should the Dimensions in the List be used as a whitelist?
 
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?

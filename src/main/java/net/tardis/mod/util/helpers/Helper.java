@@ -1,5 +1,9 @@
 package net.tardis.mod.util.helpers;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -19,10 +23,6 @@ import net.minecraft.world.biome.Biome;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
-
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Random;
 
 public class Helper {
 	
@@ -82,9 +82,16 @@ public class Helper {
 	
 	public static boolean isDimensionBlocked(int id) {
         if (id == TDimensions.TARDIS_ID) return true;
+        boolean isW = TardisConfig.Dimensions.USE_WHITELIST;
 		for (int i : TardisConfig.Dimensions.bDims) {
-			if (id == i) return true;
+			if(isW) {
+				if (id == i) return false;
+			}
+			else {
+				if (id == i) return true;
+			}
 		}
+		if(isW) return true;
 		return false;
 	}
 	
