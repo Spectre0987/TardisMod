@@ -6,12 +6,11 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
-import net.tardis.mod.api.dimensions.IBlockedDimension;
 import net.tardis.mod.client.renderers.sky.RenderNothing;
 import net.tardis.mod.client.renderers.sky.RendererSpaceSky;
 import net.tardis.mod.common.dimensions.TDimensions;
 
-public class SpaceProvider extends WorldProvider implements IBlockedDimension{
+public class SpaceProvider extends WorldProvider{
 
 	public SpaceProvider() {
 		this.setCloudRenderer(new RenderNothing());
