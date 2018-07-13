@@ -86,7 +86,7 @@ public class ItemKey extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) {
-			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText() + Helper.formatBlockPos(getPos(stack)));
+			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText() + " " +Helper.formatBlockPos(getPos(stack)));
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
