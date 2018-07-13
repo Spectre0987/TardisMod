@@ -2,6 +2,7 @@ package net.tardis.mod.client.models.clothing;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
@@ -152,8 +153,12 @@ public class ModelFourthHat extends ModelBiped
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
-    super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    GlStateManager.pushMatrix();
+    if(entity != null && entity.isSneaking()) {
+    	GlStateManager.translate(0, 0.2F, 0);
+    }
+    GlStateManager.rotate(f3, 0, 1, 0);
+    GlStateManager.rotate(f4, 1, 0, 0);
     HatBase1.render(f5);
     HatBase2.render(f5);
     HatBase3.render(f5);
@@ -173,6 +178,7 @@ public class ModelFourthHat extends ModelBiped
     HatTop2.render(f5);
     HatTop3.render(f5);
     HatTop4.render(f5);
+    GlStateManager.popMatrix();
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

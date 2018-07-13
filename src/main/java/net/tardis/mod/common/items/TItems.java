@@ -56,6 +56,7 @@ public class TItems {
 	public static Item space_legs;
 	
 	public static Item first_cane;
+	public static Item fourth_hat;
 	
 	// Componenets
 	
@@ -121,6 +122,9 @@ public class TItems {
 		first_cane = new ItemCane();
 		register(first_cane, "first_cane");
 		
+		fourth_hat = new ItemFourthHat();
+		register(fourth_hat, "fourth_hat");
+		
 		// TARDIS Components
 		fluid_link = new FluidLink();
 		register(fluid_link, "fluid_link");
@@ -136,15 +140,5 @@ public class TItems {
 		item.setUnlocalizedName(name);
 		item.setRegistryName(new ResourceLocation(Tardis.MODID, name));
 		items.add(item);
-	}
-
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public static void setUprenders(ModelBakeEvent e) {
-		demat_circut.setTileEntityItemStackRenderer(new RendererItemDemat());
-		key.setTileEntityItemStackRenderer(new RendererKey());
-		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RendererItemTardis());
-
-		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 	}
 }
