@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 import net.tardis.mod.common.items.ItemKey;
-import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.handlers.TEventHandler;
 
 public class TardisHelper {
@@ -53,8 +52,13 @@ public class TardisHelper {
 	
 	public static boolean hasValidKey(EntityLivingBase player, BlockPos cPos) {
 		ItemStack stack = player.getHeldItemMainhand();
-		if (stack.getItem() == TItems.key) {
+		ItemStack otherStack = player.getHeldItemOffhand();
+		if (stack.getItem() instanceof ItemKey) {
 			BlockPos pos = ItemKey.getPos(stack);
+			if (pos != null && pos.equals(cPos)) return true;
+		}
+		else if(otherStack.getItem() instanceof ItemKey) {
+			BlockPos pos = ItemKey.getPos(otherStack);
 			if (pos != null && pos.equals(cPos)) return true;
 		}
 		return false;

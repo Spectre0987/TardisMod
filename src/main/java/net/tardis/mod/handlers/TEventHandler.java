@@ -5,6 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -19,6 +20,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -29,11 +31,21 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.client.guis.GuiVortexM;
+import net.tardis.mod.client.models.clothing.ModelVortexM;
+import net.tardis.mod.client.renderers.RenderItemSonicPen;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceChest;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceLegs;
+import net.tardis.mod.client.renderers.items.RenderItemTardis02;
+import net.tardis.mod.client.renderers.items.RenderItemTardis03;
+import net.tardis.mod.client.renderers.items.RenderTEISRItem;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
@@ -61,6 +73,16 @@ public class TEventHandler {
 			} else
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
+
+		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
+		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
+		TItems.space_chest.setTileEntityItemStackRenderer(new RenderItemSpaceChest());
+		TItems.space_legs.setTileEntityItemStackRenderer(new RenderItemSpaceLegs());
+		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
+
+		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
+		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
+
 	}
 	
 	@SubscribeEvent
@@ -102,20 +124,18 @@ public class TEventHandler {
 			event.setCanceled(true);
 		}
 	}
-
+	
 	@SubscribeEvent
 	public static void stopHurt(LivingHurtEvent event) {
 		if (event.getEntityLiving().getRidingEntity() != null) {
 			Entity e = event.getEntityLiving().getRidingEntity();
-			if (e instanceof EntityTardis) event.setCanceled(true);
+			event.setCanceled(e instanceof EntityTardis);
 		}
 	}
 	
 	@SubscribeEvent
 	public static  void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
-		if (e.getState().getBlock() instanceof IUnbreakable) {
-			e.setCanceled(true);
-		}
+		e.setCanceled(e.getState().getBlock() instanceof IUnbreakable);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -124,7 +144,7 @@ public class TEventHandler {
 		World world = event.getPlayer().world;
 		BlockPos pos = event.getTarget().getBlockPos();
 		if (pos != null && !pos.equals(BlockPos.ORIGIN)) {
-			if (world.getBlockState(pos).getBlock() instanceof BlockConsole) event.setCanceled(true);
+			event.setCanceled(world.getBlockState(pos).getBlock() instanceof BlockConsole);
 		}
 		
 	}
@@ -164,6 +184,28 @@ public class TEventHandler {
 					}
 				}
 			}
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
+		if(e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
+			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void stopDrown(LivingUpdateEvent event) {
+		EntityLivingBase base = event.getEntityLiving();
+		int count = 0;
+		for(ItemStack stack : base.getArmorInventoryList()) {
+			if(stack.getItem() instanceof ItemSpaceSuit) {
+				count++;
+			}
+		}
+		if(count >= 3) {
+			base.setAir(200);
 		}
 	}
 }

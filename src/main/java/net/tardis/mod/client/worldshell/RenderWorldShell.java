@@ -13,6 +13,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 
 public class RenderWorldShell {
 
@@ -24,9 +26,10 @@ public class RenderWorldShell {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 
 			IContainsWorldShell container = (IContainsWorldShell) entity;
-
+			
 			GlStateManager.pushMatrix();
-			//GlStateManager.disableDepth();
+			if(entity instanceof TileEntityDoor || entity instanceof ControlDoor)GlStateManager.depthFunc(GL11.GL_ALWAYS);
+			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
 			BlockPos offset = container.getWorldShell().getOffset();
@@ -39,12 +42,15 @@ public class RenderWorldShell {
 					Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
 				}
 				container.getWorldShell().bufferstate = bb.getVertexState();
-			} else {
+			}
+			else {
 				bb.setVertexState(container.getWorldShell().bufferstate);
 			}
 
 			Tessellator.getInstance().draw();
-			//GlStateManager.enableDepth();
+			GlStateManager.depthFunc(GL11.GL_LEQUAL);
+	        GlStateManager.enableNormalize();
+	        GlStateManager.enableLighting();
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
 					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),
@@ -52,7 +58,6 @@ public class RenderWorldShell {
 				}
 			}
 			GlStateManager.popMatrix();
-			
 		}
 	}
 

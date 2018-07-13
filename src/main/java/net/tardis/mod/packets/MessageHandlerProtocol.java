@@ -12,16 +12,13 @@ public class MessageHandlerProtocol implements IMessageHandler<MessageProtocol, 
 	
 	@Override
 	public IMessage onMessage(MessageProtocol mes, MessageContext ctx) {
-		ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
-			@Override
-			public void run() {
-				WorldServer ws = ctx.getServerHandler().player.getServerWorld();
-				TileEntity te = ws.getTileEntity(mes.consolePos);
-				if (te instanceof TileEntityTardis) {
-					TardisProtocol.getProtocolFromId(mes.id).onActivated(ws, (TileEntityTardis) te);
-				}
-			}
-		});
+		ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
+            WorldServer ws = ctx.getServerHandler().player.getServerWorld();
+            TileEntity te = ws.getTileEntity(mes.consolePos);
+            if (te instanceof TileEntityTardis) {
+                TardisProtocol.getProtocolFromId(mes.id).onActivated(ws, (TileEntityTardis) te);
+            }
+        });
 		return null;
 	}
 	

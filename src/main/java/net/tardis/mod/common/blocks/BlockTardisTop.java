@@ -1,10 +1,7 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -13,15 +10,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -34,19 +26,15 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.IUnbreakable;
 
-public class BlockTardisTop extends BlockContainer implements IUnbreakable {
+import java.util.function.Supplier;
+
+public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public ItemBlock item = new ItemBlockTardis(this);
-	public Class tileentity = TileEntityDoor.class;
-	
-	public BlockTardisTop(Class<? extends TileEntityDoor> tileentity) {
-		this();
-		this.tileentity = tileentity;
-	}
-	
-	public BlockTardisTop() {
-		super(Material.WOOD, MapColor.BLUE);
+
+	public BlockTardisTop(Supplier<TileEntity> tileEntity) {
+		super(Material.WOOD, tileEntity);
 		this.setBlockUnbreakable();
 		this.setResistance(9999);
 		this.setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
@@ -57,21 +45,11 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		try {
-			return (TileEntity)tileentity.newInstance();
-		}
-		catch(Exception e) {
-			return new TileEntityDoor();
-		}
-	}
-	
-	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
 			TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
 			door.toggleLocked(playerIn);
-			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+			WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 			TileEntity te = ws.getTileEntity(door.getConsolePos());
 			if (te != null && te instanceof TileEntityTardis) {
 				EntityControl control = ((TileEntityTardis) te).getControl(ControlDoor.class);
@@ -136,7 +114,7 @@ public class BlockTardisTop extends BlockContainer implements IUnbreakable {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { FACING });
+		return new BlockStateContainer(this, FACING);
 	}
 	
 	@Override

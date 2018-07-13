@@ -36,7 +36,7 @@ public class ControlDimChange extends EntityControl {
 			if (tardis.dimIndex >= ids.length || tardis.dimIndex < 0) tardis.dimIndex = 0;
 			
 			int dim = ids[tardis.dimIndex];
-			if (Helper.isDimensionBlocked(dim)) tardis.dimIndex = this.nextDI(tardis.dimIndex, ids.length);
+			if (Helper.isDimensionBlocked(dim)) this.preformAction(player);
 			tardis.setTargetDimension(ids[tardis.dimIndex]);
 		} else
 			this.ticks = 20;

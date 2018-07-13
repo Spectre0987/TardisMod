@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.Vec3d;
+import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 
@@ -21,7 +22,7 @@ public class RenderHelper {
 		mc = Minecraft.getMinecraft();
 	}
 	
-	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset) {
+	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size) {
 		if(offset == null)offset = new Vec3d(-1, 0, -7);
 		GlStateManager.pushMatrix();
 		Minecraft mc = Minecraft.getMinecraft();
@@ -32,9 +33,9 @@ public class RenderHelper {
 		GL11.glStencilMask(0xFF);
 		GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
 
-		drawOutline();
+		drawOutline(size);
 
-		// Only pass stencil test if equal to 1
+		// Only pass stencil test if equal to 1(So only if rendered before)
 		GL11.glStencilMask(0x00);
 		GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
 
@@ -54,7 +55,7 @@ public class RenderHelper {
 		
 		// Draw portal stencils so portals wont be drawn over
 		GL11.glColorMask(false, false, false, false);
-		drawOutline();
+		drawOutline(size);
 		
 		//Set things back
 		GL11.glColorMask(true, true, true, true);
@@ -62,22 +63,27 @@ public class RenderHelper {
 	}
 	
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks) {
-		RenderHelper.renderPortal(renderShell, te, partialTicks, 0F, null);
+		RenderHelper.renderPortal(renderShell, te, partialTicks, 0F, null, null);
 	}
 	
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rot) {
-		RenderHelper.renderPortal(renderShell, te, partialTicks, rot, null);
+		RenderHelper.renderPortal(renderShell, te, partialTicks, rot, null, null);
 	}
 	
-	public static void drawOutline() {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(RenderDoor.TEXTURE);
+	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rot, Vec3d offset) {
+		RenderHelper.renderPortal(renderShell, te, partialTicks, rot, offset, null);
+	}
+	
+	public static void drawOutline(@Nullable Vec3d size) {
+		if(size == null)size = new Vec3d(1,2,0);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(RenderDoor.BLACK);
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
 		buf.begin(7, DefaultVertexFormats.POSITION_TEX);
 		buf.pos(0, 0, 0).tex(0, 0).endVertex();
-		buf.pos(0, 2, 0).tex(0, 1).endVertex();
-		buf.pos(1, 2, 0).tex(1, 1).endVertex();
-		buf.pos(1, 0, 0).tex(1, 0).endVertex();
+		buf.pos(0, size.y, 0).tex(0, 1).endVertex();
+		buf.pos(size.x, size.y, 0).tex(1, 1).endVertex();
+		buf.pos(size.x, 0, 0).tex(1, 0).endVertex();
 		tes.draw();
 	}
 

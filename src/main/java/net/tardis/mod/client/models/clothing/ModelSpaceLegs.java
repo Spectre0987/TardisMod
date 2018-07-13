@@ -1,56 +1,54 @@
 package net.tardis.mod.client.models.clothing;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.tardis.mod.client.util.ModelUtil;
+import net.minecraft.client.renderer.GlStateManager;
+import net.tardis.mod.client.models.BodyPartHook;
 
 public class ModelSpaceLegs extends ModelBiped
 {
   //fields
-    ModelRenderer RightLeg1;
-    ModelRenderer RightLeg2;
-    ModelRenderer RightLeg3;
-    ModelRenderer RightLeg4;
-    ModelRenderer RightLeg5;
-    ModelRenderer RightLeg6;
-    ModelRenderer RightLeg7;
-    ModelRenderer RightLeg8;
-    ModelRenderer RightLeg9;
-    ModelRenderer RightLeg10;
-    ModelRenderer RightToe;
-    ModelRenderer RightLeg11;
-    ModelRenderer RightBoot;
-    ModelRenderer RightLeg12;
-    ModelRenderer RightLeg13;
-    ModelRenderer RightLeg14;
-    ModelRenderer RightLeg15;
-    ModelRenderer Leftleg1;
-    ModelRenderer LeftLeg2;
-    ModelRenderer LeftLeg3;
-    ModelRenderer LeftLeg4;
-    ModelRenderer LeftLeg5;
-    ModelRenderer LeftLeg6;
-    ModelRenderer LeftToe;
-    ModelRenderer LeftLeg7;
-    ModelRenderer LeftLeg8;
-    ModelRenderer LeftLeg9;
-    ModelRenderer LeftBoot;
-    ModelRenderer LeftLeg10;
-    ModelRenderer LeftLeg11;
-    ModelRenderer LeftLeg12;
-    ModelRenderer LeftLeg13;
-    ModelRenderer LeftLeg14;
-    ModelRenderer LeftLeg15;
-    ModelRenderer LeftLeg16;
-  
+  private ModelRenderer RightLeg1;
+  private ModelRenderer RightLeg2;
+  private ModelRenderer RightLeg3;
+  private ModelRenderer RightLeg4;
+  private ModelRenderer RightLeg5;
+  private ModelRenderer RightLeg6;
+  private ModelRenderer RightLeg7;
+  private ModelRenderer RightLeg8;
+  private ModelRenderer RightLeg9;
+  private ModelRenderer RightLeg10;
+  private ModelRenderer RightToe;
+  private ModelRenderer RightLeg11;
+  private ModelRenderer RightBoot;
+  private ModelRenderer RightLeg12;
+  private ModelRenderer RightLeg13;
+  private ModelRenderer RightLeg14;
+  private ModelRenderer RightLeg15;
+  private ModelRenderer Leftleg1;
+  private ModelRenderer LeftLeg2;
+  private ModelRenderer LeftLeg3;
+  private ModelRenderer LeftLeg4;
+  private ModelRenderer LeftLeg5;
+  private ModelRenderer LeftLeg6;
+  private ModelRenderer LeftToe;
+  private ModelRenderer LeftLeg7;
+  private ModelRenderer LeftLeg8;
+  private ModelRenderer LeftLeg9;
+  private ModelRenderer LeftBoot;
+  private ModelRenderer LeftLeg10;
+  private ModelRenderer LeftLeg11;
+  private ModelRenderer LeftLeg12;
+  private ModelRenderer LeftLeg13;
+  private ModelRenderer LeftLeg14;
+  private ModelRenderer LeftLeg15;
+  private ModelRenderer LeftLeg16;
+
   public ModelSpaceLegs()
   {
     textureWidth = 128;
     textureHeight = 128;
-    
+
       RightLeg1 = new ModelRenderer(this, 68, 29);
       RightLeg1.addBox(-2F, 0F, 1.5F, 4, 1, 1);
       RightLeg1.setRotationPoint(-2F, 12F, 0F);
@@ -264,75 +262,69 @@ public class ModelSpaceLegs extends ModelBiped
       LeftLeg16.setTextureSize(128, 128);
       LeftLeg16.mirror = true;
       setRotation(LeftLeg16, 0F, 0F, 0F);
+
+    bipedRightLeg = new BodyPartHook(this, 0, 16);
+    bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
+    bipedRightLeg.setRotationPoint(-1.9F, 12.0F, 0.0F);
+    bipedLeftLeg = new BodyPartHook(this, 0, 16);
+    bipedLeftLeg.mirror = true;
+    bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
+    bipedLeftLeg.setRotationPoint(1.9F, 12.0F, 0.0F);
+
+    ((BodyPartHook) bipedRightLeg).setRender(scale -> {
+      GlStateManager.pushMatrix();
+      GlStateManager.translate(0.11, -0.735, 0);
+      RightLeg1.render(scale);
+      RightLeg2.render(scale);
+      RightLeg3.render(scale);
+      RightLeg4.render(scale);
+      RightLeg5.render(scale);
+      RightLeg6.render(scale);
+      RightLeg7.render(scale);
+      RightLeg8.render(scale);
+      RightLeg9.render(scale);
+      RightLeg10.render(scale);
+      RightToe.render(scale);
+      RightLeg11.render(scale);
+      RightBoot.render(scale);
+      RightLeg12.render(scale);
+      RightLeg13.render(scale);
+      RightLeg14.render(scale);
+      RightLeg15.render(scale);
+      GlStateManager.popMatrix();
+    });
+
+    ((BodyPartHook) bipedLeftLeg).setRender(scale -> {
+      GlStateManager.pushMatrix();
+      GlStateManager.translate(-0.11, -0.735, 0);
+      Leftleg1.render(scale);
+      LeftLeg2.render(scale);
+      LeftLeg3.render(scale);
+      LeftLeg4.render(scale);
+      LeftLeg5.render(scale);
+      LeftLeg6.render(scale);
+      LeftToe.render(scale);
+      LeftLeg7.render(scale);
+      LeftLeg8.render(scale);
+      LeftLeg9.render(scale);
+      LeftBoot.render(scale);
+      LeftLeg10.render(scale);
+      LeftLeg11.render(scale);
+      LeftLeg12.render(scale);
+      LeftLeg13.render(scale);
+      LeftLeg14.render(scale);
+      LeftLeg15.render(scale);
+      LeftLeg16.render(scale);
+      GlStateManager.popMatrix();
+    });
   }
-  
-  @Override
-  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-  {
-    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    try {
-    	Field[] fields = ModelSpaceLegs.class.getDeclaredFields();
-    	for(Field fi : fields) {
-    		Object obj = fi.get(this);
-    		if(obj !=null && obj instanceof ModelRenderer) {
-    			ModelRenderer mr = (ModelRenderer)obj;
-    			if(fi.getName().toLowerCase().contains("right")) {
-    				ModelUtil.copyAngle(this.bipedRightLeg, mr);
-    			}
-    			if(fi.getName().toLowerCase().contains("left")) {
-    				ModelUtil.copyAngle(this.bipedLeftLeg, mr);
-    			}
-    		}
-    	}
-    }
-    catch(Exception e) {}
-    RightLeg1.render(f5);
-    RightLeg2.render(f5);
-    RightLeg3.render(f5);
-    RightLeg4.render(f5);
-    RightLeg5.render(f5);
-    RightLeg6.render(f5);
-    RightLeg7.render(f5);
-    RightLeg8.render(f5);
-    RightLeg9.render(f5);
-    RightLeg10.render(f5);
-    RightToe.render(f5);
-    RightLeg11.render(f5);
-    RightBoot.render(f5);
-    RightLeg12.render(f5);
-    RightLeg13.render(f5);
-    RightLeg14.render(f5);
-    RightLeg15.render(f5);
-    Leftleg1.render(f5);
-    LeftLeg2.render(f5);
-    LeftLeg3.render(f5);
-    LeftLeg4.render(f5);
-    LeftLeg5.render(f5);
-    LeftLeg6.render(f5);
-    LeftToe.render(f5);
-    LeftLeg7.render(f5);
-    LeftLeg8.render(f5);
-    LeftLeg9.render(f5);
-    LeftBoot.render(f5);
-    LeftLeg10.render(f5);
-    LeftLeg11.render(f5);
-    LeftLeg12.render(f5);
-    LeftLeg13.render(f5);
-    LeftLeg14.render(f5);
-    LeftLeg15.render(f5);
-    LeftLeg16.render(f5);
-  }
-  
+
+
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
     model.rotateAngleX = x;
     model.rotateAngleY = y;
     model.rotateAngleZ = z;
-  }
-  
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-  {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
   }
 
 }

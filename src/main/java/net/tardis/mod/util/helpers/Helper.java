@@ -29,7 +29,7 @@ public class Helper {
 	public static Random rand = new Random();
 	
 	public static void transferToOwnedTardis(EntityPlayerMP player, WorldServer world, BlockPos pos) {
-		player.getServer().getPlayerList().transferPlayerToDimension(player, TDimensions.id, new TardisTeleporter(world));
+        player.getServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter(world));
 		pos = pos.offset(EnumFacing.SOUTH, 4);
 		player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 	}
@@ -75,18 +75,23 @@ public class Helper {
 	
 	public static boolean isSafe(World world, BlockPos pos, EnumFacing facing) {
 		if (world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR)) {
-			if (world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR)) {
-				return true;
-			}
+            return world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR);
 		}
 		return false;
 	}
 	
 	public static boolean isDimensionBlocked(int id) {
-		if (id == TDimensions.id) return true;
+        if (id == TDimensions.TARDIS_ID) return true;
+        boolean isW = TardisConfig.Dimensions.USE_WHITELIST;
 		for (int i : TardisConfig.Dimensions.bDims) {
-			if (id == i) return true;
+			if(isW) {
+				if (id == i) return false;
+			}
+			else {
+				if (id == i) return true;
+			}
 		}
+		if(isW) return true;
 		return false;
 	}
 	
@@ -183,5 +188,9 @@ public class Helper {
 			}
 		}
 		return Helper.getSafePosLower(pos, world, facing);
+	}
+
+	public static float precentToPixels(float f) {
+		return f / 16.0F;
 	}
 }

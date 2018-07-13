@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 
@@ -21,12 +22,12 @@ public class TBlocks {
 	public static Block tardis;
 	public static Block tardis_top;
 	public static Block console;
-	public static Block door;
 	public static Block panel;
 	public static Block temporal_lab;
 	public static Block food_machine;
 	public static Block megalos;
 	public static Block meglos_slab;
+	public static Block holoprojector;
 	
 	public static Block sonicRedstone;
 	
@@ -35,7 +36,7 @@ public class TBlocks {
 	//Exteriors
 	public static Block tardis_top_01;
 	public static Block tardis_top_02;
-	//public static Block json_tester;
+	public static Block json_tester;
 	
 	public static void register(Block block, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
@@ -59,15 +60,12 @@ public class TBlocks {
 		
 		tardis = new BlockTardis();
 		register(tardis, "tardis");
-		
-		tardis_top = new BlockTardisTop();
+
+		tardis_top = new BlockTardisTop(TileEntityDoor::new);
 		register(tardis_top, "tardis_top");
 		
 		console = new BlockConsole();
 		register(console, "console");
-		
-		door = new BlockBase();
-		register(door, "door");
 		
 		panel = new BlockPanel();
 		register(panel, "panel");
@@ -87,16 +85,21 @@ public class TBlocks {
 		megalos = new BlockMegalos();
 		register(megalos, "megalos");
 		
+		holoprojector = new BlockHoloprojector();
+		register(holoprojector, "holoprojector");
+		
 		//Exteriors
-		
-		tardis_top_01 = new BlockTardisTop(TileEntityDoor01.class);
+
+		tardis_top_01 = new BlockTardisTop(TileEntityDoor01::new);
 		register(tardis_top_01, "tardis_top_01");
-		
-		tardis_top_02 = new BlockTardisTop(TileEntityDoor03.class);
+
+		tardis_top_02 = new BlockTardisTop(TileEntityDoor03::new);
 		register(tardis_top_02, "tardis_top_02");
 		
-		/*json_tester = new BlockJsonTester();
-		register(json_tester, "json_tester");*/
+		if(Tardis.getIsDev()) {
+			json_tester = new BlockJsonTester();
+			register(json_tester, "json_tester");
+		}
 	}
 	
 }

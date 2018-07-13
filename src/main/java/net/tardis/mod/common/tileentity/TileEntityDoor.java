@@ -1,7 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -44,6 +42,8 @@ import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
+import java.util.List;
+
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
 	public BlockPos consolePos = BlockPos.ORIGIN;
@@ -75,7 +75,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void toggleLocked(EntityPlayer player) {
 		if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0) {
 			lockCooldown = 20;
-			isLocked = isLocked ? false : true;
+            isLocked = !isLocked;
 			this.markDirty();
 			if (!world.isRemote) {
 				Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this.isLocked()), world.provider.getDimension());
@@ -91,7 +91,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void toggleLockedNoKey(EntityPlayer player) {
 		if (lockCooldown == 0) {
 			lockCooldown = 20;
-			isLocked = isLocked ? false : true;
+            isLocked = !isLocked;
 			this.markDirty();
 			player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + isLocked), true);
 		}
@@ -133,14 +133,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 								p.motionY = 0;
 								p.motionZ = 0;
 								p.connection.sendPacket(new SPacketEntityVelocity(p));
-								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(p, TDimensions.id, new TardisTeleporter(ws));
+                                ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(p, TDimensions.TARDIS_ID, new TardisTeleporter(ws));
 								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
 								MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
 							}
 						} else {
 							if (!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase) entity), this.getConsolePos())) {
 								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
-								entity.changeDimension(TDimensions.id);
+                                entity.changeDimension(TDimensions.TARDIS_ID);
 								MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
 								this.setLocked(false);
 							}
@@ -153,7 +153,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			for(Entity e : projectiles) {
 				if(e instanceof IProjectile || e instanceof IMob) {
 					try{
-						((TileEntityTardis)DimensionManager.getWorld(TDimensions.id).getTileEntity(getConsolePos())).startHADS();
+                        ((TileEntityTardis) DimensionManager.getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos())).startHADS();
 						e.setDead();
 					}
 					catch(Exception exc) {}
@@ -167,7 +167,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			}
 			if(!this.isLocked() && world.getTotalWorldTime() % 5 == 0) {
 				worldShell = new WorldShell(this.getConsolePos());
-				WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.id);
+                WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 				for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {
 					IBlockState state = tardisWorld.getBlockState(pos);
 					if(state.getBlock() != Blocks.AIR) {
@@ -217,7 +217,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	public void knock() {
 		if(!world.isRemote && this.getConsolePos() != null) {
-			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+            WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 			if(ws != null) {
 				ws.playSound(null, getConsolePos(), knockSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
@@ -226,7 +226,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	public IInventory getLinkedInv() {
 		if (!world.isRemote && this.getConsolePos() != null) {
-			WorldServer ws = DimensionManager.getWorld(TDimensions.id);
+            WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 			if (ws != null) {
 				TileEntity te = ws.getTileEntity(getConsolePos());
 				if (te instanceof TileEntityTardis) return ((TileEntityTardis) te);

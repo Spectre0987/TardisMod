@@ -1,4 +1,4 @@
-package net.tardis.mod.client.renderers;
+package net.tardis.mod.client.renderers.tiles;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;

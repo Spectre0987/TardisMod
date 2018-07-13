@@ -13,9 +13,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -57,12 +55,12 @@ public class ItemKey extends Item {
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if (playerIn.dimension != TDimensions.id) {
+        if (playerIn.dimension != TDimensions.TARDIS_ID) {
 			if (!worldIn.isRemote) {
 				WorldServer ws = (WorldServer) worldIn;
 				ItemStack stack = playerIn.getHeldItem(handIn);
 				BlockPos cPos = TardisHelper.getTardis(playerIn.getGameProfile().getId());
-				WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.id);
+                WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 				MinecraftServer server = tw.getMinecraftServer();
 				setPos(stack, cPos);
 				if (tw.getTileEntity(cPos) == null) {
@@ -88,8 +86,7 @@ public class ItemKey extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) {
-			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText() + Helper.formatBlockPos(getPos(stack)));
-			tooltip.add(new TextComponentTranslation("key.notwheretardis").setStyle(new Style().setColor(TextFormatting.RED)).getFormattedText());
+			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText() + " " +Helper.formatBlockPos(getPos(stack)));
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
@@ -97,5 +94,10 @@ public class ItemKey extends Item {
 	@Override
 	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
+	}
+
+	@Override
+	public String getItemStackDisplayName(ItemStack stack) {
+		return new TextComponentTranslation(TItems.key.getUnlocalizedName() + ".name").getFormattedText();
 	}
 }

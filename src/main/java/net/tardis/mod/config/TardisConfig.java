@@ -25,9 +25,11 @@ public class TardisConfig {
 	
 	public static class Dimensions {
 		
-
 		@Config.LangKey("config.dims")
 		public int[] bDims = new int[] { 1 };
+		
+		@Config.LangKey("config.dim.usewhitelist")
+		public boolean USE_WHITELIST = false;
 		
 		@Config.LangKey("config.setdim")
 		public boolean setDimension = false;
