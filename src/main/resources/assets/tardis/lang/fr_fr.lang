@@ -24,6 +24,7 @@ item.tardis_manual.name=Manuel de TARDIS
 item.space_helm.name=Casque de combinaison spatiale
 item.space_chest.name=Plastron de combinaison spatiale
 item.space_legs.name=Jambières de combinaison spatiale
+item.first_cane.name=Canne du Premier Docteur
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
