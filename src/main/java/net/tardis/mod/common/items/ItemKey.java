@@ -1,5 +1,7 @@
 package net.tardis.mod.common.items;
 
+import java.util.List;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,8 +28,6 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
-
-import java.util.List;
 
 public class ItemKey extends Item {
 	
@@ -94,5 +94,10 @@ public class ItemKey extends Item {
 	@Override
 	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
+	}
+
+	@Override
+	public String getItemStackDisplayName(ItemStack stack) {
+		return new TextComponentTranslation(TItems.key.getUnlocalizedName() + ".name").getFormattedText();
 	}
 }

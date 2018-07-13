@@ -49,7 +49,6 @@ death.attack.dalek=Killed by a Dalek Ray gun
 death.cyberman.ray=was deleted.
 
 screw.recall=Recall Mode
-screw.transmat=Transmat
 screw.lamp=Tinker Mode
 screwdriver.hallway=Room Gen - Hallway
 screw.generic_room=Room Gen - Small Room
