@@ -74,15 +74,6 @@ public class TEventHandler {
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 
-		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
-		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
-		TItems.space_chest.setTileEntityItemStackRenderer(new RenderItemSpaceChest());
-		TItems.space_legs.setTileEntityItemStackRenderer(new RenderItemSpaceLegs());
-		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
-
-		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
-		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
-
 	}
 	
 	@SubscribeEvent

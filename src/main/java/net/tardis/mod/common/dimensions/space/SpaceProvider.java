@@ -6,17 +6,15 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.renderers.sky.RenderNothing;
 import net.tardis.mod.client.renderers.sky.RendererSpaceSky;
 import net.tardis.mod.common.dimensions.TDimensions;
 
 public class SpaceProvider extends WorldProvider{
 
-	public SpaceProvider() {
-		this.setCloudRenderer(new RenderNothing());
-		this.setWeatherRenderer(new RenderNothing());
-		this.setSkyRenderer(new RendererSpaceSky());
-	}
+	public SpaceProvider() {}
 	
 	@Override
 	public DimensionType getDimensionType() {
@@ -43,9 +41,10 @@ public class SpaceProvider extends WorldProvider{
 		return 1000;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IRenderHandler getCloudRenderer() {
-		return null;
+		return new RenderNothing();
 	}
 
 	@Override
