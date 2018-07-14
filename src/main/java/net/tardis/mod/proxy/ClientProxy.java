@@ -13,6 +13,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.tardis.mod.client.models.ModelFirstCane;
 import net.tardis.mod.client.models.ModelKey01;
+import net.tardis.mod.client.models.clothing.ModelFourthHat;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.renderers.RenderInvis;
 import net.tardis.mod.client.renderers.RenderItemFoodMachine;
@@ -133,6 +134,7 @@ public class ClientProxy extends ServerProxy {
 		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
 		TItems.demat_circut.setTileEntityItemStackRenderer(new RendererItemDemat());
 		TItems.key.setTileEntityItemStackRenderer(new RendererKey());
+		TItems.fourth_hat.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFourthHat(), ModelFourthHat.TEXTURE));
 		
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RendererItemTardis());
 

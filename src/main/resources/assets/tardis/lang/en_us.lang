@@ -25,6 +25,7 @@ item.space_helm.name=Space Suit Helmet
 item.space_chest.name=Space Suit Chestpiece
 item.space_legs.name=Space Suit Leggings
 item.first_cane.name=First Doctor's Cane
+item.fourth_hat.name=Fourth Doctor's Hat
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
