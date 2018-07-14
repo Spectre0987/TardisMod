@@ -32,7 +32,6 @@ public class GuiVortexM extends GuiScreen {
 		if (button == this.teleport) {
 			BlockPos tpPos = new BlockPos(getInt(xCoord.getText(), COORD_TYPE.X), getInt(yCoord.getText(), COORD_TYPE.Y), getInt(zCoord.getText(), COORD_TYPE.Z));
 			Tardis.NETWORK.sendToServer(new MessageTeleport(tpPos, mc.player.getEntityId()));
-			System.out.println("Hi");
 		}
 		super.actionPerformed(button);
 	}
