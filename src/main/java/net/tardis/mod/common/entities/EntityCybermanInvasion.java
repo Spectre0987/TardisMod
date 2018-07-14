@@ -88,7 +88,7 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
 		
 		//EntityRayCyberman ray = new EntityRayCyberman(world, targetPos.x, targetPos.y, targetPos.z);
 		EntityRayCyberman ray = new EntityRayCyberman(world, this);
-		ray.setPosition(posX + this.getForward().x, posY + this.getEyeHeight(), posZ + this.getForward().z);
+		ray.setPosition(posX, posY + this.getEyeHeight(), posZ);
 		world.spawnEntity(ray);
 	}
 
