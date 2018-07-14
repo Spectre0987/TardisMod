@@ -73,6 +73,7 @@ import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
+import net.tardis.mod.packets.MessageBOTIEntities;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageExteriorChange;
 import net.tardis.mod.packets.MessageHandlerProtocol;
@@ -161,7 +162,7 @@ public class Tardis {
 		NETWORK.registerMessage(MessageDoorOpen.Handler.class, MessageDoorOpen.class, 3, Side.CLIENT);
 		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 4, Side.SERVER);
 		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 5, Side.CLIENT);
-		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
+		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 7, Side.SERVER);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new HallwayMode());

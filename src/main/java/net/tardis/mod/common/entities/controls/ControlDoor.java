@@ -1,9 +1,11 @@
 package net.tardis.mod.common.entities.controls;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -136,7 +138,8 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		if(!world.isRemote && this.isOpen()) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			AxisAlignedBB bb = this.getEntityBoundingBox();
-			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
+			//WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
+			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
 			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
 				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
 				EnumFacing facing = ws.getBlockState(tardis.getLocation().up()).getValue(BlockTardisTop.FACING);
@@ -169,12 +172,18 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 					if(state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
 						this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
 					}
-					else if(state.getBlock() instanceof BlockTardisTop) {
-						this.setFacing(state.getValue(BlockTardisTop.FACING));
-					}
 				}
 				this.setFacing(facing);
-				this.setTime(ws.getWorldTime());
+				List<NBTTagCompound> list = new ArrayList<NBTTagCompound>();
+				for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation().offset(facing, 10), 10))) {
+					if(EntityList.getKey(e) != null) {
+						NBTTagCompound tag = new NBTTagCompound();
+						e.writeToNBT(tag);
+						tag.setString("id", EntityList.getKey(e).toString());
+						list.add(tag);
+					}
+				}
+				shell.setEntities(list);
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
 		}

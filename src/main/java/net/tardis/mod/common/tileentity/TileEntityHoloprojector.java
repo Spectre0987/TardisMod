@@ -1,7 +1,14 @@
 package net.tardis.mod.common.tileentity;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -15,14 +22,13 @@ import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
+import net.tardis.mod.util.helpers.Helper;
 
 public class TileEntityHoloprojector extends TileEntity implements ITickable, IContainsWorldShell{
 	
 	public WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	
-	public TileEntityHoloprojector() {
-		
-	}
+	public TileEntityHoloprojector() {}
 
 	@Override
 	public void update() {
@@ -41,6 +47,16 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 								worldShell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
 							}
 						}
+						List<NBTTagCompound> lists = new ArrayList<>();
+						for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 16))) {
+							if(EntityList.getKey(e) != null) {
+								NBTTagCompound tag = new NBTTagCompound();
+								e.writeToNBT(tag);
+								tag.setString("id", EntityList.getKey(e).toString());
+								lists.add(tag);
+							}
+						}
+						worldShell.setEntities(lists);
 						Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
 					}
 					return;

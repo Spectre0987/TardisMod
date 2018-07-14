@@ -10,8 +10,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +27,7 @@ public class WorldShell implements IBlockAccess {
 	// Contains every TESR to speed up rendering
 	private List<TileEntity> tesrs;
 	//Entities to render
-	private List<Entity> entities;
+	private List<NBTTagCompound> entities;
 	// The distance between the root of the worldShell and (0,0,0). Subtracting this
 	// from the coords in BlockMap should give you positions in relative terms for
 	// rendering
@@ -111,11 +111,11 @@ public class WorldShell implements IBlockAccess {
 		}
 	}
 	
-	public List<Entity> getEntities(){
+	public List<NBTTagCompound> getEntities(){
 		return this.entities;
 	}
 	
-	public void setEntities(List<Entity> entity) {
+	public void setEntities(List<NBTTagCompound> entity) {
 		this.entities = entity;
 	}
 }

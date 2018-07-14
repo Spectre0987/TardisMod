@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -55,6 +57,12 @@ public class RenderWorldShell {
 				if (t != null) {
 					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),
 							t.getPos().getZ(), partialTicks);
+				}
+			}
+			if(container.getWorldShell().getEntities() != null) {
+				for(NBTTagCompound stor : container.getWorldShell().getEntities()) {
+					Entity e = EntityList.createEntityFromNBT(stor, Minecraft.getMinecraft().world);
+					if(e != null)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 				}
 			}
 			GlStateManager.popMatrix();

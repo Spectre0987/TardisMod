@@ -1,13 +1,17 @@
 package net.tardis.mod.client.worldshell;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -46,6 +50,13 @@ public class MessageSyncWorldShell implements IMessage {
 		}
 		worldShell.setTESRs();
 		worldShell.updateRequired = true;
+		
+		List<NBTTagCompound> tagList = new ArrayList<>();
+		int max = buf.readInt();
+		for(int i = 0; i < max; ++i) {
+			tagList.add(ByteBufUtils.readTag(buf));
+		}
+		worldShell.setEntities(tagList);
 	}
 
 	@Override
@@ -58,6 +69,14 @@ public class MessageSyncWorldShell implements IMessage {
 			buf.writeLong(e.getKey().toLong());
 			e.getValue().toBuf(buf);
 		}
+		
+		if(worldShell.getEntities() != null && worldShell.getEntities().size() > 0) {
+			buf.writeInt(worldShell.getEntities().size());
+			for(NBTTagCompound tag : worldShell.getEntities()) {
+				ByteBufUtils.writeTag(buf, tag);
+			}
+		}
+		else buf.writeInt(0);
 	}
 	
 	public static class Handler implements IMessageHandler<MessageSyncWorldShell, IMessage> {
