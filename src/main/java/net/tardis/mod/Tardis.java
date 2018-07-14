@@ -73,7 +73,6 @@ import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
-import net.tardis.mod.packets.MessageBOTIEntities;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageExteriorChange;
 import net.tardis.mod.packets.MessageHandlerProtocol;

@@ -1,8 +1,12 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.IMob;
@@ -35,14 +39,13 @@ import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
-
-import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
@@ -174,6 +177,16 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), tardisWorld.getLight(pos)));
 					}
 				}
+				List<NBTTagCompound> lists = new ArrayList<NBTTagCompound>();
+				for(Entity e : tardisWorld.getEntitiesWithinAABB(Entity.class, Helper.createBB(getConsolePos(), 10))) {
+					if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
+						NBTTagCompound tag = new NBTTagCompound();
+						e.writeToNBT(tag);
+						tag.setString("id", EntityList.getKey(e).toString());
+						lists.add(tag);
+					}
+				}
+				worldShell.setEntities(lists);
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(), 16D));
 			}
 		}
