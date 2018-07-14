@@ -136,6 +136,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				TileEntity door = dWorld.getTileEntity(nPos.up());
 				if (door instanceof TileEntityDoor) {
 					((TileEntityDoor) door).setConsolePos(this.getPos());
+					((TileEntityDoor) door).setRemat();
 				}
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
@@ -321,8 +322,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.setFueling(false);
 		if (!world.isRemote) {
 			WorldServer oWorld = world.getMinecraftServer().getWorld(dimension);
-			oWorld.setBlockToAir(this.tardisLocation);
-			oWorld.setBlockToAir(this.tardisLocation.up());
+			if(oWorld.getTileEntity(tardisLocation.up()) != null) {				
+				((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).setRemat();
+				if(((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).alpha <= 1) {					
+					oWorld.setBlockToAir(this.tardisLocation);
+					oWorld.setBlockToAir(this.tardisLocation.up());
+				}
+			}
 			EntityControl door = this.getControl(ControlDoor.class);
 			((ControlDoor) door).setOpen(false);
 			this.saveCoords.set(this.saveCoords.size() - 1, new SpaceTimeCoord(this.getLocation(), this.dimension));

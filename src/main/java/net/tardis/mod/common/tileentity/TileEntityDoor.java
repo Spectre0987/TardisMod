@@ -56,6 +56,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	private int updateTicks = 0;
 	public int fadeTicks = 0;
 	public int openingTicks = 0;
+	public static float alpha = 1;
+	public static boolean isDemat = false;
+	public static boolean isRemat = false;
 	public static int radius = 10;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	
@@ -194,6 +197,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if(openingTicks > 0) {
 			--openingTicks;
 		}
+		
+		if(isRemat) {
+			if(alpha < 1 && alpha >= 0) alpha += 0.0001F;
+		}
+		if(isDemat) {
+			if(alpha > 0 && alpha <= 1) alpha -= 0.0001F;
+		}
+		if(alpha < 1) alpha += 0.025F;
 	}
 	
 	public boolean isLocked() {
@@ -335,5 +346,15 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public void setWorldShell(WorldShell worldShell) {
 		this.worldShell = worldShell;
+	}
+	
+	public void setRemat() {
+		this.alpha = 0;
+		this.isRemat = true;
+	}
+	
+	public void setDemat() {
+		this.alpha = 1;
+		this.isDemat = true;
 	}
 }

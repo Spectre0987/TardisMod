@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.exteriors;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -72,6 +74,9 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 				GlStateManager.rotate(Helper.getAngleFromFacing(mc.world.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 			}
 			mc.getTextureManager().bindTexture(TEXTURE);
+			GlStateManager.enableBlend();
+			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
 			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.pushMatrix();
 			if (open) {
@@ -81,6 +86,7 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 				origin = origin.scale(-1);
 				GlStateManager.translate(origin.x, origin.y, origin.z);
 			}
+			GlStateManager.color(1, 1, 1, te.alpha);
 			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();
 			GlStateManager.pushMatrix();
@@ -91,7 +97,9 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 					origin = origin.scale(-1);
 					GlStateManager.translate(origin.x, origin.y, origin.z);
 				}
+				GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
 				ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 			GlStateManager.popMatrix();
 			GlStateManager.popMatrix();
 	    }
