@@ -29,7 +29,7 @@ public abstract class RenderControl extends Render<EntityControl> {
 			Entity look = mc.objectMouseOver.entityHit;
 			if(look != null && entity != null && look.getEntityId() == entity.getEntityId()) {
 				GlStateManager.pushMatrix();
-				this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 16);
+                renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 16);
 				GlStateManager.popMatrix();
 			}
 		}
