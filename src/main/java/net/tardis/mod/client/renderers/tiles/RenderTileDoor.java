@@ -76,10 +76,6 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			GlStateManager.rotate(180, 0, 0, 1);
 			if(mc.world.getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
 
-				//	if(airBelow && !open) {
-				//		GlStateManager.rotate(getWorld().getTotalWorldTime(), 0, 1, 0);
-				//	}
-
 				GlStateManager.rotate(Helper.getAngleFromFacing(mc.world.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 			}
 			mc.getTextureManager().bindTexture(TEXTURE);
