@@ -98,7 +98,7 @@ config.misc=Misc
 config.misc.givekey=Should give Player A TARDIS key when they join the world?
 config.misc.maxrand=Maxium number of block the TARDIS should travel when using the randomizer
 
-entity.launch_lever.name=Space - Time Throttle
+entity.launch_lever.name=Time Rotor Handbrake
 entity.x_valve.name=Space Control - X
 entity.y_valve.name=Space Control - Y
 entity.z_valve.name=Space Control - Z
