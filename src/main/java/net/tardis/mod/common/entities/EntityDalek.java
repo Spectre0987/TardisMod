@@ -1,13 +1,20 @@
 package net.tardis.mod.common.entities;
 
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityFlying;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -26,25 +33,25 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 
 	public EntityDalek(World world) {
 		super(world);
-
-		this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 3.0D));
-		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityVillager.class, false));
-		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityIronGolem.class, true));
-
-		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityLivingBase.class, 30.0F));
-		this.tasks.addTask(0, new EntityAIAttackRanged(this, 0.3D, 12, 30F));
-		this.targetTasks.addTask(0, new EntityAIMoveTowardsTarget(this, 0.023D, 30));
-		this.targetTasks.addTask(0, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 100, true, false, input -> !(input instanceof EntityDalek)));
-		tasks.addTask(2, new EntityAIWander(this, 0.3D, 2));
 	}
 	
 	@Override
-	protected void initEntityAI() {
-		super.initEntityAI();
-	}
+	 protected void initEntityAI(){
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIAttackRanged(this, 0.75D, 40, 30F));
+        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
+        this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.applyEntityAI();
+    }
+
+    protected void applyEntityAI(){
+        this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, false, false));
+    }
 
 	@Override
 	protected void applyEntityAttributes() {
@@ -58,24 +65,33 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 		Vec3d look = target.getPositionVector().subtract(this.getPositionVector());
+		
 		EntityDalekRay ball = new EntityDalekRay(world, this);
-
-		ball.setPosition(posX + this.getLookVec().x, posY + this.getEyeHeight(), posZ + this.getLookVec().z);
+		ball.setPosition(posX + this.getLookVec().x, posY + (this.height / 2), posZ + this.getLookVec().z);
 		world.spawnEntity(ball);
 		world.playSound(null, this.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);
-		world.playSound(null, this.getPosition(), TSounds.dalek, SoundCategory.HOSTILE, 1F, 1F);
+		if(this.rand.nextInt(3) == 0)world.playSound(null, this.getPosition(), TSounds.dalek, SoundCategory.HOSTILE, 1F, 1F);
 	}
 	
 	@Override
-	public void setSwingingArms(boolean swingingArms) {
-		
-	}
+	public void setSwingingArms(boolean swingingArms) {}
 
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		setNoGravity(true);
+		if(this.getAttackTarget() != null) {
+			if(this.getAttackTarget().posY > this.posY + 5) {
+				this.setNoGravity(true);
+				this.motionY = 0.02;
+				Vec3d dir = this.getPositionVector().subtract(this.getAttackTarget().getLookVec()).normalize().scale(0.5);
+				this.motionX = dir.x;
+				this.motionZ = dir.z;
+			}
+			else this.motionY = -0.02;
+			this.fallDistance = 0;
+		}
+		if(this.onGround) this.setNoGravity(false);
 	}
 
 	@Override
