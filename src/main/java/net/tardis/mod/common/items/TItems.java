@@ -48,6 +48,7 @@ public class TItems {
 	
 	public static Item first_cane;
 	public static Item fourth_hat;
+	public static Item thirteen_coat;
 	
 	// Componenets
 	
@@ -115,6 +116,9 @@ public class TItems {
 		
 		fourth_hat = new ItemFourthHat();
 		register(fourth_hat, "fourth_hat");
+		
+		thirteen_coat = new ItemThirteenCoat();
+		register(thirteen_coat, "thirteen_coat");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();

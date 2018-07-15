@@ -199,12 +199,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		}
 		
 		if(isRemat) {
-			if(alpha < 1 && alpha >= 0) alpha += 0.0001F;
+			if(alpha < 1 && alpha >= 0) alpha += 0.005F;
 		}
 		if(isDemat) {
-			if(alpha > 0 && alpha <= 1) alpha -= 0.0001F;
+			if(alpha > 0 && alpha <= 1) alpha -= 0.005F;
 		}
-		if(alpha < 1) alpha += 0.025F;
+		
 	}
 	
 	public boolean isLocked() {
