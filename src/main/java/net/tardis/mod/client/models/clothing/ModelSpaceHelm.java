@@ -339,8 +339,8 @@ public class ModelSpaceHelm extends ModelBiped
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 
+        GlStateManager.pushMatrix();
         GlStateManager.rotate(f3, 0, 1, 0);
         GlStateManager.rotate(f4, 1, 0, 0);
 
@@ -394,6 +394,7 @@ public class ModelSpaceHelm extends ModelBiped
         Head44.render(f5);
         Head45.render(f5);
         Head46.render(f5);
+        GlStateManager.popMatrix();
     }
 
     private void setRotation(ModelRenderer model, float x, float y, float z) {
