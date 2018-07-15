@@ -1,5 +1,7 @@
 package net.tardis.mod.client.models.clothing;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -149,8 +151,20 @@ public class ModelFourthHat extends ModelBiped
       HatTop4.setTextureSize(128, 128);
       HatTop4.mirror = true;
       setRotation(HatTop4, 0F, 0F, 0F);
+      
+      try {
+      	Field[] fields = ModelFourthHat.class.getDeclaredFields();
+      	for(Field fi : fields) {
+      		Object obj = fi.get(this);
+      		if(obj instanceof ModelRenderer) {
+      			((ModelRenderer)obj).offsetY += 0.1F;
+      		}
+      	}
+      }
+      catch(Exception e) {}
   }
   
+  @Override
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     GlStateManager.pushMatrix();
