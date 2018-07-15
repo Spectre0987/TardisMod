@@ -1,10 +1,5 @@
 package net.tardis.mod.client.worldshell;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -20,6 +15,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class WorldShell implements IBlockAccess {
 
 	// Keeps stores a collection of BlockAcess's mapped to blockpos coords
@@ -33,13 +33,15 @@ public class WorldShell implements IBlockAccess {
 	// rendering
 	private BlockPos offset;
 
+    private Biome shellBiome = Biome.getBiome(0);
+
 	public BufferBuilder.State bufferstate;
 	public boolean updateRequired = false;
 
 	public WorldShell(BlockPos bp) {
-		blockMap = new HashMap<BlockPos, BlockStorage>();
+        blockMap = new HashMap<>();
 		offset = bp;
-		tesrs = new ArrayList<TileEntity>();
+        tesrs = new ArrayList<>();
 	}
 
 	public BlockPos getOffset() {
@@ -60,6 +62,11 @@ public class WorldShell implements IBlockAccess {
 		return 15;
 	}
 
+
+    public void setShellBiome(Biome shellBiome) {
+        this.shellBiome = shellBiome;
+    }
+
 	@Override
 	public IBlockState getBlockState(BlockPos pos) {
 		if (blockMap.get(pos) != null) {
@@ -76,7 +83,7 @@ public class WorldShell implements IBlockAccess {
 
 	@Override
 	public Biome getBiome(BlockPos pos) {
-		return Biome.getBiome(0);
+        return shellBiome;
 	}
 
 	@Override
@@ -103,8 +110,7 @@ public class WorldShell implements IBlockAccess {
 	public void setTESRs() {
 		for (BlockStorage bs : blockMap.values()) {
 			if (bs.tileentity != null) {
-				TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers
-						.get(bs.tileentity.getClass());
+                TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers.get(bs.tileentity.getClass());
 				if (renderer != null)
 					tesrs.add(bs.tileentity);
 			}

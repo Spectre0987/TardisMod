@@ -1,8 +1,5 @@
 package net.tardis.mod.common.entities.controls;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -37,6 +34,9 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	
@@ -174,7 +174,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 					}
 				}
 				this.setFacing(facing);
-				List<NBTTagCompound> list = new ArrayList<NBTTagCompound>();
+                List<NBTTagCompound> list = new ArrayList<>();
 				for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation().offset(facing, 10), 10))) {
 					if(EntityList.getKey(e) != null) {
 						NBTTagCompound tag = new NBTTagCompound();
