@@ -341,8 +341,6 @@ public class ModelSpaceHelm extends ModelBiped
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 
         GlStateManager.pushMatrix();
-        setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-
         GlStateManager.rotate(f3, 0, 1, 0);
         GlStateManager.rotate(f4, 1, 0, 0);
 
