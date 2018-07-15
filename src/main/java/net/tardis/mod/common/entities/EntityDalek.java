@@ -67,7 +67,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 		Vec3d look = target.getPositionVector().subtract(this.getPositionVector());
 		
 		EntityDalekRay ball = new EntityDalekRay(world, this);
-		ball.setPosition(posX + this.getLookVec().x, posY + (this.height / 2), posZ + this.getLookVec().z);
+		ball.setPosition(posX + this.getLookVec().x, posY + this.getEyeHeight(), posZ + this.getLookVec().z);
 		world.spawnEntity(ball);
 		world.playSound(null, this.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);
 		if(this.rand.nextInt(3) == 0)world.playSound(null, this.getPosition(), TSounds.dalek, SoundCategory.HOSTILE, 1F, 1F);
@@ -81,17 +81,19 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	public void onUpdate() {
 		super.onUpdate();
 		if(this.getAttackTarget() != null) {
-			if(this.getAttackTarget().posY > this.posY + 5) {
+			if(this.getAttackTarget().posY > this.posY + 2) {
 				this.setNoGravity(true);
 				this.motionY = 0.02;
-				Vec3d dir = this.getPositionVector().subtract(this.getAttackTarget().getLookVec()).normalize().scale(0.5);
+			}
+			else if(this.hasNoGravity())this.motionY = -0.02;
+			this.fallDistance = 0;
+			if(this.hasNoGravity()) {
+				Vec3d dir = this.getAttackTarget().getPositionVector().subtract(this.getPositionVector()).normalize().scale(0.3D);
 				this.motionX = dir.x;
 				this.motionZ = dir.z;
 			}
-			else this.motionY = -0.02;
-			this.fallDistance = 0;
 		}
-		if(this.onGround) this.setNoGravity(false);
+		if(this.onGround || !this.isAirBorne) this.setNoGravity(false);
 	}
 
 	@Override
