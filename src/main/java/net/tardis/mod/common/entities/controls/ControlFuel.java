@@ -1,6 +1,7 @@
 package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -29,8 +30,12 @@ public class ControlFuel extends EntityControl {
 			TileEntityTardis t = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			t.setFueling(!t.isFueling());
 			PlayerHelper.sendMessage(player, t.isFueling() ? "tardis.message.refuelling" : "tardis.message.no_longer_refuelling", true);
-		} else
-			ticks = 20;
+		} else {
+			TileEntity te = world.getTileEntity(getConsolePos());
+			if(te != null && te instanceof TileEntityTardis) {
+				((TileEntityTardis)te).aniObj.animate(this);
+			}
+		}
 	}
 	
 }

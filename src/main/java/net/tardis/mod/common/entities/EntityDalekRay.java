@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 
 public class EntityDalekRay extends EntityThrowable {
 	
+
 	public static final float SPEED = 2F;
 	
 	public EntityDalekRay(World worldIn) {
@@ -30,6 +31,14 @@ public class EntityDalekRay extends EntityThrowable {
 	@Override
 	protected float getGravityVelocity() {
 		return 0.000F;
+	}
+	
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if(this.motionX + this.motionY + this.motionZ == 0 || this.ticksExisted >= 200) {
+			this.setDead();
+		}
 	}
 	
 }

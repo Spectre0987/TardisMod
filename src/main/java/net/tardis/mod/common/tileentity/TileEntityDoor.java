@@ -42,6 +42,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.packets.MessageDemat;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
@@ -54,11 +55,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public boolean isLocked = true;
 	public int lockCooldown = 0;
 	private int updateTicks = 0;
-	public int fadeTicks = 0;
 	public int openingTicks = 0;
-	public static float alpha = 1;
-	public static boolean isDemat = false;
-	public static boolean isRemat = false;
+	public float alpha = 1;
+	public boolean isDemat = false;
+	public boolean isRemat = false;
 	public static int radius = 10;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	
@@ -193,16 +193,23 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(), 16D));
 			}
 		}
-		if (fadeTicks > 0) --fadeTicks;
 		if(openingTicks > 0) {
 			--openingTicks;
 		}
 		
 		if(isRemat) {
-			if(alpha < 1 && alpha >= 0) alpha += 0.005F;
+			if(alpha < 1.0F)alpha += 0.005F;
+			else {
+				this.isRemat = false;
+			}
 		}
 		if(isDemat) {
-			if(alpha > 0 && alpha <= 1) alpha -= 0.005F;
+			alpha -= 0.005F;
+			if(alpha <= 0) {
+				this.isDemat = false;
+				this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
+				this.world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());
+			}
 		}
 		
 	}
@@ -224,10 +231,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return new AxisAlignedBB(getPos().getX(), getPos().getY() - 1, getPos().getZ(), getPos().getX() + 1, getPos().getY() + 1.5, getPos().getZ() + 1);
-	}
-	
-	public void fadeIn() {
-		this.fadeTicks = 60;
 	}
 	
 	public void setConsolePos(BlockPos pos) {
@@ -351,10 +354,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void setRemat() {
 		this.alpha = 0;
 		this.isRemat = true;
+		if(!world.isRemote)Tardis.NETWORK.sendToAllAround(new MessageDemat(this.getPos(), false), new TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 64));
 	}
 	
 	public void setDemat() {
 		this.alpha = 1;
 		this.isDemat = true;
+		if(!world.isRemote)Tardis.NETWORK.sendToAllAround(new MessageDemat(this.getPos(), true), new TargetPoint(world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 64));
 	}
 }

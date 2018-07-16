@@ -1,5 +1,9 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -15,7 +19,11 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -31,14 +39,28 @@ import net.tardis.mod.common.animations.AnimationObject;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.controls.*;
+import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDirection;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
+import net.tardis.mod.common.entities.controls.ControlFlight;
+import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
+import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlRandom;
+import net.tardis.mod.common.entities.controls.ControlSTCButton;
+import net.tardis.mod.common.entities.controls.ControlSTCLoad;
+import net.tardis.mod.common.entities.controls.ControlScreen;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlX;
+import net.tardis.mod.common.entities.controls.ControlY;
+import net.tardis.mod.common.entities.controls.ControlZ;
+import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
@@ -131,7 +153,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			World oWorld = world.getMinecraftServer().getWorld(dimension);
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld, getDestination());
 			if (nPos != null) {
-				boolean b = dWorld.setBlockState(nPos, blockBase);
+				dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				TileEntity door = dWorld.getTileEntity(nPos.up());
 				if (door instanceof TileEntityDoor) {
@@ -323,11 +345,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (!world.isRemote) {
 			WorldServer oWorld = world.getMinecraftServer().getWorld(dimension);
 			if(oWorld.getTileEntity(tardisLocation.up()) != null) {				
-				((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).setRemat();
-				if(((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).alpha <= 1) {					
-					oWorld.setBlockToAir(this.tardisLocation);
-					oWorld.setBlockToAir(this.tardisLocation.up());
-				}
+				((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).setDemat();
 			}
 			EntityControl door = this.getControl(ControlDoor.class);
 			((ControlDoor) door).setOpen(false);
