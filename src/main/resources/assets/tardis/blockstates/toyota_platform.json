@@ -1,0 +1,10 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:toyota_platform"
+        },
+        "inventory":{
+             "model":"tardis:toyota_platform"
+        }
+    }
+}
