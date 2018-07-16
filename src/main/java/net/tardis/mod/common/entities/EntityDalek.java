@@ -57,7 +57,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 		Vec3d look = target.getPositionVector().subtract(this.getPositionVector());
-		
+		faceEntity(target, 30, 30);
 		EntityDalekRay ball = new EntityDalekRay(world, this);
 		ball.setPosition(posX + this.getLookVec().x, posY + this.getEyeHeight(), posZ + this.getLookVec().z);
 		world.spawnEntity(ball);
@@ -68,12 +68,16 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	@Override
 	public void setSwingingArms(boolean swingingArms) {}
 
+	@Override
+	protected void jump() {
+		setNoGravity(true);
+	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if(this.getAttackTarget() != null) {
-			if(this.getAttackTarget().posY > this.posY + 2) {
+			if (this.getAttackTarget().posY > this.posY + 2 || this.isInWater() || isAirBorne) {
 				this.setNoGravity(true);
 				this.motionY = 0.02;
 			}

@@ -7,12 +7,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.tardis.mod.client.models.entity.ModelDalek;
 import net.tardis.mod.common.entities.EntityDalek;
+import org.lwjgl.util.glu.Sphere;
 
 import javax.annotation.Nullable;
 
 public class RenderDalek extends RenderLiving<EntityDalek> {
 
     private ModelDalek dalek = new ModelDalek();
+    private Sphere spehere = new Sphere();
 
     public RenderDalek() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelDalek(), 1.0F);
@@ -27,8 +29,18 @@ public class RenderDalek extends RenderLiving<EntityDalek> {
             GlStateManager.translate(0, -offset, 0);
         }
 
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+        GlStateManager.color(0.2f, 0.2f, 1, 0.5f);
+        spehere.setTextureFlag(false);
+        spehere.draw(1.5f, 32, 32);
+        GlStateManager.disableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+        GlStateManager.popMatrix();
+
         dalek.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
         GlStateManager.popMatrix();
+
+
     }
 
     /**
