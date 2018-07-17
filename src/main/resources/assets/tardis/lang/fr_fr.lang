@@ -43,6 +43,7 @@ tile.food_machine.name=Machine à nourriture
 tile.electric_panel.name=Tableau électrique
 tile.megalos.name=Meglos
 tile.console.name=Console
+tile.toyota_hexagon_1.name=Bloc Toyota
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=TARDIS a été ouvert.
