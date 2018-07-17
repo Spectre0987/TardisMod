@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -148,11 +149,21 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void travel() {
 		if (!world.isRemote) {
+			Random rand = new Random();
 			this.ticksToTravel = 0;
 			World dWorld = world.getMinecraftServer().getWorld(destDim);
 			World oWorld = world.getMinecraftServer().getWorld(dimension);
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld, getDestination());
 			if (nPos != null) {
+				//TnT Stuff
+				if(dWorld.getTileEntity(nPos.down()) instanceof TileEntityDoor) {
+					nPos = ((TileEntityDoor)dWorld.getTileEntity(nPos.down())).getConsolePos().add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
+					dWorld = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+					while(dWorld.getBlockState(nPos).getMaterial() != Material.AIR || dWorld.getBlockState(nPos.up()).getMaterial() != Material.AIR) {
+						nPos.add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
+					}
+					this.destDim = TDimensions.TARDIS_ID;
+				}
 				dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				TileEntity door = dWorld.getTileEntity(nPos.up());
