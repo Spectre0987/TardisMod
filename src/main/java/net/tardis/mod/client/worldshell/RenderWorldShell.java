@@ -40,7 +40,10 @@ public class RenderWorldShell {
 				for (BlockPos bp : container.getWorldShell().blockMap.keySet()) {
 					if (bp == null)
 						continue;
-					Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
+					try {
+						Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
+					}
+					catch(Exception e) {}
 				}
 				container.getWorldShell().bufferstate = bb.getVertexState();
 			}
@@ -54,14 +57,21 @@ public class RenderWorldShell {
 	        GlStateManager.enableLighting();
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
-					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),
-							t.getPos().getZ(), partialTicks);
+					try {
+						TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),t.getPos().getZ(), partialTicks);
+					}
+					catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			if(container.getWorldShell().getEntities() != null) {
 				for(NBTTagCompound stor : container.getWorldShell().getEntities()) {
-					Entity e = EntityList.createEntityFromNBT(stor, Minecraft.getMinecraft().world);
-					if(e != null)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
+					try {
+						Entity e = EntityList.createEntityFromNBT(stor, Minecraft.getMinecraft().world);
+						if(e != null)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
+					}
+					catch(Exception e) {}
 				}
 			}
 			GlStateManager.popMatrix();

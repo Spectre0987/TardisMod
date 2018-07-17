@@ -44,13 +44,13 @@ public class RenderHelper {
 			// Draw scene from portal view
 			
 			try {
-			GlStateManager.pushMatrix();
-			GlStateManager.rotate(180,0,1,0);
-			GlStateManager.rotate(rotation, 0, 1, 0);
-			mc.entityRenderer.disableLightmap();
-			renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
-			mc.entityRenderer.enableLightmap();
-			GlStateManager.popMatrix();
+				GlStateManager.pushMatrix();
+				GlStateManager.rotate(180,0,1,0);
+				GlStateManager.rotate(rotation, 0, 1, 0);
+				mc.entityRenderer.disableLightmap();
+				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
+				mc.entityRenderer.enableLightmap();
+				GlStateManager.popMatrix();
 			}
 			catch(Exception e) {}
 	
@@ -83,6 +83,7 @@ public class RenderHelper {
 	
 	public static void drawOutline(@Nullable Vec3d size) {
 		if(size == null)size = new Vec3d(1,2,0);
+		GlStateManager.pushMatrix();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(RenderDoor.BLACK);
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
@@ -92,6 +93,7 @@ public class RenderHelper {
 		buf.pos(size.x, size.y, 0).tex(1, 1).endVertex();
 		buf.pos(size.x, 0, 0).tex(1, 0).endVertex();
 		tes.draw();
+		GlStateManager.popMatrix();
 	}
 
 }

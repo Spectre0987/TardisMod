@@ -181,7 +181,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {
 					IBlockState state = tardisWorld.getBlockState(pos);
 					if(state.getBlock() != Blocks.AIR) {
-						worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), tardisWorld.getLight(pos)));
+						worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), 15));
 					}
 				}
 				List<NBTTagCompound> lists = new ArrayList<NBTTagCompound>();

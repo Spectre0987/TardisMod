@@ -1,7 +1,13 @@
 package net.tardis.mod.client.worldshell;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -14,11 +20,8 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WorldShell implements IBlockAccess {
 
@@ -35,6 +38,7 @@ public class WorldShell implements IBlockAccess {
 
     private Biome shellBiome = Biome.getBiome(0);
 
+    @SideOnly(Side.CLIENT)
 	public BufferBuilder.State bufferstate;
 	public boolean updateRequired = false;
 
@@ -48,11 +52,13 @@ public class WorldShell implements IBlockAccess {
 		return offset;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public TileEntity getTileEntity(BlockPos pos) {
-		return blockMap.get(pos).tileentity;
+		return TileEntity.create(Minecraft.getMinecraft().world, blockMap.get(pos).tileentity);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getCombinedLight(BlockPos pos, int lightValue) {
 		return 15;
@@ -81,6 +87,7 @@ public class WorldShell implements IBlockAccess {
 		return blockMap.get(pos).blockstate.getMaterial() == Material.AIR;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Biome getBiome(BlockPos pos) {
         return shellBiome;
@@ -91,6 +98,7 @@ public class WorldShell implements IBlockAccess {
 		return 0;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public WorldType getWorldType() {
 		return WorldType.DEFAULT;
@@ -107,12 +115,14 @@ public class WorldShell implements IBlockAccess {
 		return tesrs;
 	}
 
+	@SideOnly(Side.CLIENT)
 	public void setTESRs() {
 		for (BlockStorage bs : blockMap.values()) {
 			if (bs.tileentity != null) {
-                TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers.get(bs.tileentity.getClass());
+				TileEntity te = TileEntity.create(Minecraft.getMinecraft().world, bs.tileentity);
+                TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers.get(te.getClass());
 				if (renderer != null)
-					tesrs.add(bs.tileentity);
+					tesrs.add(te);
 			}
 		}
 	}
