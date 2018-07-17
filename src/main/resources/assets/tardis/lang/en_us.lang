@@ -43,6 +43,7 @@ tile.food_machine.name=Food Machine
 tile.electric_panel.name=Electric Interface Panel
 tile.megalos.name=Meglos
 tile.console.name=Console
+tile.toyota_hexagon_1.name=Toyota Block
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!

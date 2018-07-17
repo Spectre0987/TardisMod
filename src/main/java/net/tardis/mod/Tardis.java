@@ -186,8 +186,6 @@ public class Tardis {
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 		
 		proxy.preInit();
-		
-		GenerateJson.generateFacingBlockstate("cat_ore");
 	}
 	
 	@EventHandler

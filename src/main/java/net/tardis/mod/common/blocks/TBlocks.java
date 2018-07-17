@@ -9,10 +9,12 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.blocks.BlockToyota.BlockToyotaFacing;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+import net.tardis.mod.util.GenerateJson;
 
 @Mod.EventBusSubscriber
 public class TBlocks {
@@ -115,29 +117,29 @@ public class TBlocks {
 		register(holoprojector, "holoprojector");
 		
 		//Toyota
-		toyota_hexagon_1 = new BlockToyota(false);
+		toyota_hexagon_1 = new BlockToyotaFacing(false);
 		register(toyota_hexagon_1, "toyota_hexagon_1");
-		toyota_hexagon_2 = new BlockToyota(false);
+		toyota_hexagon_2 = new BlockToyotaFacing(false);
 		register(toyota_hexagon_2, "toyota_hexagon_2");
-		toyota_hexagon_3 = new BlockToyota(false);
+		toyota_hexagon_3 = new BlockToyotaFacing(false);
 		register(toyota_hexagon_3, "toyota_hexagon_3");
-		toyota_hexagon_4 = new BlockToyota(false);
+		toyota_hexagon_4 = new BlockToyotaFacing(false);
 		register(toyota_hexagon_4, "toyota_hexagon_4");
 		
-		toyota_hexalight_1 = new BlockToyota(true);
+		toyota_hexalight_1 = new BlockToyotaFacing(true);
 		register(toyota_hexalight_1, "toyota_hexalight_1");
-		toyota_hexalight_2 = new BlockToyota(true);
+		toyota_hexalight_2 = new BlockToyotaFacing(true);
 		register(toyota_hexalight_2, "toyota_hexalight_2");
-		toyota_hexalight_3 = new BlockToyota(true);
+		toyota_hexalight_3 = new BlockToyotaFacing(true);
 		register(toyota_hexalight_3, "toyota_hexalight_3");
-		toyota_hexalight_4 = new BlockToyota(true);
+		toyota_hexalight_4 = new BlockToyotaFacing(true);
 		register(toyota_hexalight_4, "toyota_hexalight_4");
 		
-		toyota_hexalight_off1 = new BlockToyota(false);
+		toyota_hexalight_off1 = new BlockToyotaFacing(false);
 		register(toyota_hexalight_off1, "toyota_hexalight_off1");
-		toyota_hexalight_off2 = new BlockToyota(true);
+		toyota_hexalight_off2 = new BlockToyotaFacing(true);
 		register(toyota_hexalight_off2, "toyota_hexalight_off2");
-		toyota_hexalight_off3 = new BlockToyota(false);
+		toyota_hexalight_off3 = new BlockToyotaFacing(false);
 		register(toyota_hexalight_off3, "toyota_hexalight_off3");
 		
 		toyota_light_emergency = new BlockToyota(true);
@@ -186,6 +188,11 @@ public class TBlocks {
 			json_tester = new BlockJsonTester();
 			register(json_tester, "json_tester");
 		}
+	}
+	
+	public static void registerGen(Block item, String name) {
+		GenerateJson.generateFacingBlockstate(name);
+		register(item, name);
 	}
 	
 }
