@@ -83,6 +83,7 @@ import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageTelepathicCircut;
 import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
+import net.tardis.mod.util.GenerateJson;
 import net.tardis.mod.util.helpers.EntityHelper;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, useMetadata = true, dependencies = Tardis.DEP)
@@ -185,6 +186,8 @@ public class Tardis {
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 		
 		proxy.preInit();
+		
+		GenerateJson.generateFacingBlockstate("cat_ore");
 	}
 	
 	@EventHandler

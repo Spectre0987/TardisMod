@@ -83,7 +83,7 @@ public class Helper {
 	}
 	
 	public static boolean isDimensionBlocked(int id) {
-        if (id == TDimensions.TARDIS_ID) return true;
+       if (id == TDimensions.TARDIS_ID) return true;
         if(DimensionManager.createProviderFor(id) instanceof IBlockedDimension)return true;
         boolean isW = TardisConfig.Dimensions.USE_WHITELIST;
 		for (int i : TardisConfig.Dimensions.bDims) {

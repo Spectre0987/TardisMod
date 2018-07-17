@@ -66,15 +66,19 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
 		consolePos = BlockPos.fromLong(tag.getLong("tPos"));
 		isLocked = tag.getBoolean("locked");
-		super.readFromNBT(tag);
+		this.isDemat = tag.getBoolean("demat");
+		this.isRemat = tag.getBoolean("remat");
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		tag.setLong("tPos", consolePos.toLong());
 		tag.setBoolean("locked", isLocked);
+		tag.setBoolean("demat", this.isDemat);
+		tag.setBoolean("remat", this.isRemat);
 		return super.writeToNBT(tag);
 	}
 	
@@ -84,7 +88,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
             isLocked = !isLocked;
 			this.markDirty();
 			if (!world.isRemote) {
-				Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this.isLocked()), world.provider.getDimension());
+				Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this), world.provider.getDimension());
 				if (isLocked)
 					world.playSound(null, getPos(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 1F);
 				else
@@ -129,28 +133,29 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
 			
 			if (!entities.isEmpty()) {
-					for (Entity entity : entities) {
-						entity.dismountRidingEntity();
-						entity.removePassengers();
-						if (entity instanceof EntityPlayerMP) {
-							if(!this.isLocked()) {
-								EntityPlayerMP p = (EntityPlayerMP) entity;
-								p.motionX = 0;
-								p.motionY = 0;
-								p.motionZ = 0;
-								p.connection.sendPacket(new SPacketEntityVelocity(p));
-                                ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(p, TDimensions.TARDIS_ID, new TardisTeleporter(ws));
-								p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
-								MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
-							}
-						} else {
-							if (!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase) entity), this.getConsolePos())) {
-								entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
-                                entity.changeDimension(TDimensions.TARDIS_ID);
-								MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
-								this.setLocked(false);
-							}
+				for (Entity entity : entities) {
+					entity.dismountRidingEntity();
+					entity.removePassengers();
+					if (entity instanceof EntityPlayerMP) {
+						if(!this.isLocked()) {
+							EntityPlayerMP p = (EntityPlayerMP) entity;
+							p.motionX = 0;
+							p.motionY = 0;
+							p.motionZ = 0;
+							p.connection.sendPacket(new SPacketEntityVelocity(p));
+                            if(world.provider.getDimension() != TDimensions.TARDIS_ID)
+                            	ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(p, TDimensions.TARDIS_ID, new TardisTeleporter(ws));
+							p.connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+							MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
 						}
+					} else {
+						if (!this.isLocked() || entity instanceof EntityLivingBase && TardisHelper.hasValidKey(((EntityLivingBase) entity), this.getConsolePos())) {
+							entity.setPositionAndRotation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, 0, 0);
+                            entity.changeDimension(TDimensions.TARDIS_ID);
+							MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, new BlockPos(cPos.getX() + 0.5, cPos.getY(), cPos.getZ() + 0.5)));
+							this.setLocked(false);
+						}
+					}
 				}
 			}
 
@@ -160,7 +165,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				if(e instanceof IProjectile || e instanceof IMob) {
 					try{
                         ((TileEntityTardis) DimensionManager.getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos())).startHADS();
-						e.setDead();
 					}
 					catch(Exception exc) {}
 				}
@@ -168,7 +172,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			if (lockCooldown > 0) --lockCooldown;
 			++this.updateTicks;
 			if (this.updateTicks > 20) {
-				Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(), this.isLocked()), new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64D));
+				Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(), this), new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64D));
 				this.updateTicks = 0;
 			}
 			if(!this.isLocked() && world.getTotalWorldTime() % 5 == 0) {
@@ -214,6 +218,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		
 	}
 	
+	public boolean canOpen() {
+		return !this.isDemat && !this.isRemat ? true : false;
+	}
+
+	public void sendDematPacket(boolean demat) {
+		if(!world.isRemote)Tardis.NETWORK.sendToAllAround(new MessageDemat(this.getPos(), demat), new TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 64));
+	}
+	
 	public boolean isLocked() {
 		return this.isLocked;
 	}
@@ -225,7 +237,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public void onLoad() {
 		super.onLoad();
-		if (!world.isRemote) Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this.isLocked()), world.provider.getDimension());
+		if (!world.isRemote) Tardis.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this), world.provider.getDimension());
 	}
 	
 	@Override
@@ -354,12 +366,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void setRemat() {
 		this.alpha = 0;
 		this.isRemat = true;
-		if(!world.isRemote)Tardis.NETWORK.sendToAllAround(new MessageDemat(this.getPos(), false), new TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 64));
+		this.sendDematPacket(false);
 	}
 	
 	public void setDemat() {
 		this.alpha = 1;
 		this.isDemat = true;
-		if(!world.isRemote)Tardis.NETWORK.sendToAllAround(new MessageDemat(this.getPos(), true), new TargetPoint(world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 64));
+		this.sendDematPacket(true);
 	}
 }

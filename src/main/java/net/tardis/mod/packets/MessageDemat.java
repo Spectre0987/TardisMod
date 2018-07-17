@@ -11,20 +11,24 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 
 public class MessageDemat implements IMessage {
 
-	boolean isDemat;
-	BlockPos pos;
+	public boolean isDemat;
+	public BlockPos pos;
 	
 	public MessageDemat() {}
 	
 	public MessageDemat(BlockPos pos1, boolean b){
 		this.pos = pos1;
 		this.isDemat = b;
+		System.out.println("Remat pakets are not a myth.");
 	}
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.pos = BlockPos.fromLong(buf.readLong());
 		this.isDemat = buf.readBoolean();
+		if(!isDemat) {
+			System.out.println("Remat exists");
+		}
 	}
 
 	@Override
@@ -38,16 +42,17 @@ public class MessageDemat implements IMessage {
 		public Handler() {}
 		
 		@Override
-		public IMessage onMessage(MessageDemat message, MessageContext ctx) {
+		public IMessage onMessage(MessageDemat mes, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.pos);
+					TileEntity te = Minecraft.getMinecraft().world.getTileEntity(mes.pos);
 					if(te != null && te instanceof TileEntityDoor) {
-						if(message.isDemat) {
+						if(mes.isDemat) {
 							((TileEntityDoor)te).setDemat();
 						}
 						else {
+							System.out.println("Hello!");
 							((TileEntityDoor)te).setRemat();
 						}
 					}

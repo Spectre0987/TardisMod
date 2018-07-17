@@ -1,5 +1,8 @@
 package net.tardis.mod.common.entities.controls;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -28,15 +31,13 @@ import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	
@@ -148,7 +149,8 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 					if(e instanceof EntityPlayerMP) {
 						EntityPlayerMP mp = (EntityPlayerMP)e;
 						if(!mp.isSneaking()) {
-							ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, tardis.dimension, new TardisTeleporter());
+							if(tardis.dimension != TDimensions.TARDIS_ID)
+								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, tardis.dimension, new TardisTeleporter());
 							mp.connection.setPlayerLocation(pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 							mp.setSpawnPoint(pos, true);
 						}

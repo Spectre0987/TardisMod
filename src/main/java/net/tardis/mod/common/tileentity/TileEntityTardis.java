@@ -158,7 +158,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				TileEntity door = dWorld.getTileEntity(nPos.up());
 				if (door instanceof TileEntityDoor) {
 					((TileEntityDoor) door).setConsolePos(this.getPos());
-					((TileEntityDoor) door).setRemat();
+					((TileEntityDoor) dWorld.getTileEntity(nPos.up())).setRemat();
 				}
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
@@ -264,6 +264,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void setDesination(BlockPos pos, int dimension) {
 		this.tardisDestination = pos.up().toImmutable();
+		if(Helper.isDimensionBlocked(dimension))
+			dimension = 0;
 		this.destDim = dimension;
 		this.markDirty();
 		if (!world.isRemote) {
