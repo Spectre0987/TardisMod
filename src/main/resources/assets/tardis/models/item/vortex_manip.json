@@ -5,6 +5,12 @@
             "translation":[5,10,0],
             "rotation":[22.5,45,90],
             "scale":[1,1,1]
+        },
+        "firstperson_righthand":{
+            "scale":[0,0,0]
+        },
+        "thirdperson_righthand":{
+            "scale":[0,0,0]
         }
     }
 }
