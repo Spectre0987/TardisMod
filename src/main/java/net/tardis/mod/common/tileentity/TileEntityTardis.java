@@ -159,8 +159,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				if(dWorld.getTileEntity(nPos.down()) instanceof TileEntityDoor) {
 					nPos = ((TileEntityDoor)dWorld.getTileEntity(nPos.down())).getConsolePos().add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
 					dWorld = DimensionManager.getWorld(TDimensions.TARDIS_ID);
-					while(dWorld.getBlockState(nPos).getMaterial() != Material.AIR || dWorld.getBlockState(nPos.up()).getMaterial() != Material.AIR) {
+					for(int landCheck = 0; landCheck < 10; landCheck++) {
 						nPos.add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
+						if(dWorld.getBlockState(nPos).getMaterial() == Material.AIR && dWorld.getBlockState(nPos.up()).getMaterial() == Material.AIR) {
+							break;
+						}
 					}
 					this.destDim = TDimensions.TARDIS_ID;
 				}
@@ -196,9 +199,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public BlockPos getLandingBlock(World world, BlockPos pos) {
 		if (this.landOnSurface) {
-			return world.getTopSolidOrLiquidBlock(pos);
+			return Helper.getSafeHigherPos(world, pos, getFacing());
 		}
-		return Helper.getLowestBlock(world, pos);
+		return Helper.getSafeHigherPos(world, pos, facing);
 	}
 	
 	@Override

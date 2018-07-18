@@ -180,7 +180,7 @@ public class Helper {
 				return lPos;
 			}
 		}
-		return Helper.getSafeHigherPos(world, pos, facing);
+		return Helper.getSafeHigherPos(world, pos.add(rand.nextInt(10) - 5, 0, rand.nextInt(10) - 5), facing);
 	}
 	
 	public static BlockPos getSafeHigherPos(World world, BlockPos pos, EnumFacing facing) {
@@ -190,7 +190,7 @@ public class Helper {
 				return lPos;
 			}
 		}
-		return Helper.getSafePosLower(pos, world, facing);
+		return Helper.getSafePosLower(pos.add(rand.nextInt(10) - 5, 0, rand.nextInt(10) - 5),  world, facing);
 	}
 
 	public static float precentToPixels(float f) {
