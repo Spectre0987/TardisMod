@@ -31,6 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.renderers.RenderItemSonicPen;
@@ -103,7 +104,7 @@ public class TEventHandler {
 	
 	@SubscribeEvent
 	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
-		event.getRegistry().register(new RecipeKey("spare_key"));
+		event.getRegistry().register(new RecipeKey(Tardis.MODID + ":spare_key"));
 	}
 	
 	
