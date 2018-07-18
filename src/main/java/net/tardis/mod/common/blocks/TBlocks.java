@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.BlockToyota.BlockToyotaFacing;
+import net.tardis.mod.common.blocks.BlockToyota.BlockToyotaSlab;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
@@ -56,6 +57,9 @@ public class TBlocks {
 	public static Block toyota_wallroundel_4;
 	public static Block toyota_wallroundel_5;
 	public static Block toyota_wallroundel_6;
+	
+	public static Block toyota_platform_full;
+	public static Block toyota_platform_slab;
 	
 	public static Block sonicRedstone;
 	
@@ -174,6 +178,11 @@ public class TBlocks {
 		toyota_wallroundel_6 = new BlockToyota(false);
 		register(toyota_wallroundel_6, "toyota_wallroundel_6");
 		
+		toyota_platform_full = new BlockToyota(false);
+		register(toyota_platform_full, "toyota_platform_full");
+		
+		toyota_platform_slab = new BlockToyotaSlab(false);
+		register(toyota_platform_slab, "toyota_platform_slab");
 		
 		
 		//Exteriors
