@@ -46,7 +46,9 @@ public class TBlocks {
 	public static Block toyota_light_emergency;
 	public static Block toyota_light_off;
 	public static Block toyota_light_on;
+	public static Block toyota_upper_divider;
 	public static Block toyota_platform;
+	public static Block toyota_platform_top;
 	public static Block toyota_platform_light;
 	public static Block toyota_roof;
 	public static Block toyota_roof_light;
@@ -152,11 +154,15 @@ public class TBlocks {
 		register(toyota_light_off, "toyota_light_off");
 		toyota_light_on = new BlockToyota(true);
 		register(toyota_light_on, "toyota_light_on");
+		toyota_upper_divider = new BlockToyota(false);
+		register(toyota_upper_divider, "toyota_upper_divider");
 		
 		toyota_platform = new BlockToyota(false);
 		register(toyota_platform, "toyota_platform");
 		toyota_platform_light = new BlockToyota(true);
 		register(toyota_platform_light, "toyota_platform_light");
+		toyota_platform_top = new BlockToyota(false);
+		register(toyota_platform_top, "toyota_platform_top");
 		
 		toyota_roof = new BlockToyota(false);
 		register(toyota_roof, "toyota_roof");

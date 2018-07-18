@@ -1,0 +1,10 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:toyota_upper_divider"
+        },
+        "inventory":{
+             "model":"tardis:toyota_upper_divider"
+        }
+    }
+}
