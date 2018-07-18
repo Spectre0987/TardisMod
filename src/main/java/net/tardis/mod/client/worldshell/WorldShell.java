@@ -31,6 +31,7 @@ public class WorldShell implements IBlockAccess {
 	private List<TileEntity> tesrs;
 	//Entities to render
 	private List<NBTTagCompound> entities;
+	private List<PlayerStorage> players = new ArrayList<>();
 	// The distance between the root of the worldShell and (0,0,0). Subtracting this
 	// from the coords in BlockMap should give you positions in relative terms for
 	// rendering
@@ -133,5 +134,13 @@ public class WorldShell implements IBlockAccess {
 	
 	public void setEntities(List<NBTTagCompound> entity) {
 		this.entities = entity;
+	}
+	
+	public void setPlayers(List<PlayerStorage> storage) {
+		this.players = storage;
+	}
+	
+	public List<PlayerStorage> getPlayers() {
+		return this.players;
 	}
 }

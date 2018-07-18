@@ -72,6 +72,18 @@ public class RenderWorldShell {
 					catch(Exception e) {}
 				}
 			}
+			
+			if(container.getWorldShell().getPlayers() != null) {
+				for(PlayerStorage stor : container.getWorldShell().getPlayers()) {
+					try {
+						GlStateManager.pushMatrix();
+						Minecraft.getMinecraft().getTextureManager().bindTexture(Minecraft.getMinecraft().getConnection().getPlayerInfo(stor.profile.getId()).getLocationSkin());
+						GlStateManager.translate(stor.posX, stor.posY, stor.posZ);
+						//new ModelPlayer(0.0625F, false).render(null, 0, 0, 0, 0, 0, 0.0625F);
+						GlStateManager.popMatrix();
+					} catch(Exception e) {}
+				}
+			}
 			GlStateManager.popMatrix();
 		}
 	}

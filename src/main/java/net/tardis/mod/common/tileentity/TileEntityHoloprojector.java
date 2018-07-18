@@ -8,6 +8,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
@@ -21,6 +23,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -56,6 +59,11 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 								lists.add(tag);
 							}
 						}
+						List<PlayerStorage> players = new ArrayList<PlayerStorage>();
+						for(EntityPlayer player : ws.getEntitiesWithinAABB(EntityPlayerMP.class, Helper.createBB(tardis.getLocation(), 16))) {
+							players.add(new PlayerStorage(player));
+						}
+						worldShell.setPlayers(players);
 						worldShell.setEntities(lists);
 						Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
 					}

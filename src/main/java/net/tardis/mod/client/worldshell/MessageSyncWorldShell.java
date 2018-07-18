@@ -57,6 +57,13 @@ public class MessageSyncWorldShell implements IMessage {
 			tagList.add(ByteBufUtils.readTag(buf));
 		}
 		worldShell.setEntities(tagList);
+		
+		List<PlayerStorage> players = new ArrayList<PlayerStorage>();
+		int playerSize = buf.readInt();
+		for(int pIndex = 0; pIndex < playerSize; ++pIndex) {
+			players.add(PlayerStorage.fromBytes(buf));
+		}
+		worldShell.setPlayers(players);
 	}
 
 	@Override
@@ -77,6 +84,11 @@ public class MessageSyncWorldShell implements IMessage {
 			}
 		}
 		else buf.writeInt(0);
+		
+		buf.writeInt(worldShell.getPlayers().size());
+		for(PlayerStorage stor : worldShell.getPlayers()) {
+			stor.toBytes(buf);
+		}
 	}
 	
 	public static class Handler implements IMessageHandler<MessageSyncWorldShell, IMessage> {
