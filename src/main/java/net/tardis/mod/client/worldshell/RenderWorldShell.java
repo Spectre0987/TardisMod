@@ -60,9 +60,7 @@ public class RenderWorldShell {
 					try {
 						TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),t.getPos().getZ(), partialTicks);
 					}
-					catch(Exception e) {
-						e.printStackTrace();
-					}
+					catch(Exception e) {}
 				}
 			}
 			if(container.getWorldShell().getEntities() != null) {

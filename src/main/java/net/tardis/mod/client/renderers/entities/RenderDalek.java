@@ -1,5 +1,9 @@
 package net.tardis.mod.client.renderers.entities;
 
+import javax.annotation.Nullable;
+
+import org.lwjgl.util.glu.Sphere;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -7,9 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.tardis.mod.client.models.entity.ModelDalek;
 import net.tardis.mod.common.entities.EntityDalek;
-import org.lwjgl.util.glu.Sphere;
-
-import javax.annotation.Nullable;
 
 public class RenderDalek extends RenderLiving<EntityDalek> {
 
@@ -29,7 +30,7 @@ public class RenderDalek extends RenderLiving<EntityDalek> {
             GlStateManager.translate(0, -offset, 0);
         }
 
-        GlStateManager.pushMatrix();
+        /*GlStateManager.pushMatrix();
         GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
         GlStateManager.color(0.2f, 0.2f, 1, 0.5f);
         spehere.setTextureFlag(false);
@@ -37,6 +38,7 @@ public class RenderDalek extends RenderLiving<EntityDalek> {
         GlStateManager.disableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
         GlStateManager.popMatrix();
 
+        GlStateManager.color(1F, 1F, 1F, 1F);*/
         dalek.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
         GlStateManager.popMatrix();
 
