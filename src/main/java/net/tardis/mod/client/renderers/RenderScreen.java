@@ -1,11 +1,10 @@
 package net.tardis.mod.client.renderers;
 
-import java.awt.Color;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
@@ -13,6 +12,8 @@ import net.tardis.mod.client.models.console.contols.ModelScreen;
 import net.tardis.mod.common.entities.controls.ControlScreen;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
+
+import java.awt.*;
 
 public class RenderScreen extends Render {
 	
@@ -22,9 +23,9 @@ public class RenderScreen extends Render {
 	Minecraft mc;
 	FontRenderer fr;
 	int line = 0;
-	
-	public RenderScreen() {
-		super(Minecraft.getMinecraft().getRenderManager());
+
+    public RenderScreen(RenderManager manager) {
+        super(manager);
 		mc = Minecraft.getMinecraft();
 		fr = mc.fontRenderer;
 	}
