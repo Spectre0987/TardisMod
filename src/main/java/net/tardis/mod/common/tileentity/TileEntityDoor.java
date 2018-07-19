@@ -36,6 +36,7 @@ import net.tardis.mod.api.events.TardisEnterEvent;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -175,7 +176,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				Tardis.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(), this), new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64D));
 				this.updateTicks = 0;
 			}
-			if(!this.isLocked() && world.getTotalWorldTime() % 5 == 0) {
+			if(!this.isLocked() /*&& world.getTotalWorldTime() % 5 == 0*/) {
 				worldShell = new WorldShell(this.getConsolePos());
                 WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 				for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {
@@ -193,6 +194,11 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						lists.add(tag);
 					}
 				}
+				List<PlayerStorage> players = new ArrayList<PlayerStorage>();
+				for(EntityPlayer player : tardisWorld.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(getConsolePos(), 10))) {
+					players.add(new PlayerStorage(player));
+				}
+				worldShell.setPlayers(players);
 				worldShell.setEntities(lists);
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(), 16D));
 			}

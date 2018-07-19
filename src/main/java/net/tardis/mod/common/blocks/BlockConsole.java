@@ -77,7 +77,7 @@ public class BlockConsole extends BlockContainer implements IUnbreakable, IRende
 	}
 
 	@Override
-	public boolean renderBox() {
+	public boolean shouldRenderBox() {
 		return false;
 	}
 }

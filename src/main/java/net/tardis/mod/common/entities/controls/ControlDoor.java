@@ -29,6 +29,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -161,7 +162,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 					}
 				}
 			}
-			if(this.ticksExisted % 5 == 0) {
+			if(/*this.ticksExisted % 5 == 0*/true) {
 				this.shell = new WorldShell(tardis.getLocation().up().offset(this.getFacing(), 11));
 				Vec3i r = new Vec3i(10, 10, 10);
 				IBlockState doorState = ws.getBlockState(tardis.getLocation().up());
@@ -185,6 +186,11 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 						list.add(tag);
 					}
 				}
+				List<PlayerStorage> players = new ArrayList<PlayerStorage>();
+				for(EntityPlayer player : ws.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(tardis.getLocation().offset(facing, 10), 10))) {
+					players.add(new PlayerStorage(player));
+				}
+				shell.setPlayers(players);
 				shell.setEntities(list);
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}

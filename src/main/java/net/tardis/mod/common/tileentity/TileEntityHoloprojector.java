@@ -35,7 +35,7 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 
 	@Override
 	public void update() {
-		if(!world.isRemote && world.getTotalWorldTime() % 5 == 0) {
+		if(!world.isRemote /*&& world.getTotalWorldTime() % 5 == 0*/) {
 			Chunk c = world.getChunkFromBlockCoords(getPos());
 			for(TileEntity te : c.getTileEntityMap().values()) {
 				if(te instanceof TileEntityTardis) {
