@@ -93,13 +93,13 @@ public class TItems {
 		sonic_screwdriver = new ItemSonic();
 		register(sonic_screwdriver, "sonic_screwdriver");
 		
-		space_helm = new ItemSpaceSuit(ItemSpaceSuit.material, 0, EntityEquipmentSlot.HEAD);
+		space_helm = new ItemSpaceSuit(0, EntityEquipmentSlot.HEAD);
 		register(space_helm, "space_helm");
 		
-		space_chest = new ItemSpaceSuit(ItemSpaceSuit.material, 1, EntityEquipmentSlot.CHEST);
+		space_chest = new ItemSpaceSuit(1, EntityEquipmentSlot.CHEST);
 		register(space_chest, "space_chest");
 		
-		space_legs = new ItemSpaceSuit(ItemSpaceSuit.material, 2, EntityEquipmentSlot.LEGS);
+		space_legs = new ItemSpaceSuit(2, EntityEquipmentSlot.LEGS);
 		register(space_legs, "space_legs");
 		
 		manual = new ItemManual();

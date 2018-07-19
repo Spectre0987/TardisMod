@@ -1080,6 +1080,7 @@ public class ModelTardis01 extends ModelBase
     BoxMain102.render(f5);
     BoxMain103.render(f5);
     BoxMain104.render(f5);
+    BoxMain105.render(f5);
     BoxMain106.render(f5);
     BoxMain107.render(f5);
     BoxMain108.render(f5);
