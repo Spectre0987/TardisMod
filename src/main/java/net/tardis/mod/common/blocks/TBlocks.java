@@ -1,5 +1,9 @@
 package net.tardis.mod.common.blocks;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -12,10 +16,6 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.util.GenerateJson;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TBlocks {
@@ -204,8 +204,7 @@ public class TBlocks {
 			register(json_tester, "json_tester");
 		}
 	}
-
-
+	
 	public static void registerGen(Block item, String name) {
 		GenerateJson.generateFacingBlockstate(name);
 		register(item, name);

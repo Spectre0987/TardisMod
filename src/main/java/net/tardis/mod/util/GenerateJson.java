@@ -1,16 +1,19 @@
 package net.tardis.mod.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.util.helpers.Helper;
-
-import java.io.*;
 
 public class GenerateJson {
 	
@@ -19,8 +22,7 @@ public class GenerateJson {
 	 * 
 	 * Mostly adapted from Sub's code.
 	 * **/
-
-    @SideOnly(Side.CLIENT)
+	
 	public static void generateFacingBlockstate(String name) {
 		
 		try{

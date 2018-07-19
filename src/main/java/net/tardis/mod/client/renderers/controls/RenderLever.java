@@ -10,8 +10,8 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
 public class RenderLever extends RenderControl {
-
-    private ModelLever model = new ModelLever();
+	
+	ModelLever model = new ModelLever();
 	
 	public RenderLever() {}
 	

@@ -33,10 +33,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
+import net.tardis.mod.client.models.clothing.ModelVortexM;
+import net.tardis.mod.client.renderers.RenderItemSonicPen;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceChest;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceLegs;
+import net.tardis.mod.client.renderers.items.RenderItemTardis02;
+import net.tardis.mod.client.renderers.items.RenderItemTardis03;
+import net.tardis.mod.client.renderers.items.RenderTEISRItem;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.blocks.interfaces.IRenderBox;
-import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
@@ -44,6 +50,7 @@ import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
+import net.tardis.mod.util.IUnbreakable;
 import net.tardis.mod.util.helpers.Helper;
 
 @Mod.EventBusSubscriber
@@ -67,10 +74,11 @@ public class TEventHandler {
 			} else
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
+
 	}
 	
 	@SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
+	public static  void registerItems(RegistryEvent.Register<Item> event) {
 		for (Item item : TItems.items) {
 			event.getRegistry().register(item);
 		}
@@ -118,20 +126,17 @@ public class TEventHandler {
 	}
 	
 	@SubscribeEvent
-    public static void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
+	public static  void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
 		e.setCanceled(e.getState().getBlock() instanceof IUnbreakable);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-    public static void cancelBBRender(DrawBlockHighlightEvent event) {
+	public static  void cancelBBRender(DrawBlockHighlightEvent event) {
 		World world = event.getPlayer().world;
 		BlockPos pos = event.getTarget().getBlockPos();
 		if (pos != null && !pos.equals(BlockPos.ORIGIN)) {
-            if (world.getBlockState(pos).getBlock() instanceof IRenderBox) {
-                IRenderBox block = (IRenderBox) world.getBlockState(pos).getBlock();
-                event.setCanceled(!block.shouldRenderBox());
-            }
+			event.setCanceled(world.getBlockState(pos).getBlock() instanceof BlockConsole);
 		}
 		
 	}
