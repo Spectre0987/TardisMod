@@ -35,10 +35,6 @@ public class PlayerStorage{
 		tag.setDouble("motionZ", player.motionZ);
 		tag.setFloat("rotationYaw", player.rotationYaw);
 		tag.setFloat("rotationYawHead", player.rotationYawHead);
-		tag.setFloat("renderYawOffset", player.renderYawOffset);
-		tag.setBoolean("swinging", player.isSwingInProgress);
-		tag.setFloat("distanceWalkedModified", player.distanceWalkedModified);
-		tag.setFloat("prevDistanceWalkedModified", player.prevDistanceWalkedModified);
 	}
 
 	
