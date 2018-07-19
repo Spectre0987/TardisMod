@@ -76,6 +76,11 @@ public class BlockConsole extends BlockContainer implements IUnbreakable, IRende
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 
+	/**
+	 * This interface determines whether
+	 * the bounding box the player sees when their mouse is over a block
+	 * should be rendered on the block this is implemented to
+	 */
 	@Override
 	public boolean shouldRenderBox() {
 		return false;
