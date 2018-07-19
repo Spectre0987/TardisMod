@@ -10,7 +10,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.util.IUnbreakable;
+import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 
 public class BlockTardis extends Block implements IUnbreakable {
 	

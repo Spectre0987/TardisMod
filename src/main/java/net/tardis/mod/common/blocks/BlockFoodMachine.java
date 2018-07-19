@@ -1,8 +1,6 @@
 package net.tardis.mod.common.blocks;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -17,23 +15,18 @@ import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 
-public class BlockFoodMachine extends BlockContainer {
+public class BlockFoodMachine extends BlockTileBase {
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockFoodMachine() {
-		super(Material.ANVIL);
+		super(Material.IRON, TileEntityFoodMachine::new);
 		this.setCreativeTab(Tardis.tab);
 		this.setLightOpacity(0);
 		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 	}
-	
-	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityFoodMachine();
-	}
-	
+
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
@@ -76,7 +69,7 @@ public class BlockFoodMachine extends BlockContainer {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { FACING });
+		return new BlockStateContainer(this, FACING);
 	}
 	
 }
