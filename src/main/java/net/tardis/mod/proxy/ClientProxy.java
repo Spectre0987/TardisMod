@@ -45,8 +45,7 @@ public class ClientProxy extends ServerProxy {
 
     public static HashMap<Integer, Class<? extends IRenderHandler>> skyRenderers = new HashMap<>();
 
-    private static ArrayList<EntityPlayer> layerPlayers = new ArrayList<>();
-
+    @Override
     public void renderEntities() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUmbrellaStand.class, new RenderUmbrellaStand());
@@ -62,7 +61,7 @@ public class ClientProxy extends ServerProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 
         // Controls
-        RenderingRegistry.registerEntityRenderingHandler(ControlScreen.class, RenderScreen::new);
+        RenderingRegistry.registerEntityRenderingHandler(ControlScreen.class, new RenderScreen());
         RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, new RenderDoor());
         RenderingRegistry.registerEntityRenderingHandler(ControlX.class, new RenderInvis());
         RenderingRegistry.registerEntityRenderingHandler(ControlY.class, new RenderInvis());
@@ -106,10 +105,6 @@ public class ClientProxy extends ServerProxy {
         Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
     }
 
-    public static boolean getRenderBOTI() {
-        return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.BOTI.enable;
-    }
-
     @Override
     public void preInit() {
         if(!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
@@ -123,9 +118,13 @@ public class ClientProxy extends ServerProxy {
                 System.out.println(DimensionManager.createProviderFor(i).getSkyRenderer().getClass() + " : " + i);
             } else System.out.println(i + " " + wp + " is null.");
         }
-
-        renderEntities();
     }
+
+    public static boolean getRenderBOTI() {
+        return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.BOTI.enable;
+    }
+
+    public static ArrayList<EntityPlayer> layerPlayers = new ArrayList<>();
 
     @SubscribeEvent
     public static void addLayers(RenderPlayerEvent.Pre e) {

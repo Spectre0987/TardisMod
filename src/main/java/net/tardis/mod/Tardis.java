@@ -1,5 +1,7 @@
 package net.tardis.mod;
 
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
@@ -20,25 +22,69 @@ import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.*;
-import net.tardis.mod.common.entities.controls.*;
+import net.tardis.mod.common.entities.EntityCybermanInvasion;
+import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.entities.EntityDalekRay;
+import net.tardis.mod.common.entities.EntityForceField;
+import net.tardis.mod.common.entities.EntityRayCyberman;
+import net.tardis.mod.common.entities.EntityTardis;
+import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDirection;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
+import net.tardis.mod.common.entities.controls.ControlFlight;
+import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
+import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlPhone;
+import net.tardis.mod.common.entities.controls.ControlRandom;
+import net.tardis.mod.common.entities.controls.ControlSTCButton;
+import net.tardis.mod.common.entities.controls.ControlSTCLoad;
+import net.tardis.mod.common.entities.controls.ControlScanner;
+import net.tardis.mod.common.entities.controls.ControlScreen;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlX;
+import net.tardis.mod.common.entities.controls.ControlY;
+import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.TardisProtocol;
-import net.tardis.mod.common.screwdriver.*;
+import net.tardis.mod.common.screwdriver.ElectricPanelMode;
+import net.tardis.mod.common.screwdriver.GRoomMode;
+import net.tardis.mod.common.screwdriver.HADSMode;
+import net.tardis.mod.common.screwdriver.HallwayMode;
+import net.tardis.mod.common.screwdriver.RecallMode;
+import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.strings.TStrings;
-import net.tardis.mod.common.tileentity.*;
+import net.tardis.mod.common.tileentity.TileEntityAlembic;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityEPanel;
+import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
+import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
+import net.tardis.mod.common.tileentity.TileEntityJsonTester;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
+import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
-import net.tardis.mod.packets.*;
+import net.tardis.mod.packets.MessageDemat;
+import net.tardis.mod.packets.MessageDoorOpen;
+import net.tardis.mod.packets.MessageExteriorChange;
+import net.tardis.mod.packets.MessageHandlerProtocol;
+import net.tardis.mod.packets.MessageHandlerTeleport;
+import net.tardis.mod.packets.MessageProtocol;
+import net.tardis.mod.packets.MessageTelepathicCircut;
+import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
+import net.tardis.mod.util.GenerateJson;
 import net.tardis.mod.util.helpers.EntityHelper;
-import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, useMetadata = true, dependencies = Tardis.DEP)
 public class Tardis {
@@ -64,7 +110,6 @@ public class Tardis {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
 		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
@@ -145,7 +190,7 @@ public class Tardis {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		proxy.init();
+		proxy.renderEntities();
 		
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
