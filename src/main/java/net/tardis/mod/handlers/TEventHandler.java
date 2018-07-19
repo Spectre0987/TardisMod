@@ -35,6 +35,8 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.blocks.interfaces.IRenderBox;
+import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
@@ -42,7 +44,6 @@ import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
-import net.tardis.mod.util.IUnbreakable;
 import net.tardis.mod.util.helpers.Helper;
 
 @Mod.EventBusSubscriber
@@ -121,16 +122,18 @@ public class TEventHandler {
 	public static  void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
 		e.setCanceled(e.getState().getBlock() instanceof IUnbreakable);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public static  void cancelBBRender(DrawBlockHighlightEvent event) {
+    public static void cancelBBRender(DrawBlockHighlightEvent event) {
 		World world = event.getPlayer().world;
 		BlockPos pos = event.getTarget().getBlockPos();
 		if (pos != null && !pos.equals(BlockPos.ORIGIN)) {
-			event.setCanceled(world.getBlockState(pos).getBlock() instanceof BlockConsole);
-		}
-		
+            if (world.getBlockState(pos).getBlock() instanceof IRenderBox) {
+                IRenderBox block = (IRenderBox) world.getBlockState(pos).getBlock();
+                event.setCanceled(!block.shouldRenderBox());
+            }
+        }
 	}
 	
 	@SubscribeEvent

@@ -11,7 +11,16 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "0.0.5A"
+def getHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+version = "0.0.5A"+getHash()
 group = "net.tardis.mod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "tardis"
 
@@ -21,10 +30,10 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.3.2678"
+    version = "1.12.2-14.23.4.2739"
     runDir = "run"
     mappings = "snapshot_20171003"
-    //makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    makeObfSourceJar = true
 }
 
 dependencies {

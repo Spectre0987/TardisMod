@@ -1,14 +1,11 @@
 package net.tardis.mod.common.blocks;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -16,14 +13,14 @@ import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.tileentity.interiors.TileEntityInteriorDoor;
 
-public class BlockInteriorDoor extends BlockContainer {
+public class BlockInteriorDoor extends BlockTileBase {
 	
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	
 	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockInteriorDoor() {
-		super(Material.WOOD);
+        super(Material.WOOD, TileEntityInteriorDoor::new);
 		this.setCreativeTab(Tardis.tab);
 	}
 	
@@ -38,11 +35,6 @@ public class BlockInteriorDoor extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityInteriorDoor();
-	}
-
-	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
 	}
@@ -54,7 +46,7 @@ public class BlockInteriorDoor extends BlockContainer {
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {FACING});
+        return new BlockStateContainer(this, FACING);
 	}
 
 	@Override

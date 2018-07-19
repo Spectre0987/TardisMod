@@ -1,12 +1,10 @@
 package net.tardis.mod.common.blocks;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -16,20 +14,15 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.ItemSUmbrella;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 
-public class BlockUmbrellaStand extends BlockContainer {
+public class BlockUmbrellaStand extends BlockTileBase {
 	
 	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockUmbrellaStand() {
-		super(Material.CLAY);
+		super(Material.CLAY, TileEntityUmbrellaStand::new);
 		this.setCreativeTab(Tardis.tab);
 	}
-	
-	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityUmbrellaStand();
-	}
-	
+
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
