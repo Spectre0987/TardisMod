@@ -9,26 +9,32 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.clothing.ModelFourthHat;
+import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 
-public class ItemFourthHat extends ItemArmor {
+public class ItemHat extends ItemArmor {
 
-	public ItemFourthHat() {
+	private EnumClothes clothType;
+
+	public ItemHat(EnumClothes clothType) {
 		super(ItemSpaceSuit.material, 0, EntityEquipmentSlot.HEAD);
 		this.setCreativeTab(Tardis.tab);
+		this.clothType = clothType;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return ModelFourthHat.TEXTURE.toString();
+		return clothType.getTexture().toString();
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot,ModelBiped _default) {
-		return new ModelFourthHat();
+		if (clothType.getModel() != null) {
+			return clothType.getModel();
+		}
+		return super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
 	}
 
 }
