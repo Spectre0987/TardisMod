@@ -1,0 +1,30 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tardis:toyota_hexalight_4"
+  },
+  "variants": {
+    "facing=south": {
+      "model": "tardis:toyota_hexalight_4",
+      "y": 180.0
+    },
+    "facing=west": {
+      "model": "tardis:toyota_hexalight_4",
+      "y": 270.0
+    },
+    "facing=north": {
+      "model": "tardis:toyota_hexalight_4",
+      "y": 0.0
+    },
+    "facing=east": {
+      "model": "tardis:toyota_hexalight_4",
+      "y": 90.0
+    },
+    "inventory": {
+      "model": "tardis:toyota_hexalight_4"
+    },
+    "normal": {
+      "model": "tardis:toyota_hexalight_4"
+    }
+  }
+}

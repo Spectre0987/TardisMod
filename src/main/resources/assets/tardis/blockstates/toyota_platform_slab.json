@@ -1,0 +1,23 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "half_slab",
+    "textures": {
+      "bottom": "tardis:blocks/toyota/toyota_platform_top",
+      "top": "tardis:blocks/toyota/toyota_platform_top",
+      "side": "tardis:blocks/toyota/toyota_platform_top"
+    }
+  },
+  "variants": {
+    "top=true": [
+      {}
+    ],
+    "top=false": [
+      {
+        "x": 180
+      }
+    ],
+    "inventory":[{}],
+    "normal":[{}]
+  }
+}

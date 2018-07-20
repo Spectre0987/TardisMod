@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "tardis:blocks/toyota/toyota_roof",
+        "side": "tardis:blocks/toyota/toyota_light_off"
+    }
+}

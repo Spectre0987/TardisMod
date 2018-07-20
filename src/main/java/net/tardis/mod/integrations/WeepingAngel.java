@@ -3,8 +3,8 @@ package net.tardis.mod.integrations;
 import net.minecraftforge.common.MinecraftForge;
 
 public class WeepingAngel {
-	
-	public static void preInit() {
+
+    public static void preInit() {
 		MinecraftForge.EVENT_BUS.register(new WeepingAngel());
 	}
 

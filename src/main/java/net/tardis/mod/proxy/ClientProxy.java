@@ -1,18 +1,23 @@
 package net.tardis.mod.proxy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.client.models.ModelFirstCane;
 import net.tardis.mod.client.models.ModelKey01;
+import net.tardis.mod.client.models.clothing.ModelFourthHat;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.renderers.RenderInvis;
 import net.tardis.mod.client.renderers.RenderItemFoodMachine;
@@ -26,6 +31,7 @@ import net.tardis.mod.client.renderers.controls.RenderRandom;
 import net.tardis.mod.client.renderers.controls.RenderZ;
 import net.tardis.mod.client.renderers.entities.RenderCyberRay;
 import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
+import net.tardis.mod.client.renderers.entities.RenderDalek;
 import net.tardis.mod.client.renderers.entities.RenderRay;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
@@ -47,6 +53,7 @@ import net.tardis.mod.client.renderers.tiles.RenderTileHolo;
 import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
+import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityRayCyberman;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -92,7 +99,6 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoodMachine.class, new RenderFoodMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTemporalLab.class, new RenderTemporalLab());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHoloprojector.class, new RenderTileHolo());
-		
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor03.class, new RenderTileDoor03());
@@ -123,7 +129,9 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanInvasion.class, new RenderCybermanInvasion());
 		RenderingRegistry.registerEntityRenderingHandler(EntityRayCyberman.class, new RenderCyberRay());
-		
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, new RenderDalek());
+
 		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
 		TItems.space_chest.setTileEntityItemStackRenderer(new RenderItemSpaceChest());
@@ -133,14 +141,13 @@ public class ClientProxy extends ServerProxy {
 		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
 		TItems.demat_circut.setTileEntityItemStackRenderer(new RendererItemDemat());
 		TItems.key.setTileEntityItemStackRenderer(new RendererKey());
+		TItems.fourth_hat.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFourthHat(), ModelFourthHat.TEXTURE));
 		
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RendererItemTardis());
 
 		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
 		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
-		
-		ClientProxy.addRenderLayer(RenderLayerVortexM.class);
 	}
 
 	@Override
@@ -162,15 +169,22 @@ public class ClientProxy extends ServerProxy {
 	public static boolean getRenderBOTI() {
 		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.BOTI.enable;
 	}
-	
-	public static void addRenderLayer(Class<? extends LayerRenderer> clazz) {
-		try {
-			RenderPlayer rp = (Minecraft.getMinecraft().getRenderManager().getSkinMap().get("default"));
-			RenderPlayer rp1 = (Minecraft.getMinecraft().getRenderManager().getSkinMap().get("slim"));
-			
-			rp.addLayer(clazz.getConstructor(RenderPlayer.class).newInstance(rp));
-			rp1.addLayer(clazz.getConstructor(RenderPlayer.class).newInstance(rp1));
-		}
-		catch(Exception e) {}
-	}
+
+
+    public static ArrayList<EntityPlayer> layerPlayers = new ArrayList<>();
+
+    @SubscribeEvent
+    public static void addLayers(RenderPlayerEvent.Pre e) {
+        if (!layerPlayers.contains(e.getEntityPlayer())) {
+            RenderPlayer render = e.getRenderer();
+            addRenderLayer(new RenderLayerVortexM(render));
+            layerPlayers.add(e.getEntityPlayer());
+        }
+    }
+
+    private static void addRenderLayer(LayerRenderer layer) {
+        for (RenderPlayer playerRender : Minecraft.getMinecraft().getRenderManager().getSkinMap().values()) {
+            playerRender.addLayer(layer);
+        }
+    }
 }

@@ -18,13 +18,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.IUnbreakable;
 
 import java.util.function.Supplier;
 
@@ -90,13 +90,12 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		super.onBlockAdded(worldIn, pos, state);
 		try {
-			((TileEntityDoor) worldIn.getTileEntity(pos)).fadeIn();
 			if (!worldIn.isRemote) {
 				worldIn.playSound(null, pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
 			}
 		} catch (Exception e) {}
 	}
-	
+
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));

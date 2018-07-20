@@ -25,6 +25,7 @@ item.space_helm.name=Casque de combinaison spatiale
 item.space_chest.name=Plastron de combinaison spatiale
 item.space_legs.name=Jambières de combinaison spatiale
 item.first_cane.name=Canne du Premier Docteur
+item.fourth_hat.name=Chapeau du Quatrième Docteur
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -34,7 +35,7 @@ tile.tardis_top.name=TARDIS
 tile.light.name=Lampe
 tile.homing_beacon.name=Balise d'arrivée
 tile.chronodine_generator.name=Générateur de Chronodine
-tile.grate.name=Grate
+tile.grate.name=Grille
 tile.temporal_lab.name=Laboratoire temporel
 tile.umbrella_stand.name=Support de parapluie
 tile.alembic.name=Alembic
@@ -42,6 +43,7 @@ tile.food_machine.name=Machine à nourriture
 tile.electric_panel.name=Tableau électrique
 tile.megalos.name=Meglos
 tile.console.name=Console
+tile.toyota_hexagon_1.name=Bloc Toyota
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.

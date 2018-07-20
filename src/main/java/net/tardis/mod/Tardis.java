@@ -23,6 +23,7 @@ import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
+import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityRayCyberman;
@@ -73,6 +74,7 @@ import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
+import net.tardis.mod.packets.MessageDemat;
 import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageExteriorChange;
 import net.tardis.mod.packets.MessageHandlerProtocol;
@@ -81,6 +83,7 @@ import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageTelepathicCircut;
 import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
+import net.tardis.mod.util.GenerateJson;
 import net.tardis.mod.util.helpers.EntityHelper;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, useMetadata = true, dependencies = Tardis.DEP)
@@ -161,7 +164,8 @@ public class Tardis {
 		NETWORK.registerMessage(MessageDoorOpen.Handler.class, MessageDoorOpen.class, 3, Side.CLIENT);
 		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 4, Side.SERVER);
 		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 5, Side.CLIENT);
-		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
+		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 7, Side.SERVER);
+		NETWORK.registerMessage(MessageDemat.Handler.class, MessageDemat.class, 8, Side.CLIENT);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new HallwayMode());
@@ -177,6 +181,7 @@ public class Tardis {
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
+			EntityHelper.registerMob(EntityDalek.class, "dalek", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 		}
 		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 		

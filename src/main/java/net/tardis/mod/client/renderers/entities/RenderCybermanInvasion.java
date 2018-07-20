@@ -17,6 +17,7 @@ public class RenderCybermanInvasion extends Render<EntityCybermanInvasion> {
 	public RenderCybermanInvasion() {
 		super(Minecraft.getMinecraft().getRenderManager());
 		mc = Minecraft.getMinecraft();
+
 	}
 
 	@Override

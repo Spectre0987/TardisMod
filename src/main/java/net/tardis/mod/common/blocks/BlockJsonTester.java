@@ -1,6 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,18 +13,13 @@ import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 
-public class BlockJsonTester extends BlockContainer {
+public class BlockJsonTester extends BlockTileBase {
 	
 	public ItemBlock block = new ItemBlock(this);
 	
 	public BlockJsonTester() {
-		super(Material.CIRCUITS);
+        super(Material.CIRCUITS, TileEntityJsonTester::new);
 		this.setCreativeTab(Tardis.tab);
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityJsonTester();
 	}
 
 	@Override

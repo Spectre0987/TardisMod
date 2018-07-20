@@ -25,6 +25,7 @@ item.space_helm.name=Space Suit Helmet
 item.space_chest.name=Space Suit Chestpiece
 item.space_legs.name=Space Suit Leggings
 item.first_cane.name=First Doctor's Cane
+item.fourth_hat.name=Fourth Doctor's Hat
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -42,6 +43,7 @@ tile.food_machine.name=Food Machine
 tile.electric_panel.name=Electric Interface Panel
 tile.megalos.name=Meglos
 tile.console.name=Console
+tile.toyota_hexagon_1.name=Toyota Block
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!
@@ -97,7 +99,7 @@ config.misc=Misc
 config.misc.givekey=Should give Player A TARDIS key when they join the world?
 config.misc.maxrand=Maxium number of block the TARDIS should travel when using the randomizer
 
-entity.launch_lever.name=Space - Time Throttle
+entity.launch_lever.name=Time Rotor Handbrake
 entity.x_valve.name=Space Control - X
 entity.y_valve.name=Space Control - Y
 entity.z_valve.name=Space Control - Z

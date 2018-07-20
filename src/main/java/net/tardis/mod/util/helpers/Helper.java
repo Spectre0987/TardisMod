@@ -83,7 +83,7 @@ public class Helper {
 	}
 	
 	public static boolean isDimensionBlocked(int id) {
-        if (id == TDimensions.TARDIS_ID) return true;
+       if (id == TDimensions.TARDIS_ID) return true;
         if(DimensionManager.createProviderFor(id) instanceof IBlockedDimension)return true;
         boolean isW = TardisConfig.Dimensions.USE_WHITELIST;
 		for (int i : TardisConfig.Dimensions.bDims) {
@@ -180,7 +180,7 @@ public class Helper {
 				return lPos;
 			}
 		}
-		return Helper.getSafeHigherPos(world, pos, facing);
+		return world.getTopSolidOrLiquidBlock(pos);
 	}
 	
 	public static BlockPos getSafeHigherPos(World world, BlockPos pos, EnumFacing facing) {
@@ -190,7 +190,7 @@ public class Helper {
 				return lPos;
 			}
 		}
-		return Helper.getSafePosLower(pos, world, facing);
+		return world.getTopSolidOrLiquidBlock(pos);
 	}
 
 	public static float precentToPixels(float f) {

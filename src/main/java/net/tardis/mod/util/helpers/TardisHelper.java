@@ -42,7 +42,15 @@ public class TardisHelper {
 	
 	public static BlockPos getLastPos() {
 		int size = tardisOwners.size();
-		if (size > 0) return tardisOwners.values().toArray(new BlockPos[1])[size - 1];
+		if (size > 0) {
+			BlockPos last = BlockPos.ORIGIN;
+			for(BlockPos pos : tardisOwners.values().toArray(new BlockPos[] {})) {
+				if(pos.getX() > last.getX() && pos.getZ() > last.getZ()) {
+					last = pos;
+				}
+			}
+			return last;
+		}
 		return new BlockPos(8, 6, 8);
 	}
 	

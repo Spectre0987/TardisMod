@@ -48,6 +48,10 @@ public class AnimationObject {
 	}
 	
 	public void animate(EntityControl control) {
+		for(EntityControl c : this.objectsToAnimated) {
+			if(c.getEntityId() == control.getEntityId())
+				return;
+		}
 		this.objectsToAnimated.add(control);
 	}
 

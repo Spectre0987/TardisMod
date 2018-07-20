@@ -1,29 +1,20 @@
 package net.tardis.mod.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.renderers.RenderItemFoodMachine;
-import net.tardis.mod.client.renderers.items.RendererItemDemat;
-import net.tardis.mod.client.renderers.items.RendererItemTardis;
-import net.tardis.mod.client.renderers.items.RendererKey;
-import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
-import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
 import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TItems {
@@ -57,6 +48,7 @@ public class TItems {
 	
 	public static Item first_cane;
 	public static Item fourth_hat;
+	public static Item thirteen_coat;
 	
 	// Componenets
 	
@@ -82,8 +74,8 @@ public class TItems {
 		
 		ray_gun = new ItemRayGun();
 		register(ray_gun, "ray_gun");
-		
-		void_specs = new ItemVoidSpecs();
+
+		void_specs = new ItemHat(EnumClothes.HAT_VOID_SPECS);
 		register(void_specs, "void_specs");
 		
 		fez = new ItemFez();
@@ -101,13 +93,13 @@ public class TItems {
 		sonic_screwdriver = new ItemSonic();
 		register(sonic_screwdriver, "sonic_screwdriver");
 		
-		space_helm = new ItemSpaceSuit(ItemSpaceSuit.material, 0, EntityEquipmentSlot.HEAD);
+		space_helm = new ItemSpaceSuit(0, EntityEquipmentSlot.HEAD);
 		register(space_helm, "space_helm");
 		
-		space_chest = new ItemSpaceSuit(ItemSpaceSuit.material, 1, EntityEquipmentSlot.CHEST);
+		space_chest = new ItemSpaceSuit(1, EntityEquipmentSlot.CHEST);
 		register(space_chest, "space_chest");
 		
-		space_legs = new ItemSpaceSuit(ItemSpaceSuit.material, 2, EntityEquipmentSlot.LEGS);
+		space_legs = new ItemSpaceSuit(2, EntityEquipmentSlot.LEGS);
 		register(space_legs, "space_legs");
 		
 		manual = new ItemManual();
@@ -121,9 +113,12 @@ public class TItems {
 		
 		first_cane = new ItemCane();
 		register(first_cane, "first_cane");
-		
-		fourth_hat = new ItemFourthHat();
+
+		fourth_hat = new ItemHat(EnumClothes.HAT_FOURTH_DOC);
 		register(fourth_hat, "fourth_hat");
+
+		thirteen_coat = new ItemClothing(EnumClothes.CHEST_13TH_COAT);
+		register(thirteen_coat, "thirteen_coat");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();

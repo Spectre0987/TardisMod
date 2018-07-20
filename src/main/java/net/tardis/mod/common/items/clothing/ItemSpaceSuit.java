@@ -19,8 +19,8 @@ public class ItemSpaceSuit extends ItemArmor {
 	
 	public static final ArmorMaterial material = EnumHelper.addArmorMaterial("space_suit", "spacesuit", 0,new int[] {0,0,0,0},0,SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,0F);
 	
-	public ItemSpaceSuit(ArmorMaterial materialIn, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
-		super(materialIn, renderIndexIn, equipmentSlotIn);
+	public ItemSpaceSuit(int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
+		super(material, renderIndexIn, equipmentSlotIn);
 		this.setCreativeTab(Tardis.tab);
 	}
 	

@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.controls;
 
+import java.util.ArrayList;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -29,9 +31,11 @@ public class RenderConsole extends TileEntitySpecialRenderer {
 		mc.getTextureManager().bindTexture(CONTROL_TEXTURE);
 		GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
 		GlStateManager.rotate(180, 1, 0, 0);
+		controlModel.animate(((TileEntityTardis)te).aniObj.objectsToAnimated);
 		controlModel.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		mc.getTextureManager().bindTexture(CONSOLE_TEXTURE);
 		consoleModel.render(null, ((TileEntityTardis) te).frame, partialTicks, 0, 0, 0, 0.0625F);
+		((TileEntityTardis)te).aniObj.objectsToAnimated = new ArrayList<>();
 		GlStateManager.popMatrix();
 	}
 	
