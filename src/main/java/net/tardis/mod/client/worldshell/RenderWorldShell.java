@@ -3,7 +3,6 @@ package net.tardis.mod.client.worldshell;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -14,10 +13,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
-import net.tardis.mod.common.tileentity.interiors.TileEntityInteriorDoor;
 
 public class RenderWorldShell {
 
@@ -26,16 +25,12 @@ public class RenderWorldShell {
 	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		if (entity instanceof IContainsWorldShell) {
-			WorldClient client = Minecraft.getMinecraft().world;
-			
-			Minecraft.getMinecraft().world = new WorldClientBOTI(client, entity.getWorldShell());
-			
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 
 			IContainsWorldShell container = (IContainsWorldShell) entity;
 			
 			GlStateManager.pushMatrix();
-			if(entity instanceof TileEntityDoor || entity instanceof TileEntityInteriorDoor) GlStateManager.depthFunc(GL11.GL_ALWAYS);
+			if(entity instanceof TileEntityDoor) GlStateManager.depthFunc(GL11.GL_ALWAYS);
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
@@ -64,7 +59,6 @@ public class RenderWorldShell {
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
 					try {
-						t.setWorld(Minecraft.getMinecraft().world);
 						TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),t.getPos().getZ(), partialTicks);
 					}
 					catch(Exception e) {}
@@ -98,7 +92,12 @@ public class RenderWorldShell {
 							player.motionZ = stor.tag.getDouble("motionZ");
 							player.rotationYaw = stor.tag.getFloat("rotationYaw");
 							player.rotationYawHead = stor.tag.getFloat("rotationYawHead");
+							player.renderYawOffset = stor.tag.getFloat("renderYawOffset");
+							player.isSwingInProgress = stor.tag.getBoolean("swinging");
+							player.swingingHand = EnumHand.MAIN_HAND;
 							player.isRiding = stor.tag.getBoolean("riding");
+							player.distanceWalkedModified = stor.tag.getFloat("distanceWalkedModified");
+							player.prevDistanceWalkedModified = stor.tag.getFloat("prevDistanceWalkedModified");
 						}
 						GlStateManager.translate(stor.posX, stor.posY, stor.posZ);
 						GlStateManager.rotate(-player.rotationYawHead, 0, 1, 0);
@@ -108,7 +107,6 @@ public class RenderWorldShell {
 				}
 			}
 			GlStateManager.popMatrix();
-			Minecraft.getMinecraft().world = client;
 		}
 	}
 

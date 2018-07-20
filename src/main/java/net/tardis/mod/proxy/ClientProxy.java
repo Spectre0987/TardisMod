@@ -34,10 +34,12 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.*;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
-import net.tardis.mod.common.tileentity.interiors.TileEntityInteriorDoor;
 import net.tardis.mod.config.TardisConfig;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+>>>>>>> parent of 7961596... Worked on Making the Door a Block
 import java.util.HashMap;
 
 public class ClientProxy extends ServerProxy {
@@ -53,7 +55,10 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTemporalLab.class, new RenderTemporalLab());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHoloprojector.class, new RenderTileHolo());
 		
+<<<<<<< HEAD
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInteriorDoor.class, new RenderTileInteriorDoor());
+=======
+>>>>>>> parent of 7961596... Worked on Making the Door a Block
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor03.class, new RenderTileDoor03());

@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Mod;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.BlockToyota.BlockToyotaFacing;
 import net.tardis.mod.common.blocks.BlockToyota.BlockToyotaSlab;
@@ -16,6 +17,7 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.util.GenerateJson;
 
+@Mod.EventBusSubscriber
 public class TBlocks {
 	
 	public static List<Block> blocks = new ArrayList<Block>();
@@ -29,8 +31,6 @@ public class TBlocks {
 	public static Block megalos;
 	public static Block meglos_slab;
 	public static Block holoprojector;
-	
-	public static Block interiorDoor01;
 	
 	public static Block toyota_hexagon_1;
 	public static Block toyota_hexagon_2;
@@ -80,7 +80,6 @@ public class TBlocks {
 		try {
 			Field[] fields = block.getClass().getDeclaredFields();
 			for (Field f : fields) {
-				f.setAccessible(true);
 				Object o = f.get(block);
 				if (o instanceof ItemBlock) {
 					TItems.items.add(((ItemBlock) o).setRegistryName(rl));
@@ -172,22 +171,16 @@ public class TBlocks {
 		
 		toyota_wall = new BlockToyota(false);
 		register(toyota_wall, "toyota_wall");
-		
 		toyota_wallroundel_1 = new BlockToyota(true);
 		register(toyota_wallroundel_1, "toyota_wallroundel_1");
-		
 		toyota_wallroundel_2 = new BlockToyota(false);
 		register(toyota_wallroundel_2, "toyota_wallroundel_2");
-		
 		toyota_wallroundel_3 = new BlockToyota(true);
 		register(toyota_wallroundel_3, "toyota_wallroundel_3");
-		
 		toyota_wallroundel_4 = new BlockToyota(false);
 		register(toyota_wallroundel_4, "toyota_wallroundel_4");
-		
 		toyota_wallroundel_5 = new BlockToyota(false);
 		register(toyota_wallroundel_5, "toyota_wallroundel_5");
-		
 		toyota_wallroundel_6 = new BlockToyota(false);
 		register(toyota_wallroundel_6, "toyota_wallroundel_6");
 		
@@ -197,8 +190,6 @@ public class TBlocks {
 		toyota_platform_slab = new BlockToyotaSlab(false);
 		register(toyota_platform_slab, "toyota_platform_slab");
 		
-		interiorDoor01 = new BlockInteriorDoor();
-		register(interiorDoor01, "interiorDoor01");
 		
 		//Exteriors
 
