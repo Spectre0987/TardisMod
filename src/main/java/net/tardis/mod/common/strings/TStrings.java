@@ -20,5 +20,13 @@ public class TStrings {
 		public static final String INDUSTRIAL_CRAFT = "ic2";
 		public static final String WEEPING_ANGELS = "weeping-angels";
 	}
+
+	//Manual tutorial
+	public static class Manual{
+		public static final String CONTROL_COORD = "tardis.manual.control_coord";
+		public static final String TELEPATHIC ="tardis.manual.telepathic";
+		public static final String REFUELER = "tardis.manual.refueler";
+	}
+
 	
 }
