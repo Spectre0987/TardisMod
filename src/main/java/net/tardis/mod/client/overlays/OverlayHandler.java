@@ -17,7 +17,7 @@ public class OverlayHandler {
     public static void renderOverlays(RenderGameOverlayEvent e) {
         for (IOverlay overlay : OVERLAYS) {
             overlay.renderUpdate();
-            overlay.render(e.getPartialTicks(), e.getResolution());
+            overlay.render(e, e.getPartialTicks(), e.getResolution());
         }
     }
 
