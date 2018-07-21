@@ -14,10 +14,18 @@ public class OverlayHandler {
 
 
     @SubscribeEvent
-    public static void renderOverlays(RenderGameOverlayEvent e) {
+    public static void cancelOverlays(RenderGameOverlayEvent.Pre e) {
+        for (IOverlay overlay : OVERLAYS) {
+            overlay.pre(e, e.getPartialTicks(), e.getResolution());
+        }
+    }
+
+
+    @SubscribeEvent
+    public static void renderOverlays(RenderGameOverlayEvent.Post e) {
         for (IOverlay overlay : OVERLAYS) {
             overlay.renderUpdate();
-            overlay.render(e, e.getPartialTicks(), e.getResolution());
+            overlay.post(e, e.getPartialTicks(), e.getResolution());
         }
     }
 
