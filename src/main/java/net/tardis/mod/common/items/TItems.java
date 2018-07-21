@@ -1,20 +1,20 @@
 package net.tardis.mod.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
-import net.tardis.mod.common.items.clothing.ItemVoidSpecs;
 import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TItems {
@@ -55,7 +55,8 @@ public class TItems {
 	public static Item fluid_link;
 	public static Item artron_capacitor;
 	public static Item demat_circut;
-	
+	public static Item sonicShades;
+
 	public static void register() {
 		key = new ItemKey();
 		register(key, "key");
@@ -74,8 +75,8 @@ public class TItems {
 		
 		ray_gun = new ItemRayGun();
 		register(ray_gun, "ray_gun");
-		
-		void_specs = new ItemVoidSpecs();
+
+		void_specs = new ItemHat(EnumClothes.HAT_VOID_SPECS);
 		register(void_specs, "void_specs");
 		
 		fez = new ItemFez();
@@ -113,11 +114,11 @@ public class TItems {
 		
 		first_cane = new ItemCane();
 		register(first_cane, "first_cane");
-		
-		fourth_hat = new ItemFourthHat();
+
+		fourth_hat = new ItemHat(EnumClothes.HAT_FOURTH_DOC);
 		register(fourth_hat, "fourth_hat");
-		
-		thirteen_coat = new ItemThirteenCoat();
+
+		thirteen_coat = new ItemClothing(EnumClothes.CHEST_13TH_COAT);
 		register(thirteen_coat, "thirteen_coat");
 		
 		// TARDIS Components
@@ -129,6 +130,9 @@ public class TItems {
 		
 		demat_circut = new DematerializationCircut();
 		register(demat_circut, "demat_circut");
+
+		sonicShades = new ItemHat(EnumClothes.HAT_VOID_SPECS); //using void specs until I add the model
+		register(sonicShades, "sonic_shades");
 	}
 	
 	public static void register(Item item, String name) {
