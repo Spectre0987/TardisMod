@@ -49,12 +49,12 @@ public class RenderScreen extends Render {
 			GlStateManager.scale(0.005, 0.005, 0.005);
 			drawString("TARDIS Location: " + Helper.formatBlockPos(tardis.getLocation()));
 			if (tardis.currentDimName != null && !tardis.currentDimName.equals(""))
-				drawString("TARDIS Dimension: [" + tardis.currentDimName.replace('_', ' ') + "]");
+				drawString("TARDIS Dimension: [" + Helper.formatDimensionName(tardis.currentDimName) + "]");
 			else
 				drawString("TARDIS Dimension: [" + tardis.dimension + "]");
 			drawString("Nav-Com Target: " + Helper.formatBlockPos(tardis.getDestination()));
 			if (tardis.targetDimName != null && !tardis.targetDimName.equals(""))
-				drawString("Dimension Target: [" + tardis.targetDimName.replace('_', ' ') + "]");
+				drawString("Dimension Target: [" + Helper.formatDimensionName(tardis.targetDimName) + "]");
 			else
 				drawString("Dimension Target: [" + tardis.getTargetDim() + "]");
 			String fuelS = tardis.fuel * 100 + "";

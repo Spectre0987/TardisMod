@@ -2,8 +2,11 @@ package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -38,6 +41,7 @@ public class ControlDimChange extends EntityControl {
 			int dim = ids[tardis.dimIndex];
 			if (Helper.isDimensionBlocked(dim)) this.preformAction(player);
 			tardis.setTargetDimension(ids[tardis.dimIndex]);
+			player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.TARDIS_DIMENSION).getFormattedText() + " " + Helper.formatDimensionName(DimensionManager.createProviderFor(ids[tardis.dimIndex]).getDimensionType().getName())), true);
 		} else
 			this.ticks = 20;
 	}
