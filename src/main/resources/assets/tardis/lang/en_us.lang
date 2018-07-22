@@ -84,6 +84,8 @@ tardis.hads.enabled.false=H.A.D.S has been disabled
 protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
 
+tardis.dimension=Nav-com Dimension is:
+
 config.category.dims=Dimensions
 config.dims=Dimension List
 config.setdim=Set Dimension IDs for this mod?

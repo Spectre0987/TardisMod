@@ -196,4 +196,17 @@ public class Helper {
 	public static float precentToPixels(float f) {
 		return f / 16.0F;
 	}
+	
+	public static String formatDimensionName(String name) {
+		name = name.replace("_", " ");
+		char[] nameChars = name.toCharArray();
+		for(int index = 0; index < nameChars.length; ++index) {
+			if(nameChars[index] == ' ' && index + 1 < nameChars.length) {
+				char c = nameChars[index + 1];
+				nameChars[index + 1] = Character.toUpperCase(c);
+			}
+		}
+		nameChars[0] = Character.toUpperCase(nameChars[0]);
+		return new String(nameChars);
+	}
 }
