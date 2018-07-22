@@ -1,0 +1,6 @@
+{
+    "parent":"builtin/entity",
+    "display":{
+        "gui":{}
+    }
+}
