@@ -46,7 +46,7 @@ tile.console.name=Console
 tile.toyota_hexagon_1.name=Bloc Toyota
 
 tardis.locked.true=TARDIS fermé !
-tardis.locked.false=TARDIS a été ouvert.
+tardis.locked.false=Le TARDIS a été ouvert.
 
 death.attack.dalek=Tué par un rayon laser Dalek
 death.cyberman.ray=a été supprimé.
@@ -147,3 +147,7 @@ tardis.subtitle.cloister_bell=Cloche du cloître
 tardis.subtitle.drum_beat=Battement de tambour
 tardis.subtitle.stutter=Bégaiement
 tardis.subtitle.vm_teleport=Manipulateur de Vortex
+
+tardis.manual.control_coord=Pour augmenter, cliquez simplement sur le contrôle, pour baisser faite un shift-clic
+tardis.manual.telepathic=Ouvre une interface vous permettant de taper le nom d'une structure d'un biome ou d'un joueur proche.
+tardis.manual.refueler=Un clic activera la recharge, un autre l'arrêtera
