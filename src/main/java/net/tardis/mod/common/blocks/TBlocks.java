@@ -86,7 +86,7 @@ public class TBlocks {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			TItems.items.add(new ItemBlock(block).setRegistryName(rl));
 		}
 	}
 	
@@ -189,8 +189,6 @@ public class TBlocks {
 		
 		toyota_platform_slab = new BlockToyotaSlab(false);
 		register(toyota_platform_slab, "toyota_platform_slab");
-		
-		
 		//Exteriors
 
 		tardis_top_01 = new BlockTardisTop(TileEntityDoor01::new);
