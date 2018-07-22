@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelCybermanInvasion;
+import net.tardis.mod.client.models.entity.ModelCybermanInvasion;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 
 public class RenderCybermanInvasion extends Render<EntityCybermanInvasion> {
