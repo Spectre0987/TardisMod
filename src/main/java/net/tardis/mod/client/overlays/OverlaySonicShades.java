@@ -49,11 +49,19 @@ public class OverlaySonicShades implements IOverlay {
     }
 
     @Override
-    public void render(RenderGameOverlayEvent e, float partialTicks, ScaledResolution resolution) {
+    public void pre(RenderGameOverlayEvent.Pre e, float partialTicks, ScaledResolution resolution) {
+        if (Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonicShades) {
+            e.setCanceled(e.getType() == RenderGameOverlayEvent.ElementType.FOOD || e.getType() == RenderGameOverlayEvent.ElementType.HEALTH);
+        }
+    }
+
+    @Override
+    public void post(RenderGameOverlayEvent.Post e, float partialTicks, ScaledResolution resolution) {
 
         if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonicShades) {
 
             Entity mouseOver = Minecraft.getMinecraft().objectMouseOver.entityHit;
+
             GlStateManager.pushMatrix();
 
             //Head
@@ -78,7 +86,6 @@ public class OverlaySonicShades implements IOverlay {
 
             //Entity and info
             if (mc.player != null && mouseOver != null) {
-
                 GlStateManager.pushMatrix();
                 drawEntityOnScreen(mc.displayWidth / 2 - 110, mc.displayHeight / 2 - 80, 50, mouseOver);
                 GlStateManager.popMatrix();
@@ -88,7 +95,9 @@ public class OverlaySonicShades implements IOverlay {
                 mc.fontRenderer.drawStringWithShadow("Age: " + mouseOver.ticksExisted + " ticks", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 50, Color.GREEN.getRGB());
                 mc.fontRenderer.drawStringWithShadow("Position: " + mouseOver.getPosition().getX() + " || " + mouseOver.getPosition().getY() + " || " + mouseOver.getPosition().getZ(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 40, Color.GREEN.getRGB());
             }
+
             GlStateManager.popMatrix();
+
         }
     }
 
