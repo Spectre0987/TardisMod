@@ -139,7 +139,6 @@ public class EntityTardis extends EntityFlying {
 	public void onDeath(DamageSource cause) {
 		if(this.getControllingPassenger() != null) {
 			this.removePassenger(this.getControllingPassenger());
-			System.out.println("Cats");
 		}
 		super.onDeath(cause);
 		if (!world.isRemote) {
