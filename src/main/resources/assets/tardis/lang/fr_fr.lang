@@ -51,6 +51,8 @@ tardis.locked.false=Le TARDIS a été ouvert.
 death.attack.dalek=Tué par un rayon laser Dalek
 death.cyberman.ray=a été supprimé.
 
+damage.dalek=a été exterminé
+
 screw.recall=Mode de rappel
 screw.transmat=Transmat
 screwdriver.hallway=Générateur de pièce - Hall d'entrée
@@ -85,6 +87,8 @@ protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S
 
 tardis.dimension=Dimension Nav-com est:
+
+tardis.event.dalek=Invasion Dalek au:
 
 config.category.dims=Dimensions
 config.dims=Liste des dimensions
