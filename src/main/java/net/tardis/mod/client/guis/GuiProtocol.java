@@ -19,10 +19,10 @@ public class GuiProtocol extends GuiScreen {
 	
 	public BlockPos pos = BlockPos.ORIGIN;
 	
-	static final int GUI_WIDTH = 228;
-	static final int GUI_HEIGHT = 136;
+	static final int GUI_WIDTH = 248;
+	static final int GUI_HEIGHT = 167;
 	
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/screen.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/monitor.png");
 	
 	public GuiProtocol() {}
 	
@@ -33,7 +33,9 @@ public class GuiProtocol extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		mc.getTextureManager().bindTexture(TEXTURE);
-		this.drawTexturedModalRect(width / 2 - GUI_WIDTH / 2, height / 2 - GUI_HEIGHT / 2, 0, 0, GUI_WIDTH, GUI_HEIGHT);
+		int x = (width - 248) / 2;
+		int y = (height - 167) /2;
+		this.drawTexturedModalRect(x, y, 0, 0, GUI_WIDTH, GUI_HEIGHT);
 		for (GuiButton b : this.buttonList) {
 			b.drawButton(mc, mouseX, mouseY, partialTicks);
 		}

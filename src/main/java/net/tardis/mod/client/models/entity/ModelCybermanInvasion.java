@@ -1,4 +1,4 @@
-package net.tardis.mod.client.models;
+package net.tardis.mod.client.models.entity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
