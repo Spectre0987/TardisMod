@@ -14,6 +14,7 @@ import net.tardis.mod.client.models.ModelInteriorDoors;
 import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
 public class RenderDoor extends Render<ControlDoor> {
@@ -59,8 +60,9 @@ public class RenderDoor extends Render<ControlDoor> {
 				}
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0);
-				//RenderHelper.drawOutline(new Vec3d(1.5,2.5,0));
-				RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1.5,2.5,0));
+				TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
+				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1.5,2.5,0));
+				else RenderHelper.drawOutline(new Vec3d(1.5,2.5,0));
 			}
 			catch(Exception e) {}
 		}
