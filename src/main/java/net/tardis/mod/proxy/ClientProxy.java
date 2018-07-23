@@ -71,6 +71,7 @@ import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
@@ -128,6 +129,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlTelepathicCircuts.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoorSwitch.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlMag.class, new RenderInvis());
+		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, new RenderCorridor());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());

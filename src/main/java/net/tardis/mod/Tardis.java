@@ -143,7 +143,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
-		EntityHelper.registerNoSpawn(EntityCorridor.class, "corridor");
+		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
