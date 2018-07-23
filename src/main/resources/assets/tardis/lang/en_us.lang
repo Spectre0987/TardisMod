@@ -51,6 +51,8 @@ tardis.locked.false=TARDIS unlocked!
 death.attack.dalek=Killed by a Dalek Ray gun
 death.cyberman.ray=was deleted.
 
+damage.dalek=was exterminated
+
 screw.recall=Recall Mode
 screw.lamp=Tinker Mode
 screwdriver.hallway=Room Gen - Hallway
@@ -85,6 +87,8 @@ protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
 
 tardis.dimension=Nav-com Dimension is:
+
+tardis.event.dalek=Dalek Invasion at:
 
 config.category.dims=Dimensions
 config.dims=Dimension List

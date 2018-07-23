@@ -4,7 +4,15 @@ package net.tardis.mod.common.entities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,11 +21,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.api.entities.IDontSufficate;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 
-public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFlying {
+public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFlying, IDontSufficate {
 
 
 	private ItemStack[] deathItems = new ItemStack[]{new ItemStack(TItems.power_cell, 20 + rand.nextInt(11)), new ItemStack(TItems.gunstick, 1), new ItemStack(TItems.circuts, 7 + rand.nextInt(3))};
@@ -83,10 +95,11 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 			}
 			else if(this.hasNoGravity())this.motionY = -0.02;
 			this.fallDistance = 0;
-			if(this.hasNoGravity()) {
+			if(this.hasNoGravity() && this.getAttackTarget().getPositionVector().distanceTo(this.getPositionVector()) > 5) {
 				Vec3d dir = this.getAttackTarget().getPositionVector().subtract(this.getPositionVector()).normalize().scale(0.3D);
 				this.motionX = dir.x;
 				this.motionZ = dir.z;
+				this.faceEntity(this.getAttackTarget(), 1F,1F);
 			}
 		}
 		if(this.onGround || !this.isAirBorne) this.setNoGravity(false);
@@ -101,4 +114,22 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 		}
 	}
 	
+	public static class DamageSourceDalek extends DamageSource{
+
+		public DamageSourceDalek() {
+			super("damage.dalek");
+			this.setProjectile();
+		}
+
+		@Override
+		public ITextComponent getDeathMessage(EntityLivingBase entity) {
+			return new TextComponentString(entity.getDisplayName().getFormattedText() + " " + (new TextComponentTranslation("damage.dalek").getFormattedText()));
+		}
+
+		@Override
+		public boolean isUnblockable() {
+			return false;
+		}
+		
+	}
 }

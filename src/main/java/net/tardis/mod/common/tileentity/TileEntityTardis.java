@@ -50,6 +50,7 @@ import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
@@ -363,8 +364,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(oWorld.getTileEntity(tardisLocation.up()) != null) {				
 				((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).setDemat();
 			}
-			EntityControl door = this.getControl(ControlDoor.class);
-			((ControlDoor) door).setOpen(false);
 			this.saveCoords.set(this.saveCoords.size() - 1, new SpaceTimeCoord(this.getLocation(), this.dimension));
 			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunkFromBlockCoords(getLocation()).getPos());
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
@@ -465,7 +464,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 						new ControlFastReturn(this),
 						new ControlTelepathicCircuts(this),
 						new ControlDoorSwitch(this),
-						new ControlMag(this)
+						new ControlMag(this),
+						new ControlPhone(this)
 						};
 				for (EntityControl con : ec) {
 					con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);

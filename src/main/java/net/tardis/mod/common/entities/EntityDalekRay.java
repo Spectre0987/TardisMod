@@ -1,13 +1,13 @@
 package net.tardis.mod.common.entities;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.tardis.mod.common.entities.EntityDalek.DamageSourceDalek;
 
 public class EntityDalekRay extends EntityThrowable {
-	
 
 	public static final float SPEED = 2F;
 	
@@ -23,9 +23,14 @@ public class EntityDalekRay extends EntityThrowable {
 	@Override
 	protected void onImpact(RayTraceResult res) {
 		if (res != null && res.entityHit instanceof EntityLivingBase) {
-			res.entityHit.attackEntityFrom(this.getThrower() != null ? DamageSource.causeThrownDamage(this.getThrower(), this) : DamageSource.FIREWORKS, 4F);
+			res.entityHit.attackEntityFrom(new DamageSourceDalek().causeThrownDamage(this.getThrower(), this), 4F);
+			this.setDead();
 		}
-		if (res.typeOfHit == res.typeOfHit.BLOCK) this.setDead();
+		if (res.typeOfHit == res.typeOfHit.BLOCK) {
+			IBlockState state = world.getBlockState(res.getBlockPos());
+			if(!state.causesSuffocation())return;
+			this.setDead();
+		}
 	}
 	
 	@Override

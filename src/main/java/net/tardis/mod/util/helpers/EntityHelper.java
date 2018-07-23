@@ -1,5 +1,8 @@
 package net.tardis.mod.util.helpers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
@@ -7,9 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.tardis.mod.Tardis;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EntityHelper {
 	
@@ -26,7 +26,7 @@ public class EntityHelper {
 	}
 	
 	public static void registerNoSpawn(Class entityClass, String name) {
-		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID), entityClass, name, ++id, Tardis.instance, 64, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 64, 1, true);
 	}
 	
 	public static void makeGoodBiomes() {

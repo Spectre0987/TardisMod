@@ -30,4 +30,8 @@ public class TStrings {
 	}
 
 	
+	public static class EVENT{
+		public static final String DALEK_INVASION = "tardis.event.dalek";
+	}
+	
 }

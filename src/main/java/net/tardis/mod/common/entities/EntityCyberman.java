@@ -13,11 +13,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.api.entities.IDontSufficate;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 
-public class EntityCyberman extends EntityMob{
+public class EntityCyberman extends EntityMob implements IDontSufficate{
 	
 
 	public EntityCyberman(World worldIn) {
@@ -42,11 +43,17 @@ public class EntityCyberman extends EntityMob{
 
 		public DamageSourceCyberGun() {
 			super("death.cyberman.ray");
+			this.setProjectile();
 		}
 
 		@Override
 		public ITextComponent getDeathMessage(EntityLivingBase base) {
 			return new TextComponentString(base.getDisplayName().getFormattedText() + " " + new TextComponentTranslation("death.cyberman.ray").getFormattedText());
+		}
+
+		@Override
+		public boolean isUnblockable() {
+			return false;
 		}
 
 	}
