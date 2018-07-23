@@ -22,4 +22,8 @@ public class TStrings {
 		public static final String WEEPING_ANGELS = "weeping-angels";
 	}
 	
+	public static class EVENT{
+		public static final String DALEK_INVASION = "tardis.event.dalek";
+	}
+	
 }

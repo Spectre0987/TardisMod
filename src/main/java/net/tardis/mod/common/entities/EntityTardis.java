@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SPacketMoveVehicle;
+import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -93,7 +93,7 @@ public class EntityTardis extends EntityFlying {
 				motionX = look.x;
 				motionY = look.y;
 				motionZ = look.z;
-				((EntityPlayerMP) e).connection.sendPacket(new SPacketMoveVehicle(this));
+				((EntityPlayerMP) e).connection.sendPacket(new SPacketEntityVelocity(this));
 			}
 			if (this.getControllingPassenger() == null || this.getConsolePos() == null || this.getConsolePos().equals(BlockPos.ORIGIN)) {
 				++ticks;
@@ -102,6 +102,9 @@ public class EntityTardis extends EntityFlying {
 				}
 			}
 		}
+		this.prevPosX = this.posX;
+		this.prevPosY = this.posY;
+		this.prevPosZ = this.posZ;
 	}
 	
 	@Override
