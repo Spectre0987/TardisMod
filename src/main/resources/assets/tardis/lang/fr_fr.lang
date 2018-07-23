@@ -1,6 +1,6 @@
 itemGroup.tardis=TARDIS Mod
 
-item.key.name=Clé de TARDIS
+item.key.name=Clé du TARDIS
 item.pos_setter.name=Enregistreur de coordonnées
 item.circuts.name=Circuit Exotronic
 item.sonic_screwdriver.name=Tournevis sonique
@@ -53,7 +53,6 @@ death.cyberman.ray=a été supprimé.
 
 screw.recall=Mode de rappel
 screw.transmat=Transmat
-screw.lamp=Mode bricoleur
 screwdriver.hallway=Générateur de pièce - Hall d'entrée
 screw.generic_room=Générateur de pièce - Petite pièce
 screw.electric=Démonter le panneau de la rondelle
@@ -84,6 +83,8 @@ tardis.hads.enabled.false=H.A.D.S a été désactivé
 
 protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S
+
+tardis.dimension=Dimension Nav-com est:
 
 config.category.dims=Dimensions
 config.dims=Liste des dimensions
@@ -119,8 +120,11 @@ entity.tardis_fast_return.name=Retour rapide
 entity.telepathic_circuts.name=Circuits télépathiques
 entity.tardis_door_control.name=Interrupteur de porte
 entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
+entity.dalek.name=Dalek
+
 
 entity.invasion_cyberman.name=Invasion de Cyberman
+
 
 death.cyberman.generic=a été converti
 
