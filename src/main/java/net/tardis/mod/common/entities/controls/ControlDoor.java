@@ -14,6 +14,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -106,24 +107,20 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	public void preformAction(EntityPlayer player) {
 		if (this.getConsolePos() != null) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
-			if (!tardis.isInFlight()) {
-				if (!player.isSneaking()) {
-					this.setOpen(!this.isOpen());
-					if (!world.isRemote) {
-						if (this.isOpen())
-							world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
-						else
-							world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
-						WorldServer ws = DimensionManager.getWorld(tardis.dimension);
-						TileEntity te = ws.getTileEntity(tardis.getLocation().up());
-						if (te instanceof TileEntityDoor) {
-							((TileEntityDoor) te).setLocked(!this.isOpen());
-							player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + !this.isOpen()), true);
-						}
+			if (!player.isSneaking()) {
+				this.setOpen(!this.isOpen());
+				if (!world.isRemote) {
+					if (this.isOpen())
+						world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
+					else
+						world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
+					WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+					TileEntity te = ws.getTileEntity(tardis.getLocation().up());
+					if (te instanceof TileEntityDoor) {
+						((TileEntityDoor) te).setLocked(!this.isOpen());
+						player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + !this.isOpen()), true);
 					}
 				}
-			} else {
-				world.playSound(null, this.getPosition(), TSounds.door_locked, SoundCategory.BLOCKS, 1F, 1F);
 			}
 		}
 	}
@@ -137,8 +134,8 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	public void onUpdate() {
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
-		if(!world.isRemote && this.isOpen()) {
-			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
+		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
+		if(!world.isRemote && this.isOpen() && !tardis.isInFlight()) {
 			AxisAlignedBB bb = this.getEntityBoundingBox();
 			//WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
@@ -195,6 +192,24 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
 		}
+		try {
+			if(tardis.isInFlight() && this.isOpen()) {
+				AxisAlignedBB voidBB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10).offset(this.getPosition());
+				
+				for(Entity entity : world.getEntitiesWithinAABB(Entity.class, voidBB)) {
+					if(!entity.isDead) {
+						Vec3d dir = entity.getPositionVector().subtract(this.getPositionVector()).normalize().scale(-1).scale(0.25);
+						entity.motionX = dir.x;
+						entity.motionY = dir.y;
+						entity.motionZ = dir.z;
+						if(entity.getPositionVector().distanceTo(this.getPositionVector()) < 0.25) {
+							if(!world.isRemote)entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, Integer.MAX_VALUE);
+						}
+					}
+				}
+			}
+		}
+		catch(Exception e) {}
 	}
 
 	@Override
