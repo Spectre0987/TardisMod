@@ -63,7 +63,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public static int radius = 10;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	
-	public TileEntityDoor() {}
+	public TileEntityDoor() {
+		this.isRemat = true;
+		this.alpha = 0.0F;
+	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
@@ -72,6 +75,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		isLocked = tag.getBoolean("locked");
 		this.isDemat = tag.getBoolean("demat");
 		this.isRemat = tag.getBoolean("remat");
+		this.alpha = tag.getFloat("alpha");
 	}
 	
 	@Override
@@ -80,11 +84,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		tag.setBoolean("locked", isLocked);
 		tag.setBoolean("demat", this.isDemat);
 		tag.setBoolean("remat", this.isRemat);
+		tag.setFloat("alpha", this.alpha);
 		return super.writeToNBT(tag);
 	}
 	
 	public void toggleLocked(EntityPlayer player) {
-		if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0) {
+		if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0 && alpha >= 1.0F) {
 			lockCooldown = 20;
             isLocked = !isLocked;
 			this.markDirty();
@@ -208,9 +213,28 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		}
 		
 		if(isRemat) {
-			if(alpha < 1.0F)alpha += 0.005F;
+			if(alpha < 1.0F) {
+				alpha += 0.005F;
+				if(!world.isRemote) {
+					BlockPos tp = this.getConsolePos().offset(EnumFacing.SOUTH, 3);
+					for(Entity e : world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(0,0,0,1,2,1).offset(this.getPos().down()))) {
+						if(e instanceof EntityPlayerMP) {
+							EntityPlayerMP mp = (EntityPlayerMP)e;
+							mp.connection.setPlayerLocation(tp.getX(), tp.getY(), tp.getZ(), 0, 0);
+							((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, TDimensions.TARDIS_ID, new TardisTeleporter());
+						}
+						else {
+							e.changeDimension(TDimensions.TARDIS_ID);
+							e.setPositionAndUpdate(tp.getX(), tp.getY(), tp.getZ());
+							System.out.println("Works: " + e.getDisplayName().getFormattedText() + " has been sent!");
+							System.out.println("Dimension: " + e.dimension + ", BlockPos: " + Helper.formatBlockPos(e.getPosition()));
+						}
+					}
+				}
+			}
 			else {
 				this.isRemat = false;
+				this.alpha = 1.0F;
 			}
 		}
 		if(isDemat) {
@@ -221,7 +245,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				this.world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());
 			}
 		}
-		
+		if(!this.isRemat && !this.isDemat)this.alpha = 1.0F;
 	}
 	
 	public boolean canOpen() {
@@ -378,6 +402,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void setDemat() {
 		this.alpha = 1;
 		this.isDemat = true;
+		this.setLocked(true);
 		this.sendDematPacket(true);
 	}
 }

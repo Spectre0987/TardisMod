@@ -60,6 +60,7 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
+import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
@@ -97,6 +98,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean hadsEnabled = false;
 	public int magnitude = 10;
 	public AnimationObject aniObj = new AnimationObject();
+	public EnumEvent currentEvent = EnumEvent.NONE;
 	
 	public TileEntityTardis() {}
 	
