@@ -26,6 +26,7 @@ item.space_chest.name=Space Suit Chestpiece
 item.space_legs.name=Space Suit Leggings
 item.first_cane.name=First Doctor's Cane
 item.fourth_hat.name=Fourth Doctor's Hat
+item.symbiotic_nuclei.name=Symbiotic Nuclei
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console

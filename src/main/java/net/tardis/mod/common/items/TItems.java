@@ -1,5 +1,8 @@
 package net.tardis.mod.common.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -12,9 +15,6 @@ import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TItems {
@@ -49,6 +49,7 @@ public class TItems {
 	public static Item first_cane;
 	public static Item fourth_hat;
 	public static Item thirteen_coat;
+	public static Item symbiotic_nuclei;
 	
 	// Componenets
 	
@@ -70,7 +71,7 @@ public class TItems {
 		power_cell = new ItemBase();
 		register(power_cell, "power_cell");
 		
-		fob_watch = new ItemBase();
+		fob_watch = new ItemFobWatch();
 		register(fob_watch, "fob_watch");
 		
 		ray_gun = new ItemRayGun();
@@ -120,6 +121,9 @@ public class TItems {
 
 		thirteen_coat = new ItemClothing(EnumClothes.CHEST_13TH_COAT);
 		register(thirteen_coat, "thirteen_coat");
+		
+		symbiotic_nuclei = new ItemSymbioticNuclei();
+		register(symbiotic_nuclei, "symbiotic_nuclei");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();
