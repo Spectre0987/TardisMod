@@ -48,6 +48,7 @@ public class RenderScreen extends Render {
 			GlStateManager.rotate(180, 0, 0, 1);
 			GlStateManager.scale(0.005, 0.005, 0.005);
 			drawString("TARDIS Location: " + Helper.formatBlockPos(tardis.getLocation()));
+			drawString("TARDIS is facing " + Helper.formatDimensionName(tardis.facing.getName()));
 			if (tardis.currentDimName != null && !tardis.currentDimName.equals(""))
 				drawString("TARDIS Dimension: [" + Helper.formatDimensionName(tardis.currentDimName) + "]");
 			else

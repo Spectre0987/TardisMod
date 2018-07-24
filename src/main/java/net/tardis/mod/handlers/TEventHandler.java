@@ -14,12 +14,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -33,18 +35,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
-import net.tardis.mod.client.models.clothing.ModelVortexM;
-import net.tardis.mod.client.renderers.RenderItemSonicPen;
-import net.tardis.mod.client.renderers.items.RenderItemSpaceChest;
-import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
-import net.tardis.mod.client.renderers.items.RenderItemSpaceLegs;
-import net.tardis.mod.client.renderers.items.RenderItemTardis02;
-import net.tardis.mod.client.renderers.items.RenderItemTardis03;
-import net.tardis.mod.client.renderers.items.RenderTEISRItem;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
+import net.tardis.mod.common.data.TimeLord;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
@@ -201,6 +196,22 @@ public class TEventHandler {
 		}
 		if(count >= 3) {
 			base.setAir(200);
+		}
+	}
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public static void useRegen(LivingDeathEvent event) {
+		if(event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+			if(TimeLord.isTimeLord(player)) {
+				if(TimeLord.useRegen(player)) {
+					event.setCanceled(true);
+					player.setHealth(player.getMaxHealth());
+					player.sendMessage(new TextComponentString("You have " + TimeLord.getRegens(player) + " regenerations left."));
+					
+				}
+				else TimeLord.setTimeLord(player);
+			}
 		}
 	}
 }

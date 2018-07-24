@@ -29,16 +29,8 @@ public class PlayerStorage{
 		tag.setFloat("limbSwing", player.limbSwing);
 		tag.setFloat("limbSwingAmount", player.limbSwingAmount);
 		tag.setInteger("ageInTicks", player.ticksExisted);
-		tag.setFloat("swingProgress", player.swingProgress);
-		tag.setDouble("motionX", player.motionX);
-		tag.setDouble("motionY", player.motionY);
-		tag.setDouble("motionZ", player.motionZ);
 		tag.setFloat("rotationYaw", player.rotationYaw);
 		tag.setFloat("rotationYawHead", player.rotationYawHead);
-		tag.setFloat("renderYawOffset", player.renderYawOffset);
-		tag.setBoolean("swinging", player.isSwingInProgress);
-		tag.setFloat("distanceWalkedModified", player.distanceWalkedModified);
-		tag.setFloat("prevDistanceWalkedModified", player.prevDistanceWalkedModified);
 	}
 
 	
