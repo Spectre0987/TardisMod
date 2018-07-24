@@ -86,18 +86,10 @@ public class RenderWorldShell {
 							player.ticksExisted = stor.tag.getInteger("ageInTicks");
 							player.limbSwing = stor.tag.getFloat("limbSwing");
 							player.limbSwingAmount = stor.tag.getFloat("limbSwingAmount");
-							player.swingProgress = stor.tag.getFloat("swingProgress");
-							player.motionX = stor.tag.getDouble("motionX");
-							player.motionY = stor.tag.getDouble("motionY");
-							player.motionZ = stor.tag.getDouble("motionZ");
 							player.rotationYaw = stor.tag.getFloat("rotationYaw");
 							player.rotationYawHead = stor.tag.getFloat("rotationYawHead");
-							player.renderYawOffset = stor.tag.getFloat("renderYawOffset");
-							player.isSwingInProgress = stor.tag.getBoolean("swinging");
 							player.swingingHand = EnumHand.MAIN_HAND;
 							player.isRiding = stor.tag.getBoolean("riding");
-							player.distanceWalkedModified = stor.tag.getFloat("distanceWalkedModified");
-							player.prevDistanceWalkedModified = stor.tag.getFloat("prevDistanceWalkedModified");
 						}
 						GlStateManager.translate(stor.posX, stor.posY, stor.posZ);
 						GlStateManager.rotate(-player.rotationYawHead, 0, 1, 0);

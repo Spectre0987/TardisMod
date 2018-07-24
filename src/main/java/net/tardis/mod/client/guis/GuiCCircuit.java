@@ -5,7 +5,6 @@ import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -35,7 +34,7 @@ public class GuiCCircuit extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		//this.drawDefaultBackground();
+		this.drawDefaultBackground();
 		mc.getTextureManager().bindTexture(tex);
 		int x = (width - 248) / 2;
 		int y = (height - 167) /2;
@@ -58,10 +57,10 @@ public class GuiCCircuit extends GuiScreen {
 	public void initGui() {
 		super.initGui();
 		this.buttonList.clear();
-		/*this.addButton(new GuiButton(buttonSize, buttonSize, buttonSize, buttonSize, buttonSize, null));
+		this.addButton(new GuiButton(buttonSize, buttonSize, buttonSize, buttonSize, buttonSize, null));
 		this.addButton(console1 = new ButtonRecipe(0, (width / 2) - (buttonSize / 2), (height / 2) - (buttonSize / 2), new ItemStack(TBlocks.tardis_top)));
 		this.addButton(console2 = new ButtonRecipe(1, (width / 2) - (buttonSize / 2), ((height / 2) - (buttonSize / 2)) - buttonSize, new ItemStack(TBlocks.tardis_top_01)));
-		this.addButton(console3 = new ButtonRecipe(3,(width / 2) - (buttonSize / 2), ((height / 2) - (buttonSize / 2)) - buttonSize * 2, new ItemStack(TBlocks.tardis_top_02)));*/
+		this.addButton(console3 = new ButtonRecipe(3,(width / 2) - (buttonSize / 2), ((height / 2) - (buttonSize / 2)) - buttonSize * 2, new ItemStack(TBlocks.tardis_top_02)));
 	}
 
 	@Override

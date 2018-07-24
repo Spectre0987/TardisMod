@@ -24,6 +24,7 @@ import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
+import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
@@ -183,8 +184,8 @@ public class Tardis {
 			// Register All Mobs Here.
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 			EntityHelper.registerMob(EntityDalek.class, "dalek", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
+			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
 		}
-		// CapabilityManager.INSTANCE.register(ITimeLord.class,new TimeLordCapibiltyStorage(),TimeLord.class);
 		
 		proxy.preInit();
 	}
