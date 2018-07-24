@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "MWE",
+    " C "
+  ],
+  "key": {
+    "G":{
+        "item":"minecraft:golden_apple",
+        "data": 0
+    },
+    "M":{
+        "item":"minecraft:speckled_melon"
+    },
+    "W":{
+        "item":"minecraft:nether_wart"
+    },
+    "E":{
+        "item":"minecraft:ender_eye"
+    },
+    "C":{
+        "item":"minecraft:golden_carrot"
+    }
+  },
+  "result": {
+    "item": "tardis:symbiotic_nuclei"
+  }
+}
