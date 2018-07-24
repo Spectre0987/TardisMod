@@ -99,5 +99,12 @@
             "name":"tardis:stutter",
             "stream":true
         }]
+    },
+    "phone":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:phone",
+            "stream": true
+        }]
     }
 }

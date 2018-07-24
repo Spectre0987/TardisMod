@@ -34,6 +34,7 @@ import net.tardis.mod.client.renderers.controls.RenderRandom;
 import net.tardis.mod.client.renderers.controls.RenderZ;
 import net.tardis.mod.client.renderers.entities.RenderCyberRay;
 import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
+import net.tardis.mod.client.renderers.entities.RenderCybermanTomb;
 import net.tardis.mod.client.renderers.entities.RenderDalek;
 import net.tardis.mod.client.renderers.entities.RenderRay;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
@@ -57,6 +58,7 @@ import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
+import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityRayCyberman;
@@ -135,6 +137,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanInvasion.class, new RenderCybermanInvasion());
+		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanTomb.class, new RenderCybermanTomb());
 		RenderingRegistry.registerEntityRenderingHandler(EntityRayCyberman.class, new RenderCyberRay());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, new RenderDalek());
