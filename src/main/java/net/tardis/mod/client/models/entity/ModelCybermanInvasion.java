@@ -411,9 +411,6 @@ public class ModelCybermanInvasion extends ModelBiped
     ChestUnit7.render(f5);
     Crotch.render(f5);
     
-    this.LeftArm.offsetX = -0.125F;
-    this.RightArm.offsetX = 0.125F;
-    
     LeftArm.render(f5);
     RightArm.render(f5);
     LeftLeg.render(f5);
