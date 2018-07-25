@@ -122,7 +122,8 @@ public class EntityCyberman extends EntityMob implements IDontSufficate{
 					this.entity.getMoveHelper().setMoveTo(pos.x, pos.y, pos.z, speed);
 				}
 				else if(doorPos != null && entity.ticksExisted % 20 == 0) {
-					((TileEntityDoor)entity.world.getTileEntity(doorPos)).knock();
+					TileEntityDoor door = ((TileEntityDoor)entity.world.getTileEntity(doorPos));
+					if(door != null)door.knock();
 				}
 			}
 		}
