@@ -116,7 +116,7 @@ public class EntityTardis extends EntityFlying {
 	@Override
 	protected void removePassenger(Entity pas) {
 		if (!world.isRemote) {
-			if (pas instanceof EntityPlayer) {
+			if (pas instanceof EntityPlayerMP) {
                 WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 				TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(getConsolePos());
 				world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
@@ -126,11 +126,13 @@ public class EntityTardis extends EntityFlying {
 				BlockPos cPos = this.consolePos.west(3);
 				pas.setInvisible(false);
 				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());
-                ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.TARDIS_ID, new TardisTeleporter());
 				((EntityPlayerMP) pas).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.EAST), 0);
+                ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.TARDIS_ID, new TardisTeleporter());
 				this.setDead();
+				return;
 			}
 		}
+		super.removePassenger(pas);
 	}
 	
 	@Override
@@ -140,9 +142,6 @@ public class EntityTardis extends EntityFlying {
 	
 	@Override
 	public void onDeath(DamageSource cause) {
-		if(this.getControllingPassenger() != null) {
-			this.removePassenger(this.getControllingPassenger());
-		}
 		super.onDeath(cause);
 		if (!world.isRemote) {
 			world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
