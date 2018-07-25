@@ -30,6 +30,7 @@ public class RenderWorldShell {
 			IContainsWorldShell container = (IContainsWorldShell) entity;
 			
 			GlStateManager.pushMatrix();
+			WorldBoti worldBoti = new WorldBoti(Minecraft.getMinecraft().player.dimension, Minecraft.getMinecraft().world, entity.getWorldShell());
 			if(entity instanceof TileEntityDoor) GlStateManager.depthFunc(GL11.GL_ALWAYS);
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
@@ -59,6 +60,7 @@ public class RenderWorldShell {
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
 					try {
+						t.setWorld(worldBoti);
 						TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),t.getPos().getZ(), partialTicks);
 					}
 					catch(Exception e) {}
