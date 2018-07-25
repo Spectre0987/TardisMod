@@ -403,6 +403,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			tag.setTag(NBT.CONTROL_IDS, list);
 		}
+		
+		tag.setInteger("facing", this.facing.getHorizontalIndex());
 		return tag;
 	}
 	
@@ -429,6 +431,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				}
 			}
 			this.controls = controls.toArray(new EntityControl[0]);
+			this.facing = EnumFacing.getHorizontal(tag.getInteger("facing"));
 		}
 	}
 	

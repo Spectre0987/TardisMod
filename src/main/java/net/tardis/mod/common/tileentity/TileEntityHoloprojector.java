@@ -8,7 +8,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -41,7 +40,7 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 				if(te instanceof TileEntityTardis) {
 					TileEntityTardis tardis = (TileEntityTardis)te;
 					worldShell = new WorldShell(tardis.getLocation());
-					Vec3i vec = new Vec3i(10, 5, 10);
+					Vec3i vec = new Vec3i(7, 5, 7);
 					WorldServer ws = DimensionManager.getWorld(tardis.dimension);
 					if(ws != null) {
 						for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(vec), worldShell.getOffset().add(vec))) {
@@ -51,17 +50,17 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 							}
 						}
 						List<NBTTagCompound> lists = new ArrayList<>();
-						for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 16))) {
+						List<PlayerStorage> players = new ArrayList<PlayerStorage>();
+						for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 7))) {
 							if(EntityList.getKey(e) != null) {
 								NBTTagCompound tag = new NBTTagCompound();
 								e.writeToNBT(tag);
 								tag.setString("id", EntityList.getKey(e).toString());
 								lists.add(tag);
 							}
-						}
-						List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-						for(EntityPlayer player : ws.getEntitiesWithinAABB(EntityPlayerMP.class, Helper.createBB(tardis.getLocation(), 16))) {
-							players.add(new PlayerStorage(player));
+							if(e instanceof EntityPlayerMP) {
+								players.add(new PlayerStorage((EntityPlayerMP)e));
+							}
 						}
 						worldShell.setPlayers(players);
 						worldShell.setEntities(lists);

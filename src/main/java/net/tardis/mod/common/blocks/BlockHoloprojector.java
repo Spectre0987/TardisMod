@@ -28,7 +28,7 @@ public class BlockHoloprojector extends BlockTileBase {
 
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.INVISIBLE;
+		return EnumBlockRenderType.MODEL;
 	}
 
 }

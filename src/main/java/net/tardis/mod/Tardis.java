@@ -87,11 +87,12 @@ import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
 
-@Mod(modid = Tardis.MODID, name = Tardis.NAME, useMetadata = true, dependencies = Tardis.DEP)
+@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP)
 public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
-	public static final String DEP = "after:ic2, galacticraftcore, "+TStrings.ModIds.WEEPING_ANGELS+"; required-after:forge@[14.23.2.2638,)";
+	public static final String DEP = "after:ic2, galacticraftcore, " + TStrings.ModIds.WEEPING_ANGELS + "; required-after:forge@[14.23.2.2638,)";
+	public static final String VERSION = "0.0.5A";
 	
 	private static Logger logger;
 	
@@ -186,7 +187,6 @@ public class Tardis {
 			EntityHelper.registerMob(EntityDalek.class, "dalek", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
 		}
-		
 		proxy.preInit();
 	}
 	
