@@ -26,6 +26,7 @@ item.space_chest.name=Plastron de combinaison spatiale
 item.space_legs.name=Jambières de combinaison spatiale
 item.first_cane.name=Canne du Premier Docteur
 item.fourth_hat.name=Chapeau du Quatrième Docteur
+item.symbiotic_nuclei.name=Noyau Symbiotique
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
