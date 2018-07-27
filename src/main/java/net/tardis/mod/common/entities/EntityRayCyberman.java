@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class EntityRayCyberman extends EntityThrowable{
 
-	public static final float SPEED = 2F;
+	public static final float SPEED = 1.5F;
 	
 	public EntityRayCyberman(World worldIn) {
 		super(worldIn);
