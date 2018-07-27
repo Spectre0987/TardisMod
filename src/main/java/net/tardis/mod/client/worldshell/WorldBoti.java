@@ -4,7 +4,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
-import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldSettings;
@@ -36,6 +35,10 @@ public class WorldBoti extends WorldClient {
 	@Override
 	public int getCombinedLight(BlockPos pos, int lightValue) {
 		return 15;
+	}
+
+	public void setShell(WorldShell worldShell) {
+		this.shell = worldShell;
 	}
 
 }

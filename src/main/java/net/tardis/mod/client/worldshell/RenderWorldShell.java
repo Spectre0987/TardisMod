@@ -20,17 +20,23 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 
 public class RenderWorldShell {
 
-	public RenderWorldShell(){}
+	WorldBoti worldBoti;
+	
+	public RenderWorldShell() {
+		
+	}
 	
 	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		//Moving this will crash
+		if(worldBoti == null)worldBoti = new WorldBoti(0, Minecraft.getMinecraft().world, new WorldShell(BlockPos.ORIGIN));
 		if (entity instanceof IContainsWorldShell) {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 
 			IContainsWorldShell container = (IContainsWorldShell) entity;
 			
 			GlStateManager.pushMatrix();
-			WorldBoti worldBoti = new WorldBoti(Minecraft.getMinecraft().player.dimension, Minecraft.getMinecraft().world, entity.getWorldShell());
+			worldBoti.setShell(container.getWorldShell());
 			if(entity instanceof TileEntityDoor) GlStateManager.depthFunc(GL11.GL_ALWAYS);
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
