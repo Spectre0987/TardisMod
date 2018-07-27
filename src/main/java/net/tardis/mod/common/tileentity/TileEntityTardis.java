@@ -109,7 +109,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
-			this.setFuel(fuel - this.fuelUseage);
+			this.setFuel(fuel - this.calcFuelUse());
 			if (ticksToTravel <= 0) this.travel();
 			if (this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 200)
 				world.playSound(null, this.getPos(), TSounds.takeoff, SoundCategory.BLOCKS, 0.5F, 1F);
@@ -677,5 +677,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public IBlockState getTopBlock() {
 		return this.blockTop;
+	}
+	
+	public float calcFuelUse() {
+		return defaultFuelUse + (this.hadsEnabled ? (defaultFuelUse * 1.5F) : 0F);
 	}
 }
