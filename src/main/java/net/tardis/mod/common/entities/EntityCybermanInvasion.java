@@ -1,15 +1,25 @@
 package net.tardis.mod.common.entities;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
+import javax.annotation.Nullable;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
 
 public class EntityCybermanInvasion extends EntityCyberman implements IRangedAttackMob
 {
@@ -74,12 +84,9 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
 
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
-		
-		Vec3d targetPos = this.getPositionVector().subtract(target.getPositionVector());
-		
-		//EntityRayCyberman ray = new EntityRayCyberman(world, targetPos.x, targetPos.y, targetPos.z);
+	
 		EntityRayCyberman ray = new EntityRayCyberman(world, this);
-		ray.setPosition(posX, posY + this.getEyeHeight(), posZ);
+		ray.setPosition(posX + this.getLookVec().x, posY + this.getEyeHeight(), posZ + this.getLookVec().z);
 		world.spawnEntity(ray);
 	}
 

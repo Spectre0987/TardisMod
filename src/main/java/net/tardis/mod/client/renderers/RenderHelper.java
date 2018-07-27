@@ -10,11 +10,14 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.proxy.ClientProxy;
 
+@SideOnly(Side.CLIENT)
 public class RenderHelper {
 	
 	Minecraft mc;
