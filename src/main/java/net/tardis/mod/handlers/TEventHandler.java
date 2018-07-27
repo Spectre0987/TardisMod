@@ -9,9 +9,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -208,7 +211,12 @@ public class TEventHandler {
 					event.setCanceled(true);
 					player.setHealth(player.getMaxHealth());
 					player.sendMessage(new TextComponentString("You have " + TimeLord.getRegens(player) + " regenerations left."));
-					
+					Potion[] me = {MobEffects.WEAKNESS, MobEffects.SLOWNESS, MobEffects.MINING_FATIGUE, MobEffects.ABSORPTION, MobEffects.REGENERATION, MobEffects.HUNGER};
+					for(Potion p : me) {
+						player.addPotionEffect(new PotionEffect(p, 600, 0));
+					}
+					player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300, 0));
+					return;
 				}
 				else TimeLord.setTimeLord(player);
 			}
