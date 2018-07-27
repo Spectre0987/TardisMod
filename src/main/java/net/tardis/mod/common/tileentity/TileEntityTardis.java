@@ -99,6 +99,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int magnitude = 10;
 	public AnimationObject aniObj = new AnimationObject();
 	public EnumEvent currentEvent = EnumEvent.NONE;
+	public static float defaultFuelUse = 0.0001F;
+	public float fuelUseage = defaultFuelUse;
 	
 	public TileEntityTardis() {}
 	
@@ -107,7 +109,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
-			this.setFuel(fuel - 0.0001F);
+			this.setFuel(fuel - this.fuelUseage);
 			if (ticksToTravel <= 0) this.travel();
 			if (this.ticksToTravel == this.totalTimeToTravel - 1 || this.ticksToTravel == 200)
 				world.playSound(null, this.getPos(), TSounds.takeoff, SoundCategory.BLOCKS, 0.5F, 1F);
@@ -237,6 +239,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.magnitude = tardisTag.getInteger(NBT.MAGNITUDE);
 			this.hadsEnabled = tardisTag.getBoolean(NBT.HADS_ENABLED);
 			this.blockTop = Block.getStateById(tardisTag.getInteger(NBT.EXTERIOR));
+			this.fuelUseage = tardisTag.getFloat(NBT.FUEL_USAGE);
 		}
 	}
 	
@@ -273,6 +276,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setInteger(NBT.MAGNITUDE, this.magnitude);
 			tardisTag.setBoolean(NBT.HADS_ENABLED, this.hadsEnabled);
 			tardisTag.setInteger(NBT.EXTERIOR, Block.getStateId(this.blockTop));
+			tardisTag.setFloat(NBT.FUEL_USAGE, this.fuelUseage);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -547,6 +551,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public static class NBT {
+		public static final String FUEL_USAGE = "fuelUseage";
 		public static final String HADS_ENABLED = "isHADSEnabled";
 		public static final String CONTROL_IDS = "control_ids";
 		public static final String COMPOENET_LIST = "componentList";
