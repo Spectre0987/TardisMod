@@ -42,8 +42,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		boolean open = !te.isLocked();
-		IBlockState state = mc.world.getBlockState(te.getPos());
-
+		IBlockState state = te.getWorld().getBlockState(te.getPos());
 
 		if(state.getBlock() instanceof BlockTardisTop) {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
