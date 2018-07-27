@@ -20,7 +20,7 @@ def getHash = { ->
     return stdout.toString().trim()
 }
 
-version = "0.0.5A"+getHash()
+version = "0.0.5A"
 group = "net.tardis.mod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "tardis"
 
