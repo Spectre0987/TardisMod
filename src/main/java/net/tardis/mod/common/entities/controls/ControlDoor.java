@@ -135,9 +135,8 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
-		if(!world.isRemote && this.isOpen() && !tardis.isInFlight()) {
+		if(!world.isRemote && this.isOpen()) {
 			AxisAlignedBB bb = this.getEntityBoundingBox();
-			//WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
 			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
 				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
@@ -202,9 +201,6 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 						entity.motionX = dir.x;
 						entity.motionY = dir.y;
 						entity.motionZ = dir.z;
-						if(entity.getPositionVector().distanceTo(this.getPositionVector()) < 0.25) {
-							if(!world.isRemote)entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, Integer.MAX_VALUE);
-						}
 					}
 				}
 			}
