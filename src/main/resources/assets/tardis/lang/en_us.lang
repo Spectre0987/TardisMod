@@ -158,7 +158,3 @@ tardis.subtitle.cloister_bell=Cloister bell
 tardis.subtitle.drum_beat=Drum beat
 tardis.subtitle.stutter=Stutter
 tardis.subtitle.vm_teleport=Vortex Manipulator
-
-tardis.manual.control_coord=To increase, simply click on the control, to decrease perform a shift-click
-tardis.manual.telepathic=Opens an interface allowing you to type the name of a structure of a biome or a close player
-tardis.manual.refueler=One click will activate the recharge, another will stop it
