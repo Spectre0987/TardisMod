@@ -18,6 +18,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -158,6 +159,9 @@ public class TEventHandler {
 					player.world.spawnEntity(ei);
 				}
 			}
+		}
+		if(TardisConfig.BOTI.enable) {
+			event.player.sendStatusMessage(new TextComponentString("Are you sure you want to enable BOTI? It is extremly buggy and if you complain / mention it in the Discord you will be" + TextFormatting.BOLD + TextFormatting.DARK_RED + TextFormatting.UNDERLINE + " instantly and permanently be banned!"), false);
 		}
 	}
 	
