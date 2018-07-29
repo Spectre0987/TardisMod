@@ -162,15 +162,22 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (nPos != null) {
 				//TnT Stuff
 				if(dWorld.getTileEntity(nPos.down()) instanceof TileEntityDoor) {
-					nPos = ((TileEntityDoor)dWorld.getTileEntity(nPos.down())).getConsolePos().add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
-					dWorld = DimensionManager.getWorld(TDimensions.TARDIS_ID);
-					for(int landCheck = 0; landCheck < 10; landCheck++) {
-						nPos.add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
-						if(dWorld.getBlockState(nPos).getMaterial() == Material.AIR && dWorld.getBlockState(nPos.up()).getMaterial() == Material.AIR) {
-							break;
+					TileEntityDoor door = (TileEntityDoor)dWorld.getTileEntity(nPos.down());
+					TileEntityTardis otherTardis = (TileEntityTardis)world.getTileEntity(door.getConsolePos());
+					if(!door.isDemat && !door.isRemat && otherTardis != null && !otherTardis.hadsEnabled) {
+						nPos = ((TileEntityDoor)dWorld.getTileEntity(nPos.down())).getConsolePos().add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
+						dWorld = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+						for(int landCheck = 0; landCheck < 10; landCheck++) {
+							nPos.add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
+							if(dWorld.getBlockState(nPos).getMaterial() == Material.AIR && dWorld.getBlockState(nPos.up()).getMaterial() == Material.AIR) {
+								break;
+							}
 						}
+						this.destDim = TDimensions.TARDIS_ID;
 					}
-					this.destDim = TDimensions.TARDIS_ID;
+					else if(otherTardis != null && otherTardis.isHADSEnabled()) {
+						otherTardis.startHADS();
+					}
 				}
 				dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
