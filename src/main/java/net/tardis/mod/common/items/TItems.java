@@ -51,6 +51,8 @@ public class TItems {
 	public static Item thirteen_coat;
 	public static Item symbiotic_nuclei;
 	
+	public static Item stattenheim_remote;
+	
 	// Componenets
 	
 	public static Item fluid_link;
@@ -124,6 +126,9 @@ public class TItems {
 		
 		symbiotic_nuclei = new ItemSymbioticNuclei();
 		register(symbiotic_nuclei, "symbiotic_nuclei");
+		
+		stattenheim_remote = new ItemRemote();
+		register(stattenheim_remote, "stattenheim_remote");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();

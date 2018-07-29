@@ -180,7 +180,7 @@ public class Helper {
 				return lPos;
 			}
 		}
-		return world.getTopSolidOrLiquidBlock(pos);
+		return BlockPos.ORIGIN;
 	}
 	
 	public static BlockPos getSafeHigherPos(World world, BlockPos pos, EnumFacing facing) {
@@ -190,7 +190,7 @@ public class Helper {
 				return lPos;
 			}
 		}
-		return world.getTopSolidOrLiquidBlock(pos);
+		return BlockPos.ORIGIN;
 	}
 
 	public static float precentToPixels(float f) {

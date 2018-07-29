@@ -26,4 +26,8 @@ public class TStrings {
 		public static final String DALEK_INVASION = "tardis.event.dalek";
 	}
 	
+	public static class ToolTips{
+		public static final String REMOTE = "tooltip.remote";
+	}
+	
 }
