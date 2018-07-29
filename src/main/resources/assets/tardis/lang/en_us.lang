@@ -27,6 +27,9 @@ item.space_legs.name=Space Suit Leggings
 item.first_cane.name=First Doctor's Cane
 item.fourth_hat.name=Fourth Doctor's Hat
 item.symbiotic_nuclei.name=Symbiotic Nuclei
+item.stattenheim_remote.name=Stattenheim Remote
+
+tooltip.remote=Remote bound to TARDIS at:
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
