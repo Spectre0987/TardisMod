@@ -9,7 +9,7 @@ public class WeepingAngel {
 	}
 
     // TODO - Re-write to work with new angel code, shouldn't take long
-    /**@SubscribeEvent
+    /*@SubscribeEvent
 	public void hijackAngel(LivingEvent.LivingUpdateEvent event) {
 		if(event.getEntityLiving() instanceof EntityAngel) {
 			if(!event.getEntityLiving().world.isRemote) {
