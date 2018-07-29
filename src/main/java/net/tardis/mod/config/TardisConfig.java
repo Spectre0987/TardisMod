@@ -26,7 +26,7 @@ public class TardisConfig {
 	public static class Dimensions {
 		
 		@Config.LangKey("config.dims")
-		public int[] bDims = new int[] { 1 };
+		public int[] bDims = new int[] {1};
 		
 		@Config.LangKey("config.dim.usewhitelist")
 		public boolean USE_WHITELIST = false;
@@ -64,7 +64,7 @@ public class TardisConfig {
 	public static class BOTI{
 		
 		@Config.LangKey("config.boti.enabled")
-		public boolean enable = true;
+		public boolean enable = false;
 	}
 	
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)

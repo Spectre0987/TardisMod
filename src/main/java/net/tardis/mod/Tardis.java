@@ -167,8 +167,8 @@ public class Tardis {
 		NETWORK.registerMessage(MessageDoorOpen.Handler.class, MessageDoorOpen.class, 3, Side.CLIENT);
 		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 4, Side.SERVER);
 		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 5, Side.CLIENT);
-		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 7, Side.SERVER);
-		NETWORK.registerMessage(MessageDemat.Handler.class, MessageDemat.class, 8, Side.CLIENT);
+		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
+		NETWORK.registerMessage(MessageDemat.Handler.class, MessageDemat.class, 7, Side.CLIENT);
 		
 		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new HallwayMode());
