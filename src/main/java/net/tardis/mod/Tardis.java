@@ -170,7 +170,6 @@ public class Tardis {
 		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
 		NETWORK.registerMessage(MessageDemat.Handler.class, MessageDemat.class, 7, Side.CLIENT);
 		
-		ScrewdriverMode.register(new RecallMode());
 		ScrewdriverMode.register(new HallwayMode());
 		ScrewdriverMode.register(new GRoomMode());
 		ScrewdriverMode.register(new ElectricPanelMode());

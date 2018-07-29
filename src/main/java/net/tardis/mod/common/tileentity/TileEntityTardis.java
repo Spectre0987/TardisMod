@@ -210,10 +210,24 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public BlockPos getLandingBlock(World world, BlockPos pos) {
+		BlockPos landPos = pos;
+		Random rand = new Random();
 		if (this.landOnSurface) {
-			return Helper.getSafeHigherPos(world, pos, getFacing());
+			for(int tries = 0; tries < 20; ++tries) {
+				landPos = Helper.getSafeHigherPos(world, pos.add(rand.nextInt(20) - 10, 0, rand.nextInt(20) - 10), getFacing());
+				if(!landPos.equals(BlockPos.ORIGIN)) {
+					return landPos;
+				}
+			}
+			return pos;
 		}
-		return Helper.getSafeHigherPos(world, pos, facing);
+		for(int i = 0; i < 20; ++i) {
+			landPos = Helper.getSafePosLower(pos.add(rand.nextInt(20) - 10, 0, rand.nextInt(20) - 10), world, this.getFacing());
+			if(!landPos.equals(BlockPos.ORIGIN)) {
+				return landPos;
+			}
+		}
+		return pos;
 	}
 	
 	@Override
@@ -291,7 +305,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void setDesination(BlockPos pos, int dimension) {
-		this.tardisDestination = pos.up().toImmutable();
+		this.tardisDestination = pos.toImmutable();
 		if(Helper.isDimensionBlocked(dimension))
 			dimension = 0;
 		this.destDim = dimension;
