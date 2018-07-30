@@ -58,9 +58,10 @@ import net.tardis.mod.common.screwdriver.ElectricPanelMode;
 import net.tardis.mod.common.screwdriver.GRoomMode;
 import net.tardis.mod.common.screwdriver.HADSMode;
 import net.tardis.mod.common.screwdriver.HallwayMode;
-import net.tardis.mod.common.screwdriver.RecallMode;
 import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemFlight;
+import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
@@ -187,6 +188,8 @@ public class Tardis {
 			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
 		}
 		proxy.preInit();
+		
+		TardisSystems.register("flight", SystemFlight.class);
 	}
 	
 	@EventHandler

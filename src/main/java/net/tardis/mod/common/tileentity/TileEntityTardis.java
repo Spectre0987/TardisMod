@@ -62,6 +62,9 @@ import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.systems.SystemFlight;
+import net.tardis.mod.common.systems.TardisSystems;
+import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -101,9 +104,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public EnumEvent currentEvent = EnumEvent.NONE;
 	public static float defaultFuelUse = 0.0001F;
 	public float fuelUseage = defaultFuelUse;
+	public ISystem[] systems;
 	
-	public TileEntityTardis() {}
-	
+	public TileEntityTardis() {
+		if(systems == null) {
+			this.systems = this.createSystems();
+		}
+	}
+
 	@Override
 	public void update() {
 		
@@ -200,6 +208,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
 		}
 		shouldDelayLoop = true;
+		
+		for(ISystem sys : systems) {
+			sys.onUpdate(this.world, getPos());
+		}
 	}
 	
 	public void updateServer() {
@@ -261,6 +273,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.hadsEnabled = tardisTag.getBoolean(NBT.HADS_ENABLED);
 			this.blockTop = Block.getStateById(tardisTag.getInteger(NBT.EXTERIOR));
 			this.fuelUseage = tardisTag.getFloat(NBT.FUEL_USAGE);
+			
+			List<ISystem> newSystems = new ArrayList<>();
+			NBTTagList systemList = tardisTag.getTagList(NBT.SYSTEM_LIST, Constants.NBT.TAG_COMPOUND);
+			for(NBTBase base : systemList) {
+				NBTTagCompound systemTag = (NBTTagCompound)base;
+				ISystem sys = TardisSystems.createFromName(systemTag.getString("id"));
+				if(sys != null)sys.readFromNBT(systemTag);
+				newSystems.add(sys);
+			}
+			if(newSystems != null)this.systems = newSystems.toArray(new ISystem[] {});
 		}
 	}
 	
@@ -298,6 +320,20 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setBoolean(NBT.HADS_ENABLED, this.hadsEnabled);
 			tardisTag.setInteger(NBT.EXTERIOR, Block.getStateId(this.blockTop));
 			tardisTag.setFloat(NBT.FUEL_USAGE, this.fuelUseage);
+			
+			NBTTagList systemList = new NBTTagList();
+			for(ISystem sys : systems) {
+				String id = TardisSystems.getIdBySystem(sys);
+				if(id == null || id.isEmpty()) {
+					System.err.println(id + " IS NOT A VAILD ID");
+					break;
+				}
+				NBTTagCompound sysTag = new NBTTagCompound();
+				sysTag.setString("id", id);
+				systemList.appendTag(sys.writetoNBT(sysTag));
+				System.out.println(sysTag.toString());
+			}
+			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -400,6 +436,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public boolean getCanFly() {
+		for(ISystem s : systems) {
+			if(s.shouldStopFlight())return false;
+		}
 		return true;
 	}
 
@@ -549,6 +588,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, getPos().getX() + (rand.nextInt(3) - 1), getPos().getY() + (rand.nextInt(3) - 1), getPos().getZ() + (rand.nextInt(3) - 1), 0, 1, 0, 0);
 			}
 		}
+		for(ISystem s : systems) {
+			s.damage();
+		}
 	}
 	
 	public void crash() {
@@ -572,6 +614,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public static class NBT {
+		public static final String SYSTEM_LIST = "system_list";
 		public static final String FUEL_USAGE = "fuelUseage";
 		public static final String HADS_ENABLED = "isHADSEnabled";
 		public static final String CONTROL_IDS = "control_ids";
@@ -706,5 +749,15 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	public int getTimeLeft() {
 		return this.ticksToTravel;
+	}
+	
+	private ISystem[] createSystems() {
+		List<ISystem> systems = new ArrayList<>();
+		for(String s : TardisSystems.SYSTEMS.keySet()) {
+			ISystem system = TardisSystems.createFromName(s);
+			if(system != null)systems.add(system);
+		}
+		return systems == null ? new ISystem[] {new SystemFlight()} : systems.toArray(new ISystem[] {});
+		
 	}
 }

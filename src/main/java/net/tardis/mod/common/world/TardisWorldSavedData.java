@@ -23,9 +23,9 @@ public class TardisWorldSavedData extends WorldSavedData {
 		for (NBTBase base : list) {
 			NBTTagCompound tag = (NBTTagCompound) base;
 			TardisHelper.tardisOwners.put(tag.getString("name"), BlockPos.fromLong(tag.getLong("pos")).toImmutable());
-			System.out.println(TardisHelper.tardisOwners.toString());
+			//System.out.println(TardisHelper.tardisOwners.toString());
 		}
-		System.out.println(nbt.toString());
+		//System.out.println(nbt.toString());
 	}
 	
 	@Override
