@@ -1,30 +1,6 @@
 {
-    "parent":"builtin/entity",
-    "display":{
-        "gui":{
-            "translation":[-7,-5,0],
-            "rotation":[22.5,200,0],
-            "scale":[0.7,0.7,0.7]
-        },
-        "ground":{
-            "translation":[2.5,0,2.5],
-            "rotation":[0,0,0],
-            "scale":[0.25,0.25,0.25]
-        },
-        "firstperson_righthand":{
-            "translation":[0,-5, 10],
-            "rotation":[0, -45,0],
-            "scale":[0.7,0.7,0.7]
-        },
-        "firstperson_lefthand":{
-            "translation":[ -5, -5,0],
-            "rotation":[0, -45,0],
-            "scale":[0.7,0.7,0.7]
-        },
-        "thirdperson_righthand":{
-            "translation":[5,-2,-3],
-            "rotation":[22.5,45,0],
-            "scale":[0.5,0.5,0.5]
-        }
+    "parent":"item/generated",
+    "textures":{
+        "layer0":"tardis:items/space_legs"
     }
 }

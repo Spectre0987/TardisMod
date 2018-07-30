@@ -1,12 +1,12 @@
 package net.tardis.mod.client;
 
+import java.util.HashMap;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.clothing.ModelFourthHat;
 import net.tardis.mod.client.models.clothing.ModelThirteenCoat;
-
-import java.util.HashMap;
 
 public enum EnumClothes {
 
@@ -23,7 +23,7 @@ public enum EnumClothes {
     }
 
     public ModelBiped getModel() {
-        return model;
+        return ClothingHandler.CLOTHING.get(this);
     }
 
     public ResourceLocation getTexture() {

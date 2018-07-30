@@ -1,10 +1,6 @@
 {
-    "parent":"builtin/entity",
-    "display":{
-        "gui":{
-            "translation":[11, -15,0],
-            "rotation":[202.2, 45, 0],
-            "scale":[1,1,1]
-        }
+    "parent":"item/generated",
+    "textures":{
+        "layer0":"tardis:items/fourth_hat"
     }
 }

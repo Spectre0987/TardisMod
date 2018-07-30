@@ -1,6 +1,6 @@
 {
-    "parent":"builtin/entity",
-    "display":{
-        "gui":{}
+    "parent":"item/generated",
+    "textures":{
+        "layer0":"tardis:items/twelve_coat"
     }
 }
