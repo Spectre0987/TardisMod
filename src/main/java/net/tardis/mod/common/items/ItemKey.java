@@ -56,7 +56,7 @@ public class ItemKey extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if (playerIn.dimension != TDimensions.TARDIS_ID) {
-			if (!worldIn.isRemote) {
+			if (!worldIn.isRemote && this.getPos(playerIn.getHeldItem(handIn)) == null) {
 				WorldServer ws = (WorldServer) worldIn;
 				ItemStack stack = playerIn.getHeldItem(handIn);
 				BlockPos cPos = TardisHelper.getTardis(playerIn.getGameProfile().getId());
