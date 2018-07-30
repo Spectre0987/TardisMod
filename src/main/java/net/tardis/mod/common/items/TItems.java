@@ -53,6 +53,8 @@ public class TItems {
 	
 	public static Item stattenheim_remote;
 	
+	public static Item ruby;
+	
 	// Componenets
 	
 	public static Item fluid_link;
@@ -130,6 +132,8 @@ public class TItems {
 		stattenheim_remote = new ItemRemote();
 		register(stattenheim_remote, "stattenheim_remote");
 		
+		ruby = new ItemBase();
+		register(ruby, "ruby");
 		// TARDIS Components
 		fluid_link = new FluidLink();
 		register(fluid_link, "fluid_link");

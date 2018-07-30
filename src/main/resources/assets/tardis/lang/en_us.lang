@@ -28,6 +28,8 @@ item.first_cane.name=First Doctor's Cane
 item.fourth_hat.name=Fourth Doctor's Hat
 item.symbiotic_nuclei.name=Symbiotic Nuclei
 item.stattenheim_remote.name=Stattenheim Remote
+item.ruby.name=Ruby
+item.thirteen_coat.name=Thirteen's Coat
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
@@ -53,6 +55,7 @@ tile.electric_panel.name=Electric Interface Panel
 tile.megalos.name=Meglos
 tile.console.name=Console
 tile.toyota_hexagon_1.name=Toyota Block
+tile.ruby_ore.name=Ruby Ore
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!

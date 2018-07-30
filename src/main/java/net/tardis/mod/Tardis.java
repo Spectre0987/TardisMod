@@ -198,6 +198,8 @@ public class Tardis {
 		
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
+		OreDictionary.registerOre("gemRuby", TItems.ruby);
+		OreDictionary.registerOre("oreRuby", TBlocks.ruby_ore);
 	}
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
