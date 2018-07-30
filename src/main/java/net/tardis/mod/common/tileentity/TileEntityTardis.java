@@ -703,4 +703,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public float calcFuelUse() {
 		return defaultFuelUse + (this.hadsEnabled ? (defaultFuelUse * 1.5F) : 0F);
 	}
+
+	public int getTimeLeft() {
+		return this.ticksToTravel;
+	}
 }

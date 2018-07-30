@@ -16,6 +16,8 @@ public class TStrings {
 	public static final String HADS_ENABLED = "tardis.hads.enabled.";
 	public static final String TARDIS_DIMENSION = "tardis.dimension";
 	
+	public static final String SECONDS = "general.time.seconds";
+	
 	public static class ModIds {
 		public static final String GALACTICRAFT = "galacticraftcore";
 		public static final String INDUSTRIAL_CRAFT = "ic2";
@@ -28,6 +30,9 @@ public class TStrings {
 	
 	public static class ToolTips{
 		public static final String REMOTE = "tooltip.remote";
+		public static final String REMOTE_FUEL = "tooltip.remote.fuel";
+		public static final String REMOTE_TIME = "tooltip.remote.time";
+		public static final String REMOTE_EPOS = "tooltip.remote.exteriorpos";
 	}
 	
 }

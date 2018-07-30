@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -43,7 +44,7 @@ public class ItemRemote extends ItemBase {
 			TileEntityTardis tardis = ((TileEntityTardis)((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(playerIn.getHeldItem(handIn))));
 			if(tardis != null) {
 				tardis.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing()), playerIn.dimension);
-				System.out.println("Is TARDIS Launched : " + tardis.startFlight());
+				tardis.startFlight();
 			}
 		}
 		return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
@@ -51,7 +52,13 @@ public class ItemRemote extends ItemBase {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if(stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CONSOLE_POS))tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE).getFormattedText() + " " + Helper.formatBlockPos(this.getConsolePos(stack)));
+		if(stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CONSOLE_POS)) {
+			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE).getFormattedText() + " " + Helper.formatBlockPos(this.getConsolePos(stack)));
+			String format = (stack.getTagCompound().getFloat(NBT.FUEL) * 100 + "");
+			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_FUEL).getFormattedText() + " " + format.substring(0, format.indexOf(".")) + "%");
+			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_TIME).getFormattedText() + " " +stack.getTagCompound().getInteger(NBT.TIME) / 20 + " " + new TextComponentTranslation(TStrings.SECONDS).getFormattedText());
+			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_EPOS).getFormattedText() + " " + Helper.formatBlockPos(BlockPos.fromLong(stack.getTagCompound().getLong(NBT.POS))));
+		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	
@@ -65,6 +72,20 @@ public class ItemRemote extends ItemBase {
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+		if(!worldIn.isRemote && !this.getConsolePos(stack).equals(BlockPos.ORIGIN)) {
+			WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+			TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(this.getConsolePos(stack));
+			if(tardis != null && tardis.isInFlight()) {
+				stack.getTagCompound().setFloat(NBT.FUEL, tardis.fuel);
+				stack.getTagCompound().setInteger(NBT.TIME, tardis.getTimeLeft());
+				stack.getTagCompound().setLong(NBT.POS, tardis.getLocation().toLong());
+			}
+		}
+	}
+
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return oldStack.getItem() != newStack.getItem();
 	}
 
 	public static void setConsolePos(ItemStack s, BlockPos pos) {
@@ -73,6 +94,9 @@ public class ItemRemote extends ItemBase {
 	}
 
 	public static class NBT{
+		public static final String POS = "tardis_position";
+		public static final String TIME = "time_left";
 		public static final String CONSOLE_POS = "console_pos";
+		public static final String FUEL = "fuel";
 	}
 }
