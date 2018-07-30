@@ -28,6 +28,8 @@ item.first_cane.name=Canne du Premier Docteur
 item.fourth_hat.name=Chapeau du Quatrième Docteur
 item.symbiotic_nuclei.name=Noyau Symbiotique
 item.stattenheim_remote.name=Télécommande Stattenheim
+item.ruby.name=Rubis
+item.thirteen_coat.name=Veste du Treizième Docteur
 
 tooltip.remote=Télécommande reliée au TARDIS à :
 tooltip.remote.time=Le TARDIS arrive dans 
@@ -53,6 +55,7 @@ tile.electric_panel.name=Tableau électrique
 tile.megalos.name=Meglos
 tile.console.name=Console
 tile.toyota_hexagon_1.name=Bloc Toyota
+tile.ruby_ore.name=Minerais de Rubis
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=TARDIS a été ouvert.
