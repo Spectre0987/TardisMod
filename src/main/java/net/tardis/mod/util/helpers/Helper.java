@@ -9,7 +9,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -208,5 +210,13 @@ public class Helper {
 		}
 		nameChars[0] = Character.toUpperCase(nameChars[0]);
 		return new String(nameChars);
+	}
+	
+	/**
+	 * Stops those nasty null pointers
+	 * **/
+	public static NBTTagCompound getStackTag(ItemStack stack) {
+		if(stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
+		return stack.getTagCompound();
 	}
 }
