@@ -46,7 +46,7 @@ tile.console.name=Console
 tile.toyota_hexagon_1.name=Bloc Toyota
 
 tardis.locked.true=TARDIS fermé !
-tardis.locked.false=TARDIS a été ouvert.
+tardis.locked.false=Le TARDIS a été ouvert.
 
 death.attack.dalek=Tué par un rayon laser Dalek
 death.cyberman.ray=a été supprimé.
