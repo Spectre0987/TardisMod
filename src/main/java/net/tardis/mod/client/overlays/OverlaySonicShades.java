@@ -50,7 +50,7 @@ public class OverlaySonicShades implements IOverlay {
 
     @Override
     public void pre(RenderGameOverlayEvent.Pre e, float partialTicks, ScaledResolution resolution) {
-        if (Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonicShades) {
+        if (Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonic_shades) {
             e.setCanceled(e.getType() == RenderGameOverlayEvent.ElementType.FOOD || e.getType() == RenderGameOverlayEvent.ElementType.HEALTH);
         }
     }
@@ -58,7 +58,7 @@ public class OverlaySonicShades implements IOverlay {
     @Override
     public void post(RenderGameOverlayEvent.Post e, float partialTicks, ScaledResolution resolution) {
 
-        if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonicShades) {
+        if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonic_shades) {
 
             Entity mouseOver = Minecraft.getMinecraft().objectMouseOver.entityHit;
 
