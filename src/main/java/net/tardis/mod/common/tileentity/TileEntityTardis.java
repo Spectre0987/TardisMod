@@ -331,7 +331,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				NBTTagCompound sysTag = new NBTTagCompound();
 				sysTag.setString("id", id);
 				systemList.appendTag(sys.writetoNBT(sysTag));
-				System.out.println(sysTag.toString());
 			}
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 		}
