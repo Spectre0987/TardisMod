@@ -146,7 +146,7 @@ public class TItems {
 		demat_circut = new DematerializationCircut();
 		register(demat_circut, "demat_circut");
 
-		sonic_shades = new ItemHat(EnumClothes.HAT_SONIC_SHADES); //using void specs until I add the model
+		sonic_shades = new ItemHat(EnumClothes.HAT_SONIC_SHADES);
 		register(sonic_shades, "sonic_shades");
 	}
 	
