@@ -1,6 +1,6 @@
 {
     "parent":"item/generated",
     "textures":{
-        "layer0":"tardis:items/manual"
+        "layer0":"tardis:items/sonic_shades"
     }
 }

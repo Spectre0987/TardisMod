@@ -33,7 +33,8 @@ public class EntityDalekRay extends EntityThrowable {
 		}
 		if (res.typeOfHit == res.typeOfHit.BLOCK) {
 			IBlockState state = world.getBlockState(res.getBlockPos());
-			if(!state.causesSuffocation())return;
+			if(!state.isTranslucent() && !state.causesSuffocation())
+				return;
 			this.setDead();
 		}
 	}

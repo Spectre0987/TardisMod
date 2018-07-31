@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RSR",
+    "SKS",
+    "RSR"
+  ],
+  "key": {
+    "R":{
+        "item":"minecraft:redstone_block"
+    },
+    "S":{
+        "item":"minecraft:planks",
+        "data": 0
+    },
+    "K":[
+            {
+                "item":"tardis:key"
+            },
+            {
+                "item":"tardis:key_01"
+            }
+    ]
+  },
+  "result": {
+    "item": "tardis:tardis_coral"
+  }
+}

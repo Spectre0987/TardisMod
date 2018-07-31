@@ -1,0 +1,13 @@
+{
+  "homepage": "https://minecraft.curseforge.com/projects/new-tardis-mod",
+  "promos": {
+    "1.12.2-latest": "0.0.4A",
+    "1.12.2-recommended": "0.0.4A"
+  },
+  "1.12.2": {
+    "0.0.1A" : "Is that a plane? A bird? No! It's a TARDIS!",
+    "0.0.2" : "Bugfixes, sounds (door, Cloister Bell,...) animation for some controls,...",
+    "0.0.3": "Fixed crashes on a dedicated server, misc. bugfixes",
+    "0.0.4A":"Added Manual, Fast return switch, telepathic, door switch, a traveler timer, sonic pen, full space suit,..."
+  }
+}

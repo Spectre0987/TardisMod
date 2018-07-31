@@ -19,16 +19,12 @@ public class MessageDemat implements IMessage {
 	public MessageDemat(BlockPos pos1, boolean b){
 		this.pos = pos1;
 		this.isDemat = b;
-		System.out.println("Remat pakets are not a myth.");
 	}
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.pos = BlockPos.fromLong(buf.readLong());
 		this.isDemat = buf.readBoolean();
-		if(!isDemat) {
-			System.out.println("Remat exists");
-		}
 	}
 
 	@Override
@@ -52,7 +48,6 @@ public class MessageDemat implements IMessage {
 							((TileEntityDoor)te).setDemat();
 						}
 						else {
-							System.out.println("Hello!");
 							((TileEntityDoor)te).setRemat();
 						}
 					}

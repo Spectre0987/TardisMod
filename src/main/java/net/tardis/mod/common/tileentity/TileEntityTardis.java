@@ -206,6 +206,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			DimensionType type = DimensionManager.getProviderType(dimension);
 			if (type != null) this.currentDimName = type.getName();
 			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
+			for(ISystem sys : this.systems) {
+				sys.setHealth(sys.getHealth() - 0.01F);
+			}
 		}
 		shouldDelayLoop = true;
 		
@@ -331,7 +334,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				NBTTagCompound sysTag = new NBTTagCompound();
 				sysTag.setString("id", id);
 				systemList.appendTag(sys.writetoNBT(sysTag));
-				System.out.println(sysTag.toString());
 			}
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 		}

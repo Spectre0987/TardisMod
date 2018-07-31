@@ -1,14 +1,13 @@
 package net.tardis.mod.common.items;
 
 import java.util.List;
+import java.util.UUID;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -16,16 +15,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.gen.structure.template.Template;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
@@ -55,29 +48,9 @@ public class ItemKey extends Item {
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        if (playerIn.dimension != TDimensions.TARDIS_ID) {
-			if (!worldIn.isRemote && this.getPos(playerIn.getHeldItem(handIn)) == null) {
-				WorldServer ws = (WorldServer) worldIn;
-				ItemStack stack = playerIn.getHeldItem(handIn);
-				BlockPos cPos = TardisHelper.getTardis(playerIn.getGameProfile().getId());
-                WorldServer tw = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-				MinecraftServer server = tw.getMinecraftServer();
-				setPos(stack, cPos);
-				if (tw.getTileEntity(cPos) == null) {
-					Template tem = tw.getStructureTemplateManager().get(server, CONSOLE_ROOM);
-					tem.addBlocksToWorld(tw, cPos.add(-(tem.getSize().getX() / 2), -1, -(tem.getSize().getZ() / 2)), new PlacementSettings());
-					tw.setBlockState(cPos, TBlocks.console.getDefaultState());
-					EntityItem entitySonic = new EntityItem(tw, cPos.getX(), cPos.getY(), cPos.getZ(), new ItemStack(TItems.sonic_screwdriver));
-					tw.spawnEntity(entitySonic);
-					TileEntityTardis te = (TileEntityTardis) tw.getTileEntity(cPos);
-					te.setDesination(playerIn.getPosition().down().offset(playerIn.getHorizontalFacing().getOpposite(), 1), playerIn.dimension);
-					te.setShouldLandOnSurface(true);
-					te.setFacing(playerIn.getHorizontalFacing());
-					te.startFlight();
-					te.travel();
-				}
-			}
-			
+        UUID id = playerIn.getGameProfile().getId();
+		if(getPos(playerIn.getHeldItem(handIn)) == null && TardisHelper.hasTardis(id)) {
+			setPos(playerIn.getHeldItem(handIn), TardisHelper.getTardis(id));
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
@@ -98,6 +71,6 @@ public class ItemKey extends Item {
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return new TextComponentTranslation(TItems.key.getUnlocalizedName() + ".name").getFormattedText();
+		return new TextComponentTranslation("item.tardis_key.name").getFormattedText();
 	}
 }

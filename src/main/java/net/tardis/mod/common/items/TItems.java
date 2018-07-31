@@ -52,6 +52,8 @@ public class TItems {
 	public static Item symbiotic_nuclei;
 	
 	public static Item stattenheim_remote;
+	public static Item sonic_shades;
+
 	
 	public static Item ruby;
 	
@@ -60,8 +62,8 @@ public class TItems {
 	public static Item fluid_link;
 	public static Item artron_capacitor;
 	public static Item demat_circut;
-	public static Item sonicShades;
-
+	
+	
 	public static void register() {
 		key = new ItemKey();
 		register(key, "key");
@@ -144,8 +146,8 @@ public class TItems {
 		demat_circut = new DematerializationCircut();
 		register(demat_circut, "demat_circut");
 
-		sonicShades = new ItemHat(EnumClothes.HAT_VOID_SPECS); //using void specs until I add the model
-		register(sonicShades, "sonic_shades");
+		sonic_shades = new ItemHat(EnumClothes.HAT_SONIC_SHADES);
+		register(sonic_shades, "sonic_shades");
 	}
 	
 	public static void register(Item item, String name) {

@@ -68,6 +68,7 @@ public class TBlocks {
 	public static Block electric_panel;
 	
 	public static Block ruby_ore;
+	public static Block tardis_coral;
 	
 	//Exteriors
 	public static Block tardis_top_01;
@@ -195,6 +196,11 @@ public class TBlocks {
 		ruby_ore = new BlockItemDrop(TItems.ruby).setHardness(2F);
 		ruby_ore.setHarvestLevel("pickaxe", 2);
 		register(ruby_ore, "ruby_ore");
+		
+		tardis_coral = new BlockTardisCoral();
+		register(tardis_coral, "tardis_coral");
+		
+		
 		//Exteriors
 
 		tardis_top_01 = new BlockTardisTop(TileEntityDoor01::new);
