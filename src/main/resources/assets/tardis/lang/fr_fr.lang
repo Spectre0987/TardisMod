@@ -1,6 +1,6 @@
 itemGroup.tardis=TARDIS Mod
 
-item.key.name=Clé du TARDIS
+item.tardis_key.name=Clé du TARDIS
 item.pos_setter.name=Enregistreur de coordonnées
 item.circuts.name=Circuit Exotronic
 item.sonic_screwdriver.name=Tournevis sonique
@@ -58,6 +58,7 @@ tile.console.name=Console
 tile.toyota_hexagon_1.name=Bloc Toyota
 tile.ruby_ore.name=Minerais de Rubis
 tile.holoprojector.name=Projecteur holographique
+tile.tardis_coral.name=Corail de TARDIS
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=TARDIS a été ouvert.
