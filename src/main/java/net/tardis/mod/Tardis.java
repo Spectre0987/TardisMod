@@ -110,6 +110,7 @@ public class Tardis {
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
 		if (hasIC2) registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
 		registerTileEntity(TileEntityHoloprojector.class, "TileEntityHoloprojector");
+		registerTileEntity(TileEntityTardisCoral.class, "TileEntityTardisCoral");
 		
 		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
 		
@@ -142,6 +143,8 @@ public class Tardis {
 			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
 		}
 		proxy.preInit();
+		
+		TardisSystems.register("flight", SystemFlight.class);
 	}
 	
 	@EventHandler
@@ -150,6 +153,8 @@ public class Tardis {
 		
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
+		OreDictionary.registerOre("gemRuby", TItems.ruby);
+		OreDictionary.registerOre("oreRuby", TBlocks.ruby_ore);
 	}
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {

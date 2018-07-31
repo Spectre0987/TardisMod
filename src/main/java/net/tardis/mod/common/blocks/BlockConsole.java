@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -13,6 +14,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.entities.controls.EntityControl;
+import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class BlockConsole extends BlockTileBase implements IUnbreakable, IRenderBox {
@@ -55,6 +57,7 @@ public class BlockConsole extends BlockTileBase implements IUnbreakable, IRender
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(!worldIn.isRemote) {
+			ItemStack held = playerIn.getHeldItem(hand);
 			if(playerIn.isSneaking()) {
 				TileEntityTardis tardis = (TileEntityTardis)worldIn.getTileEntity(pos);
 				if(tardis.controls != null) {
@@ -64,6 +67,17 @@ public class BlockConsole extends BlockTileBase implements IUnbreakable, IRender
 					tardis.controls = null;
 				}
 				tardis.createControls();
+			}
+			else if(!held.isEmpty()) {
+				TileEntityTardis tardis = (TileEntityTardis)worldIn.getTileEntity(pos);
+				if(tardis != null) {
+					for(ISystem sys : tardis.systems) {
+						if(held.getItem() == sys.getRepairItem()) {
+							sys.repair();
+							playerIn.getHeldItem(hand).shrink(1);
+						}
+					}
+				}
 			}
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);

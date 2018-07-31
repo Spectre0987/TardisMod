@@ -194,6 +194,7 @@ public class ModelFourthHat extends ModelBiped
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     GlStateManager.pushMatrix();
+    GlStateManager.scale(1.1, 1.1, 1.1);
     if(entity != null && entity.isSneaking()) {
     	GlStateManager.translate(0, 0.2F, 0);
     }

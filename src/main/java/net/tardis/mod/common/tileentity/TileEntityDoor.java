@@ -137,7 +137,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
 			
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
-			((TileEntityTardis)ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos())).setLocation(getPos().down());
+			TileEntityTardis tardis = (TileEntityTardis)((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
+			if(tardis != null)tardis.setLocation(this.getPos().down());
 			if (!entities.isEmpty()) {
 				for (Entity entity : entities) {
 					entity.dismountRidingEntity();

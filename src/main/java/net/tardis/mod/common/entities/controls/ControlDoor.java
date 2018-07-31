@@ -14,7 +14,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -154,7 +153,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 					}
 					else if(e != this){
 						e.setPosition(pos.getX(), pos.getY(), pos.getZ());
-						e.changeDimension(tardis.dimension);
+						e.changeDimension(tardis.dimension, new TardisTeleporter());
 					}
 				}
 			}

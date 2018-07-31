@@ -1,6 +1,6 @@
 itemGroup.tardis=TARDIS Mod
 
-item.key.name=TARDIS Key
+item.tardis_key.name=TARDIS Key
 item.pos_setter.name=Coordnate Logger
 item.circuts.name=Exotronic Circuitry
 item.sonic_screwdriver.name=Sonic Screwdriver
@@ -28,8 +28,16 @@ item.first_cane.name=First Doctor's Cane
 item.fourth_hat.name=Fourth Doctor's Hat
 item.symbiotic_nuclei.name=Symbiotic Nuclei
 item.stattenheim_remote.name=Stattenheim Remote
+item.ruby.name=Ruby
+item.thirteen_coat.name=Thirteen's Coat
+item.sonic_shades.name=Sonic Shades
 
 tooltip.remote=Remote bound to TARDIS at:
+tooltip.remote.time=TARDIS Arriving in
+tooltip.remote.fuel=Artron Banks
+tooltip.remote.exteriorpos=TARDIS Exterior:
+
+general.time.seconds=seconds
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -48,6 +56,9 @@ tile.electric_panel.name=Electric Interface Panel
 tile.megalos.name=Meglos
 tile.console.name=Console
 tile.toyota_hexagon_1.name=Toyota Block
+tile.ruby_ore.name=Ruby Ore
+tile.holoprojector.name=Holoprojector
+tile.tardis_coral.name=TARDIS Coral
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!
@@ -128,6 +139,8 @@ entity.tardis_fast_return.name=Fast Return
 entity.telepathic_circuts.name=Telepathic Circuits
 entity.tardis_door_control.name=Door Switch
 entity.tardis_magnitude.name=Coordinate Magnitude Adjuster
+entity.tardis_phone.name=Communicator
+
 entity.dalek.name=Dalek
 
 
