@@ -1,6 +1,6 @@
 itemGroup.tardis=TARDIS Mod
 
-item.key.name=TARDIS Key
+item.tardis_key.name=TARDIS Key
 item.pos_setter.name=Coordnate Logger
 item.circuts.name=Exotronic Circuitry
 item.sonic_screwdriver.name=Sonic Screwdriver
@@ -58,6 +58,7 @@ tile.console.name=Console
 tile.toyota_hexagon_1.name=Toyota Block
 tile.ruby_ore.name=Ruby Ore
 tile.holoprojector.name=Holoprojector
+tile.tardis_coral.name=TARDIS Coral
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!

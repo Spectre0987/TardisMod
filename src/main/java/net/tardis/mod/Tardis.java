@@ -69,6 +69,7 @@ import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
@@ -156,6 +157,7 @@ public class Tardis {
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
 		if (hasIC2) registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
 		registerTileEntity(TileEntityHoloprojector.class, "TileEntityHoloprojector");
+		registerTileEntity(TileEntityTardisCoral.class, "TileEntityTardisCoral");
 		
 		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
 		
