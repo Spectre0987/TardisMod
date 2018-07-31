@@ -138,6 +138,8 @@ entity.tardis_fast_return.name=Fast Return
 entity.telepathic_circuts.name=Telepathic Circuits
 entity.tardis_door_control.name=Door Switch
 entity.tardis_magnitude.name=Coordinate Magnitude Adjuster
+entity.tardis_phone.name=Communicator
+
 entity.dalek.name=Dalek
 
 
