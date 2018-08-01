@@ -33,6 +33,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -57,6 +58,7 @@ import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.RiftHelper;
 
 @Mod.EventBusSubscriber
 public class TEventHandler {
@@ -247,5 +249,15 @@ public class TEventHandler {
 				player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Changelog: " + TextFormatting.AQUA + changes));
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public static void saveChunkData(ChunkDataEvent.Save event) {
+		RiftHelper.writeRiftStatus(event.getChunk(), event.getWorld(), event.getData());
+	}
+	
+	@SubscribeEvent
+	public static void loadChunkData(ChunkDataEvent.Load event) {
+		RiftHelper.readRiftStatus(event.getChunk(), event.getWorld(), event.getData());
 	}
 }
