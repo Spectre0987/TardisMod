@@ -1,5 +1,7 @@
 package net.tardis.mod.client.overlays;
 
+import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelPlayer;
@@ -9,12 +11,12 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
-
-import java.awt.*;
+import net.tardis.mod.util.helpers.Helper;
 
 public class OverlaySonicShades implements IOverlay {
 
@@ -58,6 +60,7 @@ public class OverlaySonicShades implements IOverlay {
     @Override
     public void post(RenderGameOverlayEvent.Post e, float partialTicks, ScaledResolution resolution) {
 
+    	if(mc.currentScreen != null)return;
         if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonic_shades) {
 
             Entity mouseOver = Minecraft.getMinecraft().objectMouseOver.entityHit;
@@ -92,10 +95,14 @@ public class OverlaySonicShades implements IOverlay {
 
                 mc.fontRenderer.drawStringWithShadow("Name: " + mouseOver.getName(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 70, Color.GREEN.getRGB());
                 mc.fontRenderer.drawStringWithShadow("Distance: " + Math.round(mouseOver.getDistance(mc.player)) + " blocks", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 60, Color.GREEN.getRGB());
-                mc.fontRenderer.drawStringWithShadow("Age: " + mouseOver.ticksExisted + " ticks", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 50, Color.GREEN.getRGB());
-                mc.fontRenderer.drawStringWithShadow("Position: " + mouseOver.getPosition().getX() + " || " + mouseOver.getPosition().getY() + " || " + mouseOver.getPosition().getZ(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 40, Color.GREEN.getRGB());
+                mc.fontRenderer.drawStringWithShadow("Age: " + mouseOver.ticksExisted / 20 + " seconds", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 50, Color.GREEN.getRGB());
+                mc.fontRenderer.drawStringWithShadow("Position: " + Helper.formatBlockPos(mouseOver.getPosition()), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 40, Color.GREEN.getRGB());
             }
 
+            //Compass
+            EnumFacing face = mc.player.getHorizontalFacing();
+            String direction = face == EnumFacing.NORTH ? "N" : (face == EnumFacing.EAST ? "E" : (face == EnumFacing.WEST ? "W" : "S"));
+            mc.fontRenderer.drawString(direction, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(direction) / 2, 0, Color.GREEN.getRGB());
             GlStateManager.popMatrix();
 
         }
