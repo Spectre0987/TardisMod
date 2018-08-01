@@ -16,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -73,7 +72,7 @@ public class ItemRemote extends ItemBase {
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		if(!worldIn.isRemote && !this.getConsolePos(stack).equals(BlockPos.ORIGIN)) {
-			WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+			WorldServer ws = ((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 			TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(this.getConsolePos(stack));
 			if(tardis != null && tardis.isInFlight()) {
 				stack.getTagCompound().setFloat(NBT.FUEL, tardis.fuel);

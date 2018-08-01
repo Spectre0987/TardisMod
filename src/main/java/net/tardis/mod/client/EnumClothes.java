@@ -18,11 +18,9 @@ public enum EnumClothes {
     CHEST_13TH_COAT("thirteen_coat"),
     HAT_SONIC_SHADES("sonic_shades");
 
-    private final ModelBiped model;
     private final ResourceLocation texture;
 
     EnumClothes(String texName) {
-        this.model = ClothingHandler.CLOTHING.get(this);
         this.texture = new ResourceLocation(Tardis.MODID, "textures/clothing/" + texName + ".png");
     }
 
