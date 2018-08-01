@@ -16,6 +16,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.world.Structures;
+import net.tardis.mod.util.helpers.RiftHelper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TileEntityTardisCoral extends TileEntity implements ITickable{
@@ -43,7 +44,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 	public void update() {
 		if(!world.isRemote && this.owner != null) {
 			if(world.getTotalWorldTime() % 2400 == 0) {
-				if(time > 4) {
+				if(time > (RiftHelper.isRift(world.getChunkFromBlockCoords(getPos()).getPos(), world) ? 2 : 4)) {
 					BlockPos pos = TardisHelper.getTardis(owner);
 					WorldServer tardisWorld = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 					if(tardisWorld != null && pos != null) {

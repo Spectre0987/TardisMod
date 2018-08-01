@@ -31,6 +31,7 @@ item.stattenheim_remote.name=Stattenheim Remote
 item.ruby.name=Ruby
 item.thirteen_coat.name=Thirteen's Coat
 item.sonic_shades.name=Sonic Shades
+item.time_vector_generator.name=Time Vector Generator
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
@@ -100,6 +101,7 @@ tardis.hads.enabled.false=H.A.D.S has been disabled
 
 protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
+protocol.tardis.find_rift=Find nearest rift
 
 tardis.dimension=Nav-com Dimension is:
 

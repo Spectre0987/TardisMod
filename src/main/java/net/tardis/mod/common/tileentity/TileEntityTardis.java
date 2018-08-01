@@ -61,12 +61,14 @@ import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.enums.EnumEvent;
+import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.RiftHelper;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
@@ -105,6 +107,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public static float defaultFuelUse = 0.0001F;
 	public float fuelUseage = defaultFuelUse;
 	public ISystem[] systems;
+	private EnumTardisState currentState = EnumTardisState.NORMAL;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -134,7 +137,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					++frame;
 			}
 		} else if (this.isFueling()) {
-			this.setFuel(fuel + 0.0001F);
+			if(!world.isRemote) {
+				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
+				this.setFuel(fuel + (RiftHelper.isRift(ws.getChunkFromBlockCoords(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
+			}
 		}
 		++ticks;
 		if (ticks >= 20) {
@@ -286,6 +292,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				newSystems.add(sys);
 			}
 			if(newSystems != null)this.systems = newSystems.toArray(new ISystem[] {});
+			this.currentState = Enum.valueOf(EnumTardisState.class, tardisTag.getString(NBT.TARDIS_STATE_ID));
 		}
 	}
 	
@@ -336,6 +343,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				systemList.appendTag(sys.writetoNBT(sysTag));
 			}
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
+			tardisTag.setString(NBT.TARDIS_STATE_ID, this.currentState.name());
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -616,6 +624,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public static class NBT {
+		public static final String TARDIS_STATE_ID = "tardis_state_id";
 		public static final String SYSTEM_LIST = "system_list";
 		public static final String FUEL_USAGE = "fuelUseage";
 		public static final String HADS_ENABLED = "isHADSEnabled";
@@ -761,5 +770,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		return systems == null ? new ISystem[] {new SystemFlight()} : systems.toArray(new ISystem[] {});
 		
+	}
+	
+	public EnumTardisState getTardisState() {
+		return this.currentState;
+	}
+	
+	public void setTardisState(EnumTardisState state) {
+		this.currentState = state;
 	}
 }
