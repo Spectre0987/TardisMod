@@ -104,7 +104,7 @@ public class OverlaySonicShades implements IOverlay {
             //Compass
             EnumFacing face = mc.player.getHorizontalFacing();
             String direction = face == EnumFacing.NORTH ? "N" : (face == EnumFacing.EAST ? "E" : (face == EnumFacing.WEST ? "W" : "S"));
-            mc.fontRenderer.drawString(direction, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(direction) / 2, 0, Color.GREEN.getRGB());
+            mc.fontRenderer.drawString(direction, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(direction) / 2, mc.fontRenderer.FONT_HEIGHT / 2, Color.GREEN.getRGB());
             GlStateManager.popMatrix();
 
         }
