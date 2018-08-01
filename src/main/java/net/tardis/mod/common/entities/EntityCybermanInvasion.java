@@ -32,7 +32,7 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
 
     protected void initEntityAI()
     {
-        this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 100, 30F));
+        this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 200, 30F));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
