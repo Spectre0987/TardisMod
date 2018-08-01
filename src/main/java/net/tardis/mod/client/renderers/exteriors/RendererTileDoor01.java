@@ -41,27 +41,29 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		boolean open = !te.isLocked();
-		IBlockState state = te.getWorld().getBlockState(te.getPos());
-		if(state.getBlock() instanceof BlockTardisTop) {
-			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
-			switch(facing) {
-			case EAST:{
-				GlStateManager.translate(0, 0, 1);
-				GlStateManager.rotate(90,0,1,0);
-            }
-                case SOUTH: {
-				GlStateManager.translate(0, 0, 1);
-				GlStateManager.rotate(90,0,1, 0);
-                }
-                case WEST: {
-				GlStateManager.translate(0, 0, 1);
-				GlStateManager.rotate(90,0,1,0);
-                }
-                default: {
-				GlStateManager.translate(0, -1, 0.5);
-				GlStateManager.rotate(0,0,0,0);
-                }
-            }
+		if(te.getWorld() != null) {
+			IBlockState state = te.getWorld().getBlockState(te.getPos());
+			if(state.getBlock() instanceof BlockTardisTop) {
+				EnumFacing facing = state.getValue(BlockTardisTop.FACING);
+				switch(facing) {
+				case EAST:{
+					GlStateManager.translate(0, 0, 1);
+					GlStateManager.rotate(90,0,1,0);
+	            }
+	                case SOUTH: {
+					GlStateManager.translate(0, 0, 1);
+					GlStateManager.rotate(90,0,1, 0);
+	                }
+	                case WEST: {
+					GlStateManager.translate(0, 0, 1);
+					GlStateManager.rotate(90,0,1,0);
+	                }
+	                default: {
+					GlStateManager.translate(0, -1, 0.5);
+					GlStateManager.rotate(0,0,0,0);
+	                }
+	            }
+			}
 		}
 		if(open)RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, new Vec3d(1, 2.2, 0));
 	    GlStateManager.popMatrix();
