@@ -53,6 +53,9 @@ public class TardisConfig {
 	
 	public static class Misc {
 		
+		@Config.LangKey("config.misc.invasion")
+		public boolean invasions = true;
+		
 		@Config.LangKey("config.misc.givekey")
 		public boolean givePlayerKey = false;
 		
