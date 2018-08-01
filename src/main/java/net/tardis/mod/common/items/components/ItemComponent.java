@@ -8,6 +8,6 @@ import net.tardis.mod.common.items.ItemBase;
  * @author Spectre
  *
  */
-public abstract class ItemComponent extends ItemBase {
+public class ItemComponent extends ItemBase {
 	
 }

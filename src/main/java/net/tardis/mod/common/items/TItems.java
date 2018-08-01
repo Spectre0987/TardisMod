@@ -53,7 +53,7 @@ public class TItems {
 	
 	public static Item stattenheim_remote;
 	public static Item sonic_shades;
-
+	public static Item time_vector_generator;
 	
 	public static Item ruby;
 	
@@ -134,8 +134,15 @@ public class TItems {
 		stattenheim_remote = new ItemRemote();
 		register(stattenheim_remote, "stattenheim_remote");
 		
+		time_vector_generator = new ItemTVG();
+		register(time_vector_generator, "time_vector_generator");
+		
 		ruby = new ItemBase();
 		register(ruby, "ruby");
+		
+		sonic_shades = new ItemHat(EnumClothes.HAT_SONIC_SHADES);
+		register(sonic_shades, "sonic_shades");
+		
 		// TARDIS Components
 		fluid_link = new FluidLink();
 		register(fluid_link, "fluid_link");
@@ -145,9 +152,6 @@ public class TItems {
 		
 		demat_circut = new DematerializationCircut();
 		register(demat_circut, "demat_circut");
-
-		sonic_shades = new ItemHat(EnumClothes.HAT_SONIC_SHADES);
-		register(sonic_shades, "sonic_shades");
 	}
 	
 	public static void register(Item item, String name) {
