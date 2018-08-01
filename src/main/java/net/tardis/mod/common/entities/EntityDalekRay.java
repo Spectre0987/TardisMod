@@ -22,6 +22,11 @@ public class EntityDalekRay extends EntityThrowable {
 	
 	@Override
 	protected void onImpact(RayTraceResult res) {
+
+		if(isInWater()){
+			setDead();
+		}
+
 		if (res != null && res.entityHit instanceof EntityLivingBase) {
 			res.entityHit.attackEntityFrom(new DamageSourceDalek().causeIndirectDamage(this, this.getThrower()), 4F);
 			this.setDead();

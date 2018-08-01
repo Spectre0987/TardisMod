@@ -11,7 +11,7 @@ import net.tardis.mod.common.sounds.TSounds;
 
 public class EntityForceField extends Entity {
 	
-	int ticksToLive = 600;
+	private int ticksToLive = 600;
 	
 	public EntityForceField(World worldIn) {
 		super(worldIn);
