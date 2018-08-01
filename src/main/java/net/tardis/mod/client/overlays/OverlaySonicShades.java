@@ -17,6 +17,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.RiftHelper;
 
 public class OverlaySonicShades implements IOverlay {
 
@@ -104,9 +105,14 @@ public class OverlaySonicShades implements IOverlay {
             //Compass
             EnumFacing face = mc.player.getHorizontalFacing();
             String direction = face == EnumFacing.NORTH ? "N" : (face == EnumFacing.EAST ? "E" : (face == EnumFacing.WEST ? "W" : "S"));
-            mc.fontRenderer.drawString(direction, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(direction) / 2, mc.fontRenderer.FONT_HEIGHT / 2, Color.GREEN.getRGB());
+            mc.fontRenderer.drawStringWithShadow(direction, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(direction) / 2, mc.fontRenderer.FONT_HEIGHT / 2, Color.GREEN.getRGB());
             GlStateManager.popMatrix();
-
+            
+            //Rift?
+           if(RiftHelper.isRift(mc.world.getChunkFromBlockCoords(mc.player.getPosition()).getPos(), mc.world)) {
+        	   String riftString = "Rift Detected!";
+               mc.fontRenderer.drawStringWithShadow(riftString, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(riftString) / 2, resolution.getScaledHeight() - mc.fontRenderer.FONT_HEIGHT * 5, Color.GREEN.getRGB());
+           }
         }
 	}
 }
