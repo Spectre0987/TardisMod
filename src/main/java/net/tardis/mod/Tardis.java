@@ -54,6 +54,7 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindRift;
+import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
 import net.tardis.mod.common.screwdriver.GRoomMode;
@@ -185,12 +186,13 @@ public class Tardis {
 		
 		TardisProtocol.register(new ProtocolCCircuit());
 		TardisProtocol.register(new ProtocolEnabledHADS());
+		TardisProtocol.register(new ProtocolSystemReadout());
 		TardisProtocol.register(new ProtocolFindRift());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
-			EntityHelper.registerMob(EntityDalek.class, "dalek", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
+			EntityHelper.registerNoSpawn(EntityDalek.class, "dalek");
 			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
 		}
 		proxy.preInit();
