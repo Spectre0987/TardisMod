@@ -1,10 +1,10 @@
 package net.tardis.mod.client.guis;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.client.models.exteriors.IExteriorModel;
 import net.tardis.mod.client.models.exteriors.ModelTardis01;
 import net.tardis.mod.client.models.exteriors.ModelTardis02;
 import net.tardis.mod.client.models.exteriors.ModelTardis03;
@@ -20,11 +20,11 @@ public enum EnumExterior {
 	SECOND(new ModelTardis02(), RendererTileDoor01.TEXTURE, TBlocks.tardis_top_01),
 	THIRD(new ModelTardis03(), RenderTileDoor03.TEXTURE, TBlocks.tardis_top_02);
 	
-	ModelBase model;
-	ResourceLocation tex;
-	Block block;
+	public IExteriorModel model;
+	public ResourceLocation tex;
+	public Block block;
 	
-	EnumExterior(ModelBase base, ResourceLocation tex, Block block){
+	EnumExterior(IExteriorModel base, ResourceLocation tex, Block block){
 		this.model = base;
 		this.tex = tex;
 		this.block = block;

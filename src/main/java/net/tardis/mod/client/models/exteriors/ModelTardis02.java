@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
-public class ModelTardis02 extends ModelBase
+public class ModelTardis02 extends ModelBase implements IExteriorModel
 {
   //fields
     ModelRenderer Brachacki_Altered01;
@@ -1081,5 +1081,22 @@ public class ModelTardis02 extends ModelBase
   public void setLight(boolean b) {
 	  this.light = b;
   }
+
+  	ModelRightDoor02 rd = new ModelRightDoor02();
+  	ModelLeftDoor02 ld = new ModelLeftDoor02();
+  	
+	@Override
+	public void renderClosed(float scale) {
+		GlStateManager.pushMatrix();
+		this.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.popMatrix();
+	}
+	
+	@Override
+	public void renderOpen(float scale) {
+		this.render(null, 0, 0, 0, 0, 0, 0.0625F);
+	}
 
 }

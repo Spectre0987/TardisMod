@@ -59,7 +59,7 @@ public class GuiCCircuit extends GuiScreen {
 			RenderHelper.disableStandardItemLighting();
 			EnumExterior ext = exteriors[index];
 			mc.getTextureManager().bindTexture(ext.tex);
-			ext.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			ext.model.renderClosed(0.0625F);
 			GL11.glDepthFunc(GL11.GL_LEQUAL);
 			GlStateManager.popMatrix();
 		}

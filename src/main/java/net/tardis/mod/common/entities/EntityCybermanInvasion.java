@@ -79,6 +79,12 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
     @Nullable
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
     {
+    	if(!world.isRemote) {
+    		if(world.canBlockSeeSky(this.getPosition().down()) || posY < 64) {
+    			this.setDead();
+    			return new IEntityLivingData() {};
+    		}
+    	}
         return super.onInitialSpawn(difficulty, livingdata);
     }
 
