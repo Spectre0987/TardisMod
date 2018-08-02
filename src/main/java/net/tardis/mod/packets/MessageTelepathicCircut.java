@@ -54,7 +54,7 @@ public class MessageTelepathicCircut implements IMessage {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 MinecraftServer server = ctx.getServerHandler().player.getServer();
                 WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
-                EntityPlayer player = server.getPlayerList().getPlayerByUsername(message.name);
+                EntityPlayer player = server.getPlayerList().getPlayerByUsername(message.name.toLowerCase());
                 TileEntity te = ws.getTileEntity(message.pos);
                 if(te != null && te instanceof TileEntityTardis) {
                     TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(message.pos);

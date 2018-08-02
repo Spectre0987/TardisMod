@@ -27,15 +27,17 @@ public class EntityDalekRay extends EntityThrowable {
 			setDead();
 		}
 
-		if (res != null && res.entityHit instanceof EntityLivingBase) {
-			res.entityHit.attackEntityFrom(new DamageSourceDalek().causeIndirectDamage(this, this.getThrower()), 4F);
-			this.setDead();
-		}
-		if (res.typeOfHit == res.typeOfHit.BLOCK) {
-			IBlockState state = world.getBlockState(res.getBlockPos());
-			if(!state.isTranslucent() && !state.causesSuffocation())
-				return;
-			this.setDead();
+		if(world != null) {
+			if (res != null && res.entityHit instanceof EntityLivingBase) {
+				res.entityHit.attackEntityFrom(new DamageSourceDalek().causeIndirectDamage(this, this.getThrower()), 4F);
+				this.setDead();
+			}
+			if (res.typeOfHit == res.typeOfHit.BLOCK) {
+				IBlockState state = world.getBlockState(res.getBlockPos());
+				if(!state.causesSuffocation())
+					return;
+				this.setDead();
+			}
 		}
 	}
 	
