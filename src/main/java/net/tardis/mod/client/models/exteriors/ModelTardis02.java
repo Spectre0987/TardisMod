@@ -139,7 +139,7 @@ public class ModelTardis02 extends ModelBase
     ModelRenderer Brachacki_Altered128;
     ModelRenderer Brachacki_Altered129;
     
-    boolean light = true;
+    boolean light = false;
   
   public ModelTardis02()
   {

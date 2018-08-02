@@ -143,7 +143,7 @@ public class ModelTardis03 extends ModelBase
     ModelRenderer Newbery132;
     ModelRenderer Newbery133;
     
-    boolean light = true;
+    boolean light = false;
   
   public ModelTardis03()
   {

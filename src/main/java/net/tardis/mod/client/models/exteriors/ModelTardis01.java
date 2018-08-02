@@ -146,7 +146,7 @@ public class ModelTardis01 extends ModelBase
     ModelRenderer BoxMain135;
     ModelRenderer BoxMain136;
     
-    boolean light = true;
+    boolean light = false;
   
   public ModelTardis01()
   {
