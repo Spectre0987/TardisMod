@@ -43,7 +43,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 	@Override
 	public void update() {
 		if(!world.isRemote && this.owner != null) {
-			if(world.getTotalWorldTime() % 2400 == 0) {
+			if(world.getWorldTime() % 2400 == 0) {
 				if(time > (RiftHelper.isRift(world.getChunkFromBlockCoords(getPos()).getPos(), world) ? 2 : 4)) {
 					BlockPos pos = TardisHelper.getTardis(owner);
 					WorldServer tardisWorld = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
@@ -55,7 +55,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 							tardisWorld.setBlockState(pos, TBlocks.console.getDefaultState());
 							TileEntityTardis tardis = (TileEntityTardis)tardisWorld.getTileEntity(pos);
 							this.getWorld().setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-							tardis.setDesination(getPos(), this.getWorld().provider.getDimension());
+							tardis.setDesination(getPos().up(), this.getWorld().provider.getDimension());
 							tardis.startFlight();
 							tardis.travel();
 							ItemStack keyStack = new ItemStack(TItems.key);

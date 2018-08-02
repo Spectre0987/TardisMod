@@ -113,8 +113,6 @@ public class OverlaySonicShades implements IOverlay {
         	   String riftString = "Rift Detected!";
                mc.fontRenderer.drawStringWithShadow(riftString, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(riftString) / 2, resolution.getScaledHeight() - mc.fontRenderer.FONT_HEIGHT * 5, Color.GREEN.getRGB());
            }
-           
-           
         }
 	}
 }

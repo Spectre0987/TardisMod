@@ -72,6 +72,7 @@ import net.tardis.mod.util.helpers.RiftHelper;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
+	private Random rand = new Random();
 	private int ticksToTravel = 0;
 	private int ticks = 0;
 	private BlockPos tardisLocation = BlockPos.ORIGIN;
@@ -608,19 +609,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void startHADS() {
-		if(!world.isRemote && this.hadsEnabled && this.fuel > 0.1) {
-			WorldServer ws = DimensionManager.getWorld(this.dimension);
-			ws.setBlockState(getLocation(), Blocks.AIR.getDefaultState());
-			ws.setBlockState(getLocation().up(), Blocks.AIR.getDefaultState());
-			this.fuel -= 0.1;
-			this.markDirty();
+		if(!world.isRemote && this.hadsEnabled) {
+			this.setDesination(this.getLocation().add(rand.nextInt(20) - 10, 0, rand.nextInt(20) - 10), dimension);
+			this.startFlight();
+			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
+			ws.setBlockState(this.getLocation(), Blocks.AIR.getDefaultState());
+			ws.setBlockState(this.getLocation().up(), Blocks.AIR.getDefaultState());
 		}
-	}
-	
-	public void returnFromHADS() {
-		this.setDesination(this.getLocation(), dimension);
-		this.startFlight();
-		this.travel();
 	}
 	
 	public static class NBT {
