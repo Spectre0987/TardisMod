@@ -93,7 +93,7 @@ public class OverlaySonicShades implements IOverlay {
             //Entity and info
             if (mc.player != null && mouseOver != null) {
                 GlStateManager.pushMatrix();
-                drawEntityOnScreen(mc.displayWidth / 2 - 110, mc.displayHeight / 2 - 80, 50, mouseOver);
+                drawEntityOnScreen(resolution.getScaledWidth() / 2 - 110, resolution.getScaledHeight() / 2 - 80, 50, mouseOver);
                 GlStateManager.popMatrix();
 
                 mc.fontRenderer.drawStringWithShadow("Name: " + mouseOver.getName(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 70, Color.GREEN.getRGB());
@@ -113,6 +113,8 @@ public class OverlaySonicShades implements IOverlay {
         	   String riftString = "Rift Detected!";
                mc.fontRenderer.drawStringWithShadow(riftString, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(riftString) / 2, resolution.getScaledHeight() - mc.fontRenderer.FONT_HEIGHT * 5, Color.GREEN.getRGB());
            }
+           
+           
         }
 	}
 }
