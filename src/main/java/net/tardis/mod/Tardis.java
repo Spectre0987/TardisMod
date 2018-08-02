@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.Loader;
@@ -111,6 +112,8 @@ public class Tardis {
 	public static boolean hasIC2 = false;
 	
 	public static final int ID_GUI_TEMPORAL_LAB = 0;
+	
+	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 	
 	@Instance
 	public static Tardis instance = new Tardis();

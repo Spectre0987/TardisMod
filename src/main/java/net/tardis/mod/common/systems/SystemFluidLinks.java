@@ -3,9 +3,9 @@ package net.tardis.mod.common.systems;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.util.helpers.Helper;
@@ -29,7 +29,7 @@ public class SystemFluidLinks implements ISystem{
 		if(health <= 0.00F) {
 			if(!world.isRemote && world.getWorldTime() % 20 == 0) {
 				for(EntityLivingBase base : world.getEntitiesWithinAABB(EntityLivingBase.class, Helper.createBB(consolePos, 60))) {
-					base.attackEntityFrom(DamageSource.GENERIC, 2F);
+					base.attackEntityFrom(Tardis.SUFFICATION, 2F);
 				}
 			}
 		}
@@ -58,6 +58,10 @@ public class SystemFluidLinks implements ISystem{
 
 	@Override
 	public boolean repair() {
+		if(health < 1.0F) {
+			health = 1.0F;
+			return true;
+		}
 		return false;
 	}
 
@@ -68,7 +72,7 @@ public class SystemFluidLinks implements ISystem{
 
 	@Override
 	public void wear() {
-		health -= 0.05F;
+		health -= 0.015F;
 	}
 
 }
