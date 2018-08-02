@@ -54,6 +54,7 @@ public class TItems {
 	public static Item stattenheim_remote;
 	public static Item sonic_shades;
 	public static Item time_vector_generator;
+	public static Item biodampener;
 	
 	public static Item ruby;
 	
@@ -142,6 +143,9 @@ public class TItems {
 		
 		sonic_shades = new ItemHat(EnumClothes.HAT_SONIC_SHADES);
 		register(sonic_shades, "sonic_shades");
+		
+		biodampener = new ItemBase();
+		register(biodampener, "biodampener");
 		
 		// TARDIS Components
 		fluid_link = new FluidLink();
