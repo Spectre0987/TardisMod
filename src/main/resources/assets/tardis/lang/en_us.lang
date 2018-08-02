@@ -102,6 +102,8 @@ tardis.hads.enabled.false=H.A.D.S has been disabled
 protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
 protocol.tardis.find_rift=Find nearest rift
+protocol.tardis.systemreadout=Sub-System readout
+systems.tardis.flight=Fight System
 
 tardis.dimension=Nav-com Dimension is:
 

@@ -50,6 +50,7 @@ public class TardisSystems {
 		void damage();
 		Item getRepairItem();
 		void repair();
+		String getNameKey();
 	}
 
 	

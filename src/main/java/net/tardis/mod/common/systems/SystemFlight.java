@@ -52,4 +52,9 @@ public class SystemFlight implements ISystem{
 		this.health += 0.5F;
 	}
 
+	@Override
+	public String getNameKey() {
+		return "systems.tardis.flight";
+	}
+
 }
