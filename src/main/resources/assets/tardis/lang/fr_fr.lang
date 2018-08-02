@@ -30,7 +30,9 @@ item.symbiotic_nuclei.name=Noyau Symbiotique
 item.stattenheim_remote.name=Télécommande Stattenheim
 item.ruby.name=Rubis
 item.thirteen_coat.name=Veste du Treizième Docteur
- item.sonic_shades.name=Ombres soniques
+item.sonic_shades.name=Lunettes soniques
+item.time_vector_generator.name=Générateur de vecteurs temporels
+
 
 tooltip.remote=Télécommande reliée au TARDIS à :
 tooltip.remote.time=Le TARDIS arrive dans 
@@ -100,6 +102,9 @@ tardis.hads.enabled.false=H.A.D.S a été désactivé
 
 protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S
+protocol.tardis.find_rift=Trouver la faille la plus proche
+protocol.tardis.systemreadout=Relevé du sous-système
+systems.tardis.flight=Système de combat
 
 tardis.dimension=Dimension Nav-com est:
 
