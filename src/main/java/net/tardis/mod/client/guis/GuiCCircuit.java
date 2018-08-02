@@ -47,7 +47,7 @@ public class GuiCCircuit extends GuiScreen {
 		this.drawTexturedModalRect(res.getScaledWidth() / 2 - WIDTH / 2, res.getScaledHeight() / 2 - HEIGHT / 2, 0, 0, WIDTH, HEIGHT);
 		GlStateManager.pushMatrix();
 		String title = "Chameleon Circuit";
-		mc.fontRenderer.drawStringWithShadow(title, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(title) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT, Color.darkGray.getRGB());
+		mc.fontRenderer.drawStringWithShadow(title, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(title) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT, Color.lightGray.getRGB());
 		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.popMatrix();
 		{

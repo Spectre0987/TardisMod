@@ -43,7 +43,7 @@ public class ItemRemote extends ItemBase {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		if(!worldIn.isRemote && !Helper.isDimensionBlocked(playerIn.dimension) && !this.getConsolePos(playerIn.getHeldItem(handIn)).equals(BlockPos.ORIGIN)) {
 			TileEntityTardis tardis = ((TileEntityTardis)((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(playerIn.getHeldItem(handIn))));
-			if(tardis != null) {
+			if(tardis != null && !tardis.isInFlight()) {
 				SystemFlight sys = null;
 				for(ISystem s : tardis.systems) {
 					if(s.getClass() == SystemFlight.class) {
