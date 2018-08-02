@@ -73,8 +73,9 @@ public class BlockConsole extends BlockTileBase implements IUnbreakable, IRender
 				if(tardis != null) {
 					for(ISystem sys : tardis.systems) {
 						if(held.getItem() == sys.getRepairItem()) {
-							sys.repair();
-							playerIn.getHeldItem(hand).shrink(1);
+							if(sys.repair()) {
+								playerIn.getHeldItem(hand).shrink(1);
+							}
 						}
 					}
 				}

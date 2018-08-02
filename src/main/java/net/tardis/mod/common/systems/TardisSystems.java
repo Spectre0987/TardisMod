@@ -47,10 +47,13 @@ public class TardisSystems {
 		void onUpdate(World world, BlockPos consolePos);
 		void readFromNBT(NBTTagCompound tag);
 		NBTTagCompound writetoNBT(NBTTagCompound tag);
+		/**Take Damage on crash**/
 		void damage();
 		Item getRepairItem();
-		void repair();
+		boolean repair();
 		String getNameKey();
+		/**Take damage at the end of each flight**/
+		void wear();
 	}
 
 	

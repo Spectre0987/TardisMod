@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -67,6 +68,7 @@ import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.util.SpaceTimeCoord;
+import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
 
@@ -165,6 +167,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			world.playSound(null, getPos(), TSounds.interior_hum_80, SoundCategory.BLOCKS, 2F, 1F);
 		}
 		this.createControls();
+		for(ISystem sys : this.systems) {
+			sys.onUpdate(world, this.getPos());
+		}
 	}
 	
 	public void travel() {
@@ -214,7 +219,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (type != null) this.currentDimName = type.getName();
 			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
 			for(ISystem sys : this.systems) {
-				sys.setHealth(sys.getHealth() - 0.01F);
+				sys.wear();
 			}
 		}
 		shouldDelayLoop = true;
@@ -773,5 +778,37 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void setTardisState(EnumTardisState state) {
 		this.currentState = state;
+	}
+
+	public void transferPlayer(EntityPlayer player, boolean checkDoors) {
+		if(!world.isRemote) {
+			ControlDoor door = (ControlDoor)this.getControl(ControlDoor.class);
+			if(door != null && (door.isOpen() || !checkDoors)) {
+				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
+				TileEntity te = ws.getTileEntity(this.getLocation().up());
+				if(te != null && te instanceof TileEntityDoor) {
+					System.out.println("hh");
+					if(!((TileEntityDoor)te).isLocked() || !checkDoors) {
+						EntityPlayerMP mp = (EntityPlayerMP)player;
+						((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, dimension, new TardisTeleporter());
+						EnumFacing facing = ws.getBlockState(this.getLocation().up()).getValue(BlockTardisTop.FACING);
+						BlockPos tp = this.getLocation().offset(facing, 1);
+						mp.connection.setPlayerLocation(tp.getX(), tp.getY(), tp.getZ(), Helper.get360FromFacing(facing), 0);
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	public void enterTARDIS(Entity entity) {
+		if(!world.isRemote && this.getTardisState() == EnumTardisState.NORMAL) {
+			if(entity instanceof EntityPlayerMP) {
+				EntityPlayerMP player = (EntityPlayerMP)entity;
+				BlockPos tp = this.getPos().south(4);
+				((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter());
+				player.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+			}
+		}
 	}
 }

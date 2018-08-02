@@ -48,13 +48,22 @@ public class SystemFlight implements ISystem{
 	}
 
 	@Override
-	public void repair() {
-		this.health += 0.5F;
+	public boolean repair() {
+		if(health < 1.0F) {
+			this.health = 1F;
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public String getNameKey() {
 		return "systems.tardis.flight";
+	}
+
+	@Override
+	public void wear() {
+		health -= 0.01F;
 	}
 
 }
