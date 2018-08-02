@@ -351,7 +351,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void setDesination(BlockPos pos, int dimension) {
-		this.tardisDestination = pos.toImmutable();
+		this.tardisDestination = pos.down().toImmutable();
 		if(Helper.isDimensionBlocked(dimension))
 			dimension = 0;
 		this.destDim = dimension;

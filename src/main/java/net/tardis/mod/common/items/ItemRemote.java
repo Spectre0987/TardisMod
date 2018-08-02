@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemFlight;
+import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -42,6 +44,15 @@ public class ItemRemote extends ItemBase {
 		if(!worldIn.isRemote && !Helper.isDimensionBlocked(playerIn.dimension) && !this.getConsolePos(playerIn.getHeldItem(handIn)).equals(BlockPos.ORIGIN)) {
 			TileEntityTardis tardis = ((TileEntityTardis)((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(playerIn.getHeldItem(handIn))));
 			if(tardis != null) {
+				SystemFlight sys = null;
+				for(ISystem s : tardis.systems) {
+					if(s.getClass() == SystemFlight.class) {
+						sys = (SystemFlight)s;
+					}
+				}
+				if(sys != null) {
+					sys.setHealth(sys.getHealth() - 0.1F);
+				}
 				tardis.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing()), playerIn.dimension);
 				tardis.startFlight();
 			}
