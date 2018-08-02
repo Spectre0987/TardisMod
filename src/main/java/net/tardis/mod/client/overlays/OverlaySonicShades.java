@@ -72,8 +72,8 @@ public class OverlaySonicShades implements IOverlay {
 
             //Head
             GlStateManager.pushMatrix();
-            GlStateManager.translate(mc.displayWidth / 2 - 370, mc.displayHeight / 2 - 190, 50.0F);
-            GlStateManager.scale(30, 30, 30);
+            GlStateManager.translate(resolution.getScaledWidth() / 2 - 175, 30, 50.0F);
+            GlStateManager.scale(25, 25, 25);
             mc.getTextureManager().bindTexture(mc.player.getLocationSkin());
             GlStateManager.enableColorMaterial();
             RenderHelper.enableStandardItemLighting();
