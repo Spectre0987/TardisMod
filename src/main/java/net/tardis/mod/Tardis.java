@@ -64,6 +64,7 @@ import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.SystemFlight;
+import net.tardis.mod.common.systems.SystemFluidLinks;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -199,6 +200,7 @@ public class Tardis {
 		
 		TardisSystems.register("flight", SystemFlight.class);
 		TardisSystems.register("dimensional", SystemDimension.class);
+		TardisSystems.register("fluid_links", SystemFluidLinks.class);
 	}
 	
 	@EventHandler

@@ -339,14 +339,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			
 			NBTTagList systemList = new NBTTagList();
 			for(ISystem sys : systems) {
-				String id = TardisSystems.getIdBySystem(sys);
-				if(id == null || id.isEmpty()) {
-					System.err.println(id + " IS NOT A VAILD ID");
-					break;
+				if(sys != null) {
+					String id = TardisSystems.getIdBySystem(sys);
+					if(id == null || id.isEmpty()) {
+						System.err.println(id + " IS NOT A VAILD ID");
+						break;
+					}
+					NBTTagCompound sysTag = new NBTTagCompound();
+					sysTag.setString("id", id);
+					systemList.appendTag(sys.writetoNBT(sysTag));
 				}
-				NBTTagCompound sysTag = new NBTTagCompound();
-				sysTag.setString("id", id);
-				systemList.appendTag(sys.writetoNBT(sysTag));
 			}
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 			tardisTag.setString(NBT.TARDIS_STATE_ID, this.currentState.name());
