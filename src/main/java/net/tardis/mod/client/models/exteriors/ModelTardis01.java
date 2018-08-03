@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
-public class ModelTardis01 extends ModelBase
+public class ModelTardis01 extends ModelBase implements IExteriorModel
 {
   //fields
     ModelRenderer BoxMain01;
@@ -146,7 +146,7 @@ public class ModelTardis01 extends ModelBase
     ModelRenderer BoxMain135;
     ModelRenderer BoxMain136;
     
-    boolean light = true;
+    boolean light = false;
   
   public ModelTardis01()
   {
@@ -1139,4 +1139,19 @@ public class ModelTardis01 extends ModelBase
   public void setLight(boolean b) {
 	  this.light = b;
   }
+
+  	ModelRightDoor01 rd = new ModelRightDoor01();
+  	ModelLeftDoor01 ld = new ModelLeftDoor01();
+  	
+	@Override
+	public void renderClosed(float scale) {
+		this.render(null, 0, 0, 0, 0, 0, scale);
+		rd.render(null, 0, 0, 0, 0, 0, scale);
+		ld.render(null, 0, 0, 0, 0, 0, scale);
+	}
+	
+	@Override
+	public void renderOpen(float scale) {
+		this.render(null, 0, 0, 0, 0, 0, scale);
+	}
 }

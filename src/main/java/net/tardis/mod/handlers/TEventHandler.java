@@ -124,11 +124,22 @@ public class TEventHandler {
 		}
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void stopHurt(LivingHurtEvent event) {
 		if (event.getEntityLiving().getRidingEntity() != null) {
 			Entity e = event.getEntityLiving().getRidingEntity();
 			event.setCanceled(e instanceof EntityTardis);
+		}
+		if(event.getEntityLiving() instanceof EntityPlayer) {
+			int count = 0;
+			for(ItemStack stack : ((EntityPlayer)event.getEntityLiving()).getArmorInventoryList()) {
+				if(stack.getItem() instanceof ItemSpaceSuit) {
+					++count;
+				}
+			}
+			if(count >= 3) {
+				event.setCanceled(true);
+			}
 		}
 	}
 	

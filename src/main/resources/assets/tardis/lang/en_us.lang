@@ -32,6 +32,7 @@ item.ruby.name=Ruby
 item.thirteen_coat.name=Thirteen's Coat
 item.sonic_shades.name=Sonic Shades
 item.time_vector_generator.name=Time Vector Generator
+item.biodampener.name=Bio-Dampener
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
@@ -69,6 +70,7 @@ death.cyberman.ray=was deleted.
 
 damage.dalek=was exterminated
 
+
 screw.recall=Recall Mode
 screw.lamp=Tinker Mode
 screwdriver.hallway=Room Gen - Hallway
@@ -103,7 +105,10 @@ protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
 protocol.tardis.find_rift=Find nearest rift
 protocol.tardis.systemreadout=Sub-System readout
-systems.tardis.flight=Fight System
+
+systems.tardis.flight=Flight System
+systems.protocol.dimensions=Dimensional Systems
+system.tardis.fluidlinks=Fluid Links
 
 tardis.dimension=Nav-com Dimension is:
 

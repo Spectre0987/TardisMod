@@ -1,21 +1,22 @@
 package net.tardis.mod.common.systems;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.util.helpers.Helper;
 
-public class SystemFlight extends ISystem{
+public class SystemFluidLinks extends ISystem{
 
-	private float health = 1F;
-	
-	public SystemFlight() {}
+	float health = 1F;
 	
 	@Override
 	public float getHealth() {
-		return this.health;
+		return health;
 	}
 
 	@Override
@@ -24,7 +25,15 @@ public class SystemFlight extends ISystem{
 	}
 
 	@Override
-	public void onUpdate(World world, BlockPos consolePos) {}
+	public void onUpdate(World world, BlockPos consolePos) {
+		if(health <= 0.00F) {
+			if(!world.isRemote && world.getWorldTime() % 20 == 0) {
+				for(EntityLivingBase base : world.getEntitiesWithinAABB(EntityLivingBase.class, Helper.createBB(consolePos, 60))) {
+					base.attackEntityFrom(Tardis.SUFFICATION, 2F);
+				}
+			}
+		}
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
@@ -39,18 +48,18 @@ public class SystemFlight extends ISystem{
 
 	@Override
 	public void damage() {
-		this.health -= 0.15F;
+		health -= 0.25F;
 	}
 
 	@Override
 	public Item getRepairItem() {
-		return TItems.demat_circut;
+		return TItems.fluid_link;
 	}
 
 	@Override
 	public boolean repair() {
 		if(health < 1.0F) {
-			this.health = 1F;
+			health = 1.0F;
 			return true;
 		}
 		return false;
@@ -58,12 +67,12 @@ public class SystemFlight extends ISystem{
 
 	@Override
 	public String getNameKey() {
-		return "systems.tardis.flight";
+		return "system.tardis.fluidlinks";
 	}
 
 	@Override
 	public void wear() {
-		health -= 0.01F;
+		health -= 0.015F;
 	}
 
 }

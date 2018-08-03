@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -58,11 +60,12 @@ import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
 import net.tardis.mod.common.screwdriver.GRoomMode;
-import net.tardis.mod.common.screwdriver.HADSMode;
 import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.SystemFlight;
+import net.tardis.mod.common.systems.SystemFluidLinks;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -109,6 +112,8 @@ public class Tardis {
 	public static boolean hasIC2 = false;
 	
 	public static final int ID_GUI_TEMPORAL_LAB = 0;
+	
+	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 	
 	@Instance
 	public static Tardis instance = new Tardis();
@@ -180,7 +185,6 @@ public class Tardis {
 		ScrewdriverMode.register(new HallwayMode());
 		ScrewdriverMode.register(new GRoomMode());
 		ScrewdriverMode.register(new ElectricPanelMode());
-		ScrewdriverMode.register(new HADSMode());
 		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		
@@ -198,6 +202,8 @@ public class Tardis {
 		proxy.preInit();
 		
 		TardisSystems.register("flight", SystemFlight.class);
+		TardisSystems.register("dimensional", SystemDimension.class);
+		TardisSystems.register("fluid_links", SystemFluidLinks.class);
 	}
 	
 	@EventHandler
@@ -211,7 +217,7 @@ public class Tardis {
 	}
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
-		GameRegistry.registerTileEntity(clazz, Tardis.MODID + ":" + name);
+		GameRegistry.registerTileEntity(clazz, new ResourceLocation(Tardis.MODID, name));
 	}
 	
 	public static boolean getIsDev() {
