@@ -21,7 +21,7 @@ def getGitHash = { ->
 }
 
 def getDate() {
-    return new Date().format('dd-mm-yyyy - HH-mm')
+    return new Date().format('dd-mm-yyyy')
 }
 
 

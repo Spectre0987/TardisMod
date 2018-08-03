@@ -28,8 +28,8 @@ public class ControlLandType extends EntityControl {
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
-            tardis.setShouldLandOnSurface(!tardis.getLandOnSurface());
-            player.sendStatusMessage(new TextComponentTranslation(TStrings.LAND_ON_GROUND + tardis.getLandOnSurface()), true);
+			tardis.setShouldLandOnSurface(!tardis.landOnSurface);
+			player.sendStatusMessage(new TextComponentTranslation(TStrings.LAND_ON_GROUND + tardis.landOnSurface), true);
 		}
 	}
 	
