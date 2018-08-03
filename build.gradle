@@ -11,16 +11,21 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-def getHash = { ->
+def getGitHash = { ->
     def stdout = new ByteArrayOutputStream()
     exec {
         commandLine 'git', 'rev-parse', '--short', 'HEAD'
         standardOutput = stdout
     }
-    return stdout.toString().trim()
+    return stdout.toString().trim() + "-"
 }
 
-version = "0.0.5A"
+def getDate() {
+    return new Date().format('dd-mm-yyyy - HH-mm')
+}
+
+
+version = "0.0.5A-"+ getGitHash()+getDate()
 group = "net.tardis.mod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "tardis"
 

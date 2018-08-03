@@ -1,9 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -20,11 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -40,26 +32,7 @@ import net.tardis.mod.common.animations.AnimationObject;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.controls.ControlDimChange;
-import net.tardis.mod.common.entities.controls.ControlDirection;
-import net.tardis.mod.common.entities.controls.ControlDoor;
-import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
-import net.tardis.mod.common.entities.controls.ControlFastReturn;
-import net.tardis.mod.common.entities.controls.ControlFlight;
-import net.tardis.mod.common.entities.controls.ControlFuel;
-import net.tardis.mod.common.entities.controls.ControlLandType;
-import net.tardis.mod.common.entities.controls.ControlLaunch;
-import net.tardis.mod.common.entities.controls.ControlMag;
-import net.tardis.mod.common.entities.controls.ControlPhone;
-import net.tardis.mod.common.entities.controls.ControlRandom;
-import net.tardis.mod.common.entities.controls.ControlSTCButton;
-import net.tardis.mod.common.entities.controls.ControlSTCLoad;
-import net.tardis.mod.common.entities.controls.ControlScreen;
-import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
-import net.tardis.mod.common.entities.controls.ControlX;
-import net.tardis.mod.common.entities.controls.ControlY;
-import net.tardis.mod.common.entities.controls.ControlZ;
-import net.tardis.mod.common.entities.controls.EntityControl;
+import net.tardis.mod.common.entities.controls.*;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.sounds.TSounds;
@@ -70,8 +43,12 @@ import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
-	
+
 	private int ticksToTravel = 0;
 	private int ticks = 0;
 	private BlockPos tardisLocation = BlockPos.ORIGIN;
@@ -84,8 +61,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private IBlockState blockTop = TBlocks.tardis_top.getDefaultState();
 	/** Time To Travel in Blocks/Tick **/
 	private static final int MAX_TARDIS_SPEED = 8;
-    public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.withSize(15, SpaceTimeCoord.ORIGIN);
-    public NonNullList<ItemStack> buffer = NonNullList.withSize(9, ItemStack.EMPTY);
+	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.withSize(15, SpaceTimeCoord.ORIGIN);
+	public NonNullList<ItemStack> buffer = NonNullList.withSize(9, ItemStack.EMPTY);
 	public EntityControl[] controls;
 	public float fuel = 1F;
 	private boolean isFueling = false;
@@ -108,7 +85,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public float fuelUseage = defaultFuelUse;
 	public ISystem[] systems;
 	private EnumTardisState currentState = EnumTardisState.NORMAL;
-	
+	private boolean isInvisible = false;
+
 	public TileEntityTardis() {
 		if(systems == null) {
 			this.systems = this.createSystems();
@@ -117,7 +95,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	@Override
 	public void update() {
-		
+
+		setInvisible(true);
+
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - this.calcFuelUse());
@@ -138,7 +118,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 		} else if (this.isFueling()) {
 			if(!world.isRemote) {
-				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
+				WorldServer ws = world.getMinecraftServer().getWorld(dimension);
 				this.setFuel(fuel + (RiftHelper.isRift(ws.getChunkFromBlockCoords(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
 			}
 		}
@@ -282,6 +262,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.hadsEnabled = tardisTag.getBoolean(NBT.HADS_ENABLED);
 			this.blockTop = Block.getStateById(tardisTag.getInteger(NBT.EXTERIOR));
 			this.fuelUseage = tardisTag.getFloat(NBT.FUEL_USAGE);
+			this.isInvisible = tardisTag.getBoolean(NBT.INVISIBLE);
 			
 			List<ISystem> newSystems = new ArrayList<>();
 			NBTTagList systemList = tardisTag.getTagList(NBT.SYSTEM_LIST, Constants.NBT.TAG_COMPOUND);
@@ -344,6 +325,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 			tardisTag.setString(NBT.TARDIS_STATE_ID, this.currentState.name());
+			tardisTag.setBoolean(NBT.INVISIBLE, isInvisible);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -469,6 +451,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		tag.setString(NBT.CURRENT_DIM_NAME, this.currentDimName);
 		tag.setString(NBT.TARGET_DIM_NAME, this.targetDimName);
+		tag.setBoolean(NBT.INVISIBLE, isInvisible);
 		
 		if(this.controls != null && this.controls.length > 0) {
 			NBTTagList list = new NBTTagList();
@@ -495,6 +478,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.totalTimeToTravel = tag.getInteger(NBT.MAX_TIME);
 			this.targetDimName = tag.getString(NBT.TARGET_DIM_NAME);
 			this.currentDimName = tag.getString(NBT.CURRENT_DIM_NAME);
+			this.isInvisible = tag.getBoolean(NBT.INVISIBLE);
 			
 			NBTTagList list = tag.getTagList(NBT.CONTROL_IDS, Constants.NBT.TAG_INT);
 			List<Entity> controls = new ArrayList<Entity>();
@@ -622,20 +606,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.startFlight();
 		this.travel();
 	}
-	
-	public static class NBT {
-		public static final String TARDIS_STATE_ID = "tardis_state_id";
-		public static final String SYSTEM_LIST = "system_list";
-		public static final String FUEL_USAGE = "fuelUseage";
-		public static final String HADS_ENABLED = "isHADSEnabled";
-		public static final String CONTROL_IDS = "control_ids";
-		public static final String COMPOENET_LIST = "componentList";
-		public static final String LAND_ON_SURFACE = "landOnGround";
-		public static final String MAX_TIME = "maxTime";
-		public static final String TARGET_DIM_NAME = "targetDimName";
-		public static final String CURRENT_DIM_NAME = "currentDimName";
-		public static final String MAGNITUDE = "magnitude";
-		public static final String EXTERIOR = "exterior";
+
+	public boolean isInvisible() {
+		return isInvisible;
 	}
 	
 	public EnumFacing getFacing() {
@@ -778,5 +751,37 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void setTardisState(EnumTardisState state) {
 		this.currentState = state;
+	}
+
+	public void setInvisible(boolean invisible) {
+		isInvisible = invisible;
+	}
+
+	public boolean getLandOnSurface() {
+		return landOnSurface;
+	}
+
+	public void setLandOnSurface(boolean landOnSurface) {
+		this.landOnSurface = landOnSurface;
+	}
+
+	public Ticket getTardisLocationTicket() {
+		return tardisLocTicket;
+	}
+
+	public static class NBT {
+		public static final String TARDIS_STATE_ID = "tardis_state_id";
+		public static final String SYSTEM_LIST = "system_list";
+		public static final String FUEL_USAGE = "fuelUseage";
+		public static final String HADS_ENABLED = "isHADSEnabled";
+		public static final String CONTROL_IDS = "control_ids";
+		public static final String COMPOENET_LIST = "componentList";
+		public static final String LAND_ON_SURFACE = "landOnGround";
+		public static final String MAX_TIME = "maxTime";
+		public static final String TARGET_DIM_NAME = "targetDimName";
+		public static final String CURRENT_DIM_NAME = "currentDimName";
+		public static final String MAGNITUDE = "magnitude";
+		public static final String EXTERIOR = "exterior";
+		public static final String INVISIBLE = "invisible";
 	}
 }

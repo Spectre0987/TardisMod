@@ -1,8 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -33,11 +30,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.events.TardisEnterEvent;
-import net.tardis.mod.client.worldshell.BlockStorage;
-import net.tardis.mod.client.worldshell.IContainsWorldShell;
-import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.client.worldshell.PlayerStorage;
-import net.tardis.mod.client.worldshell.WorldShell;
+import net.tardis.mod.client.worldshell.*;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -48,6 +41,9 @@ import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
@@ -62,7 +58,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public boolean isRemat = false;
 	public static int radius = 10;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
-	
+
 	public TileEntityDoor() {
 		this.isRemat = true;
 		this.alpha = 0.0F;
@@ -137,7 +133,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
 			
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
-			TileEntityTardis tardis = (TileEntityTardis)((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
+			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
 			if(tardis != null)tardis.setLocation(this.getPos().down());
 			if (!entities.isEmpty()) {
 				for (Entity entity : entities) {
@@ -222,7 +218,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						if(e instanceof EntityPlayerMP) {
 							EntityPlayerMP mp = (EntityPlayerMP)e;
 							mp.connection.setPlayerLocation(tp.getX(), tp.getY(), tp.getZ(), 0, 0);
-							((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, TDimensions.TARDIS_ID, new TardisTeleporter());
+							world.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, TDimensions.TARDIS_ID, new TardisTeleporter());
 						}
 						else {
 							e.setPositionAndUpdate(tp.getX(), tp.getY(), tp.getZ());
@@ -250,7 +246,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	}
 	
 	public boolean canOpen() {
-		return !this.isDemat && !this.isRemat ? true : false;
+		return !this.isDemat && !this.isRemat;
 	}
 
 	public void sendDematPacket(boolean demat) {

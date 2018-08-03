@@ -1,7 +1,5 @@
 package net.tardis.mod.common.items;
 
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +21,8 @@ import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
+import java.util.List;
+
 public class ItemRemote extends ItemBase {
 	
 	public ItemRemote() {
@@ -33,7 +33,7 @@ public class ItemRemote extends ItemBase {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te != null && te instanceof TileEntityTardis) {
-			this.setConsolePos(player.getHeldItem(hand), pos);
+            setConsolePos(player.getHeldItem(hand), pos);
 			return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.PASS;
@@ -41,8 +41,8 @@ public class ItemRemote extends ItemBase {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if(!worldIn.isRemote && !Helper.isDimensionBlocked(playerIn.dimension) && !this.getConsolePos(playerIn.getHeldItem(handIn)).equals(BlockPos.ORIGIN)) {
-			TileEntityTardis tardis = ((TileEntityTardis)((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(playerIn.getHeldItem(handIn))));
+        if (!worldIn.isRemote && !Helper.isDimensionBlocked(playerIn.dimension) && !getConsolePos(playerIn.getHeldItem(handIn)).equals(BlockPos.ORIGIN)) {
+            TileEntityTardis tardis = ((TileEntityTardis) worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos(playerIn.getHeldItem(handIn))));
 			if(tardis != null) {
 				SystemFlight sys = null;
 				for(ISystem s : tardis.systems) {
@@ -63,7 +63,7 @@ public class ItemRemote extends ItemBase {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if(stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CONSOLE_POS)) {
-			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE).getFormattedText() + " " + Helper.formatBlockPos(this.getConsolePos(stack)));
+            tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE).getFormattedText() + " " + Helper.formatBlockPos(getConsolePos(stack)));
 			String format = (stack.getTagCompound().getFloat(NBT.FUEL) * 100 + "");
 			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_FUEL).getFormattedText() + " " + format.substring(0, format.indexOf(".")) + "%");
 			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_TIME).getFormattedText() + " " +stack.getTagCompound().getInteger(NBT.TIME) / 20 + " " + new TextComponentTranslation(TStrings.SECONDS).getFormattedText());
@@ -82,9 +82,9 @@ public class ItemRemote extends ItemBase {
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-		if(!worldIn.isRemote && !this.getConsolePos(stack).equals(BlockPos.ORIGIN)) {
-			WorldServer ws = ((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-			TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(this.getConsolePos(stack));
+        if (!worldIn.isRemote && !getConsolePos(stack).equals(BlockPos.ORIGIN)) {
+            WorldServer ws = worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+            TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(getConsolePos(stack));
 			if(tardis != null && tardis.isInFlight()) {
 				stack.getTagCompound().setFloat(NBT.FUEL, tardis.fuel);
 				stack.getTagCompound().setInteger(NBT.TIME, tardis.getTimeLeft());

@@ -1,7 +1,5 @@
 package net.tardis.mod.client.renderers;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -17,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTileBase;
 import net.tardis.mod.common.entities.EntityTardis;
+import org.lwjgl.opengl.GL11;
 
 public class RenderTardis extends Render<EntityTardis> {
 	
@@ -46,7 +45,7 @@ public class RenderTardis extends Render<EntityTardis> {
 		Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(state, BlockPos.ORIGIN, shell, bb);
 		Tessellator.getInstance().draw();
 		if(state.getBlock() instanceof BlockTileBase) {
-			TileEntityRendererDispatcher.instance.render(((BlockTileBase)state.getBlock()).createTileEntity(mc.world, state), -0.5, 0, -0.5, partialTicks);
+			TileEntityRendererDispatcher.instance.render((state.getBlock()).createTileEntity(mc.world, state), -0.5, 0, -0.5, partialTicks);
 		}
 		GlStateManager.popMatrix();
 	}

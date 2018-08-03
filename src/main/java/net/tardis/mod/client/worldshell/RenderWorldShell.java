@@ -1,7 +1,5 @@
 package net.tardis.mod.client.worldshell;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,6 +15,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import org.lwjgl.opengl.GL11;
 
 public class RenderWorldShell {
 
@@ -33,7 +32,7 @@ public class RenderWorldShell {
 		if (entity instanceof IContainsWorldShell) {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 
-			IContainsWorldShell container = (IContainsWorldShell) entity;
+            IContainsWorldShell container = entity;
 			
 			GlStateManager.pushMatrix();
 			worldBoti.setShell(container.getWorldShell());

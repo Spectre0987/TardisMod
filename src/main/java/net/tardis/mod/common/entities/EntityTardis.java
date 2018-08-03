@@ -3,7 +3,6 @@ package net.tardis.mod.common.entities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
@@ -125,7 +124,7 @@ public class EntityTardis extends EntityFlying {
 				((TileEntityDoor) world.getTileEntity(this.getPosition().up())).consolePos = this.getConsolePos();
 				BlockPos cPos = this.consolePos.west(3);
 				pas.setInvisible(false);
-				ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).tardisLocTicket, world.getChunkFromBlockCoords(getPosition()).getPos());
+                ForgeChunkManager.forceChunk(((TileEntityTardis) ws.getTileEntity(consolePos)).getTardisLocationTicket(), world.getChunkFromBlockCoords(getPosition()).getPos());
 				((EntityPlayerMP) pas).connection.setPlayerLocation(cPos.getX() + 0.5, cPos.getY() + 1, cPos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.EAST), 0);
                 ws.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) pas, TDimensions.TARDIS_ID, new TardisTeleporter());
 				this.setDead();

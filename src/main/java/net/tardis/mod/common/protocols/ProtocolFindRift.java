@@ -16,7 +16,7 @@ public class ProtocolFindRift implements ITardisProtocol {
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
 		if(!world.isRemote) {
-			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.getTargetDim());
+            WorldServer ws = world.getMinecraftServer().getWorld(tardis.getTargetDim());
 			ChunkPos pos = ws.getChunkFromBlockCoords(tardis.getLocation()).getPos();
 			
 			for(int x = pos.x - 5; x < 10; x++) {
