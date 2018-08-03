@@ -37,23 +37,30 @@ public class TardisSystems {
 		return null;
 	}
 	
-	public static interface ISystem{
+	public static abstract class ISystem{
 		
-		default boolean shouldStopFlight() {
+		public abstract float getHealth();
+		public abstract void setHealth(float health);
+		public abstract void onUpdate(World world, BlockPos consolePos);
+		public abstract void readFromNBT(NBTTagCompound tag);
+		public abstract NBTTagCompound writetoNBT(NBTTagCompound tag);
+		/**Take Damage on crash**/
+		public abstract void damage();
+		public abstract Item getRepairItem();
+		public abstract boolean repair();
+		public abstract String getNameKey();
+		/**Take damage at the end of each flight**/
+		public abstract void wear();
+		
+		public boolean shouldStopFlight() {
 			return this.getHealth() <= 0.0F;
 		}
-		float getHealth();
-		void setHealth(float health);
-		void onUpdate(World world, BlockPos consolePos);
-		void readFromNBT(NBTTagCompound tag);
-		NBTTagCompound writetoNBT(NBTTagCompound tag);
-		/**Take Damage on crash**/
-		void damage();
-		Item getRepairItem();
-		boolean repair();
-		String getNameKey();
-		/**Take damage at the end of each flight**/
-		void wear();
+		@Override
+		public boolean equals(Object obj) {
+			if(obj.getClass() == this.getClass()) return true;
+			return super.equals(obj);
+		}
+		
 	}
 
 	

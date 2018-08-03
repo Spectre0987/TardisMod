@@ -11,7 +11,7 @@ import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
-public class SystemDimension implements ISystem{
+public class SystemDimension extends ISystem{
 
 	float health = 1F;
 	boolean shouldFix = false;

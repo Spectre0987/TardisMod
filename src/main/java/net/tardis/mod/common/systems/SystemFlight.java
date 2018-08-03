@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
 
-public class SystemFlight implements ISystem{
+public class SystemFlight extends ISystem{
 
 	private float health = 1F;
 	

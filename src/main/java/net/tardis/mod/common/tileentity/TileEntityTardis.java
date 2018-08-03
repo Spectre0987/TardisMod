@@ -297,7 +297,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				if(sys != null)sys.readFromNBT(systemTag);
 				newSystems.add(sys);
 			}
-			if(newSystems != null)this.systems = newSystems.toArray(new ISystem[] {});
+			if(newSystems != null) {
+				for(ISystem sys : this.systems) {
+					if(!newSystems.contains(sys)) {
+						newSystems.add(sys);
+					}
+				}
+				this.systems = newSystems.toArray(new ISystem[] {});
+			}
 			this.currentState = Enum.valueOf(EnumTardisState.class, tardisTag.getString(NBT.TARDIS_STATE_ID));
 		}
 	}
@@ -789,7 +796,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
 				TileEntity te = ws.getTileEntity(this.getLocation().up());
 				if(te != null && te instanceof TileEntityDoor) {
-					System.out.println("hh");
 					if(!((TileEntityDoor)te).isLocked() || !checkDoors) {
 						EntityPlayerMP mp = (EntityPlayerMP)player;
 						((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, dimension, new TardisTeleporter());
@@ -812,5 +818,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				player.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
 			}
 		}
+	}
+	
+	public ISystem getSystem(Class<? extends ISystem> system) {
+		for(ISystem sys : this.systems) {
+			if(sys.getClass() == system) {
+				return sys;
+			}
+		}
+		return null;
 	}
 }

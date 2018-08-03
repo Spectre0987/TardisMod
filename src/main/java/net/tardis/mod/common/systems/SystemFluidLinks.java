@@ -10,7 +10,7 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.util.helpers.Helper;
 
-public class SystemFluidLinks implements ISystem{
+public class SystemFluidLinks extends ISystem{
 
 	float health = 1F;
 	
