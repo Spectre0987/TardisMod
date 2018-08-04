@@ -1,7 +1,5 @@
 package net.tardis.mod.client.renderers.exteriors;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -22,6 +20,7 @@ import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.helpers.Helper;
+import org.lwjgl.opengl.GL11;
 
 public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor> {
 
@@ -40,6 +39,7 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
+
 		boolean open = !te.isLocked();
 		if(te.getWorld() != null) {
 			IBlockState state = te.getWorld().getBlockState(te.getPos());
@@ -79,6 +79,7 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 			GlStateManager.enableBlend();
 			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
+
 			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.pushMatrix();
 			if (open) {

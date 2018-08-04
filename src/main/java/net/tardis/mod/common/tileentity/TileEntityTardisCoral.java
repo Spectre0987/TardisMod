@@ -1,7 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.UUID;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,6 +16,8 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.world.Structures;
 import net.tardis.mod.util.helpers.RiftHelper;
 import net.tardis.mod.util.helpers.TardisHelper;
+
+import java.util.UUID;
 
 public class TileEntityTardisCoral extends TileEntity implements ITickable{
 
@@ -46,11 +46,11 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 			if(world.getWorldTime() % 2400 == 0) {
 				if(time > (RiftHelper.isRift(world.getChunkFromBlockCoords(getPos()).getPos(), world) ? 2 : 4)) {
 					BlockPos pos = TardisHelper.getTardis(owner);
-					WorldServer tardisWorld = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+					WorldServer tardisWorld = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 					if(tardisWorld != null && pos != null) {
 						TileEntity te = tardisWorld.getTileEntity(pos);
 						if(te == null || !(te instanceof TileEntityTardis)) {
-							Template tem = tardisWorld.getStructureTemplateManager().get(((WorldServer)world).getMinecraftServer(), Structures.CONSOLE_ROOM_80S);
+							Template tem = tardisWorld.getStructureTemplateManager().get(world.getMinecraftServer(), Structures.CONSOLE_ROOM_80S);
 							tem.addBlocksToWorld(tardisWorld, pos.add(-(tem.getSize().getX() / 2), -1, -(tem.getSize().getZ() / 2)), new PlacementSettings());
 							tardisWorld.setBlockState(pos, TBlocks.console.getDefaultState());
 							TileEntityTardis tardis = (TileEntityTardis)tardisWorld.getTileEntity(pos);
@@ -60,7 +60,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 							tardis.travel();
 							ItemStack keyStack = new ItemStack(TItems.key);
 							ItemKey.setPos(keyStack, pos);
-							((WorldServer)world).getMinecraftServer().getPlayerList().getPlayerByUUID(owner).addItemStackToInventory(keyStack);
+							world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner).addItemStackToInventory(keyStack);
 						}
 					}
 					time = 0;

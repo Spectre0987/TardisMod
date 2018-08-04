@@ -23,16 +23,12 @@ public class EntityDalekRay extends EntityThrowable {
 	@Override
 	protected void onImpact(RayTraceResult res) {
 
-		if(isInWater()){
-			setDead();
-		}
-
 		if(world != null) {
 			if (res != null && res.entityHit instanceof EntityLivingBase) {
 				res.entityHit.attackEntityFrom(new DamageSourceDalek().causeIndirectDamage(this, this.getThrower()), 4F);
 				this.setDead();
 			}
-			if (res.typeOfHit == res.typeOfHit.BLOCK) {
+            if (res.typeOfHit == RayTraceResult.Type.BLOCK) {
 				IBlockState state = world.getBlockState(res.getBlockPos());
 				if(!state.causesSuffocation())
 					return;
@@ -49,6 +45,11 @@ public class EntityDalekRay extends EntityThrowable {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+
+        if (isInWater()) {
+            setDead();
+        }
+
 		if(this.motionX + this.motionY + this.motionZ == 0 || this.ticksExisted >= 200) {
 			this.setDead();
 		}
