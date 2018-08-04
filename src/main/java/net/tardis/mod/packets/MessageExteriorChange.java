@@ -6,6 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
@@ -56,8 +57,9 @@ public class MessageExteriorChange implements IMessage {
                         tardis.setExterior(mes.state);
                         WorldServer world = ws.getMinecraftServer().getWorld(tardis.dimension);
                         TileEntity door = world.getTileEntity(tardis.getLocation().up());
+                        EnumFacing face = world.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
                         NBTTagCompound tag = door.writeToNBT(new NBTTagCompound());
-                        world.setBlockState(door.getPos(), mes.state);
+                        world.setBlockState(door.getPos(), mes.state.withProperty(BlockTardisTop.FACING, face));
                         ((TileEntityDoor)world.getTileEntity(door.getPos())).readFromNBT(tag);
                     }
                 }
