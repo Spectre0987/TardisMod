@@ -64,7 +64,9 @@ public class GuiCCircuit extends GuiScreen {
 			GlStateManager.popMatrix();
 		}
 		for(GuiButton b : this.buttonList) {
+			GlStateManager.pushMatrix();
 			b.drawButton(mc, mouseX, mouseY, partialTicks);
+			GlStateManager.popMatrix();
 		}
 	}
 

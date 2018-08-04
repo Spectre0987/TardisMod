@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class MessageExteriorChange implements IMessage {
@@ -50,7 +52,13 @@ public class MessageExteriorChange implements IMessage {
                     WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
                     TileEntity te = ws.getTileEntity(mes.pos);
                     if(te != null && te instanceof TileEntityTardis) {
-                        ((TileEntityTardis)te).setExterior(mes.state);
+                    	TileEntityTardis tardis = (TileEntityTardis)te;
+                        tardis.setExterior(mes.state);
+                        WorldServer world = ws.getMinecraftServer().getWorld(tardis.dimension);
+                        TileEntity door = world.getTileEntity(tardis.getLocation().up());
+                        NBTTagCompound tag = door.writeToNBT(new NBTTagCompound());
+                        world.setBlockState(door.getPos(), mes.state);
+                        ((TileEntityDoor)world.getTileEntity(door.getPos())).readFromNBT(tag);
                     }
                 }
             });
