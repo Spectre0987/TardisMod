@@ -24,10 +24,12 @@ public class EntityDalekRay extends EntityThrowable {
 	protected void onImpact(RayTraceResult res) {
 
 		if(world != null) {
-			if (res != null && res.entityHit instanceof EntityLivingBase) {
+			if (res != null && res.entityHit instanceof EntityLivingBase && this.getThrower() != null) {
+				if(res.entityHit.getEntityId() == this.getThrower().getEntityId())return;
 				res.entityHit.attackEntityFrom(new DamageSourceDalek().causeIndirectDamage(this, this.getThrower()), 4F);
 				this.setDead();
 			}
+			else this.setDead();
             if (res.typeOfHit == RayTraceResult.Type.BLOCK) {
 				IBlockState state = world.getBlockState(res.getBlockPos());
 				if(!state.causesSuffocation())
