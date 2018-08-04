@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.exteriors;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -20,7 +22,6 @@ import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.helpers.Helper;
-import org.lwjgl.opengl.GL11;
 
 public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor> {
 
@@ -106,6 +107,29 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 			GlStateManager.popMatrix();
 			GlStateManager.popMatrix();
 	    }
+	    //Lines
+	    /*if(mc.player.getPosition().distanceSq(te.getPos()) <= Math.pow(16, 2) && Helper.hasSpaceSuit(mc.player)) {
+	    	GlStateManager.pushMatrix();
+		    GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
+		    
+		    BufferBuilder bb = Tessellator.getInstance().getBuffer();
+		    
+		    mc.getTextureManager().bindTexture(new ResourceLocation("minecraft", "textures/blocks/anvil_base.png"));
+		    GL11.glLineWidth(8F);
+		    GL11.glDepthMask(false);
+		    bb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_TEX);
+		    double posX = mc.player.posX - te.getPos().getX();
+		    double posY = mc.player.posY - te.getPos().getY();
+		    double posZ = mc.player.posZ - te.getPos().getZ();
+		    double prevPosX = mc.player.prevPosX - te.getPos().getX();
+		    double prevPosY = mc.player.prevPosY - te.getPos().getY();
+		    double prevPosZ = mc.player.prevPosZ - te.getPos().getZ();
+		    bb.pos(0, 0, 0).tex(0, 0).endVertex();
+		    bb.pos(prevPosX + posX - prevPosX * partialTicks, prevPosY + posY - prevPosY * partialTicks, prevPosZ + posZ - prevPosZ * partialTicks).tex(1, 1).endVertex();
+		    Tessellator.getInstance().draw();
+		    GL11.glDepthMask(true);
+		    GlStateManager.popMatrix();
+	    }*/
 	}
 	public void drawOutline() {
 		mc.getTextureManager().bindTexture(RenderDoor.TEXTURE);
