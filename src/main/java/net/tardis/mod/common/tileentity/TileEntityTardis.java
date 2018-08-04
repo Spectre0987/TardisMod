@@ -168,7 +168,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		this.createControls();
 		for(ISystem sys : this.systems) {
-			sys.onUpdate(world, this.getPos());
+			if(sys != null)sys.onUpdate(world, this.getPos());
+			else{
+				List<ISystem> systems = new ArrayList<>();
+				for(int i = 0; i < this.systems.length; ++i) {
+					if(this.systems[i] != null) {
+						systems.add(this.systems[i]);
+					}
+				}
+				this.systems = systems.toArray(new ISystem[] {});
+			}
 		}
 	}
 	
@@ -237,7 +246,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public BlockPos getLandingBlock(World world, BlockPos pos) {
-		BlockPos landPos = pos;
+		BlockPos landPos = pos.down();
 		Random rand = new Random();
 		if (this.landOnSurface) {
 			for(int tries = 0; tries < 20; ++tries) {
@@ -246,10 +255,22 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					return landPos;
 				}
 			}
+			for(int t = 0; t < 20; t++) {
+				landPos = Helper.getSafePosLower(landPos, world, getFacing());
+				if(!landPos.equals(BlockPos.ORIGIN)) {
+					return landPos;
+				}
+			}
 			return pos;
 		}
 		for(int i = 0; i < 20; ++i) {
 			landPos = Helper.getSafePosLower(pos.add(rand.nextInt(20) - 10, 0, rand.nextInt(20) - 10), world, this.getFacing());
+			if(!landPos.equals(BlockPos.ORIGIN)) {
+				return landPos;
+			}
+		}
+		for(int i = 0; i < 20; ++i) {
+			landPos = Helper.getSafeHigherPos(world, landPos, getFacing());
 			if(!landPos.equals(BlockPos.ORIGIN)) {
 				return landPos;
 			}

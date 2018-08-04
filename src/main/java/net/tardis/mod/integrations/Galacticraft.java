@@ -24,9 +24,11 @@ public class Galacticraft {
 					++count;
 				}
 			}
+			
 			if(count >= 3) {
 				event.setCanceled(true);
 			}
+			
 			if(event.getEntityLiving() instanceof IDontSufficate) {
 				event.setCanceled(true);
 			}
