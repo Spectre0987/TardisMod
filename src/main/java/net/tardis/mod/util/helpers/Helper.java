@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -25,6 +26,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.api.dimensions.IBlockedDimension;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
 
@@ -218,5 +220,15 @@ public class Helper {
 	public static NBTTagCompound getStackTag(ItemStack stack) {
 		if(stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
 		return stack.getTagCompound();
+	}
+
+	public static boolean hasSpaceSuit(EntityLivingBase player) {
+		int count = 0;
+		for(ItemStack stack : player.getArmorInventoryList()) {
+			if(stack.getItem() instanceof ItemSpaceSuit) {
+				++count;
+			}
+		}
+		return count >= 3 ? true : false;
 	}
 }

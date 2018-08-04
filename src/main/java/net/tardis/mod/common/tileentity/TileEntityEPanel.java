@@ -4,13 +4,11 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import ic2.api.energy.tile.IEnergySink;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.util.helpers.TardisHelper;
@@ -23,18 +21,7 @@ public class TileEntityEPanel extends TileEntity implements ITickable, IInventor
 	
 	@Override
 	public void update() {
-		if(!this.getConsolePos().equals(BlockPos.ORIGIN)) {
-			TileEntityTardis tardis = this.getConsoleP();
-			if(tardis != null) {
-				for(EnumFacing f : EnumFacing.values()) {
-					TileEntity te = world.getTileEntity(this.getPos().offset(f));
-					if(te != null && te instanceof IEnergySink) {
-						System.out.println("Exsists");
-						((IEnergySink)te).injectEnergy(f, 10, 32.0);
-					}
-				}
-			}
-		}
+		
 	}
 	
 	@Override
