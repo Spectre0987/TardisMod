@@ -10,10 +10,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.models.exteriors.ModelLeftDoor02;
+import net.tardis.mod.client.models.exteriors.ModelRightDoor02;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor02;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoorL02;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoorR02;
 import net.tardis.mod.client.renderers.RenderHelper;
+import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -79,8 +82,17 @@ public class RenderDoor extends Render<ControlDoor> {
 					GlStateManager.translate(off.x, off.y, off.z);
 					GlStateManager.rotate(-90, 0, 1, 0);
 					rd.render(null, 00, 0, 0, 0, 0, 0.0625F);
+					
+					GlStateManager.pushMatrix();
+					mc.getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
+					GlStateManager.rotate(180, 0, 1, 0);
+					GlStateManager.translate(0, 0.0945F, 1.0155F);
+					new ModelLeftDoor02().render(null, 0, 0, 0, 0, 0, 0.0625F);
+					GlStateManager.popMatrix();
+					
 					off.scale(-1);
 					GlStateManager.translate(off.x, off.y, off.z);
+					mc.getTextureManager().bindTexture(TEXTURE_02);
 					GlStateManager.popMatrix();
 				}
 				{
@@ -89,6 +101,12 @@ public class RenderDoor extends Render<ControlDoor> {
 					GlStateManager.translate(off.x, off.y, off.z);
 					GlStateManager.rotate(90, 0, 1, 0);
 					ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+					GlStateManager.pushMatrix();
+					mc.getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
+					GlStateManager.rotate(180, 0, 1, 0);
+					GlStateManager.translate(0, 0.1, 1);
+					new ModelRightDoor02().render(null, 0, 0, 0, 0, 0, 0.0625F);
+					GlStateManager.popMatrix();
 					off.scale(-1);
 					GlStateManager.translate(off.x, off.y, off.z);
 					GlStateManager.popMatrix();

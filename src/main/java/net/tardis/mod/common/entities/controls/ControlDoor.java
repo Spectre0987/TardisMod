@@ -52,7 +52,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		super(tardis);
 		this.setSize(1F, 2F);
 	}
-	
+
 	public ControlDoor(World world) {
 		super(world);
 		this.setSize(1F, 2F);
@@ -135,7 +135,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		if (antiSpamTicks > 0) --antiSpamTicks;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 		if(!world.isRemote && this.isOpen()) {
-			AxisAlignedBB bb = this.getEntityBoundingBox();
+			AxisAlignedBB bb = new AxisAlignedBB(0, 0, 0.9, 1, 2, 1).offset(this.getPosition());
 			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
 			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
 				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
