@@ -166,7 +166,7 @@ public class Tardis {
 		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
 		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
-		if (hasIC2) registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
+		registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
 		registerTileEntity(TileEntityHoloprojector.class, "TileEntityHoloprojector");
 		registerTileEntity(TileEntityTardisCoral.class, "TileEntityTardisCoral");
 		

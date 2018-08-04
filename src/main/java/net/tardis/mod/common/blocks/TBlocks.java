@@ -113,10 +113,7 @@ public class TBlocks {
 		food_machine = new BlockFoodMachine();
 		register(food_machine, "food_machine");
 		
-		if (Tardis.hasIC2)
-			electric_panel = new BlockEPanel();
-		else
-			electric_panel = new BlockBase();
+		electric_panel = new BlockEPanel();
 		register(electric_panel, "electric_panel");
 		
 		megalos = new BlockMegalos();

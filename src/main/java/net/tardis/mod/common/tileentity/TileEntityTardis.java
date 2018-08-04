@@ -28,6 +28,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -111,6 +112,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public float fuelUseage = defaultFuelUse;
 	public ISystem[] systems;
 	private EnumTardisState currentState = EnumTardisState.NORMAL;
+	public double power = 0;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -848,5 +850,29 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns all tile entities in the interior (8 chunks in all directions);
+	 * @return
+	 */
+	public List<TileEntity> getTilesInTardis(){
+		List<TileEntity> tes = new ArrayList<TileEntity>();
+		ChunkPos pos = this.world.getChunkFromBlockCoords(this.getLocation()).getPos();
+		for(int x = -7; x < 7; ++x) {
+			for(int z = -7; z < 7; ++z) {
+				tes.addAll(world.getChunkFromChunkCoords(pos.x + x, pos.z + z).getTileEntityMap().values());
+			}
+		}
+		return tes;
+	}
+	
+	public double getPower() {
+		return this.power;
+	}
+	
+	public void setPower(double power) {
+		this.power = power;
+		this.markDirty();
 	}
 }
