@@ -10,7 +10,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelInteriorDoors;
+import net.tardis.mod.client.models.interiors.ModelInteriorDoor02;
+import net.tardis.mod.client.models.interiors.ModelInteriorDoorL02;
+import net.tardis.mod.client.models.interiors.ModelInteriorDoorR02;
 import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -19,9 +21,12 @@ import net.tardis.mod.util.helpers.Helper;
 
 public class RenderDoor extends Render<ControlDoor> {
 	
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/doors.png");
+	public static final ResourceLocation TEXTURE_02 = new ResourceLocation(Tardis.MODID, "textures/interiors/02.png");
 	public static final ResourceLocation BLACK = new ResourceLocation(Tardis.MODID, "textures/blocks/black.png");
-	ModelInteriorDoors model = new ModelInteriorDoors();
+	ModelInteriorDoor02 model = new ModelInteriorDoor02();
+	ModelInteriorDoorR02 rd = new ModelInteriorDoorR02();
+	ModelInteriorDoorL02 ld = new ModelInteriorDoorL02();
+	
 	RenderWorldShell shellRender;
 	Minecraft mc;
 	
@@ -33,13 +38,13 @@ public class RenderDoor extends Render<ControlDoor> {
 	
 	@Override
 	protected ResourceLocation getEntityTexture(ControlDoor entity) {
-		return TEXTURE;
+		return null;
 	}
 	
 	@Override
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x - 0.5, y, z + 0.499);
+		GlStateManager.translate(x - 0.25, y, z + 0.499);
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
 		if(open) {
@@ -61,18 +66,48 @@ public class RenderDoor extends Render<ControlDoor> {
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0);
 				TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
-				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1.5,2.5,0));
-				else RenderHelper.drawOutline(new Vec3d(1.5,2.5,0));
+				
+				GlStateManager.pushMatrix();
+				mc.getTextureManager().bindTexture(TEXTURE_02);
+				GlStateManager.rotate(180, 1, 0, 0);
+				GlStateManager.translate(0.5, -1.5, -0.5);
+				GlStateManager.rotate(180, 0, 1, 0);
+				model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+				{
+					GlStateManager.pushMatrix();
+					Vec3d off = Helper.convertToPixels(-1.5, 0, -16);
+					GlStateManager.translate(off.x, off.y, off.z);
+					GlStateManager.rotate(-90, 0, 1, 0);
+					rd.render(null, 00, 0, 0, 0, 0, 0.0625F);
+					off.scale(-1);
+					GlStateManager.translate(off.x, off.y, off.z);
+					GlStateManager.popMatrix();
+				}
+				{
+					GlStateManager.pushMatrix();
+					Vec3d off = Helper.convertToPixels(1.5, 0, -16);
+					GlStateManager.translate(off.x, off.y, off.z);
+					GlStateManager.rotate(90, 0, 1, 0);
+					ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+					off.scale(-1);
+					GlStateManager.translate(off.x, off.y, off.z);
+					GlStateManager.popMatrix();
+				}
+				GlStateManager.popMatrix();
+				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2,0));
+				else RenderHelper.drawOutline(new Vec3d(1, 2,0));
 			}
 			catch(Exception e) {}
 		}
 		else {
 			GlStateManager.pushMatrix();
-			mc.getTextureManager().bindTexture(TEXTURE);
+			mc.getTextureManager().bindTexture(TEXTURE_02);
 			GlStateManager.rotate(180,1,0,0);
 			GlStateManager.rotate(180,0,1,0);
-			GlStateManager.translate(-0.6, -1.5, 0.5);
+			GlStateManager.translate(-0.25, -1.5, 0.5);
 			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();
 		}
 		GlStateManager.popMatrix();

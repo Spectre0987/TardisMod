@@ -132,7 +132,7 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 	    }*/
 	}
 	public void drawOutline() {
-		mc.getTextureManager().bindTexture(RenderDoor.TEXTURE);
+		mc.getTextureManager().bindTexture(RenderDoor.BLACK);
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
 		buf.begin(7, DefaultVertexFormats.POSITION_TEX);
