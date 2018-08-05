@@ -10,13 +10,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.exteriors.ModelLeftDoor02;
-import net.tardis.mod.client.models.exteriors.ModelRightDoor02;
-import net.tardis.mod.client.models.interiors.ModelInteriorDoor02;
-import net.tardis.mod.client.models.interiors.ModelInteriorDoorL02;
-import net.tardis.mod.client.models.interiors.ModelInteriorDoorR02;
+import net.tardis.mod.client.guis.EnumExterior;
 import net.tardis.mod.client.renderers.RenderHelper;
-import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -24,11 +19,7 @@ import net.tardis.mod.util.helpers.Helper;
 
 public class RenderDoor extends Render<ControlDoor> {
 	
-	public static final ResourceLocation TEXTURE_02 = new ResourceLocation(Tardis.MODID, "textures/interiors/02.png");
 	public static final ResourceLocation BLACK = new ResourceLocation(Tardis.MODID, "textures/blocks/black.png");
-	ModelInteriorDoor02 model = new ModelInteriorDoor02();
-	ModelInteriorDoorR02 rd = new ModelInteriorDoorR02();
-	ModelInteriorDoorL02 ld = new ModelInteriorDoorL02();
 	
 	RenderWorldShell shellRender;
 	Minecraft mc;
@@ -50,6 +41,8 @@ public class RenderDoor extends Render<ControlDoor> {
 		GlStateManager.translate(x - 0.25, y, z + 0.499);
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
+		TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
+		EnumExterior ext = EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock());
 		if(open) {
 			try {
 				Vec3d offset = null;
@@ -68,65 +61,15 @@ public class RenderDoor extends Render<ControlDoor> {
 				}
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0);
-				TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
 				
-				GlStateManager.pushMatrix();
-				mc.getTextureManager().bindTexture(TEXTURE_02);
-				GlStateManager.rotate(180, 1, 0, 0);
-				GlStateManager.translate(0.5, -1.5, -0.5);
-				GlStateManager.rotate(180, 0, 1, 0);
-				model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-				{
-					GlStateManager.pushMatrix();
-					Vec3d off = Helper.convertToPixels(-1.5, 0, -16);
-					GlStateManager.translate(off.x, off.y, off.z);
-					GlStateManager.rotate(-90, 0, 1, 0);
-					rd.render(null, 00, 0, 0, 0, 0, 0.0625F);
-					
-					GlStateManager.pushMatrix();
-					mc.getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
-					GlStateManager.rotate(180, 0, 1, 0);
-					GlStateManager.translate(0, 0.0945F, 1.0155F);
-					new ModelLeftDoor02().render(null, 0, 0, 0, 0, 0, 0.0625F);
-					GlStateManager.popMatrix();
-					
-					off.scale(-1);
-					GlStateManager.translate(off.x, off.y, off.z);
-					mc.getTextureManager().bindTexture(TEXTURE_02);
-					GlStateManager.popMatrix();
-				}
-				{
-					GlStateManager.pushMatrix();
-					Vec3d off = Helper.convertToPixels(1.5, 0, -16);
-					GlStateManager.translate(off.x, off.y, off.z);
-					GlStateManager.rotate(90, 0, 1, 0);
-					ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
-					GlStateManager.pushMatrix();
-					mc.getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
-					GlStateManager.rotate(180, 0, 1, 0);
-					GlStateManager.translate(0, 0.1, 1);
-					new ModelRightDoor02().render(null, 0, 0, 0, 0, 0, 0.0625F);
-					GlStateManager.popMatrix();
-					off.scale(-1);
-					GlStateManager.translate(off.x, off.y, off.z);
-					GlStateManager.popMatrix();
-				}
-				GlStateManager.popMatrix();
+				ext.interiorModel.renderOpen();
 				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2,0));
 				else RenderHelper.drawOutline(new Vec3d(1, 2,0));
 			}
 			catch(Exception e) {}
 		}
 		else {
-			GlStateManager.pushMatrix();
-			mc.getTextureManager().bindTexture(TEXTURE_02);
-			GlStateManager.rotate(180,1,0,0);
-			GlStateManager.rotate(180,0,1,0);
-			GlStateManager.translate(-0.25, -1.5, 0.5);
-			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			GlStateManager.popMatrix();
+			ext.interiorModel.renderClosed();
 		}
 		GlStateManager.popMatrix();
 	}

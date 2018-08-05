@@ -1,12 +1,21 @@
 package net.tardis.mod.client.models.interiors;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
+import net.tardis.mod.Tardis;
+import net.tardis.mod.client.models.IInteriorModel;
+import net.tardis.mod.client.models.exteriors.ModelLeftDoor02;
+import net.tardis.mod.client.models.exteriors.ModelRightDoor02;
+import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 
-public class ModelInteriorDoor02 extends ModelBase
+public class ModelInteriorDoor02 extends ModelBase implements IInteriorModel
 {
   //fields
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/interiors/02.png");
     ModelRenderer M1;
     ModelRenderer M2;
     ModelRenderer M3;
@@ -112,5 +121,56 @@ public class ModelInteriorDoor02 extends ModelBase
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
   }
+
+  	public ModelInteriorDoorR02 rd = new ModelInteriorDoorR02();
+  	public ModelInteriorDoorL02 ld = new ModelInteriorDoorL02();
+  	
+	@Override
+	public void renderClosed() {
+		GlStateManager.pushMatrix();
+		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+		GlStateManager.rotate(180,1,0,0);
+		GlStateManager.rotate(180,0,1,0);
+		GlStateManager.translate(-0.25, -1.5, 0.5);
+		render(null, 0, 0, 0, 0, 0, 0.0625F);
+		rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.popMatrix();
+	}
+	
+	@Override
+	public void renderOpen() {
+		GlStateManager.pushMatrix();
+		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+		GlStateManager.rotate(180,1,0,0);
+		GlStateManager.rotate(180,0,1,0);
+		GlStateManager.translate(-0.5, -1.5, 0.5);
+		render(null, 0, 0, 0, 0, 0, 0.0625F);
+		{
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(-0.1, 0, -1);
+			GlStateManager.rotate(-90,0,1,0);
+			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
+			GlStateManager.translate(0, 0.095F, -1);
+			GlStateManager.rotate(180, 0, 1, 0);
+			new ModelLeftDoor02().render(null, 0, 0, 0, 0, 0, 0.0625F);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			GlStateManager.popMatrix();
+		}
+		{
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(0.1, 0, -1);
+			GlStateManager.rotate(90,0,1,0);
+			ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
+			GlStateManager.translate(0, 0.095F, -1);
+			GlStateManager.rotate(180, 0, 1, 0);
+			new ModelRightDoor02().render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.popMatrix();
+		}
+		
+		GlStateManager.popMatrix();
+	}
 
 }

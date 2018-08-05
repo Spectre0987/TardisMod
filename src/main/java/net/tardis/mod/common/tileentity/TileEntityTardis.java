@@ -517,6 +517,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		
 		tag.setInteger("facing", this.facing.getHorizontalIndex());
+		tag.setInteger(NBT.EXTERIOR, Block.getStateId(this.blockTop));
 		return tag;
 	}
 	
@@ -544,6 +545,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			this.controls = controls.toArray(new EntityControl[0]);
 			this.facing = EnumFacing.getHorizontal(tag.getInteger("facing"));
+			this.blockTop = Block.getStateById(tag.getInteger(NBT.EXTERIOR));
 		}
 	}
 	
