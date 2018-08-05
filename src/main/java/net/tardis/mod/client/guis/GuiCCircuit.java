@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.packets.MessageExteriorChange;
 
 public class GuiCCircuit extends GuiScreen {

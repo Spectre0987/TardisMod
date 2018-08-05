@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.util.ResourceLocation;
-import net.tardis.mod.client.guis.EnumExterior;
+import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.common.entities.EntityTardis;
 
 public class RenderTardis extends Render<EntityTardis> {

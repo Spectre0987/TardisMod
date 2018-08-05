@@ -1,4 +1,4 @@
-package net.tardis.mod.client.guis;
+package net.tardis.mod.client;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
@@ -11,6 +11,7 @@ import net.tardis.mod.client.models.exteriors.ModelTardis02;
 import net.tardis.mod.client.models.exteriors.ModelTardis03;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor01;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor02;
+import net.tardis.mod.client.models.interiors.ModelInteriorDoor03;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
@@ -21,7 +22,7 @@ public enum EnumExterior {
 
 	FIRST(new ModelTardis01(), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE, TBlocks.tardis_top),
 	SECOND(new ModelTardis02(), new ModelInteriorDoor02(), RendererTileDoor01.TEXTURE, TBlocks.tardis_top_01),
-	THIRD(new ModelTardis03(), new ModelInteriorDoor02(), RenderTileDoor03.TEXTURE, TBlocks.tardis_top_02);
+	THIRD(new ModelTardis03(), new ModelInteriorDoor03(), RenderTileDoor03.TEXTURE, TBlocks.tardis_top_02);
 	
 	public IExteriorModel model;
 	public IInteriorModel interiorModel;
