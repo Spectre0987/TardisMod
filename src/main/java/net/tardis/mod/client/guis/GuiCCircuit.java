@@ -40,7 +40,7 @@ public class GuiCCircuit extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
+		
 		this.drawDefaultBackground();
 		mc.getTextureManager().bindTexture(tex);
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
@@ -63,11 +63,7 @@ public class GuiCCircuit extends GuiScreen {
 			GL11.glDepthFunc(GL11.GL_LEQUAL);
 			GlStateManager.popMatrix();
 		}
-		for(GuiButton b : this.buttonList) {
-			GlStateManager.pushMatrix();
-			b.drawButton(mc, mouseX, mouseY, partialTicks);
-			GlStateManager.popMatrix();
-		}
+		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override
