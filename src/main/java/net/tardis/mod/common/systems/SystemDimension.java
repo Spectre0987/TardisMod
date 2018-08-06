@@ -65,7 +65,7 @@ public class SystemDimension extends ISystem{
 
 	@Override
 	public void damage() {
-		health -= 0.005;
+		health -= 0.2;
 		if(health <= 0.00F)runOnce = true;
 	}
 

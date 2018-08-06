@@ -13,6 +13,7 @@ import net.tardis.mod.util.helpers.Helper;
 public class SystemFluidLinks extends ISystem{
 
 	float health = 1F;
+	int ticksToHurt = 0;
 	
 	@Override
 	public float getHealth() {
@@ -26,7 +27,8 @@ public class SystemFluidLinks extends ISystem{
 
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
-		if(health <= 0.00F) {
+		if(health <= 0.00F && ticksToHurt > 0) {
+			--ticksToHurt;
 			if(!world.isRemote && world.getWorldTime() % 20 == 0) {
 				for(EntityLivingBase base : world.getEntitiesWithinAABB(EntityLivingBase.class, Helper.createBB(consolePos, 60))) {
 					base.attackEntityFrom(Tardis.SUFFICATION, 2F);
@@ -38,17 +40,22 @@ public class SystemFluidLinks extends ISystem{
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		this.health = tag.getFloat("health");
+		this.ticksToHurt = tag.getInteger("time");
 	}
 
 	@Override
 	public NBTTagCompound writetoNBT(NBTTagCompound tag) {
 		tag.setFloat("health", health);
+		tag.setInteger("time", ticksToHurt);
 		return tag;
 	}
 
 	@Override
 	public void damage() {
 		health -= 0.25F;
+		if(health <= 0.0F) {
+			this.ticksToHurt = 600;
+		}
 	}
 
 	@Override
@@ -73,6 +80,9 @@ public class SystemFluidLinks extends ISystem{
 	@Override
 	public void wear() {
 		health -= 0.015F;
+		if(health <= 0.0F) {
+			this.ticksToHurt = 600;
+		}
 	}
 
 }

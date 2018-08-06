@@ -107,7 +107,7 @@ protocol.tardis.find_rift=Find nearest rift
 protocol.tardis.systemreadout=Sub-System readout
 
 systems.tardis.flight=Flight System
-systems.protocol.dimensions=Dimensional Systems
+systems.protocol.dimensions=Dimensional Dams
 system.tardis.fluidlinks=Fluid Links
 
 tardis.dimension=Nav-com Dimension is:
