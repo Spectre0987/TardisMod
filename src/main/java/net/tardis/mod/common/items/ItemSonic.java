@@ -95,7 +95,10 @@ public class ItemSonic extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(MODE_KEY)) tooltip.add("Mode: " + new TextComponentTranslation(ScrewdriverMode.modes.get(getMode(stack)).getName()).getFormattedText());
+		try {
+			tooltip.add("Mode: " + new TextComponentTranslation(ScrewdriverMode.modes.get(getMode(stack)).getName()).getFormattedText());
+		}
+		catch(Exception e) {}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 }
