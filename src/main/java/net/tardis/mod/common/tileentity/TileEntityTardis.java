@@ -248,7 +248,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public BlockPos getLandingBlock(World world, BlockPos pos) {
-		BlockPos landPos = pos.down();
+		BlockPos landPos = pos;
 		Random rand = new Random();
 		if (this.landOnSurface) {
 			for(int tries = 0; tries < 20; ++tries) {
