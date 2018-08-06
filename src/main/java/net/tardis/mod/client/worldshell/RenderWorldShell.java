@@ -1,5 +1,7 @@
 package net.tardis.mod.client.worldshell;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,7 +17,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
-import org.lwjgl.opengl.GL11;
 
 public class RenderWorldShell {
 
@@ -74,7 +75,7 @@ public class RenderWorldShell {
 			if(container.getWorldShell().getEntities() != null) {
 				for(NBTTagCompound stor : container.getWorldShell().getEntities()) {
 					try {
-						Entity e = EntityList.createEntityFromNBT(stor, Minecraft.getMinecraft().world);
+						Entity e = EntityList.createEntityFromNBT(stor, worldBoti);
 						if(e != null)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 					}
 					catch(Exception e) {}
@@ -86,7 +87,7 @@ public class RenderWorldShell {
 					try {
 						GlStateManager.pushMatrix();
 						Minecraft.getMinecraft().getTextureManager().bindTexture(Minecraft.getMinecraft().getConnection().getPlayerInfo(stor.profile.getId()).getLocationSkin());
-						FakeClientPlayer player = new FakeClientPlayer(Minecraft.getMinecraft().world, stor.profile);
+						FakeClientPlayer player = new FakeClientPlayer(worldBoti, stor.profile);
 						if(stor.tag != null) {
 							player.readFromNBT(stor.tag);
 							player.setSneaking(stor.tag.getBoolean("sneak"));
