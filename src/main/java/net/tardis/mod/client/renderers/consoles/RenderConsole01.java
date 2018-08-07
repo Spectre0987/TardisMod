@@ -3,13 +3,13 @@ package net.tardis.mod.client.renderers.consoles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.consoles.ModelConsole01;
 import net.tardis.mod.client.models.consoles.ModelControls01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 
-public class RenderConsole01 extends TileEntitySpecialRenderer {
+public class RenderConsole01 extends TileEntitySpecialRenderer<TileEntityTardis01> {
 
 	Minecraft mc;
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/consoles/console01.png");
@@ -22,12 +22,16 @@ public class RenderConsole01 extends TileEntitySpecialRenderer {
 	}
 	
 	@Override
-	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+	public void render(TileEntityTardis01 te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.rotate(180, 1, 0, 0);
 		console.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.pushMatrix();
+		if(te.isInFlight())GlStateManager.rotate(te.getTimeLeft() % 360, 0, 1, 0);
+		console.renderRotor(0.0625F);
+		GlStateManager.popMatrix();
 		
 		GlStateManager.pushMatrix();
 		mc.getTextureManager().bindTexture(TEXTURE_CONTROLS);

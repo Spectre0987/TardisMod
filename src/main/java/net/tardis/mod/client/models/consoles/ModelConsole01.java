@@ -1,7 +1,9 @@
 package net.tardis.mod.client.models.consoles;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelConsole01 extends ModelBase
@@ -808,7 +810,6 @@ public class ModelConsole01 extends ModelBase
     Shape9.render(f5);
     Shape10.render(f5);
     Shape11.render(f5);
-    Shape12.render(f5);
     Shape13.render(f5);
     Shape14.render(f5);
     Shape15.render(f5);
@@ -884,30 +885,8 @@ public class ModelConsole01 extends ModelBase
     Shape85.render(f5);
     Shape86.render(f5);
     Shape87.render(f5);
-    Shape88.render(f5);
-    Shape89.render(f5);
-    Shape90.render(f5);
-    Shape91.render(f5);
-    Shape92.render(f5);
-    Shape93.render(f5);
-    Shape94.render(f5);
-    Shape95.render(f5);
-    Shape96.render(f5);
-    Shape97.render(f5);
-    Shape98.render(f5);
-    Shape99.render(f5);
-    Shape100.render(f5);
-    Shape101.render(f5);
-    Shape102.render(f5);
-    Shape103.render(f5);
-    Shape104.render(f5);
-    Shape105.render(f5);
-    Shape106.render(f5);
-    Shape107.render(f5);
-    Shape108.render(f5);
-    Shape109.render(f5);
-    Shape110.render(f5);
   }
+   
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
@@ -920,5 +899,34 @@ public class ModelConsole01 extends ModelBase
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
   }
-
+  	public void renderRotor(float f5) {
+  		Shape12.render(f5);
+  		Shape88.render(f5);
+  	    Shape89.render(f5);
+  	    Shape90.render(f5);
+  	    Shape91.render(f5);
+  	    Shape92.render(f5);
+  	    Shape93.render(f5);
+  	    Shape94.render(f5);
+  	    Shape95.render(f5);
+  	    Shape96.render(f5);
+  	    Shape97.render(f5);
+  	    Shape98.render(f5);
+  	    Shape99.render(f5);
+  	    Shape100.render(f5);
+  	    Shape101.render(f5);
+  	    Shape102.render(f5);
+  	    Shape103.render(f5);
+  	    Shape104.render(f5);
+  	    Shape106.render(f5);
+  	    Shape107.render(f5);
+  	    Shape108.render(f5);
+  	    GlStateManager.pushMatrix();
+  	    Minecraft.getMinecraft().entityRenderer.disableLightmap();
+  	    Shape105.render(f5);
+  	    Shape109.render(f5);
+  	    Shape110.render(f5);
+  	    Minecraft.getMinecraft().entityRenderer.enableLightmap();
+  	    GlStateManager.popMatrix();
+  	}
 }
