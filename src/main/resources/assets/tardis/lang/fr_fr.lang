@@ -104,6 +104,7 @@ protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S
 protocol.tardis.find_rift=Trouver la faille la plus proche
 protocol.tardis.systemreadout=Relevé du sous-système
+protocol.tardis.change.console=Changer Console
 
 systems.tardis.flight=Système de vol
  systems.protocol.dimensions=Systèmes dimensionnel
