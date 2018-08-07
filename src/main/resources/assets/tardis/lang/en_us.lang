@@ -105,6 +105,7 @@ protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
 protocol.tardis.find_rift=Find nearest rift
 protocol.tardis.systemreadout=Sub-System readout
+protocol.tardis.change.console=Change Console
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams

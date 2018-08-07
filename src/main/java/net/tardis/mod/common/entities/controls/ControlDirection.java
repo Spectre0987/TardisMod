@@ -23,7 +23,7 @@ public class ControlDirection extends EntityControl {
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
 		if(tardis instanceof TileEntityTardis01) {
-			return Helper.convertToPixels(0, 0, 0);
+			return Helper.convertToPixels(3, -2.5, -13);
 		}
 		return Helper.convertToPixels(9.5, -3.5, 10);
 	}
