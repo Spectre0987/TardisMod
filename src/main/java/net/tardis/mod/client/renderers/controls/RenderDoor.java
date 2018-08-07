@@ -42,7 +42,7 @@ public class RenderDoor extends Render<ControlDoor> {
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
 		TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
-		EnumExterior ext = EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock());
+		EnumExterior ext = tardis != null ? (tardis.getTopBlock() != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()): EnumExterior.FIRST) : EnumExterior.FIRST;
 		if(open) {
 			try {
 				Vec3d offset = null;

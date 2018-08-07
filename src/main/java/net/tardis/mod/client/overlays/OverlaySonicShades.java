@@ -2,13 +2,18 @@ package net.tardis.mod.client.overlays;
 
 import java.awt.Color;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EnumFacing;
@@ -66,8 +71,6 @@ public class OverlaySonicShades implements IOverlay {
         if (Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != TItems.sonic_shades)
             return;
 
-            Entity mouseOver = Minecraft.getMinecraft().objectMouseOver.entityHit;
-
             GlStateManager.pushMatrix();
 
             //Head
@@ -91,15 +94,18 @@ public class OverlaySonicShades implements IOverlay {
             GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 
             //Entity and info
-            if (mc.player != null && mouseOver != null) {
-                GlStateManager.pushMatrix();
-                drawEntityOnScreen(resolution.getScaledWidth() / 2 - 110, resolution.getScaledHeight() / 2 - 80, 50, mouseOver);
-                GlStateManager.popMatrix();
-
-                mc.fontRenderer.drawStringWithShadow("Name: " + mouseOver.getName(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 70, Color.GREEN.getRGB());
-                mc.fontRenderer.drawStringWithShadow("Distance: " + Math.round(mouseOver.getDistance(mc.player)) + " blocks", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 60, Color.GREEN.getRGB());
-                mc.fontRenderer.drawStringWithShadow("Age: " + mouseOver.ticksExisted / 20 + " seconds", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 50, Color.GREEN.getRGB());
-                mc.fontRenderer.drawStringWithShadow("Position: " + Helper.formatBlockPos(mouseOver.getPosition()), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 40, Color.GREEN.getRGB());
+            if(Minecraft.getMinecraft().objectMouseOver != null) {
+            	Entity mouseOver = Minecraft.getMinecraft().objectMouseOver.entityHit;
+	            if (mc.player != null && mouseOver != null) {
+	                GlStateManager.pushMatrix();
+	                drawEntityOnScreen(resolution.getScaledWidth() / 2 - 110, resolution.getScaledHeight() / 2 - 80, 50, mouseOver);
+	                GlStateManager.popMatrix();
+	
+	                mc.fontRenderer.drawStringWithShadow("Name: " + mouseOver.getName(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 70, Color.GREEN.getRGB());
+	                mc.fontRenderer.drawStringWithShadow("Distance: " + Math.round(mouseOver.getDistance(mc.player)) + " blocks", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 60, Color.GREEN.getRGB());
+	                mc.fontRenderer.drawStringWithShadow("Age: " + mouseOver.ticksExisted / 20 + " seconds", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 50, Color.GREEN.getRGB());
+	                mc.fontRenderer.drawStringWithShadow("Position: " + Helper.formatBlockPos(mouseOver.getPosition()), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 40, Color.GREEN.getRGB());
+	            }
             }
 
             //Compass
@@ -108,6 +114,20 @@ public class OverlaySonicShades implements IOverlay {
             mc.fontRenderer.drawStringWithShadow(direction, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(direction) / 2, mc.fontRenderer.FONT_HEIGHT / 2, Color.GREEN.getRGB());
             GlStateManager.popMatrix();
             
+            //Health
+            GlStateManager.pushMatrix();
+            BufferBuilder bb = Tessellator.getInstance().getBuffer();
+            bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+            mc.getTextureManager().bindTexture(new ResourceLocation(Tardis.MODID, "textures/gui/sonic_shades.png"));
+            float maxU = 0.2536F;
+            float width = (resolution.getScaledWidth() / 2) * (mc.player.getHealth() / mc.player.getMaxHealth());
+            float height = resolution.getScaledHeight() / 4;
+            bb.pos(0, 0, 0).tex(0, 0).endVertex();
+            bb.pos(0, height, 0).tex(0, 1).endVertex();
+            bb.pos(width, height, 0).tex(1, 1).endVertex();
+            bb.pos(width, 0, 0).tex(1, 0).endVertex();
+            Tessellator.getInstance().draw();
+            GlStateManager.popMatrix();
             //Rift?
            if(RiftHelper.isRift(mc.world.getChunkFromBlockCoords(mc.player.getPosition()).getPos(), mc.world)) {
         	   String riftString = "Rift Detected!";

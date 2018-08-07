@@ -72,7 +72,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
 		return new Vec3d(0, -1, 6);
 	}
 	

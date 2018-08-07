@@ -22,11 +22,10 @@ public abstract class EntityControl extends Entity implements IControl {
 	
 	public EntityControl(World worldIn) {
 		super(worldIn);
-		this.setSize(0.5F, 0.5F);
 	}
 	
 	public EntityControl(TileEntityTardis tardis) {
-		this(tardis.getWorld());
+		super(tardis.getWorld());
 		this.dataManager.set(CONSOLE_POS, tardis.getPos().toImmutable());
 	}
 	
@@ -84,7 +83,7 @@ public abstract class EntityControl extends Entity implements IControl {
 	}
 	
 	@Override
-	public abstract Vec3d getOffset();
+	public abstract Vec3d getOffset(TileEntityTardis tardis);
 	
 	@Override
 	public boolean isGlowing() {

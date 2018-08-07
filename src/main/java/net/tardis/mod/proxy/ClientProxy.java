@@ -26,11 +26,9 @@ import net.tardis.mod.client.renderers.RenderItemFoodMachine;
 import net.tardis.mod.client.renderers.RenderItemSonicPen;
 import net.tardis.mod.client.renderers.RenderScreen;
 import net.tardis.mod.client.renderers.RenderTardis;
+import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
-import net.tardis.mod.client.renderers.controls.RenderLever;
-import net.tardis.mod.client.renderers.controls.RenderRandom;
-import net.tardis.mod.client.renderers.controls.RenderZ;
 import net.tardis.mod.client.renderers.entities.RenderCyberRay;
 import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
 import net.tardis.mod.client.renderers.entities.RenderCybermanTomb;
@@ -87,6 +85,7 @@ import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.config.TardisConfig;
@@ -103,6 +102,8 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoodMachine.class, new RenderFoodMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTemporalLab.class, new RenderTemporalLab());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHoloprojector.class, new RenderTileHolo());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());
+		
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor03.class, new RenderTileDoor03());
@@ -114,11 +115,11 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, new RenderDoor());
 		RenderingRegistry.registerEntityRenderingHandler(ControlX.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlY.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, new RenderZ());
-		RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, new RenderLever());
+		RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, new RenderInvis());
+		RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlDimChange.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlFlight.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, new RenderRandom());
+		RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, new RenderInvis());

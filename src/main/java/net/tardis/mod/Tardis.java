@@ -54,8 +54,8 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.protocols.ProtocolAirshell;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
+import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindRift;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
@@ -79,6 +79,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.world.TardisLoadingCallback;
@@ -177,6 +178,9 @@ public class Tardis {
 		registerTileEntity(TileEntityDoor01.class, "TileEntityDoor01");
 		registerTileEntity(TileEntityDoor03.class, "TileEntityDoor03");
 		
+		//Interiors
+		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");
+		
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 1, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 2, Side.SERVER);
 		NETWORK.registerMessage(MessageDoorOpen.Handler.class, MessageDoorOpen.class, 3, Side.CLIENT);
@@ -195,7 +199,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
 		TardisProtocol.register(new ProtocolFindRift());
-		TardisProtocol.register(new ProtocolAirshell());
+		TardisProtocol.register(new ProtocolConsole());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.

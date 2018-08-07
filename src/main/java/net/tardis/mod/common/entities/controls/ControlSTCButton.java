@@ -24,7 +24,7 @@ public class ControlSTCButton extends EntityControl {
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
 		return Helper.convertToPixels(-8, -2, -8).add(vec);
 	}
 	

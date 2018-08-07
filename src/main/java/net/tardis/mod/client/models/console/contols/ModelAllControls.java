@@ -1,21 +1,13 @@
 package net.tardis.mod.client.models.console.contols;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.tardis.mod.client.util.ModelUtil.ModelAnimator;
-import net.tardis.mod.common.entities.controls.ControlFuel;
-import net.tardis.mod.common.entities.controls.EntityControl;
-import net.tardis.mod.util.helpers.Helper;
 
 public class ModelAllControls extends ModelBase {
 	// fields
-	public HashMap<Integer, ModelAnimator> animate = new HashMap<>();
 	
 	ModelRenderer Glow1;
 	ModelRenderer Glow2;
@@ -833,14 +825,6 @@ public class ModelAllControls extends ModelBase {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		
-		for(int i = 0; i < this.animate.size(); ++i) {
-			int time = this.animate.keySet().toArray(new Integer[] {})[i];
-			if(time == Minecraft.getMinecraft().world.getTotalWorldTime()) {
-				this.animate.get(time).fix();
-				this.animate.remove(time);
-			}
-		}
-		
 		DoNotGlow1.render(f5);
 		DoNotGlow2.render(f5);
 		DoNotGlow3.render(f5);
@@ -904,7 +888,7 @@ public class ModelAllControls extends ModelBase {
 		Panel6DNG3.render(f5);
 		Panel6DNG4.render(f5);
 		Panel6DNG5.render(f5);
-		// Panel6DNG6.render(f5);
+		Panel6DNG6.render(f5);
 		Panel6DNG7.render(f5);
 		Panel6DNG8.render(f5);
 		Panel6DNG9.render(f5);
@@ -923,7 +907,7 @@ public class ModelAllControls extends ModelBase {
 		Panel6DNG22.render(f5);
 		Panel6DNG23.render(f5);
 		Panel6DNG24.render(f5);
-		// Panel6Lever.render(f5);
+		Panel6Lever.render(f5);
 		
 		// OpenGlHelper
 		GlStateManager.pushMatrix();
@@ -931,7 +915,7 @@ public class ModelAllControls extends ModelBase {
 		Minecraft mc = Minecraft.getMinecraft();
 		mc.entityRenderer.disableLightmap();
 		Glow1.render(f5);
-		// Glow2.render(f5);
+		Glow2.render(f5);
 		Glow3.render(f5);
 		Glow4.render(f5);
 		Glow5.render(f5);
@@ -975,16 +959,6 @@ public class ModelAllControls extends ModelBase {
 	
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-	}
-
-	public void animate(ArrayList<EntityControl> objectsToAnimated) {
-		for(EntityControl c : objectsToAnimated) {
-			if(c instanceof ControlFuel) {
-				ModelAnimator mr = new ModelAnimator(this.Panel6DNG24, Helper.convertToPixels(0, 0.5, 0));
-				this.animate.put((int)Minecraft.getMinecraft().world.getTotalWorldTime() + 20, mr);
-				mr.translate();
-			}
-		}
 	}
 	
 }

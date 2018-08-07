@@ -1,5 +1,7 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.UUID;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,8 +18,6 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.world.Structures;
 import net.tardis.mod.util.helpers.RiftHelper;
 import net.tardis.mod.util.helpers.TardisHelper;
-
-import java.util.UUID;
 
 public class TileEntityTardisCoral extends TileEntity implements ITickable{
 
@@ -52,7 +52,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 						if(te == null || !(te instanceof TileEntityTardis)) {
 							Template tem = tardisWorld.getStructureTemplateManager().get(world.getMinecraftServer(), Structures.CONSOLE_ROOM_80S);
 							tem.addBlocksToWorld(tardisWorld, pos.add(-(tem.getSize().getX() / 2), -1, -(tem.getSize().getZ() / 2)), new PlacementSettings());
-							tardisWorld.setBlockState(pos, TBlocks.console.getDefaultState());
+							tardisWorld.setBlockState(pos, TBlocks.console_01.getDefaultState());
 							TileEntityTardis tardis = (TileEntityTardis)tardisWorld.getTileEntity(pos);
 							this.getWorld().setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
 							tardis.setDesination(getPos().up(), this.getWorld().provider.getDimension());

@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlFastReturn extends EntityControl{
@@ -17,7 +18,10 @@ public class ControlFastReturn extends EntityControl{
 	}
 
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis.getClass() == TileEntityTardis01.class) {
+			return Helper.convertToPixels(10, -2.5, 9.5);
+		}
 		return Helper.convertToPixels(-2.5, 0,7.3);
 	}
 

@@ -7,6 +7,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlSTCLoad extends EntityControl {
@@ -23,7 +24,10 @@ public class ControlSTCLoad extends EntityControl {
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis.getClass() == TileEntityTardis01.class) {
+			return Helper.convertToPixels(-12.25, -2.5, 4.25);
+		}
 		return Helper.convertToPixels(-12, -2, -3.4);
 	}
 	

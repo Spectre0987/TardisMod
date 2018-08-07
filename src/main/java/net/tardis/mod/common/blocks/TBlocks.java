@@ -13,6 +13,8 @@ import net.tardis.mod.common.blocks.BlockToyota.BlockToyotaFacing;
 import net.tardis.mod.common.blocks.BlockToyota.BlockToyotaSlab;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.util.GenerateJson;
@@ -73,6 +75,9 @@ public class TBlocks {
 	//Exteriors
 	public static Block tardis_top_01;
 	public static Block tardis_top_02;
+	
+	//Consoles
+	public static Block console_01;
 	public static Block json_tester;
 	
 	public static void register(Block block, String name) {
@@ -101,7 +106,7 @@ public class TBlocks {
 		tardis_top = new BlockTardisTop(TileEntityDoor::new);
 		register(tardis_top, "tardis_top");
 		
-		console = new BlockConsole();
+		console = new BlockConsole(TileEntityTardis::new);
 		register(console, "console");
 		
 		panel = new BlockPanel();
@@ -196,6 +201,9 @@ public class TBlocks {
 		
 		tardis_coral = new BlockTardisCoral();
 		register(tardis_coral, "tardis_coral");
+		
+		console_01 = new BlockConsole(TileEntityTardis01::new);
+		register(console_01, "console_01");
 		
 		
 		//Exteriors

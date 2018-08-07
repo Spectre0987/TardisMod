@@ -29,6 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -38,7 +39,6 @@ import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelConsole;
-import net.tardis.mod.common.animations.AnimationObject;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -106,13 +106,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int frame = 0;
 	private boolean hadsEnabled = false;
 	public int magnitude = 10;
-	public AnimationObject aniObj = new AnimationObject();
 	public EnumEvent currentEvent = EnumEvent.NONE;
 	public static float defaultFuelUse = 0.0001F;
 	public float fuelUseage = defaultFuelUse;
 	public ISystem[] systems;
 	private EnumTardisState currentState = EnumTardisState.NORMAL;
 	public double power = 0;
+	public List<Vec3d> coordList = new ArrayList<>();
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -562,36 +562,36 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public boolean createControls() {
 		if(!world.isRemote) {
 			if (controls == null || controls.length == 0) {
-				EntityControl[] ec = new EntityControl[] { 
-						new ControlLaunch(this),
-						new ControlX(this),
-						new ControlY(this),
-						new ControlZ(this),
-						new ControlDimChange(this),
-						new ControlScreen(this),
-						new ControlRandom(this),
-						new ControlDoor(this),
-						new ControlSTCLoad(this),
-						new ControlSTCButton(this, 0, Helper.convertToPixels(0, 0, 0)),
-						new ControlSTCButton(this, 1, Helper.convertToPixels(-1, 0, 1.1)),
-						new ControlSTCButton(this, 2, Helper.convertToPixels(-1.6, 0, 2.5)),
-						new ControlSTCButton(this, 3, Helper.convertToPixels(-2.3, 0, 3.7)),
-						new ControlFlight(this),
-						new ControlFuel(this),
-						new ControlLandType(this),
-						new ControlDirection(this),
-						new ControlFastReturn(this),
-						new ControlTelepathicCircuts(this),
-						new ControlDoorSwitch(this),
-						new ControlMag(this),
-						new ControlPhone(this)
-						};
+				List<EntityControl> ec = new ArrayList<EntityControl>();
+				ec.add(new ControlLaunch(this));
+				ec.add(new ControlX(this));
+				ec.add(new ControlY(this));
+				ec.add(new ControlZ(this));
+				ec.add(new ControlDimChange(this));
+				ec.add(new ControlScreen(this));
+				ec.add(new ControlRandom(this));
+				ec.add(new ControlDoor(this));
+				ec.add(new ControlSTCLoad(this));
+				ec.add(new ControlFlight(this));
+				ec.add(new ControlFuel(this));
+				ec.add(new ControlLandType(this));
+				ec.add(new ControlDirection(this));
+				ec.add(new ControlFastReturn(this));
+				ec.add(new ControlTelepathicCircuts(this));
+				ec.add(new ControlDoorSwitch(this));
+				ec.add(new ControlMag(this));
+				ec.add(new ControlPhone(this));
+				int id = 0;
+				for(Vec3d pos : this.coordList) {
+					ec.add(new ControlSTCButton(this, id, pos));
+					++id;
+				}
 				for (EntityControl con : ec) {
-					con.setPosition(this.getPos().getX() + con.getOffset().x + 0.5, this.getPos().getY() + con.getOffset().y + 1, this.getPos().getZ() + con.getOffset().z + 0.5);
+					con.setPosition(this.getPos().getX() + con.getOffset(this).x + 0.5, this.getPos().getY() + con.getOffset(this).y + 1, this.getPos().getZ() + con.getOffset(this).z + 0.5);
 					world.spawnEntity(con);
 					
 				}
-				this.controls = ec;
+				this.controls = ec.toArray(new EntityControl[] {});
 				return true;
 			}
 		}
@@ -785,7 +785,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public IBlockState getTopBlock() {
-		return this.blockTop;
+		return this.blockTop == null ? TBlocks.tardis_top.getDefaultState() : this.blockTop;
 	}
 	
 	public float calcFuelUse() {

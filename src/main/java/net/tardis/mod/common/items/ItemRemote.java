@@ -44,17 +44,17 @@ public class ItemRemote extends ItemBase {
 		if(!worldIn.isRemote && !Helper.isDimensionBlocked(playerIn.dimension) && !this.getConsolePos(playerIn.getHeldItem(handIn)).equals(BlockPos.ORIGIN)) {
 			TileEntityTardis tardis = ((TileEntityTardis)((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(playerIn.getHeldItem(handIn))));
 			if(tardis != null && !tardis.isInFlight()) {
+				tardis.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing()), playerIn.dimension);
 				SystemFlight sys = null;
 				for(ISystem s : tardis.systems) {
 					if(s.getClass() == SystemFlight.class) {
 						sys = (SystemFlight)s;
 					}
 				}
-				if(sys != null) {
-					sys.setHealth(sys.getHealth() - 0.1F);
+				if(sys != null && tardis.startFlight()) {
+					sys.setHealth(sys.getHealth() - 0.09F);
 				}
-				tardis.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing()), playerIn.dimension);
-				tardis.startFlight();
+				
 			}
 		}
 		return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));

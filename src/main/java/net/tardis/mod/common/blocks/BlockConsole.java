@@ -1,10 +1,13 @@
 package net.tardis.mod.common.blocks;
 
+import com.google.common.base.Supplier;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -22,8 +25,8 @@ public class BlockConsole extends BlockTileBase implements IUnbreakable, IRender
 	public static final AxisAlignedBB BB = new AxisAlignedBB(-1, 0, -1, 2, 0.7, 2);
 	public ItemBlock item = new ItemBlock(this);
 	
-	public BlockConsole() {
-        super(Material.ANVIL, TileEntityTardis::new);
+	public BlockConsole(Supplier<TileEntity> tile) {
+        super(Material.ANVIL, tile);
 		this.setBlockUnbreakable();
 		item.setCreativeTab(null);
 	}

@@ -6,6 +6,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlLaunch extends EntityControl {
@@ -16,11 +17,14 @@ public class ControlLaunch extends EntityControl {
 	
 	public ControlLaunch(World world) {
 		super(world);
-		this.setSize(0.0625F, 0.25F);
+		this.setSize(0.125F, 0.125F);
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis.getClass() == TileEntityTardis01.class) {
+			return Helper.convertToPixels(-5, -2.5, 12.5);
+		}
 		return Helper.convertToPixels(-7, 0, 7.5);
 	}
 	
