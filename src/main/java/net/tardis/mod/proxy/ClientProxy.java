@@ -21,7 +21,6 @@ import net.tardis.mod.client.models.ModelKey01;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.overlays.OverlayHandler;
 import net.tardis.mod.client.renderers.RenderCorridor;
-import net.tardis.mod.client.renderers.RenderInvis;
 import net.tardis.mod.client.renderers.RenderItemFoodMachine;
 import net.tardis.mod.client.renderers.RenderItemSonicPen;
 import net.tardis.mod.client.renderers.RenderScreen;
@@ -58,25 +57,8 @@ import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityRayCyberman;
 import net.tardis.mod.common.entities.EntityTardis;
-import net.tardis.mod.common.entities.controls.ControlDimChange;
-import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
-import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
-import net.tardis.mod.common.entities.controls.ControlFastReturn;
-import net.tardis.mod.common.entities.controls.ControlFlight;
-import net.tardis.mod.common.entities.controls.ControlFuel;
-import net.tardis.mod.common.entities.controls.ControlLandType;
-import net.tardis.mod.common.entities.controls.ControlLaunch;
-import net.tardis.mod.common.entities.controls.ControlMag;
-import net.tardis.mod.common.entities.controls.ControlPhone;
-import net.tardis.mod.common.entities.controls.ControlRandom;
-import net.tardis.mod.common.entities.controls.ControlSTCButton;
-import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlScreen;
-import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
-import net.tardis.mod.common.entities.controls.ControlX;
-import net.tardis.mod.common.entities.controls.ControlY;
-import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
@@ -113,7 +95,7 @@ public class ClientProxy extends ServerProxy {
 		// Controls
 		RenderingRegistry.registerEntityRenderingHandler(ControlScreen.class, new RenderScreen());
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, new RenderDoor());
-		RenderingRegistry.registerEntityRenderingHandler(ControlX.class, new RenderInvis());
+		/*RenderingRegistry.registerEntityRenderingHandler(ControlX.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlY.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, new RenderInvis());
@@ -129,7 +111,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlTelepathicCircuts.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoorSwitch.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlMag.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, new RenderInvis());
+		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, new RenderInvis());*/
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, new RenderCorridor());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());

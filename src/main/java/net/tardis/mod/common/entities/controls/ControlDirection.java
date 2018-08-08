@@ -13,6 +13,9 @@ public class ControlDirection extends EntityControl {
 	
 	public ControlDirection(TileEntityTardis tardis) {
 		super(tardis);
+		if(tardis.getClass() == TileEntityTardis01.class) {
+			this.setSize(0.0625F, 0.0625F);
+		}
 	}
 	
 	public ControlDirection(World world) {

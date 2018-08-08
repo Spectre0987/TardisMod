@@ -19,7 +19,7 @@ public abstract class EntityControl extends Entity implements IControl {
 	public static final DataParameter<Boolean> IS_GLOWING = EntityDataManager.createKey(EntityControl.class, DataSerializers.BOOLEAN);
 	public int ticks = 0;
 	public int direction = 1;
-	
+
 	public EntityControl(World worldIn) {
 		super(worldIn);
 	}
@@ -137,5 +137,9 @@ public abstract class EntityControl extends Entity implements IControl {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		return false;
 	}
-	
+	@Override
+	protected void setSize(float width, float height) {
+		super.setSize(width, height);
+		this.firstUpdate = true;
+	}
 }
