@@ -1,6 +1,6 @@
 itemGroup.tardis=TARDIS Mod
 
-item.key.name=Clé du TARDIS
+item.tardis_key.name=Clé du TARDIS
 item.pos_setter.name=Enregistreur de coordonnées
 item.circuts.name=Circuit Exotronic
 item.sonic_screwdriver.name=Tournevis sonique
@@ -26,6 +26,22 @@ item.space_chest.name=Plastron de combinaison spatiale
 item.space_legs.name=Jambières de combinaison spatiale
 item.first_cane.name=Canne du Premier Docteur
 item.fourth_hat.name=Chapeau du Quatrième Docteur
+item.symbiotic_nuclei.name=Noyau Symbiotique
+item.stattenheim_remote.name=Télécommande Stattenheim
+item.ruby.name=Rubis
+item.thirteen_coat.name=Veste du Treizième Docteur
+item.sonic_shades.name=Lunettes soniques
+item.time_vector_generator.name=Générateur de vecteurs temporels
+item.biodampener.name=Bio-Amortisseur
+item.mercury_bottle.name=Fiole de Mercure
+item.cinnabar.name=Poussière de Cinabre
+
+tooltip.remote=Télécommande reliée au TARDIS à :
+tooltip.remote.time=Le TARDIS arrive dans 
+tooltip.remote.fuel=Batterie Artron 
+tooltip.remote.exteriorpos=Extérieur du TARDIS:
+
+general.time.seconds=seconde
 
 tile.tardis.name=TARDIS
 tile.time_rotor.name=Console
@@ -44,6 +60,10 @@ tile.electric_panel.name=Tableau électrique
 tile.megalos.name=Meglos
 tile.console.name=Console
 tile.toyota_hexagon_1.name=Bloc Toyota
+tile.ruby_ore.name=Minerais de Rubis
+tile.holoprojector.name=Projecteur holographique
+tile.tardis_coral.name=Corail de TARDIS
+tile.cinnabar_ore.name=Minerais de Cinabre
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
@@ -85,6 +105,14 @@ tardis.hads.enabled.false=H.A.D.S a été désactivé
 
 protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S
+protocol.tardis.find_rift=Trouver la faille la plus proche
+protocol.tardis.systemreadout=Relevé du sous-système
+protocol.tardis.change.console=Changer de Console
+protocol.tardis.ars=Système de Reconfiguration Architecturale
+
+systems.tardis.flight=Système de vol
+systems.protocol.dimensions=Systèmes dimensionnel
+system.tardis.fluidlinks=Liens pour liquide
 
 tardis.dimension=Dimension Nav-com est:
 
@@ -124,11 +152,12 @@ entity.tardis_fast_return.name=Retour rapide
 entity.telepathic_circuts.name=Circuits télépathiques
 entity.tardis_door_control.name=Interrupteur de porte
 entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
+entity.tardis_phone.name=Communicateur
+
 entity.dalek.name=Dalek
 
 
 entity.invasion_cyberman.name=Invasion de Cyberman
-
 
 death.cyberman.generic=a été converti
 
