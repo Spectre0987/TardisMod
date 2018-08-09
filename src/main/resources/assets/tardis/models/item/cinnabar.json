@@ -1,6 +1,6 @@
 {
     "parent":"item/generated",
     "textures":{
-        "layer0":"tardis:items/coord_getter"
+        "layer0":"tardis:items/cinnabar"
     }
 }

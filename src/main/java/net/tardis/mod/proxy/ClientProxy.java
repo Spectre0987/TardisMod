@@ -35,6 +35,7 @@ import net.tardis.mod.client.renderers.entities.RenderDalek;
 import net.tardis.mod.client.renderers.entities.RenderRay;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
+import net.tardis.mod.client.renderers.items.RenderItemAlembic;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
 import net.tardis.mod.client.renderers.items.RenderItemTardis02;
 import net.tardis.mod.client.renderers.items.RenderItemTardis03;
@@ -43,6 +44,7 @@ import net.tardis.mod.client.renderers.items.RendererItemDemat;
 import net.tardis.mod.client.renderers.items.RendererItemTardis;
 import net.tardis.mod.client.renderers.items.RendererKey;
 import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
+import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderFoodMachine;
 import net.tardis.mod.client.renderers.tiles.RenderJsonHelper;
 import net.tardis.mod.client.renderers.tiles.RenderTemporalLab;
@@ -60,6 +62,7 @@ import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlScreen;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
@@ -84,6 +87,9 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoodMachine.class, new RenderFoodMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTemporalLab.class, new RenderTemporalLab());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHoloprojector.class, new RenderTileHolo());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAlembic.class, new RenderAlembic());
+		
+		//Consoles
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());
 		
 		//Exteriors
@@ -135,6 +141,7 @@ public class ClientProxy extends ServerProxy {
 		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
 		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
+		Item.getItemFromBlock(TBlocks.alembic).setTileEntityItemStackRenderer(new RenderItemAlembic());
 	}
 
 	@Override

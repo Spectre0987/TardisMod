@@ -57,6 +57,8 @@ public class TItems {
 	public static Item biodampener;
 	
 	public static Item ruby;
+	public static Item mercuryBottle;
+	public static Item crushedCinnabar;
 	
 	// Componenets
 	
@@ -147,6 +149,11 @@ public class TItems {
 		biodampener = new ItemBase();
 		register(biodampener, "biodampener");
 		
+		mercuryBottle = new ItemBase();
+		register(mercuryBottle, "mercury_bottle");
+		
+		crushedCinnabar = new ItemBase();
+		register(crushedCinnabar, "cinnabar");
 		// TARDIS Components
 		fluid_link = new FluidLink();
 		register(fluid_link, "fluid_link");

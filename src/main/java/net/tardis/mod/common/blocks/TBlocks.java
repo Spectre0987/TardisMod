@@ -72,6 +72,8 @@ public class TBlocks {
 	public static Block ruby_ore;
 	public static Block tardis_coral;
 	
+	public static Block alembic;
+	
 	//Exteriors
 	public static Block tardis_top_01;
 	public static Block tardis_top_02;
@@ -201,6 +203,10 @@ public class TBlocks {
 		
 		tardis_coral = new BlockTardisCoral();
 		register(tardis_coral, "tardis_coral");
+		
+		alembic = new BlockAlembic();
+		register(alembic, "alembic");
+		//Consoles
 		
 		console_01 = new BlockConsole(TileEntityTardis01::new);
 		register(console_01, "console_01");
