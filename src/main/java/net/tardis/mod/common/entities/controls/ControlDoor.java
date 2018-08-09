@@ -157,7 +157,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 					}
 				}
 			}
-			if(/*this.ticksExisted % 5 == 0*/true) {
+			if(this.ticksExisted % 5 == 0) {
 				this.shell = new WorldShell(tardis.getLocation().up().offset(this.getFacing(), 11));
 				Vec3i r = new Vec3i(10, 10, 10);
 				IBlockState doorState = ws.getBlockState(tardis.getLocation().up());

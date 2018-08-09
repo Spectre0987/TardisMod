@@ -124,6 +124,8 @@ public class ModelInteriorDoor02 extends ModelBase implements IInteriorModel
 
   	public ModelInteriorDoorR02 rd = new ModelInteriorDoorR02();
   	public ModelInteriorDoorL02 ld = new ModelInteriorDoorL02();
+  	public ModelLeftDoor02 eld = new ModelLeftDoor02();
+  	public ModelRightDoor02 erd = new ModelRightDoor02();
   	
 	@Override
 	public void renderClosed() {
@@ -154,7 +156,7 @@ public class ModelInteriorDoor02 extends ModelBase implements IInteriorModel
 			Minecraft.getMinecraft().getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
 			GlStateManager.translate(0, 0.095F, -1);
 			GlStateManager.rotate(180, 0, 1, 0);
-			new ModelLeftDoor02().render(null, 0, 0, 0, 0, 0, 0.0625F);
+			eld.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.popMatrix();
 		}
@@ -166,7 +168,7 @@ public class ModelInteriorDoor02 extends ModelBase implements IInteriorModel
 			Minecraft.getMinecraft().getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
 			GlStateManager.translate(0, 0.095F, -1);
 			GlStateManager.rotate(180, 0, 1, 0);
-			new ModelRightDoor02().render(null, 0, 0, 0, 0, 0, 0.0625F);
+			erd.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();
 		}
 		

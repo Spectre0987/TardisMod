@@ -164,31 +164,33 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				this.updateTicks = 0;
 			}
 			//World Shell
-			if(!this.isLocked()) {
-				worldShell = new WorldShell(this.getConsolePos());
-                WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-				for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {
-					IBlockState state = tardisWorld.getBlockState(pos);
-					if(state.getBlock() != Blocks.AIR) {
-						worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), 15));
+			if(world.getWorldTime() % 5 == 0) {
+				if(!this.isLocked()) {
+					worldShell = new WorldShell(this.getConsolePos());
+	                WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+					for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius,radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {
+						IBlockState state = tardisWorld.getBlockState(pos);
+						if(state.getBlock() != Blocks.AIR) {
+							worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), 15));
+						}
 					}
+					List<NBTTagCompound> lists = new ArrayList<NBTTagCompound>();
+					List<PlayerStorage> players = new ArrayList<PlayerStorage>();
+					for(Entity e : tardisWorld.getEntitiesWithinAABB(Entity.class, Helper.createBB(getConsolePos(), 10))) {
+						if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
+							NBTTagCompound tag = new NBTTagCompound();
+							e.writeToNBT(tag);
+							tag.setString("id", EntityList.getKey(e).toString());
+							lists.add(tag);
+						}
+						else if(e instanceof EntityPlayer) {
+							players.add(new PlayerStorage((EntityPlayer)e));
+						}
+					}
+					worldShell.setPlayers(players);
+					worldShell.setEntities(lists);
+					Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(), 16D));
 				}
-				List<NBTTagCompound> lists = new ArrayList<NBTTagCompound>();
-				List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-				for(Entity e : tardisWorld.getEntitiesWithinAABB(Entity.class, Helper.createBB(getConsolePos(), 10))) {
-					if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
-						NBTTagCompound tag = new NBTTagCompound();
-						e.writeToNBT(tag);
-						tag.setString("id", EntityList.getKey(e).toString());
-						lists.add(tag);
-					}
-					else if(e instanceof EntityPlayer) {
-						players.add(new PlayerStorage((EntityPlayer)e));
-					}
-				}
-				worldShell.setPlayers(players);
-				worldShell.setEntities(lists);
-				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(), 16D));
 			}
 		}
 		if(openingTicks > 0) {

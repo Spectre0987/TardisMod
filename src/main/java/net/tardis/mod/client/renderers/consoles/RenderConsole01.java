@@ -29,7 +29,7 @@ public class RenderConsole01 extends TileEntitySpecialRenderer<TileEntityTardis0
 		GlStateManager.rotate(180, 1, 0, 0);
 		console.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.pushMatrix();
-		if(te.isInFlight())GlStateManager.rotate((te.getTimeLeft() % 180) * 2, 0, 1, 0);
+		if(te.isInFlight())GlStateManager.rotate((te.getWorld().getTotalWorldTime() % 180) * 2, 0, 1, 0);
 		console.renderRotor(0.0625F);
 		GlStateManager.popMatrix();
 		

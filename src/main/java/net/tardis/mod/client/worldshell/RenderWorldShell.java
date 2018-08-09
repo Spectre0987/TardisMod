@@ -44,20 +44,20 @@ public class RenderWorldShell {
 			BlockPos offset = container.getWorldShell().getOffset();
 			GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());
 			
-			if (container.getWorldShell().bufferstate == null || container.getWorldShell().updateRequired) {
-				for (BlockPos bp : container.getWorldShell().blockMap.keySet()) {
-					if (bp == null)
-						continue;
-					try {
-						Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
+			try {
+				if (container.getWorldShell().bufferstate == null || container.getWorldShell().updateRequired) {
+					for (BlockPos bp : container.getWorldShell().blockMap.keySet()) {
+						if (bp == null)
+							continue;
+							Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
 					}
-					catch(Exception e) {}
+					container.getWorldShell().bufferstate = bb.getVertexState();
 				}
-				container.getWorldShell().bufferstate = bb.getVertexState();
+				else {
+					bb.setVertexState(container.getWorldShell().bufferstate);
+				}
 			}
-			else {
-				bb.setVertexState(container.getWorldShell().bufferstate);
-			}
+			catch(Exception e) {}
 
 			Tessellator.getInstance().draw();
 			GlStateManager.depthFunc(GL11.GL_LEQUAL);
@@ -72,15 +72,15 @@ public class RenderWorldShell {
 					catch(Exception e) {}
 				}
 			}
-			if(container.getWorldShell().getEntities() != null) {
-				for(NBTTagCompound stor : container.getWorldShell().getEntities()) {
-					try {
+			try {
+				if(container.getWorldShell().getEntities() != null) {
+					for(NBTTagCompound stor : container.getWorldShell().getEntities()) {
 						Entity e = EntityList.createEntityFromNBT(stor, worldBoti);
 						if(e != null)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 					}
-					catch(Exception e) {}
 				}
 			}
+			catch(Exception e) {}
 			
 			if(container.getWorldShell().getPlayers() != null) {
 				for(PlayerStorage stor : container.getWorldShell().getPlayers()) {
