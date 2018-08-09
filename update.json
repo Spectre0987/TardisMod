@@ -1,13 +1,14 @@
 {
   "homepage": "https://minecraft.curseforge.com/projects/new-tardis-mod",
   "promos": {
-    "1.12.2-latest": "0.0.4A",
-    "1.12.2-recommended": "0.0.4A"
+    "1.12.2-latest": "0.0.5A",
+    "1.12.2-recommended": "0.0.5A"
   },
   "1.12.2": {
     "0.0.1A" : "Is that a plane? A bird? No! It's a TARDIS!",
     "0.0.2" : "Bugfixes, sounds (door, Cloister Bell,...) animation for some controls,...",
     "0.0.3": "Fixed crashes on a dedicated server, misc. bugfixes",
-    "0.0.4A":"Added Manual, Fast return switch, telepathic, door switch, a traveler timer, sonic pen, full space suit,..."
+    "0.0.4A":"Added Manual, Fast return switch, telepathic, door switch, a traveler timer, sonic pen, full space suit,...",
+    "0.0.5A":"Added new exteriors + Chameleon Circuit, Added interior doors which change depending on the exterior, Added new console unit (interior yet to come), Added cybermen and daleks, Added cybermen and daleks, Added Bigger On The Inside (experimental), Added a Stattenheim Remote to summon the TARDIS, Added Fluid link system, Added TARDIS Coral which is used to grow a TARDIS, Added Rifts which speed up the growth and fuel time of a TARDIS, Updated some textures and models, Space suit lets you breathe underwater, Added clothing, Added rematerialization and dematerialization animations, Added randomly occurring dalek invasions of villages, Added a holoprojector to display your TARDIS' surroundings, Added symbiotic nuclei to grant the player regenerations (WIP), Added TARDIS sub systems, Added bio-dampener and Bug fixes"
   }
 }
