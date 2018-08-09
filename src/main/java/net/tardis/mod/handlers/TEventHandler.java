@@ -130,15 +130,17 @@ public class TEventHandler {
 			Entity e = event.getEntityLiving().getRidingEntity();
 			event.setCanceled(e instanceof EntityTardis);
 		}
-		if(event.getEntityLiving() instanceof EntityPlayer) {
-			int count = 0;
-			for(ItemStack stack : ((EntityPlayer)event.getEntityLiving()).getArmorInventoryList()) {
-				if(stack.getItem() instanceof ItemSpaceSuit) {
-					++count;
+		if(event.getSource().equals(Tardis.SUFFICATION)) {
+			if(event.getEntityLiving() instanceof EntityPlayer) {
+				int count = 0;
+				for(ItemStack stack : ((EntityPlayer)event.getEntityLiving()).getArmorInventoryList()) {
+					if(stack.getItem() instanceof ItemSpaceSuit) {
+						++count;
+					}
 				}
-			}
-			if(count >= 3) {
-				event.setCanceled(true);
+				if(count >= 3) {
+					event.setCanceled(true);
+				}
 			}
 		}
 	}
