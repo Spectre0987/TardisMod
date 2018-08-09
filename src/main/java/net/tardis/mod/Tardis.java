@@ -3,7 +3,9 @@ package net.tardis.mod;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -217,7 +219,6 @@ public class Tardis {
 		TardisSystems.register("dimensional", SystemDimension.class);
 		TardisSystems.register("fluid_links", SystemFluidLinks.class);
 		
-		GameRegistry.addSmelting(TBlocks.cinnabar_ore, new ItemStack(TItems.crushedCinnabar), 0.3F);
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
 	}
@@ -225,6 +226,8 @@ public class Tardis {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.renderEntities();
+
+		FurnaceRecipes.instance().addSmelting(Item.getItemFromBlock(TBlocks.cinnabar_ore), new ItemStack(TItems.crushedCinnabar), 0.03F);
 		
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
