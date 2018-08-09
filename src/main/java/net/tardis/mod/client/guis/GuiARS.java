@@ -21,18 +21,15 @@ public class GuiARS extends GuiScreen{
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
+		
 		GlStateManager.pushMatrix();
 		mc.getTextureManager().bindTexture(TEXTURE);
 		ScaledResolution res = new ScaledResolution(mc);
 		this.drawTexturedModalRect(res.getScaledWidth() / 2 - gui_width / 2, res.getScaledHeight() / 2 - gui_height / 2, 0, 0, gui_width, gui_height);
 		
 		//this.drawTexturedModalRect(mouseX, mouseY, 0, 0, 10, 10);
-		
-		for(GuiButton b : this.buttonList) {
-			b.drawButton(mc, mouseX, mouseY, partialTicks);
-		}
 		GlStateManager.popMatrix();
+		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override

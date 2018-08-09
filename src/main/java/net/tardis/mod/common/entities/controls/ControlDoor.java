@@ -136,7 +136,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 		if(!world.isRemote && this.isOpen()) {
 			AxisAlignedBB bb = new AxisAlignedBB(0, 0, 0.9, 1, 2, 1).offset(this.getPosition());
-			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
 				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
 				EnumFacing facing = ws.getBlockState(tardis.getLocation().up()).getValue(BlockTardisTop.FACING);
