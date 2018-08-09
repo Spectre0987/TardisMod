@@ -3,6 +3,8 @@ package net.tardis.mod;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -14,6 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -70,6 +73,7 @@ import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemFluidLinks;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
+import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
@@ -212,6 +216,8 @@ public class Tardis {
 		TardisSystems.register("flight", SystemFlight.class);
 		TardisSystems.register("dimensional", SystemDimension.class);
 		TardisSystems.register("fluid_links", SystemFluidLinks.class);
+		
+		AlembicRecipe.registerRecipe(Items.ACACIA_BOAT, Items.STICK);
 	}
 	
 	@EventHandler
@@ -222,6 +228,14 @@ public class Tardis {
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
 		OreDictionary.registerOre("gemRuby", TItems.ruby);
 		OreDictionary.registerOre("oreRuby", TBlocks.ruby_ore);
+		OreDictionary.registerOre("dustCinnabar", TItems.crushedCinnabar);
+	}
+	
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event) {
+		for(ItemStack cinnibar : OreDictionary.getOres("dustCinnabar")) {
+			AlembicRecipe.registerRecipe(cinnibar.getItem(), TItems.mercuryBottle);
+		}
 	}
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {

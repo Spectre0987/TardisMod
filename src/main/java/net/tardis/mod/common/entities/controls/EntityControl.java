@@ -140,6 +140,5 @@ public abstract class EntityControl extends Entity implements IControl {
 	@Override
 	protected void setSize(float width, float height) {
 		super.setSize(width, height);
-		this.firstUpdate = true;
 	}
 }
