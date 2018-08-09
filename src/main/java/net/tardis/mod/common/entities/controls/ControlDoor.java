@@ -196,10 +196,10 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				
 				for(Entity entity : world.getEntitiesWithinAABB(Entity.class, voidBB)) {
 					if(!entity.isDead) {
-						Vec3d dir = entity.getPositionVector().subtract(this.getPositionVector()).normalize().scale(-1).scale(0.25);
-						entity.motionX = dir.x;
-						entity.motionY = dir.y;
-						entity.motionZ = dir.z;
+						Vec3d dir = entity.getPositionVector().subtract(this.getPositionVector()).normalize().scale(-1).scale(0.12);
+						entity.motionX += dir.x;
+						entity.motionY += dir.y;
+						entity.motionZ += dir.z;
 					}
 				}
 			}
