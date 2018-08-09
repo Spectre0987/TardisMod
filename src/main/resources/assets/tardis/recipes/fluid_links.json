@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ICI",
+    "IMI",
+    "ICI"
+  ],
+  "key": {
+    "I":{
+        "item":"minecraft:iron_ingot"
+    },
+    "C":{
+        "item":"tardis:circuts"
+    },
+    "M":{
+        "item":"tardis:mercury_bottle"
+    }
+  },
+  "result": {
+    "item": "tardis:fluid_link"
+  }
+}
