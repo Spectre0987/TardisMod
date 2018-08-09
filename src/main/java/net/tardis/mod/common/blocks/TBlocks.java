@@ -70,6 +70,7 @@ public class TBlocks {
 	public static Block electric_panel;
 	
 	public static Block ruby_ore;
+	public static Block cinnabar_ore;
 	public static Block tardis_coral;
 	
 	public static Block alembic;
@@ -206,6 +207,10 @@ public class TBlocks {
 		
 		alembic = new BlockAlembic();
 		register(alembic, "alembic");
+		
+		cinnabar_ore = new BlockItemDrop(TItems.crushedCinnabar, 3);
+		register(cinnabar_ore, "cinnabar_ore");
+		
 		//Consoles
 		
 		console_01 = new BlockConsole(TileEntityTardis01::new);

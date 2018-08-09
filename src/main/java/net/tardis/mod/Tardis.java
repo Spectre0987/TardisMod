@@ -3,7 +3,6 @@ package net.tardis.mod;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
@@ -87,6 +86,7 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.world.TardisLoadingCallback;
+import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
@@ -217,7 +217,9 @@ public class Tardis {
 		TardisSystems.register("dimensional", SystemDimension.class);
 		TardisSystems.register("fluid_links", SystemFluidLinks.class);
 		
-		AlembicRecipe.registerRecipe(Items.ACACIA_BOAT, Items.STICK);
+		GameRegistry.addSmelting(TBlocks.cinnabar_ore, new ItemStack(TItems.crushedCinnabar), 0.3F);
+		
+		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
 	}
 	
 	@EventHandler

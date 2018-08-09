@@ -34,7 +34,7 @@ item.sonic_shades.name=Sonic Shades
 item.time_vector_generator.name=Time Vector Generator
 item.biodampener.name=Bio-Dampener
 item.mercury_bottle.name=Bottle of Mercury
-item.cinnibar.name=Cinnibar Dust
+item.cinnabar.name=Cinnabar Dust
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
@@ -63,6 +63,7 @@ tile.toyota_hexagon_1.name=Toyota Block
 tile.ruby_ore.name=Ruby Ore
 tile.holoprojector.name=Holoprojector
 tile.tardis_coral.name=TARDIS Coral
+tile.cinnabar_ore.name=Cinnabar Ore
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!

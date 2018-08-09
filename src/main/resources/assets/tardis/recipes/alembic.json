@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  b",
+    "b s",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item":"minecraft:stick"
+    },
+    "b":{
+        "item": "minecraft:glass_bottle"
+    }
+  },
+  "result": {
+    "item": "tardis:alembic"
+  }
+}

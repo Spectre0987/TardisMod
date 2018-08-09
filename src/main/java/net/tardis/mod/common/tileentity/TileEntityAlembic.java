@@ -90,9 +90,9 @@ public class TileEntityAlembic extends TileEntity implements ITickable {
 	@Override
 	public void update() {
 		if(!this.stack.isEmpty()) {
+			--timeLeft;
 			if(AlembicRecipe.getItemResult(this.stack.getItem()) != null) {
 				if(this.timeLeft <= 0) {
-					System.out.println("Time");
 					ItemStack add = new ItemStack(AlembicRecipe.getItemResult(this.stack.getItem()));
 					if(result.isEmpty()) {
 						result = add;
@@ -113,8 +113,8 @@ public class TileEntityAlembic extends TileEntity implements ITickable {
 					}
 				}
 			}
-			--timeLeft;
-			if(this.timeLeft < 0)
+			
+			if(this.timeLeft <= 0)
 				this.timeLeft = 200;
 			if(!world.isRemote) {
 				for(EntityPlayerMP players : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(getPos()).grow(10D))) {
