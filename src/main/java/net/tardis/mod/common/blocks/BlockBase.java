@@ -18,7 +18,11 @@ public class BlockBase extends Block {
 		super(Material.IRON);
 		this.setHardness(1F);
 		this.setResistance(99999F);
+<<<<<<< HEAD
 		this.setCreativeTab(Tardis.tab);
+=======
+		this.item.setCreativeTab(Tardis.tab);
+>>>>>>> parent of 3eef632... Added Hellbent blocks
 	}
 	
 	@Override
