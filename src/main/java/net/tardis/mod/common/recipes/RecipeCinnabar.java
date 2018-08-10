@@ -67,7 +67,7 @@ public class RecipeCinnabar implements IRecipe {
 		for(int i = 0; i < inv.getSizeInventory(); ++i) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if(stack.getItem() instanceof ItemPickaxe) {
-				stack.damageItem(1, null);
+				stack.setItemDamage(stack.getItemDamage() + 1);
 				list.add(i, stack);
 				return list;
 			}

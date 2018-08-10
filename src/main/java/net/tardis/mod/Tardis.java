@@ -33,6 +33,7 @@ import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityRayCyberman;
@@ -168,6 +169,7 @@ public class Tardis {
 		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
 		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
 		EntityHelper.registerNoSpawn(EntityAirshell.class, "airshell");
+		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "EntityDalekCasing");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -236,6 +238,7 @@ public class Tardis {
 		OreDictionary.registerOre("gemRuby", TItems.ruby);
 		OreDictionary.registerOre("oreRuby", TBlocks.ruby_ore);
 		OreDictionary.registerOre("dustCinnabar", TItems.crushedCinnabar);
+		OreDictionary.registerOre("oreCinnabar", TBlocks.cinnabar_ore);
 	}
 	
 	@EventHandler
