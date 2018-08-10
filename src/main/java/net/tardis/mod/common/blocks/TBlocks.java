@@ -22,7 +22,7 @@ public class TBlocks {
 	public static Block tardis = register(new BlockTardis(), "tardis");
 	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top");
 	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console");
-	public static Block panel = register(new BlockBase(), "panel");
+	public static Block panel = register(new BlockPanel(), "panel");
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
 	public static Block holoprojector = register(new BlockHoloprojector(), "holoprojector");
@@ -77,11 +77,11 @@ public class TBlocks {
 	public static Block hellbent_glass06 = register(new BlockBase(), "hellbent_glass06");
 	public static Block hellbent_glass07 = register(new BlockBase(), "hellbent_glass07");
 	public static Block hellbent_glass08 = register(new BlockBase(), "hellbent_glass08");
-	public static Block hellbent_roundel01 = register(new BlockBase(), "hellbent_roundel01");
-	public static Block hellbent_roundel02 = register(new BlockBase(), "hellbent_roundel02");
-	public static Block hellbent_roundel03 = register(new BlockBase(), "hellbent_roundel03");
+	public static Block hellbent_roundel01 = register(new BlockLight(), "hellbent_roundel01");
+	public static Block hellbent_roundel02 = register(new BlockLight(), "hellbent_roundel02");
+	public static Block hellbent_roundel03 = register(new BlockLight(), "hellbent_roundel03");
 	public static Block hellbent_silverwall = register(new BlockBase(), "hellbent_silverwall");
-	public static Block hellbent_vents = register(new BlockBase(), "hellbent_vents");
+	public static Block hellbent_vents = register(new BlockLight(), "hellbent_vents");
 	public static Block hellbent_wall = register(new BlockBase(), "hellbent_wall");
 	
 	//Exteriors

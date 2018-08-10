@@ -1,6 +1,6 @@
 itemGroup.tardis=TARDIS Mod
 
-item.tardis:tardis_key.name=TARDIS Key
+item.tardis:key.name=TARDIS Key
 item.tardis:pos_setter.name=Coordnate Logger
 item.tardis:circuts.name=Exotronic Circuitry
 item.tardis:sonic_screwdriver.name=Sonic Screwdriver

@@ -89,7 +89,7 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static  void registerItems(RegistryEvent.Register<Item> event) {
 		for (Item item : TItems.items) {
-			if(item != null)event.getRegistry().register(item);
+			event.getRegistry().register(item);
 		}
 	}
 	

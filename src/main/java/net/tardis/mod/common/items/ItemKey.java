@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -68,11 +67,6 @@ public class ItemKey extends Item {
 	@Override
 	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
-	}
-
-	@Override
-	public String getItemStackDisplayName(ItemStack stack) {
-		return new TextComponentTranslation("item.tardis_key.name").getFormattedText();
 	}
 	
 }
