@@ -75,6 +75,22 @@ public class TBlocks {
 	
 	public static Block alembic;
 	
+	public static Block hellbent_floor;
+	public static Block hellbent_glass01;
+	public static Block hellbent_glass02;
+	public static Block hellbent_glass03;
+	public static Block hellbent_glass04;
+	public static Block hellbent_glass05;
+	public static Block hellbent_glass06;
+	public static Block hellbent_glass07;
+	public static Block hellbent_glass08;
+	public static Block hellbent_roundel01;
+	public static Block hellbent_roundel02;
+	public static Block hellbent_roundel03;
+	public static Block hellbent_silverwall;
+	public static Block hellbent_vents;
+	public static Block hellbent_wall;
+	
 	//Exteriors
 	public static Block tardis_top_01;
 	public static Block tardis_top_02;
@@ -211,14 +227,59 @@ public class TBlocks {
 		cinnabar_ore = new BlockItemDrop(TItems.crushedCinnabar, 3);
 		register(cinnabar_ore, "cinnabar_ore");
 		
-		//Consoles
 		
+		hellbent_floor = new BlockBase();
+		register(hellbent_floor, "hellbent_floor");
+		
+		/*hellbent_glass01 = new BlockBaseGlass();
+		register(hellbent_glass01, "hellbent_glass01");
+		
+		hellbent_glass02 = new BlockBaseGlass();
+		register(hellbent_glass02, "hellbent_glass02");
+		
+		hellbent_glass03 = new BlockBaseGlass();
+		register(hellbent_glass03, "hellbent_glass03");
+		
+		hellbent_glass04 = new BlockBaseGlass();
+		register(hellbent_glass04, "hellbent_glass04");
+		
+		hellbent_glass05 = new BlockBaseGlass();
+		register(hellbent_glass05, "hellbent_glass05");
+		
+		hellbent_glass06 = new BlockBaseGlass();
+		register(hellbent_glass06, "hellbent_glass06");
+		
+		hellbent_glass07 = new BlockBaseGlass();
+		register(hellbent_glass07, "hellbent_glass07");
+		
+		hellbent_glass08 = new BlockBaseGlass();
+		register(hellbent_glass08, "hellbent_glass08");*/
+		
+		hellbent_roundel01 = new BlockBase();
+		register(hellbent_roundel01, "hellbent_roundel01");
+		
+		hellbent_roundel02 = new BlockBase();
+		register(hellbent_roundel02, "hellbent_roundel02");
+		
+		hellbent_roundel03 = new BlockBase();
+		register(hellbent_roundel03, "hellbent_roundel03");
+		
+		hellbent_silverwall = new BlockBase();
+		register(hellbent_silverwall, "hellbent_silverwall");
+		
+		hellbent_vents = new BlockBase();
+		register(hellbent_vents, "hellbent_vents");
+		
+		hellbent_wall = new BlockBase();
+		register(hellbent_wall, "hellbent_wall");
+	
+		
+		//Consoles
 		console_01 = new BlockConsole(TileEntityTardis01::new);
 		register(console_01, "console_01");
 		
 		
 		//Exteriors
-
 		tardis_top_01 = new BlockTardisTop(TileEntityDoor01::new);
 		register(tardis_top_01, "tardis_top_01");
 
@@ -232,7 +293,7 @@ public class TBlocks {
 	}
 	
 	public static void registerGen(Block item, String name) {
-		GenerateJson.generateFacingBlockstate(name);
+		GenerateJson.genCubeAll(name);
 		register(item, name);
 	}
 	
