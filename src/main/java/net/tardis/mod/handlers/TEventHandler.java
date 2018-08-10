@@ -50,10 +50,12 @@ import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.data.TimeLord;
+import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
+import net.tardis.mod.common.recipes.RecipeCinnabar;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
@@ -112,13 +114,14 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 		event.getRegistry().register(new RecipeKey(Tardis.MODID + ":spare_key"));
+		event.getRegistry().register(new RecipeCinnabar(Tardis.MODID + ":cinnabar"));
 	}
 	
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public static void stopRender(RenderPlayerEvent.Pre event) {
-		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
+		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityTardis || event.getEntityPlayer().getRidingEntity() instanceof EntityDalekCasing) {
 			Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 			event.setCanceled(true);
 		}
@@ -128,7 +131,10 @@ public class TEventHandler {
 	public static void stopHurt(LivingHurtEvent event) {
 		if (event.getEntityLiving().getRidingEntity() != null) {
 			Entity e = event.getEntityLiving().getRidingEntity();
-			event.setCanceled(e instanceof EntityTardis);
+			event.setCanceled(e instanceof EntityTardis || e instanceof EntityDalekCasing);
+			if(e instanceof EntityDalekCasing) {
+				((EntityDalekCasing)e).attackEntityFrom(event.getSource(), event.getAmount());
+			}
 		}
 		if(event.getSource().equals(Tardis.SUFFICATION)) {
 			if(event.getEntityLiving() instanceof EntityPlayer) {
