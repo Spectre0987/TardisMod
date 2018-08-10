@@ -1,6 +1,7 @@
 package net.tardis.mod.common.entities;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,9 +11,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.InputUpdateEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityDalekCasing extends EntityLiving{
 
@@ -35,6 +35,24 @@ public class EntityDalekCasing extends EntityLiving{
 				this.rotationYaw = ((EntityLivingBase)e).rotationYawHead;
 			}
 		}
+	}
+
+	@Override
+	protected void despawnEntity() {
+		
+	}
+
+	@Override
+	public void dismountEntity(Entity entityIn) {
+		super.dismountEntity(entityIn);
+		if(world.isRemote && entityIn instanceof EntityPlayer) {
+			this.setCamera(0);
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void setCamera(int i) {
+		Minecraft.getMinecraft().gameSettings.thirdPersonView = i;
 	}
 
 	@Override
@@ -70,6 +88,9 @@ public class EntityDalekCasing extends EntityLiving{
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		player.startRiding(this);
+		if(world.isRemote) {
+			this.setCamera(1);
+		}
 		return super.applyPlayerInteraction(player, vec, hand);
 	}
 

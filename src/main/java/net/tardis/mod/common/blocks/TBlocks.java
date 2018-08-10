@@ -101,7 +101,7 @@ public class TBlocks {
 	
 	public static void register(Block block, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
-		block.setUnlocalizedName(name);
+		block.setUnlocalizedName(rl.toString());
 		block.setRegistryName(rl);
 		blocks.add(block);
 		try {
