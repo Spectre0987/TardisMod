@@ -63,12 +63,12 @@ public class RecipeCinnabar implements IRecipe {
 	}
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
-		NonNullList list = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
+		NonNullList<ItemStack> list = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 		for(int i = 0; i < inv.getSizeInventory(); ++i) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if(stack.getItem() instanceof ItemPickaxe) {
 				stack.setItemDamage(stack.getItemDamage() + 1);
-				list.add(i, stack);
+				list.set(i, stack.copy());
 				return list;
 			}
 		}
