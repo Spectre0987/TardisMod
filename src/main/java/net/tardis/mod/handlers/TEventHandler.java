@@ -80,7 +80,8 @@ public class TEventHandler {
 				for (int i = 0; i < list.size(); i++) {
 					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "type=" + i));
 				}
-			} else
+			}
+			else
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 	}
@@ -88,7 +89,7 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static  void registerItems(RegistryEvent.Register<Item> event) {
 		for (Item item : TItems.items) {
-			event.getRegistry().register(item);
+			if(item != null)event.getRegistry().register(item);
 		}
 	}
 	

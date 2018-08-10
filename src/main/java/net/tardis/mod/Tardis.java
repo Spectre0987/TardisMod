@@ -167,7 +167,7 @@ public class Tardis {
 		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
 		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
 		EntityHelper.registerNoSpawn(EntityAirshell.class, "airshell");
-		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "EntityDalekCasing");
+		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -239,8 +239,8 @@ public class Tardis {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		for(ItemStack cinnibar : OreDictionary.getOres("dustCinnabar")) {
-			AlembicRecipe.registerRecipe(cinnibar.getItem(), TItems.mercuryBottle);
+		for(ItemStack cinnabar : OreDictionary.getOres("dustCinnabar")) {
+			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
 		}
 	}
 	

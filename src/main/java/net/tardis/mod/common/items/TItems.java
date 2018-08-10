@@ -166,8 +166,9 @@ public class TItems {
 	}
 	
 	public static void register(Item item, String name) {
-		item.setUnlocalizedName(name);
-		item.setRegistryName(new ResourceLocation(Tardis.MODID, name));
+		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
+		item.setUnlocalizedName(rl.toString());
+		item.setRegistryName(rl);
 		items.add(item);
 	}
 }
