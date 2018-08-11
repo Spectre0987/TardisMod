@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlDoorSwitch extends EntityControl{
@@ -23,7 +24,7 @@ public class ControlDoorSwitch extends EntityControl{
 
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis instanceof TileEntityTardis01) {
+		if(tardis instanceof TileEntityTardis01 || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-13.5, -3, -4.5);
 		}
 		return Helper.convertToPixels(0,-2,11);

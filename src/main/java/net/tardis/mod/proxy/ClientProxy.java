@@ -27,8 +27,11 @@ import net.tardis.mod.client.renderers.RenderItemSonicPen;
 import net.tardis.mod.client.renderers.RenderScreen;
 import net.tardis.mod.client.renderers.RenderTardis;
 import net.tardis.mod.client.renderers.consoles.RenderConsole01;
+import net.tardis.mod.client.renderers.consoles.RenderConsole02;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentCorridor;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentDoor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentLight;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentMonitor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentPole;
@@ -85,6 +88,8 @@ import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
+import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
+import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -96,6 +101,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
@@ -106,9 +112,8 @@ import net.tardis.mod.config.TardisConfig;
 public class ClientProxy extends ServerProxy {
 	
 	public static HashMap<Integer, Class<? extends IRenderHandler>> skyRenderers = new HashMap<>();
-	
-	@Override
-	public void renderEntities() {
+
+	public void registerRenders() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUmbrellaStand.class, new RenderUmbrellaStand());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor.class, new RenderTileDoor());
@@ -123,6 +128,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHelbentRoof.class, new RenderHellbentRoof());
 		//Consoles
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis02.class, new RenderConsole02());
 		
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
@@ -131,55 +137,48 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 		
 		// Controls
-		RenderingRegistry.registerEntityRenderingHandler(ControlScreen.class, new RenderScreen());
-		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, new RenderDoor());
-		RenderingRegistry.registerEntityRenderingHandler(ControlX.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlY.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlDimChange.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlFlight.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlLandType.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlFastReturn.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlTelepathicCircuts.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlDoorSwitch.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlMag.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, new RenderCorridor());
+		RenderingRegistry.registerEntityRenderingHandler(ControlScreen.class, RenderScreen::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlX.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlY.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlDimChange.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlFlight.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlLandType.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlFastReturn.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlTelepathicCircuts.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlDoorSwitch.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlMag.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, RenderCorridor::new);
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityDalekCasing.class, new RenderDalekCaseing());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentCorridor.class, RenderHellbentCorridor::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentDoor.class, RenderHellbentDoor::new);
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
-		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
-		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanInvasion.class, new RenderCybermanInvasion());
-		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanTomb.class, new RenderCybermanTomb());
-		RenderingRegistry.registerEntityRenderingHandler(EntityRayCyberman.class, new RenderCyberRay());
-
-		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, new RenderDalek());
-
-		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
-		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
-		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
-		TItems.key_01.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelKey01(), ModelKey01.TEXTURE));
-		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
-		TItems.demat_circut.setTileEntityItemStackRenderer(new RendererItemDemat());
-		TItems.key.setTileEntityItemStackRenderer(new RendererKey());
+		RenderingRegistry.registerEntityRenderingHandler(EntityDalekCasing.class, RenderDalekCaseing::new);
 		
-		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RendererItemTardis());
+		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, RenderTardis::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, RenderRay::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanInvasion.class, RenderCybermanInvasion::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanTomb.class, RenderCybermanTomb::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityRayCyberman.class, RenderCyberRay::new);
 
-		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
-		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
-		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
-		Item.getItemFromBlock(TBlocks.alembic).setTileEntityItemStackRenderer(new RenderItemAlembic());
+		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, RenderDalek::new);
+		
 	}
-
+	
 	@Override
 	public void preInit() {
+		
+		super.preInit();
+		
+		registerRenders();
 
 		EnumClothes.ClothingHandler.init();
 
@@ -201,7 +200,25 @@ public class ClientProxy extends ServerProxy {
 		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.BOTI.enable;
 	}
 
-
+	@Override
+	public void init() {
+		super.init();
+		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
+		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
+		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
+		TItems.key_01.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelKey01(), ModelKey01.TEXTURE));
+		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
+		TItems.demat_circut.setTileEntityItemStackRenderer(new RendererItemDemat());
+		TItems.key.setTileEntityItemStackRenderer(new RendererKey());
+		
+		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RendererItemTardis());
+		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
+		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
+		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
+		Item.getItemFromBlock(TBlocks.alembic).setTileEntityItemStackRenderer(new RenderItemAlembic());
+	}
+	
+	
     public static ArrayList<EntityPlayer> layerPlayers = new ArrayList<>();
 
     @SubscribeEvent

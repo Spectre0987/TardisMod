@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -11,8 +12,8 @@ public class RenderTardis extends Render<EntityTardis> {
 	
 	Minecraft mc;
 	
-	public RenderTardis() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderTardis(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 	}
 	

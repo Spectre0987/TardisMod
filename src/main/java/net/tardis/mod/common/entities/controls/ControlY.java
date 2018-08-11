@@ -5,6 +5,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlY extends EntityControl {
@@ -20,7 +21,7 @@ public class ControlY extends EntityControl {
 	
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis instanceof TileEntityTardis01) {
+		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-0.5, -2.5, -13.5);
 		}
 		return Helper.convertToPixels(-7.5, -0.5, 4.5);

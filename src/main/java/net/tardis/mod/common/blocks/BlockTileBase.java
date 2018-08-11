@@ -1,13 +1,14 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.function.Supplier;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
-import java.util.function.Supplier;
 
 public class BlockTileBase extends Block {
 

@@ -12,6 +12,7 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
@@ -88,10 +89,10 @@ public class TBlocks {
 	public static Block hellbent_vents = register(new BlockLight(), "hellbent_vents");
 	public static Block hellbent_wall = register(new BlockBase(), "hellbent_wall");
 	
-	public static Block hellbent_light = register(new BlockDecoration(TileEntityHellbentLight::new).setLightLevel(1F).setLightOpacity(0), "hellbent_light");
+	public static Block hellbent_light = register(new BlockFacingDecoration(TileEntityHellbentLight::new).setLightLevel(1F).setLightOpacity(0), "hellbent_light");
 	public static Block hellbent_monitor = register(new BlockFacingDecoration(TileEntityHellbentMonitor::new), "hellbent_monitor");
 	public static Block hellbent_pole = register(new BlockDecoration(TileEntityHellbentPole::new), "hellbent_pole");
-	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new), "hellbent_roof");
+	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new).setLightLevel(1F).setLightOpacity(0), "hellbent_roof");
 	
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");
@@ -99,6 +100,7 @@ public class TBlocks {
 	
 	//Consoles
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01");
+	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02");
 	public static Block json_tester;
 	
 	public static Block register(Block block, String name) {

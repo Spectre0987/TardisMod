@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -24,8 +25,8 @@ public class RenderDoor extends Render<ControlDoor> {
 	RenderWorldShell shellRender;
 	Minecraft mc;
 	
-	public RenderDoor() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderDoor(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 		shellRender = new RenderWorldShell();
 	}
@@ -42,6 +43,7 @@ public class RenderDoor extends Render<ControlDoor> {
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
 		TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
+		GlStateManager.rotate(Helper.getAngleFromFacing(entity.getHorizontalFacing()), 0, 1, 0);
 		EnumExterior ext = tardis != null ? (tardis.getTopBlock() != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()): EnumExterior.FIRST) : EnumExterior.FIRST;
 		if(open) {
 			try {

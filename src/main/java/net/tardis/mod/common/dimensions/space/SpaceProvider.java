@@ -9,7 +9,6 @@ import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.renderers.sky.RenderNothing;
-import net.tardis.mod.client.renderers.sky.RendererSpaceSky;
 import net.tardis.mod.common.dimensions.TDimensions;
 
 public class SpaceProvider extends WorldProvider{

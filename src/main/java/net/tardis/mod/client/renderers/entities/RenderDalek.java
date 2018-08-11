@@ -4,9 +4,9 @@ import javax.annotation.Nullable;
 
 import org.lwjgl.util.glu.Sphere;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.tardis.mod.client.models.entity.ModelDalek;
@@ -17,8 +17,8 @@ public class RenderDalek extends RenderLiving<EntityDalek> {
     private ModelDalek dalek = new ModelDalek();
     private Sphere spehere = new Sphere();
 
-    public RenderDalek() {
-        super(Minecraft.getMinecraft().getRenderManager(), new ModelDalek(), 1.0F);
+    public RenderDalek(RenderManager manager) {
+        super(manager, new ModelDalek(), 1.0F);
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelToyotaCorridor;
@@ -14,8 +15,8 @@ public class RenderCorridor extends Render<EntityCorridor> {
 	ModelToyotaCorridor model = new ModelToyotaCorridor();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/corridor_toyota.png");
 	
-	public RenderCorridor() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderCorridor(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 	}
 

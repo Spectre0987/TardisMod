@@ -60,6 +60,9 @@ public class TItems {
 	public static Item mercuryBottle;
 	public static Item crushedCinnabar;
 	
+	public static Item hellbent_corridor;
+	public static Item hellbent_door;
+	
 	// Componenets
 	
 	public static Item fluid_link;
@@ -154,6 +157,14 @@ public class TItems {
 		
 		crushedCinnabar = new ItemBase();
 		register(crushedCinnabar, "cinnabar");
+		
+		hellbent_corridor = new ItemHellbentCorridor();
+		register(hellbent_corridor, "hellbent_corridor");
+		
+		hellbent_door = new ItemHellbentDoor();
+		register(hellbent_door, "hellbent_door");
+		
+		
 		// TARDIS Components
 		fluid_link = new FluidLink();
 		register(fluid_link, "fluid_link");

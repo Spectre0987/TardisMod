@@ -5,7 +5,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.SpaceTimeCoord;
-import net.tardis.mod.util.helpers.Helper;
 
 public class ControlSTCButton extends EntityControl {
 	
@@ -25,7 +24,7 @@ public class ControlSTCButton extends EntityControl {
 	
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		return Helper.convertToPixels(-8, -2, -8).add(vec);
+		return vec;
 	}
 	
 	@Override

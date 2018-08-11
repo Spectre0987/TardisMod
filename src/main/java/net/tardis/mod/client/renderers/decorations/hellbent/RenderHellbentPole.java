@@ -24,7 +24,7 @@ public class RenderHellbentPole extends TileEntitySpecialRenderer {
 		GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
 		GlStateManager.rotate(180, 1, 0, 0);
 		mc.getTextureManager().bindTexture(TEXTURE);
-		model.render(null, 0, 0, 0, 0, 0, 0.05625F);
+		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
 

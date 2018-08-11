@@ -1,11 +1,11 @@
 package net.tardis.mod.client.overlays;
 
+import java.util.ArrayList;
+
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-
-import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class OverlayHandler {

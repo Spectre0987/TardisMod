@@ -5,6 +5,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.PlayerHelper;
 
@@ -21,7 +22,7 @@ public class ControlFuel extends EntityControl {
 	
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis.getClass() == TileEntityTardis01.class) {
+		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(13.5, -3, -2);
 		}
 		return Helper.convertToPixels(-12, -4, 10);
