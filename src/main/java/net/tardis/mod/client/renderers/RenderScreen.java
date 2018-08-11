@@ -6,15 +6,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.console.contols.ModelScreen;
 import net.tardis.mod.common.entities.controls.ControlScreen;
+import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
-public class RenderScreen extends Render {
+public class RenderScreen extends Render<EntityControl> {
 	
 	public ModelScreen model = new ModelScreen();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/screen.png");
@@ -23,14 +24,14 @@ public class RenderScreen extends Render {
 	FontRenderer fr;
 	int line = 0;
 	
-	public RenderScreen() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderScreen(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 		fr = mc.fontRenderer;
 	}
 	
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y - 2.5, z);
 		GlStateManager.scale(1.5, 1.5, 1.5);
@@ -73,7 +74,7 @@ public class RenderScreen extends Render {
 	}
 	
 	@Override
-	protected ResourceLocation getEntityTexture(Entity entity) {
+	protected ResourceLocation getEntityTexture(EntityControl entity) {
 		return TEXTURE;
 	}
 	

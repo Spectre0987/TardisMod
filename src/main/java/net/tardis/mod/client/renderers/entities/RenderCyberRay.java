@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers.entities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelRay;
@@ -14,8 +15,8 @@ public class RenderCyberRay extends Render<EntityRayCyberman> {
 	public ModelRay model = new ModelRay();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/ray.png");
 	
-	public RenderCyberRay() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderCyberRay(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 	}
 

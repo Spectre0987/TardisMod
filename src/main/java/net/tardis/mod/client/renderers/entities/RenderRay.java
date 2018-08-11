@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -20,8 +21,8 @@ public class RenderRay extends Render<EntityDalekRay> {
 	public ModelRay model = new ModelRay();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/ray.png");
 	
-	public RenderRay() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderRay(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 	}
 	

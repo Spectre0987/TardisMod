@@ -3,14 +3,16 @@ package net.tardis.mod.client.renderers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.tardis.mod.client.renderers.controls.RenderControl;
 import net.tardis.mod.common.items.TItems;
 
-public class RenderInvis extends Render {
+public class RenderInvis extends Render<Entity> {
 	
-	public RenderInvis() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderInvis(RenderManager manager) {
+		super(manager);
 	}
 	
 	@Override
@@ -20,8 +22,8 @@ public class RenderInvis extends Render {
 			Entity look = mc.objectMouseOver.entityHit;
 			if(look != null && look == entity) {
 				GlStateManager.pushMatrix();
-				this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 16);
-				GlStateManager.popMatrix();
+		          RenderControl.renderText(entity, entity.getDisplayName().getUnformattedText());
+		         GlStateManager.popMatrix();
 			}
 		}
 	}

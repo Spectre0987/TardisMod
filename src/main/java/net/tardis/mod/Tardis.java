@@ -1,5 +1,6 @@
 package net.tardis.mod;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -118,7 +119,7 @@ public class Tardis {
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 
 	
-	private static Logger logger;
+	private static Logger logger = LogManager.getLogger(NAME);
 	
 	public static CreativeTabs tab;
 	
@@ -129,15 +130,16 @@ public class Tardis {
 	public static final int ID_GUI_TEMPORAL_LAB = 0;
 	
 	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
-	
-	@Instance
-	public static Tardis instance = new Tardis();
+
+	@Instance(MODID)
+	public static Tardis instance;
 	
 	@SidedProxy(clientSide = "net.tardis.mod.proxy.ClientProxy", serverSide = "net.tardis.mod.proxy.ServerProxy")
 	public static ServerProxy proxy;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
 		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
@@ -239,8 +241,7 @@ public class Tardis {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		proxy.renderEntities();
-		
+		proxy.init();
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
 		OreDictionary.registerOre("gemRuby", TItems.ruby);
@@ -251,6 +252,7 @@ public class Tardis {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		proxy.postInit();
 		for(ItemStack cinnabar : OreDictionary.getOres("dustCinnabar")) {
 			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
 		}
