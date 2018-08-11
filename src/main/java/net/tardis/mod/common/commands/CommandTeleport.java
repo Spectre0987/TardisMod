@@ -44,7 +44,7 @@ public class CommandTeleport extends CommandBase {
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         if (sender instanceof EntityPlayer)
             return PermissionAPI.hasPermission((EntityPlayer) sender, TStrings.Permissions.TP_IN_TARDIS);
-        return true;
+        return false;
     }
 
 
