@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 
 import org.lwjgl.util.glu.Sphere;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
