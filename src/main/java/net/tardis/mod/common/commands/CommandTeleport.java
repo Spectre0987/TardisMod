@@ -3,11 +3,13 @@ package net.tardis.mod.common.commands;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.util.TardisTeleporter;
@@ -38,4 +40,12 @@ public class CommandTeleport extends CommandBase {
             sender.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
         }
     }
+
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+        if (sender instanceof EntityPlayer)
+            return PermissionAPI.hasPermission((EntityPlayer) sender, TStrings.Permissions.TP_IN_TARDIS);
+        return true;
+    }
+
+
 }

@@ -38,5 +38,9 @@ public class TStrings {
 	public static class Commands{
 		public static final String NO_TARDIS_OWNED = "command.no_tardis_owned";
 	}
+
+	public static class Permissions{
+		public static final String TP_IN_TARDIS = "tardis.command.tpintardis";
+	}
 	
 }

@@ -1,6 +1,8 @@
 package net.tardis.mod;
 
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.server.permission.DefaultPermissionLevel;
+import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.common.commands.CommandTeleport;
 import org.apache.logging.log4j.Logger;
 
@@ -249,6 +251,9 @@ public class Tardis {
 		OreDictionary.registerOre("oreRuby", TBlocks.ruby_ore);
 		OreDictionary.registerOre("dustCinnabar", TItems.crushedCinnabar);
 		OreDictionary.registerOre("oreCinnabar", TBlocks.cinnabar_ore);
+
+		//Permissions
+		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself in their TARDIS");
 	}
 	
 	@EventHandler
