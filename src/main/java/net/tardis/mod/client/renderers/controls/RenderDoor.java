@@ -43,6 +43,7 @@ public class RenderDoor extends Render<ControlDoor> {
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
 		TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
+		GlStateManager.rotate(Helper.getAngleFromFacing(entity.getHorizontalFacing()), 0, 1, 0);
 		EnumExterior ext = tardis != null ? (tardis.getTopBlock() != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()): EnumExterior.FIRST) : EnumExterior.FIRST;
 		if(open) {
 			try {

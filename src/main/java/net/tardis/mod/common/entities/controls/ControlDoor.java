@@ -37,6 +37,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -73,6 +74,10 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis.getClass() == TileEntityTardis02.class) {
+			this.setRotation(90, 0);
+			return new Vec3d(-9, -1, -3);
+		}
 		return new Vec3d(0, -1, 6);
 	}
 	

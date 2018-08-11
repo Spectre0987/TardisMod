@@ -57,6 +57,8 @@ import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
+import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
+import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolARS;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
@@ -89,6 +91,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
@@ -176,6 +179,8 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
 		EntityHelper.registerNoSpawn(EntityAirshell.class, "airshell");
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
+		EntityHelper.registerNoSpawn(EntityHellbentCorridor.class, "hellbent_corridor");
+		EntityHelper.registerNoSpawn(EntityHellbentDoor.class, "hellbent_door");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -200,6 +205,7 @@ public class Tardis {
 		
 		//Interiors
 		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");
+		registerTileEntity(TileEntityTardis02.class, "TileEntityTardis02");
 		
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 1, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 2, Side.SERVER);
