@@ -73,7 +73,7 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if(!world.canBlockSeeSky(this.getPosition().down()) && posY < 64) {
+		if(!world.canBlockSeeSky(this.getPosition().down()) && posY < 64 && world.getBlockState(getPosition().down()).getLightValue() < 2) {
 			return true;
 		}
 		return false;
