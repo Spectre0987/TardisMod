@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiTelepathicCircuts;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlTelepathicCircuts extends EntityControl{
@@ -28,7 +29,7 @@ public class ControlTelepathicCircuts extends EntityControl{
 
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis.getClass() == TileEntityTardis01.class) {
+		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(0, -2, -10);
 		}
 		return Helper.convertToPixels(10, -2,-6);

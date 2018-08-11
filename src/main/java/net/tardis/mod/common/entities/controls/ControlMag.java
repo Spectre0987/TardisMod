@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlMag extends EntityControl{
@@ -26,7 +27,7 @@ public class ControlMag extends EntityControl{
 
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis.getClass() == TileEntityTardis01.class) {
+		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-3.25, -2.5, -13.5);
 		}
 		return Helper.convertToPixels(-9, -2, 6.5);

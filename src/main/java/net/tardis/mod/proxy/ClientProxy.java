@@ -27,8 +27,11 @@ import net.tardis.mod.client.renderers.RenderItemSonicPen;
 import net.tardis.mod.client.renderers.RenderScreen;
 import net.tardis.mod.client.renderers.RenderTardis;
 import net.tardis.mod.client.renderers.consoles.RenderConsole01;
+import net.tardis.mod.client.renderers.consoles.RenderConsole02;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentCorridor;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentDoor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentLight;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentMonitor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentPole;
@@ -85,6 +88,8 @@ import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
+import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
+import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -96,6 +101,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
@@ -123,6 +129,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHelbentRoof.class, new RenderHellbentRoof());
 		//Consoles
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis02.class, new RenderConsole02());
 		
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
@@ -150,7 +157,10 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoorSwitch.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlMag.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, new RenderInvis());
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, new RenderCorridor());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentCorridor.class, new RenderHellbentCorridor());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentDoor.class, new RenderHellbentDoor());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekCasing.class, new RenderDalekCaseing());
 		

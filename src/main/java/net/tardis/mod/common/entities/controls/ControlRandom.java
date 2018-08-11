@@ -8,6 +8,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
 import scala.util.Random;
@@ -28,7 +29,7 @@ public class ControlRandom extends EntityControl {
 	
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis.getClass() == TileEntityTardis01.class) {
+		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-10, -1.5, -1.5);
 		}
 		return Helper.convertToPixels(0, -1, 9);

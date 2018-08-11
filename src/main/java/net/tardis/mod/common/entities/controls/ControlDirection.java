@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlDirection extends EntityControl {
@@ -25,7 +26,7 @@ public class ControlDirection extends EntityControl {
 	
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis instanceof TileEntityTardis01) {
+		if(tardis instanceof TileEntityTardis01 || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(3, -2.5, -13);
 		}
 		return Helper.convertToPixels(9.5, -3.5, 10);

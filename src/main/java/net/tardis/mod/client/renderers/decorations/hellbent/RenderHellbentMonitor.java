@@ -30,7 +30,7 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 		if(state.getBlock() instanceof BlockFacingDecoration) {
 			GlStateManager.rotate(Helper.getAngleFromFacing(state.getValue(BlockFacingDecoration.FACING)), 0, 1, 0);
 		}
-		GlStateManager.translate(0, 0, 1.15);
+		GlStateManager.translate(0, -Helper.precentToPixels(4), Helper.precentToPixels(5));
 		mc.getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
