@@ -9,8 +9,12 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 
@@ -22,7 +26,7 @@ public class TBlocks {
 	public static Block tardis = register(new BlockTardis(), "tardis");
 	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top");
 	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console");
-	public static Block panel = register(new BlockPanel(), "panel");
+	public static Block panel = register(new BlockBase(), "panel");
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
 	public static Block holoprojector = register(new BlockHoloprojector(), "holoprojector");
@@ -84,6 +88,11 @@ public class TBlocks {
 	public static Block hellbent_vents = register(new BlockLight(), "hellbent_vents");
 	public static Block hellbent_wall = register(new BlockBase(), "hellbent_wall");
 	
+	public static Block hellbent_light = register(new BlockDecoration(TileEntityHellbentLight::new).setLightLevel(1F).setLightOpacity(0), "hellbent_light");
+	public static Block hellbent_monitor = register(new BlockFacingDecoration(TileEntityHellbentMonitor::new), "hellbent_monitor");
+	public static Block hellbent_pole = register(new BlockDecoration(TileEntityHellbentPole::new), "hellbent_pole");
+	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new), "hellbent_roof");
+	
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");
 	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02");
@@ -103,6 +112,7 @@ public class TBlocks {
 	
 	public static void register() {
 		
+		if(Tardis.getIsDev())json_tester = register(new BlockJsonTester(), "json_test");
 		/*tardis = new BlockTardis();
 		register(tardis, "tardis");
 

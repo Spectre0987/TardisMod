@@ -62,6 +62,7 @@ import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindRift;
+import net.tardis.mod.common.protocols.ProtocolLight;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
@@ -78,6 +79,7 @@ import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
+import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityLight;
@@ -86,6 +88,9 @@ import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.world.TardisLoadingCallback;
@@ -180,6 +185,10 @@ public class Tardis {
 		registerTileEntity(TileEntityHoloprojector.class, "TileEntityHoloprojector");
 		registerTileEntity(TileEntityTardisCoral.class, "TileEntityTardisCoral");
 		registerTileEntity(TileEntityLight.class, "TileEntityLight");
+		registerTileEntity(TileEntityHellbentLight.class, "TileEntityHellbentLight");
+		registerTileEntity(TileEntityHellbentMonitor.class, "TileEntityHellbentMonitor");
+		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
+		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
 		
 		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
 		
@@ -210,6 +219,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolFindRift());
 		TardisProtocol.register(new ProtocolConsole());
 		TardisProtocol.register(new ProtocolARS());
+		TardisProtocol.register(new ProtocolLight());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.

@@ -864,8 +864,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public List<TileEntity> getTilesInTardis(){
 		List<TileEntity> tes = new ArrayList<TileEntity>();
 		ChunkPos pos = this.world.getChunkFromBlockCoords(this.getLocation()).getPos();
-		for(int x = -7; x < 7; ++x) {
-			for(int z = -7; z < 7; ++z) {
+		for(int x = -8; x < 8; ++x) {
+			for(int z = -8; z < 8; ++z) {
 				tes.addAll(world.getChunkFromChunkCoords(pos.x + x, pos.z + z).getTileEntityMap().values());
 			}
 		}
