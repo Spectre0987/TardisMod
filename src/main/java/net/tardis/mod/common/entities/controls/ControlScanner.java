@@ -24,7 +24,7 @@ public class ControlScanner extends EntityControl {
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
 		return Helper.convertToPixels(23, 16, 0);
 	}
 	

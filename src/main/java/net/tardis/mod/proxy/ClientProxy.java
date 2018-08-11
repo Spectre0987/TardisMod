@@ -26,18 +26,22 @@ import net.tardis.mod.client.renderers.RenderItemFoodMachine;
 import net.tardis.mod.client.renderers.RenderItemSonicPen;
 import net.tardis.mod.client.renderers.RenderScreen;
 import net.tardis.mod.client.renderers.RenderTardis;
+import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
-import net.tardis.mod.client.renderers.controls.RenderLever;
-import net.tardis.mod.client.renderers.controls.RenderRandom;
-import net.tardis.mod.client.renderers.controls.RenderZ;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentLight;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentMonitor;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentPole;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentRoof;
 import net.tardis.mod.client.renderers.entities.RenderCyberRay;
 import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
 import net.tardis.mod.client.renderers.entities.RenderCybermanTomb;
 import net.tardis.mod.client.renderers.entities.RenderDalek;
+import net.tardis.mod.client.renderers.entities.RenderDalekCaseing;
 import net.tardis.mod.client.renderers.entities.RenderRay;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
+import net.tardis.mod.client.renderers.items.RenderItemAlembic;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
 import net.tardis.mod.client.renderers.items.RenderItemTardis02;
 import net.tardis.mod.client.renderers.items.RenderItemTardis03;
@@ -46,6 +50,7 @@ import net.tardis.mod.client.renderers.items.RendererItemDemat;
 import net.tardis.mod.client.renderers.items.RendererItemTardis;
 import net.tardis.mod.client.renderers.items.RendererKey;
 import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
+import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderFoodMachine;
 import net.tardis.mod.client.renderers.tiles.RenderJsonHelper;
 import net.tardis.mod.client.renderers.tiles.RenderTemporalLab;
@@ -57,6 +62,7 @@ import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityRayCyberman;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -80,13 +86,19 @@ import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
+import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.config.TardisConfig;
@@ -103,6 +115,15 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoodMachine.class, new RenderFoodMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTemporalLab.class, new RenderTemporalLab());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHoloprojector.class, new RenderTileHolo());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAlembic.class, new RenderAlembic());
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHellbentLight.class, new RenderHellbentLight());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHellbentMonitor.class, new RenderHellbentMonitor());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHellbentPole.class, new RenderHellbentPole());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHelbentRoof.class, new RenderHellbentRoof());
+		//Consoles
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());
+		
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor03.class, new RenderTileDoor03());
@@ -114,11 +135,11 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, new RenderDoor());
 		RenderingRegistry.registerEntityRenderingHandler(ControlX.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlY.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, new RenderZ());
-		RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, new RenderLever());
+		RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, new RenderInvis());
+		RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlDimChange.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlFlight.class, new RenderInvis());
-		RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, new RenderRandom());
+		RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, new RenderInvis());
@@ -130,6 +151,8 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlMag.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, new RenderInvis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, new RenderCorridor());
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityDalekCasing.class, new RenderDalekCaseing());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, new RenderTardis());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekRay.class, new RenderRay());
@@ -152,6 +175,7 @@ public class ClientProxy extends ServerProxy {
 		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
 		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
+		Item.getItemFromBlock(TBlocks.alembic).setTileEntityItemStackRenderer(new RenderItemAlembic());
 	}
 
 	@Override

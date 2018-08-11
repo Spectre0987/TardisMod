@@ -1,9 +1,10 @@
 package net.tardis.mod.common.entities;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
+import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -84,7 +86,7 @@ public class EntityTardis extends EntityFlying {
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		this.renderRotation += 4;
+		if(world.getBlockState(this.getPosition().down()).getMaterial() == Material.AIR) this.renderRotation += 4;
 		if (this.renderRotation > 360) this.renderRotation = 0;
 		if (!world.isRemote) {
 			Entity e = this.getControllingPassenger();
@@ -170,6 +172,15 @@ public class EntityTardis extends EntityFlying {
 	
 	public double getSpeed() {
 		return (Math.abs(motionX) + Math.abs(motionY) + Math.abs(motionZ)) / 3;
+	}
+
+	public String getExterior() {
+		for(EnumExterior e : EnumExterior.values()) {
+			if(e.block == Block.getStateById(this.getState()).getBlock()) {
+				return e.name();
+			}
+		}
+		return EnumExterior.FIRST.name();
 	}
 
 	

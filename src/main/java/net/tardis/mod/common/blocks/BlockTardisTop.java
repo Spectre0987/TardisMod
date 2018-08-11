@@ -1,5 +1,7 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.function.Supplier;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -10,7 +12,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -22,11 +28,12 @@ import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.EntityControl;
+import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.systems.SystemDimension;
+import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-
-import java.util.function.Supplier;
 
 public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 	
@@ -55,6 +62,20 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 				EntityControl control = ((TileEntityTardis) te).getControl(ControlDoor.class);
 				if (control != null) {
 					((ControlDoor) control).setOpen(!door.isLocked());
+				}
+			
+				ItemStack held = playerIn.getHeldItem(hand);
+				SystemDimension dim = null;
+				if(held.getItem() == TItems.time_vector_generator) {
+					for(ISystem s : ((TileEntityTardis)te).systems) {
+						if(s.getClass() == SystemDimension.class) {
+							dim = (SystemDimension)s;
+						}
+					}
+				}
+				if(dim != null) {
+					dim.repair();
+					held.shrink(1);
 				}
 			}
 		}

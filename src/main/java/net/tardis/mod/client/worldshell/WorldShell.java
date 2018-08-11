@@ -121,9 +121,11 @@ public class WorldShell implements IBlockAccess {
 		for (BlockStorage bs : blockMap.values()) {
 			if (bs.tileentity != null) {
 				TileEntity te = TileEntity.create(Minecraft.getMinecraft().world, bs.tileentity);
-                TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers.get(te.getClass());
-				if (renderer != null)
-					tesrs.add(te);
+                if(te != null) {
+                	TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers.get(te.getClass());
+    				if (renderer != null)
+    					tesrs.add(te);
+                }
 			}
 		}
 	}

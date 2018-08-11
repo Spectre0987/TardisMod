@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 
 public class ModelDalek extends ModelBase {
-    ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/dalek.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/dalek.png");
     //fields
     ModelRenderer Dalek01;
     ModelRenderer Dalek02;

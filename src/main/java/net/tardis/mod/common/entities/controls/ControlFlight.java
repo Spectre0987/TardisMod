@@ -12,6 +12,7 @@ import net.minecraftforge.common.ForgeChunkManager;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -23,11 +24,14 @@ public class ControlFlight extends EntityControl {
 	
 	public ControlFlight(World world) {
 		super(world);
-		this.setSize(0.25F, 0.125F);
+		this.setSize(0.125F, 0.125F);
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis.getClass() == TileEntityTardis01.class) {
+			return Helper.convertToPixels(10, -2, 6);
+		}
 		return Helper.convertToPixels(-4, -3, 12);
 	}
 	

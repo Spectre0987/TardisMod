@@ -68,9 +68,5 @@ public class ItemKey extends Item {
 	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
 	}
-
-	@Override
-	public String getItemStackDisplayName(ItemStack stack) {
-		return new TextComponentTranslation("item.tardis_key.name").getFormattedText();
-	}
+	
 }

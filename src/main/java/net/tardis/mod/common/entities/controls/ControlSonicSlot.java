@@ -22,7 +22,7 @@ public class ControlSonicSlot extends EntityControl {
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
 		return Helper.convertToPixels(0, 0, 0);
 	}
 	

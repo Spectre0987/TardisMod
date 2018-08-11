@@ -1,10 +1,7 @@
 package net.tardis.mod.common.entities;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackRanged;
@@ -18,7 +15,6 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityCybermanInvasion extends EntityCyberman implements IRangedAttackMob
@@ -32,7 +28,7 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
 
     protected void initEntityAI()
     {
-        this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 100, 30F));
+        this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 200, 30F));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
@@ -67,7 +63,6 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
     @Override
     public void onUpdate() {
         super.onUpdate();
-
     }
 
     @Override
@@ -76,11 +71,13 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
         return true;
     }
 
-    @Nullable
-    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
-    {
-        return super.onInitialSpawn(difficulty, livingdata);
-    }
+	@Override
+	public boolean getCanSpawnHere() {
+		if(!world.canBlockSeeSky(this.getPosition().down()) && posY < 64 && world.getBlockState(getPosition().down()).getLightValue() < 2) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {

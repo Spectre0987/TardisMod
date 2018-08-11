@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlY extends EntityControl {
@@ -18,7 +19,10 @@ public class ControlY extends EntityControl {
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis instanceof TileEntityTardis01) {
+			return Helper.convertToPixels(-0.5, -2.5, -13.5);
+		}
 		return Helper.convertToPixels(-7.5, -0.5, 4.5);
 	}
 	
@@ -26,7 +30,7 @@ public class ControlY extends EntityControl {
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
 			TileEntityTardis tardis = ((TileEntityTardis) world.getTileEntity(this.getConsolePos()));
-			tardis.setDesination(tardis.getDestination().add(0, player.isSneaking() ? -tardis.magnitude : tardis.magnitude, 0), tardis.getTargetDim());
+			tardis.setDesination(tardis.getDestination().add(0, player.isSneaking() ? -tardis.magnitude : tardis.magnitude + 1, 0), tardis.getTargetDim());
 		} else if (this.ticks <= 0) {
 			ticks = 20;
 			direction = player.isSneaking() ? -1 : 1;

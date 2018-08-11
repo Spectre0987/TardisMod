@@ -52,7 +52,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		super(tardis);
 		this.setSize(1F, 2F);
 	}
-	
+
 	public ControlDoor(World world) {
 		super(world);
 		this.setSize(1F, 2F);
@@ -72,7 +72,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
 		return new Vec3d(0, -1, 6);
 	}
 	
@@ -135,8 +135,8 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		if (antiSpamTicks > 0) --antiSpamTicks;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 		if(!world.isRemote && this.isOpen()) {
-			AxisAlignedBB bb = this.getEntityBoundingBox();
-			WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+			AxisAlignedBB bb = new AxisAlignedBB(0, 0, 0.9, 1, 2, 1).offset(this.getPosition());
+			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
 				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
 				EnumFacing facing = ws.getBlockState(tardis.getLocation().up()).getValue(BlockTardisTop.FACING);
@@ -157,7 +157,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 					}
 				}
 			}
-			if(/*this.ticksExisted % 5 == 0*/true) {
+			if(this.ticksExisted % 5 == 0) {
 				this.shell = new WorldShell(tardis.getLocation().up().offset(this.getFacing(), 11));
 				Vec3i r = new Vec3i(10, 10, 10);
 				IBlockState doorState = ws.getBlockState(tardis.getLocation().up());
@@ -196,10 +196,10 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				
 				for(Entity entity : world.getEntitiesWithinAABB(Entity.class, voidBB)) {
 					if(!entity.isDead) {
-						Vec3d dir = entity.getPositionVector().subtract(this.getPositionVector()).normalize().scale(-1).scale(0.25);
-						entity.motionX = dir.x;
-						entity.motionY = dir.y;
-						entity.motionZ = dir.z;
+						Vec3d dir = entity.getPositionVector().subtract(this.getPositionVector()).normalize().scale(-1).scale(0.12);
+						entity.motionX += dir.x;
+						entity.motionY += dir.y;
+						entity.motionZ += dir.z;
 					}
 				}
 			}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ICI",
+    "IBI",
+    "IAI"
+  ],
+  "key": {
+    "I":{
+        "item":"minecraft:iron_ingot"
+    },
+    "C":{
+        "item":"minecraft:compass"
+    },
+    "B":{
+        "item":"tardis:circuts"
+    },
+    "A":{
+        "item":"tardis:artron_capacitor"
+    }
+  },
+  "result": {
+    "item": "tardis:stattenheim_remote"
+  }
+}

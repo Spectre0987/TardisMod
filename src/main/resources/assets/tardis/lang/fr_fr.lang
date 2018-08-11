@@ -1,56 +1,76 @@
 itemGroup.tardis=TARDIS Mod
 
-item.key.name=Clé du TARDIS
-item.pos_setter.name=Enregistreur de coordonnées
-item.circuts.name=Circuit Exotronic
-item.sonic_screwdriver.name=Tournevis sonique
-item.gunstick.name=Canon Dalek
-item.power_cell.name=Cellule de puissance trionique
-item.ray_gun.name=Rayon laser Dalek
-item.void_specs.name=Lunettes du Vide
-item.fob_watch.name=Montre à gousset Gallifreyenne
-item.fez.name=Fez
-item.bowtie.name=Noeud papillon
-item.umbrella_open.name=Parapluie sonique
-item.umbrella_closed.name=Parapluie sonique
-item.sonic_blaster.name=Dynamiteur sonique
-item.sonic_cane.name=Canne sonique
-item.vortex_manip.name=Manipulateur de Vortex
-item.fluid_link.name=Branchement de liquide
-item.demat_circut.name=Circuit de dématérialisation
-item.artron_capacitor.name=Batterie d'Artron
-item.sonic_pen.name=Stylo torche sonique
-item.tardis_manual.name=Manuel de TARDIS
-item.space_helm.name=Casque de combinaison spatiale
-item.space_chest.name=Plastron de combinaison spatiale
-item.space_legs.name=Jambières de combinaison spatiale
-item.first_cane.name=Canne du Premier Docteur
-item.fourth_hat.name=Chapeau du Quatrième Docteur
+item.tardis:tardis_key.name=Clé du TARDIS
+item.tardis:pos_setter.name=Enregistreur de coordonnées
+item.tardis:circuts.name=Circuit Exotronic
+item.tardis:sonic_screwdriver.name=Tournevis sonique
+item.tardis:gunstick.name=Canon Dalek
+item.tardis:power_cell.name=Cellule de puissance trionique
+item.tardis:ray_gun.name=Rayon laser Dalek
+item.tardis:void_specs.name=Lunettes du Vide
+item.tardis:fob_watch.name=Montre à gousset Gallifreyenne
+item.tardis:fez.name=Fez
+item.tardis:bowtie.name=Noeud papillon
+item.tardis:umbrella_open.name=Parapluie sonique
+item.tardis:umbrella_closed.name=Parapluie sonique
+item.tardis:sonic_blaster.name=Dynamiteur sonique
+item.tardis:sonic_cane.name=Canne sonique
+item.tardis:vortex_manip.name=Manipulateur de Vortex
+item.tardis:fluid_link.name=Branchement de liquide
+item.tardis:demat_circut.name=Circuit de dématérialisation
+item.tardis:artron_capacitor.name=Batterie d'Artron
+item.tardis:sonic_pen.name=Stylo torche sonique
+item.tardis:tardis_manual.name=Manuel de TARDIS
+item.tardis:space_helm.name=Casque de combinaison spatiale
+item.tardis:space_chest.name=Plastron de combinaison spatiale
+item.tardis:space_legs.name=Jambières de combinaison spatiale
+item.tardis:first_cane.name=Canne du Premier Docteur
+item.tardis:fourth_hat.name=Chapeau du Quatrième Docteur
+item.tardis:symbiotic_nuclei.name=Noyau Symbiotique
+item.tardis:stattenheim_remote.name=Télécommande Stattenheim
+item.tardis:ruby.name=Rubis
+item.tardis:thirteen_coat.name=Veste du Treizième Docteur
+item.tardis:sonic_shades.name=Lunettes soniques
+item.tardis:time_vector_generator.name=Générateur de vecteurs temporels
+item.tardis:biodampener.name=Bio-Amortisseur
+item.tardis:mercury_bottle.name=Fiole de Mercure
+item.tardis:cinnabar.name=Poussière de Cinabre
 
-tile.tardis.name=TARDIS
-tile.time_rotor.name=Console
-tile.panel.name=Rondelle
-tile.door.name=Porte du TARDIS
-tile.tardis_top.name=TARDIS
-tile.light.name=Lampe
-tile.homing_beacon.name=Balise d'arrivée
-tile.chronodine_generator.name=Générateur de Chronodine
-tile.grate.name=Grille
-tile.temporal_lab.name=Laboratoire temporel
-tile.umbrella_stand.name=Support de parapluie
-tile.alembic.name=Alembic
-tile.food_machine.name=Machine à nourriture
-tile.electric_panel.name=Tableau électrique
-tile.megalos.name=Meglos
-tile.console.name=Console
-tile.toyota_hexagon_1.name=Bloc Toyota
+tooltip.remote=Télécommande reliée au TARDIS à :
+tooltip.remote.time=Le TARDIS arrive dans 
+tooltip.remote.fuel=Batterie Artron 
+tooltip.remote.exteriorpos=Extérieur du TARDIS:
+
+general.time.seconds=seconde
+
+tile.tardis:tardis.name=TARDIS
+tile.tardis:time_rotor.name=Console
+tile.tardis:panel.name=Rondelle
+tile.tardis:door.name=Porte du TARDIS
+tile.tardis:tardis_top.name=TARDIS
+tile.tardis:light.name=Lampe
+tile.tardis:homing_beacon.name=Balise d'arrivée
+tile.tardis:chronodine_generator.name=Générateur de Chronodine
+tile.tardis:grate.name=Grille
+tile.tardis:temporal_lab.name=Laboratoire temporel
+tile.tardis:umbrella_stand.name=Support de parapluie
+tile.tardis:alembic.name=Alembic
+tile.tardis:food_machine.name=Machine à nourriture
+tile.tardis:electric_panel.name=Tableau électrique
+tile.tardis:megalos.name=Meglos
+tile.tardis:console.name=Console
+tile.tardis:toyota_hexagon_1.name=Bloc Toyota
+tile.tardis:ruby_ore.name=Minerais de Rubis
+tile.tardis:holoprojector.name=Projecteur holographique
+tile.tardis:tardis_coral.name=Corail de TARDIS
+tile.tardis:cinnabar_ore.name=Minerais de Cinabre
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
 
 death.attack.dalek=Tué par un rayon laser Dalek
 death.cyberman.ray=a été supprimé.
-
+    
 damage.dalek=a été exterminé
 
 screw.recall=Mode de rappel
@@ -85,6 +105,14 @@ tardis.hads.enabled.false=H.A.D.S a été désactivé
 
 protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S
+protocol.tardis.find_rift=Trouver la faille la plus proche
+protocol.tardis.systemreadout=Relevé du sous-système
+protocol.tardis.change.console=Changer de Console
+protocol.tardis.ars=Système de Reconfiguration Architecturale
+
+systems.tardis.flight=Système de vol
+systems.protocol.dimensions=Systèmes dimensionnel
+system.tardis.fluidlinks=Liens pour liquide
 
 tardis.dimension=Dimension Nav-com est:
 
@@ -124,11 +152,12 @@ entity.tardis_fast_return.name=Retour rapide
 entity.telepathic_circuts.name=Circuits télépathiques
 entity.tardis_door_control.name=Interrupteur de porte
 entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
+entity.tardis_phone.name=Communicateur
+
 entity.dalek.name=Dalek
 
 
 entity.invasion_cyberman.name=Invasion de Cyberman
-
 
 death.cyberman.generic=a été converti
 

@@ -89,7 +89,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	public void onUpdate() {
 		super.onUpdate();
 		if(this.getAttackTarget() != null) {
-			if (this.getAttackTarget().posY > this.posY + 2 || this.isInWater() || isAirBorne) {
+			if (this.getAttackTarget().posY >= this.posY + 1 || this.isInWater() || isAirBorne) {
 				this.setNoGravity(true);
 				this.motionY = 0.02;
 			}

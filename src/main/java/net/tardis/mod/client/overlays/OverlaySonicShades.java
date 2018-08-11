@@ -1,20 +1,28 @@
 package net.tardis.mod.client.overlays;
 
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
-
-import java.awt.*;
+import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.RiftHelper;
 
 public class OverlaySonicShades implements IOverlay {
 
@@ -50,24 +58,25 @@ public class OverlaySonicShades implements IOverlay {
 
     @Override
     public void pre(RenderGameOverlayEvent.Pre e, float partialTicks, ScaledResolution resolution) {
-        if (Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonic_shades) {
+        if (Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != TItems.sonic_shades)
+            return;
             e.setCanceled(e.getType() == RenderGameOverlayEvent.ElementType.FOOD || e.getType() == RenderGameOverlayEvent.ElementType.HEALTH);
-        }
     }
 
     @Override
     public void post(RenderGameOverlayEvent.Post e, float partialTicks, ScaledResolution resolution) {
 
+    	if(mc.currentScreen != null)return;
         if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.sonic_shades) {
-
-            Entity mouseOver = Minecraft.getMinecraft().objectMouseOver.entityHit;
+        if (Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != TItems.sonic_shades)
+            return;
 
             GlStateManager.pushMatrix();
 
             //Head
             GlStateManager.pushMatrix();
-            GlStateManager.translate(mc.displayWidth / 2 - 370, mc.displayHeight / 2 - 190, 50.0F);
-            GlStateManager.scale(30, 30, 30);
+            GlStateManager.translate(resolution.getScaledWidth() / 2 - 175, 30, 50.0F);
+            GlStateManager.scale(25, 25, 25);
             mc.getTextureManager().bindTexture(mc.player.getLocationSkin());
             GlStateManager.enableColorMaterial();
             RenderHelper.enableStandardItemLighting();
@@ -85,21 +94,45 @@ public class OverlaySonicShades implements IOverlay {
             GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 
             //Entity and info
-            if (mc.player != null && mouseOver != null) {
-                GlStateManager.pushMatrix();
-                drawEntityOnScreen(mc.displayWidth / 2 - 110, mc.displayHeight / 2 - 80, 50, mouseOver);
-                GlStateManager.popMatrix();
-
-                mc.fontRenderer.drawStringWithShadow("Name: " + mouseOver.getName(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 70, Color.GREEN.getRGB());
-                mc.fontRenderer.drawStringWithShadow("Distance: " + Math.round(mouseOver.getDistance(mc.player)) + " blocks", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 60, Color.GREEN.getRGB());
-                mc.fontRenderer.drawStringWithShadow("Age: " + mouseOver.ticksExisted + " ticks", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 50, Color.GREEN.getRGB());
-                mc.fontRenderer.drawStringWithShadow("Position: " + mouseOver.getPosition().getX() + " || " + mouseOver.getPosition().getY() + " || " + mouseOver.getPosition().getZ(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 40, Color.GREEN.getRGB());
+            if(Minecraft.getMinecraft().objectMouseOver != null) {
+            	Entity mouseOver = Minecraft.getMinecraft().objectMouseOver.entityHit;
+	            if (mc.player != null && mouseOver != null) {
+	                GlStateManager.pushMatrix();
+	                drawEntityOnScreen(resolution.getScaledWidth() / 2 - 110, resolution.getScaledHeight() / 2 - 80, 50, mouseOver);
+	                GlStateManager.popMatrix();
+	
+	                mc.fontRenderer.drawStringWithShadow("Name: " + mouseOver.getName(), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 70, Color.GREEN.getRGB());
+	                mc.fontRenderer.drawStringWithShadow("Distance: " + Math.round(mouseOver.getDistance(mc.player)) + " blocks", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 60, Color.GREEN.getRGB());
+	                mc.fontRenderer.drawStringWithShadow("Age: " + mouseOver.ticksExisted / 20 + " seconds", resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 50, Color.GREEN.getRGB());
+	                mc.fontRenderer.drawStringWithShadow("Position: " + Helper.formatBlockPos(mouseOver.getPosition()), resolution.getScaledWidth() - 160, resolution.getScaledHeight() - 40, Color.GREEN.getRGB());
+	            }
             }
 
+            //Compass
+            EnumFacing face = mc.player.getHorizontalFacing();
+            String direction = face == EnumFacing.NORTH ? "N" : (face == EnumFacing.EAST ? "E" : (face == EnumFacing.WEST ? "W" : "S"));
+            mc.fontRenderer.drawStringWithShadow(direction, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(direction) / 2, mc.fontRenderer.FONT_HEIGHT / 2, Color.GREEN.getRGB());
             GlStateManager.popMatrix();
-
+            
+            //Health
+            GlStateManager.pushMatrix();
+            BufferBuilder bb = Tessellator.getInstance().getBuffer();
+            bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+            mc.getTextureManager().bindTexture(new ResourceLocation(Tardis.MODID, "textures/gui/sonic_shades.png"));
+            float maxU = 0.2536F;
+            float width = (resolution.getScaledWidth() / 2) * (mc.player.getHealth() / mc.player.getMaxHealth());
+            float height = resolution.getScaledHeight() / 4;
+            bb.pos(0, 0, 0).tex(0, 0).endVertex();
+            bb.pos(0, height, 0).tex(0, 1).endVertex();
+            bb.pos(width, height, 0).tex(1, 1).endVertex();
+            bb.pos(width, 0, 0).tex(1, 0).endVertex();
+            Tessellator.getInstance().draw();
+            GlStateManager.popMatrix();
+            //Rift?
+           if(RiftHelper.isRift(mc.world.getChunkFromBlockCoords(mc.player.getPosition()).getPos(), mc.world)) {
+        	   String riftString = "Rift Detected!";
+               mc.fontRenderer.drawStringWithShadow(riftString, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(riftString) / 2, resolution.getScaledHeight() - mc.fontRenderer.FONT_HEIGHT * 5, Color.GREEN.getRGB());
+           }
         }
-    }
-
-
+	}
 }

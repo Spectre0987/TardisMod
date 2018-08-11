@@ -18,7 +18,7 @@ public class MessageProtocol implements IMessage {
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		consolePos = BlockPos.fromLong(buf.readLong());
+		consolePos = BlockPos.fromLong(buf.readLong()).toImmutable();
 		id = buf.readInt();
 	}
 	

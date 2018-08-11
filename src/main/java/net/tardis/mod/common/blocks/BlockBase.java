@@ -18,7 +18,7 @@ public class BlockBase extends Block {
 		super(Material.IRON);
 		this.setHardness(1F);
 		this.setResistance(99999F);
-		this.item.setCreativeTab(Tardis.tab);
+		this.setCreativeTab(Tardis.tab);
 	}
 	
 	@Override

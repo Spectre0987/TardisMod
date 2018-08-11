@@ -19,14 +19,13 @@ public abstract class EntityControl extends Entity implements IControl {
 	public static final DataParameter<Boolean> IS_GLOWING = EntityDataManager.createKey(EntityControl.class, DataSerializers.BOOLEAN);
 	public int ticks = 0;
 	public int direction = 1;
-	
+
 	public EntityControl(World worldIn) {
 		super(worldIn);
-		this.setSize(0.5F, 0.5F);
 	}
 	
 	public EntityControl(TileEntityTardis tardis) {
-		this(tardis.getWorld());
+		super(tardis.getWorld());
 		this.dataManager.set(CONSOLE_POS, tardis.getPos().toImmutable());
 	}
 	
@@ -84,7 +83,7 @@ public abstract class EntityControl extends Entity implements IControl {
 	}
 	
 	@Override
-	public abstract Vec3d getOffset();
+	public abstract Vec3d getOffset(TileEntityTardis tardis);
 	
 	@Override
 	public boolean isGlowing() {
@@ -138,5 +137,8 @@ public abstract class EntityControl extends Entity implements IControl {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		return false;
 	}
-	
+	@Override
+	protected void setSize(float width, float height) {
+		super.setSize(width, height);
+	}
 }

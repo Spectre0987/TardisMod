@@ -20,17 +20,14 @@ import net.tardis.mod.proxy.ClientProxy;
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 	
-	Minecraft mc;
 	
 	public RenderHelper() {
-		mc = Minecraft.getMinecraft();
 	}
 	
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size) {
 		if(ClientProxy.getRenderBOTI()) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 			GlStateManager.pushMatrix();
-			Minecraft mc = Minecraft.getMinecraft();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
 			GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
@@ -50,9 +47,9 @@ public class RenderHelper {
 				GlStateManager.pushMatrix();
 				GlStateManager.rotate(180,0,1,0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
-				mc.entityRenderer.disableLightmap();
+				Minecraft.getMinecraft().entityRenderer.disableLightmap();
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
-				mc.entityRenderer.enableLightmap();
+				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
 			}
 			catch(Exception e) {}

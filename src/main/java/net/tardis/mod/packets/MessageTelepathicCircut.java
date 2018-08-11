@@ -1,7 +1,11 @@
 package net.tardis.mod.packets;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -13,11 +17,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class MessageTelepathicCircut implements IMessage {
 
@@ -54,12 +56,12 @@ public class MessageTelepathicCircut implements IMessage {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 MinecraftServer server = ctx.getServerHandler().player.getServer();
                 WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
-                EntityPlayer player = server.getPlayerList().getPlayerByUsername(message.name);
+                EntityPlayer player = server.getPlayerList().getPlayerByUsername(message.name.trim().toLowerCase());
                 TileEntity te = ws.getTileEntity(message.pos);
                 if(te != null && te instanceof TileEntityTardis) {
                     TileEntityTardis tardis = (TileEntityTardis)ws.getTileEntity(message.pos);
                     WorldServer locationWorld = DimensionManager.getWorld(tardis.dimension);
-                    if(player != null) {
+                    if(player != null && !player.inventory.hasItemStack(new ItemStack(TItems.biodampener))) {
                         tardis.setDesination(player.getPosition(), player.dimension);
                         tardis.startFlight();
                     }

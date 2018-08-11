@@ -33,6 +33,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -49,14 +50,17 @@ import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.data.TimeLord;
+import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
+import net.tardis.mod.common.recipes.RecipeCinnabar;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.RiftHelper;
 
 @Mod.EventBusSubscriber
 public class TEventHandler {
@@ -76,10 +80,10 @@ public class TEventHandler {
 				for (int i = 0; i < list.size(); i++) {
 					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "type=" + i));
 				}
-			} else
+			}
+			else
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
-
 	}
 	
 	@SubscribeEvent
@@ -110,23 +114,40 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 		event.getRegistry().register(new RecipeKey(Tardis.MODID + ":spare_key"));
+		event.getRegistry().register(new RecipeCinnabar(Tardis.MODID + ":cinnabar"));
 	}
 	
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public static void stopRender(RenderPlayerEvent.Pre event) {
-		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
+		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityTardis || event.getEntityPlayer().getRidingEntity() instanceof EntityDalekCasing) {
 			Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 			event.setCanceled(true);
 		}
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void stopHurt(LivingHurtEvent event) {
 		if (event.getEntityLiving().getRidingEntity() != null) {
 			Entity e = event.getEntityLiving().getRidingEntity();
-			event.setCanceled(e instanceof EntityTardis);
+			event.setCanceled(e instanceof EntityTardis || e instanceof EntityDalekCasing);
+			if(e instanceof EntityDalekCasing) {
+				((EntityDalekCasing)e).attackEntityFrom(event.getSource(), event.getAmount());
+			}
+		}
+		if(event.getSource().equals(Tardis.SUFFICATION)) {
+			if(event.getEntityLiving() instanceof EntityPlayer) {
+				int count = 0;
+				for(ItemStack stack : ((EntityPlayer)event.getEntityLiving()).getArmorInventoryList()) {
+					if(stack.getItem() instanceof ItemSpaceSuit) {
+						++count;
+					}
+				}
+				if(count >= 3) {
+					event.setCanceled(true);
+				}
+			}
 		}
 	}
 	
@@ -247,5 +268,15 @@ public class TEventHandler {
 				player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Changelog: " + TextFormatting.AQUA + changes));
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public static void saveChunkData(ChunkDataEvent.Save event) {
+		RiftHelper.writeRiftStatus(event.getChunk(), event.getWorld(), event.getData());
+	}
+	
+	@SubscribeEvent
+	public static void loadChunkData(ChunkDataEvent.Load event) {
+		RiftHelper.readRiftStatus(event.getChunk(), event.getWorld(), event.getData());
 	}
 }

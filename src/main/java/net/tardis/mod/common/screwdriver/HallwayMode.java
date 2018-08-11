@@ -2,13 +2,10 @@ package net.tardis.mod.common.screwdriver;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.play.server.SPacketChunkData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
@@ -36,13 +33,7 @@ public class HallwayMode implements IScrewable {
 					EnumFacing facing = player.getHorizontalFacing();
 					Rotation rot = this.getRotationFromFacing(facing);
 					PlacementSettings sett = new PlacementSettings().setRotation(this.getRotationFromFacing(facing));
-					temp.addBlocksToWorld(ws, pos.add(this.getOffsetFromFacing(facing)), sett, 2);
-					ChunkPos cPos = world.getChunkFromBlockCoords(pos).getPos();
-					for (int x = -1; x < 3; ++x) {
-						for (int z = -1; z < 3; ++z) {
-							((EntityPlayerMP) player).connection.sendPacket(new SPacketChunkData(world.getChunkFromChunkCoords(cPos.x + x, cPos.z + z), 65535));
-						}
-					}
+					temp.addBlocksToWorld(ws, pos.add(this.getOffsetFromFacing(facing)), sett);
 				}
 			}
 		}

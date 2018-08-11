@@ -6,6 +6,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlLandType extends EntityControl {
@@ -20,7 +21,10 @@ public class ControlLandType extends EntityControl {
 	}
 	
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis.getClass() == TileEntityTardis01.class) {
+			return Helper.convertToPixels(13.5, -2.5, 4);
+		}
 		return Helper.convertToPixels(11.5, -2, 4);
 	}
 	
@@ -28,7 +32,7 @@ public class ControlLandType extends EntityControl {
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
-			tardis.setShouldLandOnSurface(tardis.landOnSurface ? false : true);
+			tardis.setShouldLandOnSurface(!tardis.landOnSurface);
 			player.sendStatusMessage(new TextComponentTranslation(TStrings.LAND_ON_GROUND + tardis.landOnSurface), true);
 		}
 	}

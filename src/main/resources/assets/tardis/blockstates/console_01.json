@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults":{
+        "model":"tardis:console_01"
+    },
+    "variants":{
+        "inventory":[{}],
+        "normal":[{}]
+    }
+}

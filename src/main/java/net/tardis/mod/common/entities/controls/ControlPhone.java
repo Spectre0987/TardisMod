@@ -14,6 +14,8 @@ import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ControlPhone extends EntityControl{
@@ -28,7 +30,10 @@ public class ControlPhone extends EntityControl{
 	}
 
 	@Override
-	public Vec3d getOffset() {
+	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis.getClass() == TileEntityTardis01.class) {
+			return Helper.convertToPixels(0, -2, 8);
+		}
 		return Helper.convertToPixels(0,-1,-8);
 	}
 
@@ -45,16 +50,18 @@ public class ControlPhone extends EntityControl{
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
-		if(tardis != null) {
-			if(tardis.currentEvent != EnumEvent.NONE) {
-				if(world.getTotalWorldTime() % 80 == 0) {
-					world.playSound(null, this.getPosition(), TSounds.phone, SoundCategory.BLOCKS, 1F, 1F);
+		if(!world.isRemote && TardisConfig.MISC.invasions) {
+			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
+			if(tardis != null) {
+				if(tardis.currentEvent != EnumEvent.NONE) {
+					if(world.getTotalWorldTime() % 80 == 0) {
+						world.playSound(null, this.getPosition(), TSounds.phone, SoundCategory.BLOCKS, 1F, 1F);
+					}
 				}
-			}
-			else if(world.getTotalWorldTime() % 24000 == 0) {
-				if(rand.nextInt(4) == 0) {
-					tardis.currentEvent = EnumEvent.DALEK;
+				else if(world.getTotalWorldTime() % 24000 == 0) {
+					if(rand.nextInt(4) == 0) {
+						tardis.currentEvent = EnumEvent.DALEK;
+					}
 				}
 			}
 		}
