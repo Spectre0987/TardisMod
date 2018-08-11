@@ -1,5 +1,7 @@
 package net.tardis.mod;
 
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.tardis.mod.common.commands.CommandTeleport;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -262,5 +264,10 @@ public class Tardis {
 	
 	public static boolean getIsDev() {
 		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
+	}
+
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event){
+		event.registerServerCommand(new CommandTeleport());
 	}
 }

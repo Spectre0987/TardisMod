@@ -34,5 +34,9 @@ public class TStrings {
 		public static final String REMOTE_TIME = "tooltip.remote.time";
 		public static final String REMOTE_EPOS = "tooltip.remote.exteriorpos";
 	}
+
+	public static class Commands{
+		public static final String NO_TARDIS_OWNED = "command.no_tardis_owned";
+	}
 	
 }
