@@ -184,3 +184,5 @@ tardis.subtitle.cloister_bell=Cloche du cloître
 tardis.subtitle.drum_beat=Battement de tambour
 tardis.subtitle.stutter=Bégaiement
 tardis.subtitle.vm_teleport=Manipulateur de Vortex
+
+command.no_tardis_owned=Vous ne possédez pas de TARDIS

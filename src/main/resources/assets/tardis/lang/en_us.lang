@@ -185,3 +185,5 @@ tardis.subtitle.cloister_bell=Cloister bell
 tardis.subtitle.drum_beat=Drum beat
 tardis.subtitle.stutter=Stutter
 tardis.subtitle.vm_teleport=Vortex Manipulator
+
+command.no_tardis_owned=You don't own a TARDIS

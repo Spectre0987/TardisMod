@@ -3,6 +3,10 @@ package net.tardis.mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.server.permission.DefaultPermissionLevel;
+import net.minecraftforge.server.permission.PermissionAPI;
+import net.tardis.mod.common.commands.CommandTeleport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
@@ -254,6 +258,9 @@ public class Tardis {
 		OreDictionary.registerOre("oreRuby", TBlocks.ruby_ore);
 		OreDictionary.registerOre("dustCinnabar", TItems.crushedCinnabar);
 		OreDictionary.registerOre("oreCinnabar", TBlocks.cinnabar_ore);
+
+		//Permissions
+		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself in their TARDIS");
 	}
 	
 	@EventHandler
@@ -270,5 +277,10 @@ public class Tardis {
 	
 	public static boolean getIsDev() {
 		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
+	}
+
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event){
+		event.registerServerCommand(new CommandTeleport());
 	}
 }
