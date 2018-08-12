@@ -2,8 +2,6 @@ package net.tardis.mod.common.blocks;
 
 import java.util.function.Supplier;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;

@@ -6,9 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.EnumExterior;
-import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.common.blocks.BlockFacingDecoration;
 import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -18,6 +16,7 @@ public class RenderInteriorDoor extends TileEntitySpecialRenderer {
 	
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+		boolean open = false;
 		GlStateManager.pushMatrix();
 		TileEntityInteriorDoor door = (TileEntityInteriorDoor)te;
 		List<TileEntity> list = te.getWorld().loadedTileEntityList;
@@ -33,6 +32,14 @@ public class RenderInteriorDoor extends TileEntitySpecialRenderer {
 		if(state.getBlock() instanceof BlockFacingDecoration) {
 			GlStateManager.rotate(Helper.getAngleFromFacing(state.getValue(BlockFacingDecoration.FACING)), 0, 1, 0);
 		}
+		
+		if(open) {
+			ext.interiorModel.renderOpen();
+			//TODO: WorldShell/WorldPortal here
+		} else {
+			ext.interiorModel.renderClosed();
+		}
+		
 		
 		GlStateManager.popMatrix();
 	}
