@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.items.TItems;
 
 public class RenderInvis extends Render<Entity> {
@@ -21,6 +22,14 @@ public class RenderInvis extends Render<Entity> {
 		Minecraft mc = Minecraft.getMinecraft();
 		if(mc.player.getHeldItemMainhand().getItem() == TItems.manual) {
 			Entity look = mc.objectMouseOver.entityHit;
+			
+			String name;
+			if(entity instanceof EntityControl) {
+				name = ((EntityControl) entity).getControlName();
+			} else {
+				name = entity.getDisplayName().getUnformattedText();
+			}
+			
 			if(look != null && look == entity) {
 				
 				float offset = MathHelper.cos(entity.ticksExisted * 0.1F) * -0.09F;
@@ -28,7 +37,7 @@ public class RenderInvis extends Render<Entity> {
 				GL11.glPushMatrix();
 				GL11.glTranslatef(0, 0.4F, 0);
 				GL11.glScalef(0.60F, 0.60F, 0.60F);
-            	this.renderLivingLabel(entity, entity.getDisplayName().getUnformattedText(), x,y + 0.4 + offset, z, 46);
+			 	this.renderLivingLabel(entity, name, x,y + 0.4 + offset, z, 46);
 				GL11.glPopMatrix();
 			}
 		}

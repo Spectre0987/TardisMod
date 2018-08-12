@@ -45,4 +45,10 @@ public class ControlDoorSwitch extends EntityControl{
 		}
 	}
 
+	@Override
+	public String getControlName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

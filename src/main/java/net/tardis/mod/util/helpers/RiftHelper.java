@@ -17,6 +17,7 @@ public class RiftHelper {
 	public static List<DimChunkPos> RIFT_POS = new ArrayList<>();
 
 	public static void writeRiftStatus(Chunk chunk, World world, NBTTagCompound tag) {
+		if(tag == null) return;
 		if(RIFT_POS.contains(new DimChunkPos(chunk.getPos(), world.provider.getDimension()))) {
 			tag.setBoolean(Tardis.MODID + ":isRift", true);
 			return;
