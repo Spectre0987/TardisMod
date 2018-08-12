@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers.decorations.hellbent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentDoor;
@@ -15,8 +16,8 @@ public class RenderHellbentDoor extends Render<EntityHellbentDoor> {
 	public ModelHellbentDoor door = new ModelHellbentDoor();
 	Minecraft mc;
 	
-	public RenderHellbentDoor() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderHellbentDoor(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 	}
 

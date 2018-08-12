@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers.entities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.entity.ModelCybermanInvasion;
@@ -14,8 +15,8 @@ public class RenderCybermanInvasion extends Render<EntityCybermanInvasion> {
 	public ModelCybermanInvasion model = new ModelCybermanInvasion();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cyberman_invasion.png");
 	
-	public RenderCybermanInvasion() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderCybermanInvasion(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 
 	}

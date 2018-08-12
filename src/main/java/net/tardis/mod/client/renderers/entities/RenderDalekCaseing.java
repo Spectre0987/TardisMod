@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers.entities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.client.models.entity.ModelDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
@@ -13,8 +14,8 @@ public class RenderDalekCaseing extends Render<EntityDalekCasing> {
 	public ModelDalek model = new ModelDalek();
 	Minecraft mc;
 	
-	public RenderDalekCaseing() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderDalekCaseing(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 	}
 	

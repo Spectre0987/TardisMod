@@ -1,7 +1,12 @@
 package net.tardis.mod;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.server.permission.DefaultPermissionLevel;
+import net.minecraftforge.server.permission.PermissionAPI;
+import net.tardis.mod.common.commands.CommandTeleport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
@@ -121,7 +126,7 @@ public class Tardis {
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 
 	
-	private static Logger logger;
+	private static Logger logger = LogManager.getLogger(NAME);
 	
 	public static CreativeTabs tab;
 	
@@ -132,15 +137,16 @@ public class Tardis {
 	public static final int ID_GUI_TEMPORAL_LAB = 0;
 	
 	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
-	
-	@Instance
-	public static Tardis instance = new Tardis();
+
+	@Instance(MODID)
+	public static Tardis instance;
 	
 	@SidedProxy(clientSide = "net.tardis.mod.proxy.ClientProxy", serverSide = "net.tardis.mod.proxy.ServerProxy")
 	public static ServerProxy proxy;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
 		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
@@ -245,18 +251,21 @@ public class Tardis {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		proxy.renderEntities();
-		
+		proxy.init();
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
 		OreDictionary.registerOre("gemRuby", TItems.ruby);
 		OreDictionary.registerOre("oreRuby", TBlocks.ruby_ore);
 		OreDictionary.registerOre("dustCinnabar", TItems.crushedCinnabar);
 		OreDictionary.registerOre("oreCinnabar", TBlocks.cinnabar_ore);
+
+		//Permissions
+		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself in their TARDIS");
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		proxy.postInit();
 		for(ItemStack cinnabar : OreDictionary.getOres("dustCinnabar")) {
 			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
 		}
@@ -268,5 +277,10 @@ public class Tardis {
 	
 	public static boolean getIsDev() {
 		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
+	}
+
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event){
+		event.registerServerCommand(new CommandTeleport());
 	}
 }

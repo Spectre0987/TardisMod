@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers.decorations.hellbent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentCorridor;
@@ -15,8 +16,8 @@ public class RenderHellbentCorridor extends Render<EntityHellbentCorridor> {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/hellbent/corridor.png");
 	public ModelHellbentCorridor model = new ModelHellbentCorridor();
 	
-	public RenderHellbentCorridor() {
-		super(Minecraft.getMinecraft().getRenderManager());
+	public RenderHellbentCorridor(RenderManager manager) {
+		super(manager);
 		mc = Minecraft.getMinecraft();
 	}
 

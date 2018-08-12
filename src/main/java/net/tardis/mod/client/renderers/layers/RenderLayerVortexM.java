@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.layers;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -11,8 +13,6 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.util.ModelUtil;
 import net.tardis.mod.common.items.TItems;
-
-import java.lang.reflect.Field;
 
 public class RenderLayerVortexM implements LayerRenderer{
 
