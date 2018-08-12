@@ -1,5 +1,6 @@
 package net.tardis.mod;
 
+import net.tardis.mod.common.commands.CommandSummon;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -260,6 +261,7 @@ public class Tardis {
 
 		//Permissions
 		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself in their TARDIS");
+		PermissionAPI.registerNode(TStrings.Permissions.SUMMON_TARDIS, DefaultPermissionLevel.OP, "Allows players to summon a TARDIS owned by someone");
 	}
 	
 	@EventHandler
@@ -282,5 +284,6 @@ public class Tardis {
 	public void serverStarting(FMLServerStartingEvent event){
 		event.registerServerCommand(new CommandTeleport());
 		event.registerServerCommand(new TardisCommandGrow());
+		event.registerServerCommand(new CommandSummon());
 	}
 }
