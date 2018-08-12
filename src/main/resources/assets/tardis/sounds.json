@@ -106,5 +106,12 @@
             "name":"tardis:phone",
             "stream": true
         }]
+    },
+    "knocking":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:knocking",
+            "stream":true
+        }]
     }
 }
