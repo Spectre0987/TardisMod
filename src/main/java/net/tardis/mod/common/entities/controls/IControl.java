@@ -5,7 +5,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public interface IControl {
 	
-	String getName();
+	String getControlName();
 	
 	Vec3d getOffset(TileEntityTardis tardis);
 }

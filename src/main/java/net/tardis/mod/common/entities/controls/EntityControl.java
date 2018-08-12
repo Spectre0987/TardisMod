@@ -141,4 +141,9 @@ public abstract class EntityControl extends Entity implements IControl {
 	protected void setSize(float width, float height) {
 		super.setSize(width, height);
 	}
+	
+	@Override
+	public String getControlName() {
+		return this.getDisplayName().getUnformattedText();
+	}
 }

@@ -60,4 +60,9 @@ public class ControlFlight extends EntityControl {
 		}
 	}
 	
+	@Override
+	public String getControlName() {
+		return "Real World - Flight Interface";
+	}
+	
 }

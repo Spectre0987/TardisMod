@@ -59,6 +59,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public boolean isRemat = false;
 	public static int radius = 10;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
+	private AxisAlignedBB SHELL_AABB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10);
 	
 	public TileEntityDoor() {
 		this.isRemat = true;

@@ -10,6 +10,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
+import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
@@ -94,6 +95,8 @@ public class TBlocks {
 	public static Block hellbent_pole = register(new BlockDecoration(TileEntityHellbentPole::new), "hellbent_pole");
 	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new).setLightLevel(1F).setLightOpacity(0), "hellbent_roof");
 	
+	public static Block roundel_chest = register(new BlockRoundelChest(), "roundel_chest");
+	
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");
 	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02");
@@ -101,6 +104,8 @@ public class TBlocks {
 	//Consoles
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01");
 	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02");
+	
+	public static Block interior_door = register(new BlockInteriorDoor(TileEntityInteriorDoor::new), "interior_door");
 	public static Block json_tester;
 	
 	public static Block register(Block block, String name) {

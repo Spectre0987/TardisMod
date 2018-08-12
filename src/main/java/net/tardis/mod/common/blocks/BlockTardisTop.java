@@ -37,6 +37,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 	
+
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public ItemBlock item = new ItemBlockTardis(this);
 
@@ -80,6 +81,18 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 			}
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+	}
+	
+	@Override
+	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
+		if(!worldIn.isRemote) {
+			WorldServer tWorld = ((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+			TileEntityTardis tardis = (TileEntityTardis)tWorld.getTileEntity(((TileEntityDoor)worldIn.getTileEntity(pos)).getConsolePos());
+			if(tardis != null) {
+				tWorld.playSound(null, tardis.getPos(), TSounds.knocking, SoundCategory.BLOCKS, 1F, 1F);
+			}
+		}
+		super.onBlockClicked(worldIn, pos, playerIn);
 	}
 	
 	@Override

@@ -86,12 +86,6 @@ public class TEventHandler {
 		}
 	}
 	
-	@SubscribeEvent
-	public static  void registerItems(RegistryEvent.Register<Item> event) {
-		for (Item item : TItems.items) {
-			event.getRegistry().register(item);
-		}
-	}
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -187,7 +181,7 @@ public class TEventHandler {
 			}
 		}
 		if(TardisConfig.BOTI.enable) {
-			event.player.sendStatusMessage(new TextComponentString("Are you sure you want to enable BOTI? It is extremly buggy and if you complain / mention it in the Discord you will be" + TextFormatting.BOLD + TextFormatting.DARK_RED + TextFormatting.UNDERLINE + " instantly and permanently be banned!"), false);
+			event.player.sendStatusMessage(new TextComponentString("Are you sure you want to enable BOTI? It is extremly buggy and if you complain / mention it in the Discord you" + TextFormatting.BOLD + TextFormatting.DARK_RED + TextFormatting.UNDERLINE + " may be banned!"), false);
 		}
 	}
 	

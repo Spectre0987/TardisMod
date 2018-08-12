@@ -2,18 +2,23 @@ package net.tardis.mod.proxy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.models.ModelFirstCane;
@@ -29,6 +34,7 @@ import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
+import net.tardis.mod.client.renderers.controls.RenderInteriorDoor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentCorridor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentDoor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentLight;
@@ -55,6 +61,7 @@ import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderFoodMachine;
 import net.tardis.mod.client.renderers.tiles.RenderJsonHelper;
+import net.tardis.mod.client.renderers.tiles.RenderRoundelChest;
 import net.tardis.mod.client.renderers.tiles.RenderTemporalLab;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.renderers.tiles.RenderTileHolo;
@@ -94,6 +101,7 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
+import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
@@ -103,10 +111,14 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.config.TardisConfig;
+import net.tardis.mod.util.LimbManipulationUtil;
+import net.tardis.mod.util.LimbManipulationUtil.Limb;
 
+@EventBusSubscriber
 public class ClientProxy extends ServerProxy {
 	
 	public static HashMap<Integer, Class<? extends IRenderHandler>> skyRenderers = new HashMap<>();
@@ -124,6 +136,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHellbentMonitor.class, new RenderHellbentMonitor());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHellbentPole.class, new RenderHellbentPole());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHelbentRoof.class, new RenderHellbentRoof());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRoundelChest.class, new RenderRoundelChest());
 		//Consoles
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis02.class, new RenderConsole02());
@@ -133,6 +146,9 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor03.class, new RenderTileDoor03());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
+		
+		//Interior Door
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInteriorDoor.class, new RenderInteriorDoor());
 		
 		// Controls
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);
@@ -218,15 +234,74 @@ public class ClientProxy extends ServerProxy {
 	
     public static ArrayList<EntityPlayer> layerPlayers = new ArrayList<>();
 
+    
     @SubscribeEvent
     public static void addLayers(RenderPlayerEvent.Pre e) {
-        if (!layerPlayers.contains(e.getEntityPlayer())) {
+    	
+    	EntityPlayer player = e.getEntityPlayer();
+    	
+        if (!layerPlayers.contains(player)) {
             RenderPlayer render = e.getRenderer();
             addRenderLayer(new RenderLayerVortexM(render));
-            layerPlayers.add(e.getEntityPlayer());
+            layerPlayers.add(player);
+        }
+    
+        Random rand = e.getEntityPlayer().world.rand;
+       
+        //pls write something that says "THIS PLAYERS BEING SUCKED INTO THE VOID" k thx
+        if(false) {
+        LimbManipulationUtil.getLimbManipulator(e.getRenderer(), Limb.RIGHT_ARM).setAngles(-85, 8, 10);
+        LimbManipulationUtil.getLimbManipulator(e.getRenderer(), Limb.LEFT_ARM).setAngles(-85, -8, -10);
+     
+        LimbManipulationUtil.getLimbManipulator(e.getRenderer(), Limb.LEFT_LEG).setAngles(-90, -11, 0);
+        LimbManipulationUtil.getLimbManipulator(e.getRenderer(), Limb.RIGHT_LEG).setAngles(-90, 11, 0);
         }
     }
+   
+  
 
+    public static void setRotationAngles(float limbSwing, float limbSwingAmount, float netHeadYaw, float headPitch, Entity entity, ModelBiped model){
+
+        model.bipedHead.rotateAngleZ = -netHeadYaw / (180F / (float)Math.PI);
+        model.bipedHead.rotateAngleY = 0;
+        model.bipedHead.rotateAngleX = -55 / (180F / (float)Math.PI);
+
+        model.bipedHeadwear.rotateAngleX = model.bipedHead.rotateAngleX;
+        model.bipedHeadwear.rotateAngleY = model.bipedHead.rotateAngleY;
+        model.bipedHeadwear.rotateAngleZ = model.bipedHead.rotateAngleZ;
+        
+        if(limbSwingAmount > 0.25)
+        	limbSwingAmount = 0.25f;
+        float movement = MathHelper.cos(limbSwing * 0.8f + (float)Math.PI) * limbSwingAmount;
+
+        model.bipedLeftArm.rotateAngleX = 180 / (180F / (float)Math.PI) - movement * 0.25f;
+        model.bipedLeftArm.rotateAngleY = movement * -0.46f;
+        model.bipedLeftArm.rotateAngleZ = movement * -0.2f;
+        model.bipedLeftArm.rotationPointY = 2 - movement * 9.0F;
+        
+        model.bipedRightArm.rotateAngleX = 180 / (180F / (float)Math.PI) + movement * 0.25f;
+        model.bipedRightArm.rotateAngleY = movement * -0.4f;
+        model.bipedRightArm.rotateAngleZ = movement * -0.2f;
+        model.bipedRightArm.rotationPointY = 2 + movement * 9.0F;
+
+        model.bipedBody.rotateAngleY = movement * 0.1f;
+        model.bipedBody.rotateAngleX = 0;
+        model.bipedBody.rotateAngleZ = movement * 0.1f;
+        
+        model.bipedLeftLeg.rotateAngleX = movement * 0.1f;
+        model.bipedLeftLeg.rotateAngleY = movement * 0.1f;
+        model.bipedLeftLeg.rotateAngleZ = -7 / (180F / (float)Math.PI) - movement * 0.25f;
+        model.bipedLeftLeg.rotationPointY = 10.4f + movement * 9.0F;
+        model.bipedLeftLeg.rotationPointZ = movement * 0.6f;
+
+        model.bipedRightLeg.rotateAngleX = movement * -0.1f;
+        model.bipedRightLeg.rotateAngleY = movement * 0.1f;
+        model.bipedRightLeg.rotateAngleZ = 7 / (180F / (float)Math.PI) - movement * 0.25f;
+        model.bipedRightLeg.rotationPointY = 10.4f - movement * 9.0F;
+        model.bipedRightLeg.rotationPointZ = movement * -0.6f;
+	}
+
+    
     private static void addRenderLayer(LayerRenderer layer) {
         for (RenderPlayer playerRender : Minecraft.getMinecraft().getRenderManager().getSkinMap().values()) {
             playerRender.addLayer(layer);
