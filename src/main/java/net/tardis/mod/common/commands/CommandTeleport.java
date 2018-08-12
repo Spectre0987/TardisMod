@@ -30,11 +30,11 @@ public class CommandTeleport extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-    EntityPlayerMP player = CommandBase.getCommandSenderAsPlayer(sender);
+    	EntityPlayerMP player = CommandBase.getCommandSenderAsPlayer(sender);
         if (TardisHelper.hasTardis(player.getUniqueID())){
             BlockPos pos = TardisHelper.getTardis(player.getUniqueID());
             player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.EAST), 0);
-            server.getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID,new TardisTeleporter());
+            if(player.dimension != TDimensions.TARDIS_ID)server.getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID,new TardisTeleporter());
         }
         else {
             sender.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
