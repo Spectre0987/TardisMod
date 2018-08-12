@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -32,22 +33,36 @@ public class EntityDalekCasing extends EntityLiving{
 					this.motionX = look.x;
 					this.motionZ = look.z;
 				}
+				this.prevRotationYaw = this.rotationYaw;
 				this.rotationYaw = ((EntityLivingBase)e).rotationYawHead;
 			}
 		}
 	}
 
 	@Override
-	protected void despawnEntity() {
-		
+	protected void despawnEntity() {}
+
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if(source.getTrueSource() != null && this.getPassengers().contains(source.getTrueSource())) {
+			if(!world.isRemote) {
+				Vec3d look = source.getTrueSource().getLookVec().scale(2);
+				Vec3d des = look.add(this.getPositionVector()).scale(120);
+				EntityDalekRay ray = new EntityDalekRay(world, des.x, des.y, des.z);
+				ray.setPosition(posX + look.x, (posY + this.getEyeHeight()) + look.y, posZ + look.z);
+				world.spawnEntity(ray);
+			}
+			return false;
+		}
+		return super.attackEntityFrom(source, amount);
 	}
 
 	@Override
 	public void dismountEntity(Entity entityIn) {
-		super.dismountEntity(entityIn);
 		if(world.isRemote && entityIn instanceof EntityPlayer) {
 			this.setCamera(0);
 		}
+		super.dismountEntity(entityIn);
 	}
 	
 	@SideOnly(Side.CLIENT)
