@@ -16,6 +16,7 @@ public class RenderInteriorDoor extends TileEntitySpecialRenderer {
 	
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+		boolean open = false;
 		GlStateManager.pushMatrix();
 		TileEntityInteriorDoor door = (TileEntityInteriorDoor)te;
 		List<TileEntity> list = te.getWorld().loadedTileEntityList;
@@ -31,6 +32,14 @@ public class RenderInteriorDoor extends TileEntitySpecialRenderer {
 		if(state.getBlock() instanceof BlockFacingDecoration) {
 			GlStateManager.rotate(Helper.getAngleFromFacing(state.getValue(BlockFacingDecoration.FACING)), 0, 1, 0);
 		}
+		
+		if(open) {
+			ext.interiorModel.renderOpen();
+			//TODO: WorldShell/WorldPortal here
+		} else {
+			ext.interiorModel.renderClosed();
+		}
+		
 		
 		GlStateManager.popMatrix();
 	}
