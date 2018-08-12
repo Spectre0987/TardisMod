@@ -78,9 +78,10 @@ public class MessageTelepathicCircut implements IMessage {
                             }
                         }
                         else {
+                        	Random rand = new Random();
                             BlockPos structurePos = locationWorld.findNearestStructure(message.name.trim(), tardis.getLocation(), true);
                             if(structurePos != null && !BlockPos.ORIGIN.equals(structurePos)) {
-                                tardis.setDesination(structurePos, tardis.dimension);
+                                tardis.setDesination(structurePos.add(rand.nextInt(6) - 3, 0, rand.nextInt(6) - 3), tardis.dimension);
                                 tardis.startFlight();
                             }
                         }

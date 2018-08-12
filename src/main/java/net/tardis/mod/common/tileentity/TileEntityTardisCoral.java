@@ -45,28 +45,32 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 		if(!world.isRemote && this.owner != null) {
 			if(world.getWorldTime() % 2400 == 0) {
 				if(time > (RiftHelper.isRift(world.getChunkFromBlockCoords(getPos()).getPos(), world) ? 2 : 4)) {
-					BlockPos pos = TardisHelper.getTardis(owner);
-					WorldServer tardisWorld = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-					if(tardisWorld != null && pos != null) {
-						TileEntity te = tardisWorld.getTileEntity(pos);
-						if(te == null || !(te instanceof TileEntityTardis)) {
-							Template tem = tardisWorld.getStructureTemplateManager().get(world.getMinecraftServer(), Structures.CONSOLE_ROOM_80S);
-							tem.addBlocksToWorld(tardisWorld, pos.add(-(tem.getSize().getX() / 2), -2, (-(tem.getSize().getZ() / 2)) + 1), new PlacementSettings());
-							tardisWorld.setBlockState(pos, TBlocks.console_02.getDefaultState());
-							TileEntityTardis tardis = (TileEntityTardis)tardisWorld.getTileEntity(pos);
-							this.getWorld().setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-							tardis.setDesination(getPos().up(), this.getWorld().provider.getDimension());
-							tardis.startFlight();
-							tardis.travel();
-							ItemStack keyStack = new ItemStack(TItems.key);
-							ItemKey.setPos(keyStack, pos);
-							world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner).addItemStackToInventory(keyStack);
-						}
-					}
+					this.grow();
 					time = 0;
 				}
 				++time;
 				this.markDirty();
+			}
+		}
+	}
+	
+	public void grow() {
+		BlockPos pos = TardisHelper.getTardis(owner);
+		WorldServer tardisWorld = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+		if(tardisWorld != null && pos != null) {
+			TileEntity te = tardisWorld.getTileEntity(pos);
+			if(te == null || !(te instanceof TileEntityTardis)) {
+				Template tem = tardisWorld.getStructureTemplateManager().get(world.getMinecraftServer(), Structures.CONSOLE_ROOM_80S);
+				tem.addBlocksToWorld(tardisWorld, pos.add(-(tem.getSize().getX() / 2), -2, (-(tem.getSize().getZ() / 2)) + 1), new PlacementSettings());
+				tardisWorld.setBlockState(pos, TBlocks.console_02.getDefaultState());
+				TileEntityTardis tardis = (TileEntityTardis)tardisWorld.getTileEntity(pos);
+				this.getWorld().setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
+				tardis.setDesination(getPos().up(), this.getWorld().provider.getDimension());
+				tardis.startFlight();
+				tardis.travel();
+				ItemStack keyStack = new ItemStack(TItems.key);
+				ItemKey.setPos(keyStack, pos);
+				world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner).addItemStackToInventory(keyStack);
 			}
 		}
 	}

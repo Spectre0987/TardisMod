@@ -90,7 +90,7 @@ public class TBlocks {
 	public static Block hellbent_wall = register(new BlockBase(), "hellbent_wall");
 	
 	public static Block hellbent_light = register(new BlockFacingDecoration(TileEntityHellbentLight::new).setLightLevel(1F).setLightOpacity(0), "hellbent_light");
-	public static Block hellbent_monitor = register(new BlockFacingDecoration(TileEntityHellbentMonitor::new), "hellbent_monitor");
+	public static Block hellbent_monitor = register(new BlockMonitor(TileEntityHellbentMonitor::new), "hellbent_monitor");
 	public static Block hellbent_pole = register(new BlockDecoration(TileEntityHellbentPole::new), "hellbent_pole");
 	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new).setLightLevel(1F).setLightOpacity(0), "hellbent_roof");
 	

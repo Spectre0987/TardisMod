@@ -20,7 +20,7 @@ public class CommandTeleport extends CommandBase {
 
     @Override
     public String getName() {
-        return "tpintardis";
+        return "tardistp";
     }
 
     @Override

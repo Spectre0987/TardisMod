@@ -3,10 +3,6 @@ package net.tardis.mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.server.permission.DefaultPermissionLevel;
-import net.minecraftforge.server.permission.PermissionAPI;
-import net.tardis.mod.common.commands.CommandTeleport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
@@ -22,14 +18,19 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.server.permission.DefaultPermissionLevel;
+import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.commands.CommandTeleport;
+import net.tardis.mod.common.commands.TardisCommandGrow;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityAirshell;
 import net.tardis.mod.common.entities.EntityCorridor;
@@ -56,7 +57,6 @@ import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlScanner;
-import net.tardis.mod.common.entities.controls.ControlScreen;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
@@ -161,7 +161,6 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlY.class, "y_valve");
 		EntityHelper.registerStatic(ControlZ.class, "z_valve");
 		EntityHelper.registerStatic(ControlDimChange.class, "dim_change");
-		EntityHelper.registerStatic(ControlScreen.class, "screen");
 		EntityHelper.registerStatic(ControlRandom.class, "rand_control");
 		EntityHelper.registerStatic(ControlDoor.class, "tardis_door");
 		EntityHelper.registerStatic(ControlSTCLoad.class, "stc_load");
@@ -282,5 +281,6 @@ public class Tardis {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event){
 		event.registerServerCommand(new CommandTeleport());
+		event.registerServerCommand(new TardisCommandGrow());
 	}
 }
