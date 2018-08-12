@@ -1,6 +1,5 @@
 package net.tardis.mod;
 
-import net.tardis.mod.common.commands.CommandSummon;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +29,7 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.commands.CommandSummon;
 import net.tardis.mod.common.commands.CommandTeleport;
 import net.tardis.mod.common.commands.TardisCommandGrow;
 import net.tardis.mod.common.dimensions.TDimensions;
