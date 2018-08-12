@@ -19,7 +19,7 @@ public class TardisCommandGrow extends CommandBase{
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		return "commands.tardis.grow";
+		return "commands.tardis.grow.usage";
 	}
 
 	@Override

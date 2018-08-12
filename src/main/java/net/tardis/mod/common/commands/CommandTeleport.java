@@ -23,7 +23,7 @@ public class CommandTeleport extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "commands.tardis.teleportin";
+        return "commands.tardis.teleportin.usage";
     }
 
     @Override
@@ -39,6 +39,7 @@ public class CommandTeleport extends CommandBase {
         }
     }
 
+    @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         if (sender instanceof EntityPlayer)
             return PermissionAPI.hasPermission((EntityPlayer) sender, TStrings.Permissions.TP_IN_TARDIS);

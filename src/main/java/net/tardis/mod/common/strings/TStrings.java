@@ -37,10 +37,13 @@ public class TStrings {
 
 	public static class Commands{
 		public static final String NO_TARDIS_OWNED = "command.no_tardis_owned";
+		public static final String NO_PLAYER_FOUND = "command.no_player_found";
+		public static final String TARDIS_TRAVEL = "command.tardis_travel";
 	}
 
 	public static class Permissions{
-		public static final String TP_IN_TARDIS = "tardis.command.tpintardis";
+		public static final String TP_IN_TARDIS = "tardis.command.tardistp";
+		public static final String SUMMON_TARDIS = "tardis.command.summontardis";
 	}
 	
 }
