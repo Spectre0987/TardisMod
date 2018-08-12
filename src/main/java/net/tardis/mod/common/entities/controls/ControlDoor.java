@@ -191,6 +191,9 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 						entity.motionX += dir.x;
 						entity.motionY += dir.y;
 						entity.motionZ += dir.z;
+						if(entity instanceof EntityPlayer && entity.getPositionVector().distanceTo(this.getPositionVector()) <= 1) {
+							if(!world.isRemote)tardis.transferPlayer((EntityPlayer)entity, false);
+						}
 					}
 				}
 			}

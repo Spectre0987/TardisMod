@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -18,8 +17,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
-import net.tardis.mod.common.systems.SystemFlight;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -36,10 +33,19 @@ public class ItemRemote extends ItemBase {
 			this.setConsolePos(player.getHeldItem(hand), pos);
 			return EnumActionResult.SUCCESS;
 		}
+		else if(!worldIn.isRemote && !this.getConsolePos(player.getHeldItem(hand)).equals(BlockPos.ORIGIN)) {
+			TileEntity tte = ((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(player.getHeldItem(hand)));
+			if(tte != null && tte instanceof TileEntityTardis) {
+				TileEntityTardis tardis = ((TileEntityTardis)tte);
+				tardis.setDesination(pos.up(3), player.dimension);
+				tardis.setFacing(player.getHorizontalFacing().getOpposite());
+				tardis.startFlight();
+			}
+		}
 		return EnumActionResult.PASS;
 	}
 
-	@Override
+	/*@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		if(!worldIn.isRemote && !Helper.isDimensionBlocked(playerIn.dimension) && !this.getConsolePos(playerIn.getHeldItem(handIn)).equals(BlockPos.ORIGIN)) {
 			TileEntityTardis tardis = ((TileEntityTardis)((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(playerIn.getHeldItem(handIn))));
@@ -58,7 +64,7 @@ public class ItemRemote extends ItemBase {
 			}
 		}
 		return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
-	}
+	}*/
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

@@ -1,7 +1,6 @@
 package net.tardis.mod.client.renderers.decorations.hellbent;
 
 import java.awt.Color;
-import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -38,10 +37,10 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 		GlStateManager.translate(0, -Helper.precentToPixels(4), Helper.precentToPixels(5));
 		mc.getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+	
 		
-		List<TileEntity> list = te.getWorld().loadedTileEntityList;
 		TileEntityTardis tardis = null;
-		for(TileEntity liste : list) {
+		for(TileEntity liste : te.getWorld().getChunkFromBlockCoords(te.getPos()).getTileEntityMap().values()) {
 			if(liste instanceof TileEntityTardis) {
 				tardis = (TileEntityTardis)liste;
 			}
