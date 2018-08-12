@@ -186,3 +186,7 @@ tardis.subtitle.stutter=Bégaiement
 tardis.subtitle.vm_teleport=Manipulateur de Vortex
 
 command.no_tardis_owned=Vous ne possédez pas de TARDIS
+
+commands.tardis.teleportin.usage=/tardistp
+commands.tardis.grow.usage=/tardisgrow
+commands.tardis.summon.usage=/summontardis <joueur>

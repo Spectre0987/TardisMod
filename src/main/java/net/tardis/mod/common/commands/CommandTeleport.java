@@ -23,7 +23,7 @@ public class CommandTeleport extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "commands.tardis.teleportin";
+        return "commands.tardis.teleportin.usage";
     }
 
     @Override
