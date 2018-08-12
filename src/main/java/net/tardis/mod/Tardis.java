@@ -89,6 +89,7 @@ import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
+import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityLight;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -200,6 +201,8 @@ public class Tardis {
 		registerTileEntity(TileEntityHellbentMonitor.class, "TileEntityHellbentMonitor");
 		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
 		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
+		
+		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
 		
 		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
 		
