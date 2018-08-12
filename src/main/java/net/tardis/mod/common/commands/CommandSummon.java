@@ -43,7 +43,7 @@ public class CommandSummon extends CommandBase {
         if (args.length < 1)
             throw new WrongUsageException(this.getUsage(sender));
 
-        EntityPlayerMP player = playerExist(args[0], server);
+        EntityPlayerMP player = server.getPlayerList().getPlayerByUsername(args[0]);
         if (player != null){
             if (TardisHelper.hasTardis(player.getUniqueID())){
                 BlockPos tardisbp = TardisHelper.getTardis(player.getUniqueID());
@@ -61,14 +61,6 @@ public class CommandSummon extends CommandBase {
         else {
             sender.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_PLAYER_FOUND));
         }
-    }
-
-    private EntityPlayerMP playerExist(String name, MinecraftServer server){
-        List<EntityPlayerMP> players = server.getPlayerList().getPlayers();
-        for (EntityPlayerMP p : players){
-            if (p.getName().equals(name)) return p;
-        }
-        return null;
     }
 
     @Override
