@@ -1,6 +1,5 @@
 package net.tardis.mod;
 
-import net.tardis.mod.common.commands.CommandSummon;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,8 +29,10 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.commands.CommandSummon;
 import net.tardis.mod.common.commands.CommandTeleport;
 import net.tardis.mod.common.commands.TardisCommandGrow;
+import net.tardis.mod.common.commands.TardisCommandRemove;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityAirshell;
 import net.tardis.mod.common.entities.EntityCorridor;
@@ -101,6 +102,7 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.world.TardisLoadingCallback;
@@ -201,6 +203,7 @@ public class Tardis {
 		registerTileEntity(TileEntityHellbentMonitor.class, "TileEntityHellbentMonitor");
 		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
 		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
+		registerTileEntity(TileEntityRoundelChest.class, "TileEntityRoundelChest");
 		
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
 		
@@ -288,5 +291,6 @@ public class Tardis {
 		event.registerServerCommand(new CommandTeleport());
 		event.registerServerCommand(new TardisCommandGrow());
 		event.registerServerCommand(new CommandSummon());
+		event.registerServerCommand(new TardisCommandRemove());
 	}
 }
