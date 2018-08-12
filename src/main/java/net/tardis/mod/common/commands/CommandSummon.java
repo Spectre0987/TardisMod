@@ -51,6 +51,7 @@ public class CommandSummon extends CommandBase {
                     if (te instanceof TileEntityTardis){
                         ((TileEntityTardis) te).setDesination(senderPlayer.getPosition().add(1,0,1),senderPlayer.dimension);
                         ((TileEntityTardis) te).startFlight();
+                        sender.sendMessage(new TextComponentTranslation(TStrings.Commands.TARDIS_TRAVEL));
                     }
                 }
             }
