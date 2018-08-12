@@ -39,15 +39,16 @@ public abstract class RenderControl extends Render<EntityControl> {
             Entity look = mc.objectMouseOver.entityHit;
             
             if(look != null && look == entity) {
-				
+            	look.setGlowing(true);
 				float offset = MathHelper.cos(entity.ticksExisted * 0.1F) * -0.09F;
 			
 				GL11.glPushMatrix();
-				GL11.glTranslatef(0, 1.4F, 0);
-				GL11.glScalef(0.1F, 0.1F, 0.1F);
+				GL11.glTranslatef(0, 0.4F, 0);
+				GL11.glScalef(0.60F, 0.60F, 0.60F);
             	this.renderLivingLabel(entity, entity.getDisplayName().getUnformattedText(), x,y + 0.4 + offset, z, 46);
 				GL11.glPopMatrix();
 			}
+            look.setGlowing(false);
         }
     }
 

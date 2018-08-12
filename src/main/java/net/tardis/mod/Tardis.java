@@ -152,7 +152,7 @@ public class Tardis {
 		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
 		logger = event.getModLog();
 		tab = new TardisTab();
-		TItems.register();
+		TItems.init();
 		TBlocks.register();
 		TDimensions.register();
 		EntityHelper.makeGoodBiomes();

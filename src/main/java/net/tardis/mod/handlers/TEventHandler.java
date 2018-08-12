@@ -86,12 +86,6 @@ public class TEventHandler {
 		}
 	}
 	
-	@SubscribeEvent
-	public static  void registerItems(RegistryEvent.Register<Item> event) {
-		for (Item item : TItems.items) {
-			event.getRegistry().register(item);
-		}
-	}
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {

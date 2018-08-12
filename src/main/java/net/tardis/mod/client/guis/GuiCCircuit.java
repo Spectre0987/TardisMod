@@ -3,6 +3,7 @@ package net.tardis.mod.client.guis;
 import java.awt.Color;
 import java.io.IOException;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -42,6 +43,9 @@ public class GuiCCircuit extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
+		 float rotX = 30 + (mouseY - height/2);
+		 float rotY = 45 + (mouseX - width/2);
+		
 		this.drawDefaultBackground();
 		mc.getTextureManager().bindTexture(tex);
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
@@ -52,10 +56,16 @@ public class GuiCCircuit extends GuiScreen {
 		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.popMatrix();
 		{
+			
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(res.getScaledWidth() / 2, res.getScaledHeight() / 2, -20);
 			GlStateManager.scale(25, 25, 25);
-			GlStateManager.rotate(mc.world.getTotalWorldTime() % 360, 0, 1, 0);
+			if(!Mouse.isButtonDown(0)) {
+			GlStateManager.rotate(mc.world.getTotalWorldTime() % 360, 0, 1, 0); } else {
+			GlStateManager.translate(0, 0, -2);
+			GlStateManager.rotate(rotX, 1, 0, 0);
+			GlStateManager.rotate(rotY, 0, 1, 0);
+			}
 			GL11.glDepthFunc(GL11.GL_GREATER);
 			RenderHelper.disableStandardItemLighting();
 			EnumExterior ext = exteriors[index];
