@@ -24,7 +24,6 @@ import net.tardis.mod.client.renderers.RenderCorridor;
 import net.tardis.mod.client.renderers.RenderInvis;
 import net.tardis.mod.client.renderers.RenderItemFoodMachine;
 import net.tardis.mod.client.renderers.RenderItemSonicPen;
-import net.tardis.mod.client.renderers.RenderScreen;
 import net.tardis.mod.client.renderers.RenderTardis;
 import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
@@ -83,7 +82,6 @@ import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
-import net.tardis.mod.common.entities.controls.ControlScreen;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
@@ -137,7 +135,6 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 		
 		// Controls
-		RenderingRegistry.registerEntityRenderingHandler(ControlScreen.class, RenderScreen::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlX.class, RenderInvis::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlY.class, RenderInvis::new);

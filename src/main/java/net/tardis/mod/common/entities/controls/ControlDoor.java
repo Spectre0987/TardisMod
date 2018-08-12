@@ -37,7 +37,6 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 
@@ -45,7 +44,6 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<EnumFacing> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FACING);
-	public static final DataParameter<NBTTagCompound> WORLD_TIME = EntityDataManager.createKey(ControlDoor.class, DataSerializers.COMPOUND_TAG);
 	public int antiSpamTicks = 0;
 	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 	
@@ -64,7 +62,6 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		super.entityInit();
 		this.dataManager.register(IS_OPEN, false);
 		this.dataManager.register(FACING, EnumFacing.NORTH);
-		this.dataManager.register(WORLD_TIME, new NBTTagCompound());
 	}
 	
 	@Override
@@ -74,10 +71,6 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis.getClass() == TileEntityTardis02.class) {
-			this.setRotation(90, 0);
-			return new Vec3d(-9, -1, -3);
-		}
 		return new Vec3d(0, -1, 6);
 	}
 	
@@ -97,15 +90,8 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 		return this.dataManager.get(IS_OPEN);
 	}
 	
-	public void setTime(long time) {
-		NBTTagCompound tag = this.dataManager.get(WORLD_TIME);
-		tag.setLong("time", time);
-		this.dataManager.set(WORLD_TIME, tag);
-		this.dataManager.setDirty(WORLD_TIME);
-	}
-	
 	public long getTime() {
-		return this.dataManager.get(WORLD_TIME).getLong("time");
+		return 1l;
 	}
 	@Override
 	public void preformAction(EntityPlayer player) {

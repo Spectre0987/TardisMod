@@ -19,6 +19,11 @@ public class EntityDalekRay extends EntityThrowable {
 		super(worldIn);
 	}
 	
+	public EntityDalekRay(World worldIn, double x, double y, double z) {
+		super(worldIn);
+		this.shoot(x, y, z, SPEED, 0);
+	}
+	
 	public EntityDalekRay(World worldIn, EntityLivingBase base) {
 		super(worldIn, base);
 		this.shoot(base, base.rotationPitch, base.rotationYawHead, 0, SPEED, 0);

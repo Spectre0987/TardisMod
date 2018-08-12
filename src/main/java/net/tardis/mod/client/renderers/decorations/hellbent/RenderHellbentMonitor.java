@@ -1,14 +1,19 @@
 package net.tardis.mod.client.renderers.decorations.hellbent;
 
+import java.awt.Color;
+import java.util.List;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentMonitor;
 import net.tardis.mod.common.blocks.BlockFacingDecoration;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
 public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
@@ -33,6 +38,29 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 		GlStateManager.translate(0, -Helper.precentToPixels(4), Helper.precentToPixels(5));
 		mc.getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		
+		List<TileEntity> list = te.getWorld().loadedTileEntityList;
+		TileEntityTardis tardis = null;
+		for(TileEntity liste : list) {
+			if(liste instanceof TileEntityTardis) {
+				tardis = (TileEntityTardis)liste;
+			}
+		}
+		if(tardis != null) {
+			GlStateManager.pushMatrix();
+			double scale = 0.007;
+			GlStateManager.translate(-Helper.precentToPixels(8), Helper.precentToPixels(8), -1);
+			GlStateManager.scale(scale, scale, scale);
+			mc.fontRenderer.drawString("Location " + Helper.formatBlockPos(tardis.getLocation()), 0,  mc.fontRenderer.FONT_HEIGHT * 0, Color.WHITE.getRGB());
+			mc.fontRenderer.drawString("Dimension " + Helper.formatDimensionName(DimensionManager.createProviderFor(tardis.dimension).getDimensionType().getName()), 0, mc.fontRenderer.FONT_HEIGHT * 1, Color.WHITE.getRGB());
+			mc.fontRenderer.drawString("Destination " + Helper.formatBlockPos(tardis.getDestination()), 0, mc.fontRenderer.FONT_HEIGHT * 2, Color.WHITE.getRGB());
+			mc.fontRenderer.drawString("Target Dim " + Helper.formatDimensionName(DimensionManager.createProviderFor(tardis.getTargetDim()).getDimensionType().getName()), 0, mc.fontRenderer.FONT_HEIGHT * 3, Color.WHITE.getRGB());
+			mc.fontRenderer.drawString("Artron Banks " + Math.round(tardis.fuel * 100) + "%", 0, mc.fontRenderer.FONT_HEIGHT * 4, Color.WHITE.getRGB());
+			if(tardis.isInFlight())mc.fontRenderer.drawString("Time Left " + tardis.getTimeLeft() / 20, 0, mc.fontRenderer.FONT_HEIGHT * 5, Color.WHITE.getRGB());
+			else mc.fontRenderer.drawString("TARDIS Landed", 0, mc.fontRenderer.FONT_HEIGHT * 5, Color.WHITE.getRGB());
+			GlStateManager.popMatrix();
+		}
+		
 		GlStateManager.popMatrix();
 	}
 

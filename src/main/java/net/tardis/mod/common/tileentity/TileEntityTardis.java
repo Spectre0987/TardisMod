@@ -56,7 +56,6 @@ import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
-import net.tardis.mod.common.entities.controls.ControlScreen;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
@@ -568,7 +567,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				ec.add(new ControlY(this));
 				ec.add(new ControlZ(this));
 				ec.add(new ControlDimChange(this));
-				ec.add(new ControlScreen(this));
 				ec.add(new ControlRandom(this));
 				ec.add(new ControlDoor(this));
 				ec.add(new ControlSTCLoad(this));
