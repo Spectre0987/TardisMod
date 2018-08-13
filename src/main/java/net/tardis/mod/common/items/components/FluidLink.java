@@ -1,9 +1,8 @@
 package net.tardis.mod.common.items.components;
 
 public class FluidLink extends ItemComponent {
-	
-	public FluidLink() {
-		
+
+	public FluidLink(String name) {
+		super(name);
 	}
-	
 }

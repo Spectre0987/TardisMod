@@ -8,8 +8,9 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class ItemManual extends ItemBase {
-	
-	public ItemManual() {
+
+	public ItemManual(String name) {
+		super(name);
 		this.setMaxStackSize(1);
 	}
 	

@@ -20,8 +20,9 @@ import net.tardis.mod.common.sounds.TSounds;
 public class ItemRayGun extends ItemBase {
 	
 	public static final String AMMO_KEY = "ammo";
-	
-	public ItemRayGun() {
+
+	public ItemRayGun(String name) {
+		super(name);
 		this.setMaxStackSize(1);
 	}
 	

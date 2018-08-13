@@ -15,13 +15,12 @@ import net.tardis.mod.client.models.clothing.ModelSpaceChest;
 import net.tardis.mod.client.models.clothing.ModelSpaceHelm;
 import net.tardis.mod.client.models.clothing.ModelSpaceLegs;
 
-public class ItemSpaceSuit extends ItemArmor {
+public class ItemSpaceSuit extends ItemArmorBase {
 	
 	public static final ArmorMaterial material = EnumHelper.addArmorMaterial("space_suit", "spacesuit", 0,new int[] {0,0,0,0},0,SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,0F);
 	
-	public ItemSpaceSuit(int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
-		super(material, renderIndexIn, equipmentSlotIn);
-		this.setCreativeTab(Tardis.tab);
+	public ItemSpaceSuit(int renderIndexIn, EntityEquipmentSlot equipmentSlotIn, String name) {
+		super(material, renderIndexIn, equipmentSlotIn, name);
 	}
 	
 	@Override

@@ -8,8 +8,9 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.data.TimeLord;
 
 public class ItemSymbioticNuclei extends ItemBase {
-	
-	public ItemSymbioticNuclei() {
+
+	public ItemSymbioticNuclei(String name) {
+		super(name);
 		this.setMaxStackSize(1);
 	}
 
