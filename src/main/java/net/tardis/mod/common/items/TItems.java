@@ -16,7 +16,7 @@ import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class TItems {
 
 	public static List<Item> items = new ArrayList<Item>();
