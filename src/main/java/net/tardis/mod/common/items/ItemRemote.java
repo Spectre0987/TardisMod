@@ -21,8 +21,9 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ItemRemote extends ItemBase {
-	
-	public ItemRemote() {
+
+	public ItemRemote(String name) {
+		super(name);
 		this.setMaxStackSize(1);
 	}
 

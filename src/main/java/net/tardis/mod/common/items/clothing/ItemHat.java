@@ -1,4 +1,4 @@
-package net.tardis.mod.common.items;
+package net.tardis.mod.common.items.clothing;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
@@ -12,13 +12,12 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 
-public class ItemHat extends ItemArmor {
+public class ItemHat extends ItemArmorBase {
 
 	private EnumClothes clothType;
 
-	public ItemHat(EnumClothes clothType) {
-		super(ItemSpaceSuit.material, 0, EntityEquipmentSlot.HEAD);
-		this.setCreativeTab(Tardis.tab);
+	public ItemHat(EnumClothes clothType, String name) {
+		super(ItemSpaceSuit.material, 0, EntityEquipmentSlot.HEAD, name);
 		this.clothType = clothType;
 	}
 

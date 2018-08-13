@@ -9,5 +9,8 @@ import net.tardis.mod.common.items.ItemBase;
  *
  */
 public class ItemComponent extends ItemBase {
-	
+
+    public ItemComponent(String name) {
+        super(name);
+    }
 }

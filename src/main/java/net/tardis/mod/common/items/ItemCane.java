@@ -12,8 +12,10 @@ import net.minecraft.item.ItemStack;
 public class ItemCane extends ItemBase {
 	
 	public static final UUID caneWeapon = UUID.randomUUID();
-	
-	public ItemCane() {}
+
+	public ItemCane(String name) {
+		super(name);
+	}
 
 	@Override
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {

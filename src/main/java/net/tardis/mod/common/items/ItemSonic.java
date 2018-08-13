@@ -23,13 +23,13 @@ import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.helpers.Helper;
 
-public class ItemSonic extends Item {
+public class ItemSonic extends ItemBase {
 	
 	public static final String MODE_KEY = "mode";
 	public static final String CONSOLE_POS = "console_pos";
-	
-	public ItemSonic() {
-		this.setCreativeTab(Tardis.tab);
+
+	public ItemSonic(String name) {
+		super(name);
 		this.setMaxStackSize(1);
 	}
 	

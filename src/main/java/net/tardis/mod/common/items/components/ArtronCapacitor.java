@@ -14,8 +14,9 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.RiftHelper;
 
 public class ArtronCapacitor extends ItemComponent {
-	
-	public ArtronCapacitor() {
+
+	public ArtronCapacitor(String name) {
+		super(name);
 		this.setMaxDamage(5);
 		this.setMaxStackSize(1);
 	}

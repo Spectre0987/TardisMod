@@ -10,9 +10,9 @@ import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.util.helpers.Helper;
 
 public class ItemHellbentDoor extends ItemBase {
-	
-	public ItemHellbentDoor() {
-		
+
+	public ItemHellbentDoor(String name) {
+		super(name);
 	}
 
 	@Override

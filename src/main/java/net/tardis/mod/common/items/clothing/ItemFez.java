@@ -11,11 +11,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelFez;
 
-public class ItemFez extends ItemArmor {
+public class ItemFez extends ItemArmorBase {
 	
-	public ItemFez() {
-		super(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
-		this.setCreativeTab(Tardis.tab);
+	public ItemFez(String name) {
+		super(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD, name);
 	}
 	
 	@Override

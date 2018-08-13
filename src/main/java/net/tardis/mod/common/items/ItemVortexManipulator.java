@@ -12,11 +12,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
 
-public class ItemVortexManipulator extends Item {
-	
-	public ItemVortexManipulator() {
+public class ItemVortexManipulator extends ItemBase {
+
+	public ItemVortexManipulator(String name) {
+		super(name);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(Tardis.tab);
 	}
 	
 	@Override

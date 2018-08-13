@@ -10,8 +10,10 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 
 public class ItemHellbentCorridor extends ItemBase {
-	
-	public ItemHellbentCorridor(){}
+
+	public ItemHellbentCorridor(String name) {
+		super(name);
+	}
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {

@@ -22,12 +22,12 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
-public class ItemKey extends Item {
+public class ItemKey extends ItemBase {
 	
 	public static final ResourceLocation CONSOLE_ROOM = new ResourceLocation(Tardis.MODID, "console_room");
-	
-	public ItemKey() {
-		this.setCreativeTab(Tardis.tab);
+
+	public ItemKey(String name) {
+		super(name);
 		this.setMaxStackSize(1);
 	}
 	
