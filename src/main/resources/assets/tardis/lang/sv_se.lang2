@@ -1,0 +1,197 @@
+itemGroup.tardis=TARDIS-Moddet
+
+item.tardis.key.name=TARDIS-Nyckeln
+item.tardis.pos_setter.name=Koordinat-Datainloggare
+item.tardis.circuts.name=Exotronisk Krets
+item.tardis.sonic_screwdriver.name=Sonisk Skruvmejsel
+item.tardis.gunstick.name=Dalek Vapen
+item.tardis.power_cell.name=Trioniskt Energicell 
+item.tardis.ray_gun.name=Dalek Strålvapen
+item.tardis.void_specs.name=Tomrumsbrillor
+item.tardis.fob_watch.name=Gallifreyiskt Fickur
+item.tardis.fez.name=Fez
+item.tardis.bowtie.name=Fluga
+item.tardis.umbrella_open.name=Soniskt Paraply
+item.tardis.umbrella_closed.name=Soniskt Paraply
+item.tardis.sonic_blaster.name=Sonisk Blästrare
+item.tardis.sonic_cane.name=Sonisk Käpp
+item.tardis.vortex_manip.name=Tidsvirvelsmanipulator
+item.tardis.fluid_link.name=Vätskelänk
+item.tardis.demat_circut.name=Dematerialiseringskrets
+item.tardis.artron_capacitor.name=Artron Kondensator
+item.tardis.sonic_pen.name=Sonisk Ficklampa
+item.tardis.tardis_manual.name=TARDIS-Handboken
+item.tardis.space_helm.name=Rymddräktshjälm
+item.tardis.space_chest.name=Rumddräktsöverkropp
+item.tardis.space_legs.name=Rymddräktsdamasker
+item.tardis.first_cane.name=Första Doktorns Käpp
+item.tardis.fourth_hat.name=Fjärde Doktorns Hatt
+item.tardis.symbiotic_nuclei.name=Symbiotisk Kärna
+item.tardis.stattenheim_remote.name=Stattenheim Dosa
+item.tardis.ruby.name=Rubin
+item.tardis.thirteen_coat.name=Trettons Kappa
+item.tardis.sonic_shades.name=Soniska Brillor
+item.tardis.time_vector_generator.name=Tidsvektorskontroll
+item.tardis.biodampener.name=Bio-Dämpare
+item.tardis.mercury_bottle.name=Kvicksilversflaska
+item.tardis.cinnabar.name=Cinnabar Damm
+
+tooltip.remote=Dosan bunden till TARDISen vid:
+tooltip.remote.time=TARDISen Ankommer Om
+tooltip.remote.fuel=Artron Banker
+tooltip.remote.exteriorpos=TARDISens Yttre Position:
+
+general.time.seconds=sekund(er)
+
+tile.tardis:tardis.name=TARDIS
+tile.tardis:time_rotor.name=Tidsrotor
+tile.tardis:panel.name=Rundel
+tile.tardis:door.name=TARDIS-Dörr
+tile.tardis:tardis_top.name=TARDIS
+tile.tardis:light.name=Lampa
+tile.tardis:homing_beacon.name=Vägledare
+tile.tardis:chronodine_generator.name=Kronodyn-Generator
+tile.tardis:grate.name=Galler
+tile.tardis:temporal_lab.name=Timlighetslaboratorium
+tile.tardis:umbrella_stand.name=Paraplyställ
+tile.tardis:alembic.name=Retort
+tile.tardis:food_machine.name=Matmaskin
+tile.tardis:electric_panel.name=Elektriskt Gränssnittspanel
+tile.tardis:megalos.name=Meglos
+tile.tardis:console.name=Konsol
+tile.tardis:toyota_hexagon_1.name=Toyota Block
+tile.tardis:ruby_ore.name=Rubinmalm
+tile.tardis:holoprojector.name=Holoprojektor
+tile.tardis:tardis_coral.name=TARDIS-Korall
+tile.tardis:cinnabar_ore.name=Cinnabarmalm
+
+tardis.locked.true=TARDISen är låst!
+tardis.locked.false=TARDISen är upplåst!
+
+death.attack.dalek=Skjuten av ett Dalek Strålvapen.
+death.cyberman.ray=var utplånad.
+
+damage.dalek=var förintad.
+
+
+screw.recall=Tillkallningsläge
+screw.lamp=Fix-Läge
+screwdriver.hallway=Rumskapare - Hall
+screw.generic_room=Rumskapare - Litet Rum
+screw.electric=Rundeldemontör
+screwdriver.hads=Återvänd från H.A.D.S.
+
+raygun.ammo=Ammunition kvar.
+raygun.ammo.none=Ingen ammunition!
+
+tardis.none=Du äger inte en TARDIS.
+tardis.flying=TARDISen är i flygläge!
+
+tardis.gui.protocol.force_field=Kraftfätlsprotokoll
+
+tardis.console.land.true=TARDISen skall söka på marken för en landningsplats.
+tardis.console.land.false=TARDISen skall söka under marken för en landningsplats.
+
+tardis.direction.north=TARDISen står inför Norr.
+tardis.direction.east=TARDISen står inför Öst.
+tardis.direction.south=TARDISen är vänd mot Söder.
+tardis.direction.west=TARDISen står inför Väst.
+
+tardis.missing=Det yttre plasmaskalet kan inte hittas! Var snäll och försök att landa igen.
+
+tardis.magnitude=TARDIS-koordinatmodifieraren är
+
+tardis.hads.enabled.true=H.A.D.S. är påslaget.
+tardis.hads.enabled.false=H.A.D.S. är avstängt.
+
+protocol.ccircut=Kameleonkrets
+protocol.hads=H.A.D.S.-Brytare
+protocol.tardis.find_rift=Sök efter den närmaste tidssprickan.
+protocol.tardis.systemreadout=Subsystemsavläsning
+protocol.tardis.change.console=Byt konsol.
+protocol.tardis.ars=Arkitektoniskt Rekonfigurationssystem.
+
+systems.tardis.flight=Flygsystemet
+systems.protocol.dimensions=Dimensionella Fördämningar
+system.tardis.fluidlinks=Vätskelänkarna
+
+tardis.dimension=Navigeringsdatorns dimension är:
+
+tardis.event.dalek=Dalek invasion vid:
+
+config.category.dims=Dimensioner
+config.dims=Dimensionslista
+config.setdim=Ange dimensions-ID för moddet?
+config.tDim=TARDIS-Dimensionen
+config.bhDim=Rymddimensionen
+config.dim.usewhitelist=Bör dimensionerna i dimensionslistan användas som en vitlista?
+
+config.entity=Entitet
+config.entity.allowed=Bör moddet tillägga mobs?
+config.entity.cybermen.spawnchance=Chansen att en Cyberman spawnar (per chunk)
+
+config.misc=Diverse
+config.misc.givekey=Ska ge spelare en TARDIS-nyckel när de går med i världen?
+config.misc.maxrand=Maximalt antal block som TARDISen får resa när man använder randomiseraren
+
+entity.launch_lever.name=Tidsrotorshandbroms
+entity.x_valve.name=Rumtidskontroll - X
+entity.y_valve.name=Rumtidskontroll - Y
+entity.z_valve.name=Rumtidskontroll - Z
+entity.dim_change.name=Dimensionsväljare
+entity.screen.name=Skärm
+entity.rand_control.name=Destinationsrandomiserare
+entity.tardis_door.name=Dörr
+entity.stc_load.name=Waypoint Setter
+entity.stc_button.name=Waypointväljare
+entity.control_flight.name=Manuell-Flygläge
+entity.fuel.name=Påfyllare
+entity.land_type.name=Landningsväljare
+entity.direction_control.name=Riktningskontroll
+entity.tardis.name=TARDIS
+entity.tardis_fast_return.name=Snabb Retur
+entity.telepathic_circuts.name=Telepatiksa Kretsar
+entity.tardis_door_control.name=Dörrbrytare
+entity.tardis_magnitude.name=Koordinat Magnitudjusteraren
+entity.tardis_phone.name=Kommunikator
+
+entity.dalek.name=Dalek
+
+
+entity.invasion_cyberman.name=Invasion Cyberman
+
+death.cyberman.generic=var konverterad.
+
+key.console.location=TARDISens inre position:
+
+manual.help=Håll musen över kontrollerna för att veta vad som gör vad!
+
+tardis.damage.demat=Dematerialiseringskretsen har förstörts!
+
+tardis.message.refuelling=TARDISen tankar...
+tardis.message.no_longer_refuelling=TARDISen är färdigtankad!
+
+tardis.subtitle.vworp=Vworp
+tardis.subtitle.flying=TARDISen flyger.
+tardis.subtitle.sonic=Soniken
+tardis.subtitle.dalek_ray=Dalek Stråle
+tardis.subtitle.dalek=Dalek
+tardis.subtitle.force_field=Kraftfält
+tardis.subtitle.locked=Låst
+tardis.subtitle.door_open=Dörr öppnas
+tardis.subtitle.door_closed=Dörr stängs
+tardis.subtitle.interior_hum_80=80-talets inre surrande
+tardis.subtitle.cloister_bell=Klosterklocka
+tardis.subtitle.drum_beat=Trumslag
+tardis.subtitle.stutter=Stamning
+tardis.subtitle.vm_teleport=Tidvirvelsmanipulator
+
+command.no_tardis_owned=Ingen TARDIS funnen.
+command.no_player_found=Ingen spelare hittades med det namnet.
+command.tardis_travel=TARDISen är på väg.
+command.tardis_deleted=TARDISen har blivit raderad.
+
+commands.tardis.teleportin.usage=/tardistp
+commands.tardis.grow.usage=/tardisgrow
+commands.tardis.summon.usage=/tardissummon <player>
+command.tardis.remove.usage=/tardisremove <player>
