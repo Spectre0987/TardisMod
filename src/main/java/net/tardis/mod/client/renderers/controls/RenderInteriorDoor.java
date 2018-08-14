@@ -1,42 +1,53 @@
 package net.tardis.mod.client.renderers.controls;
 
-import java.util.List;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.tardis.mod.client.EnumExterior;
+import net.tardis.mod.client.renderers.RenderHelper;
+import net.tardis.mod.client.worldshell.RenderWorldShell;
+import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockFacingDecoration;
 import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
-public class RenderInteriorDoor extends TileEntitySpecialRenderer {
+public class RenderInteriorDoor extends TileEntitySpecialRenderer<TileEntityInteriorDoor> {
+	
+	private WorldShell shell;
+	private RenderWorldShell render;
+	
+	public RenderInteriorDoor() {
+		render = new RenderWorldShell();
+	}
 	
 	@Override
-	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		boolean open = false;
+	public void render(TileEntityInteriorDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+		boolean open = true;
 		GlStateManager.pushMatrix();
+		GlStateManager.translate(x + 0.5, y - 1, z + 0.5);
 		TileEntityInteriorDoor door = (TileEntityInteriorDoor)te;
-		List<TileEntity> list = te.getWorld().loadedTileEntityList;
 		TileEntityTardis tardis = null;
-		for(TileEntity liste : list) {
+		for(TileEntity liste : te.getWorld().getChunkFromBlockCoords(te.getPos()).getTileEntityMap().values()) {
 			if(liste instanceof TileEntityTardis) {
 				tardis = (TileEntityTardis)liste;
 			}
 		}
 		EnumExterior ext = tardis != null ? (tardis.getTopBlock() != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()): EnumExterior.FIRST) : EnumExterior.FIRST;
-		GlStateManager.translate((float)x, (float)y, (float)z);
 		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		if(state.getBlock() instanceof BlockFacingDecoration) {
 			GlStateManager.rotate(Helper.getAngleFromFacing(state.getValue(BlockFacingDecoration.FACING)), 0, 1, 0);
+			EnumFacing facing = state.getValue(BlockFacingDecoration.FACING);
+			if(facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH)GlStateManager.rotate(180, 0, 1, 0);
 		}
-		
+		//GlStateManager.translate(-0.5, 0, 0);
 		if(open) {
 			ext.interiorModel.renderOpen();
-			//TODO: WorldShell/WorldPortal here
+			RenderHelper.renderPortal(render, te, partialTicks);
 		} else {
+			GlStateManager.translate(0.25, 0, 0);
 			ext.interiorModel.renderClosed();
 		}
 		

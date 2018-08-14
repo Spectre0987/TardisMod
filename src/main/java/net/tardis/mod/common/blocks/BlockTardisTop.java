@@ -90,6 +90,7 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 			TileEntityTardis tardis = (TileEntityTardis)tWorld.getTileEntity(((TileEntityDoor)worldIn.getTileEntity(pos)).getConsolePos());
 			if(tardis != null) {
 				tWorld.playSound(null, tardis.getPos(), TSounds.knocking, SoundCategory.BLOCKS, 1F, 1F);
+				worldIn.playSound(null, tardis.getPos(), TSounds.knocking, SoundCategory.BLOCKS, 1F, 1F);
 			}
 		}
 		super.onBlockClicked(worldIn, pos, playerIn);
