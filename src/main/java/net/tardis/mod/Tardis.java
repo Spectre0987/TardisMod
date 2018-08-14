@@ -30,6 +30,7 @@ import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.commands.CommandSummon;
+import net.tardis.mod.common.commands.CommandTardisTransfer;
 import net.tardis.mod.common.commands.CommandTeleport;
 import net.tardis.mod.common.commands.TardisCommandGrow;
 import net.tardis.mod.common.commands.TardisCommandRemove;
@@ -293,5 +294,6 @@ public class Tardis {
 		event.registerServerCommand(new TardisCommandGrow());
 		event.registerServerCommand(new CommandSummon());
 		event.registerServerCommand(new TardisCommandRemove());
+		event.registerServerCommand(new CommandTardisTransfer());
 	}
 }
