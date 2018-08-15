@@ -568,7 +568,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				ec.add(new ControlZ(this));
 				ec.add(new ControlDimChange(this));
 				ec.add(new ControlRandom(this));
-				ec.add(new ControlDoor(this));
 				ec.add(new ControlSTCLoad(this));
 				ec.add(new ControlFlight(this));
 				ec.add(new ControlFuel(this));

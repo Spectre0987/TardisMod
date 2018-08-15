@@ -116,11 +116,6 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	}
 	
 	@Override
-	public void applyEntityCollision(Entity entityIn) {
-		
-	}
-	
-	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
@@ -164,6 +159,7 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				}
 				this.setFacing(facing);
                 List<NBTTagCompound> list = new ArrayList<>();
+                List<PlayerStorage> players = new ArrayList<PlayerStorage>();
 				for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation().offset(facing, 10), 10))) {
 					if(EntityList.getKey(e) != null) {
 						NBTTagCompound tag = new NBTTagCompound();
@@ -171,10 +167,9 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 						tag.setString("id", EntityList.getKey(e).toString());
 						list.add(tag);
 					}
-				}
-				List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-				for(EntityPlayer player : ws.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(tardis.getLocation().offset(facing, 10), 10))) {
-					players.add(new PlayerStorage(player));
+					else if(e instanceof EntityPlayer) {
+						players.add(new PlayerStorage((EntityPlayer)e));
+					}
 				}
 				shell.setPlayers(players);
 				shell.setEntities(list);

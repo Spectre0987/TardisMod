@@ -14,6 +14,7 @@ public class RenderHellbentPole extends TileEntitySpecialRenderer {
 	public ModelHellbentPole model = new ModelHellbentPole();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/hellbent/pole.png");
 	
+	
 	public RenderHellbentPole() {
 		mc = Minecraft.getMinecraft();
 	}

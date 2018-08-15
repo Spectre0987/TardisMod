@@ -72,7 +72,7 @@ import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindRift;
-import net.tardis.mod.common.protocols.ProtocolLight;
+import net.tardis.mod.common.protocols.ProtocolRegenRoom;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.screwdriver.ElectricPanelMode;
@@ -127,7 +127,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String DEP = "after:ic2, galacticraftcore, " + TStrings.ModIds.WEEPING_ANGELS + "; required-after:forge@[14.23.2.2638,)";
-	public static final String VERSION = "0.0.5A";
+	public static final String VERSION = "0.0.6A";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 
 	
@@ -238,7 +238,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolFindRift());
 		TardisProtocol.register(new ProtocolConsole());
 		TardisProtocol.register(new ProtocolARS());
-		TardisProtocol.register(new ProtocolLight());
+		TardisProtocol.register(new ProtocolRegenRoom());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.

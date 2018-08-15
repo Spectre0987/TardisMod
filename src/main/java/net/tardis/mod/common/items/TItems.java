@@ -65,6 +65,10 @@ public class TItems {
 	public static Item hellbent_corridor = null;
 	public static Item hellbent_door = null;
 	
+	public static Item interior_door = register(new ItemInteriorDoor(), "interior_door");
+	
+	public static Item marker = createItem(new ItemMarker(), "marker");
+	
 	// Componenets
 	public static Item fluid_link = null;
 	public static Item artron_capacitor = null;

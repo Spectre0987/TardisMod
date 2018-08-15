@@ -26,8 +26,7 @@ public class GuiARS extends GuiScreen{
 		mc.getTextureManager().bindTexture(TEXTURE);
 		ScaledResolution res = new ScaledResolution(mc);
 		this.drawTexturedModalRect(res.getScaledWidth() / 2 - gui_width / 2, res.getScaledHeight() / 2 - gui_height / 2, 0, 0, gui_width, gui_height);
-		
-		//this.drawTexturedModalRect(mouseX, mouseY, 0, 0, 10, 10);
+
 		GlStateManager.popMatrix();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

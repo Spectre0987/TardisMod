@@ -67,8 +67,8 @@ public class BlockConsole extends BlockTileBase implements IUnbreakable, IRender
 					for(EntityControl c : tardis.controls) {
 						c.setDead();
 					}
-					tardis.controls = null;
 				}
+				tardis.controls = null;
 				tardis.createControls();
 			}
 			else if(!held.isEmpty()) {

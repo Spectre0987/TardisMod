@@ -146,7 +146,7 @@ public class TEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static  void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
+	public static void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
 		e.setCanceled(e.getState().getBlock() instanceof IUnbreakable);
 	}
 
@@ -181,7 +181,7 @@ public class TEventHandler {
 			}
 		}
 		if(TardisConfig.BOTI.enable) {
-			event.player.sendStatusMessage(new TextComponentString("Are you sure you want to enable BOTI? It is extremly buggy and if you complain / mention it in the Discord you" + TextFormatting.BOLD + TextFormatting.DARK_RED + TextFormatting.UNDERLINE + " may be banned!"), false);
+			event.player.sendStatusMessage(new TextComponentString("Are you sure you want to enable BOTI? It is extremly buggy and if you complain / mention it in the Discord you" + TextFormatting.BOLD + TextFormatting.DARK_RED + TextFormatting.UNDERLINE + " INSTANTLY and PERMANENTLY banned!"), false);
 		}
 	}
 	

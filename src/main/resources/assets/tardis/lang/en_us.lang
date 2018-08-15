@@ -87,8 +87,6 @@ raygun.ammo.none=No Ammo!
 tardis.none=You don't own a TARDIS
 tardis.flying=TARDIS in flight!
 
-tardis.gui.protocol.force_field=Force Field Protocol
-
 tardis.console.land.true=TARDIS will search upwards for a landing spot
 tardis.console.land.false=TARDIS will search downwards for a landing spot
 
@@ -110,6 +108,7 @@ protocol.tardis.find_rift=Find nearest rift
 protocol.tardis.systemreadout=Sub-System readout
 protocol.tardis.change.console=Change Console
 protocol.tardis.ars=Architectural Reconfiguration System
+protocol.tardis.regenroom=Regenerate Console Room
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams

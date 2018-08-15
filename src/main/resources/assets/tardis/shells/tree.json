@@ -1,0 +1,3140 @@
+{
+  "structure": {
+    "blocks": {
+      "X": 7,
+      "Y": 0,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": 0,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": 0,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": 0,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": 0,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": 0,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -1,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -1,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -1,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -1,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -1,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -1,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -1,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -2,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -2,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -2,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -2,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -2,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -2,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -2,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -3,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -3,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -3,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -4,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -4,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -4,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -5,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -5,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -5,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -6,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -6,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -6,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -6,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -6,
+      "Z": 7,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": 0,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": 0,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": 0,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": 0,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": 0,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": 0,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -1,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -1,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -1,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -1,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -1,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -1,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -1,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -2,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -2,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -2,
+      "Z": 6,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -2,
+      "Z": 6,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -2,
+      "Z": 6,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -2,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -2,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -3,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -3,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -3,
+      "Z": 6,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": 6,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 6,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -4,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -4,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -4,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -5,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -5,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -5,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -6,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -6,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -6,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -6,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -6,
+      "Z": 6,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": 0,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": 0,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": 0,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": 0,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": 0,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": 0,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -1,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -1,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -1,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -1,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -1,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -1,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -1,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -2,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -2,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -2,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -2,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -2,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -2,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -2,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -3,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -3,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -3,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -4,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -4,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -4,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -5,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -5,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -5,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": 5,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -6,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -6,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -6,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -6,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -6,
+      "Z": 5,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": 0,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": 0,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": 0,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": 0,
+      "Z": 4,
+      "Block": "minecraft:log",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": 0,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": 0,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -1,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -1,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -1,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -1,
+      "Z": 4,
+      "Block": "minecraft:log",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -1,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -1,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -1,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -2,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -2,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -2,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -2,
+      "Z": 4,
+      "Block": "minecraft:log",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -2,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -2,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -2,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -3,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -3,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -3,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": 4,
+      "Block": "minecraft:log",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -4,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -4,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -4,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": 4,
+      "Block": "minecraft:log",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -5,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -5,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -5,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 4,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -6,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -6,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -6,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -6,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -6,
+      "Z": 4,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": 0,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": 0,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": 0,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": 0,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": 0,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": 0,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -1,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -1,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -1,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -1,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -1,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -1,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -1,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -2,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -2,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -2,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -2,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -2,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -2,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -2,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -3,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -3,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -3,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -4,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -4,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -4,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -5,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -5,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -5,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": 3,
+      "Block": "minecraft:leaves",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -6,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -6,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -6,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -6,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -6,
+      "Z": 3,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": 0,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": 0,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": 0,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": 0,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": 0,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": 0,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -1,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -1,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -1,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -1,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -1,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -1,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -1,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -2,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -2,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -2,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -2,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -2,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -2,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -2,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -3,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -3,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -3,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 2,
+      "Block": "minecraft:leaves",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -4,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -4,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -4,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -5,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -5,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -5,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -6,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -6,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -6,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -6,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -6,
+      "Z": 2,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": 0,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": 0,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": 0,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": 0,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": 0,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": 0,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -1,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -1,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -1,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -1,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -1,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -1,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -1,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -2,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -2,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -2,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -2,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -2,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -2,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -2,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -3,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -3,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -3,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -4,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -4,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -4,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -5,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -5,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -5,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -6,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -6,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -6,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -6,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -6,
+      "Z": 1,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -1,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -1,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -1,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -1,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -1,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -1,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -1,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -2,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -2,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -2,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -2,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -2,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -2,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -2,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 7,
+      "Y": -6,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 6,
+      "Y": -6,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 5,
+      "Y": -6,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -6,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -6,
+      "Z": 0,
+      "Block": "minecraft:air",
+      "Meta": 0
+    }
+  }
+}
