@@ -90,11 +90,30 @@ public class EntityTardis extends EntityFlying {
 		if (this.renderRotation > 360) this.renderRotation = 0;
 		if (!world.isRemote) {
 			Entity e = this.getControllingPassenger();
-			if (e != null && ((EntityLivingBase) e).moveForward > 0) {
-				Vec3d look = e.getLookVec().scale(0.5);
-				motionX = look.x;
-				motionY = look.y;
-				motionZ = look.z;
+			if (e != null && e instanceof EntityLivingBase) {
+				EntityLivingBase base = (EntityLivingBase)e;
+				if(base.moveForward > 0) {
+					Vec3d look = e.getLookVec().scale(0.5);
+					motionX = look.x;
+					motionY = look.y;
+					motionZ = look.z;
+				}
+				else if(base.moveForward < 0) {
+					Vec3d look = e.getLookVec().scale(0.5).scale(-1);
+					motionX = look.x;
+					motionY = look.y;
+					motionZ = look.z;
+				}
+				if(base.moveStrafing > 0) {
+					Vec3d look = e.getLookVec().scale(0.5).rotateYaw(90F);
+					motionX = look.x;
+					motionZ = look.z;
+				}
+				else if(base.moveStrafing < 0) {
+					Vec3d look = e.getLookVec().scale(0.5).rotateYaw(-90F);
+					motionX = look.x;
+					motionZ = look.z;
+				}
 				((EntityPlayerMP) e).connection.sendPacket(new SPacketEntityVelocity(this));
 			}
 			if (this.getControllingPassenger() == null || this.getConsolePos() == null || this.getConsolePos().equals(BlockPos.ORIGIN)) {
