@@ -25,4 +25,7 @@ formatter/
 classes/
 build/
 
+gradle.properties
+*.jks
+
 

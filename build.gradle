@@ -10,20 +10,21 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
+task signJar(type: SignJar, dependsOn: reobfJar) {
 
-def getGitHash = { ->
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'rev-parse', '--short', 'HEAD'
-        standardOutput = stdout
+    onlyIf {
+        project.hasProperty('keyStore')
     }
-    return stdout.toString().trim() + "-"
+
+    keyStore = project.findProperty('keyStore')
+    alias = project.findProperty('keyStoreAlias')
+    storePass = project.findProperty('keyStorePass')
+    keyPass = project.findProperty('keyStoreKeyPass')
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
 }
 
-def getDate() {
-    return new Date().format('dd-mm-yyyy')
-}
-
+build.dependsOn signJar
 
 version = "0.0.6A"
 group = "net.tardis.mod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -39,6 +40,9 @@ minecraft {
     runDir = "run"
     mappings = "snapshot_20171003"
     makeObfSourceJar = true
+    replace '@VERSION@', project.version
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    replaceIn "net.tardis.mod.Tardis.java"
 }
 
 dependencies {
