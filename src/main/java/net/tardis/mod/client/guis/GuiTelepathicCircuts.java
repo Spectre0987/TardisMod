@@ -1,5 +1,11 @@
 package net.tardis.mod.client.guis;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -12,11 +18,6 @@ import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.packets.MessageTelepathicCircut;
-import org.lwjgl.input.Keyboard;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class GuiTelepathicCircuts extends GuiScreen {
 	
@@ -39,9 +40,10 @@ public class GuiTelepathicCircuts extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		name.drawTextBox();
-        //	this.drawDefaultBackground();
+        
     }
 
     @Override
@@ -139,7 +141,7 @@ public class GuiTelepathicCircuts extends GuiScreen {
         });
 
         for (ResourceLocation biomeName : ForgeRegistries.BIOMES.getKeys()) {
-            newStrings.add(biomeName.getResourcePath());
+        	newStrings.add(ForgeRegistries.BIOMES.getValue(biomeName).getBiomeName());
         }
 
     }
