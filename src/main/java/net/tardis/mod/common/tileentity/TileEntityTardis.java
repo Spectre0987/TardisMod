@@ -117,6 +117,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if(systems == null) {
 			this.systems = this.createSystems();
 		}
+		this.coordList.add(Helper.convertToPixels(0, 0, 0));
 	}
 
 	@Override
