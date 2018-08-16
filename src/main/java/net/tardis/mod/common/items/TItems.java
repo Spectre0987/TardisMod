@@ -1,8 +1,5 @@
 package net.tardis.mod.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -17,6 +14,9 @@ import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TItems {
@@ -64,10 +64,10 @@ public class TItems {
 	
 	public static Item hellbent_corridor = null;
 	public static Item hellbent_door = null;
-	
-	public static Item interior_door = register(new ItemInteriorDoor(), "interior_door");
-	
-	public static Item marker = createItem(new ItemMarker(), "marker");
+
+    public static Item interior_door = null;
+
+    public static Item marker = null;
 	
 	// Componenets
 	public static Item fluid_link = null;
@@ -119,6 +119,8 @@ public class TItems {
 		fluid_link = createItem(new FluidLink(), "fluid_link");
 		artron_capacitor = createItem(new ArtronCapacitor(), "artron_capacitor");
 		demat_circut = createItem(new DematerializationCircut(), "demat_circut");
+        interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
+        marker = createItem(new ItemMarker(), "marker");
 	}
 	
 	public static Item createItem(Item item, String name) {

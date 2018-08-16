@@ -1,7 +1,6 @@
 package net.tardis.mod.common.blocks;
 
 import com.google.common.base.Supplier;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +25,7 @@ public class BlockConsole extends BlockTileBase implements IUnbreakable, IRender
 	public ItemBlock item = new ItemBlock(this);
 	
 	public BlockConsole(Supplier<TileEntity> tile) {
-        super(Material.ANVIL, tile);
+		super(Material.ROCK, tile);
 		this.setBlockUnbreakable();
 		item.setCreativeTab(null);
 	}

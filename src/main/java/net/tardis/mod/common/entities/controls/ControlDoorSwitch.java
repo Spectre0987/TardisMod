@@ -2,12 +2,10 @@ package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
-import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
@@ -42,7 +40,7 @@ public class ControlDoorSwitch extends EntityControl{
 				TileEntityTardis tardis = (TileEntityTardis)te;
 				if(!tardis.isInFlight()) {
 					for(EntityHellbentDoor rd : world.getEntitiesWithinAABB(EntityHellbentDoor.class, DOOR_BB.offset(getPositionVector()))) {
-						rd.setOpen(rd.isOpen() ? false : true);
+                        rd.setOpen(!rd.isOpen());
 					}
 				}
 			}

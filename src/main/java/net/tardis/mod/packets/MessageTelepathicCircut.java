@@ -1,8 +1,5 @@
 package net.tardis.mod.packets;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,6 +17,9 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MessageTelepathicCircut implements IMessage {
 
@@ -78,7 +78,7 @@ public class MessageTelepathicCircut implements IMessage {
                             }
                         }
                         else {
-                        	Random rand = new Random();
+                            Random rand = ctx.getServerHandler().player.world.rand;
                             BlockPos structurePos = locationWorld.findNearestStructure(message.name.trim(), tardis.getLocation(), true);
                             if(structurePos != null && !BlockPos.ORIGIN.equals(structurePos)) {
                                 tardis.setDesination(structurePos.add(rand.nextInt(6) - 3, 0, rand.nextInt(6) - 3), tardis.dimension);
