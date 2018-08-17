@@ -62,6 +62,9 @@ public class TardisConfig {
 		@Config.LangKey("config.misc.maxrand")
 		@Config.Comment("Set to Zero to make it anywhere in the world.")
 		public int maxRandom = 5000;
+
+		@Config.LangKey("config.misc.on.kill")
+		public boolean killControlsOnKillCommand = false;
 	}
 	
 	public static class BOTI{
