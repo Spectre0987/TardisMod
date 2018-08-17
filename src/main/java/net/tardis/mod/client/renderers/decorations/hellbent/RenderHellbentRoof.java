@@ -21,7 +21,7 @@ public class RenderHellbentRoof extends TileEntitySpecialRenderer {
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x + 0.5, y + 2, z + 0.5);
+		GlStateManager.translate(x + 0.5, y + 1.75, z + 0.5);
 		GlStateManager.rotate(180, 1, 0, 0);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
