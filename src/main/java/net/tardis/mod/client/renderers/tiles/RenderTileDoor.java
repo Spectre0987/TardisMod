@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
@@ -37,7 +36,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 	@Override
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
-		boolean airBelow = mc.world.getBlockState(new BlockPos(x, y - 1, z)).getBlock() == Blocks.AIR;
+		boolean airBelow = mc.world.getBlockState(te.getPos().down()).getBlock() == Blocks.AIR;
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);

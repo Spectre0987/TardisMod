@@ -16,8 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.blocks.interfaces.INeedItem;
 
-public class BlockMegalos extends BlockBase {
+public class BlockMegalos extends BlockBase implements INeedItem{
 	
 	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
 	public ItemBlock item = new ItemBlock(this);
@@ -91,6 +92,11 @@ public class BlockMegalos extends BlockBase {
 	public boolean causesSuffocation(IBlockState state) {
 		int meta = state.getValue(TYPE);
 		return meta == 14 || meta == 15 ? false : true;
+	}
+
+	@Override
+	public ItemBlock getItem() {
+		return item;
 	}
 	
 }

@@ -26,8 +26,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.controls.ControlDoor;
-import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemDimension;
@@ -60,11 +58,6 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 			WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 			TileEntity te = ws.getTileEntity(door.getConsolePos());
 			if (te != null && te instanceof TileEntityTardis) {
-				EntityControl control = ((TileEntityTardis) te).getControl(ControlDoor.class);
-				if (control != null) {
-					((ControlDoor) control).setOpen(!door.isLocked());
-				}
-			
 				ItemStack held = playerIn.getHeldItem(hand);
 				SystemDimension dim = null;
 				if(held.getItem() == TItems.time_vector_generator) {
