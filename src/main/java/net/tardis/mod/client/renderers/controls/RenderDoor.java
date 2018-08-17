@@ -39,12 +39,16 @@ public class RenderDoor extends Render<ControlDoor> {
 	@Override
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x - 0.25, y, z + 0.499);
+		GlStateManager.translate(x, y, z);
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
 		TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
-		
 		EnumExterior ext = tardis != null ? (tardis.getTopBlock() != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()): EnumExterior.FIRST) : EnumExterior.FIRST;
+		GlStateManager.rotate(Helper.get360FromFacing(entity.getHorizontalFacing()), 0, 1, 0);
+		if(entity.getHorizontalFacing() == EnumFacing.NORTH || entity.getHorizontalFacing() == EnumFacing.SOUTH) {
+			GlStateManager.rotate(180, 0, 1, 0);
+		}
+		GlStateManager.translate(-0.25, 0, 0);
 		if(open) {
 			try {
 				Vec3d offset = null;
@@ -62,8 +66,7 @@ public class RenderDoor extends Render<ControlDoor> {
 					offset = new Vec3d(-12,1,0);
 				}
 				mc.getTextureManager().bindTexture(BLACK);
-				GlStateManager.translate(-0.25, 0, 0);
-				
+				GlStateManager.translate(-0.25, 0, 0.5);
 				ext.interiorModel.renderOpen();
 				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2,0));
 				else RenderHelper.drawOutline(new Vec3d(1, 2,0));
@@ -71,6 +74,7 @@ public class RenderDoor extends Render<ControlDoor> {
 			catch(Exception e) {}
 		}
 		else {
+			GlStateManager.translate(0, 0, 0.5);
 			ext.interiorModel.renderClosed();
 		}
 		GlStateManager.popMatrix();

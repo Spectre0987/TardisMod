@@ -9,12 +9,16 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +27,6 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.BlockStorage;
@@ -33,6 +36,7 @@ import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -40,17 +44,12 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 
-public class ControlDoor extends EntityControl implements IContainsWorldShell{
+public class ControlDoor extends Entity implements IContainsWorldShell{
 	
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<EnumFacing> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FACING);
 	public int antiSpamTicks = 0;
 	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
-	
-	public ControlDoor(TileEntityTardis tardis) {
-		super(tardis);
-		this.setSize(1F, 2F);
-	}
 
 	public ControlDoor(World world) {
 		super(world);
@@ -59,19 +58,32 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	
 	@Override
 	protected void entityInit() {
-		super.entityInit();
 		this.dataManager.register(IS_OPEN, false);
 		this.dataManager.register(FACING, EnumFacing.NORTH);
 	}
 	
+	public BlockPos getConsolePos() {
+		BlockPos pos = BlockPos.ORIGIN;
+		for(TileEntity te : world.loadedTileEntityList) {
+			if(te instanceof TileEntityTardis && te.getPos().distanceSq(this.getPosition()) < Math.pow(40, 2)) {
+				return te.getPos();
+			}
+		}
+		return pos;
+	}
+
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if(!world.isRemote) {
+			this.setDead();
+			InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(TItems.interior_door));
+		}
+		return true;
+	}
+
 	@Override
 	public boolean canBePushed() {
 		return false;
-	}
-	
-	@Override
-	public Vec3d getOffset(TileEntityTardis tardis) {
-		return new Vec3d(0, -1, 6);
 	}
 	
 	public void setFacing(EnumFacing facing) {
@@ -93,8 +105,9 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	public long getTime() {
 		return 1l;
 	}
+	
 	@Override
-	public void preformAction(EntityPlayer player) {
+	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
 		if (this.getConsolePos() != null) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			if (!player.isSneaking()) {
@@ -104,7 +117,8 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 						world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
 					else
 						world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
-					WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+					WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
+					if(ws == null)return true;
 					TileEntity te = ws.getTileEntity(tardis.getLocation().up());
 					if (te instanceof TileEntityDoor) {
 						((TileEntityDoor) te).setLocked(!this.isOpen());
@@ -113,15 +127,17 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 				}
 			}
 		}
+		return true;
 	}
-	
+
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
+		if(tardis == null) return;
 		if(!world.isRemote && this.isOpen()) {
-			AxisAlignedBB bb = new AxisAlignedBB(0, 0, 0.9, 1, 2, 1).offset(this.getPosition());
+			AxisAlignedBB bb = new AxisAlignedBB(0, 0, 0, 1, 2, 1).offset(this.getPosition());
 			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
 				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
@@ -214,6 +230,16 @@ public class ControlDoor extends EntityControl implements IContainsWorldShell{
 	@Override
 	public boolean shouldRenderInPass(int pass) {
 		return true;
+	}
+
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound compound) {
+		this.dataManager.set(IS_OPEN, compound.getBoolean("open"));
+	}
+
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound compound) {
+		compound.setBoolean("open", this.dataManager.get(IS_OPEN));
 	}
 	
 }
