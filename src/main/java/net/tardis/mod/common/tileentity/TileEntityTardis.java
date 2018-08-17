@@ -625,7 +625,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void crash(boolean explode) {
 		if (!world.isRemote) {
 			WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-			BlockPos crashSite = this.getLocation();
+			Vec3d cr = Helper.blockPosToVec3d(this.getDestination().subtract(this.getLocation())).scale(this.ticksToTravel / this.totalTimeToTravel);
+			BlockPos crashSite = new BlockPos(cr.x, cr.y, cr.z).add(this.getLocation());
 			this.setDesination(crashSite == null ? getLocation() : crashSite, dimension);
 			if(explode) {
 				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
@@ -817,7 +818,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	public void transferPlayer(EntityPlayer player, boolean checkDoors) {
 		if(!world.isRemote) {
-			ControlDoor door = (ControlDoor)this.getControl(ControlDoor.class);
+			ControlDoor door = null;
+			for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+				if(e != null) {
+					door = e;
+					break;
+				}
+			}
 			if(door != null && (door.isOpen() || !checkDoors)) {
 				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
 				TileEntity te = ws.getTileEntity(this.getLocation().up());
@@ -837,11 +844,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	public void enterTARDIS(Entity entity) {
 		if(!world.isRemote && this.getTardisState() == EnumTardisState.NORMAL) {
+			EnumFacing facing = EnumFacing.NORTH;
 			if(entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP)entity;
 				BlockPos tp = this.getPos().south(4);
+				for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+					tp = e.getPosition().offset(e.getHorizontalFacing());
+					facing = e.getHorizontalFacing();
+				}
 				((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter());
-				player.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(EnumFacing.NORTH), 0);
+				player.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 			}
 		}
 	}
