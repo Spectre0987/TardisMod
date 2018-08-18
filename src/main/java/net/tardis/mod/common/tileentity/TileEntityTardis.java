@@ -141,6 +141,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				else
 					++frame;
 			}
+			if(!world.isRemote) {
+				if(!this.getCanFly()) {
+					this.crash();
+				}
+			}
 		} else if (this.isFueling()) {
 			if(!world.isRemote) {
 				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
@@ -830,6 +835,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void setTardisState(EnumTardisState state) {
 		this.currentState = state;
+		this.markDirty();
 	}
 
 	public void transferPlayer(EntityPlayer player, boolean checkDoors) {
@@ -850,7 +856,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 						((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, dimension, new TardisTeleporter());
 						EnumFacing facing = ws.getBlockState(this.getLocation().up()).getValue(BlockTardisTop.FACING);
 						BlockPos tp = this.getLocation().offset(facing, 1);
-						mp.connection.setPlayerLocation(tp.getX(), tp.getY(), tp.getZ(), Helper.get360FromFacing(facing), 0);
+						mp.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 						return;
 					}
 				}
@@ -859,7 +865,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public void enterTARDIS(Entity entity) {
-		if(!world.isRemote && this.getTardisState() == EnumTardisState.NORMAL) {
+		if(!world.isRemote && this.getTardisState().equals(EnumTardisState.NORMAL)) {
 			EnumFacing facing = EnumFacing.NORTH;
 			if(entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP)entity;

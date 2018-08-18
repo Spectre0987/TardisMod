@@ -27,6 +27,9 @@ public class SystemDimension extends ISystem{
 	@Override
 	public void setHealth(float health) {
 		this.health = health;
+		if(health <= 0 && !runOnce) {
+			this.runOnce = true;
+		}
 	}
 
 	@Override
