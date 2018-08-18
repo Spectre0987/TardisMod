@@ -12,8 +12,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.Tardis;
 
 public class EntityDalekCasing extends EntityLiving{
 
@@ -45,13 +50,6 @@ public class EntityDalekCasing extends EntityLiving{
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if(source.getTrueSource() != null && this.getPassengers().contains(source.getTrueSource())) {
-			if(!world.isRemote) {
-				Vec3d look = source.getTrueSource().getLookVec().scale(2);
-				Vec3d des = look.add(this.getPositionVector()).scale(120);
-				EntityDalekRay ray = new EntityDalekRay(world, des.x, des.y, des.z);
-				ray.setPosition(posX + look.x, (posY + this.getEyeHeight()) + look.y, posZ + look.z);
-				world.spawnEntity(ray);
-			}
 			return false;
 		}
 		return super.attackEntityFrom(source, amount);
@@ -64,7 +62,14 @@ public class EntityDalekCasing extends EntityLiving{
 		}
 		super.dismountEntity(entityIn);
 	}
-	
+
+	@Override
+	public void updatePassenger(Entity pas) {
+		super.updatePassenger(pas);
+		Vec3d look = this.getPositionVector().add(this.getLookVec().scale(0.5));
+		pas.setPosition(look.x, look.y, look.z);
+	}
+
 	@SideOnly(Side.CLIENT)
 	public void setCamera(int i) {
 		Minecraft.getMinecraft().gameSettings.thirdPersonView = i;
@@ -112,5 +117,21 @@ public class EntityDalekCasing extends EntityLiving{
 	@Override
 	public Entity getControllingPassenger() {
 		return this.getPassengers().size() >= 1 ? this.getPassengers().get(0) : null;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@EventBusSubscriber(modid =  Tardis.MODID, value = Side.CLIENT)
+	public static class ClientEvent{
+		
+		@SubscribeEvent
+		public static void stopArmRender(RenderHandEvent event) {
+			if(isRiding()) {
+				event.setCanceled(true);
+			}
+		}
+		
+		public static boolean isRiding() {
+			return Minecraft.getMinecraft().player.getRidingEntity() != null && Minecraft.getMinecraft().player.getRidingEntity() instanceof EntityDalekCasing;
+		}
 	}
 }

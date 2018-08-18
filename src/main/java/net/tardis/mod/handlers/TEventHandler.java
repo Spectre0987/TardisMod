@@ -116,7 +116,6 @@ public class TEventHandler {
 	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public static void stopRender(RenderPlayerEvent.Pre event) {
 		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityTardis || event.getEntityPlayer().getRidingEntity() instanceof EntityDalekCasing) {
-			Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 			event.setCanceled(true);
 		}
 	}

@@ -11,7 +11,7 @@ public enum EnumTardisState {
 		this.name = name;
 	}
 	
-	String getNameKey(){
+	public String getNameKey(){
 		return name;
 	}
 
