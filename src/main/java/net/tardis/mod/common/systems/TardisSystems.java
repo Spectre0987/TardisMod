@@ -3,6 +3,7 @@ package net.tardis.mod.common.systems;
 import java.util.HashMap;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -47,7 +48,7 @@ public class TardisSystems {
 		/**Take Damage on crash**/
 		public abstract void damage();
 		public abstract Item getRepairItem();
-		public abstract boolean repair();
+		public abstract boolean repair(ItemStack stack);
 		public abstract String getNameKey();
 		/**Take damage at the end of each flight**/
 		public abstract void wear();

@@ -10,4 +10,9 @@ import net.tardis.mod.common.items.ItemBase;
  */
 public class ItemComponent extends ItemBase {
 	
+	public ItemComponent() {
+		this.setMaxDamage(100);
+		this.setMaxStackSize(1);
+	}
+	
 }

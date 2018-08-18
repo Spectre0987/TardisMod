@@ -68,7 +68,7 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 					}
 				}
 				if(dim != null) {
-					dim.repair();
+					dim.repair(held);
 					held.shrink(1);
 				}
 			}

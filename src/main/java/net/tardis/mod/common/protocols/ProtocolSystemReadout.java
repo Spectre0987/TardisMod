@@ -10,7 +10,7 @@ public class ProtocolSystemReadout implements ITardisProtocol {
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
 		if(world.isRemote) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiSystem());
+			Minecraft.getMinecraft().displayGuiScreen(new GuiSystem(tardis));
 		}
 	}
 

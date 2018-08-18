@@ -1,6 +1,7 @@
 package net.tardis.mod.common.systems;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -48,9 +49,9 @@ public class SystemFlight extends ISystem{
 	}
 
 	@Override
-	public boolean repair() {
+	public boolean repair(ItemStack stack) {
 		if(health < 1.0F) {
-			this.health = 1F;
+			this.health = (100 - stack.getItemDamage()) / 100F;
 			return true;
 		}
 		return false;

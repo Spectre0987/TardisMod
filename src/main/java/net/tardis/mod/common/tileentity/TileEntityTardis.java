@@ -518,6 +518,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		
 		tag.setInteger("facing", this.facing.getHorizontalIndex());
 		tag.setInteger(NBT.EXTERIOR, Block.getStateId(this.blockTop));
+		NBTTagList sysList = new NBTTagList();
+		for(ISystem s : this.systems) {
+			NBTTagCompound sT = new NBTTagCompound();
+			sT.setString("id", TardisSystems.getIdBySystem(s));
+			s.writetoNBT(sT);
+			sysList.appendTag(sT);
+		}
+		tag.setTag(NBT.SYSTEM_LIST, sysList);
 		return tag;
 	}
 	
@@ -546,6 +554,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.controls = controls.toArray(new EntityControl[0]);
 			this.facing = EnumFacing.getHorizontal(tag.getInteger("facing"));
 			this.blockTop = Block.getStateById(tag.getInteger(NBT.EXTERIOR));
+			List<ISystem> systems = new ArrayList<ISystem>();
+			for(NBTBase base : tag.getTagList(NBT.SYSTEM_LIST, Constants.NBT.TAG_COMPOUND)) {
+				NBTTagCompound sysTag = (NBTTagCompound)base;
+				ISystem system = TardisSystems.createFromName(sysTag.getString("id"));
+				system.readFromNBT(sysTag);
+				systems.add(system);
+			}
+			this.systems = systems.toArray(new ISystem[] {});
 		}
 	}
 	
@@ -889,5 +905,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void setPower(double power) {
 		this.power = power;
 		this.markDirty();
+	}
+
+	public ControlDoor getDoor() {
+		for(ControlDoor door : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+			return door;
+		}
+		return null;
 	}
 }

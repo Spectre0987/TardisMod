@@ -15,6 +15,8 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.packets.MessageDamageSystem;
+import net.tardis.mod.packets.MessageSpawnItem;
 
 public class GuiSystem extends GuiScreen{
 	
@@ -43,24 +45,25 @@ public class GuiSystem extends GuiScreen{
 		super.initGui();
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
 		int width = GUI_WIDTH / 2, height = GUI_HEIGHT / 2, id = 0;
-		for(String s : TardisSystems.SYSTEMS.keySet()) {
-			this.addButton(new GuiButton(id, width, height + (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(TardisSystems.createFromName(s).getNameKey()).getFormattedText()));
-			sys.put(id, s);
+		for(ISystem s : tardis.systems) {
+			this.addButton(new GuiButton(id, width, height + (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%"));
 			++id;
 		}
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		super.actionPerformed(button);
-		ISystem s;
-		for(ISystem sy : tardis.systems) {
-			if(TardisSystems.getIdBySystem(sy).equals(sys.get(button.id))) {
-				
+		if(button.id < TardisSystems.SYSTEMS.size()) {
+			ISystem sys = tardis.systems[button.id];
+			if(sys.getHealth() > 0.0F) {
+				ItemStack stack = new ItemStack(sys.getRepairItem());
+				stack.setItemDamage((int)(100 - (sys.getHealth() * 100)));
+				Tardis.NETWORK.sendToServer(new MessageSpawnItem(Minecraft.getMinecraft().player.getUniqueID(), stack));
+				Tardis.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
 			}
+			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
-		ItemStack stack = new ItemStack(TardisSystems.createFromName(sys.get(button.id)).getRepairItem());
-		stack.setItemDamage(0);
+		super.actionPerformed(button);
 	}
 
 }

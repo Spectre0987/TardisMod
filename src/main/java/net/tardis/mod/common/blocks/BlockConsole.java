@@ -1,6 +1,7 @@
 package net.tardis.mod.common.blocks;
 
 import com.google.common.base.Supplier;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -76,7 +77,7 @@ public class BlockConsole extends BlockTileBase implements IUnbreakable, IRender
 				if(tardis != null) {
 					for(ISystem sys : tardis.systems) {
 						if(held.getItem() == sys.getRepairItem()) {
-							if(sys.repair()) {
+							if(sys.repair(held)) {
 								playerIn.getHeldItem(hand).shrink(1);
 							}
 						}

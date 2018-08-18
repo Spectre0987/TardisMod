@@ -2,9 +2,11 @@ package net.tardis.mod.common.systems;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
@@ -35,6 +37,8 @@ public class SystemDimension extends ISystem{
 				tardis.setTardisState(EnumTardisState.DISABLED);
 				for(EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(consolePos, 8 * 16))) {
 					tardis.transferPlayer(p, false);
+					ControlDoor door = tardis.getDoor();
+					if(door != null)door.setOpen(false);
 				}
 				runOnce = false;
 			}
@@ -75,9 +79,9 @@ public class SystemDimension extends ISystem{
 	}
 
 	@Override
-	public boolean repair() {
+	public boolean repair(ItemStack stack) {
 		if(health < 1.0F) {
-			this.health = 1F;
+			this.health = (100 - stack.getItemDamage()) / 100F;
 			this.shouldFix = true;
 			return true;
 		}
