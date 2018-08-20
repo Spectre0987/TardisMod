@@ -879,6 +879,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP)entity;
 				BlockPos tp = this.getPos().south(4);
+				ChunkPos cPos = world.getChunkFromBlockCoords(getPos()).getPos();
+				for(int x = -1; x < 1; ++x) {
+					for(int z = -1; z < 1; ++z) {
+						((WorldServer)world).getChunkProvider().loadChunk(cPos.x + x, cPos.z + z);
+					}
+				}
 				for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
 					tp = e.getPosition().offset(e.getHorizontalFacing());
 					facing = e.getHorizontalFacing();
