@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:wooden_door"
+    },
+    {
+      "item": "tardis:circuts"
+    },
+    {
+        "item":"artron_capacitor"
+    }
+  ],
+  "result": {
+    "item": "tardis:interiordoor"
+  }
+}
