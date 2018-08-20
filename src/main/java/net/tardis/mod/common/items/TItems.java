@@ -1,5 +1,8 @@
 package net.tardis.mod.common.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -14,9 +17,7 @@ import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.items.components.ArtronCapacitor;
 import net.tardis.mod.common.items.components.DematerializationCircut;
 import net.tardis.mod.common.items.components.FluidLink;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.tardis.mod.common.items.components.ItemComponent;
 
 @Mod.EventBusSubscriber
 public class TItems {
@@ -73,6 +74,7 @@ public class TItems {
 	public static Item fluid_link = null;
 	public static Item artron_capacitor = null;
 	public static Item demat_circut = null;
+	public static Item antenna = createItem(new ItemComponent(), "antenna");
 
 	
 	@SubscribeEvent

@@ -40,11 +40,22 @@ public class TardisSystems {
 	
 	public static abstract class ISystem{
 		
-		public abstract float getHealth();
-		public abstract void setHealth(float health);
+		private float health = 1F;
+		
+		public float getHealth() {
+			return health;
+		}
+		public void setHealth(float health) {
+			this.health = health;
+		}
 		public abstract void onUpdate(World world, BlockPos consolePos);
-		public abstract void readFromNBT(NBTTagCompound tag);
-		public abstract NBTTagCompound writetoNBT(NBTTagCompound tag);
+		public void readFromNBT(NBTTagCompound tag) {
+			this.health = tag.getFloat("health");
+		}
+		public NBTTagCompound writetoNBT(NBTTagCompound tag) {
+			tag.setFloat("health", health);
+			return tag;
+		}
 		/**Take Damage on crash**/
 		public abstract void damage();
 		public abstract Item getRepairItem();

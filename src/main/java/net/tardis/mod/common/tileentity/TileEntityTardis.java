@@ -117,7 +117,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if(systems == null) {
 			this.systems = this.createSystems();
 		}
-		this.coordList.add(Helper.convertToPixels(0, 0, 0));
+		if(this.getClass() == TileEntityTardis.class) {
+			this.coordList.add(Helper.convertToPixels(-8.5, -1.5, -8.25));
+			this.coordList.add(Helper.convertToPixels(-8.75, -1.5, -6.75));
+			this.coordList.add(Helper.convertToPixels(-9.5, -1.5, -5.75));
+			this.coordList.add(Helper.convertToPixels(-10.25, -1.5, -4.5));
+		}
 	}
 
 	@Override
@@ -140,6 +145,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					frame = 0;
 				else
 					++frame;
+				for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+					player.rotationPitch += (rand.nextInt(10) - 5) * 0.1;
+					player.rotationYaw += (rand.nextInt(10) - 5) * 0.1;
+				}
 			}
 			if(!world.isRemote) {
 				if(!this.getCanFly()) {
@@ -409,7 +418,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 400/* The Time in tick it takes the launch sound to play */);
+		return (int) ((dist / MAX_TARDIS_SPEED) + 400 + (dimension == destDim ? 0 : 300));
 	}
 	
 	public BlockPos getDestination() {

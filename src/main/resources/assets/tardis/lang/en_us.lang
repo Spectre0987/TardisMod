@@ -35,6 +35,7 @@ item.tardis.time_vector_generator.name=Time Vector Generator
 item.tardis.biodampener.name=Bio-Dampener
 item.tardis.mercury_bottle.name=Bottle of Mercury
 item.tardis.cinnabar.name=Cinnabar Dust
+item.tardis.antenna.name=Interstitial Antenna
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
@@ -113,6 +114,7 @@ protocol.tardis.regenroom=Regenerate Console Room
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
 system.tardis.fluidlinks=Fluid Links
+systems.tardis.antenna=Interstitial Antenna
 
 tardis.dimension=Nav-com Dimension is:
 

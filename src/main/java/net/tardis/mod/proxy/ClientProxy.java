@@ -21,6 +21,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.client.EnumClothes;
+import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.client.models.ModelFirstCane;
 import net.tardis.mod.client.models.ModelKey01;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
@@ -228,6 +229,8 @@ public class ClientProxy extends ServerProxy {
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
 		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
 		Item.getItemFromBlock(TBlocks.alembic).setTileEntityItemStackRenderer(new RenderItemAlembic());
+		
+		Item.getItemFromBlock(TBlocks.console).setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelConsole(), RenderConsole.CONSOLE_TEXTURE));
 	}
 	
 	

@@ -81,6 +81,7 @@ import net.tardis.mod.common.screwdriver.GRoomMode;
 import net.tardis.mod.common.screwdriver.HallwayMode;
 import net.tardis.mod.common.screwdriver.ScrewdriverMode;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemAntenna;
 import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemFluidLinks;
@@ -264,6 +265,7 @@ public class Tardis {
 		TardisSystems.register("flight", SystemFlight.class);
 		TardisSystems.register("dimensional", SystemDimension.class);
 		TardisSystems.register("fluid_links", SystemFluidLinks.class);
+		TardisSystems.register("antenna", SystemAntenna.class);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
