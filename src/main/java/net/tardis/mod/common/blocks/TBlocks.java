@@ -51,9 +51,9 @@ public class TBlocks {
 	public static Block toyota_platform = register(new BlockToyota(false), "toyota_platform");
 	public static Block toyota_platform_top = register(new BlockToyota(false), "toyota_platform_top");
 	public static Block toyota_platform_light = register(new BlockToyota(true), "toyota_platform_light");
-	public static Block toyota_roof = register(new BlockToyota(false), "toyota_upper_divider");
+	public static Block toyota_roof = register(new BlockToyota(false), "toyota_roof");
 	public static Block toyota_roof_light = register(new BlockToyota(true), "toyota_roof_light");
-	public static Block toyota_wall = register(new BlockToyota(false), "toyota_upper_divider");
+	public static Block toyota_wall = register(new BlockToyota(false), "toyota_wall");
 	public static Block toyota_wallroundel_1 = register(new BlockToyota(true), "toyota_wallroundel_1");
 	public static Block toyota_wallroundel_2 = register(new BlockToyota(false), "toyota_wallroundel_2");
 	public static Block toyota_wallroundel_3 = register(new BlockToyota(true), "toyota_wallroundel_3");

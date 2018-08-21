@@ -17,8 +17,9 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.blocks.interfaces.INeedItem;
 
-public class BlockToyota extends BlockBase {
+public class BlockToyota extends BlockBase implements INeedItem{
 	
 	public ItemBlock item = new ItemBlockToyota(this);
 
@@ -134,6 +135,11 @@ public class BlockToyota extends BlockBase {
 			return new TextComponentTranslation(TBlocks.toyota_hexagon_1.getUnlocalizedName() + ".name").getFormattedText();
 		}
 		
+	}
+
+	@Override
+	public ItemBlock getItem() {
+		return item;
 	}
 
 }
