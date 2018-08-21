@@ -1,7 +1,6 @@
 package net.tardis.mod.proxy;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
@@ -12,10 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.WorldProvider;
-import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -120,8 +116,6 @@ import net.tardis.mod.util.LimbManipulationUtil.Limb;
 
 @EventBusSubscriber
 public class ClientProxy extends ServerProxy {
-	
-	public static HashMap<Integer, Class<? extends IRenderHandler>> skyRenderers = new HashMap<>();
 
 	public void registerRenders() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
@@ -188,24 +182,11 @@ public class ClientProxy extends ServerProxy {
 	
 	@Override
 	public void preInit() {
-		
-		super.preInit();
-		
 		registerRenders();
-
 		EnumClothes.ClothingHandler.init();
-
 		OverlayHandler.init();
-
 		if(!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
-		}
-		
-		for(int i : DimensionManager.getStaticDimensionIDs()) {
-			WorldProvider wp = DimensionManager.createProviderFor(i);
-			if(wp != null && wp.getSkyRenderer() != null) {
-				skyRenderers.put(i, wp.getSkyRenderer().getClass());
-			}
 		}
 	}
 	
