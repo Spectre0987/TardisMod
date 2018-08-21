@@ -67,6 +67,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
@@ -145,9 +146,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					frame = 0;
 				else
 					++frame;
-				for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
-					player.rotationPitch += (rand.nextInt(10) - 5) * 0.1;
-					player.rotationYaw += (rand.nextInt(10) - 5) * 0.1;
+				if(TardisConfig.MISC.camShake && (this.ticksToTravel < 200 || this.totalTimeToTravel - this.ticksToTravel < 200)) {
+					for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+						player.rotationPitch += (rand.nextInt(10) - 5) * 0.1;
+						player.rotationYaw += (rand.nextInt(10) - 5) * 0.1;
+					}
 				}
 			}
 			if(!world.isRemote) {
