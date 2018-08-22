@@ -60,37 +60,41 @@ public class CommandTardis extends CommandBase {
 
             String alias = args[0];
 
-            if (alias.equals("grow")) {
-                handleGrow(player);
-            }
-
-            if (alias.equals("interior")) {
-                if (PermissionAPI.hasPermission(player, TStrings.Permissions.TP_IN_TARDIS)) {
-                    handleTeleport(player);
-                } else {
-                    throw new CommandException("You do not have permission to run this command.");
+            if (args.length == 1){
+                if (alias.equals("grow")) {
+                    handleGrow(player);
                 }
 
-            }
+                if (alias.equals("interior")) {
+                    if (PermissionAPI.hasPermission(player, TStrings.Permissions.TP_IN_TARDIS)) {
+                        handleTeleport(player);
+                    } else {
+                        throw new CommandException("You do not have permission to run this command.");
+                    }
+                }
+            } else if (args.length == 2){
+                if (alias.equals("transfer")) {
+                    handlerOwner(player, args[1]);
+                }
 
-            if (alias.equals("transfer")) {
-                handlerOwner(player, args[1]);
-            }
+                if (alias.equals("summon")) {
+                    if (PermissionAPI.hasPermission(player, TStrings.Permissions.SUMMON_TARDIS)) {
+                        handleSummon(player, args[1]);
+                    } else {
+                        throw new CommandException("You do not have permission to run this command.");
+                    }
+                }
 
-            if (alias.equals("summon")) {
-                if (PermissionAPI.hasPermission(player, TStrings.Permissions.SUMMON_TARDIS)) {
-                    handleSummon(player, args[1]);
-                } else {
-                    throw new CommandException("You do not have permission to run this command.");
+                if (alias.equals("remove")) {
+                    if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
+                        handleRemove(player, args[1]);
+                    } else {
+                        throw new CommandException("You do not have permission to run this command.");
+                    }
                 }
             }
-
-            if (alias.equals("remove")) {
-                if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
-                    handleRemove(player, args[1]);
-                } else {
-                    throw new CommandException("You do not have permission to run this command.");
-                }
+            else {
+                throw new CommandException("/tardis [summon | remove | transfer] <username>");
             }
         } else {
             throw new CommandException("You are not a player. You must run these commands in game.");
@@ -177,6 +181,12 @@ public class CommandTardis extends CommandBase {
      */
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        return args.length == 1 ? getListOfStringsMatchingLastWord(args, "grow", "transfer", "interior", "summon", "remove") : Collections.emptyList();
+        if(args.length < 2 ) {
+            return getListOfStringsMatchingLastWord(args, "grow", "transfer", "interior", "summon", "remove");
+        }
+        if (args[0].equals("summon") || args[0].equals("remove") || args[0].equals("transfer")){
+            return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+        }
+        return Collections.emptyList();
     }
 }
