@@ -1,11 +1,14 @@
 package net.tardis.mod.common.screwdriver;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketChunkData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -18,21 +21,21 @@ import net.tardis.mod.common.blocks.BlockPanel;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.world.Structures;
 
-public class GRoomMode implements IScrewable {
-	
+public class InteractionGRoom implements IScrew {
+
 	@Override
-	public String getName() {
-		return "screw.generic_room";
+	public void performAction(World world, EntityPlayer player, EnumHand hand) {
+
 	}
-	
+
 	@Override
-	public void screw(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public void blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		if (!world.isRemote) {
 			if (state.getBlock() == TBlocks.panel && state.getValue(BlockPanel.TYPE) == 1) {
 				WorldServer ws = (WorldServer) world;
 				MinecraftServer server = ws.getMinecraftServer();
 				EnumFacing facing = player.getHorizontalFacing();
-				
+
 				Template temp = ws.getStructureTemplateManager().get(server, Structures.GENERIC_ROOM);
 				temp.addBlocksToWorld(ws, pos.add(getOffset(facing)), new PlacementSettings().setRotation(getRotation(facing)));
 				ChunkPos cPos = world.getChunkFromBlockCoords(pos).getPos();
@@ -44,7 +47,17 @@ public class GRoomMode implements IScrewable {
 			}
 		}
 	}
-	
+
+	@Override
+	public void entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
+
+	}
+
+	@Override
+	public String getName() {
+		return "screw.generic_room";
+	}
+
 	private Rotation getRotation(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:

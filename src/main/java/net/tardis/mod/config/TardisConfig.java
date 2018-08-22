@@ -65,6 +65,9 @@ public class TardisConfig {
 
 		@Config.LangKey("config.misc.on.kill")
 		public boolean killControlsOnKillCommand = false;
+		
+		@Config.LangKey("config.misc.shake")
+		public boolean camShake = true;
 	}
 	
 	public static class BOTI{

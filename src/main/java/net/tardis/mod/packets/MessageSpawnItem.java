@@ -32,12 +32,10 @@ public class MessageSpawnItem implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageSpawnItem message, MessageContext ctx) {
-			ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
-				@Override
-				public void run() {
-					EntityPlayerMP player = ctx.getServerHandler().player;
-					if(player != null) player.inventory.addItemStackToInventory(message.stack);
-				}});
+            ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
+                EntityPlayerMP player = ctx.getServerHandler().player;
+                if (player != null) player.inventory.addItemStackToInventory(message.stack);
+            });
 			return null;
 		}}
 

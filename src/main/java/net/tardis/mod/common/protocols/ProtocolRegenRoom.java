@@ -21,16 +21,15 @@ public class ProtocolRegenRoom implements ITardisProtocol {
 			for(BlockPos pos : BlockPos.getAllInBox(tardis.getPos().subtract(new Vec3i(20, 20, 20)), tardis.getPos().add(20, 20, 20))) {
 				if(world.getTileEntity(pos) == null) {
 					world.setBlockToAir(pos);
-					System.out.println("sdfg");
 				}
 			}
 			NBTTagCompound tag = tardis.writeToNBT(new NBTTagCompound());
 			IBlockState state = world.getBlockState(tardis.getPos());
-			MinecraftServer server = ((WorldServer)world).getMinecraftServer();
+			MinecraftServer server = world.getMinecraftServer();
 			Template temp = ((WorldServer)world).getStructureTemplateManager().get(server, new ResourceLocation(Tardis.MODID, "console_room"));
 			temp.addBlocksToWorld(world, tardis.getPos().add(-temp.getSize().getX() / 2, -2, -(temp.getSize().getZ() / 2) + 1), new PlacementSettings());
 			world.setBlockState(tardis.getPos(), state);
-			((TileEntityTardis)world.getTileEntity(tardis.getPos())).readFromNBT(tag);
+			(world.getTileEntity(tardis.getPos())).readFromNBT(tag);
 			
 		}
 	}

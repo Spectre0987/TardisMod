@@ -1,5 +1,6 @@
 package net.tardis.mod.common.dimensions;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -68,6 +69,11 @@ public class TardisProvider extends WorldProvider {
 	@Override
 	public boolean canRespawnHere() {
 		return false;
+	}
+
+	@Override
+	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
+		return WorldSleepResult.ALLOW;
 	}
 	
 }

@@ -11,7 +11,6 @@ import net.tardis.mod.common.blocks.interfaces.INeedItem;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
-import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
@@ -34,33 +33,33 @@ public class TBlocks {
 	public static Block megalos = register(new BlockMegalos(), "megalos");
 	public static Block holoprojector = register(new BlockHoloprojector(), "holoprojector");
 	
-	public static Block toyota_hexagon_1;
-	public static Block toyota_hexagon_2;
-	public static Block toyota_hexagon_3;
-	public static Block toyota_hexagon_4;
-	public static Block toyota_hexalight_1;
-	public static Block toyota_hexalight_2;
-	public static Block toyota_hexalight_3;
-	public static Block toyota_hexalight_4;
-	public static Block toyota_hexalight_off1;
-	public static Block toyota_hexalight_off2;
-	public static Block toyota_hexalight_off3;
-	public static Block toyota_light_emergency;
-	public static Block toyota_light_off;
-	public static Block toyota_light_on;
-	public static Block toyota_upper_divider;
-	public static Block toyota_platform;
-	public static Block toyota_platform_top;
-	public static Block toyota_platform_light;
-	public static Block toyota_roof;
-	public static Block toyota_roof_light;
-	public static Block toyota_wall;
-	public static Block toyota_wallroundel_1;
-	public static Block toyota_wallroundel_2;
-	public static Block toyota_wallroundel_3;
-	public static Block toyota_wallroundel_4;
-	public static Block toyota_wallroundel_5;
-	public static Block toyota_wallroundel_6;
+	public static Block toyota_hexagon_1 = register(new BlockToyota(false), "toyota_hexagon_1");
+	public static Block toyota_hexagon_2 = register(new BlockToyota(false), "toyota_hexagon_2");
+	public static Block toyota_hexagon_3 = register(new BlockToyota(false), "toyota_hexagon_3");
+	public static Block toyota_hexagon_4 = register(new BlockToyota(false), "toyota_hexagon_4");
+	public static Block toyota_hexalight_1 = register(new BlockToyota(true), "toyota_hexalight_1");
+	public static Block toyota_hexalight_2 = register(new BlockToyota(true), "toyota_hexalight_2");
+	public static Block toyota_hexalight_3 = register(new BlockToyota(true), "toyota_hexalight_3");
+	public static Block toyota_hexalight_4 = register(new BlockToyota(true), "toyota_hexalight_4");
+	public static Block toyota_hexalight_off1 = register(new BlockToyota(false), "toyota_hexalight_off1");
+	public static Block toyota_hexalight_off2 = register(new BlockToyota(true), "toyota_hexalight_off2");
+	public static Block toyota_hexalight_off3 = register(new BlockToyota(false), "toyota_hexalight_off3");
+	public static Block toyota_light_emergency = register(new BlockToyota(true), "toyota_light_emergency");
+	public static Block toyota_light_off = register(new BlockToyota(false), "toyota_light_off");
+	public static Block toyota_light_on = register(new BlockToyota(true), "toyota_light_on");
+	public static Block toyota_upper_divider = register(new BlockToyota(false), "toyota_upper_divider");
+	public static Block toyota_platform = register(new BlockToyota(false), "toyota_platform");
+	public static Block toyota_platform_top = register(new BlockToyota(false), "toyota_platform_top");
+	public static Block toyota_platform_light = register(new BlockToyota(true), "toyota_platform_light");
+	public static Block toyota_roof = register(new BlockToyota(false), "toyota_roof");
+	public static Block toyota_roof_light = register(new BlockToyota(true), "toyota_roof_light");
+	public static Block toyota_wall = register(new BlockToyota(false), "toyota_wall");
+	public static Block toyota_wallroundel_1 = register(new BlockToyota(true), "toyota_wallroundel_1");
+	public static Block toyota_wallroundel_2 = register(new BlockToyota(false), "toyota_wallroundel_2");
+	public static Block toyota_wallroundel_3 = register(new BlockToyota(true), "toyota_wallroundel_3");
+	public static Block toyota_wallroundel_4 = register(new BlockToyota(false), "toyota_wallroundel_4");
+	public static Block toyota_wallroundel_5 = register(new BlockToyota(false), "toyota_wallroundel_5");
+	public static Block toyota_wallroundel_6 = register(new BlockToyota(false), "toyota_wallroundel_6");
 	
 	public static Block toyota_platform_full;
 	public static Block toyota_platform_slab;
@@ -96,8 +95,6 @@ public class TBlocks {
 	public static Block hellbent_pole = register(new BlockDecoration(TileEntityHellbentPole::new), "hellbent_pole");
 	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new).setLightLevel(1F).setLightOpacity(0), "hellbent_roof");
 	
-	public static Block roundel_chest = register(new BlockRoundelChest(), "roundel_chest");
-	
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");
 	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02");
@@ -106,7 +103,7 @@ public class TBlocks {
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01");
 	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02");
 	
-	public static Block interior_door = register(new BlockInteriorDoor(TileEntityInteriorDoor::new), "interior_door");
+	//public static Block interior_door = register(new BlockInteriorDoor(TileEntityInteriorDoor::new), "interior_door");
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test") : null;
 	
 	public static Block register(Block block, String name) {

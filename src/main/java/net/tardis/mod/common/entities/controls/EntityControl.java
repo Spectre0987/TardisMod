@@ -149,12 +149,16 @@ public abstract class EntityControl extends Entity implements IControl {
 		return this.getDisplayName().getUnformattedText();
 	}
 
+	/**
+	 * Will get destroyed next tick.
+	 */
     @Override
-    public void onKillCommand() {
-        if (TardisConfig.MISC.killControlsOnKillCommand) {
-            super.onKillCommand();
-        } else {
+	public void setDead() {
+		if (TardisConfig.MISC.killControlsOnKillCommand) {
+			this.isDead = true;
+		} else {
             Tardis.LOG.debug("Not killing: {}", this::getControlName);
         }
     }
+
 }

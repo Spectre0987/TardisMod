@@ -67,6 +67,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
@@ -117,7 +118,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if(systems == null) {
 			this.systems = this.createSystems();
 		}
-		this.coordList.add(Helper.convertToPixels(0, 0, 0));
+		if(this.getClass() == TileEntityTardis.class) {
+			this.coordList.add(Helper.convertToPixels(-8.5, -1.5, -8.25));
+			this.coordList.add(Helper.convertToPixels(-8.75, -1.5, -6.75));
+			this.coordList.add(Helper.convertToPixels(-9.5, -1.5, -5.75));
+			this.coordList.add(Helper.convertToPixels(-10.25, -1.5, -4.5));
+		}
 	}
 
 	@Override
@@ -140,6 +146,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					frame = 0;
 				else
 					++frame;
+				if(TardisConfig.MISC.camShake && (this.ticksToTravel < 200 || this.totalTimeToTravel - this.ticksToTravel < 200)) {
+					for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+						player.rotationPitch += (rand.nextInt(10) - 5) * 0.1;
+						player.rotationYaw += (rand.nextInt(10) - 5) * 0.1;
+					}
+				}
 			}
 			if(!world.isRemote) {
 				if(!this.getCanFly()) {
@@ -409,7 +421,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 400/* The Time in tick it takes the launch sound to play */);
+		return (int) ((dist / MAX_TARDIS_SPEED) + 400 + (dimension == destDim ? 0 : 300));
 	}
 	
 	public BlockPos getDestination() {
@@ -870,6 +882,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP)entity;
 				BlockPos tp = this.getPos().south(4);
+				ChunkPos cPos = world.getChunkFromBlockCoords(getPos()).getPos();
+				for(int x = -1; x < 1; ++x) {
+					for(int z = -1; z < 1; ++z) {
+						((WorldServer)world).getChunkProvider().loadChunk(cPos.x + x, cPos.z + z);
+					}
+				}
 				for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
 					tp = e.getPosition().offset(e.getHorizontalFacing());
 					facing = e.getHorizontalFacing();
