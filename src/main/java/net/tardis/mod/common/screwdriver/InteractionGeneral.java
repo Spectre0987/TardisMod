@@ -1,9 +1,6 @@
 package net.tardis.mod.common.screwdriver;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockTNT;
-import net.minecraft.block.BlockTrapDoor;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,9 +10,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.util.helpers.PlayerHelper;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+@Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class InteractionGeneral implements IScrew {
+
+    Method dispense = ReflectionHelper.findMethod(BlockDispenser.class, "dispense", "func_176439_d", World.class, BlockPos.class);
 
     @Override
     public void performAction(World world, EntityPlayer player, EnumHand hand) {
@@ -69,6 +75,17 @@ public class InteractionGeneral implements IScrew {
         }
 
 
+        if (block instanceof BlockDispenser) {
+            if (!player.isSneaking()) return;
+            try {
+                dispense.invoke(block, world, pos);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
@@ -90,4 +107,6 @@ public class InteractionGeneral implements IScrew {
     public String getName() {
         return "screw.general";
     }
+
+
 }
