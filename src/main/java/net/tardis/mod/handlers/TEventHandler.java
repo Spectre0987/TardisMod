@@ -15,7 +15,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -41,6 +43,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
@@ -57,6 +60,15 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeCinnabar;
 import net.tardis.mod.common.recipes.RecipeKey;
+import net.tardis.mod.common.tileentity.*;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
@@ -80,13 +92,47 @@ public class TEventHandler {
 				for (int i = 0; i < list.size(); i++) {
 					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "type=" + i));
 				}
-			}
-			else
+			} else {
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+			}
 		}
+
+		registerTiles();
 	}
-	
-	
+
+	private static void registerTiles() {
+		mapTile(TileEntityTardis.class, "TileEntityTardis");
+		mapTile(TileEntityDoor.class, "TileEntityDoor");
+		mapTile(TileEntityTemporalLab.class, "TileEntityTemporalLab");
+		mapTile(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
+		mapTile(TileEntityAlembic.class, "TileEntityAlembic");
+		mapTile(TileEntityFoodMachine.class, "TileEntityFoodMachine");
+		mapTile(TileEntityEPanel.class, "TileEntityEPanel");
+		mapTile(TileEntityHoloprojector.class, "TileEntityHoloprojector");
+		mapTile(TileEntityTardisCoral.class, "TileEntityTardisCoral");
+		mapTile(TileEntityLight.class, "TileEntityLight");
+		mapTile(TileEntityHellbentLight.class, "TileEntityHellbentLight");
+		mapTile(TileEntityHellbentMonitor.class, "TileEntityHellbentMonitor");
+		mapTile(TileEntityHellbentPole.class, "TileEntityHellbentPole");
+		mapTile(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
+		mapTile(TileEntityRoundelChest.class, "TileEntityRoundelChest");
+		mapTile(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
+		mapTile(TileEntityJsonTester.class, "TileEntityJsonTester");
+
+		//Exteriors
+		mapTile(TileEntityDoor01.class, "TileEntityDoor01");
+		mapTile(TileEntityDoor03.class, "TileEntityDoor03");
+
+		//Interiors
+		mapTile(TileEntityTardis01.class, "TileEntityTardis01");
+		mapTile(TileEntityTardis02.class, "TileEntityTardis02");
+	}
+
+	public static void mapTile(Class<? extends TileEntity> clazz, String name) {
+		GameRegistry.registerTileEntity(clazz, new ResourceLocation(Tardis.MODID, name));
+	}
+
+
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		for (Block block : TBlocks.blocks) {
@@ -126,13 +172,13 @@ public class TEventHandler {
 			Entity e = event.getEntityLiving().getRidingEntity();
 			event.setCanceled(e instanceof EntityTardis || e instanceof EntityDalekCasing);
 			if(e instanceof EntityDalekCasing) {
-				((EntityDalekCasing)e).attackEntityFrom(event.getSource(), event.getAmount());
+				e.attackEntityFrom(event.getSource(), event.getAmount());
 			}
 		}
 		if(event.getSource().equals(Tardis.SUFFICATION)) {
 			if(event.getEntityLiving() instanceof EntityPlayer) {
 				int count = 0;
-				for(ItemStack stack : ((EntityPlayer)event.getEntityLiving()).getArmorInventoryList()) {
+				for (ItemStack stack : event.getEntityLiving().getArmorInventoryList()) {
 					if(stack.getItem() instanceof ItemSpaceSuit) {
 						++count;
 					}

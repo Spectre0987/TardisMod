@@ -1,6 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +12,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TTabs;
 
 public class BlockPanel extends BlockBase {
 	
@@ -22,7 +21,7 @@ public class BlockPanel extends BlockBase {
 	
 	public BlockPanel() {
 		this.setLightOpacity(0);
-		item.setCreativeTab(Tardis.tab);
+		item.setCreativeTab(TTabs.tabTardis);
 	}
 	
 	public static void setType(IBlockState state, int i) {
@@ -45,7 +44,7 @@ public class BlockPanel extends BlockBase {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { TYPE });
+		return new BlockStateContainer(this, TYPE);
 	}
 	
 	@Override

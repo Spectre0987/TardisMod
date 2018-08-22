@@ -13,7 +13,7 @@ import net.tardis.mod.Tardis;
 public class ButtonRecipe extends GuiButton {
 	
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/item_button.png");
-	ItemStack stackToRender = ItemStack.EMPTY;
+	ItemStack stackToRender;
 	TransformType type = TransformType.GUI;
 	
 	public ButtonRecipe(int buttonId, int x, int y, ItemStack stack) {

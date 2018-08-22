@@ -7,14 +7,9 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.permission.PermissionAPI;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.TardisHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -42,24 +37,6 @@ public class CommandSummon extends CommandBase {
         if (args.length < 1)
             throw new WrongUsageException(this.getUsage(sender));
 
-        EntityPlayerMP player = server.getPlayerList().getPlayerByUsername(args[0]);
-        if (player != null){
-            if (TardisHelper.hasTardis(player.getUniqueID())){
-                BlockPos tardisbp = TardisHelper.getTardis(player.getUniqueID());
-                TileEntity te = server.getWorld(TDimensions.TARDIS_ID).getTileEntity(tardisbp);
-                if (te instanceof TileEntityTardis){
-                    ((TileEntityTardis) te).setDesination(senderPlayer.getPosition().add(1,0,1),senderPlayer.dimension);
-                    ((TileEntityTardis) te).startFlight();
-                    sender.sendMessage(new TextComponentTranslation(TStrings.Commands.TARDIS_TRAVEL));
-                }
-            }
-            else {
-                sender.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
-            }
-        }
-        else {
-            sender.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_PLAYER_FOUND));
-        }
     }
 
     @Override

@@ -1,11 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -16,8 +10,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.packets.MessageTelepathicCircut;
+import net.tardis.mod.packets.NetworkHandler;
+import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class GuiTelepathicCircuts extends GuiScreen {
 	
@@ -75,7 +74,7 @@ public class GuiTelepathicCircuts extends GuiScreen {
         }
 
         if (button.id == 1) {
-            Tardis.NETWORK.sendToServer(new MessageTelepathicCircut(this.pos, name.getText()));
+            NetworkHandler.NETWORK.sendToServer(new MessageTelepathicCircut(this.pos, name.getText()));
             Minecraft.getMinecraft().displayGuiScreen(null);
         }
 
@@ -117,7 +116,7 @@ public class GuiTelepathicCircuts extends GuiScreen {
 			name.textboxKeyTyped(typedChar, keyCode);
 		}
 		else {
-			Tardis.NETWORK.sendToServer(new MessageTelepathicCircut(this.pos, name.getText()));
+            NetworkHandler.NETWORK.sendToServer(new MessageTelepathicCircut(this.pos, name.getText()));
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 	}

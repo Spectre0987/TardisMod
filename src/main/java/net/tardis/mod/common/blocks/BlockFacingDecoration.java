@@ -1,7 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -13,7 +11,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TTabs;
+
+import java.util.function.Supplier;
 
 public class BlockFacingDecoration extends BlockTileBase {
 
@@ -21,7 +21,7 @@ public class BlockFacingDecoration extends BlockTileBase {
 	
 	public BlockFacingDecoration(Supplier<TileEntity> tileEntity) {
 		super(Material.IRON, tileEntity);
-		this.setCreativeTab(Tardis.tab);
+		setCreativeTab(TTabs.tabTardis);
 	}
 
 	@Override

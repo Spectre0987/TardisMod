@@ -1,9 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,6 +13,11 @@ import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.packets.MessageDamageSystem;
 import net.tardis.mod.packets.MessageSpawnItem;
+import net.tardis.mod.packets.NetworkHandler;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GuiSystem extends GuiScreen{
 	
@@ -58,8 +59,8 @@ public class GuiSystem extends GuiScreen{
 			if(sys.getHealth() > 0.0F) {
 				ItemStack stack = new ItemStack(sys.getRepairItem());
 				stack.setItemDamage((int)(100 - (sys.getHealth() * 100)));
-				Tardis.NETWORK.sendToServer(new MessageSpawnItem(stack));
-				Tardis.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
+				NetworkHandler.NETWORK.sendToServer(new MessageSpawnItem(stack));
+				NetworkHandler.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
 			}
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}

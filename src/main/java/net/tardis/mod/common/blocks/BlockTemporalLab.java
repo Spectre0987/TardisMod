@@ -9,6 +9,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TTabs;
 import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 
 public class BlockTemporalLab extends BlockTileBase {
@@ -17,8 +18,8 @@ public class BlockTemporalLab extends BlockTileBase {
 	
 	public BlockTemporalLab() {
 		super(Material.IRON, TileEntityTemporalLab::new);
-		this.setCreativeTab(Tardis.tab);
-		item.setCreativeTab(Tardis.tab);
+		this.setCreativeTab(TTabs.tabTardis);
+		item.setCreativeTab(TTabs.tabTardis);
 	}
 
 	@Override

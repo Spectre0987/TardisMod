@@ -3,6 +3,7 @@ package net.tardis.mod.common.items;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,7 +11,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TTabs;
 import net.tardis.mod.common.screwdriver.IScrew;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.common.sounds.TSounds;
@@ -24,7 +25,7 @@ public class ItemSonic extends Item {
 	public static final String CONSOLE_POS = "console_pos";
 	
 	public ItemSonic() {
-		this.setCreativeTab(Tardis.tab);
+		this.setCreativeTab(TTabs.tabTardis);
 		this.setMaxStackSize(1);
 	}
 
@@ -39,21 +40,22 @@ public class ItemSonic extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
 		ItemStack held = player.getHeldItem(handIn);
-		if (player.isSneaking()) {
-			setMode(held, getMode(held) + 1);
-			if (!worldIn.isRemote)
-				PlayerHelper.sendMessage(player, new TextComponentTranslation(ScrewdriverHandler.MODES.get(getMode(held)).getName()).getFormattedText(), true);
-		} else {
-			IScrew sc = (ScrewdriverHandler.MODES.get(getMode(held)));
-			sc.performAction(worldIn, player, handIn);
-			worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
-		}
+		IScrew sc = (ScrewdriverHandler.MODES.get(getMode(held)));
+		sc.performAction(worldIn, player, handIn);
+		worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
 		return super.onItemRightClick(worldIn, player, handIn);
 	}
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack held = player.getHeldItem(hand);
+
+		if (player.isSneaking() && worldIn.getBlockState(pos).getBlock() != Blocks.DISPENSER) {
+			setMode(held, getMode(held) + 1);
+			if (!worldIn.isRemote)
+				PlayerHelper.sendMessage(player, new TextComponentTranslation(ScrewdriverHandler.MODES.get(getMode(held)).getName()).getFormattedText(), true);
+		}
+
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
 			sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
