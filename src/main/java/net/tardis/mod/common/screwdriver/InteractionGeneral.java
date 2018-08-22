@@ -29,7 +29,7 @@ public class InteractionGeneral implements IScrew {
         Block block = state.getBlock();
 
         //It doesn't work on wood.
-        if (block.getRegistryName().toString().contains("wood") || state.getMaterial().equals(Material.WOOD)) {
+        if (block.isWood(world,pos) || block.getRegistryName().toString().contains("wood") || state.getMaterial().equals(Material.WOOD)) {
             PlayerHelper.sendMessage(player, "screw.fail.itswood", true);
             return;
         }
