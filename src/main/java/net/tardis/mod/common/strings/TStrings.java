@@ -22,6 +22,8 @@ public class TStrings {
 		public static final String GALACTICRAFT = "galacticraftcore";
 		public static final String INDUSTRIAL_CRAFT = "ic2";
 		public static final String WEEPING_ANGELS = "weeping-angels";
+        public static final String REGENERATION = "lcm-regen";
+        public static final String LCORE = "lucraftcore";
 	}
 	
 	public static class EVENT{

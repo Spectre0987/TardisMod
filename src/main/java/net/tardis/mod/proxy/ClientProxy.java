@@ -18,6 +18,7 @@ import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.client.models.ModelFirstCane;
 import net.tardis.mod.client.models.ModelKey01;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
+import net.tardis.mod.client.models.sonics.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
 import net.tardis.mod.client.renderers.RenderCorridor;
 import net.tardis.mod.client.renderers.RenderInvis;
@@ -147,7 +148,8 @@ public class ClientProxy extends ServerProxy {
 		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
 		TItems.demat_circut.setTileEntityItemStackRenderer(new RendererItemDemat());
 		TItems.key.setTileEntityItemStackRenderer(new RendererKey());
-		
+		TItems.sonic13th.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelSonic13()));
+
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RendererItemTardis());
 		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());

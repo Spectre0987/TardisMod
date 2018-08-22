@@ -48,6 +48,7 @@ import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
+import net.tardis.mod.integrations.Regeneration;
 import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.packets.*;
 import net.tardis.mod.proxy.ServerProxy;
@@ -96,6 +97,12 @@ public class Tardis {
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
 		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
+
+        if (Loader.isModLoaded(TStrings.ModIds.REGENERATION) && !Loader.isModLoaded(TStrings.ModIds.LCORE)) {
+            Regeneration.preInit();
+        }
+		
+		
 		logger = event.getModLog();
 		tab = new TardisTab();
 		TItems.init();
