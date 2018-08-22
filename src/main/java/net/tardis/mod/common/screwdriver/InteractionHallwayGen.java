@@ -1,9 +1,12 @@
 package net.tardis.mod.common.screwdriver;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,21 +17,21 @@ import net.tardis.mod.common.blocks.BlockPanel;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.world.Structures;
 
-public class HallwayMode implements IScrewable {
-	
+public class InteractionHallwayGen implements IScrew {
+
 	@Override
-	public String getName() {
-		return "screwdriver.hallway";
+	public void performAction(World world, EntityPlayer player, EnumHand hand) {
+
 	}
-	
+
 	@Override
-	public void screw(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public void blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		if (!world.isRemote) {
 			if (state.getBlock() == TBlocks.panel && state.getValue(BlockPanel.TYPE) == 1) {
 				if (state.getBlock() == TBlocks.panel) {
 					WorldServer ws = (WorldServer) world;
 					MinecraftServer server = ws.getMinecraftServer();
-					
+
 					Template temp = ws.getStructureTemplateManager().get(server, Structures.HALLWAY);
 					EnumFacing facing = player.getHorizontalFacing();
 					Rotation rot = this.getRotationFromFacing(facing);
@@ -38,6 +41,17 @@ public class HallwayMode implements IScrewable {
 			}
 		}
 	}
+
+	@Override
+	public void entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
+
+	}
+
+	@Override
+	public String getName() {
+		return "screwdriver.hallway";
+	}
+
 	
 	public BlockPos getOffsetFromFacing(EnumFacing facing) {
 		switch (facing) {

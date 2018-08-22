@@ -1,12 +1,12 @@
 package net.tardis.mod.common.systems;
 
-import java.util.HashMap;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.HashMap;
 
 public class TardisSystems {
 	
@@ -69,8 +69,7 @@ public class TardisSystems {
 		}
 		@Override
 		public boolean equals(Object obj) {
-			if(obj.getClass() == this.getClass()) return true;
-			return super.equals(obj);
+			return obj.getClass() == this.getClass() || super.equals(obj);
 		}
 		
 	}

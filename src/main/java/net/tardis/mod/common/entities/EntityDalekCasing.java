@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,7 +33,7 @@ public class EntityDalekCasing extends EntityLiving{
 			Entity e = this.getControllingPassenger();
 			if(e != null && e instanceof EntityLivingBase){
 				if(((EntityLivingBase)e).moveForward > 0) {
-					Vec3d look = ((EntityLivingBase)e).getLookVec().normalize().scale(0.15);
+					Vec3d look = e.getLookVec().normalize().scale(0.15);
 					this.motionX = look.x;
 					this.motionZ = look.z;
 				}
@@ -49,10 +48,7 @@ public class EntityDalekCasing extends EntityLiving{
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(source.getTrueSource() != null && this.getPassengers().contains(source.getTrueSource())) {
-			return false;
-		}
-		return super.attackEntityFrom(source, amount);
+		return (source.getTrueSource() == null || !this.getPassengers().contains(source.getTrueSource())) && super.attackEntityFrom(source, amount);
 	}
 
 	@Override

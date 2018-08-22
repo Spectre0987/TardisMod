@@ -39,19 +39,16 @@ public class MessageDemat implements IMessage {
 		
 		@Override
 		public IMessage onMessage(MessageDemat mes, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-				@Override
-				public void run() {
-					TileEntity te = Minecraft.getMinecraft().world.getTileEntity(mes.pos);
-					if(te != null && te instanceof TileEntityDoor) {
-						if(mes.isDemat) {
-							((TileEntityDoor)te).setDemat();
-						}
-						else {
-							((TileEntityDoor)te).setRemat();
-						}
+			Minecraft.getMinecraft().addScheduledTask(() -> {
+				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(mes.pos);
+				if (te != null && te instanceof TileEntityDoor) {
+					if (mes.isDemat) {
+						((TileEntityDoor) te).setDemat();
+					} else {
+						((TileEntityDoor) te).setRemat();
 					}
-				}});
+				}
+			});
 			return null;
 		}}
 }
