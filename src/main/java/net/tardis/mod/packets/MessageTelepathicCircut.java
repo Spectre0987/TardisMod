@@ -53,8 +53,10 @@ public class MessageTelepathicCircut implements IMessage {
 		
 		@Override
 		public IMessage onMessage(MessageTelepathicCircut message, MessageContext ctx) {
-			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
-                MinecraftServer server = ctx.getServerHandler().player.getServer();
+
+            MinecraftServer server = ctx.getServerHandler().player.getServer();
+
+            server.addScheduledTask(() -> {
                 WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
                 EntityPlayer player = server.getPlayerList().getPlayerByUsername(message.name.trim().toLowerCase());
                 TileEntity te = ws.getTileEntity(message.pos);

@@ -1,8 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +16,9 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TBlocks {
@@ -115,7 +115,6 @@ public class TBlocks {
 		else TItems.items.add(((INeedItem)block).getItem().setRegistryName(rl));
 		return block;
 	}
-	
-	public static void register() {}
-	
+
+
 }

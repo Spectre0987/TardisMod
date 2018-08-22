@@ -11,7 +11,14 @@ import java.util.HashMap;
 public class TardisSystems {
 	
 	public static HashMap<String, Class<? extends ISystem>> SYSTEMS = new HashMap<>();
-	
+
+	public static void init() {
+		TardisSystems.register("flight", SystemFlight.class);
+		TardisSystems.register("dimensional", SystemDimension.class);
+		TardisSystems.register("fluid_links", SystemFluidLinks.class);
+		TardisSystems.register("antenna", SystemAntenna.class);
+	}
+
 	public static void register(String name, Class<? extends ISystem> sys){
 		if(SYSTEMS.containsKey(name)) {
 			return;

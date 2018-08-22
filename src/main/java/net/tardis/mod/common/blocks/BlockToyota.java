@@ -1,7 +1,6 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -16,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TTabs;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 
 public class BlockToyota extends BlockBase implements INeedItem{
@@ -24,8 +23,8 @@ public class BlockToyota extends BlockBase implements INeedItem{
 	public ItemBlock item = new ItemBlockToyota(this);
 
 	public BlockToyota(boolean light) {
-		this.setCreativeTab(Tardis.tab);
-		this.item.setCreativeTab(Tardis.tab);
+		this.setCreativeTab(TTabs.tabTardis);
+		this.item.setCreativeTab(TTabs.tabTardis);
 		if(light) {
 			this.setLightLevel(1);
 		}
@@ -39,12 +38,12 @@ public class BlockToyota extends BlockBase implements INeedItem{
 		
 		public BlockToyotaFacing(boolean light) {
 			super(light);
-			this.setCreativeTab(Tardis.tab);
+			setCreativeTab(TTabs.tabTardis);
 		}
 
 		@Override
 		protected BlockStateContainer createBlockState() {
-			return new BlockStateContainer(this, new IProperty[] {FACING});
+			return new BlockStateContainer(this, FACING);
 		}
 
 		@Override
@@ -79,7 +78,7 @@ public class BlockToyota extends BlockBase implements INeedItem{
 
 		@Override
 		public IBlockState getStateFromMeta(int meta) {
-			return this.getDefaultState().withProperty(IS_TOP, meta == 0 ? true : false);
+			return this.getDefaultState().withProperty(IS_TOP, meta == 0);
 		}
 
 		@Override
@@ -89,7 +88,7 @@ public class BlockToyota extends BlockBase implements INeedItem{
 
 		@Override
 		protected BlockStateContainer createBlockState() {
-			return new BlockStateContainer(this, new IProperty[] {IS_TOP});
+			return new BlockStateContainer(this, IS_TOP);
 		}
 
 		@Override

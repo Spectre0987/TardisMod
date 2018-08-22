@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TTabs;
 
 public class BlockBase extends Block {
 	
@@ -18,7 +18,7 @@ public class BlockBase extends Block {
 		super(Material.IRON);
 		this.setHardness(1F);
 		this.setResistance(99999F);
-		this.setCreativeTab(Tardis.tab);
+		setCreativeTab(TTabs.tabTardis);
 	}
 	
 	@Override

@@ -79,6 +79,7 @@ public class InteractionGeneral implements IScrew {
             if (!player.isSneaking()) return;
             try {
                 dispense.invoke(block, world, pos);
+                coolDown(player);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
