@@ -41,6 +41,7 @@ item.tardis.hellbent_corridor.name=Hellbent Corridor Entrance
 item.tardis.key_01.name=TARDIS Key
 item.tardis.marker.name=Marker
 item.tardis.interiordoor.name=Interior Door
+item.tardis.sonic_screwdriver_13.name=Thirteen's Sonic
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
