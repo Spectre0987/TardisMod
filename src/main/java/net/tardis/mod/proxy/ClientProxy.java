@@ -140,7 +140,6 @@ public class ClientProxy extends ServerProxy {
 
 	@Override
 	public void init() {
-		super.init();
 		TItems.sonic_pen.setTileEntityItemStackRenderer(new RenderItemSonicPen());
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
 		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));

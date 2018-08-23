@@ -31,7 +31,7 @@ public class RenderTEISRItem extends TileEntityItemStackRenderer {
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();
-		GlStateManager.scale(0.5, 0.5, 0.5);
+		//GlStateManager.scale(0.5, 0.5, 0.5);
 		if(texture != null) {
 			mc.getTextureManager().bindTexture(this.texture);
 		}
