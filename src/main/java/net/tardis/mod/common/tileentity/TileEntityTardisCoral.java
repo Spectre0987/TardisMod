@@ -1,6 +1,7 @@
 package net.tardis.mod.common.tileentity;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import java.util.UUID;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,11 +16,8 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.world.Structures;
-import net.tardis.mod.util.helpers.PlayerHelper;
 import net.tardis.mod.util.helpers.RiftHelper;
 import net.tardis.mod.util.helpers.TardisHelper;
-
-import java.util.UUID;
 
 public class TileEntityTardisCoral extends TileEntity implements ITickable{
 
@@ -72,15 +70,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 				tardis.travel();
 				ItemStack keyStack = new ItemStack(TItems.key);
 				ItemKey.setPos(keyStack, pos);
-
-                // TODO We should maybe save pending keys to json? Else people who are offline will never get a key?
-
-                EntityPlayerMP entityPlayer = world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner);
-                if (entityPlayer != null) {
-                    entityPlayer.addItemStackToInventory(keyStack);
-                    PlayerHelper.sendMessage(entityPlayer, "tardis.arrived", false);
-                }
-			
+				world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner).addItemStackToInventory(keyStack);
 			}
 		}
 	}

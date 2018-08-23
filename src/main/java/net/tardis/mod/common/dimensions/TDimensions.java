@@ -12,8 +12,8 @@ public class TDimensions {
 	
 	public static int SPACE_ID;
 	public static DimensionType spaceType;
-
-	public static void init() {
+	
+	public static void register() {
 		if (TardisConfig.Dimensions.setDimension) {
 			TARDIS_ID = TardisConfig.Dimensions.tardisDimension;
 		}

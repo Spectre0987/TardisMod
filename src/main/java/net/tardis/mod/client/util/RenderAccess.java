@@ -13,7 +13,7 @@ import net.minecraft.world.biome.Biome;
 
 public class RenderAccess implements IBlockAccess{
 
-    IBlockState state;
+	IBlockState state = Blocks.AIR.getDefaultState();
 	
 	public RenderAccess(IBlockState state){
 		this.state = state;

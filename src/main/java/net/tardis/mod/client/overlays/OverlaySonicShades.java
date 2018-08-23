@@ -1,9 +1,17 @@
 package net.tardis.mod.client.overlays;
 
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -15,9 +23,6 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 
 public class OverlaySonicShades implements IOverlay {
 
@@ -123,7 +128,6 @@ public class OverlaySonicShades implements IOverlay {
             bb.pos(width, 0, 0).tex(1, 0).endVertex();
             Tessellator.getInstance().draw();
             GlStateManager.popMatrix();
-
             //Rift?
            if(RiftHelper.isRift(mc.world.getChunkFromBlockCoords(mc.player.getPosition()).getPos(), mc.world)) {
         	   String riftString = "Rift Detected!";

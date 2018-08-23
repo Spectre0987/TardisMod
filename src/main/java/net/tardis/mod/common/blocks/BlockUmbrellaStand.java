@@ -10,7 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TTabs;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.ItemSUmbrella;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 
@@ -20,7 +20,7 @@ public class BlockUmbrellaStand extends BlockTileBase {
 	
 	public BlockUmbrellaStand() {
 		super(Material.CLAY, TileEntityUmbrellaStand::new);
-		this.setCreativeTab(TTabs.tabTardis);
+		this.setCreativeTab(Tardis.tab);
 	}
 
 	@Override

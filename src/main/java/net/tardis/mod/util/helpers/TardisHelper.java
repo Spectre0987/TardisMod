@@ -1,5 +1,9 @@
 package net.tardis.mod.util.helpers;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -7,18 +11,15 @@ import net.minecraft.world.chunk.Chunk;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.handlers.TEventHandler;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 public class TardisHelper {
 	
 	public static Map<String, BlockPos> tardisOwners = new HashMap<String, BlockPos>();
-
-	public static final int TARDIS_SIZE = 50;
+	
+	public static final int TARDIS_SIZE = 16;
 	
 	public static boolean isConsoleChunk(Chunk c) {
-		return c.x % TARDIS_SIZE == 0 && c.z % TARDIS_SIZE == 0;
+		if (c.x % TARDIS_SIZE == 0 && c.z % TARDIS_SIZE == 0) return true;
+		return false;
 	}
 	
 	public static boolean hasTardis(UUID id) {
@@ -62,11 +63,11 @@ public class TardisHelper {
 		ItemStack otherStack = player.getHeldItemOffhand();
 		if (stack.getItem() instanceof ItemKey) {
 			BlockPos pos = ItemKey.getPos(stack);
-			return pos != null && pos.equals(cPos);
+			if (pos != null && pos.equals(cPos)) return true;
 		}
 		else if(otherStack.getItem() instanceof ItemKey) {
 			BlockPos pos = ItemKey.getPos(otherStack);
-			return pos != null && pos.equals(cPos);
+			if (pos != null && pos.equals(cPos)) return true;
 		}
 		return false;
 	}

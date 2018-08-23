@@ -13,9 +13,9 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.RiftHelper;
 
-public class ItemArtronCapacitor extends ItemComponent {
-
-	public ItemArtronCapacitor() {
+public class ArtronCapacitor extends ItemComponent {
+	
+	public ArtronCapacitor() {
 		this.setMaxDamage(5);
 		this.setMaxStackSize(1);
 	}

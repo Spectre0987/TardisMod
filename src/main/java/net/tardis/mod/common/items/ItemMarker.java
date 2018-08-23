@@ -1,7 +1,13 @@
 package net.tardis.mod.common.items;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,18 +19,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TTabs;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.util.helpers.Helper;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
 
 public class ItemMarker extends ItemBase {
 	
 	public ItemMarker() {
-		this.setCreativeTab(TTabs.tabTardis);
+		this.setCreativeTab(Tardis.tab);
 	}
 
 	@Override

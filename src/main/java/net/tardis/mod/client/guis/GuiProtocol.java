@@ -1,5 +1,7 @@
 package net.tardis.mod.client.guis;
 
+import java.io.IOException;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -12,9 +14,6 @@ import net.tardis.mod.common.protocols.ITardisProtocol;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.packets.MessageProtocol;
-import net.tardis.mod.packets.NetworkHandler;
-
-import java.io.IOException;
 
 public class GuiProtocol extends GuiScreen {
 	
@@ -48,7 +47,7 @@ public class GuiProtocol extends GuiScreen {
 		int cw = width / 2 - GUI_WIDTH / 2;
 		int ch = height / 2 - GUI_HEIGHT / 2;
 		int id = 0;
-        for (ITardisProtocol p : TardisProtocol.PROTOCOLS.values()) {
+		for (ITardisProtocol p : TardisProtocol.protocols.values()) {
 			this.addButton(new ButtonText(id++, width / 2, (height / 2 - GUI_HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT * id, mc.fontRenderer, (new TextComponentTranslation(p.getNameKey()).getFormattedText())));
 		}
 	}
@@ -56,7 +55,7 @@ public class GuiProtocol extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		Minecraft.getMinecraft().displayGuiScreen(null);
-        NetworkHandler.NETWORK.sendToServer(new MessageProtocol(pos, button.id));
+		Tardis.NETWORK.sendToServer(new MessageProtocol(pos, button.id));
 		TardisProtocol.getProtocolFromId(button.id).onActivated(mc.world, (TileEntityTardis)mc.world.getTileEntity(pos));
 		super.actionPerformed(button);
 	}

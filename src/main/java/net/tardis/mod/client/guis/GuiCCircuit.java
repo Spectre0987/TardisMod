@@ -1,5 +1,11 @@
 package net.tardis.mod.client.guis;
 
+import java.awt.Color;
+import java.io.IOException;
+
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -11,12 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.packets.MessageExteriorChange;
-import net.tardis.mod.packets.NetworkHandler;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class GuiCCircuit extends GuiScreen {
 	
@@ -80,12 +80,12 @@ public class GuiCCircuit extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button == this.selectButton) {
-            NetworkHandler.NETWORK.sendToServer(new MessageExteriorChange(pos, exteriors[index].block.getDefaultState()));
+			Tardis.NETWORK.sendToServer(new MessageExteriorChange(pos, exteriors[index].block.getDefaultState()));
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 		else if(button == this.nextArrow) {
 			int i = index + 1;
-            if (i > exteriors.length - 1) {
+			if(i > this.exteriors.length - 1) {
 				index = 0;
 			}
 			else index++;
@@ -93,7 +93,7 @@ public class GuiCCircuit extends GuiScreen {
 		else {
 			int i = index - 1;
 			if(i < 0) {
-                index = exteriors.length - 1;
+				index = this.exteriors.length - 1;
 			}
 			else --index;
 		}

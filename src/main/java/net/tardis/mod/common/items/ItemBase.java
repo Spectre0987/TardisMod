@@ -1,12 +1,12 @@
 package net.tardis.mod.common.items;
 
 import net.minecraft.item.Item;
-import net.tardis.mod.client.creativetabs.TTabs;
+import net.tardis.mod.Tardis;
 
 public class ItemBase extends Item {
 	
 	public ItemBase() {
-		this.setCreativeTab(TTabs.tabTardis);
+		this.setCreativeTab(Tardis.tab);
 	}
 
 }

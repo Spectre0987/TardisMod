@@ -9,14 +9,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.client.creativetabs.TTabs;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
 
 public class ItemVortexManipulator extends Item {
 	
 	public ItemVortexManipulator() {
 		this.setMaxStackSize(1);
-		this.setCreativeTab(TTabs.tabTardis);
+		this.setCreativeTab(Tardis.tab);
 	}
 	
 	@Override

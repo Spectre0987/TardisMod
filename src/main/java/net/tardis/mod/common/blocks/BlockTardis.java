@@ -9,7 +9,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.tardis.mod.client.creativetabs.TTabs;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 
 public class BlockTardis extends Block implements IUnbreakable {
@@ -20,7 +20,7 @@ public class BlockTardis extends Block implements IUnbreakable {
 		super(Material.WOOD, MapColor.BLUE);
 		this.setBlockUnbreakable();
 		this.setResistance(999);
-		item.setCreativeTab(TTabs.tabTardis);
+		item.setCreativeTab(Tardis.tab);
 	}
 	
 	@Override

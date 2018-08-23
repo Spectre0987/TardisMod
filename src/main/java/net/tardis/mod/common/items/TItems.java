@@ -11,10 +11,10 @@ import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
-import net.tardis.mod.common.items.components.ItemArtronCapacitor;
+import net.tardis.mod.common.items.components.ArtronCapacitor;
+import net.tardis.mod.common.items.components.DematerializationCircut;
+import net.tardis.mod.common.items.components.FluidLink;
 import net.tardis.mod.common.items.components.ItemComponent;
-import net.tardis.mod.common.items.components.ItemDematCircuit;
-import net.tardis.mod.common.items.components.ItemFluidLink;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,9 +119,9 @@ public class TItems {
 		hellbent_door = createItem(new ItemHellbentDoor(), "hellbent_door");
 		
 		// TARDIS Components
-		fluid_link = createItem(new ItemFluidLink(), "fluid_link");
-		artron_capacitor = createItem(new ItemArtronCapacitor(), "artron_capacitor");
-		demat_circut = createItem(new ItemDematCircuit(), "demat_circut");
+		fluid_link = createItem(new FluidLink(), "fluid_link");
+		artron_capacitor = createItem(new ArtronCapacitor(), "artron_capacitor");
+		demat_circut = createItem(new DematerializationCircut(), "demat_circut");
         interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
         marker = createItem(new ItemMarker(), "marker");
 

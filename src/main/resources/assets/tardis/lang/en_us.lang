@@ -94,7 +94,6 @@ tile.tardis.json_test.name=Json Tester
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!
-tardis.arrived=The TARDIS has arrived!
 
 death.attack.dalek=Killed by a Dalek Ray gun
 death.cyberman.ray=was deleted.

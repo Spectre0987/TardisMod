@@ -1,26 +1,35 @@
 package net.tardis.mod;
 
+<<<<<<< HEAD
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+=======
+import net.minecraft.creativetab.CreativeTabs;
+>>>>>>> parent of 5558bad... I went a bit far
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
+import net.tardis.mod.client.creativetabs.TardisTab;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
+<<<<<<< HEAD
 import net.tardis.mod.common.commands.CommandTardis;
 import net.tardis.mod.common.entities.EntityAirshell;
 import net.tardis.mod.common.entities.EntityCorridor;
@@ -51,18 +60,36 @@ import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
+=======
+import net.tardis.mod.common.commands.*;
+import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.*;
+import net.tardis.mod.common.entities.controls.*;
+>>>>>>> parent of 5558bad... I went a bit far
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.protocols.TardisProtocol;
+import net.tardis.mod.common.protocols.*;
+import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.*;
+import net.tardis.mod.common.tileentity.*;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.Regeneration;
 import net.tardis.mod.integrations.WeepingAngel;
+import net.tardis.mod.packets.*;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
 
@@ -74,9 +101,15 @@ public class Tardis {
 	public static final String DEP = "after:ic2, galacticraftcore, " + TStrings.ModIds.WEEPING_ANGELS + "; required-after:forge@[14.23.2.2638,)";
 	public static final String VERSION = "0.0.6A";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
-
 	public static Logger LOG = LogManager.getLogger(NAME);
 
+
+	private static Logger logger = LogManager.getLogger(NAME);
+	
+	public static CreativeTabs tab;
+	
+	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+	
 	public static boolean hasIC2 = false;
 	
 	public static final int ID_GUI_TEMPORAL_LAB = 0;
@@ -90,6 +123,12 @@ public class Tardis {
 	public static ServerProxy proxy;
 
 	@EventHandler
+	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
+		LOG.warn("Invalid fingerprint detected! The file " + event.getSource().getName() + " may have been tampered with. This version will NOT be supported by the author!");
+	}
+
+
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
@@ -99,11 +138,13 @@ public class Tardis {
         if (Loader.isModLoaded(TStrings.ModIds.REGENERATION) && !Loader.isModLoaded(TStrings.ModIds.LCORE)) {
             Regeneration.preInit();
         }
-
-		TardisProtocol.init();
-
+		
+		
+		logger = event.getModLog();
+		tab = new TardisTab();
 		TItems.init();
-        
+		TBlocks.register();
+		TDimensions.register();
 		EntityHelper.makeGoodBiomes();
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");
 		EntityHelper.registerStatic(ControlX.class, "x_valve");
@@ -133,24 +174,77 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
 		EntityHelper.registerNoSpawn(EntityHellbentCorridor.class, "hellbent_corridor");
 		EntityHelper.registerNoSpawn(EntityHellbentDoor.class, "hellbent_door");
+		
+		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
+		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
+		registerTileEntity(TileEntityTemporalLab.class, "TileEntityTemporalLab");
+		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
+		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
+		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
+		registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
+		registerTileEntity(TileEntityHoloprojector.class, "TileEntityHoloprojector");
+		registerTileEntity(TileEntityTardisCoral.class, "TileEntityTardisCoral");
+		registerTileEntity(TileEntityLight.class, "TileEntityLight");
+		registerTileEntity(TileEntityHellbentLight.class, "TileEntityHellbentLight");
+		registerTileEntity(TileEntityHellbentMonitor.class, "TileEntityHellbentMonitor");
+		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
+		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
+		registerTileEntity(TileEntityRoundelChest.class, "TileEntityRoundelChest");
+		
+		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
+		
+		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
+		
+		//Exteriors
+		registerTileEntity(TileEntityDoor01.class, "TileEntityDoor01");
+		registerTileEntity(TileEntityDoor03.class, "TileEntityDoor03");
+		
+		//Interiors
+		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");
+		registerTileEntity(TileEntityTardis02.class, "TileEntityTardis02");
+		
+		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 1, Side.SERVER);
+		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 2, Side.SERVER);
+		NETWORK.registerMessage(MessageDoorOpen.Handler.class, MessageDoorOpen.class, 3, Side.CLIENT);
+		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 4, Side.SERVER);
+		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 5, Side.CLIENT);
+		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
+		NETWORK.registerMessage(MessageDemat.Handler.class, MessageDemat.class, 7, Side.CLIENT);
+		NETWORK.registerMessage(MessageSpawnItem.Handler.class, MessageSpawnItem.class, 8, Side.SERVER);
+		NETWORK.registerMessage(MessageDamageSystem.Helper.class, MessageDamageSystem.class, 9, Side.SERVER);
 
+		ScrewdriverHandler.init();
+		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
-
+		
+		TardisProtocol.register(new ProtocolCCircuit());
+		TardisProtocol.register(new ProtocolEnabledHADS());
+		TardisProtocol.register(new ProtocolSystemReadout());
+		TardisProtocol.register(new ProtocolFindRift());
+		TardisProtocol.register(new ProtocolConsole());
+		TardisProtocol.register(new ProtocolARS());
+		TardisProtocol.register(new ProtocolRegenRoom());
+		
 		if (TardisConfig.USE_ENTITIES.entities) {
+			// Register All Mobs Here.
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 			EntityHelper.registerNoSpawn(EntityDalek.class, "dalek");
 			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
 		}
-
 		proxy.preInit();
-
+		
+		TardisSystems.register("flight", SystemFlight.class);
+		TardisSystems.register("dimensional", SystemDimension.class);
+		TardisSystems.register("fluid_links", SystemFluidLinks.class);
+		TardisSystems.register("antenna", SystemAntenna.class);
+		
+		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.init();
-
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
 		OreDictionary.registerOre("gemRuby", TItems.ruby);
@@ -171,13 +265,21 @@ public class Tardis {
 			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
 		}
 	}
-
+	
+	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
+		GameRegistry.registerTileEntity(clazz, new ResourceLocation(Tardis.MODID, name));
+	}
+	
 	public static boolean getIsDev() {
 		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
 	}
 
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event){
-		event.registerServerCommand(new CommandTardis());
+		event.registerServerCommand(new CommandTeleport());
+		event.registerServerCommand(new TardisCommandGrow());
+		event.registerServerCommand(new CommandSummon());
+		event.registerServerCommand(new TardisCommandRemove());
+		event.registerServerCommand(new CommandTardisTransfer());
 	}
 }

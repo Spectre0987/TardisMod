@@ -7,13 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.creativetabs.TTabs;
 
 public class ItemBowTie extends ItemArmor {
 	
 	public ItemBowTie() {
 		super(ArmorMaterial.LEATHER, 1, EntityEquipmentSlot.CHEST);
-		this.setCreativeTab(TTabs.tabTardis);
+		this.setCreativeTab(Tardis.tab);
 	}
 	
 	@SideOnly(Side.CLIENT)

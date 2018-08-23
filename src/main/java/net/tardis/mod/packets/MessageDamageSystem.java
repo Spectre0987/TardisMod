@@ -43,6 +43,7 @@ public class MessageDamageSystem implements IMessage{
 				WorldServer ws = ctx.getServerHandler().player.getServer().getWorld(TDimensions.TARDIS_ID);
 				TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(message.pos);
 				if (tardis != null) {
+					ISystem s = null;
 					for (ISystem sys : tardis.systems) {
 						if (TardisSystems.getIdBySystem(sys).equals(message.system)) {
 							sys.setHealth(0.00F);

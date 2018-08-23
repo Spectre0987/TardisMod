@@ -1,5 +1,8 @@
 package net.tardis.mod.common.items;
 
+import java.util.List;
+import java.util.UUID;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,20 +18,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.creativetabs.TTabs;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
-
-import java.util.List;
-import java.util.UUID;
 
 public class ItemKey extends Item {
 	
 	public static final ResourceLocation CONSOLE_ROOM = new ResourceLocation(Tardis.MODID, "console_room");
 	
 	public ItemKey() {
-		this.setCreativeTab(TTabs.tabTardis);
+		this.setCreativeTab(Tardis.tab);
 		this.setMaxStackSize(1);
 	}
 	
