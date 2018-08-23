@@ -128,7 +128,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	@Override
 	public void update() {
-		
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - this.calcFuelUse());
@@ -634,6 +633,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		ForgeChunkManager.releaseTicket(tardisTicket);
 		ForgeChunkManager.releaseTicket(tardisLocTicket);
 		for(EntityControl cont : controls) {
+			System.out.println("Killing: " + cont.getDisplayName().getFormattedText());
 			cont.setDead();
 		}
 		super.invalidate();
@@ -641,7 +641,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
-		return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).grow(3, 3, 3);
+		return Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(3D);
 	}
 	
 	public EntityControl getControl(Class clazz) {

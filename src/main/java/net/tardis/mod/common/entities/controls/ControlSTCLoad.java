@@ -27,7 +27,7 @@ public class ControlSTCLoad extends EntityControl {
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
 		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
-			return Helper.convertToPixels(-12.25, -2.5, 4.25);
+			return Helper.convertToPixels(-9.5, -2.5, 9);
 		}
 		return Helper.convertToPixels(-12, -2, -3.4);
 	}
