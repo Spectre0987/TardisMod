@@ -11,7 +11,7 @@ import net.tardis.mod.Tardis;
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated //To be updated to use EntityEntries
+//Like Hell
 public class EntityHelper {
 
 	public static int id = 0;

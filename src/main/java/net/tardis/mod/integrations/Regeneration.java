@@ -1,5 +1,7 @@
 package net.tardis.mod.integrations;
 
+import java.util.Random;
+
 import me.sub.regeneration.common.events.RegenerationEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
@@ -7,8 +9,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.sounds.TSounds;
-
-import java.util.Random;
 
 public class Regeneration {
 
@@ -20,7 +20,6 @@ public class Regeneration {
 
         @SubscribeEvent
         public void regen(RegenerationEvent event) {
-            System.out.println("sdfsdfsd");
             EntityPlayer player = event.getEntityPlayer();
 
             if (player.dimension != TDimensions.TARDIS_ID) return;

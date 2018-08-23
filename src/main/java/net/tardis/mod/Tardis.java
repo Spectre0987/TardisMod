@@ -1,5 +1,8 @@
 package net.tardis.mod;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.DamageSource;
@@ -19,8 +22,35 @@ import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.commands.CommandTardis;
-import net.tardis.mod.common.entities.*;
-import net.tardis.mod.common.entities.controls.*;
+import net.tardis.mod.common.entities.EntityAirshell;
+import net.tardis.mod.common.entities.EntityCorridor;
+import net.tardis.mod.common.entities.EntityCybermanInvasion;
+import net.tardis.mod.common.entities.EntityCybermanTomb;
+import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.entities.EntityDalekCasing;
+import net.tardis.mod.common.entities.EntityDalekRay;
+import net.tardis.mod.common.entities.EntityForceField;
+import net.tardis.mod.common.entities.EntityRayCyberman;
+import net.tardis.mod.common.entities.EntityTardis;
+import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDirection;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
+import net.tardis.mod.common.entities.controls.ControlFlight;
+import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
+import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlPhone;
+import net.tardis.mod.common.entities.controls.ControlRandom;
+import net.tardis.mod.common.entities.controls.ControlSTCButton;
+import net.tardis.mod.common.entities.controls.ControlSTCLoad;
+import net.tardis.mod.common.entities.controls.ControlScanner;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlX;
+import net.tardis.mod.common.entities.controls.ControlY;
+import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.items.TItems;
@@ -35,8 +65,6 @@ import net.tardis.mod.integrations.Regeneration;
 import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
 public class Tardis {
