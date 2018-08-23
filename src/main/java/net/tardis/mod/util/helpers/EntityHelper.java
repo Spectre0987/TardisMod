@@ -11,13 +11,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.tardis.mod.Tardis;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.List;
-
 //Like Hell
-=======
->>>>>>> parent of 5558bad... I went a bit far
 public class EntityHelper {
 	
 	public static int id = 0;

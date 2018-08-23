@@ -98,7 +98,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlFlight.class, RenderInvis::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, RenderInvis::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, RenderInvis::new);
-		//RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, RenderInvis::new);
+		RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, RenderInvis::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, RenderInvis::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlLandType.class, RenderInvis::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, RenderInvis::new);
