@@ -1,8 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +16,9 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TBlocks {
@@ -102,10 +102,13 @@ public class TBlocks {
 	//Consoles
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01");
 	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02");
-	
+
+	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block");
+
 	//public static Block interior_door = register(new BlockInteriorDoor(TileEntityInteriorDoor::new), "interior_door");
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test") : null;
-	
+
+
 	public static Block register(Block block, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
         block.setUnlocalizedName("tardis." + name);

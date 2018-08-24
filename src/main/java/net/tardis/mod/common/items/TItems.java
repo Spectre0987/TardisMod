@@ -75,7 +75,8 @@ public class TItems {
 	public static Item artron_capacitor = null;
 	public static Item demat_circut = null;
 	public static Item antenna = createItem(new ItemComponent(), "antenna");
-    public static Item sonic13th;
+	public static Item sonic13th = null;
+	public static Item sonicBlaster = createItem(new ItemSonicBlaster(), "sonic_blaster");
 
 
     @SubscribeEvent
@@ -124,8 +125,6 @@ public class TItems {
 		demat_circut = createItem(new DematerializationCircut(), "demat_circut");
         interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
         marker = createItem(new ItemMarker(), "marker");
-
-
         sonic13th = createItem(new ItemSonic(), "sonic_screwdriver_13");
 	}
 	

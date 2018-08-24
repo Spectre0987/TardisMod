@@ -1,19 +1,14 @@
 package net.tardis.mod.common.items;
 
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -22,6 +17,8 @@ import net.tardis.mod.common.screwdriver.IScrew;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.helpers.PlayerHelper;
+
+import java.util.List;
 
 public class ItemSonic extends Item {
 	
@@ -32,6 +29,16 @@ public class ItemSonic extends Item {
 		this.setCreativeTab(Tardis.tab);
 		this.setMaxStackSize(1);
 	}
+
+
+	/**
+	 * returns the action that specifies what animation to play when the items is being used
+	 */
+	@Override
+	public EnumAction getItemUseAction(ItemStack stack) {
+		return EnumAction.BOW;
+	}
+
 
 	// NBT Start
 	private static void setMode(ItemStack stack, int i) {
