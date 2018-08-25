@@ -25,7 +25,7 @@ public class RenderInteriorDoor extends TileEntitySpecialRenderer<TileEntityInte
 	
 	@Override
 	public void render(TileEntityInteriorDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		boolean open = true;
+		boolean open = te.getOpen();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y - 1, z + 0.5);
 		TileEntityInteriorDoor door = (TileEntityInteriorDoor)te;
@@ -42,10 +42,11 @@ public class RenderInteriorDoor extends TileEntitySpecialRenderer<TileEntityInte
 			EnumFacing facing = state.getValue(BlockFacingDecoration.FACING);
 			if(facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH)GlStateManager.rotate(180, 0, 1, 0);
 		}
-		//GlStateManager.translate(-0.5, 0, 0);
+		GlStateManager.translate(-0.5, 1, 0);
 		if(open) {
 			ext.interiorModel.renderOpen();
 			RenderHelper.renderPortal(render, te, partialTicks);
+			System.out.println("open");
 		} else {
 			GlStateManager.translate(0.25, 0, 0);
 			ext.interiorModel.renderClosed();
