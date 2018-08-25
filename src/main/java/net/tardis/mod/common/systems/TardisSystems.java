@@ -1,12 +1,13 @@
 package net.tardis.mod.common.systems;
 
+import java.util.HashMap;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-
-import java.util.HashMap;
 
 public class TardisSystems {
 	
@@ -59,7 +60,13 @@ public class TardisSystems {
 		/**Take Damage on crash**/
 		public abstract void damage();
 		public abstract Item getRepairItem();
-		public abstract boolean repair(ItemStack stack);
+		public boolean repair(ItemStack stack) {
+			if(this.getHealth() < 1.0F) {
+				this.setHealth(MathHelper.clamp(this.getHealth() + ((stack.getMaxDamage() - stack.getItemDamage()) / 100F), 0.0F, 1.0F));
+				return true;
+			}
+			return false;
+		}
 		public abstract String getNameKey();
 		/**Take damage at the end of each flight**/
 		public abstract void wear();

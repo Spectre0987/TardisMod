@@ -38,4 +38,9 @@ public class SystemAntenna extends ISystem{
 	@Override
 	public void wear() {}
 
+	@Override
+	public boolean shouldStopFlight() {
+		return false;
+	}
+
 }

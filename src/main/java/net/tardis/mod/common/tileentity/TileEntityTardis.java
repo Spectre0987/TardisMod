@@ -879,21 +879,25 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void enterTARDIS(Entity entity) {
 		if(!world.isRemote && this.getTardisState().equals(EnumTardisState.NORMAL)) {
 			EnumFacing facing = EnumFacing.NORTH;
+			BlockPos tp = this.getPos().south(4);
+			ChunkPos cPos = world.getChunkFromBlockCoords(getPos()).getPos();
+			for(int x = -1; x < 1; ++x) {
+				for(int z = -1; z < 1; ++z) {
+					((WorldServer)world).getChunkProvider().loadChunk(cPos.x + x, cPos.z + z);
+				}
+			}
+			for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+				tp = e.getPosition().offset(e.getHorizontalFacing());
+				facing = e.getHorizontalFacing();
+			}
 			if(entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP)entity;
-				BlockPos tp = this.getPos().south(4);
-				ChunkPos cPos = world.getChunkFromBlockCoords(getPos()).getPos();
-				for(int x = -1; x < 1; ++x) {
-					for(int z = -1; z < 1; ++z) {
-						((WorldServer)world).getChunkProvider().loadChunk(cPos.x + x, cPos.z + z);
-					}
-				}
-				for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
-					tp = e.getPosition().offset(e.getHorizontalFacing());
-					facing = e.getHorizontalFacing();
-				}
 				((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter());
 				player.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
+			}
+			else {
+				entity.setPosition(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5);
+				entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
 			}
 		}
 	}
