@@ -126,13 +126,13 @@ public class TEventHandler {
 			Entity e = event.getEntityLiving().getRidingEntity();
 			event.setCanceled(e instanceof EntityTardis || e instanceof EntityDalekCasing);
 			if(e instanceof EntityDalekCasing) {
-				((EntityDalekCasing)e).attackEntityFrom(event.getSource(), event.getAmount());
+                e.attackEntityFrom(event.getSource(), event.getAmount());
 			}
 		}
 		if(event.getSource().equals(Tardis.SUFFICATION)) {
 			if(event.getEntityLiving() instanceof EntityPlayer) {
 				int count = 0;
-				for(ItemStack stack : ((EntityPlayer)event.getEntityLiving()).getArmorInventoryList()) {
+                for (ItemStack stack : event.getEntityLiving().getArmorInventoryList()) {
 					if(stack.getItem() instanceof ItemSpaceSuit) {
 						++count;
 					}
@@ -178,9 +178,6 @@ public class TEventHandler {
 					player.world.spawnEntity(ei);
 				}
 			}
-		}
-		if(TardisConfig.BOTI.enable) {
-			event.player.sendStatusMessage(new TextComponentString("Are you sure you want to enable BOTI? It is extremly buggy and if you complain / mention it in the Discord you" + TextFormatting.BOLD + TextFormatting.DARK_RED + TextFormatting.UNDERLINE + " INSTANTLY and PERMANENTLY banned!"), false);
 		}
 	}
 	

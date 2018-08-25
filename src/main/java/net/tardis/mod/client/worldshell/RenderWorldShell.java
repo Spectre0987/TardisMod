@@ -1,7 +1,5 @@
 package net.tardis.mod.client.worldshell;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,6 +15,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import org.lwjgl.opengl.GL11;
 
 public class RenderWorldShell {
 
@@ -37,7 +36,9 @@ public class RenderWorldShell {
 			
 			GlStateManager.pushMatrix();
 			worldBoti.setShell(container.getWorldShell());
-			if(entity instanceof TileEntityDoor) GlStateManager.depthFunc(GL11.GL_ALWAYS);
+			if (entity instanceof TileEntityDoor)
+
+				GlStateManager.depthFunc(GL11.GL_ALWAYS);
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 

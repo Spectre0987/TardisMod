@@ -1,9 +1,5 @@
 package net.tardis.mod.client.renderers;
 
-import javax.annotation.Nullable;
-
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -16,6 +12,9 @@ import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.proxy.ClientProxy;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
@@ -30,8 +29,8 @@ public class RenderHelper {
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
-			GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
-			GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
+			GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xFF);
+			GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_REPLACE);
 			GL11.glStencilMask(0xFF);
 			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
 	
@@ -53,7 +52,7 @@ public class RenderHelper {
 				GlStateManager.popMatrix();
 			}
 			catch(Exception e) {}
-	
+
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			
 			// Draw portal stencils so portals wont be drawn over

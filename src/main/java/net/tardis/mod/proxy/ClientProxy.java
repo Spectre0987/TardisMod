@@ -49,7 +49,6 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
-import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.LimbManipulationUtil;
 import net.tardis.mod.util.LimbManipulationUtil.Limb;
 
@@ -133,7 +132,7 @@ public class ClientProxy extends ServerProxy {
 	}
 	
 	public static boolean getRenderBOTI() {
-		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.BOTI.enable;
+		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled();
 	}
 
 	@Override
