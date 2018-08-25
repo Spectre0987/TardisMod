@@ -27,8 +27,9 @@ public class TSounds {
 	public static SoundEvent engine_stutter = register("stutter");
 	public static SoundEvent phone = register("phone");
 	public static SoundEvent knocking = register("knocking");
-	
-	public static SoundEvent register(String name) {
+    public static SoundEvent classicDoor = register("classic_door_open");
+
+    public static SoundEvent register(String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
 		SoundEvent event = new SoundEvent(rl);
 		event.setRegistryName(rl);

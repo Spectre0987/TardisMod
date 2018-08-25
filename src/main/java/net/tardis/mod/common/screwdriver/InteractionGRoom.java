@@ -73,7 +73,7 @@ public class InteractionGRoom implements IScrew {
 
 	@Override
 	public int energyRequired() {
-		return 0;
+		return 10;
 	}
 
 	private Rotation getRotation(EnumFacing facing) {

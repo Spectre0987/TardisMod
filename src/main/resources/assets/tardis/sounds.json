@@ -107,6 +107,15 @@
             "stream": true
         }]
     },
+	
+	  "classic_door_open":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:classic_door_open",
+            "stream": true
+        }]
+    },
+	
     "knocking":{
         "category":"blocks",
         "sounds":[{

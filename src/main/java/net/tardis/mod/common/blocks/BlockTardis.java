@@ -10,9 +10,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.blocks.IBlock;
 import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 
-public class BlockTardis extends Block implements IUnbreakable {
+public class BlockTardis extends Block implements IUnbreakable, IBlock {
 	
 	public ItemBlock item = new ItemBlock(this);
 	
@@ -47,5 +48,9 @@ public class BlockTardis extends Block implements IUnbreakable {
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
 	}
-	
+
+	@Override
+	public boolean doesDelete() {
+		return false;
+	}
 }

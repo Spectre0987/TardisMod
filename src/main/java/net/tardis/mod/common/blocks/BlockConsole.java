@@ -14,13 +14,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tardis.mod.api.blocks.IBlock;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class BlockConsole extends BlockTileBase implements IUnbreakable, IRenderBox {
+public class BlockConsole extends BlockTileBase implements IUnbreakable, IRenderBox, IBlock {
 	
 	public static final AxisAlignedBB BB = new AxisAlignedBB(-1, 0, -1, 2, 0.7, 2);
 	public ItemBlock item = new ItemBlock(this);
@@ -97,4 +98,9 @@ public class BlockConsole extends BlockTileBase implements IUnbreakable, IRender
     public boolean shouldRenderBox() {
         return false;
     }
+
+	@Override
+	public boolean doesDelete() {
+		return false;
+	}
 }

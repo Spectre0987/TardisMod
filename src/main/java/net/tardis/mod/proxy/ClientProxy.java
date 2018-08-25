@@ -15,6 +15,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.models.ModelConsole;
@@ -120,6 +121,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 import org.lwjgl.opengl.GL11;
+
 @EventBusSubscriber
 public class ClientProxy extends ServerProxy {
 
