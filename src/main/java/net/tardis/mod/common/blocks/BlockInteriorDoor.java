@@ -34,6 +34,7 @@ public class BlockInteriorDoor extends BlockFacingDecoration {
 		if (!worldIn.isRemote) {
             TileEntityInteriorDoor door = (TileEntityInteriorDoor) worldIn.getTileEntity(pos);
             door.setOpen(!door.getOpen());
+            System.out.println(door.getOpen());
             worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), door.getOpen() ? type.getOpenSound() : type.getClosedSound(), SoundCategory.PLAYERS, 1.0F, 1.0F);
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);

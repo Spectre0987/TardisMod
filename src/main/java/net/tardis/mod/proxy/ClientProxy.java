@@ -27,6 +27,7 @@ import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
+import net.tardis.mod.client.renderers.controls.RenderInteriorDoor;
 import net.tardis.mod.client.renderers.decorations.hellbent.*;
 import net.tardis.mod.client.renderers.entities.*;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
