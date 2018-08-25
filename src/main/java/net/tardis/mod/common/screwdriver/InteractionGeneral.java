@@ -5,8 +5,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,23 +21,23 @@ import java.lang.reflect.Method;
 @Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class InteractionGeneral implements IScrew {
 
-    Method dispense = ReflectionHelper.findMethod(BlockDispenser.class, "dispense", "func_176439_d", World.class, BlockPos.class);
+    private Method dispense = ReflectionHelper.findMethod(BlockDispenser.class, "dispense", "func_176439_d", World.class, BlockPos.class);
 
     @Override
-    public void performAction(World world, EntityPlayer player, EnumHand hand) {
-
+    public EnumActionResult performAction(World world, EntityPlayer player, EnumHand hand) {
+        return EnumActionResult.FAIL;
     }
 
     @Override
-    public void blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-        if (world.isRemote) return;
+    public EnumActionResult blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+        if (world.isRemote) return EnumActionResult.FAIL;
 
         Block block = state.getBlock();
 
         //It doesn't work on wood.
         if (block.isWood(world,pos) || block.getRegistryName().toString().contains("wood") || state.getMaterial().equals(Material.WOOD)) {
             PlayerHelper.sendMessage(player, "screw.fail.itswood", true);
-            return;
+            return EnumActionResult.FAIL;
         }
 
         //TNT
@@ -45,8 +45,7 @@ public class InteractionGeneral implements IScrew {
             BlockTNT tnt = (BlockTNT) block;
             tnt.explode(world, pos, state.withProperty(BlockTNT.EXPLODE, true), player);
             world.setBlockToAir(pos);
-            coolDown(player);
-            return;
+            return EnumActionResult.SUCCESS;
         }
 
         //Open trap doors
@@ -55,8 +54,7 @@ public class InteractionGeneral implements IScrew {
         if (block instanceof BlockTrapDoor) {
             IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
             markUpdate(world, pos, newState);
-            coolDown(player);
-            return;
+            return EnumActionResult.SUCCESS;
         }
 
         //Open doors
@@ -69,38 +67,30 @@ public class InteractionGeneral implements IScrew {
             } else {
                 IBlockState newState = state.cycleProperty(BlockDoor.OPEN);
                 markUpdate(world, pos, newState);
-                coolDown(player);
             }
-            return;
+            return EnumActionResult.SUCCESS;
         }
 
 
         if (block instanceof BlockDispenser) {
-            if (!player.isSneaking()) return;
+            if (!player.isSneaking()) return EnumActionResult.FAIL;
             try {
                 dispense.invoke(block, world, pos);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
-
+        return EnumActionResult.FAIL;
     }
 
     @Override
-    public void entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
-
+    public boolean entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
+        return false;
     }
 
     private void markUpdate(World world, BlockPos pos, IBlockState state) {
         world.setBlockState(pos, state, 10);
         world.markBlockRangeForRenderUpdate(pos, pos);
-    }
-
-    private void coolDown(EntityPlayer player) {
-        Item stack = player.getHeldItem(player.getActiveHand()).getItem();
-        player.getCooldownTracker().setCooldown(stack, 50);
     }
 
     @Override
@@ -110,12 +100,17 @@ public class InteractionGeneral implements IScrew {
 
     @Override
     public int getCoolDownAmount() {
-        return 0;
+        return 50;
     }
 
     @Override
     public boolean causesCoolDown() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public int energyRequired() {
+        return 5;
     }
 
 

@@ -36,13 +36,23 @@ public class ItemSonic extends Item {
 		return charge;
 	}
 
-	public void setCharge(int charge) {
+	public void setCharge(ItemStack stack, int charge) {
 		this.charge = charge;
+		if (stack.hasTagCompound()) {
+			NBTTagCompound nbt = stack.getTagCompound();
+			nbt.setInteger("charge", charge);
+		} else {
+			stack.setTagCompound(new NBTTagCompound());
+			NBTTagCompound nbt = stack.getTagCompound();
+			nbt.setInteger("charge", charge);
+		}
 	}
+
 
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 		super.onCreated(stack, worldIn, playerIn);
+		setCharge(stack, 100);
 	}
 
 	/**
@@ -64,52 +74,70 @@ public class ItemSonic extends Item {
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
+
 		ItemStack held = player.getHeldItem(handIn);
 		IScrew sc = (ScrewdriverHandler.MODES.get(getMode(held)));
-		sc.performAction(worldIn, player, handIn);
 
-		if(sc.causesCoolDown()) {
-			coolDown(player, sc.getCoolDownAmount());
+		BlockPos lookPos = player.rayTrace(100, 1.0F).getBlockPos();
+
+		if (player.isSneaking() && worldIn.getBlockState(lookPos).getBlock() != Blocks.DISPENSER) {
+			setMode(held, getMode(held) + 1);
+			if (!worldIn.isRemote) {
+				PlayerHelper.sendMessage(player, new TextComponentTranslation(ScrewdriverHandler.MODES.get(getMode(held)).getName()).getFormattedText(), true);
+			}
 		}
 
-		worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
+		if (getCharge() >= sc.energyRequired()) {
+			EnumActionResult result = sc.performAction(worldIn, player, handIn);
+			if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
+				cooldown(player, sc.getCoolDownAmount());
+				worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
+				setCharge(held, getCharge() - sc.energyRequired());
+			}
+		}
 		return super.onItemRightClick(worldIn, player, handIn);
 	}
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack held = player.getHeldItem(hand);
-
-		if (player.isSneaking() && worldIn.getBlockState(pos).getBlock() != Blocks.DISPENSER) {
-			setMode(held, getMode(held) + 1);
-			if (!worldIn.isRemote)
-				PlayerHelper.sendMessage(player, new TextComponentTranslation(ScrewdriverHandler.MODES.get(getMode(held)).getName()).getFormattedText(), true);
-		}
+		EnumActionResult result = EnumActionResult.FAIL;
 
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
-			sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
+			if (getCharge() >= sc.energyRequired()) {
+				result = sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
+				if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
+					cooldown(player, sc.getCoolDownAmount());
+					worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
+					setCharge(held, getCharge() - sc.energyRequired());
+				}
+			}
+		}
 
-			if(sc.causesCoolDown()) {
-				coolDown(player, sc.getCoolDownAmount());
-			}
-				worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
-			}
-		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+		return result;
 	}
 
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
+
 		ItemStack held = player.getHeldItem(hand);
+		boolean flag = false;
+
 		if (getMode(held) >= 0) {
+
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
-			sc.entityInteraction(stack, player, target, hand);
-			if(sc.causesCoolDown()) {
-				coolDown(player, sc.getCoolDownAmount());
+
+			if (getCharge() >= sc.energyRequired()) {
+				flag = sc.entityInteraction(stack, player, target, hand);
+				if (sc.causesCoolDown() && flag) {
+					cooldown(player, sc.getCoolDownAmount());
+					player.world.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
+					setCharge(held, getCharge() - sc.energyRequired());
+				}
 			}
-			player.world.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
 		}
-		return super.itemInteractionForEntity(stack, player, target, hand);
+		return flag;
 	}
 	
 	public static int getMode(ItemStack stack) {
@@ -144,7 +172,7 @@ public class ItemSonic extends Item {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
-	private void coolDown(EntityPlayer player, int ticks) {
+	private void cooldown(EntityPlayer player, int ticks) {
 		Item stack = player.getHeldItem(player.getActiveHand()).getItem();
 		player.getCooldownTracker().setCooldown(stack, ticks);
 	}

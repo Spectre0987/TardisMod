@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,12 +17,12 @@ import net.tardis.mod.util.helpers.TardisHelper;
 public class InteractonElectricPanel implements IScrew {
 
 	@Override
-	public void performAction(World world, EntityPlayer player, EnumHand hand) {
-
+	public EnumActionResult performAction(World world, EntityPlayer player, EnumHand hand) {
+		return EnumActionResult.FAIL;
 	}
 
 	@Override
-	public void blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public EnumActionResult blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 
 		if (!world.isRemote) {
 			Block block = world.getBlockState(pos).getBlock();
@@ -38,15 +39,16 @@ public class InteractonElectricPanel implements IScrew {
 					if(player.getPosition().getDistance(tardisPos.getX(), tardisPos.getY(), tardisPos.getZ()) < 8 * 16) {
 						panel.setOwner(player.getGameProfile().getId());
 					}
+					return EnumActionResult.SUCCESS;
 				}
 			}
 		}
-
+		return EnumActionResult.FAIL;
 	}
 
 	@Override
-	public void entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
-
+	public boolean entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
+		return false;
 	}
 
 	@Override
@@ -62,6 +64,11 @@ public class InteractonElectricPanel implements IScrew {
 	@Override
 	public boolean causesCoolDown() {
 		return true;
+	}
+
+	@Override
+	public int energyRequired() {
+		return 0;
 	}
 
 

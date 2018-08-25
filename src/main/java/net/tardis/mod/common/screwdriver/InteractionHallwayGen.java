@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Rotation;
@@ -20,13 +21,15 @@ import net.tardis.mod.common.world.Structures;
 public class InteractionHallwayGen implements IScrew {
 
 	@Override
-	public void performAction(World world, EntityPlayer player, EnumHand hand) {
-
+	public EnumActionResult performAction(World world, EntityPlayer player, EnumHand hand) {
+		return EnumActionResult.FAIL;
 	}
 
 	@Override
-	public void blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-		if (!world.isRemote) {
+	public EnumActionResult blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+
+		if (world.isRemote) return EnumActionResult.FAIL;
+
 			if (state.getBlock() == TBlocks.panel && state.getValue(BlockPanel.TYPE) == 1) {
 				if (state.getBlock() == TBlocks.panel) {
 					WorldServer ws = (WorldServer) world;
@@ -37,14 +40,16 @@ public class InteractionHallwayGen implements IScrew {
 					Rotation rot = this.getRotationFromFacing(facing);
 					PlacementSettings sett = new PlacementSettings().setRotation(this.getRotationFromFacing(facing));
 					temp.addBlocksToWorld(ws, pos.add(this.getOffsetFromFacing(facing)), sett);
+					return EnumActionResult.SUCCESS;
 				}
 			}
-		}
+
+		return EnumActionResult.FAIL;
 	}
 
 	@Override
-	public void entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
-
+	public boolean entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
+		return false;
 	}
 
 	@Override
@@ -60,6 +65,11 @@ public class InteractionHallwayGen implements IScrew {
 	@Override
 	public boolean causesCoolDown() {
 		return false;
+	}
+
+	@Override
+	public int energyRequired() {
+		return 0;
 	}
 
 
