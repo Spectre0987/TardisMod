@@ -69,13 +69,14 @@ import net.tardis.mod.common.protocols.ProtocolARS;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
-import net.tardis.mod.common.protocols.ProtocolFindRift;
+import net.tardis.mod.common.protocols.ProtocolLock;
 import net.tardis.mod.common.protocols.ProtocolRegenRoom;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemAntenna;
+import net.tardis.mod.common.systems.SystemCCircuit;
 import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemFluidLinks;
@@ -240,10 +241,10 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolCCircuit());
 		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
-		TardisProtocol.register(new ProtocolFindRift());
 		TardisProtocol.register(new ProtocolConsole());
 		TardisProtocol.register(new ProtocolARS());
 		TardisProtocol.register(new ProtocolRegenRoom());
+		TardisProtocol.register(new ProtocolLock());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
@@ -257,6 +258,7 @@ public class Tardis {
 		TardisSystems.register("dimensional", SystemDimension.class);
 		TardisSystems.register("fluid_links", SystemFluidLinks.class);
 		TardisSystems.register("antenna", SystemAntenna.class);
+		TardisSystems.register("chameleon", SystemCCircuit.class);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);

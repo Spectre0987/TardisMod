@@ -113,6 +113,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private EnumTardisState currentState = EnumTardisState.NORMAL;
 	public double power = 0;
 	public List<Vec3d> coordList = new ArrayList<>();
+	private boolean isLocked = false;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -405,7 +406,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void setDesination(BlockPos pos, int dimension) {
-		this.tardisDestination = pos.down().toImmutable();
+		this.tardisDestination = pos.down();
 		if(Helper.isDimensionBlocked(dimension))
 			dimension = 0;
 		this.destDim = dimension;
@@ -658,9 +659,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void crash(boolean explode) {
 		if (!world.isRemote) {
 			WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-			Vec3d cr = Helper.blockPosToVec3d(this.getDestination().subtract(this.getLocation())).scale(this.ticksToTravel / this.totalTimeToTravel);
-			BlockPos crashSite = new BlockPos(cr.x, cr.y, cr.z).add(this.getLocation());
-			this.setDesination(crashSite == null ? getLocation() : crashSite, dimension);
+			BlockPos crashSite = this.getCurrentPosOnPath();
+			System.out.println("Land: " + this.getLocation() + "Crash: " + crashSite);
+			this.setDesination(crashSite, dimension);
 			if(explode) {
 				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
 				world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
@@ -940,5 +941,22 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			return door;
 		}
 		return null;
+	}
+
+	public boolean isLocked() {
+		return this.isLocked;
+	}
+	
+	public void setLocked(boolean b) {
+		this.isLocked = b;
+		this.markDirty();
+	}
+	
+	public BlockPos getCurrentPosOnPath() {
+		if(this.isInFlight()) {
+			BlockPos dist = this.getDestination().subtract(this.getLocation());
+			return this.getLocation().add(Helper.scaleBP(dist, this.ticksToTravel / (float)this.totalTimeToTravel));
+		}
+		return this.getLocation();
 	}
 }

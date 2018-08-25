@@ -90,7 +90,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if(!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis)((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
 			if(tardis != null && tardis.getTardisState() == EnumTardisState.NORMAL) {
-				if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0 && alpha >= 1.0F) {
+				if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0 && alpha >= 1.0F && !tardis.isLocked()) {
 					lockCooldown = 20;
 		            isLocked = !isLocked;
 					this.markDirty();
@@ -100,6 +100,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					else
 						world.playSound(null, getPos(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 1F);
 					player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + isLocked), true);
+				}
+				else if(tardis.isLocked()) {
+					player.sendStatusMessage(new TextComponentTranslation(TStrings.DOUBLE_LOCKED), false);
 				}
 			}
 		}

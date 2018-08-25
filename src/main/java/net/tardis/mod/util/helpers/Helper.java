@@ -1,5 +1,9 @@
 package net.tardis.mod.util.helpers;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,10 +28,6 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
-
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Random;
 
 public class Helper {
 	
@@ -221,5 +221,9 @@ public class Helper {
 			}
 		}
 		return count >= 3;
+	}
+
+	public static BlockPos scaleBP(BlockPos dist, double i) {
+		return new BlockPos(dist.getX() * i, dist.getY() * i, dist.getZ() * i);
 	}
 }
