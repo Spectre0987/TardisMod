@@ -54,5 +54,15 @@ public class InteractonElectricPanel implements IScrew {
 		return "screw.electric";
 	}
 
-	
+	@Override
+	public int getCoolDownAmount() {
+		return 50;
+	}
+
+	@Override
+	public boolean causesCoolDown() {
+		return true;
+	}
+
+
 }

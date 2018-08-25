@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -55,8 +56,11 @@ import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.LimbManipulationUtil;
 import net.tardis.mod.util.LimbManipulationUtil.Limb;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
+
+import org.lwjgl.opengl.GL11;
 
 @EventBusSubscriber
 public class ClientProxy extends ServerProxy {
@@ -186,48 +190,6 @@ public class ClientProxy extends ServerProxy {
     }
    
   
-
-    public static void setRotationAngles(float limbSwing, float limbSwingAmount, float netHeadYaw, float headPitch, Entity entity, ModelBiped model){
-
-        model.bipedHead.rotateAngleZ = -netHeadYaw / (180F / (float)Math.PI);
-        model.bipedHead.rotateAngleY = 0;
-        model.bipedHead.rotateAngleX = -55 / (180F / (float)Math.PI);
-
-        model.bipedHeadwear.rotateAngleX = model.bipedHead.rotateAngleX;
-        model.bipedHeadwear.rotateAngleY = model.bipedHead.rotateAngleY;
-        model.bipedHeadwear.rotateAngleZ = model.bipedHead.rotateAngleZ;
-        
-        if(limbSwingAmount > 0.25)
-        	limbSwingAmount = 0.25f;
-        float movement = MathHelper.cos(limbSwing * 0.8f + (float)Math.PI) * limbSwingAmount;
-
-        model.bipedLeftArm.rotateAngleX = 180 / (180F / (float)Math.PI) - movement * 0.25f;
-        model.bipedLeftArm.rotateAngleY = movement * -0.46f;
-        model.bipedLeftArm.rotateAngleZ = movement * -0.2f;
-        model.bipedLeftArm.rotationPointY = 2 - movement * 9.0F;
-        
-        model.bipedRightArm.rotateAngleX = 180 / (180F / (float)Math.PI) + movement * 0.25f;
-        model.bipedRightArm.rotateAngleY = movement * -0.4f;
-        model.bipedRightArm.rotateAngleZ = movement * -0.2f;
-        model.bipedRightArm.rotationPointY = 2 + movement * 9.0F;
-
-        model.bipedBody.rotateAngleY = movement * 0.1f;
-        model.bipedBody.rotateAngleX = 0;
-        model.bipedBody.rotateAngleZ = movement * 0.1f;
-        
-        model.bipedLeftLeg.rotateAngleX = movement * 0.1f;
-        model.bipedLeftLeg.rotateAngleY = movement * 0.1f;
-        model.bipedLeftLeg.rotateAngleZ = -7 / (180F / (float)Math.PI) - movement * 0.25f;
-        model.bipedLeftLeg.rotationPointY = 10.4f + movement * 9.0F;
-        model.bipedLeftLeg.rotationPointZ = movement * 0.6f;
-
-        model.bipedRightLeg.rotateAngleX = movement * -0.1f;
-        model.bipedRightLeg.rotateAngleY = movement * 0.1f;
-        model.bipedRightLeg.rotateAngleZ = 7 / (180F / (float)Math.PI) - movement * 0.25f;
-        model.bipedRightLeg.rotationPointY = 10.4f - movement * 9.0F;
-        model.bipedRightLeg.rotationPointZ = movement * -0.6f;
-	}
-
     
     private static void addRenderLayer(LayerRenderer layer) {
         for (RenderPlayer playerRender : Minecraft.getMinecraft().getRenderManager().getSkinMap().values()) {

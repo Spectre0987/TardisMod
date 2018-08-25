@@ -24,12 +24,26 @@ public class ItemSonic extends Item {
 	
 	public static final String MODE_KEY = "mode";
 	public static final String CONSOLE_POS = "console_pos";
-	
+
+	private int charge = 100;
+
 	public ItemSonic() {
 		this.setCreativeTab(Tardis.tab);
 		this.setMaxStackSize(1);
 	}
 
+	public int getCharge() {
+		return charge;
+	}
+
+	public void setCharge(int charge) {
+		this.charge = charge;
+	}
+
+	@Override
+	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+		super.onCreated(stack, worldIn, playerIn);
+	}
 
 	/**
 	 * returns the action that specifies what animation to play when the items is being used
@@ -53,6 +67,11 @@ public class ItemSonic extends Item {
 		ItemStack held = player.getHeldItem(handIn);
 		IScrew sc = (ScrewdriverHandler.MODES.get(getMode(held)));
 		sc.performAction(worldIn, player, handIn);
+
+		if(sc.causesCoolDown()) {
+			coolDown(player, sc.getCoolDownAmount());
+		}
+
 		worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
 		return super.onItemRightClick(worldIn, player, handIn);
 	}
@@ -70,6 +89,10 @@ public class ItemSonic extends Item {
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
 			sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
+
+			if(sc.causesCoolDown()) {
+				coolDown(player, sc.getCoolDownAmount());
+			}
 				worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
 			}
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
@@ -81,6 +104,9 @@ public class ItemSonic extends Item {
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
 			sc.entityInteraction(stack, player, target, hand);
+			if(sc.causesCoolDown()) {
+				coolDown(player, sc.getCoolDownAmount());
+			}
 			player.world.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
 		}
 		return super.itemInteractionForEntity(stack, player, target, hand);
@@ -113,10 +139,13 @@ public class ItemSonic extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		try {
-			tooltip.add("Mode: " + new TextComponentTranslation(ScrewdriverHandler.MODES.get(getMode(stack)).getName()).getFormattedText());
-		}
-		catch(Exception e) {}
+		tooltip.add("Mode: " + new TextComponentTranslation(ScrewdriverHandler.MODES.get(getMode(stack)).getName()).getFormattedText());
+		tooltip.add("Charge: " + getCharge());
 		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
+
+	private void coolDown(EntityPlayer player, int ticks) {
+		Item stack = player.getHeldItem(player.getActiveHand()).getItem();
+		player.getCooldownTracker().setCooldown(stack, ticks);
 	}
 }

@@ -52,7 +52,17 @@ public class InteractionHallwayGen implements IScrew {
 		return "screwdriver.hallway";
 	}
 
-	
+	@Override
+	public int getCoolDownAmount() {
+		return 0;
+	}
+
+	@Override
+	public boolean causesCoolDown() {
+		return false;
+	}
+
+
 	public BlockPos getOffsetFromFacing(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:

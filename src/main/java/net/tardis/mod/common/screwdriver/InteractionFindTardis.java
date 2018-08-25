@@ -30,4 +30,14 @@ public class InteractionFindTardis implements IScrew {
         return null;
     }
 
+    @Override
+    public int getCoolDownAmount() {
+        return 0;
+    }
+
+    @Override
+    public boolean causesCoolDown() {
+        return false;
+    }
+
 }

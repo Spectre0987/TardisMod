@@ -1,20 +1,44 @@
 package net.tardis.mod.common.items;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.tileentity.TileEntitySonicGun;
 
 public class ItemSonicBlaster extends ItemBase {
 
-    public static AxisAlignedBB posToHelper(BlockPos pos) {
+    private AxisAlignedBB axisAlignedBB;
+
+    public void setAxisAlignedBB(AxisAlignedBB axisAlignedBB) {
+        this.axisAlignedBB = axisAlignedBB;
+    }
+
+    public AxisAlignedBB getAxisAlignedBB(EntityPlayer player, BlockPos pos) {
+        return posToHelper(player, pos);
+    }
+
+    public AxisAlignedBB getAxisAlignedBB() {
+        return axisAlignedBB;
+    }
+
+    public static AxisAlignedBB posToHelper(EntityPlayer player, BlockPos pos) {
+    	
+    	 System.out.println(player.rotationPitch);
+    	
+    	  if(MathHelper.ceil(player.getLookVec().y) > -20 || MathHelper.ceil(player.getLookVec().y) < 20){
+              return new AxisAlignedBB(pos.north().west(), pos.south().east());
+          }
+    	  
         return new AxisAlignedBB(pos.west().up(), pos.east().down());
     }
 
@@ -24,7 +48,7 @@ public class ItemSonicBlaster extends ItemBase {
         IBlockState state = worldIn.getBlockState(pos);
         if (state.getBlock() == Blocks.AIR) return EnumActionResult.FAIL;
 
-        AxisAlignedBB box = posToHelper(pos);
+        AxisAlignedBB box = posToHelper(player, pos);
 
         for (int x = (int) box.minX; x <= box.maxX; x++) {
             for (int y = (int) box.minY; y <= box.maxY; y++) {

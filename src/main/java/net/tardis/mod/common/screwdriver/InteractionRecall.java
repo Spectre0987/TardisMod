@@ -46,4 +46,14 @@ public class InteractionRecall implements IScrew {
 		return "screw.recall";
 	}
 
+	@Override
+	public int getCoolDownAmount() {
+		return 0;
+	}
+
+	@Override
+	public boolean causesCoolDown() {
+		return false;
+	}
+
 }

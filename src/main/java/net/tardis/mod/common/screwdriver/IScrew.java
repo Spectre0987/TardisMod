@@ -29,4 +29,9 @@ public interface IScrew {
 	 * Returns the name of the sonic function
 	 */
 	String getName();
+
+	int getCoolDownAmount();
+
+	boolean causesCoolDown();
+
 }

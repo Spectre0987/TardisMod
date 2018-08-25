@@ -19,5 +19,6 @@ public class ScrewdriverHandler {
 		register(new InteractionHallwayGen());
 		register(new InteractionGRoom());
 		register(new InteractonElectricPanel());
+		register(new InteractionEntity());
 	}
 }

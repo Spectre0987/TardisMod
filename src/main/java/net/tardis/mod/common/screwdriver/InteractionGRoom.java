@@ -58,6 +58,16 @@ public class InteractionGRoom implements IScrew {
 		return "screw.generic_room";
 	}
 
+	@Override
+	public int getCoolDownAmount() {
+		return 0;
+	}
+
+	@Override
+	public boolean causesCoolDown() {
+		return false;
+	}
+
 	private Rotation getRotation(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:
