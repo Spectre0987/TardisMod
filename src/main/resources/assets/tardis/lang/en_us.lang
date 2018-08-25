@@ -42,6 +42,7 @@ item.tardis.key_01.name=TARDIS Key
 item.tardis.marker.name=Marker
 item.tardis.interiordoor.name=Interior Door
 item.tardis.sonic_screwdriver_13.name=Thirteen's Sonic
+item.tardis.chameleon_circuit.name=Chameleon Circuit
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
@@ -101,6 +102,7 @@ death.cyberman.ray=was deleted.
 
 damage.dalek=was exterminated
 
+door.tardis.locked=This TARDIS Is Double Locked!
 
 screw.recall=Recall Mode
 screw.lamp=Tinker Mode
@@ -142,11 +144,13 @@ protocol.tardis.systemreadout=Sub-System readout
 protocol.tardis.change.console=Change Console
 protocol.tardis.ars=Architectural Reconfiguration System
 protocol.tardis.regenroom=Regenerate Console Room
+protocol.tardis.lock=Double Lock
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
 system.tardis.fluidlinks=Fluid Links
 systems.tardis.antenna=Interstitial Antenna
+system.tardis.ccircuit=Chameleon Circuit
 
 tardis.dimension=Nav-com Dimension is:
 

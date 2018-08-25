@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.client.models.ModelFirstCane;
@@ -117,12 +115,16 @@ import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.LimbManipulationUtil;
 import net.tardis.mod.util.LimbManipulationUtil.Limb;
 
+<<<<<<< HEAD
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 import org.lwjgl.opengl.GL11;
 
 @EventBusSubscriber
+=======
+@EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
+>>>>>>> 418dfdc15b3d0b9620d5ddfd1881385d858a69f3
 public class ClientProxy extends ServerProxy {
 
 	public void registerRenders() {

@@ -17,6 +17,7 @@ public class TStrings {
 	public static final String TARDIS_DIMENSION = "tardis.dimension";
 	
 	public static final String SECONDS = "general.time.seconds";
+	public static final String DOUBLE_LOCKED = "door.tardis.locked";
 	
 	public static class ModIds {
 		public static final String GALACTICRAFT = "galacticraftcore";
