@@ -68,7 +68,7 @@ public class InteractonElectricPanel implements IScrew {
 
 	@Override
 	public int energyRequired() {
-		return 0;
+		return 5;
 	}
 
 

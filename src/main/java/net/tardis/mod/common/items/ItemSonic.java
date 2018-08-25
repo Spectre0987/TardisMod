@@ -90,7 +90,7 @@ public class ItemSonic extends Item {
 		if (getCharge() >= sc.energyRequired()) {
 			EnumActionResult result = sc.performAction(worldIn, player, handIn);
 			if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
-				cooldown(player, sc.getCoolDownAmount());
+				cooldown(held.getItem(), player, sc.getCoolDownAmount());
 				worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
 				setCharge(held, getCharge() - sc.energyRequired());
 			}
@@ -103,12 +103,17 @@ public class ItemSonic extends Item {
 		ItemStack held = player.getHeldItem(hand);
 		EnumActionResult result = EnumActionResult.FAIL;
 
+		if(!held.hasTagCompound()){
+			NBTTagCompound nbt = held.getTagCompound();
+			nbt.setInteger("charge", getCharge());
+		}
+		
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
 			if (getCharge() >= sc.energyRequired()) {
 				result = sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
 				if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
-					cooldown(player, sc.getCoolDownAmount());
+					cooldown(held.getItem(), player, sc.getCoolDownAmount());
 					worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
 					setCharge(held, getCharge() - sc.energyRequired());
 				}
@@ -131,7 +136,7 @@ public class ItemSonic extends Item {
 			if (getCharge() >= sc.energyRequired()) {
 				flag = sc.entityInteraction(stack, player, target, hand);
 				if (sc.causesCoolDown() && flag) {
-					cooldown(player, sc.getCoolDownAmount());
+					cooldown(stack.getItem(), player, sc.getCoolDownAmount());
 					player.world.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
 					setCharge(held, getCharge() - sc.energyRequired());
 				}
@@ -172,8 +177,7 @@ public class ItemSonic extends Item {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
-	private void cooldown(EntityPlayer player, int ticks) {
-		Item stack = player.getHeldItem(player.getActiveHand()).getItem();
+	private void cooldown(Item stack, EntityPlayer player, int ticks) {
 		player.getCooldownTracker().setCooldown(stack, ticks);
 	}
 }

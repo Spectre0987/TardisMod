@@ -12,6 +12,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.tardis.mod.api.blocks.IBlock;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.tileentity.TileEntitySonicGun;
 
@@ -46,7 +47,7 @@ public class ItemSonicBlaster extends ItemBase {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
         IBlockState state = worldIn.getBlockState(pos);
-        if (state.getBlock() == Blocks.AIR) return EnumActionResult.FAIL;
+        if (state.getBlock() == Blocks.AIR || state.getBlock() instanceof IBlock && !((IBlock) state.getBlock()).doesDelete()) return EnumActionResult.FAIL;
 
         AxisAlignedBB box = posToHelper(player, pos);
 

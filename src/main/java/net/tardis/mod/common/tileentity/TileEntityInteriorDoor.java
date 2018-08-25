@@ -13,7 +13,7 @@ import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
-import net.tardis.mod.common.enums.EnumInteriorDoor;
+import net.tardis.mod.common.blocks.BlockInteriorDoor;
 
 public class TileEntityInteriorDoor extends TileEntity implements ITickable, IContainsWorldShell {
 	
@@ -21,27 +21,30 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	private Vec3i rad = new Vec3i(10, 10, 10);
 
 	private boolean open;
-	private EnumInteriorDoor doorType;
+	private BlockInteriorDoor.DoorTypes doorType;
+
+	public TileEntityInteriorDoor() {
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		setOpen(compound.getBoolean("open"));
-		setDoorType(EnumInteriorDoor.valueOf(compound.getString("type")));
+		setDoorType(BlockInteriorDoor.DoorTypes.valueOf(compound.getString("type")));
 	}
 
-	public EnumInteriorDoor getDoorType() {
+	public BlockInteriorDoor.DoorTypes getDoorType() {
 		return doorType;
 	}
 
-	public void setDoorType(EnumInteriorDoor doorType) {
+	public void setDoorType(BlockInteriorDoor.DoorTypes doorType) {
 		this.doorType = doorType;
 	}
 
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setBoolean("open", open);
-		compound.setString("type", doorType.toString());
+		compound.setString("type", doorType.toString().toLowerCase());
 		return compound;
 	}
 
@@ -53,8 +56,6 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 		this.open = open;
 	}
 
-	public TileEntityInteriorDoor() {}
-	
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return new AxisAlignedBB(-1, 0, 0, 2, 4, 1).offset(getPos());

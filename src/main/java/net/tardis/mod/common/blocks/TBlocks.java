@@ -107,7 +107,9 @@ public class TBlocks {
 
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block");
 
-	//public static Block interior_door = register(new BlockInteriorDoor(TileEntityInteriorDoor::new), "interior_door");
+    public static Block interiorDoorPolice = register(new BlockInteriorDoor(BlockInteriorDoor.DoorTypes.DEFAULT), "interiorDoorPolice");
+
+
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test") : null;
 
 

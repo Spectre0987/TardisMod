@@ -69,7 +69,7 @@ public class InteractionHallwayGen implements IScrew {
 
 	@Override
 	public int energyRequired() {
-		return 0;
+		return 10;
 	}
 
 
