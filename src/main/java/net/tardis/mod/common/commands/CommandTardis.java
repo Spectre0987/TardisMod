@@ -1,5 +1,10 @@
 package net.tardis.mod.common.commands;
 
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -17,10 +22,6 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.util.helpers.TardisHelper;
-
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
 public class CommandTardis extends CommandBase {
     /**
@@ -57,7 +58,7 @@ public class CommandTardis extends CommandBase {
 
         if (sender instanceof EntityPlayerMP) {
             EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-
+            
             String alias = args[0];
 
             if (args.length == 1){

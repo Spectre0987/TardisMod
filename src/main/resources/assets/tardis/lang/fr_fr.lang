@@ -41,6 +41,7 @@ item.tardis.hellbent_corridor.name=Hall d'entrée Hellbent
 item.tardis.key_01.name=Clé de TARDIS
 item.tardis.marker.name=Marqueur
 item.tardis.interiordoor.name=Porte intérieure
+item.tardis.sonic_screwdriver_13.name=Tournevis sonique du Treizième Docteur
 
 tooltip.remote=Télécommande reliée au TARDIS à :
 tooltip.remote.time=Le TARDIS arrive dans 
@@ -218,8 +219,3 @@ command.no_tardis_owned=Aucun TARDIS trouvé
 command.no_player_found=Pas de joueur trouvé avec ce pseudonyme
 command.tardis_travel=Le TARDIS arrive
 command.tardis_deleted=TARDIS supprimé
-
-commands.tardis.teleportin.usage=/tardistp
-commands.tardis.grow.usage=/tardisgrow
-commands.tardis.summon.usage=/summontardis <joueur>
-command.tardis.remove.usage=/tardisremove <joueur>
