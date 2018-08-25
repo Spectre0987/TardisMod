@@ -135,6 +135,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	public void onUpdate() {
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
+		if(!(world.getTileEntity(getConsolePos()) instanceof TileEntityTardis))return;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 		if(tardis == null) return;
 		if(!world.isRemote && this.isOpen()) {
