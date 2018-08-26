@@ -128,6 +128,7 @@ config.dim.usewhitelist=Les dimensions de la liste doivent-elles être utilisée
 config.entity=Entitées
 config.entity.allowed=Ce mod doit-il ajouter des Mobs ?
 config.entity.cybermen.spawnchance=Chance qu'un Cyberman apparaisse (par chunk)
+config.entity.adipose.spawnchance=Chance qu'une Adipose apparaisse (par chunk)
 
 config.misc=Divers
 config.misc.givekey=Donner une clef de TARDIS quand un joueur rejoint pour la première fois ?

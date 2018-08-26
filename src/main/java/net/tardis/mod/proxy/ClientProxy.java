@@ -41,12 +41,7 @@ import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentLight;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentMonitor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentPole;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentRoof;
-import net.tardis.mod.client.renderers.entities.RenderCyberRay;
-import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
-import net.tardis.mod.client.renderers.entities.RenderCybermanTomb;
-import net.tardis.mod.client.renderers.entities.RenderDalek;
-import net.tardis.mod.client.renderers.entities.RenderDalekCaseing;
-import net.tardis.mod.client.renderers.entities.RenderRay;
+import net.tardis.mod.client.renderers.entities.*;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.items.RenderItemAlembic;
@@ -67,14 +62,7 @@ import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.renderers.tiles.RenderTileHolo;
 import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.entities.EntityCorridor;
-import net.tardis.mod.common.entities.EntityCybermanInvasion;
-import net.tardis.mod.common.entities.EntityCybermanTomb;
-import net.tardis.mod.common.entities.EntityDalek;
-import net.tardis.mod.common.entities.EntityDalekCasing;
-import net.tardis.mod.common.entities.EntityDalekRay;
-import net.tardis.mod.common.entities.EntityRayCyberman;
-import net.tardis.mod.common.entities.EntityTardis;
+import net.tardis.mod.common.entities.*;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -182,6 +170,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityRayCyberman.class, RenderCyberRay::new);
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, RenderDalek::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
 		
 	}
 	

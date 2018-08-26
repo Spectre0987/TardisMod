@@ -1,5 +1,6 @@
 package net.tardis.mod;
 
+import net.tardis.mod.common.entities.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,16 +37,6 @@ import net.tardis.mod.common.commands.CommandTeleport;
 import net.tardis.mod.common.commands.TardisCommandGrow;
 import net.tardis.mod.common.commands.TardisCommandRemove;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.EntityAirshell;
-import net.tardis.mod.common.entities.EntityCorridor;
-import net.tardis.mod.common.entities.EntityCybermanInvasion;
-import net.tardis.mod.common.entities.EntityCybermanTomb;
-import net.tardis.mod.common.entities.EntityDalek;
-import net.tardis.mod.common.entities.EntityDalekCasing;
-import net.tardis.mod.common.entities.EntityDalekRay;
-import net.tardis.mod.common.entities.EntityForceField;
-import net.tardis.mod.common.entities.EntityRayCyberman;
-import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -124,6 +115,8 @@ import net.tardis.mod.packets.MessageTelepathicCircut;
 import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
+
+import javax.swing.text.html.parser.Entity;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
 public class Tardis {
@@ -258,6 +251,7 @@ public class Tardis {
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 			EntityHelper.registerNoSpawn(EntityDalek.class, "dalek");
 			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
+			EntityHelper.registerMob(EntityAdipose.class,"adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance);
 		}
 		proxy.preInit();
 		
