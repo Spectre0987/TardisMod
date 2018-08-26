@@ -18,6 +18,9 @@ public class BiomeTelos extends BiomeDesert {
 		this.topBlock = TBlocks.telos_sand.getDefaultState();
 		this.fillerBlock = TBlocks.telos_sand.getDefaultState();
 		this.spawnableMonsterList.clear();
+		this.spawnableCaveCreatureList.clear();
+		this.spawnableWaterCreatureList.clear();
+		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityCybermanTomb.class, 25, 0, 2));
 		this.decorator.generateFalls = false;
 	}

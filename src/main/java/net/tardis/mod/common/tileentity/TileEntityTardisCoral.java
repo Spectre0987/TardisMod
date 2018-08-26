@@ -46,7 +46,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 	public void update() {
 		if(!world.isRemote && this.owner != null) {
 			if(world.getWorldTime() % 2400 == 0) {
-				if(time > (RiftHelper.isRift(world.getChunkFromBlockCoords(getPos()).getPos(), world) ? 2 : 4)) {
+				if(time > (RiftHelper.isRift(world.getChunkFromBlockCoords(getPos()).getPos(), world) ? 1 : 2)) {
 					this.grow();
 					time = 0;
 				}
