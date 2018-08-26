@@ -5,11 +5,15 @@ import java.util.function.Supplier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemMap;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.MapData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiProtocol;
@@ -23,15 +27,24 @@ public class BlockMonitor extends BlockFacingDecoration {
 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(worldIn.isRemote) {
-			TileEntityTardis tardis = null;
-			for(TileEntity te : worldIn.getChunkFromBlockCoords(pos).getTileEntityMap().values()) {
-				if(te != null && te instanceof TileEntityTardis) {
-					tardis = (TileEntityTardis)te;
-					break;
-				}
+		ItemStack held = playerIn.getHeldItem(hand);
+		TileEntityTardis tardis = null;
+		for(TileEntity te : worldIn.getChunkFromBlockCoords(pos).getTileEntityMap().values()) {
+			if(te != null && te instanceof TileEntityTardis) {
+				tardis = (TileEntityTardis)te;
+				break;
 			}
-			if(tardis != null) {
+		}
+		if(tardis == null)return true;
+		if(held.getItem() instanceof ItemMap) {
+			if(!worldIn.isRemote) {
+				MapData data = ItemMap.loadMapData(held.getItemDamage(), worldIn);
+				WorldServer ws = worldIn.getMinecraftServer().getWorld(data.dimension);
+				tardis.setDesination(ws.getTopSolidOrLiquidBlock(new BlockPos(data.xCenter, 0, data.zCenter)), data.dimension);
+			}
+		}
+		else {
+			if(worldIn.isRemote) {
 				this.openGui(tardis);
 			}
 		}
