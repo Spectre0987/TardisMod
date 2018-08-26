@@ -21,6 +21,7 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	private Vec3i rad = new Vec3i(10, 10, 10);
 
 	private boolean open;
+	public int openCooldown = 0;
 	private BlockInteriorDoor.DoorTypes doorType;
 
 	public TileEntityInteriorDoor() {
@@ -53,7 +54,11 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	}
 
 	public void setOpen(boolean open) {
-		this.open = open;
+		if(openCooldown == 0) {
+			openCooldown = 20;
+			this.open = open;
+			this.markDirty();
+		}
 	}
 
 	@Override
@@ -80,6 +85,8 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 					tardis = (TileEntityTardis)te;
 				}
 			}
+			
+			if(openCooldown > 0) openCooldown--;
 			if(tardis != null) {
 				WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 				shell = new WorldShell(tardis.getLocation());
