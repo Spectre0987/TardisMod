@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeDesert;
 import net.tardis.mod.Tardis;
@@ -27,4 +28,9 @@ public class BiomeTelos extends BiomeDesert {
 
 	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos) {}
+
+	@Override
+	public boolean canRain() {
+		return false;
+	}
 }
