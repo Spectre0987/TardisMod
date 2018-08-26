@@ -56,6 +56,7 @@ import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
+import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
@@ -346,6 +347,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				this.systems = newSystems.toArray(new ISystem[] {});
 			}
 			this.currentState = Enum.valueOf(EnumTardisState.class, tardisTag.getString(NBT.TARDIS_STATE_ID));
+			this.isLocked = tardisTag.getBoolean(NBT.IS_LOCKED);
 		}
 	}
 	
@@ -399,6 +401,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 			tardisTag.setString(NBT.TARDIS_STATE_ID, this.currentState.name());
+			tardisTag.setBoolean(NBT.IS_LOCKED, this.isLocked);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -612,6 +615,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				ec.add(new ControlDoorSwitch(this));
 				ec.add(new ControlMag(this));
 				ec.add(new ControlPhone(this));
+				ec.add(new ControlSonicSlot(this));
 				int id = 0;
 				for(Vec3d pos : this.coordList) {
 					ec.add(new ControlSTCButton(this, id, pos));
@@ -694,6 +698,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public static class NBT {
+		public static final String IS_LOCKED = "is_locked";
 		public static final String TARDIS_STATE_ID = "tardis_state_id";
 		public static final String SYSTEM_LIST = "system_list";
 		public static final String FUEL_USAGE = "fuelUseage";

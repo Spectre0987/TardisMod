@@ -1,5 +1,14 @@
 package net.tardis.mod.handlers;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -175,6 +184,39 @@ public class TEventHandler {
 				if(!player.world.isRemote) {
 					player.world.spawnEntity(ei);
 				}
+			}
+		}
+		if(!event.player.world.isRemote) {
+			try {
+				HashMap<String, Long> map = new HashMap<String, Long>();
+				File f = new File(event.player.world.getMinecraftServer().getDataDirectory() + "/pending_keys.json");
+				JsonReader jr = new JsonReader(new FileReader(f));
+				jr.beginObject();
+				while(jr.hasNext()) {
+					map.put(jr.nextName(), Long.parseLong(jr.nextString()));
+				}
+				jr.endObject();
+				jr.close();
+				
+				if(map.containsKey(event.player.getGameProfile().getId().toString())) {
+					ItemStack stack = new ItemStack(TItems.key);
+					ItemKey.setPos(stack, BlockPos.fromLong(map.get(event.player.getGameProfile().getId().toString())));
+					event.player.inventory.addItemStackToInventory(stack);
+					
+					GsonBuilder gb = new GsonBuilder();
+					gb.setPrettyPrinting();
+					JsonWriter jw = gb.create().newJsonWriter(new FileWriter(f));
+					jw.beginObject();
+					map.remove(event.player.getGameProfile().getId().toString());
+					for(String name : map.keySet()) {
+						jw.name(name).value(map.get(name).toString());
+					}
+					jw.endObject();
+					jw.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}

@@ -1,5 +1,15 @@
 package net.tardis.mod.common.tileentity;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.UUID;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -18,8 +28,6 @@ import net.tardis.mod.common.world.Structures;
 import net.tardis.mod.util.helpers.PlayerHelper;
 import net.tardis.mod.util.helpers.RiftHelper;
 import net.tardis.mod.util.helpers.TardisHelper;
-
-import java.util.UUID;
 
 public class TileEntityTardisCoral extends TileEntity implements ITickable{
 
@@ -72,15 +80,39 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 				tardis.travel();
 				ItemStack keyStack = new ItemStack(TItems.key);
 				ItemKey.setPos(keyStack, pos);
-
-				// TODO We should maybe save pending keys to json? Else people who are offline will never get a key?
-
+				
 				EntityPlayerMP entityPlayer = world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner);
 				if (entityPlayer != null) {
 					entityPlayer.addItemStackToInventory(keyStack);
 					PlayerHelper.sendMessage(entityPlayer, "tardis.arrived", false);
 				}
-
+				else {
+					try {
+						File f = new File(world.getMinecraftServer().getDataDirectory() + "/pending_keys.json");
+						HashMap<String, Long> map = new HashMap<>();
+						if(f.exists()) {
+							JsonReader jr = new JsonReader(new FileReader(f));
+							jr.beginObject();
+							while(jr.hasNext()) {
+								map.put(jr.nextName(), Long.parseLong(jr.nextString()));
+							}
+							jr.endArray();
+							jr.close();
+						}
+						else f.createNewFile();
+						map.put(owner.toString(), pos.toLong());
+						GsonBuilder gb = new GsonBuilder();
+						gb.setPrettyPrinting();
+						JsonWriter jw = gb.create().newJsonWriter(new FileWriter(f));
+						jw.beginObject();
+						for(String name : map.keySet()) {
+							jw.name(name).value(map.get(name).toString());
+						}
+						jw.endObject();
+						jw.close();
+					}
+					catch(Exception e) {}
+				}
 			}
 		}
 	}
