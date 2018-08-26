@@ -1,5 +1,7 @@
 package net.tardis.mod.common.items;
 
+import java.util.List;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +10,11 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -16,36 +22,25 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.common.screwdriver.IScrew;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.PlayerHelper;
-
-import java.util.List;
 
 public class ItemSonic extends Item {
 	
 	public static final String MODE_KEY = "mode";
 	public static final String CONSOLE_POS = "console_pos";
 
-	private int charge = 100;
-
 	public ItemSonic() {
 		this.setCreativeTab(Tardis.tab);
 		this.setMaxStackSize(1);
 	}
 
-	public int getCharge() {
-		return charge;
+	public static int getCharge(ItemStack stack) {
+		return Helper.getStackTag(stack).getInteger("charge");
 	}
 
-	public void setCharge(ItemStack stack, int charge) {
-		this.charge = charge;
-		if (stack.hasTagCompound()) {
-			NBTTagCompound nbt = stack.getTagCompound();
-			nbt.setInteger("charge", charge);
-		} else {
-			stack.setTagCompound(new NBTTagCompound());
-			NBTTagCompound nbt = stack.getTagCompound();
-			nbt.setInteger("charge", charge);
-		}
+	public static void setCharge(ItemStack stack, int charge) {
+		Helper.getStackTag(stack).setInteger("charge", charge);
 	}
 
 
@@ -87,12 +82,12 @@ public class ItemSonic extends Item {
 			}
 		}
 
-		if (getCharge() >= sc.energyRequired()) {
+		if (getCharge(held) >= sc.energyRequired()) {
 			EnumActionResult result = sc.performAction(worldIn, player, handIn);
 			if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
 				cooldown(held.getItem(), player, sc.getCoolDownAmount());
 				worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
-				setCharge(held, getCharge() - sc.energyRequired());
+				setCharge(held, getCharge(held) - sc.energyRequired());
 			}
 		}
 		return super.onItemRightClick(worldIn, player, handIn);
@@ -105,17 +100,17 @@ public class ItemSonic extends Item {
 
 		if(!held.hasTagCompound()){
 			NBTTagCompound nbt = held.getTagCompound();
-			nbt.setInteger("charge", getCharge());
+			nbt.setInteger("charge", getCharge(held));
 		}
 		
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
-			if (getCharge() >= sc.energyRequired()) {
+			if (getCharge(held) >= sc.energyRequired()) {
 				result = sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
 				if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
 					cooldown(held.getItem(), player, sc.getCoolDownAmount());
 					worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
-					setCharge(held, getCharge() - sc.energyRequired());
+					setCharge(held, getCharge(held) - sc.energyRequired());
 				}
 			}
 		}
@@ -133,12 +128,12 @@ public class ItemSonic extends Item {
 
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
 
-			if (getCharge() >= sc.energyRequired()) {
+			if (getCharge(held) >= sc.energyRequired()) {
 				flag = sc.entityInteraction(stack, player, target, hand);
 				if (sc.causesCoolDown() && flag) {
 					cooldown(stack.getItem(), player, sc.getCoolDownAmount());
 					player.world.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
-					setCharge(held, getCharge() - sc.energyRequired());
+					setCharge(held, getCharge(held) - sc.energyRequired());
 				}
 			}
 		}
@@ -173,7 +168,7 @@ public class ItemSonic extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add("Mode: " + new TextComponentTranslation(ScrewdriverHandler.MODES.get(getMode(stack)).getName()).getFormattedText());
-		tooltip.add("Charge: " + getCharge());
+		tooltip.add("Charge: " + getCharge(stack));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

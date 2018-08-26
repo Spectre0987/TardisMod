@@ -28,7 +28,7 @@ public class ControlSonicSlot extends EntityControl {
 	
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		return Helper.convertToPixels(0, 16, 0);
+		return Helper.convertToPixels(11.25, -1.5, 6.25);
 	}
 	
 	@Override
@@ -38,7 +38,8 @@ public class ControlSonicSlot extends EntityControl {
 			player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 		}
 		else if(player.getHeldItemMainhand().isEmpty() && !this.getItemStack().isEmpty()){
-			player.setHeldItem(EnumHand.OFF_HAND, this.getItemStack());
+			player.setHeldItem(EnumHand.MAIN_HAND, this.getItemStack());
+			this.setItemStack(ItemStack.EMPTY);
 		}
 	}
 
@@ -54,6 +55,18 @@ public class ControlSonicSlot extends EntityControl {
 	
 	public ItemStack getItemStack() {
 		return new ItemStack(this.getDataManager().get(ITEM));
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if(world.getWorldTime() % 20 == 0) {
+			ItemStack stack = this.getItemStack();
+			if(!stack.isEmpty() && stack.getItem() instanceof ItemSonic) {
+				ItemSonic.setCharge(getItemStack(), ItemSonic.getCharge(this.getItemStack()) + 1);
+			}
+			this.rotationYaw = 65;
+		}
 	}
 	
 }
