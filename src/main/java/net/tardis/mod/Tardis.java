@@ -58,12 +58,14 @@ import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlScanner;
+import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
+import net.tardis.mod.common.entities.vehicles.EntityBike;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolARS;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
@@ -186,6 +188,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDoorSwitch.class, "tardis_door_control");
 		EntityHelper.registerStatic(ControlPhone.class, "tardis_phone");
 		EntityHelper.registerStatic(ControlMag.class, "tardis_magnitude");
+		EntityHelper.registerStatic(ControlSonicSlot.class, "sonic_slot");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
@@ -194,6 +197,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
 		EntityHelper.registerNoSpawn(EntityHellbentCorridor.class, "hellbent_corridor");
 		EntityHelper.registerNoSpawn(EntityHellbentDoor.class, "hellbent_door");
+		EntityHelper.registerNoSpawn(EntityBike.class, "bike");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
