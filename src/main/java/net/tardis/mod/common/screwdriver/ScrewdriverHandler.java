@@ -1,9 +1,9 @@
 package net.tardis.mod.common.screwdriver;
 
-import net.tardis.mod.Tardis;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.tardis.mod.Tardis;
 
 public class ScrewdriverHandler {
 
@@ -20,5 +20,6 @@ public class ScrewdriverHandler {
 		register(new InteractionGRoom());
 		register(new InteractonElectricPanel());
 		register(new InteractionEntity());
+		register(new ModeSignal());
 	}
 }
