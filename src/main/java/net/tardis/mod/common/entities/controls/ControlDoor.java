@@ -24,7 +24,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
@@ -39,8 +38,6 @@ import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
-import net.tardis.mod.common.strings.TStrings;
-import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
@@ -118,13 +115,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 						world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
 					else
 						world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
-					WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
-					if(ws == null)return true;
-					TileEntity te = ws.getTileEntity(tardis.getLocation().up());
-					if (te instanceof TileEntityDoor) {
-						((TileEntityDoor) te).setLocked(!this.isOpen());
-						player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + !this.isOpen()), true);
-					}
 				}
 			}
 		}

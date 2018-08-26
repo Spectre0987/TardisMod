@@ -34,6 +34,7 @@ import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
+import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -100,6 +101,15 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					else
 						world.playSound(null, getPos(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 1F);
 					player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + isLocked), true);
+					ControlDoor door = tardis.getDoor();
+					if(door != null) {
+						door.setOpen(!this.isLocked());
+						for(Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(door.getPositionVector()).grow(20))) {
+							if(e instanceof IDoor) {
+								((IDoor)e).setOpen(!this.isLocked());
+							}
+						}
+					}
 				}
 				else if(tardis.isLocked()) {
 					player.sendStatusMessage(new TextComponentTranslation(TStrings.DOUBLE_LOCKED), false);

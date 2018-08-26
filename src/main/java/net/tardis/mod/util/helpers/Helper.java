@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -26,6 +27,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.api.dimensions.IBlockedDimension;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
 
@@ -225,5 +227,9 @@ public class Helper {
 
 	public static BlockPos scaleBP(BlockPos dist, double i) {
 		return new BlockPos(dist.getX() * i, dist.getY() * i, dist.getZ() * i);
+	}
+
+	public static TileEntityTardis getTardis(TileEntity te) {
+		return te != null && te instanceof TileEntityTardis ? ((TileEntityTardis)te) : null;
 	}
 }
