@@ -1,7 +1,5 @@
 package net.tardis.mod.common.dimensions.telos;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProvider;
@@ -24,12 +22,17 @@ public class WorldProviderTelos extends WorldProvider{
 
 	@Override
 	public boolean canRespawnHere() {
-		return super.canRespawnHere();
+		return true;
 	}
 
 	@Override
-	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
-		return super.canSleepAt(player, pos);
+	public boolean isSurfaceWorld() {
+		return false;
+	}
+
+	@Override
+	public boolean isSkyColored() {
+		return false;
 	}
 
 }

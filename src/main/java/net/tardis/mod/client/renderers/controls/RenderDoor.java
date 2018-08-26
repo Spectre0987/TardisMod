@@ -63,13 +63,15 @@ public class RenderDoor extends Render<ControlDoor> {
 					offset = new Vec3d(0,1, 11);
 				}
 				else if(facing == EnumFacing.WEST) {
-					offset = new Vec3d(-12,1,0);
+					offset = new Vec3d(-12, 1, 0);
 				}
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0.5);
 				ext.interiorModel.renderOpen();
-				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2,0));
+				mc.renderGlobal.renderSky(partialTicks, 0);
+				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2, 0));
 				else RenderHelper.drawOutline(new Vec3d(1, 2,0));
+				
 			}
 			catch(Exception e) {}
 		}

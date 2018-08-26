@@ -19,9 +19,9 @@ public class BiomeTelos extends BiomeDesert {
 		this.fillerBlock = TBlocks.telos_sand.getDefaultState();
 		this.spawnableMonsterList.clear();
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityCybermanTomb.class, 25, 0, 2));
+		this.decorator.generateFalls = false;
 	}
 
 	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos) {}
-
 }
