@@ -18,15 +18,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -57,6 +54,7 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeCinnabar;
 import net.tardis.mod.common.recipes.RecipeKey;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
@@ -246,7 +244,7 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {
 		EntityPlayer player = e.player;
-		if (!player.world.isRemote) {
+		/*if (!player.world.isRemote) {
 			ForgeVersion.CheckResult version = ForgeVersion.getResult(Loader.instance().activeModContainer());
 			if (version.status == ForgeVersion.Status.OUTDATED) {
 				TextComponentString url = new TextComponentString(TextFormatting.GOLD + TextFormatting.BOLD.toString() + "UPDATE");
@@ -257,7 +255,8 @@ public class TEventHandler {
 				String changes = String.valueOf(version.changes).replace("{" + version.target + "=", "").replace("}", "");
 				player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Changelog: " + TextFormatting.AQUA + changes));
 			}
-		}
+		}*/
+		if(Loader.isModLoaded(TStrings.ModIds.OPTIFINE))player.sendStatusMessage(new TextComponentTranslation(TStrings.OPTIFINE_INSTALLED), false);
 	}
 	
 	@SubscribeEvent
