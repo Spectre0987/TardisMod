@@ -863,12 +863,24 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(door != null && (door.isOpen() || !checkDoors)) {
 				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
 				TileEntity te = ws.getTileEntity(this.getLocation().up());
+				EntityPlayerMP mp = (EntityPlayerMP)player;
+				if(!checkDoors) {
+					BlockPos tp = this.getLocation();
+					if(this.isInFlight()) tp = this.getCurrentPosOnPath();
+					mp.setLocationAndAngles(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, 0, 0);
+					if(world.provider.getDimension() != this.dimension)mp.getServer().getPlayerList().transferPlayerToDimension(mp, this.dimension, new TardisTeleporter());
+					
+				}
 				if(te != null && te instanceof TileEntityDoor) {
-					if(!((TileEntityDoor)te).isLocked() || !checkDoors) {
-						EntityPlayerMP mp = (EntityPlayerMP)player;
+					if(!((TileEntityDoor)te).isLocked()) {
 						((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, dimension, new TardisTeleporter());
-						EnumFacing facing = ws.getBlockState(this.getLocation().up()).getValue(BlockTardisTop.FACING);
+						IBlockState state = ws.getBlockState(this.getLocation().up());
+						EnumFacing facing = EnumFacing.NORTH;
+						if(state.getBlock() instanceof BlockTardisTop) {
+							state.getValue(BlockTardisTop.FACING);
+						}
 						BlockPos tp = this.getLocation().offset(facing, 1);
+						if(this.isInFlight())tp = this.getCurrentPosOnPath();
 						mp.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 						return;
 					}
