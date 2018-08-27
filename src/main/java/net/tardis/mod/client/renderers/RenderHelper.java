@@ -30,7 +30,7 @@ public class RenderHelper {
 		if(ClientProxy.getRenderBOTI()) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 			int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
-			if(fb == null) fb =  new Framebuffer(width, height, true);
+			if(fb == null || fb.framebufferWidth != Minecraft.getMinecraft().displayWidth) fb =  new Framebuffer(width, height, true);
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
@@ -50,9 +50,9 @@ public class RenderHelper {
 			try {
 				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
 				fb.bindFramebuffer(true);
-				GlStateManager.pushMatrix();
 				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-				GlStateManager.rotate(180,0,1,0);
+				GlStateManager.pushMatrix();
+				GlStateManager.rotate(180, 0, 1, 0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
@@ -60,6 +60,7 @@ public class RenderHelper {
 				GlStateManager.popMatrix();
 				
 				old.bindFramebuffer(true);
+				
 				fb.deleteFramebuffer();
 				
 			}
