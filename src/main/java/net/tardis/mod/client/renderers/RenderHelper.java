@@ -1,10 +1,15 @@
 package net.tardis.mod.client.renderers;
 
+import javax.annotation.Nullable;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -12,13 +17,11 @@ import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.proxy.ClientProxy;
-import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 	
+	static Framebuffer fb = null;
 	
 	public RenderHelper() {
 	}
@@ -26,6 +29,8 @@ public class RenderHelper {
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size) {
 		if(ClientProxy.getRenderBOTI()) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
+			int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
+			if(fb == null) fb =  new Framebuffer(width, height, true);
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
@@ -43,15 +48,24 @@ public class RenderHelper {
 			// Draw scene from portal view
 			
 			try {
+				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
+				fb.bindFramebuffer(true);
 				GlStateManager.pushMatrix();
+				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 				GlStateManager.rotate(180,0,1,0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
+				
+				old.bindFramebuffer(true);
+				fb.deleteFramebuffer();
+				
 			}
-			catch(Exception e) {}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			
