@@ -1,14 +1,8 @@
 package net.tardis.mod.handlers;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.HashMap;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -38,7 +32,6 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -54,7 +47,6 @@ import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
-import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.data.TimeLord;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -68,6 +60,11 @@ import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
 
 @Mod.EventBusSubscriber
 public class TEventHandler {
@@ -151,10 +148,6 @@ public class TEventHandler {
 		}
 	}
 	
-	@SubscribeEvent
-	public static void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
-		e.setCanceled(e.getState().getBlock() instanceof IUnbreakable);
-	}
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

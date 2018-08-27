@@ -1,9 +1,7 @@
 package net.tardis.mod.common.items;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -12,6 +10,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent;
 import net.tardis.mod.api.blocks.IBlock;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.tileentity.TileEntitySonicGun;
@@ -60,6 +60,7 @@ public class ItemSonicBlaster extends ItemBase {
                         worldIn.setBlockState(changePos, TBlocks.sonic_blaster.getDefaultState());
                         TileEntitySonicGun tile = (TileEntitySonicGun) worldIn.getTileEntity(changePos);
                         tile.setBlockState(oldState);
+                        MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(worldIn, pos, oldState, player));
                     }
                 }
             }
