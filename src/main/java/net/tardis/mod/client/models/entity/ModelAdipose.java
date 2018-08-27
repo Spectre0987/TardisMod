@@ -174,4 +174,6 @@ public class ModelAdipose extends ModelBase
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     }
 
+
+
 }
