@@ -30,7 +30,7 @@ public class RenderHelper {
 		if(ClientProxy.getRenderBOTI()) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 			int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
-			if(fb == null || fb.framebufferWidth != Minecraft.getMinecraft().displayWidth) fb =  new Framebuffer(width, height, true);
+			if(fb == null || fb.framebufferWidth != width) fb =  new Framebuffer(width, height, true);
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
