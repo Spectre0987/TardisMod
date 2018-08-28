@@ -16,6 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
@@ -40,7 +41,7 @@ public class ItemSonic extends Item {
 	}
 
 	public static void setCharge(ItemStack stack, int charge) {
-		Helper.getStackTag(stack).setInteger("charge", charge);
+		Helper.getStackTag(stack).setInteger("charge", MathHelper.clamp(charge, 0, 100));
 	}
 
 
