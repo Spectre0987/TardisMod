@@ -62,7 +62,7 @@ public class ControlSonicSlot extends EntityControl {
 		super.onUpdate();
 		if(world.getWorldTime() % 20 == 0) {
 			ItemStack stack = this.getItemStack();
-			if(!stack.isEmpty() && stack.getItem() instanceof ItemSonic) {
+			if(!stack.isEmpty() && stack.getItem() instanceof ItemSonic && ItemSonic.getCharge(stack) < 100) {
 				ItemSonic.setCharge(getItemStack(), ItemSonic.getCharge(this.getItemStack()) + 1);
 			}
 			this.rotationYaw = 65;
