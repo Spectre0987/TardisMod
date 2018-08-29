@@ -156,8 +156,7 @@ entity.tardis_magnitude.name=Coordinate Magnitude Adjuster
 entity.tardis_phone.name=Communicator
 
 entity.dalek.name=Dalek
-
-
+entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Invasion Cyberman
 
 death.cyberman.generic=was converted

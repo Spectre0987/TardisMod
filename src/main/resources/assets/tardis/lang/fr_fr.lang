@@ -156,9 +156,8 @@ entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 entity.tardis_phone.name=Communicateur
 
 entity.dalek.name=Dalek
-
-
-entity.invasion_cyberman.name=Invasion de Cyberman
+entity.adipose.name=Adipose
+entity.invasion_cyberman.name=Cyberman d'Invasion
 
 death.cyberman.generic=a été converti
 
