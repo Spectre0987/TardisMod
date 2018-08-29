@@ -35,7 +35,6 @@ public class EntityAdipose extends EntityMob {
         this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(3, new EntityAILookIdle(this));
         this.tasks.addTask(2, new EntityAIWanderAvoidWater(this, 0.2F));
-
     }
 
     @Override
@@ -52,8 +51,6 @@ public class EntityAdipose extends EntityMob {
         final PathNavigateGround navigator = new PathNavigateGround(this, worldIn);
         navigator.setCanSwim(true);
         return navigator;
-
-
     }
 
     @Override
