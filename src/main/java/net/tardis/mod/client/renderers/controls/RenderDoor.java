@@ -54,7 +54,7 @@ public class RenderDoor extends Render<ControlDoor> {
 				Vec3d offset = null;
 				EnumFacing facing = entity.getFacing();
 				if(facing == EnumFacing.NORTH) {
-					offset = new Vec3d(-1,1,-12);
+					offset = new Vec3d(-1,1,-11);
 				}
 				else if(facing == EnumFacing.EAST){
 					offset = new Vec3d(10, 1, -1);

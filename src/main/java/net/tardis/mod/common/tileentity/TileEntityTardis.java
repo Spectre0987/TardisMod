@@ -29,6 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
@@ -470,8 +471,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.markDirty();
 	}
 	
-	private void setFuel(float f) {
-		fuel = f > 1.0F ? 1.0F : f;
+	public void setFuel(float f) {
+		fuel = MathHelper.clamp(f, 0.0F, 1.0F);
 		this.markDirty();
 	}
 	

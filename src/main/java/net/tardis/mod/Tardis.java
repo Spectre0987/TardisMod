@@ -31,6 +31,7 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.CommandTardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityAirshell;
@@ -71,6 +72,7 @@ import net.tardis.mod.common.protocols.ProtocolARS;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
+import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
 import net.tardis.mod.common.protocols.ProtocolLock;
 import net.tardis.mod.common.protocols.ProtocolRegenRoom;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
@@ -139,8 +141,6 @@ public class Tardis {
 	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	
 	public static boolean hasIC2 = false;
-	
-	public static final int ID_GUI_TEMPORAL_LAB = 0;
 	
 	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 
@@ -249,6 +249,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolARS());
 		TardisProtocol.register(new ProtocolRegenRoom());
 		TardisProtocol.register(new ProtocolLock());
+		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
@@ -303,5 +304,8 @@ public class Tardis {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event){
 		event.registerServerCommand(new CommandTardis());
+		if(Tardis.getIsDev()) {
+			event.registerServerCommand(new CommandDebug());
+		}
 	}
 }

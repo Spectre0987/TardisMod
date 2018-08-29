@@ -27,6 +27,7 @@ public class TStrings {
         public static final String REGENERATION = "lcm-regen";
         public static final String LCORE = "lucraftcore";
 		public static final String OPTIFINE = "optifine";
+		public static final String DIM_DOORS = "dimdoors";
 	}
 	
 	public static class EVENT{

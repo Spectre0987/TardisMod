@@ -150,6 +150,7 @@ protocol.tardis.change.console=Change Console
 protocol.tardis.ars=Architectural Reconfiguration System
 protocol.tardis.regenroom=Regenerate Console Room
 protocol.tardis.lock=Double Lock
+protocol.tardis.destroy.rift=Consume Dimensional Rift
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
