@@ -17,11 +17,17 @@ public class TStrings {
 	public static final String TARDIS_DIMENSION = "tardis.dimension";
 	
 	public static final String SECONDS = "general.time.seconds";
+	public static final String DOUBLE_LOCKED = "door.tardis.locked";
+	public static final String OPTIFINE_INSTALLED = "mods.tardis.compat.optifine";
 	
 	public static class ModIds {
 		public static final String GALACTICRAFT = "galacticraftcore";
 		public static final String INDUSTRIAL_CRAFT = "ic2";
 		public static final String WEEPING_ANGELS = "weeping-angels";
+        public static final String REGENERATION = "lcm-regen";
+        public static final String LCORE = "lucraftcore";
+		public static final String OPTIFINE = "optifine";
+		public static final String DIM_DOORS = "dimdoors";
 	}
 	
 	public static class EVENT{

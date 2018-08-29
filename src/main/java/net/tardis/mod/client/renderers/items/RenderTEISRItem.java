@@ -9,9 +9,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderTEISRItem extends TileEntityItemStackRenderer {
 
-	Minecraft mc;
-	public ModelBase base;
-	public ResourceLocation texture;
+	private Minecraft mc;
+	private ModelBase base;
+	private ResourceLocation texture;
 	
 	public RenderTEISRItem(){
 		mc = Minecraft.getMinecraft();
@@ -21,6 +21,11 @@ public class RenderTEISRItem extends TileEntityItemStackRenderer {
 		this();
 		this.base = model;
 		this.texture = rl;
+	}
+
+	public RenderTEISRItem(ModelBase modelBase) {
+		this.base = modelBase;
+		this.texture = null;
 	}
 	
 	@Override

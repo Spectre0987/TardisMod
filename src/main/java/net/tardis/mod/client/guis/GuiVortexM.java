@@ -1,7 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -10,6 +8,8 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.packets.MessageTeleport;
+
+import java.io.IOException;
 
 public class GuiVortexM extends GuiScreen {
 	

@@ -10,7 +10,7 @@ import net.minecraft.world.WorldSettings;
 
 public class WorldBoti extends WorldClient {
 
-	WorldShell shell;
+	private WorldShell shell;
 	
 	public WorldBoti(int dimension, WorldClient wc, WorldShell ws) {
 		super(Minecraft.getMinecraft().getConnection(), new WorldSettings(wc.getWorldInfo()), dimension, wc.getDifficulty(), wc.profiler);

@@ -13,7 +13,7 @@ import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
-import net.tardis.mod.common.enums.EnumInteriorDoor;
+import net.tardis.mod.common.blocks.BlockInteriorDoor;
 
 public class TileEntityInteriorDoor extends TileEntity implements ITickable, IContainsWorldShell {
 	
@@ -21,27 +21,31 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	private Vec3i rad = new Vec3i(10, 10, 10);
 
 	private boolean open;
-	private EnumInteriorDoor doorType;
+	public int openCooldown = 0;
+	private BlockInteriorDoor.DoorTypes doorType;
+
+	public TileEntityInteriorDoor() {
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		setOpen(compound.getBoolean("open"));
-		setDoorType(EnumInteriorDoor.valueOf(compound.getString("type")));
+		setDoorType(BlockInteriorDoor.DoorTypes.valueOf(compound.getString("type")));
 	}
 
-	public EnumInteriorDoor getDoorType() {
+	public BlockInteriorDoor.DoorTypes getDoorType() {
 		return doorType;
 	}
 
-	public void setDoorType(EnumInteriorDoor doorType) {
+	public void setDoorType(BlockInteriorDoor.DoorTypes doorType) {
 		this.doorType = doorType;
 	}
 
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setBoolean("open", open);
-		compound.setString("type", doorType.toString());
+		compound.setString("type", doorType.toString().toLowerCase());
 		return compound;
 	}
 
@@ -50,11 +54,13 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	}
 
 	public void setOpen(boolean open) {
-		this.open = open;
+		if(openCooldown == 0) {
+			openCooldown = 20;
+			this.open = open;
+			this.markDirty();
+		}
 	}
 
-	public TileEntityInteriorDoor() {}
-	
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return new AxisAlignedBB(-1, 0, 0, 2, 4, 1).offset(getPos());
@@ -79,6 +85,8 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 					tardis = (TileEntityTardis)te;
 				}
 			}
+			
+			if(openCooldown > 0) openCooldown--;
 			if(tardis != null) {
 				WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 				shell = new WorldShell(tardis.getLocation());

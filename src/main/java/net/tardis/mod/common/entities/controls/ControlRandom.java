@@ -41,6 +41,9 @@ public class ControlRandom extends EntityControl {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			Random rand = new Random();
 			BlockPos loc = tardis.getLocation();
+            if (loc == null) {
+                loc = player.getPosition();
+            }
 			if(maxDist == 0) {
 				WorldServer ws = DimensionManager.getWorld(tardis.dimension);
 				if(ws != null) {

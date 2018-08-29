@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults":{
+        "model":"tardis:hellbent_ceiling"
+    },
+    "variants":{
+        "inventory":[{}],
+        "normal":[{}]
+    }
+}

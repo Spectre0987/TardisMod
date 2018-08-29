@@ -1,23 +1,22 @@
 package net.tardis.mod.client.renderers.layers;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.util.ModelUtil;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.util.helpers.PlayerHelper;
 
 public class RenderLayerVortexM implements LayerRenderer{
 
-	Minecraft mc;
-	ModelVortexM model = new ModelVortexM();
+	private Minecraft mc;
+	private ModelVortexM model = new ModelVortexM();
 	private RenderPlayer renderPlayer;
 	
 	public RenderLayerVortexM(RenderPlayer rp) {
@@ -29,15 +28,7 @@ public class RenderLayerVortexM implements LayerRenderer{
 		if(entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)entity;
 			if(player.inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
-				boolean slim = false;
-				try {
-					Field field;
-					if(Tardis.getIsDev())field = RenderPlayer.class.getDeclaredField("smallArms");
-					else field = RenderPlayer.class.getDeclaredField("field_177140_a");
-					field.setAccessible(true);
-					slim = (Boolean)field.get(renderPlayer);
-				}
-				catch(Exception e) {}
+				boolean slim = PlayerHelper.hasSmallArms((AbstractClientPlayer) player);
 				GlStateManager.pushMatrix();
 				if(!slim) GlStateManager.translate(-0.03125, 0, 0);
                 mc.getTextureManager().bindTexture(ModelVortexM.TEXTURE);

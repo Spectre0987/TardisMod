@@ -19,10 +19,8 @@ public class TardisConfig {
 	
 	@Config.LangKey("config.misc")
 	public static final Misc MISC = new Misc();
-	
-	@Config.LangKey("config.boti")
-	public static final BOTI BOTI = new BOTI();
-	
+
+
 	public static class Dimensions {
 		
 		@Config.LangKey("config.dims")
@@ -68,14 +66,11 @@ public class TardisConfig {
 
 		@Config.LangKey("config.misc.on.kill")
 		public boolean killControlsOnKillCommand = false;
-	}
-	
-	public static class BOTI{
 		
-		@Config.LangKey("config.boti.enabled")
-		public boolean enable = false;
+		@Config.LangKey("config.misc.shake")
+		public boolean camShake = true;
 	}
-	
+
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)
 	private static class EventHandler {
 		@SubscribeEvent

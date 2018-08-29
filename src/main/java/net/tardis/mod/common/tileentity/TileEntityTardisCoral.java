@@ -1,7 +1,16 @@
 package net.tardis.mod.common.tileentity;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.UUID;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,6 +25,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.world.Structures;
+import net.tardis.mod.util.helpers.PlayerHelper;
 import net.tardis.mod.util.helpers.RiftHelper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
@@ -23,9 +33,9 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 
 	public int time = 0;
 	public UUID owner;
-	
+
 	public TileEntityTardisCoral() {}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
@@ -44,7 +54,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 	public void update() {
 		if(!world.isRemote && this.owner != null) {
 			if(world.getWorldTime() % 2400 == 0) {
-				if(time > (RiftHelper.isRift(world.getChunkFromBlockCoords(getPos()).getPos(), world) ? 2 : 4)) {
+				if(time > (RiftHelper.isRift(world.getChunkFromBlockCoords(getPos()).getPos(), world) ? 1 : 2)) {
 					this.grow();
 					time = 0;
 				}
@@ -53,7 +63,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 			}
 		}
 	}
-	
+
 	public void grow() {
 		BlockPos pos = TardisHelper.getTardis(owner);
 		WorldServer tardisWorld = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
@@ -70,7 +80,39 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 				tardis.travel();
 				ItemStack keyStack = new ItemStack(TItems.key);
 				ItemKey.setPos(keyStack, pos);
-				world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner).addItemStackToInventory(keyStack);
+				
+				EntityPlayerMP entityPlayer = world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner);
+				if (entityPlayer != null) {
+					entityPlayer.addItemStackToInventory(keyStack);
+					PlayerHelper.sendMessage(entityPlayer, "tardis.arrived", false);
+				}
+				else {
+					try {
+						File f = new File(world.getMinecraftServer().getDataDirectory() + "/pending_keys.json");
+						HashMap<String, Long> map = new HashMap<>();
+						if(f.exists()) {
+							JsonReader jr = new JsonReader(new FileReader(f));
+							jr.beginObject();
+							while(jr.hasNext()) {
+								map.put(jr.nextName(), Long.parseLong(jr.nextString()));
+							}
+							jr.endArray();
+							jr.close();
+						}
+						else f.createNewFile();
+						map.put(owner.toString(), pos.toLong());
+						GsonBuilder gb = new GsonBuilder();
+						gb.setPrettyPrinting();
+						JsonWriter jw = gb.create().newJsonWriter(new FileWriter(f));
+						jw.beginObject();
+						for(String name : map.keySet()) {
+							jw.name(name).value(map.get(name).toString());
+						}
+						jw.endObject();
+						jw.close();
+					}
+					catch(Exception e) {}
+				}
 			}
 		}
 	}

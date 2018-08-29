@@ -11,9 +11,7 @@ import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
-import net.tardis.mod.common.items.components.ArtronCapacitor;
-import net.tardis.mod.common.items.components.DematerializationCircut;
-import net.tardis.mod.common.items.components.FluidLink;
+import net.tardis.mod.common.items.components.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,13 +67,18 @@ public class TItems {
 
     public static Item marker = null;
 	
+    public static Item sonic13th = null;
+	public static Item sonicBlaster = createItem(new ItemSonicBlaster(), "sonic_blaster");
+	
 	// Componenets
 	public static Item fluid_link = null;
 	public static Item artron_capacitor = null;
 	public static Item demat_circut = null;
+	public static Item antenna = createItem(new ItemComponent(), "antenna");
+	public static Item chameleon_circuit = createItem(new ItemComponent(), "chameleon_circuit");
 
-	
-	@SubscribeEvent
+
+    @SubscribeEvent
 	public static void regItems(RegistryEvent.Register<Item> event) {
 		for (Item item : items) {
 			event.getRegistry().register(item);
@@ -121,6 +124,7 @@ public class TItems {
 		demat_circut = createItem(new DematerializationCircut(), "demat_circut");
         interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
         marker = createItem(new ItemMarker(), "marker");
+        sonic13th = createItem(new ItemSonic(), "sonic_screwdriver_13");
 	}
 	
 	public static Item createItem(Item item, String name) {
