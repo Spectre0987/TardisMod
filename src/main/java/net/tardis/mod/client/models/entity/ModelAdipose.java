@@ -2,7 +2,9 @@ package net.tardis.mod.client.models.entity;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.model.ModelZombie;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 public class ModelAdipose extends ModelBase
 {
@@ -165,9 +167,29 @@ public class ModelAdipose extends ModelBase
         model.rotateAngleZ = z;
     }
 
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
-        super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+        //TODO Add an animation on Adiposes parts
+        /*float f = MathHelper.sin(this.swingProgress * (float)Math.PI);
+        float f1 = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float)Math.PI);
+        this.LeftFoot.rotateAngleX = -(0.1F - f * 0.6F);
+        this.LeftFoot.rotateAngleZ = 0.0F;
+        this.RightFoot.rotateAngleX = 0.1F - f * 0.6F;
+        this.RightFoot.rotateAngleZ = 0.0F;
+        this.LeftHand.rotateAngleX = 0.1F - f * 0.6F;
+        this.LeftHand.rotateAngleZ = 0.0F;
+        this.RightHand.rotateAngleX = -(0.1F - f * 0.6F);
+        this.RightHand.rotateAngleZ = 0.0F;
+        float f2 = -(float)Math.PI / ( 2.25F);
+        this.RightHand.rotateAngleX = f2;
+        this.LeftHand.rotateAngleX = f2;
+        this.RightHand.rotateAngleX += f * 1.2F - f1 * 0.4F;
+        this.LeftHand.rotateAngleX += f * 1.2F - f1 * 0.4F;
+        this.RightHand.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+        this.LeftHand.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+        this.RightHand.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+        this.LeftHand.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;*/
     }
 
 
