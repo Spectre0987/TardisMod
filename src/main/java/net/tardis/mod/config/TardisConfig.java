@@ -51,7 +51,7 @@ public class TardisConfig {
 		public int cybermanSpawnChance = 50;
 
 		@Config.LangKey("config.entity.adipose.spawnchance")
-		public int adiposeSpawnChance = 50;
+		public int adiposeSpawnChance = 10;
 	}
 	
 	public static class Misc {

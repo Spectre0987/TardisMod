@@ -8,7 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.entity.ModelAdipose;
 import net.tardis.mod.common.entities.EntityAdipose;
-import net.tardis.mod.common.entities.EntityCybermanInvasion;
 
 import javax.annotation.Nullable;
 
@@ -28,7 +27,9 @@ public class RenderAdipose extends RenderLiving<EntityAdipose> {
         GlStateManager.translate(x, y + 1.5 , z);
         mc.getTextureManager().bindTexture(TEXTURE);
         GlStateManager.rotate(180,1,0,0);
-        adipose.render(entity, entity.limbSwing, entity.limbSwingAmount, entity.ticksExisted,entity.getRotationYawHead(), entity.rotationPitch, 0.0625F);
+        GlStateManager.rotate(entity.rotationYaw,0,1,0);
+        adipose.render(entity, entity.limbSwing, entity.limbSwingAmount, entity.ticksExisted,0, entity.rotationPitch, 0.0625F);
+
         GlStateManager.popMatrix();
     }
 
@@ -36,5 +37,10 @@ public class RenderAdipose extends RenderLiving<EntityAdipose> {
     @Override
     protected ResourceLocation getEntityTexture(EntityAdipose entity) {
         return TEXTURE;
+    }
+
+    @Override
+    protected void applyRotations(EntityAdipose entityLiving, float p_77043_2_, float rotationYaw, float partialTicks) {
+        super.applyRotations(entityLiving, p_77043_2_, rotationYaw, partialTicks);
     }
 }
