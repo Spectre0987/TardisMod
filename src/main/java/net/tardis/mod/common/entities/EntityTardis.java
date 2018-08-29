@@ -2,6 +2,8 @@ package net.tardis.mod.common.entities;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,9 +23,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
@@ -83,6 +88,20 @@ public class EntityTardis extends EntityFlying {
 		this.dataManager.set(STATE, tag);
 		this.dataManager.setDirty(STATE);
 	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote) {
+			if (!onGround) {
+				if (ticksExisted % 25 == 0) {
+					playFlightSound();
+				}
+			}
+		}
+	}
+
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
@@ -97,8 +116,7 @@ public class EntityTardis extends EntityFlying {
 					motionX = look.x;
 					motionY = look.y;
 					motionZ = look.z;
-				}
-				else if(base.moveForward < 0) {
+				} else if(base.moveForward < 0) {
 					Vec3d look = e.getLookVec().scale(0.5).scale(-1);
 					motionX = look.x;
 					motionY = look.y;
@@ -108,8 +126,7 @@ public class EntityTardis extends EntityFlying {
 					Vec3d look = e.getLookVec().scale(0.5).rotateYaw(90F);
 					motionX = look.x;
 					motionZ = look.z;
-				}
-				else if(base.moveStrafing < 0) {
+				} else if(base.moveStrafing < 0) {
 					Vec3d look = e.getLookVec().scale(0.5).rotateYaw(-90F);
 					motionX = look.x;
 					motionZ = look.z;
@@ -130,7 +147,7 @@ public class EntityTardis extends EntityFlying {
 	
 	@Override
 	public Entity getControllingPassenger() {
-		if (this.getPassengers() != null && this.getPassengers().size() > 0) return this.getPassengers().get(0);
+		if (this.getPassengers().size() > 0) return this.getPassengers().get(0);
 		return null;
 	}
 	
@@ -200,6 +217,11 @@ public class EntityTardis extends EntityFlying {
 			}
 		}
 		return EnumExterior.FIRST.name();
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void playFlightSound() {
+		Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(TSounds.flyLoop, 1.0F));
 	}
 
 	
