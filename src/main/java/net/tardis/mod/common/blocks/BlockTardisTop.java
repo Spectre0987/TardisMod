@@ -1,7 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -12,11 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -24,7 +18,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
@@ -33,7 +26,9 @@ import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
+import java.util.function.Supplier;
+
+public class BlockTardisTop extends BlockTileBase {
 	
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -79,7 +74,7 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 	@Override
 	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
 		if(!worldIn.isRemote) {
-			WorldServer tWorld = ((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+			WorldServer tWorld = worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 			TileEntityTardis tardis = (TileEntityTardis)tWorld.getTileEntity(((TileEntityDoor)worldIn.getTileEntity(pos)).getConsolePos());
 			if(tardis != null) {
 				tWorld.playSound(null, tardis.getPos(), TSounds.knocking, SoundCategory.BLOCKS, 1F, 1F);
@@ -157,6 +152,11 @@ public class BlockTardisTop extends BlockTileBase implements IUnbreakable {
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
+	}
+
+	@Override
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+		return false;
 	}
 	
 	public static class ItemBlockTardis extends ItemBlock{

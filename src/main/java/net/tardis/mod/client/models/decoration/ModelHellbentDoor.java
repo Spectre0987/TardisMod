@@ -701,7 +701,8 @@ public class ModelHellbentDoor extends ModelBase
   }
   
   public void renderRightDoor(float f5) {
-	  RDR1.render(f5);
+
+    RDR1.render(f5);
 	    RDR2.render(f5);
 	    RDR3.render(f5);
 	    RDR4.render(f5);

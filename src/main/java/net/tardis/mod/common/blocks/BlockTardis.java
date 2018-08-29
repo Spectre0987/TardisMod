@@ -4,15 +4,17 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
+import net.tardis.mod.api.blocks.IBlock;
 
-public class BlockTardis extends Block implements IUnbreakable {
+public class BlockTardis extends Block implements IBlock {
 	
 	public ItemBlock item = new ItemBlock(this);
 	
@@ -47,5 +49,14 @@ public class BlockTardis extends Block implements IUnbreakable {
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
 	}
-	
+
+	@Override
+	public boolean doesDelete() {
+		return false;
+	}
+
+	@Override
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+		return false;
+	}
 }

@@ -107,11 +107,29 @@
             "stream": true
         }]
     },
+	
+	  "classic_door_open":{
+        "category":"blocks",
+        "sounds":[{
+            "name":"tardis:classic_door_open",
+            "stream": true
+        }]
+    },
+
     "knocking":{
         "category":"blocks",
         "sounds":[{
             "name":"tardis:knocking",
             "stream":true
         }]
+    },
+    "fly_loop": {
+        "category": "blocks",
+        "sounds": [
+            {
+                "name": "tardis:fly_loop",
+                "stream": true
+            }
+        ]
     }
 }

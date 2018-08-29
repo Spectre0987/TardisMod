@@ -1,5 +1,9 @@
 package net.tardis.mod;
 
+import net.tardis.mod.common.entities.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
@@ -12,7 +16,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -23,25 +31,65 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.commands.*;
+import net.tardis.mod.common.commands.CommandDebug;
+import net.tardis.mod.common.commands.CommandTardis;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.*;
-import net.tardis.mod.common.entities.controls.*;
+import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDirection;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
+import net.tardis.mod.common.entities.controls.ControlFlight;
+import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
+import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlPhone;
+import net.tardis.mod.common.entities.controls.ControlRandom;
+import net.tardis.mod.common.entities.controls.ControlSTCButton;
+import net.tardis.mod.common.entities.controls.ControlSTCLoad;
+import net.tardis.mod.common.entities.controls.ControlScanner;
+import net.tardis.mod.common.entities.controls.ControlSonicSlot;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlX;
+import net.tardis.mod.common.entities.controls.ControlY;
+import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
+import net.tardis.mod.common.entities.vehicles.EntityBike;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.protocols.*;
-import net.tardis.mod.common.screwdriver.ElectricPanelMode;
-import net.tardis.mod.common.screwdriver.GRoomMode;
-import net.tardis.mod.common.screwdriver.HallwayMode;
-import net.tardis.mod.common.screwdriver.ScrewdriverMode;
+import net.tardis.mod.common.protocols.ProtocolARS;
+import net.tardis.mod.common.protocols.ProtocolCCircuit;
+import net.tardis.mod.common.protocols.ProtocolConsole;
+import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
+import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
+import net.tardis.mod.common.protocols.ProtocolLock;
+import net.tardis.mod.common.protocols.ProtocolRegenRoom;
+import net.tardis.mod.common.protocols.ProtocolSystemReadout;
+import net.tardis.mod.common.protocols.TardisProtocol;
+import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemAntenna;
+import net.tardis.mod.common.systems.SystemCCircuit;
 import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemFluidLinks;
 import net.tardis.mod.common.systems.TardisSystems;
-import net.tardis.mod.common.tileentity.*;
+import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityEPanel;
+import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
+import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
+import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
+import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
+import net.tardis.mod.common.tileentity.TileEntityJsonTester;
+import net.tardis.mod.common.tileentity.TileEntityLight;
+import net.tardis.mod.common.tileentity.TileEntitySonicGun;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
+import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
+import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
@@ -55,11 +103,20 @@ import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
-import net.tardis.mod.packets.*;
+import net.tardis.mod.packets.MessageDamageSystem;
+import net.tardis.mod.packets.MessageDemat;
+import net.tardis.mod.packets.MessageDoorOpen;
+import net.tardis.mod.packets.MessageExteriorChange;
+import net.tardis.mod.packets.MessageHandlerProtocol;
+import net.tardis.mod.packets.MessageHandlerTeleport;
+import net.tardis.mod.packets.MessageProtocol;
+import net.tardis.mod.packets.MessageSpawnItem;
+import net.tardis.mod.packets.MessageTelepathicCircut;
+import net.tardis.mod.packets.MessageTeleport;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import javax.swing.text.html.parser.Entity;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
 public class Tardis {
@@ -67,20 +124,15 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String DEP = "after:ic2, galacticraftcore, " + TStrings.ModIds.WEEPING_ANGELS + "; required-after:forge@[14.23.2.2638,)";
-	public static final String VERSION = "0.0.6A";
+	public static final String VERSION = "0.0.7A";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static Logger LOG = LogManager.getLogger(NAME);
 
-
-	private static Logger logger = LogManager.getLogger(NAME);
-	
 	public static CreativeTabs tab;
 	
 	public static SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	
 	public static boolean hasIC2 = false;
-	
-	public static final int ID_GUI_TEMPORAL_LAB = 0;
 	
 	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 
@@ -102,7 +154,7 @@ public class Tardis {
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
 		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
-		logger = event.getModLog();
+		
 		tab = new TardisTab();
 		TItems.init();
 		TBlocks.register();
@@ -128,6 +180,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDoorSwitch.class, "tardis_door_control");
 		EntityHelper.registerStatic(ControlPhone.class, "tardis_phone");
 		EntityHelper.registerStatic(ControlMag.class, "tardis_magnitude");
+		EntityHelper.registerStatic(ControlSonicSlot.class, "sonic_slot");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
@@ -136,6 +189,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
 		EntityHelper.registerNoSpawn(EntityHellbentCorridor.class, "hellbent_corridor");
 		EntityHelper.registerNoSpawn(EntityHellbentDoor.class, "hellbent_door");
+		EntityHelper.registerNoSpawn(EntityBike.class, "bike");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -164,6 +218,7 @@ public class Tardis {
 		//Interiors
 		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");
 		registerTileEntity(TileEntityTardis02.class, "TileEntityTardis02");
+		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 1, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 2, Side.SERVER);
@@ -174,20 +229,19 @@ public class Tardis {
 		NETWORK.registerMessage(MessageDemat.Handler.class, MessageDemat.class, 7, Side.CLIENT);
 		NETWORK.registerMessage(MessageSpawnItem.Handler.class, MessageSpawnItem.class, 8, Side.SERVER);
 		NETWORK.registerMessage(MessageDamageSystem.Helper.class, MessageDamageSystem.class, 9, Side.SERVER);
-		
-		ScrewdriverMode.register(new HallwayMode());
-		ScrewdriverMode.register(new GRoomMode());
-		ScrewdriverMode.register(new ElectricPanelMode());
+
+		ScrewdriverHandler.init();
 		
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 		
 		TardisProtocol.register(new ProtocolCCircuit());
 		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
-		TardisProtocol.register(new ProtocolFindRift());
 		TardisProtocol.register(new ProtocolConsole());
 		TardisProtocol.register(new ProtocolARS());
 		TardisProtocol.register(new ProtocolRegenRoom());
+		TardisProtocol.register(new ProtocolLock());
+		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
@@ -201,6 +255,8 @@ public class Tardis {
 		TardisSystems.register("flight", SystemFlight.class);
 		TardisSystems.register("dimensional", SystemDimension.class);
 		TardisSystems.register("fluid_links", SystemFluidLinks.class);
+		TardisSystems.register("antenna", SystemAntenna.class);
+		TardisSystems.register("chameleon", SystemCCircuit.class);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
@@ -240,10 +296,9 @@ public class Tardis {
 
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event){
-		event.registerServerCommand(new CommandTeleport());
-		event.registerServerCommand(new TardisCommandGrow());
-		event.registerServerCommand(new CommandSummon());
-		event.registerServerCommand(new TardisCommandRemove());
-		event.registerServerCommand(new CommandTardisTransfer());
+		event.registerServerCommand(new CommandTardis());
+		if(Tardis.getIsDev()) {
+			event.registerServerCommand(new CommandDebug());
+		}
 	}
 }

@@ -11,13 +11,11 @@ public class MessageHandlerTeleport implements IMessageHandler<MessageTeleport, 
 	
 	@Override
 	public IMessage onMessage(MessageTeleport mes, MessageContext ctx) {
-		ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
-		@Override
-		public void run() {
+        ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
 			WorldServer world = ctx.getServerHandler().player.getServerWorld();
             BlockPos pos = world.getTopSolidOrLiquidBlock(mes.pos);
             ((EntityPlayerMP)world.getEntityByID(mes.id)).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
-		}});
+        });
 		return null;
 	}
 	

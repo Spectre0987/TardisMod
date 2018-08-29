@@ -97,23 +97,23 @@ public class MessageSyncWorldShell implements IMessage {
 		
 		@Override
 		public IMessage onMessage(MessageSyncWorldShell mes, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-				@Override
-				public void run() {
-					 World world = Minecraft.getMinecraft().world;
-		                if(mes.id == -1) {
-		                    TileEntity te = world.getTileEntity(mes.tilePos);
-		                    if(te != null && te instanceof IContainsWorldShell) {
-		                        ((IContainsWorldShell)te).setWorldShell(mes.worldShell);
-		                    }
-		                }
-		                else {
-		                    Entity entity = world.getEntityByID(mes.id);
-		                    if(entity != null && entity instanceof IContainsWorldShell){
-		                        ((IContainsWorldShell)entity).setWorldShell(mes.worldShell);
-		                    }
-		                }
-				}});
+            Minecraft.getMinecraft().addScheduledTask(new Runnable(){
+            	@Override
+            	public void run() {
+	                World world = Minecraft.getMinecraft().world;
+	                if (mes.id == -1) {
+	                    TileEntity te = world.getTileEntity(mes.tilePos);
+	                    if (te != null && te instanceof IContainsWorldShell) {
+	                        ((IContainsWorldShell) te).setWorldShell(mes.worldShell);
+	                    }
+	                } else {
+	                    Entity entity = world.getEntityByID(mes.id);
+	                    if (entity != null && entity instanceof IContainsWorldShell) {
+	                        ((IContainsWorldShell) entity).setWorldShell(mes.worldShell);
+	                    }
+	                }
+            	}
+            });
 			return null;
 		}
 

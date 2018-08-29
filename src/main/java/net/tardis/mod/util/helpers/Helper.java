@@ -13,13 +13,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
@@ -27,6 +27,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.api.dimensions.IBlockedDimension;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
 
@@ -57,11 +58,7 @@ public class Helper {
 	public static Vec3d convertToPixels(double x, double y, double z) {
 		return new Vec3d(x / 16, y / 16, z / 16);
 	}
-	
-	public static void tell(EntityPlayer playerIn, String string) {
-		playerIn.sendMessage(new TextComponentString(string));
-	}
-	
+
 	public static BlockPos getLowestBlock(World world, BlockPos pos) {
 		pos = new BlockPos(pos.getX(), 0, pos.getZ());
 		for (int i = 0; i < 256; ++i) {
@@ -80,10 +77,7 @@ public class Helper {
 	}
 	
 	public static boolean isSafe(World world, BlockPos pos, EnumFacing facing) {
-		if (world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR)) {
-            return world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR);
-		}
-		return false;
+		return world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR);
 	}
 	
 	public static boolean isDimensionBlocked(int id) {
@@ -98,8 +92,7 @@ public class Helper {
 				if (id == i) return true;
 			}
 		}
-		if(isW) return true;
-		return false;
+		return isW;
 	}
 	
 	public static float getAngleFromFacing(EnumFacing facing) {
@@ -229,6 +222,14 @@ public class Helper {
 				++count;
 			}
 		}
-		return count >= 3 ? true : false;
+		return count >= 3;
+	}
+
+	public static BlockPos scaleBP(BlockPos dist, double i) {
+		return new BlockPos(dist.getX() * i, dist.getY() * i, dist.getZ() * i);
+	}
+
+	public static TileEntityTardis getTardis(TileEntity te) {
+		return te != null && te instanceof TileEntityTardis ? ((TileEntityTardis)te) : null;
 	}
 }

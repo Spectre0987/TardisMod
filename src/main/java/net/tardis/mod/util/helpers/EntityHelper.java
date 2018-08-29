@@ -11,6 +11,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.tardis.mod.Tardis;
 
+//Like Hell
 public class EntityHelper {
 	
 	public static int id = 0;

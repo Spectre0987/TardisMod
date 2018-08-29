@@ -58,7 +58,7 @@ public class GuiSystem extends GuiScreen{
 			if(sys.getHealth() > 0.0F) {
 				ItemStack stack = new ItemStack(sys.getRepairItem());
 				stack.setItemDamage((int)(100 - (sys.getHealth() * 100)));
-				Tardis.NETWORK.sendToServer(new MessageSpawnItem(Minecraft.getMinecraft().player.getUniqueID(), stack));
+				Tardis.NETWORK.sendToServer(new MessageSpawnItem(stack));
 				Tardis.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
 			}
 			Minecraft.getMinecraft().displayGuiScreen(null);

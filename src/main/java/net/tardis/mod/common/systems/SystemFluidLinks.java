@@ -2,7 +2,6 @@ package net.tardis.mod.common.systems;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -12,23 +11,12 @@ import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.util.helpers.Helper;
 
 public class SystemFluidLinks extends ISystem{
-
-	float health = 1F;
+	
 	int ticksToHurt = 0;
 	
 	@Override
-	public float getHealth() {
-		return health;
-	}
-
-	@Override
-	public void setHealth(float health) {
-		this.health = health;
-	}
-
-	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
-		if(health <= 0.00F && ticksToHurt > 0) {
+		if(this.getHealth() <= 0.00F && ticksToHurt > 0) {
 			--ticksToHurt;
 			if(!world.isRemote && world.getWorldTime() % 20 == 0) {
 				for(EntityLivingBase base : world.getEntitiesWithinAABB(EntityLivingBase.class, Helper.createBB(consolePos, 60))) {
@@ -40,21 +28,21 @@ public class SystemFluidLinks extends ISystem{
 
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
-		this.health = tag.getFloat("health");
+		super.readFromNBT(tag);
 		this.ticksToHurt = tag.getInteger("time");
 	}
 
 	@Override
 	public NBTTagCompound writetoNBT(NBTTagCompound tag) {
-		tag.setFloat("health", health);
+		super.writetoNBT(tag);
 		tag.setInteger("time", ticksToHurt);
 		return tag;
 	}
 
 	@Override
 	public void damage() {
-		health -= 0.25F;
-		if(health <= 0.0F) {
+		this.setHealth(this.getHealth() - 0.25F);
+		if(this.getHealth() <= 0.0F) {
 			this.ticksToHurt = 600;
 		}
 	}
@@ -65,23 +53,14 @@ public class SystemFluidLinks extends ISystem{
 	}
 
 	@Override
-	public boolean repair(ItemStack stack) {
-		if(health < 1.0F) {
-			health = (100 - stack.getItemDamage()) / 100F;
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public String getNameKey() {
 		return "system.tardis.fluidlinks";
 	}
 
 	@Override
 	public void wear() {
-		health -= 0.015F;
-		if(health <= 0.0F) {
+		this.setHealth(this.getHealth() - 0.015F);
+		if(this.getHealth() <= 0.0F) {
 			this.ticksToHurt = 600;
 		}
 	}

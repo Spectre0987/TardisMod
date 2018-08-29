@@ -20,6 +20,7 @@ public class ItemHellbentCorridor extends ItemBase {
 			Vec3d look = player.getLookVec().rotateYaw(0.25F);
 			e.setPosition(pos.getX(), pos.getY() + 1, pos.getZ() + 0.5);
 			worldIn.spawnEntity(e);
+			player.getHeldItem(hand).shrink(1);
 		}
 		return EnumActionResult.SUCCESS;
 	}

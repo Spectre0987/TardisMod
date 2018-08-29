@@ -13,11 +13,13 @@ import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemAntenna;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
+
 
 public class ControlPhone extends EntityControl{
 
@@ -54,14 +56,17 @@ public class ControlPhone extends EntityControl{
 		if(!world.isRemote && TardisConfig.MISC.invasions) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			if(tardis != null) {
-				if(tardis.currentEvent != EnumEvent.NONE) {
-					if(world.getTotalWorldTime() % 80 == 0) {
-						world.playSound(null, this.getPosition(), TSounds.phone, SoundCategory.BLOCKS, 1F, 1F);
+				SystemAntenna sys = (SystemAntenna)tardis.getSystem(SystemAntenna.class);
+				if(sys != null && sys.getHealth() > 0.0F) {
+					if(tardis.currentEvent != EnumEvent.NONE) {
+						if(world.getTotalWorldTime() % 80 == 0) {
+							world.playSound(null, this.getPosition(), TSounds.phone, SoundCategory.BLOCKS, 1F, 1F);
+						}
 					}
-				}
-				else if(world.getTotalWorldTime() % 24000 == 0) {
-					if(rand.nextInt(4) == 0) {
-						tardis.currentEvent = EnumEvent.DALEK;
+					else if(world.getTotalWorldTime() % 24000 == 0) {
+						if(rand.nextInt(4) == 0) {
+							tardis.currentEvent = EnumEvent.DALEK;
+						}
 					}
 				}
 			}
@@ -81,7 +86,7 @@ public class ControlPhone extends EntityControl{
 					ws.spawnEntity(dalek);
 				}
 				tardis.setDesination(villagePos, 0);
-				player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.EVENT.DALEK_INVASION).getFormattedText() + " " + Helper.formatBlockPos(villagePos)), true);
+				player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.EVENT.DALEK_INVASION).getFormattedText() + " " + Helper.formatBlockPos(villagePos)), false);
 				tardis.currentEvent = EnumEvent.NONE;
 			}
 		}

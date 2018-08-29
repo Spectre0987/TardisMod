@@ -16,7 +16,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.tardis.mod.common.tileentity.TileEntityDoor;
 
 public class RenderWorldShell {
 
@@ -37,7 +36,6 @@ public class RenderWorldShell {
 			
 			GlStateManager.pushMatrix();
 			worldBoti.setShell(container.getWorldShell());
-			if(entity instanceof TileEntityDoor) GlStateManager.depthFunc(GL11.GL_ALWAYS);
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 

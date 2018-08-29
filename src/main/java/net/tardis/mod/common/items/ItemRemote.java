@@ -37,7 +37,7 @@ public class ItemRemote extends ItemBase {
 			TileEntity tte = ((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(player.getHeldItem(hand)));
 			if(tte != null && tte instanceof TileEntityTardis) {
 				TileEntityTardis tardis = ((TileEntityTardis)tte);
-				tardis.setDesination(pos.up(3), player.dimension);
+				tardis.setDesination(pos.up(2), player.dimension);
 				tardis.setFacing(player.getHorizontalFacing().getOpposite());
 				tardis.startFlight();
 			}

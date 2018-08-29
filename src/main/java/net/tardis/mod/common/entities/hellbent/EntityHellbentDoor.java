@@ -14,9 +14,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.sounds.TSounds;
 
-public class EntityHellbentDoor extends Entity{
+public class EntityHellbentDoor extends Entity implements IDoor{
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(EntityHellbentDoor.class, DataSerializers.BOOLEAN);
 	
@@ -42,6 +44,9 @@ public class EntityHellbentDoor extends Entity{
 	
 	public void setOpen(boolean b) {
 		this.dataManager.set(IS_OPEN, b);
+		if(isOpen()){
+			playSound(TSounds.classicDoor, 1.0F, 1.0F);
+		}
 	}
 	
 	public boolean isOpen() {

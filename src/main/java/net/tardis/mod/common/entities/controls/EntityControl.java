@@ -11,7 +11,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.config.TardisConfig;
 
@@ -149,12 +148,12 @@ public abstract class EntityControl extends Entity implements IControl {
 		return this.getDisplayName().getUnformattedText();
 	}
 
-    @Override
-    public void onKillCommand() {
-        if (TardisConfig.MISC.killControlsOnKillCommand) {
-            super.onKillCommand();
-        } else {
-            Tardis.LOG.debug("Not killing: {}", this::getControlName);
-        }
-    }
+	@Override
+	public void onKillCommand() {
+		if(TardisConfig.MISC.killControlsOnKillCommand) {
+			super.onKillCommand();
+		}
+		
+	}
+
 }

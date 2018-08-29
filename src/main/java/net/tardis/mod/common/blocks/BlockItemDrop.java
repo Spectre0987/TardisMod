@@ -1,6 +1,7 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -16,6 +17,7 @@ public class BlockItemDrop extends BlockBase {
 	public BlockItemDrop(Item item) {
 		this.item = item;
 		this.setCreativeTab(Tardis.tab);
+		this.setResistance(1F);
 	}
 	
 	public BlockItemDrop(Item item, int count) {

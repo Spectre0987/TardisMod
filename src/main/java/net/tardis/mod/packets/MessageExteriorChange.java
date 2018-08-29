@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.systems.SystemCCircuit;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
@@ -54,13 +55,15 @@ public class MessageExteriorChange implements IMessage {
                     TileEntity te = ws.getTileEntity(mes.pos);
                     if(te != null && te instanceof TileEntityTardis) {
                     	TileEntityTardis tardis = (TileEntityTardis)te;
-                        tardis.setExterior(mes.state);
-                        WorldServer world = ws.getMinecraftServer().getWorld(tardis.dimension);
-                        TileEntity door = world.getTileEntity(tardis.getLocation().up());
-                        EnumFacing face = world.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
-                        NBTTagCompound tag = door.writeToNBT(new NBTTagCompound());
-                        world.setBlockState(door.getPos(), mes.state.withProperty(BlockTardisTop.FACING, face));
-                        ((TileEntityDoor)world.getTileEntity(door.getPos())).readFromNBT(tag);
+                       if(tardis.getSystem(SystemCCircuit.class) != null && ((SystemCCircuit)tardis.getSystem(SystemCCircuit.class)).getHealth() > 0.0F) {
+                    	   tardis.setExterior(mes.state);
+                           WorldServer world = ws.getMinecraftServer().getWorld(tardis.dimension);
+                           TileEntity door = world.getTileEntity(tardis.getLocation().up());
+                           EnumFacing face = world.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
+                           NBTTagCompound tag = door.writeToNBT(new NBTTagCompound());
+                           world.setBlockState(door.getPos(), mes.state.withProperty(BlockTardisTop.FACING, face));
+                           ((TileEntityDoor)world.getTileEntity(door.getPos())).readFromNBT(tag);
+                       }
                     }
                 }
             });

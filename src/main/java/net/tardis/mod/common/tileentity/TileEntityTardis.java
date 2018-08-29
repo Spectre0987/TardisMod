@@ -29,6 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
@@ -56,6 +57,7 @@ import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
+import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
@@ -67,6 +69,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
@@ -112,17 +115,22 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private EnumTardisState currentState = EnumTardisState.NORMAL;
 	public double power = 0;
 	public List<Vec3d> coordList = new ArrayList<>();
+	private boolean isLocked = false;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
 			this.systems = this.createSystems();
 		}
-		this.coordList.add(Helper.convertToPixels(0, 0, 0));
+		if(this.getClass() == TileEntityTardis.class) {
+			this.coordList.add(Helper.convertToPixels(-8.5, -1.5, -8.25));
+			this.coordList.add(Helper.convertToPixels(-8.75, -1.5, -6.75));
+			this.coordList.add(Helper.convertToPixels(-9.5, -1.5, -5.75));
+			this.coordList.add(Helper.convertToPixels(-10.25, -1.5, -4.5));
+		}
 	}
 
 	@Override
 	public void update() {
-		
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - this.calcFuelUse());
@@ -140,6 +148,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					frame = 0;
 				else
 					++frame;
+				if(TardisConfig.MISC.camShake && (this.ticksToTravel < 200 || this.totalTimeToTravel - this.ticksToTravel < 200)) {
+					for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+						player.rotationPitch += (rand.nextInt(10) - 5) * 0.1;
+						player.rotationYaw += (rand.nextInt(10) - 5) * 0.1;
+					}
+				}
 			}
 			if(!world.isRemote) {
 				if(!this.getCanFly()) {
@@ -334,6 +348,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				this.systems = newSystems.toArray(new ISystem[] {});
 			}
 			this.currentState = Enum.valueOf(EnumTardisState.class, tardisTag.getString(NBT.TARDIS_STATE_ID));
+			this.isLocked = tardisTag.getBoolean(NBT.IS_LOCKED);
 		}
 	}
 	
@@ -387,6 +402,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 			tardisTag.setString(NBT.TARDIS_STATE_ID, this.currentState.name());
+			tardisTag.setBoolean(NBT.IS_LOCKED, this.isLocked);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -394,7 +410,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void setDesination(BlockPos pos, int dimension) {
-		this.tardisDestination = pos.down().toImmutable();
+		this.tardisDestination = pos.down();
 		if(Helper.isDimensionBlocked(dimension))
 			dimension = 0;
 		this.destDim = dimension;
@@ -409,7 +425,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 400/* The Time in tick it takes the launch sound to play */);
+		return (int) ((dist / MAX_TARDIS_SPEED) + 400 + (dimension == destDim ? 0 : 300));
 	}
 	
 	public BlockPos getDestination() {
@@ -455,8 +471,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.markDirty();
 	}
 	
-	private void setFuel(float f) {
-		fuel = f > 1.0F ? 1.0F : f;
+	public void setFuel(float f) {
+		fuel = MathHelper.clamp(f, 0.0F, 1.0F);
 		this.markDirty();
 	}
 	
@@ -600,6 +616,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				ec.add(new ControlDoorSwitch(this));
 				ec.add(new ControlMag(this));
 				ec.add(new ControlPhone(this));
+				ec.add(new ControlSonicSlot(this));
 				int id = 0;
 				for(Vec3d pos : this.coordList) {
 					ec.add(new ControlSTCButton(this, id, pos));
@@ -622,6 +639,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		ForgeChunkManager.releaseTicket(tardisTicket);
 		ForgeChunkManager.releaseTicket(tardisLocTicket);
 		for(EntityControl cont : controls) {
+			System.out.println("Killing: " + cont.getDisplayName().getFormattedText());
 			cont.setDead();
 		}
 		super.invalidate();
@@ -629,7 +647,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
-		return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).grow(3, 3, 3);
+		return Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(3D);
 	}
 	
 	public EntityControl getControl(Class clazz) {
@@ -646,9 +664,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void crash(boolean explode) {
 		if (!world.isRemote) {
 			WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-			Vec3d cr = Helper.blockPosToVec3d(this.getDestination().subtract(this.getLocation())).scale(this.ticksToTravel / this.totalTimeToTravel);
-			BlockPos crashSite = new BlockPos(cr.x, cr.y, cr.z).add(this.getLocation());
-			this.setDesination(crashSite == null ? getLocation() : crashSite, dimension);
+			BlockPos crashSite = this.getCurrentPosOnPath();
+			System.out.println("Land: " + this.getLocation() + "Crash: " + crashSite);
+			this.setDesination(crashSite, dimension);
 			if(explode) {
 				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
 				world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
@@ -681,6 +699,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public static class NBT {
+		public static final String IS_LOCKED = "is_locked";
 		public static final String TARDIS_STATE_ID = "tardis_state_id";
 		public static final String SYSTEM_LIST = "system_list";
 		public static final String FUEL_USAGE = "fuelUseage";
@@ -850,12 +869,24 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(door != null && (door.isOpen() || !checkDoors)) {
 				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(dimension);
 				TileEntity te = ws.getTileEntity(this.getLocation().up());
+				EntityPlayerMP mp = (EntityPlayerMP)player;
+				if(!checkDoors) {
+					BlockPos tp = this.getLocation();
+					if(this.isInFlight()) tp = this.getCurrentPosOnPath();
+					mp.setLocationAndAngles(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, 0, 0);
+					if(world.provider.getDimension() != this.dimension)mp.getServer().getPlayerList().transferPlayerToDimension(mp, this.dimension, new TardisTeleporter());
+					
+				}
 				if(te != null && te instanceof TileEntityDoor) {
-					if(!((TileEntityDoor)te).isLocked() || !checkDoors) {
-						EntityPlayerMP mp = (EntityPlayerMP)player;
+					if(!((TileEntityDoor)te).isLocked()) {
 						((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, dimension, new TardisTeleporter());
-						EnumFacing facing = ws.getBlockState(this.getLocation().up()).getValue(BlockTardisTop.FACING);
+						IBlockState state = ws.getBlockState(this.getLocation().up());
+						EnumFacing facing = EnumFacing.NORTH;
+						if(state.getBlock() instanceof BlockTardisTop) {
+							state.getValue(BlockTardisTop.FACING);
+						}
 						BlockPos tp = this.getLocation().offset(facing, 1);
+						if(this.isInFlight())tp = this.getCurrentPosOnPath();
 						mp.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 						return;
 					}
@@ -867,15 +898,25 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void enterTARDIS(Entity entity) {
 		if(!world.isRemote && this.getTardisState().equals(EnumTardisState.NORMAL)) {
 			EnumFacing facing = EnumFacing.NORTH;
+			BlockPos tp = this.getPos().south(4);
+			ChunkPos cPos = world.getChunkFromBlockCoords(getPos()).getPos();
+			for(int x = -1; x < 1; ++x) {
+				for(int z = -1; z < 1; ++z) {
+					((WorldServer)world).getChunkProvider().loadChunk(cPos.x + x, cPos.z + z);
+				}
+			}
+			for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+				tp = e.getPosition().offset(e.getHorizontalFacing());
+				facing = e.getHorizontalFacing();
+			}
 			if(entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP)entity;
-				BlockPos tp = this.getPos().south(4);
-				for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
-					tp = e.getPosition().offset(e.getHorizontalFacing());
-					facing = e.getHorizontalFacing();
-				}
 				((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter());
 				player.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
+			}
+			else {
+				entity.setPosition(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5);
+				entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
 			}
 		}
 	}
@@ -918,5 +959,22 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			return door;
 		}
 		return null;
+	}
+
+	public boolean isLocked() {
+		return this.isLocked;
+	}
+	
+	public void setLocked(boolean b) {
+		this.isLocked = b;
+		this.markDirty();
+	}
+	
+	public BlockPos getCurrentPosOnPath() {
+		if(this.isInFlight()) {
+			BlockPos dist = this.getDestination().subtract(this.getLocation());
+			return this.getLocation().add(Helper.scaleBP(dist, this.ticksToTravel / (float)this.totalTimeToTravel));
+		}
+		return this.getLocation();
 	}
 }

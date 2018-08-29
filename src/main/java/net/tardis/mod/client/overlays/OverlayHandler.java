@@ -31,5 +31,6 @@ public class OverlayHandler {
 
     public static void init() {
         OVERLAYS.add(new OverlaySonicShades());
+        OVERLAYS.add(new OverlayDalekCasing());
     }
 }

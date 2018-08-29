@@ -1,5 +1,8 @@
 package net.tardis.mod.handlers;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -18,21 +21,17 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -48,7 +47,6 @@ import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
-import net.tardis.mod.common.blocks.interfaces.IUnbreakable;
 import net.tardis.mod.common.data.TimeLord;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -57,10 +55,16 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeCinnabar;
 import net.tardis.mod.common.recipes.RecipeKey;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
 
 @Mod.EventBusSubscriber
 public class TEventHandler {
@@ -116,7 +120,6 @@ public class TEventHandler {
 	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public static void stopRender(RenderPlayerEvent.Pre event) {
 		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityTardis || event.getEntityPlayer().getRidingEntity() instanceof EntityDalekCasing) {
-			Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 			event.setCanceled(true);
 		}
 	}
@@ -127,13 +130,13 @@ public class TEventHandler {
 			Entity e = event.getEntityLiving().getRidingEntity();
 			event.setCanceled(e instanceof EntityTardis || e instanceof EntityDalekCasing);
 			if(e instanceof EntityDalekCasing) {
-				((EntityDalekCasing)e).attackEntityFrom(event.getSource(), event.getAmount());
+                e.attackEntityFrom(event.getSource(), event.getAmount());
 			}
 		}
 		if(event.getSource().equals(Tardis.SUFFICATION)) {
 			if(event.getEntityLiving() instanceof EntityPlayer) {
 				int count = 0;
-				for(ItemStack stack : ((EntityPlayer)event.getEntityLiving()).getArmorInventoryList()) {
+                for (ItemStack stack : event.getEntityLiving().getArmorInventoryList()) {
 					if(stack.getItem() instanceof ItemSpaceSuit) {
 						++count;
 					}
@@ -145,10 +148,6 @@ public class TEventHandler {
 		}
 	}
 	
-	@SubscribeEvent
-	public static void makeTrueUnbreakable(BlockEvent.BreakEvent e) {
-		e.setCanceled(e.getState().getBlock() instanceof IUnbreakable);
-	}
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
@@ -180,8 +179,38 @@ public class TEventHandler {
 				}
 			}
 		}
-		if(TardisConfig.BOTI.enable) {
-			event.player.sendStatusMessage(new TextComponentString("Are you sure you want to enable BOTI? It is extremly buggy and if you complain / mention it in the Discord you" + TextFormatting.BOLD + TextFormatting.DARK_RED + TextFormatting.UNDERLINE + " INSTANTLY and PERMANENTLY banned!"), false);
+		if(!event.player.world.isRemote) {
+			try {
+				HashMap<String, Long> map = new HashMap<String, Long>();
+				File f = new File(event.player.world.getMinecraftServer().getDataDirectory() + "/pending_keys.json");
+				JsonReader jr = new JsonReader(new FileReader(f));
+				jr.beginObject();
+				while(jr.hasNext()) {
+					map.put(jr.nextName(), Long.parseLong(jr.nextString()));
+				}
+				jr.endObject();
+				jr.close();
+				
+				if(map.containsKey(event.player.getGameProfile().getId().toString())) {
+					ItemStack stack = new ItemStack(TItems.key);
+					ItemKey.setPos(stack, BlockPos.fromLong(map.get(event.player.getGameProfile().getId().toString())));
+					event.player.inventory.addItemStackToInventory(stack);
+					
+					GsonBuilder gb = new GsonBuilder();
+					gb.setPrettyPrinting();
+					JsonWriter jw = gb.create().newJsonWriter(new FileWriter(f));
+					jw.beginObject();
+					map.remove(event.player.getGameProfile().getId().toString());
+					for(String name : map.keySet()) {
+						jw.name(name).value(map.get(name).toString());
+					}
+					jw.endObject();
+					jw.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -250,7 +279,7 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {
 		EntityPlayer player = e.player;
-		if (!player.world.isRemote) {
+		/*if (!player.world.isRemote) {
 			ForgeVersion.CheckResult version = ForgeVersion.getResult(Loader.instance().activeModContainer());
 			if (version.status == ForgeVersion.Status.OUTDATED) {
 				TextComponentString url = new TextComponentString(TextFormatting.GOLD + TextFormatting.BOLD.toString() + "UPDATE");
@@ -261,7 +290,8 @@ public class TEventHandler {
 				String changes = String.valueOf(version.changes).replace("{" + version.target + "=", "").replace("}", "");
 				player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Changelog: " + TextFormatting.AQUA + changes));
 			}
-		}
+		}*/
+		if(Loader.isModLoaded(TStrings.ModIds.OPTIFINE))player.sendStatusMessage(new TextComponentTranslation(TStrings.OPTIFINE_INSTALLED), false);
 	}
 	
 	@SubscribeEvent
