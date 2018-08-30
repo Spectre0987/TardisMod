@@ -10,6 +10,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class EntityCorridor extends Entity{
@@ -86,5 +87,4 @@ public class EntityCorridor extends Entity{
 			}
 		}
 	}
-
 }

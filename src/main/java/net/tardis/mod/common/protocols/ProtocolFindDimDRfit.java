@@ -14,7 +14,7 @@ public class ProtocolFindDimDRfit implements ITardisProtocol {
 			WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 			for(TileEntity te : ws.loadedTileEntityList) {
 				if(te.getPos().distanceSq(tardis.getLocation()) < Math.pow(16, 2)) {
-					if(TileEntity.getKey(te.getClass()).toString().equals("dimdoors:floating_rift")) {
+					if(TileEntity.getKey(te.getClass()) != null && TileEntity.getKey(te.getClass()).toString().equals("dimdoors:floating_rift")) {
 						ws.setBlockState(te.getPos(), Blocks.AIR.getDefaultState());
 						tardis.setFuel(1.0F);
 					}

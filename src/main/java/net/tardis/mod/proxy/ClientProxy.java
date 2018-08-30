@@ -1,5 +1,7 @@
 package net.tardis.mod.proxy;
 
+import java.util.ArrayList;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -29,20 +31,82 @@ import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.renderers.controls.RenderInteriorDoor;
 import net.tardis.mod.client.renderers.controls.RenderSonicSlot;
-import net.tardis.mod.client.renderers.decorations.hellbent.*;
-import net.tardis.mod.client.renderers.entities.*;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentCorridor;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentDoor;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentLight;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentMonitor;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentPole;
+import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentRoof;
+import net.tardis.mod.client.renderers.entities.RenderCyberRay;
+import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
+import net.tardis.mod.client.renderers.entities.RenderCybermanTomb;
+import net.tardis.mod.client.renderers.entities.RenderDalek;
+import net.tardis.mod.client.renderers.entities.RenderDalekCaseing;
+import net.tardis.mod.client.renderers.entities.RenderRay;
+import net.tardis.mod.client.renderers.entities.vehicles.RenderBessie;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoorCC;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
-import net.tardis.mod.client.renderers.items.*;
+import net.tardis.mod.client.renderers.items.RenderItemAlembic;
+import net.tardis.mod.client.renderers.items.RenderItemFoodMachine;
+import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
+import net.tardis.mod.client.renderers.items.RenderItemTardis02;
+import net.tardis.mod.client.renderers.items.RenderItemTardis03;
+import net.tardis.mod.client.renderers.items.RenderTEISRItem;
+import net.tardis.mod.client.renderers.items.RendererItemDemat;
+import net.tardis.mod.client.renderers.items.RendererItemTardis;
+import net.tardis.mod.client.renderers.items.RendererKey;
 import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
-import net.tardis.mod.client.renderers.tiles.*;
+import net.tardis.mod.client.renderers.tiles.RenderAlembic;
+import net.tardis.mod.client.renderers.tiles.RenderFoodMachine;
+import net.tardis.mod.client.renderers.tiles.RenderJsonHelper;
+import net.tardis.mod.client.renderers.tiles.RenderRoundelChest;
+import net.tardis.mod.client.renderers.tiles.RenderTemporalLab;
+import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
+import net.tardis.mod.client.renderers.tiles.RenderTileHolo;
+import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.entities.*;
-import net.tardis.mod.common.entities.controls.*;
+import net.tardis.mod.common.entities.EntityCorridor;
+import net.tardis.mod.common.entities.EntityCybermanInvasion;
+import net.tardis.mod.common.entities.EntityCybermanTomb;
+import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.entities.EntityDalekCasing;
+import net.tardis.mod.common.entities.EntityDalekRay;
+import net.tardis.mod.common.entities.EntityRayCyberman;
+import net.tardis.mod.common.entities.EntityTardis;
+import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDirection;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
+import net.tardis.mod.common.entities.controls.ControlFlight;
+import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
+import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlPhone;
+import net.tardis.mod.common.entities.controls.ControlRandom;
+import net.tardis.mod.common.entities.controls.ControlSTCButton;
+import net.tardis.mod.common.entities.controls.ControlSTCLoad;
+import net.tardis.mod.common.entities.controls.ControlSonicSlot;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlX;
+import net.tardis.mod.common.entities.controls.ControlY;
+import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
+import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.tileentity.*;
+import net.tardis.mod.common.tileentity.TileEntityAlembic;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
+import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
+import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
+import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
+import net.tardis.mod.common.tileentity.TileEntityJsonTester;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
+import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
@@ -51,8 +115,7 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
-
-import java.util.ArrayList;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientProxy extends ServerProxy {
@@ -78,6 +141,7 @@ public class ClientProxy extends ServerProxy {
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor03.class, new RenderTileDoor03());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorCC.class, new RenderTileDoorCC());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 		
@@ -105,6 +169,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, RenderInvis::new);
 		RenderingRegistry.registerEntityRenderingHandler(ControlSonicSlot.class, RenderSonicSlot::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, RenderCorridor::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBessie.class, RenderBessie::new);
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentCorridor.class, RenderHellbentCorridor::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentDoor.class, RenderHellbentDoor::new);

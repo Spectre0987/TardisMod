@@ -349,8 +349,8 @@ public class ModelCybermanInvasion extends ModelBiped
     ModelUtil.copyAngle(this.bipedRightLeg, this.RightToe);
     if(entity != null && entity instanceof EntityLivingBase) {
 	    GlStateManager.pushMatrix();
-	    GlStateManager.rotate(((EntityLivingBase)entity).rotationYawHead,0,1,0);
-	    GlStateManager.rotate(entity.rotationPitch,1,0,0);
+	    GlStateManager.rotate((float)Math.toDegrees(this.bipedHead.rotateAngleY), 0, 1, 0);
+	    GlStateManager.rotate((float)Math.toDegrees(this.bipedHead.rotateAngleX), 1, 0, 0);
 	    {
 	    	GlStateManager.pushMatrix();
 	    	Minecraft mc = Minecraft.getMinecraft();

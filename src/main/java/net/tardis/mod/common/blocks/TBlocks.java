@@ -19,6 +19,7 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 
 
 public class TBlocks {
@@ -100,6 +101,7 @@ public class TBlocks {
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");
 	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02");
+	public static Block tardis_top_cc = register(new BlockTardisTop(TileEntityDoorCC::new), "tardis_top_cc");
 	
 	//Consoles
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01");

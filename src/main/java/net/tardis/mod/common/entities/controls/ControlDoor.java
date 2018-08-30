@@ -146,7 +146,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 						}
 					}
 					else if(e != this){
-						e.setPosition(pos.getX(), pos.getY(), pos.getZ());
+						e.setPosition(pos.getX() + 0.5 + e.width / 2, pos.getY(), pos.getZ() + 0.5 + e.width / 2);
 						e.changeDimension(tardis.dimension, new TardisTeleporter());
 					}
 				}

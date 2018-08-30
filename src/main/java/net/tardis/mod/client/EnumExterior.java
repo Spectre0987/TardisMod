@@ -4,7 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.IInteriorModel;
+import net.tardis.mod.client.models.ModelBlocks;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
 import net.tardis.mod.client.models.exteriors.ModelTardis01;
 import net.tardis.mod.client.models.exteriors.ModelTardis02;
@@ -22,7 +24,8 @@ public enum EnumExterior {
 
 	FIRST(new ModelTardis01(), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE, TBlocks.tardis_top),
 	SECOND(new ModelTardis02(), new ModelInteriorDoor02(), RendererTileDoor01.TEXTURE, TBlocks.tardis_top_01),
-	THIRD(new ModelTardis03(), new ModelInteriorDoor03(), RenderTileDoor03.TEXTURE, TBlocks.tardis_top_02);
+	THIRD(new ModelTardis03(), new ModelInteriorDoor03(), RenderTileDoor03.TEXTURE, TBlocks.tardis_top_02),
+	CC(new ModelBlocks(new ResourceLocation(Tardis.MODID + ":shells/tree.json")), new ModelInteriorDoor01(), new ResourceLocation(""), TBlocks.tardis_top_cc);
 	
 	public IExteriorModel model;
 	public IInteriorModel interiorModel;

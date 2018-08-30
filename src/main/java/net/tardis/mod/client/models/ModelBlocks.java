@@ -19,8 +19,9 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.tardis.mod.client.models.exteriors.IExteriorModel;
 
-public class ModelBlocks {
+public class ModelBlocks implements IExteriorModel{
 	
 	public ResourceLocation loc;
 	private HashMap<BlockPos, IBlockState> blocks = new HashMap<>();
@@ -80,6 +81,20 @@ public class ModelBlocks {
 		}
 		GlStateManager.popMatrix();
 		
+	}
+
+	public ResourceLocation getKey() {
+		return this.loc;
+	}
+	
+	@Override
+	public void renderClosed(float scale) {
+		this.render();
+	}
+
+	@Override
+	public void renderOpen(float scale) {
+		this.render();
 	}
 
 }

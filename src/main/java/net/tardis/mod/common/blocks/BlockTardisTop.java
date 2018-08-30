@@ -1,5 +1,7 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.function.Supplier;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -10,14 +12,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
@@ -25,8 +30,6 @@ import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-
-import java.util.function.Supplier;
 
 public class BlockTardisTop extends BlockTileBase {
 	
@@ -50,7 +53,7 @@ public class BlockTardisTop extends BlockTileBase {
 		if (!worldIn.isRemote) {
 			TileEntityDoor door = (TileEntityDoor) worldIn.getTileEntity(pos);
 			door.toggleLocked(playerIn);
-			WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+			WorldServer ws = worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 			TileEntity te = ws.getTileEntity(door.getConsolePos());
 			if (te != null && te instanceof TileEntityTardis) {
 				ItemStack held = playerIn.getHeldItem(hand);
@@ -146,7 +149,7 @@ public class BlockTardisTop extends BlockTileBase {
 
 	@Override
 	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
+		return BlockRenderLayer.SOLID;
 	}
 
 	@Override

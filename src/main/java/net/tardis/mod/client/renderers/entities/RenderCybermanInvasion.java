@@ -1,22 +1,21 @@
 package net.tardis.mod.client.renderers.entities;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.entity.ModelCybermanInvasion;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 
-public class RenderCybermanInvasion extends Render<EntityCybermanInvasion> {
+public class RenderCybermanInvasion extends RenderLiving<EntityCybermanInvasion> {
 
 	Minecraft mc;
-	public ModelCybermanInvasion model = new ModelCybermanInvasion();
+	public static ModelCybermanInvasion model = new ModelCybermanInvasion();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cyberman_invasion.png");
 	
 	public RenderCybermanInvasion(RenderManager manager) {
-		super(manager);
+		super(manager, model, 0.03F);
 		mc = Minecraft.getMinecraft();
 
 	}
@@ -27,15 +26,8 @@ public class RenderCybermanInvasion extends Render<EntityCybermanInvasion> {
 	}
 
 	@Override
-	public void doRender(EntityCybermanInvasion entity, double x, double y, double z, float entityYaw,float partialTicks) {
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y + 1.5, z);
-		mc.getTextureManager().bindTexture(TEXTURE);
-		GlStateManager.rotate(180,0,0,1);
-		GlStateManager.rotate(180,0,1,0);
-		model.render(entity, entity.limbSwing, entity.limbSwingAmount, entity.ticksExisted,entity.getRotationYawHead(), entity.rotationPitch, 0.0625F);
-		GlStateManager.popMatrix();
-		
+	protected void renderModel(EntityCybermanInvasion entitylivingbaseIn, float limbSwing, float limbSwingAmount,float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+		super.renderModel(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
 	}
 
 }

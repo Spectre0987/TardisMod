@@ -116,6 +116,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public double power = 0;
 	public List<Vec3d> coordList = new ArrayList<>();
 	private boolean isLocked = false;
+	//Is the TARDIS 'parked' in the Vortex?
+	private boolean parkingOrbit = false;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -174,9 +176,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (chunkLoadTick) {
 			chunkLoadTick = false;
 			if (!world.isRemote) {
+				WorldServer ws = world.getMinecraftServer().getWorld(this.dimension);
+				if(ws == null)return;
 				tardisTicket = ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisTicket, world.getChunkFromBlockCoords(this.getPos()).getPos());
-				WorldServer ws = world.getMinecraftServer().getWorld(this.dimension);
 				this.tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, ws, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisLocTicket, ws.getChunkFromBlockCoords(tardisLocation).getPos());
 			}
@@ -898,7 +901,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void enterTARDIS(Entity entity) {
 		if(!world.isRemote && this.getTardisState().equals(EnumTardisState.NORMAL)) {
 			EnumFacing facing = EnumFacing.NORTH;
-			BlockPos tp = this.getPos().south(4);
+			BlockPos tp = this.getPos();
 			ChunkPos cPos = world.getChunkFromBlockCoords(getPos()).getPos();
 			for(int x = -1; x < 1; ++x) {
 				for(int z = -1; z < 1; ++z) {
@@ -915,7 +918,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				player.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
 			}
 			else {
-				entity.setPosition(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5);
+				entity.setPosition(tp.getX() + 0.5 + entity.width, tp.getY(), tp.getZ() + 0.5 + entity.width);
 				entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
 			}
 		}

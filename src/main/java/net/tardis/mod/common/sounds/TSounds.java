@@ -30,6 +30,7 @@ public class TSounds {
     public static SoundEvent classicDoor = register("classic_door_open");
 	public static SoundEvent vmSound = register("vm_teleport");
 	public static SoundEvent flyLoop = register("fly_loop");
+	public static SoundEvent bessieHorn = register("bessie_horn");
 
     public static SoundEvent register(String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
