@@ -10,6 +10,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tardis.mod.common.sounds.TSounds;
 
 
 public class EntityBessie extends Entity{
@@ -155,5 +156,10 @@ public class EntityBessie extends Entity{
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		this.health -= amount;
 		return true;
+	}
+
+	public void playHorn() {
+		System.out.println("boi");
+		this.playSound(TSounds.bessieHorn, 1, 1);
 	}
 }

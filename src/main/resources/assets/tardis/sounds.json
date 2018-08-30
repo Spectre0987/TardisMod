@@ -93,6 +93,16 @@
             "stream": true
         }]
     },
+  "bessie_horn": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:bessie_horn",
+        "stream": true
+      }
+    ]
+  },
+	
     "stutter":{
         "category":"blocks",
         "sounds":[{
