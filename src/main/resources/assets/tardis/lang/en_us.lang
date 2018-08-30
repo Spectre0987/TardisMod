@@ -172,6 +172,7 @@ config.dim.usewhitelist=Should the Dimensions in the List be used as a whitelist
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
 config.entity.cybermen.spawnchance=Chance That A Cyberman Will Spawn (Per Chunk)
+config.entity.adipose.spawnchance=Chance That An Adipose Will Spawn (Per Chunk)
 
 config.misc=Misc
 config.misc.givekey=Should give Player A TARDIS key when they join the world?
@@ -200,8 +201,7 @@ entity.tardis_magnitude.name=Coordinate Magnitude Adjuster
 entity.tardis_phone.name=Communicator
 
 entity.dalek.name=Dalek
-
-
+entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Invasion Cyberman
 
 death.cyberman.generic=was converted

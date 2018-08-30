@@ -1,6 +1,5 @@
 package net.tardis.mod;
 
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
@@ -58,6 +57,8 @@ import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.helpers.EntityHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.swing.text.html.parser.Entity;
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
 public class Tardis {
@@ -192,6 +193,7 @@ public class Tardis {
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 			EntityHelper.registerNoSpawn(EntityDalek.class, "dalek");
 			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
+			EntityHelper.registerMob(EntityAdipose.class,"adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance);
 		}
 		proxy.preInit();
 		
