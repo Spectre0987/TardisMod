@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,15 +62,17 @@ public class ItemMarker extends ItemBase {
 					jw.beginObject();
 					
 					for(BlockPos pos : BlockPos.getAllInBox(fp, ep)) {
-						jw.name("blocks");
-						jw.beginObject();
-						
-						jw.name("X").value(fp.getX() - pos.getX());
-						jw.name("Y").value(fp.getY() - pos.getY());
-						jw.name("Z").value(fp.getZ() - pos.getZ());
-						jw.name("Block").value(worldIn.getBlockState(pos).getBlock().getRegistryName().toString());
-						jw.name("Meta").value(worldIn.getBlockState(pos).getBlock().getMetaFromState(worldIn.getBlockState(pos)));
-						jw.endObject();
+						if(worldIn.getBlockState(pos).getMaterial() != Material.AIR) {
+							jw.name("blocks");
+							jw.beginObject();
+							
+							jw.name("X").value(fp.getX() - pos.getX());
+							jw.name("Y").value(fp.getY() - pos.getY());
+							jw.name("Z").value(fp.getZ() - pos.getZ());
+							jw.name("Block").value(worldIn.getBlockState(pos).getBlock().getRegistryName().toString());
+							jw.name("Meta").value(worldIn.getBlockState(pos).getBlock().getMetaFromState(worldIn.getBlockState(pos)));
+							jw.endObject();
+						}
 					}
 					
 					jw.endObject();
