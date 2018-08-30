@@ -28,6 +28,7 @@ public class TStrings {
         public static final String LCORE = "lucraftcore";
 		public static final String OPTIFINE = "optifine";
 		public static final String DIM_DOORS = "dimdoors";
+		public static final String ALBEDO = "albedo";
 	}
 	
 	public static class EVENT{
