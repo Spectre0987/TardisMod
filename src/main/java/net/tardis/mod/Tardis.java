@@ -66,7 +66,7 @@ import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
-import net.tardis.mod.common.entities.vehicles.EntityBike;
+import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolARS;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
@@ -108,6 +108,7 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
@@ -197,7 +198,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
 		EntityHelper.registerNoSpawn(EntityHellbentCorridor.class, "hellbent_corridor");
 		EntityHelper.registerNoSpawn(EntityHellbentDoor.class, "hellbent_door");
-		EntityHelper.registerNoSpawn(EntityBike.class, "bike");
+		EntityHelper.registerNoSpawn(EntityBessie.class, "bessie");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -222,6 +223,7 @@ public class Tardis {
 		//Exteriors
 		registerTileEntity(TileEntityDoor01.class, "TileEntityDoor01");
 		registerTileEntity(TileEntityDoor03.class, "TileEntityDoor03");
+		registerTileEntity(TileEntityDoorCC.class, "TileEntityDoorCC");
 		
 		//Interiors
 		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");
