@@ -37,6 +37,7 @@ public class RenderHelper {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if(worldBOTI == null || worldBOTI.getDimension() != dim) worldBOTI = new WorldBoti(dim, Minecraft.getMinecraft().world, te.getWorldShell());
 			
 			Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
@@ -60,6 +61,9 @@ public class RenderHelper {
 =======
 			if(fb == null || fb.framebufferWidth != Minecraft.getMinecraft().displayWidth) fb =  new Framebuffer(width, height, true);
 >>>>>>> parent of ac84b76... Worked on "The thing"
+=======
+			if(fb == null) fb =  new Framebuffer(width, height, true);
+>>>>>>> parent of 1d96a2b... Fixed "That Thing" Not updating when screen width changes
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
@@ -88,6 +92,7 @@ public class RenderHelper {
 				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
 				fb.bindFramebuffer(true);
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of 205cc5f... Made BOTI render the sky
 				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 =======
@@ -95,6 +100,10 @@ public class RenderHelper {
 =======
 >>>>>>> parent of 9325134... That Which Shall Not Be Named
 				GlStateManager.pushMatrix();
+=======
+				GlStateManager.pushMatrix();
+				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+>>>>>>> parent of 1d96a2b... Fixed "That Thing" Not updating when screen width changes
 				GlStateManager.rotate(180,0,1,0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
