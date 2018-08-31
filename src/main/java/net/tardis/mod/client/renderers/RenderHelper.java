@@ -32,10 +32,13 @@ public class RenderHelper {
 		if(ClientProxy.getRenderBOTI()) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 			int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
-			if(fb == null || fb.framebufferWidth != width) fb =  new Framebuffer(width, height, true);
 			if(worldBOTI == null || worldBOTI.getDimension() != dim) worldBOTI = new WorldBoti(dim, Minecraft.getMinecraft().world, te.getWorldShell());
-			GlStateManager.pushMatrix();
+			
+			Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
+			if(fb == null)fb = new Framebuffer(width, height, false);
 			if(!fb.isStencilEnabled()) fb.enableStencil();
+			
+			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
 			GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xFF);
@@ -54,8 +57,6 @@ public class RenderHelper {
 			try {
 				WorldClient oldWorld = Minecraft.getMinecraft().world;
 				Minecraft.getMinecraft().world = worldBOTI;
-				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
-				fb.bindFramebuffer(true);
 				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 				GlStateManager.pushMatrix();
 				GlStateManager.rotate(180, 0, 1, 0);
@@ -70,9 +71,6 @@ public class RenderHelper {
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
 				
-				old.bindFramebuffer(true);
-				
-				fb.deleteFramebuffer();
 				
 				Minecraft.getMinecraft().world = oldWorld;
 			}
@@ -82,13 +80,13 @@ public class RenderHelper {
 
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			
-			// Draw portal stencils so portals wont be drawn over
-			GL11.glColorMask(false, false, false, false);
-			drawOutline(size);
-			
 			//Set things back
 			GL11.glColorMask(true, true, true, true);
 		    GlStateManager.popMatrix();
+		    
+		    old.bindFramebuffer(true);
+			
+			fb.deleteFramebuffer();
 		}
 		else {
 			RenderHelper.drawOutline(size);

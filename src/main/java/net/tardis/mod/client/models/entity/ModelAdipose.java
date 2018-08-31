@@ -1,10 +1,12 @@
 package net.tardis.mod.client.models.entity;
 
-import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
-public class ModelAdipose extends ModelBase
+public class ModelAdipose extends ModelBiped
 {
     //fields
     ModelRenderer LeftEye;
@@ -135,10 +137,16 @@ public class ModelAdipose extends ModelBase
         setRotation(RightHeel, 0F, 0.3490659F, 0F);
     }
 
+    @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
-        super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        
+        GlStateManager.pushMatrix();
+        GlStateManager.rotate((float)MathHelper.clamp(Math.toDegrees(this.bipedLeftLeg.rotateAngleX), -5, 5), 1, 0, 0);
+        LeftFoot.render(f5);
+        LeftHeel.render(f5);
+        GlStateManager.popMatrix();
         LeftEye.render(f5);
         Mouth1.render(f5);
         RightHand.render(f5);
@@ -153,8 +161,6 @@ public class ModelAdipose extends ModelBase
         Body6.render(f5);
         LeftHand.render(f5);
         RightFoot.render(f5);
-        LeftFoot.render(f5);
-        LeftHeel.render(f5);
         RightHeel.render(f5);
     }
 
