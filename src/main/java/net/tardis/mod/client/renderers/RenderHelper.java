@@ -36,6 +36,7 @@ public class RenderHelper {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if(worldBOTI == null || worldBOTI.getDimension() != dim) worldBOTI = new WorldBoti(dim, Minecraft.getMinecraft().world, te.getWorldShell());
 			
 			Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
@@ -56,6 +57,9 @@ public class RenderHelper {
 =======
 			if(fb == null || fb.framebufferWidth != width) fb =  new Framebuffer(width, height, true);
 >>>>>>> parent of 205cc5f... Made BOTI render the sky
+=======
+			if(fb == null || fb.framebufferWidth != Minecraft.getMinecraft().displayWidth) fb =  new Framebuffer(width, height, true);
+>>>>>>> parent of ac84b76... Worked on "The thing"
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer

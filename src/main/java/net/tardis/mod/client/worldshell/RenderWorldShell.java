@@ -36,7 +36,11 @@ public class RenderWorldShell {
 			
 			GlStateManager.pushMatrix();
 			worldBoti.setShell(container.getWorldShell());
+<<<<<<< HEAD
 			GlStateManager.depthFunc(GL11.GL_ALWAYS);
+=======
+			//GlStateManager.depthFunc(GL11.GL_ALWAYS);
+>>>>>>> parent of ac84b76... Worked on "The thing"
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
