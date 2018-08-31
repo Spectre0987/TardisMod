@@ -36,7 +36,7 @@ public class RenderWorldShell {
 			
 			GlStateManager.pushMatrix();
 			worldBoti.setShell(container.getWorldShell());
-			//GlStateManager.depthFunc(GL11.GL_ALWAYS);
+			GlStateManager.depthFunc(GL11.GL_ALWAYS);
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
