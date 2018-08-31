@@ -46,20 +46,20 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 				EnumFacing facing = state.getValue(BlockTardisTop.FACING);
 				switch(facing) {
 				case EAST:{
-					GlStateManager.translate(0, 0, 1);
-					GlStateManager.rotate(90,0,1,0);
-				}
+						GlStateManager.translate(0, 0, 1);
+						GlStateManager.rotate(90,0,1,0);
+					}
 					case SOUTH: {
-					GlStateManager.translate(0, 0, 1);
-					GlStateManager.rotate(90,0,1, 0);
+						GlStateManager.translate(0, 0, 1);
+						GlStateManager.rotate(90,0,1, 0);
 					}
 					case WEST: {
-					GlStateManager.translate(0, 0, 1);
-					GlStateManager.rotate(90,0,1,0);
+						GlStateManager.translate(0, 0, 1);
+						GlStateManager.rotate(90,0,1,0);
 					}
 					default: {
-					GlStateManager.translate(0, -1, 0.5);
-					GlStateManager.rotate(0,0,0,0);
+						GlStateManager.translate(0, -1, 0.5);
+						GlStateManager.rotate(0,0,0,0);
 					}
 				}
 			}
@@ -67,7 +67,6 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 		if(open) {
 			RenderHelper.renderPortal(renderShell, te, partialTicks);
 		}
-
 		GlStateManager.popMatrix();
 	    //RenderDoor
 	    {

@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,59 +13,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
-import net.tardis.mod.proxy.ClientProxy;
-import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 	
-<<<<<<< HEAD
-=======
-	static Framebuffer fb = null;
->>>>>>> parent of 205cc5f... Made BOTI render the sky
-	
+
 	public RenderHelper() {
 	}
 	
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size) {
-		if(ClientProxy.getRenderBOTI()) {
+		/*if(ClientProxy.getRenderBOTI()) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
-<<<<<<< HEAD
-			int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if(worldBOTI == null || worldBOTI.getDimension() != dim) worldBOTI = new WorldBoti(dim, Minecraft.getMinecraft().world, te.getWorldShell());
-			
-			Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
-			if(fb == null)fb = new Framebuffer(width, height, false);
-			if(!fb.isStencilEnabled()) fb.enableStencil();
-			
-=======
-			if(fb == null || fb.framebufferWidth != width) fb =  new Framebuffer(width, height, true);
->>>>>>> parent of 205cc5f... Made BOTI render the sky
-=======
-			if(fb == null || fb.framebufferWidth != Minecraft.getMinecraft().displayWidth) fb =  new Framebuffer(width, height, true);
->>>>>>> parent of ac84b76... Worked on "The thing"
-=======
-			if(fb == null) fb =  new Framebuffer(width, height, true);
->>>>>>> parent of 1d96a2b... Fixed "That Thing" Not updating when screen width changes
-=======
->>>>>>> parent of 9325134... That Which Shall Not Be Named
-=======
-			if(fb == null || fb.framebufferWidth != width) fb =  new Framebuffer(width, height, true);
->>>>>>> parent of 205cc5f... Made BOTI render the sky
-=======
-			if(fb == null || fb.framebufferWidth != Minecraft.getMinecraft().displayWidth) fb =  new Framebuffer(width, height, true);
->>>>>>> parent of ac84b76... Worked on "The thing"
-=======
-			if(fb == null) fb =  new Framebuffer(width, height, true);
->>>>>>> parent of 1d96a2b... Fixed "That Thing" Not updating when screen width changes
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
@@ -81,64 +41,29 @@ public class RenderHelper {
 			// Draw scene from portal view
 			
 			try {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-				WorldClient oldWorld = Minecraft.getMinecraft().world;
-				Minecraft.getMinecraft().world = worldBOTI;
-=======
-=======
->>>>>>> parent of 205cc5f... Made BOTI render the sky
-				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
-				fb.bindFramebuffer(true);
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 205cc5f... Made BOTI render the sky
-				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-=======
->>>>>>> parent of 1d96a2b... Fixed "That Thing" Not updating when screen width changes
-=======
->>>>>>> parent of 9325134... That Which Shall Not Be Named
 				GlStateManager.pushMatrix();
-=======
-				GlStateManager.pushMatrix();
-				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
->>>>>>> parent of 1d96a2b... Fixed "That Thing" Not updating when screen width changes
 				GlStateManager.rotate(180,0,1,0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
-<<<<<<< HEAD
-				
-<<<<<<< HEAD
-=======
-				old.bindFramebuffer(true);
-				fb.deleteFramebuffer();
->>>>>>> parent of 1d96a2b... Fixed "That Thing" Not updating when screen width changes
 				
 			}
 			catch(Exception e) {
 				e.printStackTrace();
-=======
->>>>>>> parent of 9325134... That Which Shall Not Be Named
 			}
-			catch(Exception e) {}
 
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			
 			//Set things back
 			GL11.glColorMask(true, true, true, true);
 		    GlStateManager.popMatrix();
-		    
-		    old.bindFramebuffer(true);
-			
-			fb.deleteFramebuffer();
 		}
 		else {
 			RenderHelper.drawOutline(size);
-		}
+		}*/
+		RenderHelper.drawOutline(size);
 	}
 	
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks) {
