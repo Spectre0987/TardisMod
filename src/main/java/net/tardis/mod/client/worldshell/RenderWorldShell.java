@@ -26,13 +26,9 @@ public class RenderWorldShell {
 	}
 	
 	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		if(worldBoti == null) worldBoti = new WorldBoti(0, Minecraft.getMinecraft().world, entity.getWorldShell());
-		this.doRender(entity, x, y, z, entityYaw, partialTicks, worldBoti);
-	}
-	
-	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks, WorldBoti worldBoti) {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		//Moving this will crash
+		if(worldBoti == null)worldBoti = new WorldBoti(0, Minecraft.getMinecraft().world, new WorldShell(BlockPos.ORIGIN));
 		if (entity instanceof IContainsWorldShell) {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 
@@ -62,7 +58,7 @@ public class RenderWorldShell {
 			catch(Exception e) {}
 
 			Tessellator.getInstance().draw();
-			//GlStateManager.depthFunc(GL11.GL_LEQUAL);
+			GlStateManager.depthFunc(GL11.GL_LEQUAL);
 	        GlStateManager.enableNormalize();
 	        GlStateManager.enableLighting();
 			for (TileEntity t : container.getWorldShell().getTESRs()) {

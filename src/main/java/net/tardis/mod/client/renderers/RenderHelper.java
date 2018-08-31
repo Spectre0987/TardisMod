@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -17,27 +16,30 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
-import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.proxy.ClientProxy;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 	
 	static Framebuffer fb = null;
-	static WorldBoti worldBOTI = null;
 	
-	public RenderHelper() {}
+	public RenderHelper() {
+	}
 	
-	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size, int dim) {
+	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size) {
 		if(ClientProxy.getRenderBOTI()) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 			int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
+<<<<<<< HEAD
 			if(worldBOTI == null || worldBOTI.getDimension() != dim) worldBOTI = new WorldBoti(dim, Minecraft.getMinecraft().world, te.getWorldShell());
 			
 			Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
 			if(fb == null)fb = new Framebuffer(width, height, false);
 			if(!fb.isStencilEnabled()) fb.enableStencil();
 			
+=======
+			if(fb == null || fb.framebufferWidth != width) fb =  new Framebuffer(width, height, true);
+>>>>>>> parent of 205cc5f... Made BOTI render the sky
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
@@ -55,24 +57,23 @@ public class RenderHelper {
 			// Draw scene from portal view
 			
 			try {
+<<<<<<< HEAD
 				WorldClient oldWorld = Minecraft.getMinecraft().world;
 				Minecraft.getMinecraft().world = worldBOTI;
+=======
+				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
+				fb.bindFramebuffer(true);
+>>>>>>> parent of 205cc5f... Made BOTI render the sky
 				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 				GlStateManager.pushMatrix();
 				GlStateManager.rotate(180, 0, 1, 0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
-				
-				GlStateManager.pushMatrix();
-				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, 0);
-				GlStateManager.popMatrix();
-				
-				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, worldBOTI);
+				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
 				
 				
-				Minecraft.getMinecraft().world = oldWorld;
 			}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -91,12 +92,8 @@ public class RenderHelper {
 		else {
 			RenderHelper.drawOutline(size);
 		}
-		
 	}
 	
-	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size) {
-		RenderHelper.renderPortal(renderShell, te, partialTicks, rotation, offset, size, 0);
-	}
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks) {
 		RenderHelper.renderPortal(renderShell, te, partialTicks, 0F, null, null);
 	}
