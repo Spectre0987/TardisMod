@@ -19,6 +19,10 @@ import javax.annotation.Nullable;
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 	
+<<<<<<< HEAD
+=======
+	static Framebuffer fb = null;
+>>>>>>> parent of 205cc5f... Made BOTI render the sky
 	
 	public RenderHelper() {
 	}
@@ -28,6 +32,7 @@ public class RenderHelper {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 <<<<<<< HEAD
 			int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -48,6 +53,9 @@ public class RenderHelper {
 >>>>>>> parent of 1d96a2b... Fixed "That Thing" Not updating when screen width changes
 =======
 >>>>>>> parent of 9325134... That Which Shall Not Be Named
+=======
+			if(fb == null || fb.framebufferWidth != width) fb =  new Framebuffer(width, height, true);
+>>>>>>> parent of 205cc5f... Made BOTI render the sky
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			// Always write to stencil buffer
@@ -67,9 +75,12 @@ public class RenderHelper {
 			try {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				WorldClient oldWorld = Minecraft.getMinecraft().world;
 				Minecraft.getMinecraft().world = worldBOTI;
 =======
+=======
+>>>>>>> parent of 205cc5f... Made BOTI render the sky
 				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
 				fb.bindFramebuffer(true);
 <<<<<<< HEAD
