@@ -3,6 +3,8 @@ package net.tardis.mod.common.entities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -128,5 +130,13 @@ public class EntityCyberman extends EntityMob implements IDontSufficate{
 			}
 		}
 		
+	}
+
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if(source.getTrueSource() instanceof EntityPlayer && ((EntityPlayer)source.getTrueSource()).getHeldItemMainhand().getItem() == Items.GOLDEN_SWORD) {
+			amount *= 2;
+		}
+		return super.attackEntityFrom(source, amount);
 	}
 }
