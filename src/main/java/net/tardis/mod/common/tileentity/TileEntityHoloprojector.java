@@ -82,4 +82,16 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 		this.worldShell = worldShell;
 	}
 
+	@Override
+	public int getDimnesion() {
+		TileEntityTardis tardis = null;
+		for(TileEntity te : world.getChunkFromBlockCoords(getPos()).getTileEntityMap().values()) {
+			if(te != null && te instanceof TileEntityTardis) {
+				tardis = (TileEntityTardis)te;
+				break;
+			}
+		}
+		return tardis == null ? 0 : tardis.dimension;
+	}
+
 }

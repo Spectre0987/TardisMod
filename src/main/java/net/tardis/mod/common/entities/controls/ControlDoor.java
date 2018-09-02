@@ -233,5 +233,10 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setBoolean("open", this.dataManager.get(IS_OPEN));
 	}
+
+	@Override
+	public int getDimnesion() {
+		return this.getConsolePos().equals(BlockPos.ORIGIN) ? 0 : ((TileEntityTardis)world.getTileEntity(getConsolePos())).dimension;
+	}
 	
 }

@@ -409,4 +409,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public boolean shouldRenderInPass(int pass) {
 		return true;
 	}
+
+	@Override
+	public int getDimnesion() {
+		return TDimensions.TARDIS_ID;
+	}
 }

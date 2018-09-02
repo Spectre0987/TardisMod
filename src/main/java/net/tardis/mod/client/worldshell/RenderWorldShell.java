@@ -1,5 +1,7 @@
 package net.tardis.mod.client.worldshell;
 
+import javax.annotation.Nullable;
+
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -18,17 +20,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 public class RenderWorldShell {
-
-	WorldBoti worldBoti;
 	
-	public RenderWorldShell() {
-		
-	}
+	public RenderWorldShell() {}
 	
-	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks, @Nullable WorldBoti worldBoti) {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		//Moving this will crash
-		if(worldBoti == null)worldBoti = new WorldBoti(0, Minecraft.getMinecraft().world, new WorldShell(BlockPos.ORIGIN));
+		if(worldBoti == null)worldBoti = new WorldBoti(entity.getDimnesion(), Minecraft.getMinecraft().world, entity.getWorldShell());
 		if (entity instanceof IContainsWorldShell) {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 
@@ -41,7 +39,7 @@ public class RenderWorldShell {
 
 			BlockPos offset = container.getWorldShell().getOffset();
 			GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());
-			
+	        
 			try {
 				if (container.getWorldShell().bufferstate == null || container.getWorldShell().updateRequired) {
 					for (BlockPos bp : container.getWorldShell().blockMap.keySet()) {

@@ -11,10 +11,12 @@ import net.minecraft.world.WorldSettings;
 public class WorldBoti extends WorldClient {
 
 	private WorldShell shell;
+	public int dimension = 0;
 	
 	public WorldBoti(int dimension, WorldClient wc, WorldShell ws) {
 		super(Minecraft.getMinecraft().getConnection(), new WorldSettings(wc.getWorldInfo()), dimension, wc.getDifficulty(), wc.profiler);
 		shell = ws;
+		this.dimension = dimension;
 	}
 
 	@Override

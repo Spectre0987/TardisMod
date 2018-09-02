@@ -8,4 +8,9 @@ public interface IContainsWorldShell {
 	
 	void setWorldShell(WorldShell worldShell);
 	
+	/**
+	 * Gets the dimension for the sky renderers
+	 */
+	int getDimnesion();
+	
 }

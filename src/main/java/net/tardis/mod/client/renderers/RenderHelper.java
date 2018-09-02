@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -16,12 +17,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
+import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.proxy.ClientProxy;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 	
 	static Framebuffer fb;
+	static WorldBoti wBoti;
 	
 	public RenderHelper() {}
 	
@@ -30,6 +33,7 @@ public class RenderHelper {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
+			
 			// Always write to stencil buffer
 			GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xFF);
 			GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_REPLACE);
@@ -47,6 +51,9 @@ public class RenderHelper {
 			// Draw scene from portal view
 			
 			try {
+				if(wBoti == null || wBoti.dimension != te.getDimnesion()) wBoti = new WorldBoti(te.getDimnesion(), Minecraft.getMinecraft().world, te.getWorldShell());
+				WorldClient oldW = Minecraft.getMinecraft().world;
+				Minecraft.getMinecraft().world = wBoti;
 				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
 				int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
 				if(fb == null) fb = new Framebuffer(width, height, true);
@@ -55,10 +62,12 @@ public class RenderHelper {
 				GlStateManager.rotate(180,0,1,0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
-				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks);
+				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
+				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
 				
+				Minecraft.getMinecraft().world = oldW;
 				old.bindFramebuffer(true);
 				
 				fb.deleteFramebuffer();
@@ -71,10 +80,12 @@ public class RenderHelper {
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			
 			GL11.glColorMask(false, false, false, false);
-			RenderHelper.drawOutline(size);
+			GlStateManager.depthMask(false);
+			drawOutline(size);
 			
 			//Set things back
 			GL11.glColorMask(true, true, true, true);
+			GlStateManager.depthMask(true);
 		    GlStateManager.popMatrix();
 		}
 		else if(MinecraftForgeClient.getRenderPass() == 1){
