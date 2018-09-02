@@ -45,7 +45,7 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setBoolean("open", open);
-		compound.setString("type", doorType.toString().toLowerCase());
+		//compound.setString("type", doorType.toString().toLowerCase());
 		return compound;
 	}
 
@@ -57,6 +57,8 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 		if(openCooldown == 0) {
 			openCooldown = 20;
 			this.open = open;
+	        world.setBlockState(pos, this.getWorld().getBlockState(pos), 10);
+	        world.markBlockRangeForRenderUpdate(pos, pos);
 			this.markDirty();
 		}
 	}
