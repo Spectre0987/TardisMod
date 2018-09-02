@@ -1,98 +1,122 @@
 {
-    "takeoff":{
-        "category":"block",
-        "subtitle":"tardis.subtitle.vworp",
-        "sounds":[{
-            "name":"tardis:takeoff",
-            "stream":true
-        }]
-    },
-    "loop":{
-        "category":"block",
-        "subtitle":"tardis.subtitle.flying",
-        "sounds":[{
-            "name":"tardis:loop",
-            "stream":true
-        }]
-    },
-    "sonic":{
-        "category":"players",
-        "subtitle":"tardis.subtitle.sonic",
-        "sounds":[{
-            "name":"tardis:sonic",
-            "stream":true
-        }]
-    },
-    "dalek_ray":{
-        "category":"hostile",
-		"subtitle":"tardis.subtitle.dalek_ray",
-        "sounds":[{
-            "name":"tardis:dalek_ray",
-            "stream":true
-        }]
-    },
-    "dalek":{
-        "category":"hostile",
-		"subtitle":"tardis.subtitle.dalek",
-        "sounds":[{
-            "name":"tardis:dalek",
-            "stream":true
-        }]
-    },
-    "force_field":{
-        "category":"players",
-		"subtitle":"tardis.subtitle.force_field",
-        "sounds":[{
-            "name":"tardis:force_field",
-            "stream":true
-        }]
-    },
-    "locked":{
-        "category":"blocks",
-		"subtitle":"tardis.subtitle.locked",
-        "sounds":[{
-            "name":"tardis:locked",
-            "stream":true
-        }]
-    },
-    "door_open":{
-        "category":"blocks",
-		"subtitle":"tardis.subtitle.door_open",
-        "sounds":[{
-            "name":"tardis:door_open",
-            "stream": true
-        }]
-    },
-    "door_closed":{
-        "category":"blocks",
-		"subtitle":"tardis.subtitle.door_closed",
-        "sounds":[{
-            "name":"tardis:door_close",
-            "stream": true
-        }]
-    },
-    "interior_hum_80":{
-        "category":"blocks",
-		"subtitle":"tardis.subtitle.interior_hum_80",
-        "sounds":[{
-            "name":"tardis:interior_hum_80",
-            "stream": true
-        }]
-    },
-    "cloister_bell":{
-        "category":"blocks",
-        "sounds":[{
-            "name":"tardis:cloister_bell",
-            "stream": true
-        }]
-    },
-    "drum_beat":{
-        "category":"blocks",
-        "sounds":[{
-            "name":"tardis:drum_beat",
-            "stream": true
-        }]
-    },
+  "takeoff": {
+    "category": "block",
+    "subtitle": "tardis.subtitle.vworp",
+    "sounds": [
+      {
+        "name": "tardis:takeoff",
+        "stream": true
+      }
+    ]
+  },
+  "loop": {
+    "category": "block",
+    "subtitle": "tardis.subtitle.flying",
+    "sounds": [
+      {
+        "name": "tardis:loop",
+        "stream": true
+      }
+    ]
+  },
+  "sonic": {
+    "category": "players",
+    "subtitle": "tardis.subtitle.sonic",
+    "sounds": [
+      {
+        "name": "tardis:sonic",
+        "stream": true
+      }
+    ]
+  },
+  "dalek_ray": {
+    "category": "hostile",
+    "subtitle": "tardis.subtitle.dalek_ray",
+    "sounds": [
+      {
+        "name": "tardis:dalek_ray",
+        "stream": true
+      }
+    ]
+  },
+  "dalek": {
+    "category": "hostile",
+    "subtitle": "tardis.subtitle.dalek",
+    "sounds": [
+      {
+        "name": "tardis:dalek",
+        "stream": true
+      }
+    ]
+  },
+  "force_field": {
+    "category": "players",
+    "subtitle": "tardis.subtitle.force_field",
+    "sounds": [
+      {
+        "name": "tardis:force_field",
+        "stream": true
+      }
+    ]
+  },
+  "locked": {
+    "category": "blocks",
+    "subtitle": "tardis.subtitle.locked",
+    "sounds": [
+      {
+        "name": "tardis:locked",
+        "stream": true
+      }
+    ]
+  },
+  "door_open": {
+    "category": "blocks",
+    "subtitle": "tardis.subtitle.door_open",
+    "sounds": [
+      {
+        "name": "tardis:door_open",
+        "stream": true
+      }
+    ]
+  },
+  "door_closed": {
+    "category": "blocks",
+    "subtitle": "tardis.subtitle.door_closed",
+    "sounds": [
+      {
+        "name": "tardis:door_close",
+        "stream": true
+      }
+    ]
+  },
+  "interior_hum_80": {
+    "category": "blocks",
+    "subtitle": "tardis.subtitle.interior_hum_80",
+    "sounds": [
+      {
+        "name": "tardis:interior_hum_80",
+        "stream": true
+      }
+    ]
+  },
+  "cloister_bell": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:cloister_bell",
+        "stream": true
+      }
+    ]
+  },
+  "drum_beat": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:drum_beat",
+        "stream": true
+      }
+    ]
+  },
   "bessie_horn": {
     "category": "blocks",
     "sounds": [
@@ -102,44 +126,68 @@
       }
     ]
   },
-	
-    "stutter":{
-        "category":"blocks",
-        "sounds":[{
-            "name":"tardis:stutter",
-            "stream":true
-        }]
-    },
-    "phone":{
-        "category":"blocks",
-        "sounds":[{
-            "name":"tardis:phone",
-            "stream": true
-        }]
-    },
-	
-	  "classic_door_open":{
-        "category":"blocks",
-        "sounds":[{
-            "name":"tardis:classic_door_open",
-            "stream": true
-        }]
-    },
+  "stutter": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:stutter",
+        "stream": true
+      }
+    ]
+  },
+  "phone": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:phone",
+        "stream": true
+      }
+    ]
+  },
+  "knocking": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:knocking",
+        "stream": true
+      }
+    ]
+  },
+  "fly_loop": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:fly_loop",
+        "stream": true
+      }
+    ]
+  },
+  "1963_food_machine": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:1963/food_machine",
+        "stream": true
+      }
+    ]
+  },
+  "1963_int_door": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:1963/int_door",
+        "stream": true
+      }
+    ]
+  },
+  "1963_interior_hum": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:1963/interior_hum",
+        "stream": true
+      }
+    ]
+  }
 
-    "knocking":{
-        "category":"blocks",
-        "sounds":[{
-            "name":"tardis:knocking",
-            "stream":true
-        }]
-    },
-    "fly_loop": {
-        "category": "blocks",
-        "sounds": [
-            {
-                "name": "tardis:fly_loop",
-                "stream": true
-            }
-        ]
-    }
 }

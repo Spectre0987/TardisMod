@@ -35,7 +35,7 @@ public class RenderHellbentDoor extends Render<EntityHellbentDoor> {
 		GlStateManager.translate(-0.5, 0, 0.5);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		door.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		
+
 		if(entity.isOpen()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(1, 0, -2 + Helper.precentToPixels(2));
@@ -44,7 +44,7 @@ public class RenderHellbentDoor extends Render<EntityHellbentDoor> {
 			GlStateManager.popMatrix();
 		}
 		else door.renderLeftDoor(0.0625F);
-		
+
 		if(entity.isOpen()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(0, 0, -1 + Helper.precentToPixels(2));

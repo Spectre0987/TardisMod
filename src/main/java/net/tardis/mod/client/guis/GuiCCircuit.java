@@ -1,11 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.awt.Color;
-import java.io.IOException;
-
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,6 +11,11 @@ import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.packets.MessageExteriorChange;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class GuiCCircuit extends GuiScreen {
 	
@@ -60,7 +59,7 @@ public class GuiCCircuit extends GuiScreen {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(res.getScaledWidth() / 2, res.getScaledHeight() / 2, -20);
 			GlStateManager.scale(25, 25, 25);
-			if(!Mouse.isButtonDown(0)) {
+            if (!isMouseDown()) {
 			GlStateManager.rotate(mc.world.getTotalWorldTime() % 360, 0, 1, 0); } else {
 			GlStateManager.translate(0, 0, -2);
 			GlStateManager.rotate(rotX, 1, 0, 0);
@@ -77,6 +76,12 @@ public class GuiCCircuit extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
+    private boolean isMouseDown() {
+        boolean mouse = Mouse.isButtonDown(0);
+        boolean bloodyButtons = buttonList.get(0).isMouseOver() || buttonList.get(1).isMouseOver() || buttonList.get(2).isMouseOver();
+        return mouse && !bloodyButtons;
+    }
+
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button == this.selectButton) {
@@ -85,7 +90,7 @@ public class GuiCCircuit extends GuiScreen {
 		}
 		else if(button == this.nextArrow) {
 			int i = index + 1;
-			if(i > this.exteriors.length - 1) {
+            if (i > exteriors.length - 1) {
 				index = 0;
 			}
 			else index++;
@@ -93,7 +98,7 @@ public class GuiCCircuit extends GuiScreen {
 		else {
 			int i = index - 1;
 			if(i < 0) {
-				index = this.exteriors.length - 1;
+                index = exteriors.length - 1;
 			}
 			else --index;
 		}

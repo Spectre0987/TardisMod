@@ -8,9 +8,12 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.config.TardisConfig;
 
@@ -54,7 +57,8 @@ public abstract class EntityControl extends Entity implements IControl {
 	
 	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-		this.preformAction(player);
+		preformAction(player);
+		world.playSound(null, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getUseSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
 		return true;
 	}
 	
@@ -153,7 +157,10 @@ public abstract class EntityControl extends Entity implements IControl {
 		if(TardisConfig.MISC.killControlsOnKillCommand) {
 			super.onKillCommand();
 		}
-		
 	}
 
+	@Override
+	public SoundEvent getUseSound() {
+		return TSounds.phone; //TODO roll with it until I add the console sounds lmao
+	}
 }
