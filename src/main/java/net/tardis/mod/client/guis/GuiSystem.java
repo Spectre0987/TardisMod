@@ -1,9 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,6 +13,10 @@ import net.tardis.mod.common.systems.TardisSystems.ISystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.packets.MessageDamageSystem;
 import net.tardis.mod.packets.MessageSpawnItem;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GuiSystem extends GuiScreen{
 	
@@ -65,5 +65,4 @@ public class GuiSystem extends GuiScreen{
 		}
 		super.actionPerformed(button);
 	}
-
 }
