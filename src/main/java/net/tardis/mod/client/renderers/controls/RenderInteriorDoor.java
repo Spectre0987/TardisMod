@@ -16,7 +16,6 @@ import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
-@SideOnly(Side.CLIENT)
 public class RenderInteriorDoor extends TileEntitySpecialRenderer<TileEntityInteriorDoor> {
 	
 	private WorldShell shell;
@@ -31,7 +30,6 @@ public class RenderInteriorDoor extends TileEntitySpecialRenderer<TileEntityInte
 		boolean open = te.getOpen();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y - 1, z + 0.5);
-		TileEntityInteriorDoor door = (TileEntityInteriorDoor)te;
 		TileEntityTardis tardis = null;
 		for(TileEntity liste : te.getWorld().getChunkFromBlockCoords(te.getPos()).getTileEntityMap().values()) {
 			if(liste instanceof TileEntityTardis) {
@@ -49,6 +47,7 @@ public class RenderInteriorDoor extends TileEntitySpecialRenderer<TileEntityInte
 		if(open) {
 			ext.interiorModel.renderOpen();
 			RenderHelper.renderPortal(render, te, partialTicks);
+			System.out.println("open");
 		} else {
 			GlStateManager.translate(0.25, 0, 0);
 			ext.interiorModel.renderClosed();
