@@ -4,9 +4,9 @@ import java.util.Random;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeDesert;
+import net.minecraftforge.common.BiomeDictionary;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCybermanTomb;

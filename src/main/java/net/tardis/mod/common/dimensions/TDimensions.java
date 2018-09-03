@@ -2,6 +2,7 @@ package net.tardis.mod.common.dimensions;
 
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -44,7 +45,7 @@ public class TDimensions {
 		DimensionManager.registerDimension(SPACE_ID, spaceType);
 		
 		TELOS_ID = DimensionManager.getNextFreeDimId();
-		telosType = DimensionType.register("telos", "telos", TELOS_ID, WorldProviderTelos.class, false);
+		telosType = DimensionType.register("telos", "_telos", TELOS_ID, WorldProviderTelos.class, false);
 		DimensionManager.registerDimension(TELOS_ID, telosType);
 	}
 	
@@ -54,6 +55,7 @@ public class TDimensions {
 		@SubscribeEvent
 		public static void register(RegistryEvent.Register<Biome> event) {
 			event.getRegistry().register(TDimensions.telosBiome);
+			BiomeDictionary.addTypes(TDimensions.telosBiome, BiomeDictionary.Type.SNOWY);
 		}
 	}
 }
