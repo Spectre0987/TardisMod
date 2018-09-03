@@ -4,17 +4,24 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.client.CPacketVehicleMove;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
-
 
 public class EntityBessie extends Entity{
 
+	public static final DataParameter<Integer> DAMAGE_TICKS = EntityDataManager.createKey(EntityBessie.class, DataSerializers.VARINT);
+	
 	public static int MAX_PASSENGERS = 3;
 	public float health = 40F;
 	
@@ -70,6 +77,15 @@ public class EntityBessie extends Entity{
 		if(!this.hasNoGravity() && !this.onGround) {
 			motionY -= 0.5D;
 		}
+		if(!world.isRemote) {
+			if(this.health <= 0.0F) {
+				InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(TItems.bessie));
+				this.setDead();
+			}
+			else if(this.dataManager.get(DAMAGE_TICKS) > 0) {
+				this.dataManager.set(DAMAGE_TICKS, this.getDataManager().get(DAMAGE_TICKS) - 1);
+			}
+		}
 	}
 
 	@Override
@@ -107,7 +123,9 @@ public class EntityBessie extends Entity{
 	}
 
 	@Override
-	protected void entityInit() {}
+	protected void entityInit() {
+		this.getDataManager().register(DAMAGE_TICKS, 0);
+	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
@@ -155,11 +173,11 @@ public class EntityBessie extends Entity{
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		this.health -= amount;
+		this.getDataManager().set(DAMAGE_TICKS, 20);
 		return true;
 	}
 
 	public void playHorn() {
-		System.out.println("boi");
 		this.playSound(TSounds.bessieHorn, 1, 1);
 	}
 }

@@ -29,8 +29,10 @@ public class RenderBessie extends Render<EntityBessie>{
 		GlStateManager.translate(x, y + 1.5, z);
 		GlStateManager.rotate(180, 1, 0, 0);
 		GlStateManager.rotate(entity.prevRotationYaw - ((entity.prevRotationYaw - entity.rotationYaw) * partialTicks), 0, 1, 0);
+		if(entity.getDataManager().get(EntityBessie.DAMAGE_TICKS) > 0) GlStateManager.color(1, 0.5F, 0.5F);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.color(1, 1, 1);
 		GlStateManager.popMatrix();
 	}
 
