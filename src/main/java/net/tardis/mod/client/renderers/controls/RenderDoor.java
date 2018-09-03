@@ -54,16 +54,16 @@ public class RenderDoor extends Render<ControlDoor> {
 				Vec3d offset = null;
 				EnumFacing facing = entity.getFacing();
 				if(facing == EnumFacing.NORTH) {
-					offset = new Vec3d(-1,1,-11);
+					offset = new Vec3d(-1, 1, -11);
 				}
 				else if(facing == EnumFacing.EAST){
-					offset = new Vec3d(11,1, -1);
+					offset = new Vec3d(10, 1, -1);
 				}
 				else if(facing == EnumFacing.SOUTH) {
-					offset = new Vec3d(0,1, 11);
+					offset = new Vec3d(0, 1, 10);
 				}
 				else if(facing == EnumFacing.WEST) {
-					offset = new Vec3d(-12, 1, 0);
+					offset = new Vec3d(-11, 1, 0);
 				}
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0.5);
