@@ -112,7 +112,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					}
 				}
 				else if(tardis.isLocked()) {
-					player.sendStatusMessage(new TextComponentTranslation(TStrings.DOUBLE_LOCKED), false);
+					player.sendStatusMessage(new TextComponentTranslation(TStrings.DOUBLE_LOCKED + true), false);
 				}
 			}
 		}
