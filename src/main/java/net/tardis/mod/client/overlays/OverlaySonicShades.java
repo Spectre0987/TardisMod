@@ -2,27 +2,22 @@ package net.tardis.mod.client.overlays;
 
 import java.awt.Color;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.util.helpers.Helper;
-import net.tardis.mod.util.helpers.RiftHelper;
 
 public class OverlaySonicShades implements IOverlay {
 
@@ -60,7 +55,7 @@ public class OverlaySonicShades implements IOverlay {
     public void pre(RenderGameOverlayEvent.Pre e, float partialTicks, ScaledResolution resolution) {
         if (Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != TItems.sonic_shades)
             return;
-            e.setCanceled(e.getType() == RenderGameOverlayEvent.ElementType.FOOD || e.getType() == RenderGameOverlayEvent.ElementType.HEALTH);
+            //e.setCanceled(e.getType() == RenderGameOverlayEvent.ElementType.FOOD || e.getType() == RenderGameOverlayEvent.ElementType.HEALTH);
     }
 
     @Override
@@ -80,6 +75,7 @@ public class OverlaySonicShades implements IOverlay {
             mc.getTextureManager().bindTexture(mc.player.getLocationSkin());
             GlStateManager.enableColorMaterial();
             RenderHelper.enableStandardItemLighting();
+            GlStateManager.color(1, 1, 1, 1);
             biped.bipedHeadwear.rotateAngleX = biped.bipedHead.rotateAngleX = 0.7f;
             biped.bipedHeadwear.rotateAngleY = biped.bipedHead.rotateAngleY = (float) (-Math.PI / 4);
             biped.bipedHeadwear.rotateAngleZ = biped.bipedHead.rotateAngleZ = -0.5f;
@@ -114,22 +110,10 @@ public class OverlaySonicShades implements IOverlay {
             mc.fontRenderer.drawStringWithShadow(direction, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(direction) / 2, mc.fontRenderer.FONT_HEIGHT / 2, Color.GREEN.getRGB());
             GlStateManager.popMatrix();
             
-            //Health
-            GlStateManager.pushMatrix();
-            BufferBuilder bb = Tessellator.getInstance().getBuffer();
-            bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-            mc.getTextureManager().bindTexture(new ResourceLocation(Tardis.MODID, "textures/gui/sonic_shades.png"));
-            float maxU = 0.2536F;
-            float width = (resolution.getScaledWidth() / 2) * (mc.player.getHealth() / mc.player.getMaxHealth());
-            float height = resolution.getScaledHeight() / 4;
-            bb.pos(0, 0, 0).tex(0, 0).endVertex();
-            bb.pos(0, height, 0).tex(0, 1).endVertex();
-            bb.pos(width, height, 0).tex(1, 1).endVertex();
-            bb.pos(width, 0, 0).tex(1, 0).endVertex();
-            Tessellator.getInstance().draw();
-            GlStateManager.popMatrix();
+           
             //Rift?
-           if(RiftHelper.isRift(mc.world.getChunkFromBlockCoords(mc.player.getPosition()).getPos(), mc.world)) {
+            NBTTagCompound tag = Helper.getStackTag(mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
+           if(tag.hasKey("rift") && tag.getBoolean("rift")) {
         	   String riftString = "Rift Detected!";
                mc.fontRenderer.drawStringWithShadow(riftString, resolution.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(riftString) / 2, resolution.getScaledHeight() - mc.fontRenderer.FONT_HEIGHT * 5, Color.GREEN.getRGB());
            }
