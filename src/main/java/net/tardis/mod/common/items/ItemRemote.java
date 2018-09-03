@@ -75,6 +75,7 @@ public class ItemRemote extends ItemBase {
 			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_TIME).getFormattedText() + " " +stack.getTagCompound().getInteger(NBT.TIME) / 20 + " " + new TextComponentTranslation(TStrings.SECONDS).getFormattedText());
 			tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_EPOS).getFormattedText() + " " + Helper.formatBlockPos(BlockPos.fromLong(stack.getTagCompound().getLong(NBT.POS))));
 		}
+		else tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_BIND).getFormattedText());
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

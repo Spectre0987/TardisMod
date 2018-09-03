@@ -17,7 +17,7 @@ public class TStrings {
 	public static final String TARDIS_DIMENSION = "tardis.dimension";
 	
 	public static final String SECONDS = "general.time.seconds";
-	public static final String DOUBLE_LOCKED = "door.tardis.locked";
+	public static final String DOUBLE_LOCKED = "door.tardis.locked.";
 	public static final String OPTIFINE_INSTALLED = "mods.tardis.compat.optifine";
 	
 	public static class ModIds {
@@ -40,6 +40,7 @@ public class TStrings {
 		public static final String REMOTE_FUEL = "tooltip.remote.fuel";
 		public static final String REMOTE_TIME = "tooltip.remote.time";
 		public static final String REMOTE_EPOS = "tooltip.remote.exteriorpos";
+		public static final String REMOTE_BIND = "tooltip.remote.bind";
 	}
 
 	public static class Commands{
