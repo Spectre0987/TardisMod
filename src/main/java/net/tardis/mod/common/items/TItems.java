@@ -1,5 +1,8 @@
 package net.tardis.mod.common.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -8,13 +11,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
+import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
-import net.tardis.mod.common.items.components.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.tardis.mod.common.items.components.ArtronCapacitor;
+import net.tardis.mod.common.items.components.DematerializationCircut;
+import net.tardis.mod.common.items.components.FluidLink;
+import net.tardis.mod.common.items.components.ItemComponent;
+import net.tardis.mod.common.items.components.ItemTVG;
 
 @Mod.EventBusSubscriber
 public class TItems {
@@ -70,6 +75,8 @@ public class TItems {
     public static Item sonic13th = null;
 	public static Item sonicBlaster = createItem(new ItemSonicBlaster(), "sonic_blaster");
 	
+	public static Item bessie = createItem(new ItemESpawn(EntityBessie::new), "bessie");
+	
 	// Componenets
 	public static Item fluid_link = null;
 	public static Item artron_capacitor = null;
@@ -111,20 +118,21 @@ public class TItems {
 		stattenheim_remote = createItem(new ItemRemote(), "stattenheim_remote");
 		time_vector_generator = createItem(new ItemTVG(), "time_vector_generator");
 		ruby = createItem(new ItemBase(), "ruby");
-		sonic_shades = createItem(new ItemHat(EnumClothes.HAT_SONIC_SHADES), "sonic_shades");
+		sonic_shades = createItem(new ItemSonicShades(EnumClothes.HAT_SONIC_SHADES), "sonic_shades");
 		biodampener = createItem(new ItemBase(), "biodampener");
 		mercuryBottle = createItem(new ItemBase(), "mercury_bottle");
 		crushedCinnabar = createItem(new ItemBase(), "cinnabar");
 		hellbent_corridor = createItem(new ItemHellbentCorridor(), "hellbent_corridor");
 		hellbent_door = createItem(new ItemHellbentDoor(), "hellbent_door");
 		
+		interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
+        marker = createItem(new ItemMarker(), "marker");
+        sonic13th = createItem(new ItemSonic(), "sonic_screwdriver_13");
+		
 		// TARDIS Components
 		fluid_link = createItem(new FluidLink(), "fluid_link");
 		artron_capacitor = createItem(new ArtronCapacitor(), "artron_capacitor");
 		demat_circut = createItem(new DematerializationCircut(), "demat_circut");
-        interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
-        marker = createItem(new ItemMarker(), "marker");
-        sonic13th = createItem(new ItemSonic(), "sonic_screwdriver_13");
 	}
 	
 	public static Item createItem(Item item, String name) {

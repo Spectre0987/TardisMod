@@ -43,11 +43,13 @@ item.tardis.marker.name=Marker
 item.tardis.interiordoor.name=Interior Door
 item.tardis.sonic_screwdriver_13.name=Thirteen's Sonic
 item.tardis.chameleon_circuit.name=Chameleon Circuit
+item.tardis.bessie.name=Bessie
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
 tooltip.remote.fuel=Artron Banks
 tooltip.remote.exteriorpos=TARDIS Exterior:
+tooltip.remote.bind=To bind, right click on a console.
 
 general.time.seconds=seconds
 
@@ -98,12 +100,13 @@ tile.tardis.telos_sand.name=Telos Sand
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!
 
+door.tardis.locked.true=This TARDIS is double locked!
+door.tardis.locked.false=Double lock lifted.
+
 death.attack.dalek=Killed by a Dalek Ray gun
 death.cyberman.ray=was deleted.
 
 damage.dalek=was exterminated
-
-door.tardis.locked=This TARDIS Is Double Locked!
 
 screw.recall=Recall Mode
 screw.lamp=Tinker Mode
@@ -179,6 +182,8 @@ config.misc.givekey=Should give Player A TARDIS key when they join the world?
 config.misc.maxrand=Maxium number of block the TARDIS should travel when using the randomizer
 config.misc.shake=Should the camera shake when taking off / landing?
 
+config.boti=Enable BOTI?
+
 entity.launch_lever.name=Time Rotor Handbrake
 entity.x_valve.name=Space Control - X
 entity.y_valve.name=Space Control - Y
@@ -235,9 +240,9 @@ command.no_player_found=No player found with this username
 command.tardis_travel=The TARDIS is coming
 command.tardis_deleted=TARDIS deleted
 
-commands.tardis.teleportin.usage=/tardistp
-commands.tardis.grow.usage=/tardisgrow
-commands.tardis.summon.usage=/summontardis <player>
-command.tardis.remove.usage=/tardisremove <player>
+commands.tardis.teleportin.usage=/tardis interior
+commands.tardis.grow.usage=/tardis grow
+commands.tardis.summon.usage=/summon tardis <player>
+command.tardis.remove.usage=/tardis remove <player>
 
 gui.tardis.travel=Travel
