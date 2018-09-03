@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -37,6 +38,8 @@ public class RenderWorldShell {
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
+			GlStateManager.color(1, 1, 1);
+			 
 			BlockPos offset = container.getWorldShell().getOffset();
 			GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());
 	        
@@ -59,6 +62,9 @@ public class RenderWorldShell {
 			GlStateManager.depthFunc(GL11.GL_LEQUAL);
 	        GlStateManager.enableNormalize();
 	        GlStateManager.enableLighting();
+	        
+	        RenderHelper.disableStandardItemLighting();
+	        GlStateManager.color(1, 1, 1);
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
 					try {
@@ -72,7 +78,12 @@ public class RenderWorldShell {
 				if(container.getWorldShell().getEntities() != null) {
 					for(NBTTagCompound stor : container.getWorldShell().getEntities()) {
 						Entity e = EntityList.createEntityFromNBT(stor, worldBoti);
-						if(e != null)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
+						if(e != null) {
+							GlStateManager.pushMatrix();
+							GlStateManager.rotate(e.rotationYaw, 0, 1, 0);
+							Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
+							GlStateManager.popMatrix();
+						}
 					}
 				}
 			}
@@ -101,6 +112,7 @@ public class RenderWorldShell {
 						GlStateManager.popMatrix();
 					} catch(Exception e) {}
 				}
+				RenderHelper.enableStandardItemLighting();
 			}
 			GlStateManager.popMatrix();
 		}

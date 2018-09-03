@@ -19,6 +19,9 @@ public class TardisConfig {
 	
 	@Config.LangKey("config.misc")
 	public static final Misc MISC = new Misc();
+	
+	@Config.LangKey("config.boti")
+	public static boolean boti = true;
 
 
 	public static class Dimensions {
@@ -69,6 +72,7 @@ public class TardisConfig {
 		
 		@Config.LangKey("config.misc.shake")
 		public boolean camShake = true;
+		
 	}
 
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)

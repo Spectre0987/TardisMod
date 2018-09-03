@@ -15,6 +15,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
@@ -32,6 +33,7 @@ public class RenderHelper {
 		if(ClientProxy.getRenderBOTI() && MinecraftForgeClient.getRenderPass() == 1) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 			GlStateManager.pushMatrix();
+			
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			
 			// Always write to stencil buffer
@@ -57,20 +59,23 @@ public class RenderHelper {
 				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
 				int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
 				if(fb == null) fb = new Framebuffer(width, height, true);
+				Minecraft.getMinecraft().world.setWorldTime(0L);
 				GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
 				GlStateManager.pushMatrix();
 				GlStateManager.rotate(180,0,1,0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
 				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
+				Minecraft.getMinecraft().renderGlobal.renderClouds(partialTicks, MinecraftForgeClient.getRenderPass(), te.getWorldShell().getOffset().getX(), te.getWorldShell().getOffset().getY(), te.getWorldShell().getOffset().getZ());
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
 				
-				Minecraft.getMinecraft().world = oldW;
-				old.bindFramebuffer(true);
-				
+				 old.bindFramebuffer(true);
+					
 				fb.deleteFramebuffer();
+				Minecraft.getMinecraft().world = oldW;
+				
 				
 			}
 			catch(Exception e) {
@@ -86,9 +91,11 @@ public class RenderHelper {
 			//Set things back
 			GL11.glColorMask(true, true, true, true);
 			GlStateManager.depthMask(true);
-		    GlStateManager.popMatrix();
+		   
+		   
+			GlStateManager.popMatrix();
 		}
-		else if(MinecraftForgeClient.getRenderPass() == 1){
+		else if(!ClientProxy.getRenderBOTI()){
 			RenderHelper.drawOutline(size);
 		}
 	}
@@ -110,12 +117,12 @@ public class RenderHelper {
 		GlStateManager.pushMatrix();
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
-		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
-		GlStateManager.color(0F, 0F, 0F, 1F);
-		buf.pos(0, 0, 0).endVertex();
-		buf.pos(0, size.y, 0).endVertex();
-		buf.pos(size.x, size.y, 0).endVertex();
-		buf.pos(size.x, 0, 0).endVertex();
+		Minecraft.getMinecraft().getTextureManager().bindTexture(RenderDoor.BLACK);
+		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+		buf.pos(0, 0, 0).tex(0, 0).endVertex();
+		buf.pos(0, size.y, 0).tex(0, 1).endVertex();
+		buf.pos(size.x, size.y, 0).tex(1, 1).endVertex();
+		buf.pos(size.x, 0, 0).tex(1, 0).endVertex();
 		tes.draw();
 		GlStateManager.popMatrix();
 	}

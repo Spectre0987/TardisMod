@@ -118,6 +118,7 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
+import net.tardis.mod.config.TardisConfig;
 
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientProxy extends ServerProxy {
@@ -200,7 +201,7 @@ public class ClientProxy extends ServerProxy {
 	}
 	
 	public static boolean getRenderBOTI() {
-		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled();
+		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.boti;
 	}
 
 	@Override
