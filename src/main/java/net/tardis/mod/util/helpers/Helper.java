@@ -232,4 +232,44 @@ public class Helper {
 	public static TileEntityTardis getTardis(TileEntity te) {
 		return te != null && te instanceof TileEntityTardis ? ((TileEntityTardis)te) : null;
 	}
+	
+		/**
+	 * Returns a BlockPos when TARDIS run out of fuel.
+	 *
+	 * @return BlockPos when TARDIS run out of fuel.
+	 */
+	public static BlockPos getFallPos(int totalTime, int remainingTime, BlockPos fromPos, BlockPos toPos, World world, EnumFacing facing){
+		BlockPos fallPos = new BlockPos(fromPos);
+		int xDist = getHowManyBlocksBeetweenTwoCoords(fromPos.getX(),toPos.getX());
+		int zDist = getHowManyBlocksBeetweenTwoCoords(fromPos.getZ(),toPos.getZ());
+		double percTravelled = (double)(totalTime-remainingTime)/(double)totalTime;
+		xDist = (int)Math.floor(xDist * percTravelled);
+		zDist = (int)Math.floor(zDist * percTravelled);
+		if ((fromPos.getX() < 0 && toPos.getX() < 0) || (toPos.getX() < 0)){
+			fallPos.add(-xDist,0,0);
+		}
+		else {
+			fallPos.add(xDist,0,0);
+		}
+		if ((fromPos.getZ() < 0 && toPos.getZ() < 0) || (toPos.getZ() < 0)){
+			fallPos.add(0,0,-zDist);
+		}
+		else {
+			fallPos.add(0,0,zDist);
+		}
+		return Helper.getSafeHigherPos(world,fallPos,facing);
+	}
+	public static int getHowManyBlocksBeetweenTwoCoords(int coord1, int coord2){
+		if ((coord1 < 0 && coord2 < 0) || (coord1 > 0 && coord2 > 0)){
+			return Math.abs(coord1 + coord2);
+		}
+		else if (coord1 < 0){
+			return Math.abs(coord1 - coord2);
+		}
+		else {
+			return Math.abs(coord2 - coord1);
+		}
+	}
+	
+	
 }
