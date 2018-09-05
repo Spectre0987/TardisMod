@@ -56,7 +56,7 @@ public class ControlPhone extends EntityControl{
 		if(!world.isRemote && TardisConfig.MISC.invasions) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			if(tardis != null) {
-				SystemAntenna sys = (SystemAntenna)tardis.getSystem(SystemAntenna.class);
+				SystemAntenna sys = tardis.getSystem(SystemAntenna.class);
 				if(sys != null && sys.getHealth() > 0.0F) {
 					if(tardis.currentEvent != EnumEvent.NONE) {
 						if(world.getTotalWorldTime() % 80 == 0) {

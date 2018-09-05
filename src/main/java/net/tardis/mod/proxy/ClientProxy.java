@@ -38,6 +38,7 @@ import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentMonito
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentPole;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentRoof;
 import net.tardis.mod.client.renderers.entities.RenderAdipose;
+import net.tardis.mod.client.renderers.entities.RenderCompanion;
 import net.tardis.mod.client.renderers.entities.RenderCyberRay;
 import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
 import net.tardis.mod.client.renderers.entities.RenderCybermanTomb;
@@ -68,6 +69,7 @@ import net.tardis.mod.client.renderers.tiles.RenderTileHolo;
 import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityAdipose;
+import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityCybermanTomb;
@@ -187,6 +189,7 @@ public class ClientProxy extends ServerProxy {
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, RenderDalek::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
 		
 	}
 	

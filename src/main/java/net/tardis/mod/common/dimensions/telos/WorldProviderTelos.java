@@ -1,5 +1,6 @@
 package net.tardis.mod.common.dimensions.telos;
 
+import net.minecraft.init.Biomes;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProvider;
@@ -32,7 +33,7 @@ public class WorldProviderTelos extends WorldProvider{
 
 	@Override
 	public BiomeProvider getBiomeProvider() {
-		return new BiomeProviderSingle(TDimensions.telosBiome);
+		return new BiomeProviderSingle(Biomes.DESERT);
 	}
 
 }

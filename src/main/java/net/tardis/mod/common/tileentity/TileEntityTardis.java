@@ -925,10 +925,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 	}
 	
-	public ISystem getSystem(Class<? extends ISystem> system) {
+	public <T> T getSystem(Class<T> system) {
 		for(ISystem sys : this.systems) {
 			if(sys.getClass() == system) {
-				return sys;
+				return (T)sys;
 			}
 		}
 		return null;

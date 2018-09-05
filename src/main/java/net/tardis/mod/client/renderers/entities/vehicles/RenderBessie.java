@@ -32,7 +32,7 @@ public class RenderBessie extends Render<EntityBessie>{
 		if(entity.getDataManager().get(EntityBessie.DAMAGE_TICKS) > 0) GlStateManager.color(1, 0.5F, 0.5F);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		GlStateManager.color(1, 1, 1);
+		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.popMatrix();
 	}
 

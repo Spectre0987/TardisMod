@@ -1,0 +1,237 @@
+{
+  "data": {
+    "size": [
+      4,
+      6,
+      7
+    ],
+    "position": [3, 1, -4],
+    "rotation":[180, 0, 0]
+  },
+  "structure": {
+    "blocks": {
+      "X": -2,
+      "Y": -5,
+      "Z": -3,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -5,
+      "Z": -3,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -4,
+      "Y": -5,
+      "Z": -3,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -4,
+      "Z": -4,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -1,
+      "Y": -5,
+      "Z": -4,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -2,
+      "Y": -5,
+      "Z": -4,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -5,
+      "Z": -4,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -4,
+      "Y": -5,
+      "Z": -4,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -6,
+      "Z": -4,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": 0,
+      "Z": -5,
+      "Block": "minecraft:log",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -1,
+      "Z": -5,
+      "Block": "minecraft:log",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -2,
+      "Z": -5,
+      "Block": "minecraft:log",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -3,
+      "Z": -5,
+      "Block": "minecraft:log",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -2,
+      "Y": -4,
+      "Z": -5,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -4,
+      "Z": -5,
+      "Block": "minecraft:log",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -4,
+      "Y": -4,
+      "Z": -5,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -1,
+      "Y": -5,
+      "Z": -5,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -2,
+      "Y": -5,
+      "Z": -5,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -5,
+      "Z": -5,
+      "Block": "minecraft:log",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -4,
+      "Y": -5,
+      "Z": -5,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -2,
+      "Y": -6,
+      "Z": -5,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -6,
+      "Z": -5,
+      "Block": "minecraft:leaves",
+      "Meta": 9
+    },
+    "blocks": {
+      "X": -4,
+      "Y": -6,
+      "Z": -5,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -4,
+      "Z": -6,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -1,
+      "Y": -5,
+      "Z": -6,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -2,
+      "Y": -5,
+      "Z": -6,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -5,
+      "Z": -6,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -4,
+      "Y": -5,
+      "Z": -6,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -6,
+      "Z": -6,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -2,
+      "Y": -5,
+      "Z": -7,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -3,
+      "Y": -5,
+      "Z": -7,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": -4,
+      "Y": -5,
+      "Z": -7,
+      "Block": "minecraft:leaves",
+      "Meta": 1
+    }
+  }
+}
