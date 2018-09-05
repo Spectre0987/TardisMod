@@ -115,6 +115,7 @@ import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
+import net.tardis.mod.packets.MessageCompanion;
 import net.tardis.mod.packets.MessageDamageSystem;
 import net.tardis.mod.packets.MessageDemat;
 import net.tardis.mod.packets.MessageDoorOpen;
@@ -245,6 +246,7 @@ public class Tardis {
 		NETWORK.registerMessage(MessageDamageSystem.Helper.class, MessageDamageSystem.class, 9, Side.SERVER);
 		NETWORK.registerMessage(MessageUpdateBessie.Handler.class, MessageUpdateBessie.class, 10, Side.SERVER);
 		NETWORK.registerMessage(MessageIInvSync.Handler.class, MessageIInvSync.class, 11, Side.SERVER);
+		NETWORK.registerMessage(MessageCompanion.Handler.class, MessageCompanion.class, 12, Side.SERVER);
 
 		ScrewdriverHandler.init();
 		

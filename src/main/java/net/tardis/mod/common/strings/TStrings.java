@@ -56,4 +56,8 @@ public class TStrings {
 		public static final String REMOVE_TARDIS = "tardis.command.removetardis";
 	}
 	
+	public static class Companions{
+		public static final String FOLLOW = "companion.tardis.follow.";
+	}
+	
 }

@@ -3,7 +3,6 @@ package net.tardis.mod.common.entities;
 import java.util.UUID;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -18,7 +17,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -29,9 +27,8 @@ import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.client.guis.GUICompanion;
 import net.tardis.mod.packets.MessageIInvSync;
-import net.tardis.mod.util.helpers.Helper;
 
 public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
 
@@ -175,7 +172,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	
 	@SideOnly(Side.CLIENT)
 	public void openGui() {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiChest(Minecraft.getMinecraft().player.inventory, this));
+		Minecraft.getMinecraft().displayGuiScreen(new GUICompanion(this.getEntityId()));
 	}
 
 	@Override
@@ -210,19 +207,12 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if(!world.isRemote) {
-			if(this.player == null) {
-				this.setOwner(player);
-				System.out.println(player);
-				return true;
-			}
-			else {
-				this.getDataManager().set(SITTING, !this.getDataManager().get(SITTING));
-			}
-		}
+		if(world.isRemote)
+			openGui();
+		else this.setOwner(player);
 		return true;
 	}
-
+	
 	@Override
 	public boolean getAlwaysRenderNameTag() {
 		return true;
@@ -282,16 +272,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 			super.updateTask();
 			EntityPlayer player = entity.getOwner();
 			if(player == null) return;
-			boolean tMove = false;
-			for(TileEntity te : entity.world.loadedTileEntityList) {
-				if(te instanceof TileEntityDoor && Helper.blockPosToVec3d(te.getPos()).distanceTo(entity.getOwner().getPositionVector()) < 5) {
-					entity.moveHelper.setMoveTo(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), speed);
-					tMove = true;
-				}
-			}
-			if(!tMove) {
-				if(player.getPositionVector().distanceTo(entity.getPositionVector()) > 5)entity.moveHelper.setMoveTo(player.posX, player.posY, player.posZ, speed);
-			}
+			if(player.getPositionVector().distanceTo(entity.getPositionVector()) > 5)entity.moveHelper.setMoveTo(player.posX, player.posY, player.posZ, speed);
 		}
 
 		@Override
@@ -299,6 +280,14 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 			return entity.getOwner() != null && entity.getOwner().getPositionVector().distanceTo(entity.getPositionVector()) > 5 && !entity.getDataManager().get(EntityCompanion.SITTING);
 		}
 		
+	}
+
+	public boolean getSit() {
+		return this.getDataManager().get(SITTING);
+	}
+	
+	public void setSit(boolean sit) {
+		this.getDataManager().set(SITTING, sit);
 	}
 
 }
