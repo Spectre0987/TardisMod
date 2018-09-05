@@ -654,13 +654,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(3D);
 	}
 	
-	public EntityControl getControl(Class clazz) {
+	public <T>T getControl(Class<T> clazz) {
 		if(this.controls == null || this.controls.length == 0) {
 			this.createControls();
 		}
 		for(EntityControl c : this.controls) {
 			if(c.getClass() == clazz)
-				return c;
+				return (T)c;
 		}
 		return null;
 	}

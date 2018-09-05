@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class EntityRayCyberman extends EntityThrowable{
 
-	public static final float SPEED = 1.5F;
+	public static final float SPEED = 1F;
 	
 	public EntityRayCyberman(World worldIn) {
 		super(worldIn);
@@ -19,7 +19,7 @@ public class EntityRayCyberman extends EntityThrowable{
 	}
 	public EntityRayCyberman(World worldIn, double x, double y, double z) {
 		super(worldIn, x, y, z);
-		this.shoot(x, y, z, SPEED, 0);
+		this.shoot(x, y, z, 1, 0);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class EntityRayCyberman extends EntityThrowable{
 				this.setDead();
 			}
 		}
-		else if(result.entityHit != null) {
+		else if(result.entityHit != null && result.entityHit != this.getThrower()) {
 			result.entityHit.attackEntityFrom(EntityCyberman.DamageSourceCyberGun.causeIndirectDamage(this, this.getThrower()), 2F);
 			this.setDead();
 		}
