@@ -58,6 +58,25 @@ public class ItemMarker extends ItemBase {
 					
 					jw.beginObject();
 					
+					jw.name("data");
+					jw.beginObject();
+					
+					jw.name("size");
+					jw.beginArray();
+					BlockPos sizePos = ep.subtract(fp);
+					jw.value(Math.abs(sizePos.getX()));
+					jw.value(Math.abs(sizePos.getY()));
+					jw.value(Math.abs(sizePos.getZ()));
+					jw.endArray();
+					
+					jw.name("position");
+					jw.beginArray();
+					jw.value(0);
+					jw.value(0);
+					jw.value(0);
+					jw.endArray();
+					jw.endObject();
+					
 					jw.name("structure");
 					jw.beginObject();
 					

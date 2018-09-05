@@ -15,8 +15,10 @@ import net.tardis.mod.util.helpers.Helper;
 
 public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> {
 
-	public static final ResourceLocation TREE = new ResourceLocation(Tardis.MODID, "shells/cactus.json");
 	public static ModelBlocks model = new ModelBlocks(new ResourceLocation(Tardis.MODID, "shells/tree.json"));
+	public static final ResourceLocation CACTUS = new ResourceLocation(Tardis.MODID, "shells/cactus.json");
+	public static final ResourceLocation TREE = new ResourceLocation(Tardis.MODID, "shells/tree.json");
+	
 	RenderWorldShell renderShell;
 	
 	public RenderTileDoorCC() {
@@ -27,7 +29,13 @@ public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> 
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y - 1, z);
-		model.render();
+		ResourceLocation rl = model.loc;
+		String name = te.getWorld().getBiome(te.getPos()).getBiomeName().toLowerCase();
+		if(name.contains("desert") && !model.loc.equals(CACTUS)) model = new ModelBlocks(CACTUS);
+		if(name.contains("taiga") && !model.loc.equals(TREE)) model = new ModelBlocks(TREE);
+		if(rl != null) {
+			model.render();
+		}
 		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		if(state.getBlock() instanceof BlockTardisTop) {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
@@ -35,9 +43,9 @@ public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> 
 			if(facing == EnumFacing.EAST || facing == EnumFacing.WEST) {
 				GlStateManager.rotate(180, 0, 1, 0);
 			}
-			if(facing == EnumFacing.WEST) GlStateManager.translate(-1, 0, 0);
-			if(facing == EnumFacing.EAST) GlStateManager.translate(0, 0, -1);
-			if(facing == EnumFacing.SOUTH) GlStateManager.translate(-1, 0, -1);
+			if(facing == EnumFacing.WEST) GlStateManager.translate(-1.01, 0, 0);
+			if(facing == EnumFacing.EAST) GlStateManager.translate(0, 0, -1.01);
+			if(facing == EnumFacing.SOUTH) GlStateManager.translate(-1.01, 0, -1.01);
 			if(!te.isLocked())RenderHelper.renderPortal(renderShell, te, partialTicks, 0);
 		}
 		GlStateManager.popMatrix();
