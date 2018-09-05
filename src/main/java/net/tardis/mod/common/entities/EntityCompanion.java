@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -28,13 +29,15 @@ import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.packets.MessageIInvSync;
+import net.tardis.mod.util.helpers.Helper;
 
 public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
+	public static final DataParameter<String> TYPE = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.STRING);
 	private NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
-	public EnumCompanionType type = EnumCompanionType.NONE;
 	UUID player;
 	
 	public EntityCompanion(World worldIn) {
@@ -43,7 +46,6 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		this.tasks.addTask(1, new EntityAIFollowOwner(this, 1D));
 		this.tasks.addTask(2, new EntityAIWander(this, 0.5D));
 		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityPlayer.class, 30));
-		if(type == EnumCompanionType.NONE) type = EnumCompanionType.values()[rand.nextInt(EnumCompanionType.values().length - 1)];
 	}
 
 	@Override
@@ -55,17 +57,12 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	protected void entityInit() {
 		super.entityInit();
 		this.getDataManager().register(SITTING, false);
+		this.getDataManager().register(TYPE, EnumCompanionType.values()[rand.nextInt(EnumCompanionType.values().length - 1)].name());
 	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		/*if(this.getOwner() != null && !this.dataManager.get(SITTING)) {
-			EntityPlayer own = this.getOwner();
-			if(this.getPositionVector().distanceTo(own.getPositionVector()) > 5) {
-				this.moveHelper.setMoveTo(own.posX, own.posY, own.posZ, 1D);
-			}
-		}*/
 	}
 
 	@Override
@@ -73,6 +70,14 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		return false;
 	}
 
+	public EnumCompanionType getType() {
+		return Enum.valueOf(EnumCompanionType.class, this.getDataManager().get(TYPE));
+	}
+	
+	public void setType(EnumCompanionType type) {
+		this.getDataManager().set(TYPE, type.name());
+	}
+	
 	@Override
 	public int getSizeInventory() {
 		return inv.size();
@@ -175,7 +180,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TextComponentString(this.type.formattedName);
+		return new TextComponentString(this.getType().getName());
 	}
 
 	@Override
@@ -186,7 +191,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		}
 		compound.setTag("inv", list);
 		compound.setString("owner", player != null ? player.toString() : "");
-		compound.setString("type", type.name());
+		compound.setString("type", this.getType().name());
 		return super.writeToNBT(compound);
 	}
 
@@ -200,7 +205,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 			++id;
 		}
 		if(!compound.getString("owner").isEmpty()) player = UUID.fromString(compound.getString("owner"));
-		if(compound.getString("type") != null && !compound.getString("type").isEmpty()) this.type = Enum.valueOf(EnumCompanionType.class, compound.getString("type"));
+		if(compound.getString("type") != null && !compound.getString("type").isEmpty()) this.setType(Enum.valueOf(EnumCompanionType.class, compound.getString("type")));
 	}
 
 	@Override
@@ -276,11 +281,24 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		public void updateTask() {
 			super.updateTask();
 			EntityPlayer player = entity.getOwner();
-			if(player.getPositionVector().distanceTo(entity.getPositionVector()) > 5)entity.moveHelper.setMoveTo(player.posX, player.posY, player.posZ, speed);
+			if(player == null) return;
+			boolean tMove = false;
+			for(TileEntity te : entity.world.loadedTileEntityList) {
+				if(te instanceof TileEntityDoor && Helper.blockPosToVec3d(te.getPos()).distanceTo(entity.getOwner().getPositionVector()) < 5) {
+					entity.moveHelper.setMoveTo(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), speed);
+					tMove = true;
+				}
+			}
+			if(!tMove) {
+				if(player.getPositionVector().distanceTo(entity.getPositionVector()) > 5)entity.moveHelper.setMoveTo(player.posX, player.posY, player.posZ, speed);
+			}
 		}
 
 		@Override
 		public boolean shouldContinueExecuting() {
 			return entity.getOwner() != null && entity.getOwner().getPositionVector().distanceTo(entity.getPositionVector()) > 5 && !entity.getDataManager().get(EntityCompanion.SITTING);
-		}}
+		}
+		
+	}
+
 }

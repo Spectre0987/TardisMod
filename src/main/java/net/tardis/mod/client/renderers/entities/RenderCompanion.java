@@ -17,7 +17,7 @@ public class RenderCompanion extends RenderLiving<EntityCompanion>{
 
 	@Override
 	public ResourceLocation getEntityTexture(EntityCompanion entity) {
-		return entity.type.getTexture();
+		return entity.getType().getTexture();
 	}
 
 }
