@@ -17,9 +17,11 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
@@ -28,13 +30,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GUICompanion;
-import net.tardis.mod.packets.MessageIInvSync;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.Helper;
 
 public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<String> TYPE = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.STRING);
 	private NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
+	public BlockPos tardisPos = BlockPos.ORIGIN;
 	UUID player;
 	
 	public EntityCompanion(World worldIn) {
@@ -43,6 +48,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		this.tasks.addTask(1, new EntityAIFollowOwner(this, 1D));
 		this.tasks.addTask(2, new EntityAIWander(this, 0.5D));
 		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityPlayer.class, 30));
+		this.tasks.addTask(0, new EntityAIEnterTardis(this, 1.0D));
 	}
 
 	@Override
@@ -123,18 +129,10 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {
-		sendInv();
-	}
+	public void openInventory(EntityPlayer player) {}
 
 	@Override
-	public void closeInventory(EntityPlayer player) {
-		sendInv();
-	}
-	
-	public void sendInv() {
-		Tardis.NETWORK.sendToServer(new MessageIInvSync(this.getEntityId(), this));
-	}
+	public void closeInventory(EntityPlayer player) {}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -278,6 +276,45 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		@Override
 		public boolean shouldContinueExecuting() {
 			return entity.getOwner() != null && entity.getOwner().getPositionVector().distanceTo(entity.getPositionVector()) > 5 && !entity.getDataManager().get(EntityCompanion.SITTING);
+		}
+		
+	}
+	
+	public static class EntityAIEnterTardis extends EntityAIBase{
+
+		double speed;
+		EntityCompanion comp;
+		
+		public EntityAIEnterTardis(EntityCompanion com, double s) {
+			this.comp = com;
+			this.speed = s;
+			this.setMutexBits(1);
+		}
+		
+		@Override
+		public boolean shouldExecute() {
+			return !comp.tardisPos.equals(BlockPos.ORIGIN);
+		}
+
+		@Override
+		public boolean shouldContinueExecuting() {
+			return this.shouldExecute();
+		}
+
+		@Override
+		public void updateTask() {
+			if(Helper.blockPosToVec3d(comp.tardisPos).distanceTo(comp.getPositionVector()) > 3) {
+				comp.moveHelper.setMoveTo(comp.tardisPos.getX(), comp.tardisPos.getY(), comp.tardisPos.getZ(), speed);
+			}
+			else {
+				comp.tardisPos = BlockPos.ORIGIN;
+				TileEntityTardis tardis;
+				for(TileEntity te : comp.world.loadedTileEntityList) {
+					if(te.getPos().distanceSq(comp.getPosition()) <= Math.pow(3, 2) && te instanceof TileEntityDoor) {
+						
+					}
+				}
+			}
 		}
 		
 	}

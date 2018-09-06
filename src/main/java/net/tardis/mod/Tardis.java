@@ -122,7 +122,6 @@ import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageExteriorChange;
 import net.tardis.mod.packets.MessageHandlerProtocol;
 import net.tardis.mod.packets.MessageHandlerTeleport;
-import net.tardis.mod.packets.MessageIInvSync;
 import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageSpawnItem;
 import net.tardis.mod.packets.MessageTelepathicCircut;
@@ -245,7 +244,6 @@ public class Tardis {
 		NETWORK.registerMessage(MessageSpawnItem.Handler.class, MessageSpawnItem.class, 8, Side.SERVER);
 		NETWORK.registerMessage(MessageDamageSystem.Helper.class, MessageDamageSystem.class, 9, Side.SERVER);
 		NETWORK.registerMessage(MessageUpdateBessie.Handler.class, MessageUpdateBessie.class, 10, Side.SERVER);
-		NETWORK.registerMessage(MessageIInvSync.Handler.class, MessageIInvSync.class, 11, Side.SERVER);
 		NETWORK.registerMessage(MessageCompanion.Handler.class, MessageCompanion.class, 12, Side.SERVER);
 
 		ScrewdriverHandler.init();

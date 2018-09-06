@@ -58,6 +58,7 @@ public class TStrings {
 	
 	public static class Companions{
 		public static final String FOLLOW = "companion.tardis.follow.";
+		public static final String GO_TO_TARDIS = "companion.tardis.tardis";
 	}
 	
 }

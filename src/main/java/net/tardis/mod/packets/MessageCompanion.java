@@ -1,12 +1,18 @@
 package net.tardis.mod.packets;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.client.guis.GUICompanion.EnumAction;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityCompanion;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class MessageCompanion implements IMessage {
 
@@ -40,10 +46,18 @@ public class MessageCompanion implements IMessage {
 				public void run() {
 					EntityCompanion comp = (EntityCompanion)ctx.getServerHandler().player.getServerWorld().getEntityByID(message.id);
 					if(comp != null) {
-						switch(message.action) {
-						case FOLLOW : {
+						if(message.action == EnumAction.GO_TO_TARDIS) {
+							WorldServer world = ctx.getServerHandler().player.getServer().getWorld(TDimensions.TARDIS_ID);
+							BlockPos pos = TardisHelper.hasTardis(ctx.getServerHandler().player.getGameProfile().getId()) ? TardisHelper.getTardis(ctx.getServerHandler().player.getGameProfile().getId()) : BlockPos.ORIGIN;
+							if(pos.equals(BlockPos.ORIGIN)) return;
+							TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(pos));
+							if(tardis != null) {
+								comp.setSit(false);
+								comp.tardisPos = tardis.getLocation().toImmutable();
+							}
+						}
+						else if(message.action == EnumAction.FOLLOW){
 							comp.setSit(!comp.getSit());
-						};
 						}
 					}
 				}});

@@ -33,8 +33,17 @@ public class GUICompanion extends GuiScreen {
 		int id = button.id;
 		EnumAction action = null;
 		switch(id) {
-		case 0 : action = EnumAction.FOLLOW;
+		case 0 : {
+			action = EnumAction.FOLLOW;
+			break;
 		}
+		case 1: {
+			action = EnumAction.GO_TO_TARDIS;
+			break;
+		}
+		default:;
+		}
+		System.out.println(action);
 		if(action != null) {
 			Tardis.NETWORK.sendToServer(new MessageCompanion(entityID, action));
 			Minecraft.getMinecraft().displayGuiScreen(null);
@@ -47,6 +56,7 @@ public class GUICompanion extends GuiScreen {
 		super.initGui();
 		this.buttonList.clear();
 		this.addText(new TextComponentTranslation(TStrings.Companions.FOLLOW + ((EntityCompanion)Minecraft.getMinecraft().world.getEntityByID(entityID)).getSit()).getFormattedText());
+		this.addText(new TextComponentTranslation(TStrings.Companions.GO_TO_TARDIS).getFormattedText());
 	}
 
 	int id = 0;
@@ -63,6 +73,7 @@ public class GUICompanion extends GuiScreen {
 	}
 
 	public static enum EnumAction{
-		FOLLOW;
+		FOLLOW,
+		GO_TO_TARDIS;
 	}
 }
