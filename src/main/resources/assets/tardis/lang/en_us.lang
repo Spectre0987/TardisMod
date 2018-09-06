@@ -242,7 +242,7 @@ command.tardis_deleted=TARDIS deleted
 
 commands.tardis.teleportin.usage=/tardis interior
 commands.tardis.grow.usage=/tardis grow
-commands.tardis.summon.usage=/summon tardis <player>
+commands.tardis.summon.usage=/tardis summon <player>
 command.tardis.remove.usage=/tardis remove <player>
 
 gui.tardis.travel=Travel
