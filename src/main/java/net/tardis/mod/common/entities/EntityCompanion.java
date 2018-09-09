@@ -1,7 +1,5 @@
 package net.tardis.mod.common.entities;
 
-import java.util.UUID;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityOwnable;
@@ -34,13 +32,15 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
+import java.util.UUID;
+
 public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<String> TYPE = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.STRING);
-	private NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inv = NonNullList.withSize(27, ItemStack.EMPTY);
 	public BlockPos tardisPos = BlockPos.ORIGIN;
-	UUID player;
+    private UUID player;
 	
 	public EntityCompanion(World worldIn) {
 		super(worldIn);
@@ -200,7 +200,8 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 			++id;
 		}
 		if(!compound.getString("owner").isEmpty()) player = UUID.fromString(compound.getString("owner"));
-		if(compound.getString("type") != null && !compound.getString("type").isEmpty()) this.setType(Enum.valueOf(EnumCompanionType.class, compound.getString("type")));
+        if (compound.hasKey("type") && !compound.getString("type").isEmpty())
+            this.setType(Enum.valueOf(EnumCompanionType.class, compound.getString("type")));
 	}
 
 	@Override
@@ -215,15 +216,15 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	public boolean getAlwaysRenderNameTag() {
 		return true;
 	}
-	
-	public static enum EnumCompanionType{
+
+    public enum EnumCompanionType {
 		JOE("joe", "Joe"),
 		CLAIRE("claire", "Claire"),
 		VASSILIS("vassilis", "Vassilis"),
 		NONE("", "");
 		
 		ResourceLocation skin;
-		String formattedName = "";
+        String formattedName;
 		
 		EnumCompanionType(String name, String formatName) {
 			skin = new ResourceLocation(Tardis.MODID, "textures/entity/" + name + ".png");
