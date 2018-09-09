@@ -1,0 +1,378 @@
+{
+  "data": {
+    "size": [
+      4,
+      7,
+      5
+    ],
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "structure": {
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 2
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 3
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 2
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 3
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 2
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": 0,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 3
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 3
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 3
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 3
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 1
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 2
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": -1,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 3
+    },
+    "blocks": {
+      "X": 2,
+      "Y": 0,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 10
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -1,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 10
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -2,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 10
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 4
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 10
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 6
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 4
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 10
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 6
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 4
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 10
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 6
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 4
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 5
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": -2,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 6
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -3,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 7
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -3,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 9
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -4,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 7
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -4,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 9
+    },
+    "blocks": {
+      "X": 4,
+      "Y": -5,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 7
+    },
+    "blocks": {
+      "X": 0,
+      "Y": -5,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 9
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -6,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 7
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -6,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -6,
+      "Z": -3,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 9
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -3,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 7
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -3,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -3,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 9
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -4,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 7
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -4,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -4,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 9
+    },
+    "blocks": {
+      "X": 3,
+      "Y": -5,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 7
+    },
+    "blocks": {
+      "X": 2,
+      "Y": -5,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 8
+    },
+    "blocks": {
+      "X": 1,
+      "Y": -5,
+      "Z": -4,
+      "Block": "minecraft:red_mushroom_block",
+      "Meta": 9
+    }
+  }
+}

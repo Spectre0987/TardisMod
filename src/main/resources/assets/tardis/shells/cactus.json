@@ -1,18 +1,27 @@
 {
-    "structure":{
-        "blocks": {
-          "X": 0,
-          "Y": 0,
-          "Z": 0,
-          "Block": "minecraft:cactus",
-          "Meta": 0
-        },
-        "blocks": {
-          "X": 0,
-          "Y": 1,
-          "Z": 0,
-          "Block": "minecraft:cactus",
-          "Meta": 0
-        }
+  "data": {
+    "size": [
+      2,
+      2,
+      1
+    ],
+    "position": [0, 0, 0],
+    "rotation": [0, 0, 0]
+  },
+  "structure": {
+    "blocks": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "Block": "minecraft:cactus",
+      "Meta": 0
+    },
+    "blocks": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0,
+      "Block": "minecraft:cactus",
+      "Meta": 0
     }
+  }
 }

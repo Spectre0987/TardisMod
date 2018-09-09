@@ -389,7 +389,7 @@ public class ModelCybermanInvasion extends ModelBiped
 	    GlStateManager.popMatrix();
     }
     GlStateManager.pushMatrix();
-    GlStateManager.rotate(entity.rotationYaw,0,1,0);
+    GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
     Neck.render(f5);
     Torso.render(f5);
     {

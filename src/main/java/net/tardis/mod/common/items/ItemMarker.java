@@ -75,7 +75,6 @@ public class ItemMarker extends ItemBase {
 					jw.value(0);
 					jw.value(0);
 					jw.endArray();
-					jw.endObject();
 					
 					jw.name("rotation");
 					jw.beginArray();
@@ -83,6 +82,7 @@ public class ItemMarker extends ItemBase {
 					jw.value(0D);
 					jw.value(0D);
 					jw.endArray();
+					jw.endObject();
 					
 					jw.name("structure");
 					jw.beginObject();
