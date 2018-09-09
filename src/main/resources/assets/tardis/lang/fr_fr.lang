@@ -42,11 +42,14 @@ item.tardis.key_01.name=Clé de TARDIS
 item.tardis.marker.name=Marqueur
 item.tardis.interiordoor.name=Porte intérieure
 item.tardis.sonic_screwdriver_13.name=Tournevis sonique du Treizième Docteur
+item.tardis.chameleon_circuit.name=Circuit Caméléon
+item.tardis.bessie.name=Bessie
 
 tooltip.remote=Télécommande reliée au TARDIS à :
 tooltip.remote.time=Le TARDIS arrive dans 
 tooltip.remote.fuel=Batterie Artron 
 tooltip.remote.exteriorpos=Extérieur du TARDIS:
+tooltip.remote.bind=Pour lier, clic droit sur la console
 
 general.time.seconds=seconde
 
@@ -92,9 +95,13 @@ tile.tardis.hellbent_monitor.name=Moniteur de la montée en enfer
 tile.tardis.hellbent_pole.name=Poteau de la montée en enfer
 tile.tardis.hellbent_roof.name=Chose au plafond de la montée en enfer
 tile.tardis.json_test.name=Testeur JSON
+tile.tardis.telos_sand.name=Sable de Telos
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
+
+door.tardis.locked.true=Le TARDIS est vérouillé à double tour!
+door.tardis.locked.false=Double serrure soulevée.
 
 death.attack.dalek=Tué par un rayon laser Dalek
 death.cyberman.ray=a été supprimé.
@@ -107,14 +114,21 @@ screwdriver.hallway=Générateur de pièce - Hall d'entrée
 screw.generic_room=Générateur de pièce - Petite pièce
 screw.electric=Démonter le panneau de la rondelle
 screwdriver.hads=Retour depuis le H.A.D.S
+screw.general=Interactions avec les Blocs
+screw.entities=Interactions avec les Entités
+screw.tardis.signal=Signal TARDIS
+screw.entity=Interaction avec une Entité
+
+screw.fail.itswood=Ca ne marche pas sur du bois!
+screw.fail.bottom-door=Pour ouvrir cette porte, vous devez le pointer vers le bas.
 
 raygun.ammo=Munitions restantes
 raygun.ammo.none=Pas de munitions!
 
+mods.tardis.compat.optifine=Vous utilisé Optifine avec ce mod! C'est bien ! On peut comprendre pourquoi. Mais s'il vous plait, on ne peut accepter aucun report de bug de votre part sur le rendu avec Optifine d'installé.
+
 tardis.none=Vous ne possédez pas de TARDIS
 tardis.flying=TARDIS en vol!
-
-tardis.gui.protocol.force_field=Protocole de champs de force
 
 tardis.console.land.true=TARDIS est réglé pour atterrir sur le point le plus haut disponible
 tardis.console.land.false=TARDIS est réglé pour atterrir sur le point le plus bas disponible
@@ -137,11 +151,15 @@ protocol.tardis.find_rift=Trouver la faille la plus proche
 protocol.tardis.systemreadout=Relevé du sous-système
 protocol.tardis.change.console=Changer de Console
 protocol.tardis.ars=Système de Reconfiguration Architecturale
+protocol.tardis.regenroom=Regénérer la salle de contrôle
+protocol.tardis.lock=Double serrure
+protocol.tardis.destroy.rift=Consommer la Faille Dimensionnel
 
 systems.tardis.flight=Système de vol
 systems.protocol.dimensions=Systèmes dimensionnel
 system.tardis.fluidlinks=Liens pour liquide
 systems.tardis.antenna=Antenne interstitielle
+system.tardis.ccircuit=Circuit Caméléon
 
 tardis.dimension=Dimension Nav-com est:
 
@@ -162,7 +180,9 @@ config.entity.adipose.spawnchance=Chance qu'une Adipose apparaisse (par chunk)
 config.misc=Divers
 config.misc.givekey=Donner une clef de TARDIS quand un joueur rejoint pour la première fois ?
 config.misc.maxrand=Nombre de blocs maximum que le TARDIS pourra voyager quand on utilise le Contrôleur aléatoire
-config.misc.shake=La caméra doit elle trembler quand votre TARDIS décole/atterri ? 
+config.misc.shake=La caméra doit elle trembler quand votre TARDIS décole/atterri ?
+
+config.boti=Activer le PALE/BOTI?
 
 entity.launch_lever.name=Espace - Accélérateur temporel
 entity.x_valve.name=Contrôle spatial - X
@@ -219,3 +239,14 @@ command.no_tardis_owned=Aucun TARDIS trouvé
 command.no_player_found=Pas de joueur trouvé avec ce pseudonyme
 command.tardis_travel=Le TARDIS arrive
 command.tardis_deleted=TARDIS supprimé
+
+commands.tardis.teleportin.usage=/tardis interior
+commands.tardis.grow.usage=/tardis grow
+commands.tardis.summon.usage=/tardis summon <player>
+command.tardis.remove.usage=/tardis remove <player>
+
+gui.tardis.travel=Voyager
+
+companion.tardis.follow.true=Suis-moi s'il te plait.
+companion.tardis.follow.false=Attends ici.
+companion.tardis.tardis=Retourne dans le TARDIS et attends-moi.
