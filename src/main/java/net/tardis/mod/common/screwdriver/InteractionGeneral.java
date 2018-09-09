@@ -34,6 +34,8 @@ public class InteractionGeneral implements IScrew {
 
         Block block = state.getBlock();
 
+        System.out.println(state.getBlock().getRegistryName());
+
         //It doesn't work on wood.
         if (block.isWood(world,pos) || block.getRegistryName().toString().contains("wood") || state.getMaterial().equals(Material.WOOD)) {
             PlayerHelper.sendMessage(player, "screw.fail.itswood", true);
@@ -71,15 +73,24 @@ public class InteractionGeneral implements IScrew {
             return EnumActionResult.SUCCESS;
         }
 
-
+        //Dispenser
         if (block instanceof BlockDispenser) {
             if (!player.isSneaking()) return EnumActionResult.FAIL;
             try {
                 dispense.invoke(block, world, pos);
+                return EnumActionResult.SUCCESS;
             } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
+                return EnumActionResult.FAIL;
             }
         }
+
+        //Dispenser
+        if (block instanceof BlockPistonBase) {
+            //      IBlockState newState = state.cycleProperty(BlockPistonBase.EXTENDED);
+            //      markUpdate(world, pos, newState);
+            //        return EnumActionResult.SUCCESS;
+        }
+
         return EnumActionResult.FAIL;
     }
 
