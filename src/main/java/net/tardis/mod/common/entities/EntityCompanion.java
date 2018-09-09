@@ -2,10 +2,12 @@ package net.tardis.mod.common.entities;
 
 import java.util.UUID;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,30 +27,39 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants.NBT;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.events.TardisEnterEvent;
+import net.tardis.mod.api.events.TardisExitEvent;
 import net.tardis.mod.client.guis.GUICompanion;
-import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<String> TYPE = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.STRING);
+	public static final DataParameter<Float> TARDIS_XP = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.FLOAT);
 	private NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
 	public BlockPos tardisPos = BlockPos.ORIGIN;
+	public boolean flyTardis = false;
 	UUID player;
 	
 	public EntityCompanion(World worldIn) {
 		super(worldIn);
 		this.stepHeight = 1;
-		this.tasks.addTask(1, new EntityAIFollowOwner(this, 1D));
-		this.tasks.addTask(2, new EntityAIWander(this, 0.5D));
+		this.tasks.addTask(2, new EntityAIFollowOwner(this, 1D));
+		this.tasks.addTask(3, new EntityAIWander(this, 0.5D));
 		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityPlayer.class, 30));
-		this.tasks.addTask(0, new EntityAIEnterTardis(this, 1.0D));
+		this.tasks.addTask(1, new EntityAIEnterTardis(this, 1.0D));
+		this.tasks.addTask(0, new EntityAISwimming(this));
 	}
 
 	@Override
@@ -61,11 +72,24 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		super.entityInit();
 		this.getDataManager().register(SITTING, false);
 		this.getDataManager().register(TYPE, EnumCompanionType.values()[rand.nextInt(EnumCompanionType.values().length - 1)].name());
+		this.getDataManager().register(TARDIS_XP, 0F);
 	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+		if(!world.isRemote && this.dimension == TDimensions.TARDIS_ID && world.getWorldTime() % 20 == 0) {
+			TileEntityTardis tardis = null;
+			for(TileEntity te : world.loadedTileEntityList) {
+				if(te instanceof TileEntityTardis && te.getPos().distanceSq(this.getPosition()) < Math.pow(16, 2)) {
+					tardis = (TileEntityTardis)te;
+					break;
+				}
+			}
+			if(tardis != null && tardis.isInFlight()) {
+				this.setXP(this.getXP() + 0.001F);
+			}
+		}
 	}
 
 	@Override
@@ -187,6 +211,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		compound.setTag("inv", list);
 		compound.setString("owner", player != null ? player.toString() : "");
 		compound.setString("type", this.getType().name());
+		compound.setFloat("xp", this.getXP());
 		return super.writeToNBT(compound);
 	}
 
@@ -201,13 +226,14 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		}
 		if(!compound.getString("owner").isEmpty()) player = UUID.fromString(compound.getString("owner"));
 		if(compound.getString("type") != null && !compound.getString("type").isEmpty()) this.setType(Enum.valueOf(EnumCompanionType.class, compound.getString("type")));
+		this.setXP(compound.getFloat("xp"));
 	}
 
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if(world.isRemote)
 			openGui();
-		else this.setOwner(player);
+		else if(this.getOwnerId() == null) this.setOwner(player);
 		return true;
 	}
 	
@@ -308,15 +334,20 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 			}
 			else {
 				comp.tardisPos = BlockPos.ORIGIN;
-				TileEntityTardis tardis;
-				for(TileEntity te : comp.world.loadedTileEntityList) {
-					if(te.getPos().distanceSq(comp.getPosition()) <= Math.pow(3, 2) && te instanceof TileEntityDoor) {
-						
+				WorldServer world = comp.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+				if(comp.getOwner() != null && TardisHelper.hasTardis(comp.getOwner().getGameProfile().getId())) {
+					TileEntityTardis tardis = Helper.getTardis((world.getTileEntity(TardisHelper.getTardis(comp.getOwner().getGameProfile().getId()))));
+					if(tardis != null) {
+						tardis.enterTARDIS(comp);
+						if(comp.flyTardis) {
+							tardis.setDesination(comp.getOwner().getPosition(), comp.getOwner().dimension);
+							tardis.startFlight();
+							comp.flyTardis = false;
+						}
 					}
 				}
 			}
 		}
-		
 	}
 
 	public boolean getSit() {
@@ -325,6 +356,50 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	
 	public void setSit(boolean sit) {
 		this.getDataManager().set(SITTING, sit);
+	}
+	
+	public void setXP(float xp) {
+		this.getDataManager().set(TARDIS_XP, xp);
+	}
+	
+	public float getXP() {
+		return this.getDataManager().get(TARDIS_XP);
+	}
+	
+	@EventBusSubscriber
+	public static class Events{
+		
+		@SubscribeEvent
+		public static void enterTardis(TardisEnterEvent event) {
+			if(!event.getEntity().world.isRemote && event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer)event.getEntity();
+				for(EntityCompanion e : player.getEntityWorld().getEntitiesWithinAABB(EntityCompanion.class, Block.FULL_BLOCK_AABB.offset(player.getPositionVector()).grow(16))) {
+					if(!e.getSit() && e.getOwner() != null && e.getOwner() == player) {
+						WorldServer world = player.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+						TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(event.getInteriorPos()));
+						if(tardis != null) {
+							tardis.enterTARDIS(e);
+						}
+					}
+				}
+			}
+		}
+		
+		@SubscribeEvent
+		public static void exitTardis(TardisExitEvent event) {
+			if(!event.getEntity().world.isRemote && event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer)event.getEntity();
+				WorldServer world = player.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+				for(EntityCompanion c : player.world.getEntitiesWithinAABB(EntityCompanion.class, Block.FULL_BLOCK_AABB.offset(player.getPositionVector()).grow(16))) {
+					if(!c.getSit() && c.getOwner() != null && c.getOwner() == player) {
+						TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(event.getPos()));
+						if(tardis != null) {
+							tardis.transferPlayer(c, false);
+						}
+					}
+				}
+			}
+		}
 	}
 
 }

@@ -52,12 +52,26 @@ public class MessageCompanion implements IMessage {
 							if(pos.equals(BlockPos.ORIGIN)) return;
 							TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(pos));
 							if(tardis != null) {
-								comp.setSit(false);
+								comp.setSit(true);
 								comp.tardisPos = tardis.getLocation().toImmutable();
 							}
 						}
 						else if(message.action == EnumAction.FOLLOW){
 							comp.setSit(!comp.getSit());
+							comp.tardisPos = BlockPos.ORIGIN;
+						}
+						else if(message.action == EnumAction.BRING_TARDIS) {
+							if(comp.dimension != TDimensions.TARDIS_ID) {
+								WorldServer world = ctx.getServerHandler().player.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+								if(comp.getOwner() != null && TardisHelper.hasTardis(comp.getOwner().getGameProfile().getId())) {
+									TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(TardisHelper.getTardis(comp.getOwner().getGameProfile().getId())));
+									if(tardis != null) {
+										comp.setSit(true);
+										comp.tardisPos = tardis.getLocation();
+										comp.flyTardis = true;
+									}
+								}
+							}
 						}
 					}
 				}});

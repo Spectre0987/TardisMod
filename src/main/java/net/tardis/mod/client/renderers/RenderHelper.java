@@ -33,6 +33,7 @@ public class RenderHelper {
 		if(ClientProxy.getRenderBOTI() && MinecraftForgeClient.getRenderPass() == 1) {
 			if(offset == null)offset = new Vec3d(-1, 0, -7);
 			GlStateManager.pushMatrix();
+			GlStateManager.color(1, 1, 1);
 			
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 			
@@ -66,7 +67,6 @@ public class RenderHelper {
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
 				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
-				Minecraft.getMinecraft().renderGlobal.renderClouds(partialTicks, MinecraftForgeClient.getRenderPass(), te.getWorldShell().getOffset().getX(), te.getWorldShell().getOffset().getY(), te.getWorldShell().getOffset().getZ());
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
