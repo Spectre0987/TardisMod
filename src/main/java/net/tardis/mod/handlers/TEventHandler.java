@@ -1,8 +1,14 @@
 package net.tardis.mod.handlers;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -55,16 +61,12 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeCinnabar;
 import net.tardis.mod.common.recipes.RecipeKey;
+import net.tardis.mod.common.recipes.RecipeRemote;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.HashMap;
 
 @Mod.EventBusSubscriber
 public class TEventHandler {
@@ -113,6 +115,7 @@ public class TEventHandler {
 	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 		event.getRegistry().register(new RecipeKey(Tardis.MODID + ":spare_key"));
 		event.getRegistry().register(new RecipeCinnabar(Tardis.MODID + ":cinnabar"));
+		event.getRegistry().register(new RecipeRemote("remote_bind"));
 	}
 	
 	
