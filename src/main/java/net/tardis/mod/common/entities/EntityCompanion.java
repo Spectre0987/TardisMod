@@ -1,11 +1,8 @@
 package net.tardis.mod.common.entities;
 
-<<<<<<< HEAD
 import java.util.UUID;
 
 import net.minecraft.block.Block;
-=======
->>>>>>> 02831757d9d4b078e4af4fdcbf771e8cf68881d8
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityOwnable;
@@ -45,23 +42,15 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
-import java.util.UUID;
-
 public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<String> TYPE = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.STRING);
-<<<<<<< HEAD
 	public static final DataParameter<Float> TARDIS_XP = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.FLOAT);
 	private NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
 	public BlockPos tardisPos = BlockPos.ORIGIN;
 	public boolean flyTardis = false;
 	UUID player;
-=======
-    private NonNullList<ItemStack> inv = NonNullList.withSize(27, ItemStack.EMPTY);
-	public BlockPos tardisPos = BlockPos.ORIGIN;
-    private UUID player;
->>>>>>> 02831757d9d4b078e4af4fdcbf771e8cf68881d8
 	
 	public EntityCompanion(World worldIn) {
 		super(worldIn);
@@ -236,13 +225,8 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 			++id;
 		}
 		if(!compound.getString("owner").isEmpty()) player = UUID.fromString(compound.getString("owner"));
-<<<<<<< HEAD
 		if(compound.getString("type") != null && !compound.getString("type").isEmpty()) this.setType(Enum.valueOf(EnumCompanionType.class, compound.getString("type")));
 		this.setXP(compound.getFloat("xp"));
-=======
-        if (compound.hasKey("type") && !compound.getString("type").isEmpty())
-            this.setType(Enum.valueOf(EnumCompanionType.class, compound.getString("type")));
->>>>>>> 02831757d9d4b078e4af4fdcbf771e8cf68881d8
 	}
 
 	@Override
@@ -257,15 +241,15 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	public boolean getAlwaysRenderNameTag() {
 		return true;
 	}
-
-    public enum EnumCompanionType {
+	
+	public static enum EnumCompanionType{
 		JOE("joe", "Joe"),
 		CLAIRE("claire", "Claire"),
 		VASSILIS("vassilis", "Vassilis"),
 		NONE("", "");
 		
 		ResourceLocation skin;
-        String formattedName;
+		String formattedName = "";
 		
 		EnumCompanionType(String name, String formatName) {
 			skin = new ResourceLocation(Tardis.MODID, "textures/entity/" + name + ".png");
