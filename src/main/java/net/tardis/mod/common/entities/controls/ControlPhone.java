@@ -8,7 +8,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
+import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.sounds.TSounds;
@@ -57,7 +57,7 @@ public class ControlPhone extends EntityControl{
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			if(tardis != null) {
 				SystemAntenna sys = tardis.getSystem(SystemAntenna.class);
-				if(sys != null && sys.getHealth() > 0.0F) {
+				if(sys != null && sys.getHealth() > 0F) {
 					if(tardis.currentEvent != EnumEvent.NONE) {
 						if(world.getTotalWorldTime() % 80 == 0) {
 							world.playSound(null, this.getPosition(), TSounds.phone, SoundCategory.BLOCKS, 1F, 1F);
@@ -79,7 +79,7 @@ public class ControlPhone extends EntityControl{
 	public void genDalekInvasion(EntityPlayer player) {
 		if(!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
-			WorldServer ws = DimensionManager.getWorld(0);
+			WorldServer ws = world.getMinecraftServer().getWorld(0);
 			BlockPos villagePos = ws.getChunkProvider().getNearestStructurePos(ws, "Village", tardis.getLocation(), true);
 			if(villagePos != null && !villagePos.equals(BlockPos.ORIGIN)) {
 				for(int i = 0; i < 10; ++i) {
@@ -87,6 +87,11 @@ public class ControlPhone extends EntityControl{
 					BlockPos pos = ws.getTopSolidOrLiquidBlock(villagePos.add(rand.nextInt(100) - 50, 64, rand.nextInt(100) - 50));
 					dalek.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 					ws.spawnEntity(dalek);
+				}
+				for(int c = 0; c < 5; ++c) {
+					EntityCompanion comp = new EntityCompanion(ws);
+					BlockPos pos = ws.getTopSolidOrLiquidBlock(villagePos.add(rand.nextInt(50) - 25, 1, rand.nextInt(50) - 25));
+					comp.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 				}
 				tardis.setDesination(villagePos, 0);
 				player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.EVENT.DALEK_INVASION).getFormattedText() + " " + Helper.formatBlockPos(villagePos)), false);

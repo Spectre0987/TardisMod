@@ -1,13 +1,13 @@
 package net.tardis.mod.common.sounds;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
-
-import java.lang.reflect.Field;
 
 @Mod.EventBusSubscriber
 public class TSounds {
@@ -30,6 +30,9 @@ public class TSounds {
 	public static SoundEvent vmSound = register("vm_teleport");
 	public static SoundEvent flyLoop = register("fly_loop");
 	public static SoundEvent bessieHorn = register("bessie_horn");
+	public static SoundEvent control_01 = register("control_01");
+	public static SoundEvent control_02 = register("control_02");
+	public static SoundEvent control_03 = register("control_03");
 
 	//1963
 	public static SoundEvent INTERIOR_HUM_1963 = register("1963_interior_hum");

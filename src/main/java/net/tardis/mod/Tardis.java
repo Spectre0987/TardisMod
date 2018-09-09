@@ -88,6 +88,7 @@ import net.tardis.mod.common.systems.SystemFluidLinks;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
+import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
@@ -219,6 +220,7 @@ public class Tardis {
 		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
 		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
 		registerTileEntity(TileEntityRoundelChest.class, "TileEntityRoundelChest");
+		registerTileEntity(TileEntityComponentRepair.class, "TileEntityComponentRepair");
 		
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
 		
@@ -276,6 +278,7 @@ public class Tardis {
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
+		
 	}
 	
 	@EventHandler

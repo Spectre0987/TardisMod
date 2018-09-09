@@ -59,7 +59,7 @@ public class SpaceProvider extends WorldProvider{
 
 	@Override
 	public boolean canBlockFreeze(BlockPos pos, boolean byWater) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -72,6 +72,12 @@ public class SpaceProvider extends WorldProvider{
 	public void onPlayerRemoved(EntityPlayerMP player) {
 		super.onPlayerRemoved(player);
 		player.setNoGravity(false);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IRenderHandler getSkyRenderer() {
+		return new RenderSpace();
 	}
 
 }

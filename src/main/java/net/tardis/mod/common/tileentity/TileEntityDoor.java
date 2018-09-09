@@ -58,7 +58,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public float alpha = 1;
 	public boolean isDemat = false;
 	public boolean isRemat = false;
-	public static int radius = 10;
+	public static int radius = 20;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	private AxisAlignedBB SHELL_AABB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10);
 	
@@ -180,9 +180,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			//World Shell
 			if(world.getWorldTime() % 5 == 0) {
 				if(!this.isLocked()) {
+					if(tardis.getDoor() == null)return;
 					worldShell = new WorldShell(this.getConsolePos());
 	                WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-					for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius, radius, radius)), worldShell.getOffset().add(new Vec3i(radius,radius, 6)))) {
+					for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(radius, radius, radius)), worldShell.getOffset().add(new Vec3i(radius, radius, 6)))) {
 						IBlockState state = tardisWorld.getBlockState(pos);
 						if(state.getBlock() != Blocks.AIR) {
 							worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), 15));

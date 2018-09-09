@@ -39,14 +39,16 @@ public class MessageDamageSystem implements IMessage{
 	public static class Helper implements IMessageHandler<MessageDamageSystem, IMessage>{
 		@Override
 		public IMessage onMessage(MessageDamageSystem message, MessageContext ctx) {
-			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
-				WorldServer ws = ctx.getServerHandler().player.getServer().getWorld(TDimensions.TARDIS_ID);
-				TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(message.pos);
-				if (tardis != null) {
-					ISystem s = null;
-					for (ISystem sys : tardis.systems) {
-						if (TardisSystems.getIdBySystem(sys).equals(message.system)) {
-							sys.setHealth(0.00F);
+			ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
+				@Override
+				public void run() {
+					WorldServer ws = ctx.getServerHandler().player.getServer().getWorld(TDimensions.TARDIS_ID);
+					TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(message.pos);
+					if (tardis != null) {
+						ISystem sys = tardis.getSystem(TardisSystems.createFromName(message.system).getClass());
+						if(sys != null) {
+							sys.setHealth(0F);
+							System.out.println(message.pos);
 						}
 					}
 				}

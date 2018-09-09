@@ -47,7 +47,7 @@ public class TardisSystems {
 			return health;
 		}
 		public void setHealth(float health) {
-			this.health = MathHelper.clamp(health, 0.0F, 1.0F);
+			this.health = health > 1F ? 1F : (health < 0F ? 0F : health);
 		}
 		public abstract void onUpdate(World world, BlockPos consolePos);
 		public void readFromNBT(NBTTagCompound tag) {

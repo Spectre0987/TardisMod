@@ -26,8 +26,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.events.TardisExitEvent;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
@@ -137,6 +139,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 				BlockPos pos = tardis.getLocation().offset(facing, 2);
 				for(Entity e : entities) {
 					if(e instanceof EntityPlayerMP) {
+						MinecraftForge.EVENT_BUS.post(new TardisExitEvent(e, tardis.getPos()));
 						EntityPlayerMP mp = (EntityPlayerMP)e;
 						if(!mp.isSneaking()) {
 							if(tardis.dimension != TDimensions.TARDIS_ID)
