@@ -37,8 +37,11 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.events.TardisEnterEvent;
+import net.tardis.mod.api.events.TardisExitEvent;
 import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -861,8 +864,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.markDirty();
 	}
 
-	public void transferPlayer(EntityPlayer player, boolean checkDoors) {
+	public void transferPlayer(Entity entity, boolean checkDoors) {
 		if(!world.isRemote) {
+			MinecraftForge.EVENT_BUS.post(new TardisExitEvent(entity, this.getPos()));
 			ControlDoor door = null;
 			for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
 				if(e != null) {
@@ -873,26 +877,31 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(door != null && (door.isOpen() || !checkDoors)) {
 				WorldServer ws = world.getMinecraftServer().getWorld(dimension);
 				TileEntity te = ws.getTileEntity(this.getLocation().up());
-				EntityPlayerMP mp = (EntityPlayerMP)player;
-				if(!checkDoors) {
-					BlockPos tp = this.getLocation();
-					if(this.isInFlight()) tp = this.getCurrentPosOnPath();
-					mp.setLocationAndAngles(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, 0, 0);
-					if(world.provider.getDimension() != this.dimension)mp.getServer().getPlayerList().transferPlayerToDimension(mp, this.dimension, new TardisTeleporter());
-					
-				}
-				if(te != null && te instanceof TileEntityDoor) {
-					if(!((TileEntityDoor)te).isLocked()) {
-						world.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, dimension, new TardisTeleporter());
-						IBlockState state = ws.getBlockState(this.getLocation().up());
-						EnumFacing facing = EnumFacing.NORTH;
-						if(state.getBlock() instanceof BlockTardisTop) {
-							state.getValue(BlockTardisTop.FACING);
+				if(entity instanceof EntityPlayerMP) {
+					EntityPlayerMP mp = (EntityPlayerMP)entity;
+					if(!checkDoors) {
+						BlockPos tp = this.getLocation();
+						if(this.isInFlight()) tp = this.getCurrentPosOnPath();
+						mp.setLocationAndAngles(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, 0, 0);
+						if(world.provider.getDimension() != this.dimension)mp.getServer().getPlayerList().transferPlayerToDimension(mp, this.dimension, new TardisTeleporter());
+						
+					}
+					if(te != null && te instanceof TileEntityDoor) {
+						if(!((TileEntityDoor)te).isLocked()) {
+							EnumFacing facing = ws.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING);
+							BlockPos tp = te.getPos().offset(facing);
+							if(this.isInFlight())tp = this.getCurrentPosOnPath();
+							mp.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
+							world.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, dimension, new TardisTeleporter());
+							return;
 						}
-						BlockPos tp = this.getLocation().offset(facing, 1);
-						if(this.isInFlight())tp = this.getCurrentPosOnPath();
-						mp.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
-						return;
+					}
+				}
+				else {
+					if(te != null) {
+						BlockPos pos = te.getPos().offset(ws.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING), 2);
+						entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+						entity.changeDimension(dimension, new TardisTeleporter());
 					}
 				}
 			}
@@ -900,6 +909,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public void enterTARDIS(Entity entity) {
+		MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, this.getPos()));
 		if(!world.isRemote && this.getTardisState().equals(EnumTardisState.NORMAL)) {
 			EnumFacing facing = EnumFacing.NORTH;
 			BlockPos tp = this.getPos();
