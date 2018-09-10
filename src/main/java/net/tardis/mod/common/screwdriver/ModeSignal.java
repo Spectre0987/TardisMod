@@ -29,7 +29,7 @@ public class ModeSignal implements IScrew {
 
 	@Override
 	public EnumActionResult blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-		return null;
+		return EnumActionResult.PASS;
 	}
 
 	@Override

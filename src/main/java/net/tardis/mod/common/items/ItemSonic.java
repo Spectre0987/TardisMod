@@ -109,7 +109,7 @@ public class ItemSonic extends Item {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
 			if (getCharge(held) >= sc.energyRequired()) {
 				result = sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
-				if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
+				if (sc.causesCoolDown() && EnumActionResult.SUCCESS.equals(result)) {
 					cooldown(held.getItem(), player, sc.getCoolDownAmount());
 					worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
 					setCharge(held, getCharge(held) - sc.energyRequired());
