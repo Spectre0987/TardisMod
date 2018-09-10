@@ -7,6 +7,7 @@ import java.util.UUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.chunk.Chunk;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.handlers.TEventHandler;
@@ -70,6 +71,15 @@ public class TardisHelper {
 			if (pos != null && pos.equals(cPos)) return true;
 		}
 		return false;
+	}
+	
+	public static BlockPos getTardisForPosition(Vec3i vec) {
+		for(BlockPos pos : tardisOwners.values()) {
+			if(pos.getDistance(vec.getX(), vec.getY(), vec.getZ()) < (TARDIS_SIZE / 2) * 16 - 8) {
+				return pos;
+			}
+		}
+		return BlockPos.ORIGIN;
 	}
 	
 }
