@@ -37,7 +37,8 @@ public class ItemSonic extends Item {
 	}
 
 	public static int getCharge(ItemStack stack) {
-		return Helper.getStackTag(stack).getInteger("charge");
+		//return Helper.getStackTag(stack).getInteger("charge");
+		return 100;
 	}
 
 	public static void setCharge(ItemStack stack, int charge) {
@@ -74,7 +75,7 @@ public class ItemSonic extends Item {
 		ItemStack held = player.getHeldItem(handIn);
 		IScrew sc = (ScrewdriverHandler.MODES.get(getMode(held)));
 
-		BlockPos lookPos = player.rayTrace(100, 1.0F).getBlockPos();
+		BlockPos lookPos = worldIn.rayTraceBlocks(player.getPositionVector().addVector(0, player.getEyeHeight(), 0), player.getLookVec().scale(6)).getBlockPos();
 
 		if (player.isSneaking() && worldIn.getBlockState(lookPos).getBlock() != Blocks.DISPENSER) {
 			setMode(held, getMode(held) + 1);

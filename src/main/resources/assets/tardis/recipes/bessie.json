@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I W",
+    "YYY",
+    "B B"
+  ],
+  "key": {
+    "I": {
+      "item":"minecraft:iron_ingot"
+    },
+    "W":{
+        "item":"minecraft:wool",
+        "data": 15
+    },
+    "Y":{
+        "item":"minecraft:concrete",
+        "data" : 4
+    },
+    "B":{
+        "item":"minecraft:concrete",
+        "data" : 15
+    }
+  },
+  "result": {
+    "item": "tardis:bessie"
+  }
+}

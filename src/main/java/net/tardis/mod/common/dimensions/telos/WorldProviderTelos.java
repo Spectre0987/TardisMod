@@ -5,6 +5,7 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.tardis.mod.common.dimensions.TDimensions;
 
 public class WorldProviderTelos extends WorldProvider{
@@ -34,6 +35,11 @@ public class WorldProviderTelos extends WorldProvider{
 	@Override
 	public BiomeProvider getBiomeProvider() {
 		return new BiomeProviderSingle(Biomes.DESERT);
+	}
+
+	@Override
+	public IChunkGenerator createChunkGenerator() {
+		return new ChunkGeneratorTelos(this.world, this.world.getSeed());
 	}
 
 }

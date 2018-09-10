@@ -84,7 +84,7 @@ public class ControlPhone extends EntityControl{
 			if(villagePos != null && !villagePos.equals(BlockPos.ORIGIN)) {
 				for(int i = 0; i < 10; ++i) {
 					EntityDalek dalek = new EntityDalek(ws);
-					BlockPos pos = ws.getTopSolidOrLiquidBlock(villagePos.add(rand.nextInt(100) - 50, 64, rand.nextInt(100) - 50));
+					BlockPos pos = ws.getTopSolidOrLiquidBlock(villagePos.add(rand.nextInt(20) - 10, 64, rand.nextInt(20) - 10));
 					dalek.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 					ws.spawnEntity(dalek);
 				}
@@ -92,6 +92,7 @@ public class ControlPhone extends EntityControl{
 					EntityCompanion comp = new EntityCompanion(ws);
 					BlockPos pos = ws.getTopSolidOrLiquidBlock(villagePos.add(rand.nextInt(50) - 25, 1, rand.nextInt(50) - 25));
 					comp.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+					ws.spawnEntity(comp);
 				}
 				tardis.setDesination(villagePos, 0);
 				player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.EVENT.DALEK_INVASION).getFormattedText() + " " + Helper.formatBlockPos(villagePos)), false);

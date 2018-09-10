@@ -7,6 +7,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.BossInfo.Color;
 import net.tardis.mod.Tardis;
@@ -18,17 +19,19 @@ import net.tardis.mod.packets.MessageCompanion;
 public class GUICompanion extends GuiScreen {
 
 	int entityID = 0;
+	EntityCompanion comp;
 	
-	public GUICompanion(int id) {
-		this.entityID = id;
+	public GUICompanion(EntityCompanion comp) {
+		this.entityID = comp.getEntityId();
+		this.comp = comp;
 	}
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		EntityCompanion comp = (EntityCompanion)Minecraft.getMinecraft().world.getEntityByID(entityID);
-		this.drawString(Minecraft.getMinecraft().fontRenderer, "XP: " + comp.getXP(), 0, 0, Color.WHITE.ordinal());
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		GlStateManager.color(1, 1, 1);
+		this.drawString(Minecraft.getMinecraft().fontRenderer, "XP: " + comp.getXP(), 0, 0, Color.RED.ordinal());
 	}
 
 	@Override
@@ -54,7 +57,7 @@ public class GUICompanion extends GuiScreen {
 		id = 0;
 		this.addText(new TextComponentTranslation(TStrings.Companions.FOLLOW + ((EntityCompanion)Minecraft.getMinecraft().world.getEntityByID(entityID)).getSit()).getFormattedText());
 		this.addText(new TextComponentTranslation(TStrings.Companions.GO_TO_TARDIS).getFormattedText());
-		if(((EntityCompanion)Minecraft.getMinecraft().world.getEntityByID(entityID)).getXP() > 1)this.addText(new TextComponentTranslation(TStrings.Companions.BRING_TARDIS).getFormattedText());
+		if(((EntityCompanion)Minecraft.getMinecraft().world.getEntityByID(entityID)).getXP() > 0)this.addText(new TextComponentTranslation(TStrings.Companions.BRING_TARDIS).getFormattedText());
 		id = 0;
 	}
 

@@ -26,6 +26,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -38,6 +39,7 @@ import net.tardis.mod.api.events.TardisEnterEvent;
 import net.tardis.mod.api.events.TardisExitEvent;
 import net.tardis.mod.client.guis.GUICompanion;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
@@ -194,7 +196,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	
 	@SideOnly(Side.CLIENT)
 	public void openGui() {
-		Minecraft.getMinecraft().displayGuiScreen(new GUICompanion(this.getEntityId()));
+		Minecraft.getMinecraft().displayGuiScreen(new GUICompanion(this));
 	}
 
 	@Override
@@ -231,9 +233,13 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if(world.isRemote)
-			openGui();
-		else if(this.getOwnerId() == null) this.setOwner(player);
+		if(world.isRemote && player.getGameProfile().getId().equals(this.getOwnerId())) openGui();
+		else if(this.getOwnerId() == null) {
+			this.setOwner(player);
+			if(!world.isRemote) {
+				player.sendStatusMessage(new TextComponentTranslation(TStrings.Companions.SAVED), false);
+			}
+		}
 		return true;
 	}
 	

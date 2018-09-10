@@ -27,12 +27,12 @@ public class TileEntityEPanel extends TileEntity implements ITickable, IInventor
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		this.owner = UUID.fromString(compound.getString("owner"));
+		this.owner = compound.getString("owner").isEmpty() ? null : UUID.fromString(compound.getString("owner"));
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		if(owner != null)compound.setString("owner", owner.toString());
+		compound.setString("owner", owner != null ? owner.toString() : "");
 		return super.writeToNBT(compound);
 	}
 

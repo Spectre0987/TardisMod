@@ -12,7 +12,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.dimensions.TDimensions;
 
 public class ChunkGeneratorTelos implements IChunkGenerator {
 
@@ -32,13 +32,7 @@ public class ChunkGeneratorTelos implements IChunkGenerator {
 		Chunk c = new Chunk(world, new ChunkPrimer(), cx, cz);
 		for(int x = 0; x < 16; ++x) {
 			for(int z = 0; z < 16; ++z) {
-				for(int y = 0; y < 64; ++y) {
-					c.setBlockState(new BlockPos(x, y, z), Blocks.STONE.getDefaultState());
-				}
-				c.setBlockState(new BlockPos(x, 0, z), Blocks.BEDROCK.getDefaultState());
-				double nv = noise.getValue(x * cx, z * cx);
-				int height = nv > 1 ? 1 : 0;
-				c.setBlockState(new BlockPos(x, c.getHeightValue(x, z) + height, z), TBlocks.telos_sand.getDefaultState());
+				
 			}
 		}
 		c.generateSkylightMap();

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "VCV",
+    " G "
+  ],
+  "key": {
+    "G":{
+        "item":"minecraft:tallgrass",
+        "data": 1
+    },
+    "V":{
+        "item":"minecraft:vine"
+    },
+    "C":{
+        "item":"tardis:circuts"
+    }
+  },
+  "result": {
+    "item": "tardis:chameleon_circuit"
+  }
+}
