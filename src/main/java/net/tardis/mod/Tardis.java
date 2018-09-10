@@ -27,6 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
+import net.tardis.mod.api.disguise.DisguiseRegistry;
 import net.tardis.mod.client.creativetabs.TardisTab;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -279,6 +280,7 @@ public class Tardis {
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
 		
+		DisguiseRegistry.init();
 	}
 	
 	@EventHandler
