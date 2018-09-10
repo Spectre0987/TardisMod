@@ -14,6 +14,7 @@ import net.tardis.mod.client.models.decoration.ModelHellbentMonitor;
 import net.tardis.mod.common.blocks.BlockFacingDecoration;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 
@@ -38,13 +39,13 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 		mc.getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		
-		TileEntityTardis tardis = null;
-		for(TileEntity liste : te.getWorld().getChunkFromBlockCoords(te.getPos()).getTileEntityMap().values()) {
+		TileEntityTardis tardis = (TileEntityTardis)te.getWorld().getTileEntity(TardisHelper.getTardisForPosition(te.getPos()));
+		/*for(TileEntity liste : te.getWorld().getChunkFromBlockCoords(te.getPos()).getTileEntityMap().values()) {
 			if(liste instanceof TileEntityTardis) {
 				tardis = (TileEntityTardis)liste;
 				break;
 			}
-		}
+		}*/
 		if(tardis != null) {
 			GlStateManager.pushMatrix();
 			double scale = 0.007;
