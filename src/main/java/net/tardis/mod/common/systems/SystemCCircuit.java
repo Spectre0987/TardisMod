@@ -19,8 +19,8 @@ public class SystemCCircuit extends ISystem{
 			TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(consolePos));
 			if(tardis != null && tardis.getTopBlock().getBlock() == TBlocks.tardis_top_cc) {
 				this.setHealth(this.getHealth() - 0.01F);
-				checkActive = false;
 			}
+			checkActive = false;
 		}
 	}
 
