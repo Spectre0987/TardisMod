@@ -40,6 +40,9 @@ public class TardisConfig {
 		
 		@Config.LangKey("config.bhDim")
 		public int spaceDimension = 22;
+
+		@Config.LangKey("config.telosDim")
+		public int telosDimension = 23;
 	}
 	
 	public static class UseEntities {

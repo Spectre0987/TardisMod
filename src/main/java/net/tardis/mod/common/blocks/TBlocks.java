@@ -96,7 +96,7 @@ public class TBlocks {
 	public static Block hellbent_pole = register(new BlockDecoration(TileEntityHellbentPole::new), "hellbent_pole");
 	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new).setLightLevel(1F).setLightOpacity(0), "hellbent_roof");
 	
-	public static Block telos_sand = register(new BlockBase(), "telos_sand");
+	public static Block telos_sand = register(new BlockBaseSand(), "telos_sand");
 	
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");

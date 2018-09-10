@@ -1,42 +1,23 @@
 package net.tardis.mod.common.dimensions.telos;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.tardis.mod.common.dimensions.TDimensions;
+import net.minecraft.world.gen.ChunkGeneratorOverworld;
 
-public class ChunkGeneratorTelos implements IChunkGenerator {
-
-	World world; 
-	Random rand = new Random();
-	NoiseGeneratorPerlin noise = new NoiseGeneratorPerlin(this.rand, 2);
+public class ChunkGeneratorTelos extends ChunkGeneratorOverworld {
 	
-	public ChunkGeneratorTelos() {}
-	
-	public ChunkGeneratorTelos(World world, Long seed){
-		this.world = world;
-		this.rand = new Random(seed);
+	public ChunkGeneratorTelos(World worldIn, long seed) {
+		super(worldIn, seed, false, "");
 	}
 	
 	@Override
-	public Chunk generateChunk(int cx, int cz) {
-		Chunk c = new Chunk(world, new ChunkPrimer(), cx, cz);
-		for(int x = 0; x < 16; ++x) {
-			for(int z = 0; z < 16; ++z) {
-				
-			}
-		}
-		c.generateSkylightMap();
-		return c;
+	public Chunk generateChunk(int x, int z) {
+		return super.generateChunk(x, z);
 	}
 
 	@Override

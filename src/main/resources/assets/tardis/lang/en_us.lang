@@ -171,6 +171,7 @@ config.setdim=Set Dimension IDs for this mod?
 config.tDim=TARDIS Dimension
 config.bhDim=Space Dimension
 config.dim.usewhitelist=Should the Dimensions in the List be used as a whitelist?
+config.telosDim=Telos Dimension ID
 
 config.entity=Entities
 config.entity.allowed=Should this mod add Mobs?
