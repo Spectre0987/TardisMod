@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "g",
+    "c",
+    "i"
+  ],
+  "key": {
+    "g": {
+      "item":"minecraft:gold_ingot"
+    },
+    "c":{
+        "item":"tardis:circuts"
+    },
+    "i":{
+        "item":"minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "tardis:time_vector_generator"
+  }
+}
