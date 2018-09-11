@@ -43,6 +43,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	
@@ -127,8 +128,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	public void onUpdate() {
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
-		if(!(world.getTileEntity(getConsolePos()) instanceof TileEntityTardis))return;
-		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
+		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
 		if(tardis == null) return;
 		if(!world.isRemote && this.isOpen()) {
 			AxisAlignedBB bb = new AxisAlignedBB(0, 0, 0, 1, 2, 1).offset(this.getPosition());

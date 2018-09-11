@@ -17,6 +17,7 @@ import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class RenderDoor extends Render<ControlDoor> {
 	
@@ -42,7 +43,7 @@ public class RenderDoor extends Render<ControlDoor> {
 		GlStateManager.translate(x, y, z);
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
-		TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(entity.getConsolePos());
+		TileEntityTardis tardis = (TileEntityTardis)mc.world.getTileEntity(TardisHelper.getTardisForPosition(entity.getPosition()));
 		EnumExterior ext = tardis != null ? (tardis.getTopBlock() != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()): EnumExterior.FIRST) : EnumExterior.FIRST;
 		GlStateManager.rotate(Helper.get360FromFacing(entity.getHorizontalFacing()), 0, 1, 0);
 		if(entity.getHorizontalFacing() == EnumFacing.NORTH || entity.getHorizontalFacing() == EnumFacing.SOUTH) {

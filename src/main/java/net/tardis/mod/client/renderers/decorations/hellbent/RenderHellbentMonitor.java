@@ -40,12 +40,6 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		
 		TileEntityTardis tardis = (TileEntityTardis)te.getWorld().getTileEntity(TardisHelper.getTardisForPosition(te.getPos()));
-		/*for(TileEntity liste : te.getWorld().getChunkFromBlockCoords(te.getPos()).getTileEntityMap().values()) {
-			if(liste instanceof TileEntityTardis) {
-				tardis = (TileEntityTardis)liste;
-				break;
-			}
-		}*/
 		if(tardis != null) {
 			GlStateManager.pushMatrix();
 			double scale = 0.007;
