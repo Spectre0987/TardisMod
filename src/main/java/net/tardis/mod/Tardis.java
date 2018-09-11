@@ -86,6 +86,7 @@ import net.tardis.mod.common.systems.SystemCCircuit;
 import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemFluidLinks;
+import net.tardis.mod.common.systems.SystemTemporalGrace;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
@@ -276,6 +277,7 @@ public class Tardis {
 		TardisSystems.register("fluid_links", SystemFluidLinks.class);
 		TardisSystems.register("antenna", SystemAntenna.class);
 		TardisSystems.register("chameleon", SystemCCircuit.class);
+		TardisSystems.register("temporal_grace", SystemTemporalGrace.class);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);

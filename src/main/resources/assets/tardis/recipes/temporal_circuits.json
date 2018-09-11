@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "scs",
+    " s "
+  ],
+  "key": {
+    "s":{
+        "item":"minecraft:shield"
+    },
+    "c":{
+        "item":"tardis:circuts"
+    }
+  },
+  "result": {
+    "item": "tardis:temporal_grace_circuits"
+  }
+}

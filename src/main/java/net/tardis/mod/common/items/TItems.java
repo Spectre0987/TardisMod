@@ -83,6 +83,7 @@ public class TItems {
 	public static Item demat_circut = null;
 	public static Item antenna = createItem(new ItemComponent(), "antenna");
 	public static Item chameleon_circuit = createItem(new ItemComponent(), "chameleon_circuit");
+	public static Item temporal_grace_circuits = createItem(new ItemComponent(), "temporal_grace_circuits");
 
 
     @SubscribeEvent

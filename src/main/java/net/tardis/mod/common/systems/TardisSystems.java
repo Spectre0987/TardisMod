@@ -41,7 +41,7 @@ public class TardisSystems {
 	
 	public static abstract class ISystem{
 		
-		private float health = 1F;
+		private float health = 0F;
 		
 		public float getHealth() {
 			return health;

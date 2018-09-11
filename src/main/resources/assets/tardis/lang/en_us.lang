@@ -160,6 +160,7 @@ systems.protocol.dimensions=Dimensional Dams
 system.tardis.fluidlinks=Fluid Links
 systems.tardis.antenna=Interstitial Antenna
 system.tardis.ccircuit=Chameleon Circuit
+system.tardis.temporal_grace=Temporal Grace Circuits
 
 tardis.dimension=Nav-com Dimension is:
 

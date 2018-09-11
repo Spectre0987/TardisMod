@@ -2,7 +2,6 @@ package net.tardis.mod.common.systems;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,27 +14,13 @@ import net.tardis.mod.util.helpers.Helper;
 
 public class SystemDimension extends ISystem{
 
-	float health = 1F;
 	boolean shouldFix = false;
 	boolean runOnce = false;
 	
 	@Override
-	public float getHealth() {
-		return health;
-	}
-
-	@Override
-	public void setHealth(float health) {
-		this.health = health;
-		if(health <= 0 && !runOnce) {
-			this.runOnce = true;
-		}
-	}
-
-	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
 		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(consolePos);
-		if(this.health <= 0.00F) {
+		if(this.getHealth() <= 0.00F) {
 			if(runOnce) {
 				tardis.setTardisState(EnumTardisState.DISABLED);
 				for(EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(consolePos, 8 * 16))) {
@@ -59,36 +44,26 @@ public class SystemDimension extends ISystem{
 
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
-		health = tag.getFloat("health");
+		super.readFromNBT(tag);
 		this.shouldFix = tag.getBoolean("fix");
 	}
 
 	@Override
 	public NBTTagCompound writetoNBT(NBTTagCompound tag) {
-		tag.setFloat("health", health);
+		super.writetoNBT(tag);
 		tag.setBoolean("fix", shouldFix);
 		return tag;
 	}
 
 	@Override
 	public void damage() {
-		health -= 0.2;
-		if(health <= 0.00F)runOnce = true;
+		this.setHealth(this.getHealth() - 0.2F);
+		if(this.getHealth() <= 0.00F)runOnce = true;
 	}
 
 	@Override
 	public Item getRepairItem() {
 		return TItems.time_vector_generator;
-	}
-
-	@Override
-	public boolean repair(ItemStack stack) {
-		if(health < 1.0F) {
-			this.health = (100 - stack.getItemDamage()) / 100F;
-			this.shouldFix = true;
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -102,7 +77,5 @@ public class SystemDimension extends ISystem{
 	}
 
 	@Override
-	public void wear() {
-		
-	}
+	public void wear() {}
 }

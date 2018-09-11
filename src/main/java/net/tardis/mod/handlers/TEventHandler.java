@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -63,10 +64,13 @@ import net.tardis.mod.common.recipes.RecipeCinnabar;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.recipes.RecipeRemote;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemTemporalGrace;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 @Mod.EventBusSubscriber
 public class TEventHandler {
@@ -149,6 +153,17 @@ public class TEventHandler {
 				}
 			}
 		}
+		EntityLivingBase e = event.getEntityLiving();
+		if(!(e instanceof IMob) && !TardisHelper.getTardisForPosition(e.getPosition()).equals(BlockPos.ORIGIN)) {
+			TileEntityTardis tardis = (TileEntityTardis)e.world.getTileEntity(TardisHelper.getTardisForPosition(e.getPosition()));
+			if(tardis != null && tardis.getSystem(SystemTemporalGrace.class) != null) {
+				SystemTemporalGrace sys = tardis.getSystem(SystemTemporalGrace.class);
+				if(sys.getHealth() > 0.0F) {
+					sys.setHealth(sys.getHealth() - 0.01F);
+					event.setCanceled(true);
+				}
+			}
+		}
 	}
 	
 
@@ -186,29 +201,31 @@ public class TEventHandler {
 			try {
 				HashMap<String, Long> map = new HashMap<String, Long>();
 				File f = new File(event.player.world.getMinecraftServer().getDataDirectory() + "/pending_keys.json");
-				JsonReader jr = new JsonReader(new FileReader(f));
-				jr.beginObject();
-				while(jr.hasNext()) {
-					map.put(jr.nextName(), Long.parseLong(jr.nextString()));
-				}
-				jr.endObject();
-				jr.close();
-				
-				if(map.containsKey(event.player.getGameProfile().getId().toString())) {
-					ItemStack stack = new ItemStack(TItems.key);
-					ItemKey.setPos(stack, BlockPos.fromLong(map.get(event.player.getGameProfile().getId().toString())));
-					event.player.inventory.addItemStackToInventory(stack);
-					
-					GsonBuilder gb = new GsonBuilder();
-					gb.setPrettyPrinting();
-					JsonWriter jw = gb.create().newJsonWriter(new FileWriter(f));
-					jw.beginObject();
-					map.remove(event.player.getGameProfile().getId().toString());
-					for(String name : map.keySet()) {
-						jw.name(name).value(map.get(name).toString());
+				if(f.exists()) {
+					JsonReader jr = new JsonReader(new FileReader(f));
+					jr.beginObject();
+					while(jr.hasNext()) {
+						map.put(jr.nextName(), Long.parseLong(jr.nextString()));
 					}
-					jw.endObject();
-					jw.close();
+					jr.endObject();
+					jr.close();
+					
+					if(map.containsKey(event.player.getGameProfile().getId().toString())) {
+						ItemStack stack = new ItemStack(TItems.key);
+						ItemKey.setPos(stack, BlockPos.fromLong(map.get(event.player.getGameProfile().getId().toString())));
+						event.player.inventory.addItemStackToInventory(stack);
+						
+						GsonBuilder gb = new GsonBuilder();
+						gb.setPrettyPrinting();
+						JsonWriter jw = gb.create().newJsonWriter(new FileWriter(f));
+						jw.beginObject();
+						map.remove(event.player.getGameProfile().getId().toString());
+						for(String name : map.keySet()) {
+							jw.name(name).value(map.get(name).toString());
+						}
+						jw.endObject();
+						jw.close();
+					}
 				}
 			}
 			catch(Exception e) {
