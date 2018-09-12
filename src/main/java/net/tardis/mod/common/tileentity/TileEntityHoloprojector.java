@@ -15,7 +15,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
@@ -25,6 +24,7 @@ import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TileEntityHoloprojector extends TileEntity implements ITickable, IContainsWorldShell{
 	
@@ -35,39 +35,36 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 	@Override
 	public void update() {
 		if(!world.isRemote && world.getTotalWorldTime() % 5 == 0) {
-			Chunk c = world.getChunkFromBlockCoords(getPos());
-			for(TileEntity te : c.getTileEntityMap().values()) {
-				if(te instanceof TileEntityTardis) {
-					TileEntityTardis tardis = (TileEntityTardis)te;
-					worldShell = new WorldShell(tardis.getLocation());
-					Vec3i vec = new Vec3i(7, 5, 7);
-					WorldServer ws = DimensionManager.getWorld(tardis.dimension);
-					if(ws != null) {
-						for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(vec), worldShell.getOffset().add(vec))) {
-							IBlockState state = ws.getBlockState(pos);
-							if(state.getMaterial() != Material.AIR) {
-								worldShell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
-							}
+			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(TardisHelper.getTardisForPosition(this.getPos()));
+			if(tardis != null) {
+				worldShell = new WorldShell(tardis.getLocation());
+				Vec3i vec = new Vec3i(7, 5, 7);
+				WorldServer ws = DimensionManager.getWorld(tardis.dimension);
+				if(ws != null) {
+					for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(vec), worldShell.getOffset().add(vec))) {
+						IBlockState state = ws.getBlockState(pos);
+						if(state.getMaterial() != Material.AIR) {
+							worldShell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
 						}
-						List<NBTTagCompound> lists = new ArrayList<>();
-						List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-						for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 7))) {
-							if(EntityList.getKey(e) != null) {
-								NBTTagCompound tag = new NBTTagCompound();
-								e.writeToNBT(tag);
-								tag.setString("id", EntityList.getKey(e).toString());
-								lists.add(tag);
-							}
-							if(e instanceof EntityPlayerMP) {
-								players.add(new PlayerStorage((EntityPlayerMP)e));
-							}
-						}
-						worldShell.setPlayers(players);
-						worldShell.setEntities(lists);
-						Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
 					}
-					return;
+					List<NBTTagCompound> lists = new ArrayList<>();
+					List<PlayerStorage> players = new ArrayList<PlayerStorage>();
+					for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 7))) {
+						if(EntityList.getKey(e) != null) {
+							NBTTagCompound tag = new NBTTagCompound();
+							e.writeToNBT(tag);
+							tag.setString("id", EntityList.getKey(e).toString());
+							lists.add(tag);
+						}
+						if(e instanceof EntityPlayerMP) {
+							players.add(new PlayerStorage((EntityPlayerMP)e));
+						}
+					}
+					worldShell.setPlayers(players);
+					worldShell.setEntities(lists);
+					Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
 				}
+				return;
 			}
 		}
 	}
