@@ -1,6 +1,5 @@
 package net.tardis.mod.client.models;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.WorldBoti;
@@ -72,16 +72,17 @@ public class ModelBlocks implements IExteriorModel{
 				GlStateManager.translate(pos.getX(), pos.getY(), pos.getZ());
 				List<BakedQuad> quads = model.getQuads(state, null, 0);
 				VertexFormat vFormat = quads.size() > 0 ? quads.get(0).getFormat() : DefaultVertexFormats.ITEM;
-				Color color = Color.GREEN;
-				bb.putColorMultiplier(0F, 1F, 0F, 0);
 				bb.begin(GL11.GL_QUADS, vFormat);
+				int color = Minecraft.getMinecraft().getBlockColors().colorMultiplier(state, Minecraft.getMinecraft().world, Minecraft.getMinecraft().player.getPosition(), 0);
 				for(BakedQuad bq : quads) {
 					bb.addVertexData(bq.getVertexData());
+					bb.putColor4(color);
 				}
 				for(EnumFacing f : EnumFacing.values()) {
 					for(BakedQuad quad : model.getQuads(state, f, 0)) {
 						bb.addVertexData(quad.getVertexData());
 					}
+					bb.putColor4(color);
 				}
 				Tessellator.getInstance().draw();
 				GlStateManager.popMatrix();

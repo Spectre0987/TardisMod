@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
+import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.client.models.ModelFirstCane;
 import net.tardis.mod.client.models.ModelKey01;
@@ -191,6 +192,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
 		
+		
 	}
 	
 	@Override
@@ -225,6 +227,8 @@ public class ClientProxy extends ServerProxy {
 		Item.getItemFromBlock(TBlocks.alembic).setTileEntityItemStackRenderer(new RenderItemAlembic());
 		
 		Item.getItemFromBlock(TBlocks.console).setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelConsole(), RenderConsole.CONSOLE_TEXTURE));
+		
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new BlockColorTelos(), TBlocks.telos_sand);
 	}
 	
 	

@@ -1,5 +1,9 @@
 package net.tardis.mod.common.dimensions;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -23,7 +27,8 @@ public class TDimensions {
 	
 	public static int TELOS_ID;
 	public static DimensionType telosType;
-	public static Biome telosBiome = new BiomeTelos();
+	public static Biome telosBiome = new BiomeTelos(true);
+	public static Biome telosBiomeOrange= new BiomeTelos(false);
 	
 	public static void register() {
 		boolean setDim = TardisConfig.Dimensions.setDimension;
@@ -55,15 +60,30 @@ public class TDimensions {
 		
 		telosType = DimensionType.register("telos", "_telos", TELOS_ID, WorldProviderTelos.class, false);
 		DimensionManager.registerDimension(TELOS_ID, telosType);
+		
+		BiomeReg.init();
 	}
 	
 	@EventBusSubscriber(modid = Tardis.MODID)
 	public static class BiomeReg{
 		
+		private static List<Biome> BIOMES = new ArrayList<>();
+		
 		@SubscribeEvent
 		public static void register(RegistryEvent.Register<Biome> event) {
-			event.getRegistry().register(TDimensions.telosBiome);
-			BiomeDictionary.addTypes(TDimensions.telosBiome, BiomeDictionary.Type.SNOWY);
+			for(Biome b : BIOMES) {
+				event.getRegistry().register(b);
+			}
+		}
+		
+		public static void registerBiome(Biome b, String name, BiomeDictionary.Type type) {
+			b.setRegistryName(new ResourceLocation(Tardis.MODID, name));
+			BIOMES.add(b);
+		}
+		
+		public static void init() {
+			registerBiome(TDimensions.telosBiome, "telos", BiomeDictionary.Type.SNOWY);
+			registerBiome(TDimensions.telosBiomeOrange, "telos_orange", BiomeDictionary.Type.SNOWY);
 		}
 	}
 }

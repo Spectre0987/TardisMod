@@ -18,7 +18,7 @@ import net.tardis.mod.util.helpers.Helper;
 public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> {
 
 	public static ModelBlocks model = new ModelBlocks(new ResourceLocation(Tardis.MODID, "shells/cactus.json"));
-	
+	public static Vec3d position = new Vec3d(0.75, 1.8, 0);
 	RenderWorldShell renderShell;
 	
 	public RenderTileDoorCC() {
@@ -49,7 +49,7 @@ public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> 
 			if(facing == EnumFacing.EAST) GlStateManager.translate(0.125, 0, -1.001);
 			if(facing == EnumFacing.SOUTH) GlStateManager.translate(-0.875, 0, -1.01);
 			if(facing == EnumFacing.NORTH) GlStateManager.translate(0.125, 0, -0.001);
-			if(!te.isLocked())RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, new Vec3d(0.75, 1.8, 0));
+			if(!te.isLocked())RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, position);
 		}
 		GlStateManager.popMatrix();
 	}
