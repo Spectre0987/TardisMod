@@ -18,7 +18,7 @@ public class ChunkGeneratorTelos extends ChunkGeneratorOverworld {
 	@Override
 	public void replaceBiomeBlocks(int cx, int cz, ChunkPrimer primer, Biome[] biomesIn) {
 		super.replaceBiomeBlocks(cx, cz, primer, biomesIn);
-		for(int x = 0; x < 16; ++x) {
+		/*for(int x = 0; x < 16; ++x) {
 			for(int z = 0; z < 16; ++z) {
 				for(int y = 0; y < world.getHeight(); ++y) {
 					if(primer.getBlockState(x, y, z).getBlock() == Blocks.STONE) {
@@ -26,7 +26,7 @@ public class ChunkGeneratorTelos extends ChunkGeneratorOverworld {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	@Override

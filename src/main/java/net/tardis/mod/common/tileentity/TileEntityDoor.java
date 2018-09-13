@@ -146,7 +146,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void update() {
 		if (!world.isRemote) {
 			WorldServer ws = (WorldServer) world;
-			BlockPos cPos = getConsolePos().south(4);
 			
 			AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
 			

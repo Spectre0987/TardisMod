@@ -7,7 +7,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -26,10 +25,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.api.events.TardisExitEvent;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
@@ -37,11 +34,9 @@ import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.TardisHelper;
 
@@ -131,28 +126,11 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
 		if(tardis == null) return;
 		if(!world.isRemote && this.isOpen()) {
-			AxisAlignedBB bb = new AxisAlignedBB(0, 0, 0, 1, 2, 1).offset(this.getPosition());
-			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
-			if(ws.getBlockState(tardis.getLocation().up()).getBlock() instanceof BlockTardisTop) {
-				List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bb);
-				EnumFacing facing = ws.getBlockState(tardis.getLocation().up()).getValue(BlockTardisTop.FACING);
-				BlockPos pos = tardis.getLocation().offset(facing, 2);
-				for(Entity e : entities) {
-					if(e instanceof EntityPlayerMP) {
-						MinecraftForge.EVENT_BUS.post(new TardisExitEvent(e, tardis.getPos()));
-						EntityPlayerMP mp = (EntityPlayerMP)e;
-						if(!mp.isSneaking()) {
-							if(tardis.dimension != TDimensions.TARDIS_ID)
-								ws.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, tardis.dimension, new TardisTeleporter());
-							mp.connection.setPlayerLocation(pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
-							mp.setSpawnPoint(pos, true);
-						}
-					}
-					else if(e != this){
-						e.setPosition(pos.getX() + 0.5 + e.width / 2, pos.getY(), pos.getZ() + 0.5 + e.width / 2);
-						e.changeDimension(tardis.dimension, new TardisTeleporter());
-					}
-				}
+			WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
+			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox());
+			for(Entity e : entities) {
+				if(e == this || e instanceof IControl || e instanceof IDoor) continue;
+				tardis.transferPlayer(e, true);
 			}
 			if(this.ticksExisted % 5 == 0) {
 				this.shell = new WorldShell(tardis.getLocation().up().offset(this.getFacing(), 11));

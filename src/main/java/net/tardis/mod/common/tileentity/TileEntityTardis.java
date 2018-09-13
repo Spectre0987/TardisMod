@@ -37,11 +37,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.api.events.TardisEnterEvent;
-import net.tardis.mod.api.events.TardisExitEvent;
 import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -865,73 +862,39 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public void transferPlayer(Entity entity, boolean checkDoors) {
-		if(!world.isRemote) {
-			MinecraftForge.EVENT_BUS.post(new TardisExitEvent(entity, this.getPos()));
-			ControlDoor door = null;
-			for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
-				if(e != null) {
-					door = e;
-					break;
-				}
-			}
-			if(door != null && (door.isOpen() || !checkDoors)) {
-				WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-				TileEntity te = ws.getTileEntity(this.getLocation().up());
+		WorldServer ws = world.getMinecraftServer().getWorld(dimension);
+		if(ws == null)return;
+		BlockPos pos = this.getLocation();
+		if(checkDoors) {
+			TileEntityDoor door = (TileEntityDoor)ws.getTileEntity(this.getLocation().up());
+			if(door != null) {
+				EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
+				pos = door.getPos().down().offset(face, 2);
 				if(entity instanceof EntityPlayerMP) {
-					EntityPlayerMP mp = (EntityPlayerMP)entity;
-					if(!checkDoors) {
-						BlockPos tp = this.getLocation();
-						if(this.isInFlight()) tp = this.getCurrentPosOnPath();
-						mp.setLocationAndAngles(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, 0, 0);
-						if(world.provider.getDimension() != this.dimension)mp.getServer().getPlayerList().transferPlayerToDimension(mp, this.dimension, new TardisTeleporter());
-						
-					}
-					if(te != null && te instanceof TileEntityDoor) {
-						if(!((TileEntityDoor)te).isLocked()) {
-							EnumFacing facing = ws.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING);
-							BlockPos tp = te.getPos().offset(facing);
-							if(this.isInFlight())tp = this.getCurrentPosOnPath();
-							mp.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
-							world.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, dimension, new TardisTeleporter());
-							return;
-						}
-					}
-				}
-				else {
-					if(te != null) {
-						BlockPos pos = te.getPos().offset(ws.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING), 2);
-						entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-						entity.changeDimension(dimension, new TardisTeleporter());
-					}
+					EntityPlayerMP player = (EntityPlayerMP)entity;
+					if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter());
+					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get360FromFacing(face), 0);
 				}
 			}
 		}
 	}
 
 	public void enterTARDIS(Entity entity) {
-		MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, this.getPos()));
-		if(!world.isRemote && this.getTardisState().equals(EnumTardisState.NORMAL)) {
-			EnumFacing facing = EnumFacing.NORTH;
-			BlockPos tp = this.getPos();
-			ChunkPos cPos = world.getChunkFromBlockCoords(getPos()).getPos();
-			for(int x = -1; x < 1; ++x) {
-				for(int z = -1; z < 1; ++z) {
-					((WorldServer)world).getChunkProvider().loadChunk(cPos.x + x, cPos.z + z);
-				}
-			}
-			for(ControlDoor e : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
-				tp = e.getPosition().offset(e.getHorizontalFacing());
-				facing = e.getHorizontalFacing();
-			}
-			if(entity instanceof EntityPlayerMP) {
-				EntityPlayerMP player = (EntityPlayerMP)entity;
+		ControlDoor door = this.getDoor();
+		Vec3d pos;
+		EnumFacing face = EnumFacing.NORTH;
+		if(door == null) {
+			pos = Helper.blockPosToVec3d(this.getPos());
+		}
+		else {
+			pos = door.getPositionVector().add(door.getLookVec());
+			face = door.getHorizontalFacing();
+		}
+		if(entity instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP)entity;
+			if(player.dimension != TDimensions.TARDIS_ID)
 				world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter());
-				player.connection.setPlayerLocation(tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, Helper.get360FromFacing(facing), 0);
-			}
-			else {
-				entity.setPosition(tp.getX() + 0.5 + entity.width, tp.getY(), tp.getZ() + 0.5 + entity.width);
-				entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
-			}
+			player.connection.setPlayerLocation(pos.x, pos.y, pos.z, Helper.get360FromFacing(face), 0);
 		}
 	}
 	
