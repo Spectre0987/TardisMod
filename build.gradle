@@ -14,22 +14,55 @@ version = "0.0.7A"
 group = "net.tardis.mod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "tardis"
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
 minecraft {
     version = "1.12.2-14.23.4.2739"
-    runDir = "run"
+    if(project.hasProperty('runDir')) {
+        runDir = project.runDir
+    }
+    else if(file('../run').exists()) {
+        runDir = "../run"
+    }
+    else {
+        runDir = "run"
+    }
     mappings = "snapshot_20171003"
     makeObfSourceJar = true
     replace '@VERSION@', project.version
-    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    if(project.hasProperty('signSHA1')) replace '@FINGERPRINT@', project.findProperty('signSHA1')
     replaceIn "net.tardis.mod.Tardis.java"
 }
 
+repositories {
+    maven {
+        name = "IC2"
+        url = "http://maven.ic2.player.to"
+    }
+
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven"
+    }
+
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
+}
+
 dependencies {
+    //use deobfProvided for optional dependencies, deobfCompile for required ones!
+
+    //ic2-ex
+    compileOnly "net.industrial-craft:industrialcraft-2:2.8.99-ex112:api"
+    runtime "net.industrial-craft:industrialcraft-2:2.8.99-ex112"
+
+    //weeping angels
+    deobfProvided "com.github.SandedShoes:Weeping-Angels:21"
+
+    //regeneration
+    deobfProvided "com.github.SandedShoes:Regeneration:2.0"
 }
 
 processResources {
