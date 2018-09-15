@@ -74,7 +74,7 @@ public class RenderHelper {
 				GlStateManager.rotate(180, 0, 1, 0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
-				if(wBoti.provider.isSurfaceWorld()) {
+				if(!wBoti.provider.isSurfaceWorld()) {
 					GlStateManager.pushMatrix();
 					Vec3d color = wBoti.provider.getFogColor(0, 0);
 					GlStateManager.enableFog();

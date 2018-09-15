@@ -21,13 +21,13 @@ public class TardisConfig {
 	public static final Misc MISC = new Misc();
 	
 	@Config.LangKey("config.boti")
-	public static boolean boti = true;
+	public static final Boti BOTI= new Boti();
 
 
 	public static class Dimensions {
 		
 		@Config.LangKey("config.dims")
-		public int[] bDims = new int[] {1};
+		public int[] bDims = new int[] {};
 		
 		@Config.LangKey("config.dim.usewhitelist")
 		public boolean USE_WHITELIST = false;
@@ -76,6 +76,15 @@ public class TardisConfig {
 		@Config.LangKey("config.misc.shake")
 		public boolean camShake = true;
 		
+	}
+	
+	public static class Boti{
+		
+		@Config.LangKey("config.boti.enabled")
+		public boolean enabled = true;
+		
+		@Config.LangKey("config.boti.skip")
+		public String[] modids = {};
 	}
 
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)

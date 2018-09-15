@@ -206,7 +206,7 @@ public class ClientProxy extends ServerProxy {
 	}
 	
 	public static boolean getRenderBOTI() {
-		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.boti;
+		return Minecraft.getMinecraft().getFramebuffer().isStencilEnabled() && TardisConfig.BOTI.enabled;
 	}
 
 	@Override
@@ -253,4 +253,11 @@ public class ClientProxy extends ServerProxy {
             playerRender.addLayer(layer);
         }
     }
+
+	public static boolean shouldRender(String modid) {
+		for(String s : TardisConfig.BOTI.modids) {
+			if(modid.equals(s)) return false;
+		}
+		return true;
+	}
 }
