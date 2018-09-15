@@ -2,6 +2,7 @@ package net.tardis.mod.common.systems;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,6 +17,10 @@ public class SystemDimension extends ISystem{
 
 	boolean shouldFix = false;
 	boolean runOnce = false;
+	
+	public SystemDimension() {
+		this.setHealth(1F);
+	}
 	
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
@@ -58,7 +63,7 @@ public class SystemDimension extends ISystem{
 	@Override
 	public void damage() {
 		this.setHealth(this.getHealth() - 0.2F);
-		if(this.getHealth() <= 0.00F)runOnce = true;
+		if(this.getHealth() <= 0.00F) runOnce = true;
 	}
 
 	@Override
@@ -78,4 +83,19 @@ public class SystemDimension extends ISystem{
 
 	@Override
 	public void wear() {}
+
+	@Override
+	public void setHealth(float health) {
+		super.setHealth(health);
+		if(this.getHealth() <= 0.0F) this.runOnce = true;
+	}
+
+	@Override
+	public boolean repair(ItemStack stack) {
+		boolean b = super.repair(stack);
+		if(b) {
+			this.shouldFix = true;
+		}
+		return b;
+	}
 }

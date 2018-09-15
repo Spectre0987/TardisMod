@@ -12,6 +12,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.dimensions.moon.BiomeMoon;
+import net.tardis.mod.common.dimensions.moon.MoonProvider;
 import net.tardis.mod.common.dimensions.space.SpaceProvider;
 import net.tardis.mod.common.dimensions.telos.BiomeTelos;
 import net.tardis.mod.common.dimensions.telos.WorldProviderTelos;
@@ -28,9 +30,14 @@ public class TDimensions {
 	public static int TELOS_ID;
 	public static DimensionType telosType;
 	public static Biome telosBiome = new BiomeTelos(true);
-	public static Biome telosBiomeOrange= new BiomeTelos(false);
+	public static Biome telosBiomeOrange = new BiomeTelos(false);
+	
+	public static int MOON_ID;
+	public static DimensionType MOON_TYPE;
+	public static Biome moonBiome = new BiomeMoon();
 	
 	public static void register() {
+		
 		boolean setDim = TardisConfig.Dimensions.setDimension;
 		
 		if (setDim) {
@@ -61,6 +68,10 @@ public class TDimensions {
 		telosType = DimensionType.register("telos", "_telos", TELOS_ID, WorldProviderTelos.class, false);
 		DimensionManager.registerDimension(TELOS_ID, telosType);
 		
+		MOON_ID = DimensionManager.getNextFreeDimId();
+		MOON_TYPE = DimensionType.register("moon", "_moon", MOON_ID, MoonProvider.class, false);
+		DimensionManager.registerDimension(MOON_ID, MOON_TYPE);
+		 
 		BiomeReg.init();
 	}
 	

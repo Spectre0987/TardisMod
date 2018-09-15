@@ -96,6 +96,7 @@ tile.tardis.hellbent_pole.name=Hellbent Pole
 tile.tardis.hellbent_roof.name=Hellbent Ceiling Thing
 tile.tardis.json_test.name=Json Tester
 tile.tardis.telos_sand.name=Telos Sand
+tile.tardis.moon_dirt.name=Moon Dirt
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!

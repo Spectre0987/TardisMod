@@ -32,5 +32,4 @@ public class ChunkGeneratorTelos extends ChunkGeneratorOverworld {
 	@Override
 	public void populate(int x, int z) {}
 
-	
 }
