@@ -37,7 +37,6 @@ public abstract class RenderControl extends Render<EntityControl> {
         renderControl(entity, x, y, z, entityYaw, partialTicks, (TileEntityTardis) mc.world.getTileEntity(entity.getConsolePos()));
         if (mc.player.getHeldItemMainhand().getItem() == TItems.manual) {
             Entity look = mc.objectMouseOver.entityHit;
-            
             if(look != null && look == entity) {
 				float offset = MathHelper.cos(entity.ticksExisted * 0.1F) * -0.09F;
 				GL11.glPushMatrix();

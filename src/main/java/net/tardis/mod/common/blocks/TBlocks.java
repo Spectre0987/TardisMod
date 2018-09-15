@@ -97,6 +97,7 @@ public class TBlocks {
 	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new).setLightLevel(1F).setLightOpacity(0), "hellbent_roof");
 	
 	public static Block telos_sand = register(new BlockBaseSand(), "telos_sand");
+	public static Block moon_dirt = register(new BlockBase(), "moon_dirt");
 	
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");
@@ -108,8 +109,6 @@ public class TBlocks {
 	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02");
 
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block");
-
-    public static Block interiorDoorPolice = register(new BlockInteriorDoor(BlockInteriorDoor.DoorTypes.DEFAULT), "interiorDoorPolice");
 
 
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test") : null;

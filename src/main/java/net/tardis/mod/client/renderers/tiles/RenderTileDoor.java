@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.tiles;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,7 +19,6 @@ import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.helpers.Helper;
-import org.lwjgl.opengl.GL11;
 
 public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 

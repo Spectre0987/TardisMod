@@ -64,6 +64,7 @@ public class MessageSyncWorldShell implements IMessage {
 			players.add(PlayerStorage.fromBytes(buf));
 		}
 		worldShell.setPlayers(players);
+		worldShell.setTime(buf.readLong());
 	}
 
 	@Override
@@ -89,6 +90,7 @@ public class MessageSyncWorldShell implements IMessage {
 		for(PlayerStorage stor : worldShell.getPlayers()) {
 			stor.toBytes(buf);
 		}
+		buf.writeLong(worldShell.getTime());
 	}
 	
 	public static class Handler implements IMessageHandler<MessageSyncWorldShell, IMessage> {

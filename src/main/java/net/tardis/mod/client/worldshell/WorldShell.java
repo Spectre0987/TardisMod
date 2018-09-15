@@ -36,7 +36,8 @@ public class WorldShell implements IBlockAccess {
 	// from the coords in BlockMap should give you positions in relative terms for
 	// rendering
 	private BlockPos offset;
-
+	private long time = 0L;
+	
     private Biome shellBiome = Biome.getBiome(0);
 
     @SideOnly(Side.CLIENT)
@@ -144,5 +145,13 @@ public class WorldShell implements IBlockAccess {
 	
 	public List<PlayerStorage> getPlayers() {
 		return this.players;
+	}
+
+	public long getTime() {
+		return time;
+	}
+	
+	public void setTime(long time) {
+		this.time = time;
 	}
 }

@@ -130,9 +130,9 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox());
 			for(Entity e : entities) {
 				if(e == this || e instanceof IControl || e instanceof IDoor) continue;
-				tardis.transferPlayer(e, true);
+				if(!e.isSneaking())tardis.transferPlayer(e, true);
 			}
-			if(this.ticksExisted % 5 == 0) {
+			if(this.ticksExisted % 10 == 0) {
 				this.shell = new WorldShell(tardis.getLocation().up().offset(this.getFacing(), 11));
 				Vec3i r = new Vec3i(10, 10, 10);
 				IBlockState doorState = ws.getBlockState(tardis.getLocation().up());
@@ -160,10 +160,12 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 						players.add(new PlayerStorage((EntityPlayer)e));
 					}
 				}
+				shell.setTime(world.getWorldTime());
 				shell.setPlayers(players);
 				shell.setEntities(list);
 				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
+			if(world.isRemote)this.shell.setTime(shell.getTime() + 1);
 		}
 		try {
 			if(tardis.isInFlight() && this.isOpen()) {

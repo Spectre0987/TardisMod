@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.renderers.RenderHelper;
@@ -49,7 +50,7 @@ public class RenderDoor extends Render<ControlDoor> {
 		if(entity.getHorizontalFacing() == EnumFacing.NORTH || entity.getHorizontalFacing() == EnumFacing.SOUTH) {
 			GlStateManager.rotate(180, 0, 1, 0);
 		}
-		GlStateManager.translate(-0.25, 0, 0);
+		GlStateManager.translate(-0.25, 0, -0.01);
 		if(open) {
 			try {
 				Vec3d offset = null;
@@ -69,9 +70,9 @@ public class RenderDoor extends Render<ControlDoor> {
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0.5);
 				ext.interiorModel.renderOpen();
-				mc.renderGlobal.renderSky(partialTicks, 0);
-				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2, 0));
-				else RenderHelper.drawOutline(new Vec3d(1, 2,0));
+				mc.renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
+				if(!tardis.isInFlight())RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2, 0), true);
+				else RenderHelper.drawOutline(new Vec3d(1, 2, 0));
 				
 			}
 			catch(Exception e) {}

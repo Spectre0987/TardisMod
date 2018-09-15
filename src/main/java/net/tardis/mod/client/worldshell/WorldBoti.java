@@ -6,17 +6,21 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
+import net.minecraftforge.common.DimensionManager;
 
 public class WorldBoti extends WorldClient {
 
 	private WorldShell shell;
 	public int dimension = 0;
+	public WorldProvider provider;
 	
 	public WorldBoti(int dimension, WorldClient wc, WorldShell ws) {
 		super(Minecraft.getMinecraft().getConnection(), new WorldSettings(wc.getWorldInfo()), dimension, wc.getDifficulty(), wc.profiler);
 		shell = ws;
 		this.dimension = dimension;
+		this.provider = DimensionManager.createProviderFor(dimension);
 	}
 
 	@Override
