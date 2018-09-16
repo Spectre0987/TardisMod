@@ -249,17 +249,25 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	}
 	
 	public static enum EnumCompanionType{
-		JOE("joe", "Joe"),
-		CLAIRE("claire", "Claire"),
+		CLAIRE("claire", "Claire", true),
 		VASSILIS("vassilis", "Vassilis"),
+		ALEXA("alexa", "Alexa", true),
+		PETER("peter", "Peter", true),
+		VANDHAM("vandham", "Vandham"),
 		NONE("", "");
 		
 		ResourceLocation skin;
 		String formattedName = "";
+		boolean smallArms = false;
 		
 		EnumCompanionType(String name, String formatName) {
 			skin = new ResourceLocation(Tardis.MODID, "textures/entity/" + name + ".png");
 			formattedName = formatName;
+		}
+		
+		EnumCompanionType(String name, String formatName, boolean smallArms) {
+			this(name, formatName);
+			this.smallArms = smallArms;
 		}
 		
 		public ResourceLocation getTexture() {
@@ -268,6 +276,10 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		
 		public String getName() {
 			return this.formattedName;
+		}
+		
+		public boolean getSmallArms() {
+			return smallArms;
 		}
 	}
 

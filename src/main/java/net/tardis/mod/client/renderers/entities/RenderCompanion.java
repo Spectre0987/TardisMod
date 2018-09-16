@@ -11,13 +11,25 @@ public class RenderCompanion extends RenderLiving<EntityCompanion>{
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/companion.png");
 	
+	public static ModelPlayer STEVE = new ModelPlayer(0.0625F, false);
+	public static ModelPlayer ALEX = new ModelPlayer(0.0625F, true);
+	
 	public RenderCompanion(RenderManager rendermanagerIn) {
-		super(rendermanagerIn, new ModelPlayer(0.0625F, false), 0.3F);
+		super(rendermanagerIn, STEVE, 0.3F);
+		STEVE.isChild = false;
+		ALEX.isChild = false;
 	}
 
 	@Override
 	public ResourceLocation getEntityTexture(EntityCompanion entity) {
 		return entity.getType().getTexture();
+	}
+
+	@Override
+	protected void renderModel(EntityCompanion comp, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+		this.bindEntityTexture(comp);
+		if(comp.getType().getSmallArms()) ALEX.render(comp, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
+		else STEVE.render(comp, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
 	}
 
 }
