@@ -96,6 +96,7 @@ tile.tardis.hellbent_pole.name=Poteau de la montée en enfer
 tile.tardis.hellbent_roof.name=Chose au plafond de la montée en enfer
 tile.tardis.json_test.name=Testeur JSON
 tile.tardis.telos_sand.name=Sable de Telos
+tile.tardis.moon_dirt.name=Terre lunaire 
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
@@ -160,6 +161,7 @@ systems.protocol.dimensions=Systèmes dimensionnel
 system.tardis.fluidlinks=Liens pour liquide
 systems.tardis.antenna=Antenne interstitielle
 system.tardis.ccircuit=Circuit Caméléon
+system.tardis.temporal_grace=Circuits de grâce temporelle
 
 tardis.dimension=Dimension Nav-com est:
 
@@ -171,6 +173,7 @@ config.setdim=Paramétrer des IDs de dimensions pour le TARDIS?
 config.tDim=Dimension TARDIS
 config.bhDim=Dimension spatiale
 config.dim.usewhitelist=Les dimensions de la liste doivent-elles être utilisées comme liste blanche ?
+config.telosDim=ID de la dimension Telos
 
 config.entity=Entitées
 config.entity.allowed=Ce mod doit-il ajouter des Mobs ?
@@ -250,3 +253,5 @@ gui.tardis.travel=Voyager
 companion.tardis.follow.true=Suis-moi s'il te plait.
 companion.tardis.follow.false=Attends ici.
 companion.tardis.tardis=Retourne dans le TARDIS et attends-moi.
+companion.tardis.fetch=J'ai besoin que tu ailles chercher le TARDIS.
+companion.tardis.saved.dalek=Bon travail avec ces Daleks !
