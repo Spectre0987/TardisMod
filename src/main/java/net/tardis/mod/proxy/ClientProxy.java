@@ -3,6 +3,8 @@ package net.tardis.mod.proxy;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelOcelot;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -71,6 +73,7 @@ import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityAdipose;
 import net.tardis.mod.common.entities.EntityCompanion;
+import net.tardis.mod.common.entities.EntityCompanion.EnumCompanionType;
 import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityCybermanTomb;
@@ -229,6 +232,12 @@ public class ClientProxy extends ServerProxy {
 		Item.getItemFromBlock(TBlocks.console).setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelConsole(), RenderConsole.CONSOLE_TEXTURE));
 		
 		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new BlockColorTelos(), TBlocks.telos_sand);
+		
+		EnumCompanionType.CLAIRE.setModel(new ModelOcelot());
+		EnumCompanionType.ALEXA.setModel(new ModelPlayer(0.0625F, true));
+		EnumCompanionType.PETER.setModel(new ModelPlayer(0.0625F, true));
+		EnumCompanionType.VANDHAM.setModel(new ModelPlayer(0.0625F, true));
+		EnumCompanionType.VASSILIS.setModel(new ModelPlayer(0.0625F, false));
 	}
 	
 	

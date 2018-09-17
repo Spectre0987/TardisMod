@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -91,6 +93,9 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 			if(tardis != null && tardis.isInFlight()) {
 				this.setXP(this.getXP() + 0.001F);
 			}
+		}
+		if(true) {
+			this.setSize(this.getType().size[0], this.getType().size[1]);
 		}
 	}
 
@@ -249,25 +254,28 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	}
 	
 	public static enum EnumCompanionType{
-		CLAIRE("claire", "Claire", true),
+		CLAIRE("black", "Claire", new float[] {1F, 0.5F}),
 		VASSILIS("vassilis", "Vassilis"),
-		ALEXA("alexa", "Alexa", true),
-		PETER("peter", "Peter", true),
+		ALEXA("alexa", "Alexa"),
+		PETER("peter", "Peter"),
 		VANDHAM("vandham", "Vandham"),
 		NONE("", "");
 		
 		ResourceLocation skin;
 		String formattedName = "";
-		boolean smallArms = false;
+		float[] size = {1, 2};
+		
+		@SideOnly(Side.CLIENT)
+		public ModelBase model = new ModelPlayer(0.0625F, false);
 		
 		EnumCompanionType(String name, String formatName) {
 			skin = new ResourceLocation(Tardis.MODID, "textures/entity/" + name + ".png");
 			formattedName = formatName;
 		}
 		
-		EnumCompanionType(String name, String formatName, boolean smallArms) {
-			this(name, formatName);
-			this.smallArms = smallArms;
+		EnumCompanionType(String name, String formattedName, float[] size){
+			this(name, formattedName);
+			this.size = size;
 		}
 		
 		public ResourceLocation getTexture() {
@@ -278,8 +286,15 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 			return this.formattedName;
 		}
 		
-		public boolean getSmallArms() {
-			return smallArms;
+		@SideOnly(Side.CLIENT)
+		public void setModel(ModelBase model) {
+			this.model = model;
+		}
+		
+		@SideOnly(Side.CLIENT)
+		public ModelBase getModel() {
+			model.isChild = false;
+			return model;
 		}
 	}
 
@@ -418,6 +433,11 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean isChild() {
+		return false;
 	}
 
 }
