@@ -94,7 +94,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 				this.setXP(this.getXP() + 0.001F);
 			}
 		}
-		if(true) {
+		if(this.isWrongSize()) {
 			this.setSize(this.getType().size[0], this.getType().size[1]);
 		}
 	}
@@ -253,17 +253,24 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		return true;
 	}
 	
+	public boolean isWrongSize() {
+		float[] size = this.getType().size;
+		if(this.width != size[0] || this.height != size[1])
+			return true;
+		return false;
+	}
 	public static enum EnumCompanionType{
-		CLAIRE("black", "Claire", new float[] {1F, 0.5F}),
+		CLAIRE("claire", "Claire"),
 		VASSILIS("vassilis", "Vassilis"),
 		ALEXA("alexa", "Alexa"),
 		PETER("peter", "Peter"),
 		VANDHAM("vandham", "Vandham"),
+		WOLSEY("black", "Wolsey", new float[] {0.75F, 1F}),
 		NONE("", "");
 		
 		ResourceLocation skin;
 		String formattedName = "";
-		float[] size = {1, 2};
+		float[] size = {0.95F, 1.75F};
 		
 		@SideOnly(Side.CLIENT)
 		public ModelBase model = new ModelPlayer(0.0625F, false);
@@ -427,7 +434,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 					if(!c.getSit() && c.getOwner() != null && c.getOwner() == player) {
 						TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(event.getPos()));
 						if(tardis != null) {
-							tardis.transferPlayer(c, false);
+							tardis.transferPlayer(c, true);
 						}
 					}
 				}

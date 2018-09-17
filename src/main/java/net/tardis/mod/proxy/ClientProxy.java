@@ -233,11 +233,12 @@ public class ClientProxy extends ServerProxy {
 		
 		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new BlockColorTelos(), TBlocks.telos_sand);
 		
-		EnumCompanionType.CLAIRE.setModel(new ModelOcelot());
+		EnumCompanionType.CLAIRE.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.ALEXA.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.PETER.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.VANDHAM.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.VASSILIS.setModel(new ModelPlayer(0.0625F, false));
+		EnumCompanionType.WOLSEY.setModel(new ModelOcelot());
 	}
 	
 	

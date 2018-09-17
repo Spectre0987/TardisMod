@@ -15,11 +15,11 @@ public class TardisTeleporter implements ITeleporter {
 	
 	@Override
 	public void placeEntity(World world, Entity entity, float yaw) {
-		if(!world.isRemote) {
+		/*if(!world.isRemote) {
 			((WorldServer)world).addScheduledTask(() -> {
                 entity.setEntityInvulnerable(false);
                 entity.extinguish();
             });
-		}
+		}*/
 	}
 }

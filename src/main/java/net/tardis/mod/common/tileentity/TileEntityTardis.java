@@ -37,8 +37,11 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.events.TardisEnterEvent;
+import net.tardis.mod.api.events.TardisExitEvent;
 import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -864,6 +867,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void transferPlayer(Entity entity, boolean checkDoors) {
 		WorldServer ws = world.getMinecraftServer().getWorld(dimension);
 		if(ws == null)return;
+		MinecraftForge.EVENT_BUS.post(new TardisExitEvent(entity, this.getPos()));
 		BlockPos pos = this.getLocation();
 		if(checkDoors) {
 			TileEntityDoor door = (TileEntityDoor)ws.getTileEntity(this.getLocation().up());
@@ -876,8 +880,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get360FromFacing(face), 0);
 				}
 				else if(!(entity instanceof EntityPlayer)){
-					entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
 					entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+					entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
 				}
 			}
 		}
@@ -892,6 +896,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	public void enterTARDIS(Entity entity) {
 		if(this.getTardisState() != EnumTardisState.NORMAL) return;
+		MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, this.getPos()));
 		ControlDoor door = this.getDoor();
 		Vec3d pos;
 		EnumFacing face = EnumFacing.NORTH;
@@ -902,6 +907,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			pos = door.getPositionVector().add(door.getLookVec());
 			face = door.getHorizontalFacing();
 		}
+		
 		if(entity instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP)entity;
 			if(player.dimension != TDimensions.TARDIS_ID)
