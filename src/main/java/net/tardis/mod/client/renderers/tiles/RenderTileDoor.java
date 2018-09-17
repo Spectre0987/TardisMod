@@ -1,15 +1,11 @@
 package net.tardis.mod.client.renderers.tiles;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
@@ -36,15 +32,14 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 	@Override
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
-		boolean airBelow = mc.world.getBlockState(te.getPos().down()).getBlock() == Blocks.AIR;
-
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		boolean open = !te.isLocked();
+		EnumFacing facing = EnumFacing.NORTH;
 		if(te.getWorld() != null) {
 			IBlockState state = te.getWorld().getBlockState(te.getPos());
 			if(state.getBlock() instanceof BlockTardisTop) {
-				EnumFacing facing = state.getValue(BlockTardisTop.FACING);
+				facing = state.getValue(BlockTardisTop.FACING);
 				switch(facing) {
 				case EAST:{
 						GlStateManager.translate(0, 0, 1);
@@ -69,48 +64,31 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			RenderHelper.renderPortal(renderShell, te, partialTicks);
 		}
 		GlStateManager.popMatrix();
-	    //RenderDoor
-	    {
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
-			GlStateManager.rotate(180, 0, 0, 1);
-
-			if(mc.world.getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
-
-				GlStateManager.rotate(Helper.getAngleFromFacing(mc.world.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
-			}
-			mc.getTextureManager().bindTexture(TEXTURE);
-
-			GlStateManager.enableBlend();
-			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
-			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			GlStateManager.translate(0, -0.03125F, 0);
-			GlStateManager.pushMatrix();
-			if (open) {
-				Vec3d origin = Helper.convertToPixels(7, 0, -8.5);
-				GlStateManager.translate(origin.x, origin.y, origin.z);
-				GlStateManager.rotate(85, 0, 1, 0);
-				origin = origin.scale(-1);
-				GlStateManager.translate(origin.x, origin.y, origin.z);
-			}
-			GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
-			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			GlStateManager.popMatrix();
-			GlStateManager.pushMatrix();
-				if (open) {
-					Vec3d origin = Helper.convertToPixels(-7, 0, -8.5);
-					GlStateManager.translate(origin.x, origin.y, origin.z);
-					GlStateManager.rotate(-85, 0, 1, 0);
-					origin = origin.scale(-1);
-					GlStateManager.translate(origin.x, origin.y, origin.z);
-				}
-				GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
-				ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
-			GlStateManager.popMatrix();
-			GlStateManager.popMatrix();
-	    }
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
+		if(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
+			EnumFacing face = te.getWorld().getBlockState(te.getPos()).getValue(BlockTardisTop.FACING);
+			GlStateManager.rotate(Helper.get360FromFacing(facing), 0, 1, 0);
+			if(face == EnumFacing.WEST || face == EnumFacing.EAST) GlStateManager.rotate(180, 0, 1, 0);
+		}
+		this.mc.getTextureManager().bindTexture(TEXTURE);
+		GlStateManager.rotate(180, 1, 0, 0);
+		model.renderGlow(null, 0, 0, 0, 0, 0, 0.0625F, true);
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0.46875, 0, -0.53125);
+		GlStateManager.rotate(open ? 85 : 0, 0, 1, 0);
+		ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.popMatrix();
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-0.46875, 0, -0.53125);
+		GlStateManager.rotate(open ? -85 : 0, 0, 1, 0);
+		rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.popMatrix();
+		
+		GlStateManager.popMatrix();
 	}
 	
 }

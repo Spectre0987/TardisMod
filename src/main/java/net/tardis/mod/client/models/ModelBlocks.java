@@ -28,8 +28,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
+import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.client.worldshell.WorldShell;
@@ -184,7 +184,12 @@ public class ModelBlocks implements IExteriorModel{
 	
 	@Override
 	public void renderClosed(float scale) {
+		GlStateManager.pushMatrix();
+		GlStateManager.scale(0.5, 0.5, 0.5);
+		GlStateManager.translate(-0.5, 3, 0.5);
+		GlStateManager.rotate(180, 1, 0, 0);
 		this.render();
+		GlStateManager.popMatrix();
 	}
 
 	@Override

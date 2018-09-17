@@ -74,7 +74,7 @@ public class RenderHelper {
 				GlStateManager.rotate(180, 0, 1, 0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
-				if(!wBoti.provider.isSurfaceWorld()) {
+				if(!wBoti.provider.isSkyColored()) {
 					GlStateManager.pushMatrix();
 					Vec3d color = wBoti.provider.getFogColor(0, 0);
 					GlStateManager.enableFog();
@@ -91,9 +91,7 @@ public class RenderHelper {
 					GlStateManager.disableFog();
 					GlStateManager.popMatrix();
 				}
-				if(wBoti.provider.isSurfaceWorld()) {
-					Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
-				}
+				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
@@ -168,5 +166,23 @@ public class RenderHelper {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void renderTransformAxis() {
+		GlStateManager.pushMatrix();
+		GlStateManager.disableTexture2D();
+		BufferBuilder bb = Tessellator.getInstance().getBuffer();
+		bb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
+		bb.pos(-1, 0, 0).color(1F, 0, 0, 1F).endVertex();
+		bb.pos(1, 0, 0).color(1F, 0, 0, 1F).endVertex();
+		
+		bb.pos(0, -1, 0).color(0F, 0, 1, 1F).endVertex();
+		bb.pos(0, 1, 0).color(0F, 0, 1, 1F).endVertex();
+		
+		bb.pos(0, 0, -1).color(0F, 1, 0, 1F).endVertex();
+		bb.pos(0, 0, 1).color(0F, 1, 0, 1F).endVertex();
+		Tessellator.getInstance().draw();
+		GlStateManager.enableTexture2D();
+		GlStateManager.popMatrix();
 	}
 }

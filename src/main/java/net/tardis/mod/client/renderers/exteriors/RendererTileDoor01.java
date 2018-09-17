@@ -66,45 +66,18 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 	            }
 			}
 		}
-		if(open)RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, new Vec3d(1, 2.2, 0));
+		if(open) RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, new Vec3d(1, 2.2, 0));
 	    GlStateManager.popMatrix();
 	    //RenderDoor
 	    {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
-			GlStateManager.rotate(180, 0, 0, 1);
+			GlStateManager.rotate(180, 0, 0, 0);
 			if(mc.world.getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
 				GlStateManager.rotate(Helper.getAngleFromFacing(mc.world.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 			}
 			mc.getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.enableBlend();
-			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
-
-			model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			GlStateManager.pushMatrix();
-			if (open) {
-				Vec3d origin = Helper.convertToPixels(7, 0, -8.5);
-				GlStateManager.translate(origin.x, origin.y, origin.z);
-				GlStateManager.rotate(85, 0, 1, 0);
-				origin = origin.scale(-1);
-				GlStateManager.translate(origin.x, origin.y, origin.z);
-			}
-			GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
-			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			GlStateManager.popMatrix();
-			GlStateManager.pushMatrix();
-				if (open) {
-					Vec3d origin = Helper.convertToPixels(-7, 0, -8.5);
-					GlStateManager.translate(origin.x, origin.y, origin.z);
-					GlStateManager.rotate(-85, 0, 1, 0);
-					origin = origin.scale(-1);
-					GlStateManager.translate(origin.x, origin.y, origin.z);
-				}
-				GlStateManager.color(1.0f, 1.0f, 1.0f, te.alpha);
-				ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
-			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-			GlStateManager.popMatrix();
+			
 			GlStateManager.popMatrix();
 	    }
 	}

@@ -1,5 +1,11 @@
 package net.tardis.mod.client.guis;
 
+import java.awt.Color;
+import java.io.IOException;
+
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -11,11 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.packets.MessageExteriorChange;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class GuiCCircuit extends GuiScreen {
 	
@@ -28,6 +29,7 @@ public class GuiCCircuit extends GuiScreen {
 	private GuiButton prevArrow;
 	private static final int WIDTH = 248;
 	private static final int HEIGHT = 166;
+	private static final int BOX_NAME_COLOR = new Color((float)111 / 255, (float)111 / 255, (float)111 / 255).getRGB();
 	private int index = 0;
 	
 	public GuiCCircuit() {
@@ -51,7 +53,9 @@ public class GuiCCircuit extends GuiScreen {
 		this.drawTexturedModalRect(res.getScaledWidth() / 2 - WIDTH / 2, res.getScaledHeight() / 2 - HEIGHT / 2, 0, 0, WIDTH, HEIGHT);
 		GlStateManager.pushMatrix();
 		String title = "Chameleon Circuit";
-		mc.fontRenderer.drawStringWithShadow(title, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(title) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT, Color.lightGray.getRGB());
+		mc.fontRenderer.drawStringWithShadow(title, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(title) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT, BOX_NAME_COLOR);
+		String boxName = "19Who gives a fuck - Doctor's Name";
+		mc.fontRenderer.drawStringWithShadow(boxName, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(boxName) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT * 2.3F, BOX_NAME_COLOR);
 		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.popMatrix();
 		{
@@ -60,10 +64,12 @@ public class GuiCCircuit extends GuiScreen {
 			GlStateManager.translate(res.getScaledWidth() / 2, res.getScaledHeight() / 2, -20);
 			GlStateManager.scale(25, 25, 25);
             if (!isMouseDown()) {
-			GlStateManager.rotate(mc.world.getTotalWorldTime() % 360, 0, 1, 0); } else {
-			GlStateManager.translate(0, 0, -2);
-			GlStateManager.rotate(rotX, 1, 0, 0);
-			GlStateManager.rotate(rotY, 0, 1, 0);
+            	GlStateManager.rotate(mc.world.getTotalWorldTime() % 360, 0, 1, 0);
+			}
+            else {
+				GlStateManager.translate(0, 0, -2);
+				GlStateManager.rotate(rotX, 1, 0, 0);
+				GlStateManager.rotate(rotY, 0, 1, 0);
 			}
 			GL11.glDepthFunc(GL11.GL_GREATER);
 			RenderHelper.disableStandardItemLighting();

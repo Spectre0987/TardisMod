@@ -1,228 +1,199 @@
 package net.tardis.mod.client.models.exteriors;
 
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.tardis.mod.client.renderers.RenderHelper;
+import net.tardis.mod.util.helpers.Helper;
 
-public class ModelLeftDoor01 extends ModelBase
-{
-  //fields
-    ModelRenderer LeftDoor01;
-    ModelRenderer LeftDoor02;
-    ModelRenderer LeftDoor03;
-    ModelRenderer LeftDoor04;
-    ModelRenderer LeftDoor05;
-    ModelRenderer LeftDoor06;
-    ModelRenderer LeftDoor07;
-    ModelRenderer LeftDoor08;
-    ModelRenderer LeftDoor09;
-    ModelRenderer LeftDoor10;
-    ModelRenderer LeftDoor11;
-    ModelRenderer LeftDoor12;
-    ModelRenderer LeftDoor13;
-    ModelRenderer LeftDoor14;
-    ModelRenderer LeftDoor15;
-    ModelRenderer LeftDoor16;
-    ModelRenderer LeftDoor17;
-    ModelRenderer LeftDoor18;
-    ModelRenderer LeftDoor19;
-    ModelRenderer LeftDoor20;
-    ModelRenderer LeftDoor21;
-    ModelRenderer LeftDoor22;
-    ModelRenderer LeftDoor23;
-    ModelRenderer LeftDoor24;
-  
-  public ModelLeftDoor01()
-  {
-    textureWidth = 256;
-    textureHeight = 256;
-    
-      LeftDoor01 = new ModelRenderer(this, 18, 72);
-      LeftDoor01.addBox(-6.5F, 0F, 0F, 5, 1, 1);
-      LeftDoor01.setRotationPoint(0F, 0F, -9F);
-      LeftDoor01.setTextureSize(256, 256);
-      LeftDoor01.mirror = true;
-      setRotation(LeftDoor01, 1.047198F, 0F, 0F);
-      LeftDoor02 = new ModelRenderer(this, 18, 72);
-      LeftDoor02.addBox(-6.5F, -1F, 0F, 5, 1, 1);
-      LeftDoor02.setRotationPoint(0F, 6.5F, -9F);
-      LeftDoor02.setTextureSize(256, 256);
-      LeftDoor02.mirror = true;
-      setRotation(LeftDoor02, -1.047198F, 0F, 0F);
-      LeftDoor03 = new ModelRenderer(this, 18, 72);
-      LeftDoor03.addBox(-6.5F, 0F, 0F, 5, 1, 1);
-      LeftDoor03.setRotationPoint(0F, 7.5F, -9F);
-      LeftDoor03.setTextureSize(256, 256);
-      LeftDoor03.mirror = true;
-      setRotation(LeftDoor03, 1.047198F, 0F, 0F);
-      LeftDoor04 = new ModelRenderer(this, 18, 72);
-      LeftDoor04.addBox(-6.5F, -1F, 0F, 5, 1, 1);
-      LeftDoor04.setRotationPoint(0F, 14F, -9F);
-      LeftDoor04.setTextureSize(256, 256);
-      LeftDoor04.mirror = true;
-      setRotation(LeftDoor04, -1.047198F, 0F, 0F);
-      LeftDoor05 = new ModelRenderer(this, 18, 72);
-      LeftDoor05.addBox(-6.5F, 0F, 0F, 5, 1, 1);
-      LeftDoor05.setRotationPoint(0F, 15F, -9F);
-      LeftDoor05.setTextureSize(256, 256);
-      LeftDoor05.mirror = true;
-      setRotation(LeftDoor05, 1.047198F, 0F, 0F);
-      LeftDoor06 = new ModelRenderer(this, 18, 72);
-      LeftDoor06.addBox(-6.5F, -1F, 0F, 5, 1, 1);
-      LeftDoor06.setRotationPoint(0F, 21.5F, -9F);
-      LeftDoor06.setTextureSize(256, 256);
-      LeftDoor06.mirror = true;
-      setRotation(LeftDoor06, -1.047198F, 0F, 0F);
-      LeftDoor07 = new ModelRenderer(this, 13, 72);
-      LeftDoor07.addBox(-1.5F, -9F, -8.5F, 1, 31, 1);
-      LeftDoor07.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor07.setTextureSize(256, 256);
-      LeftDoor07.mirror = true;
-      setRotation(LeftDoor07, 0F, 0F, 0F);
-      LeftDoor08 = new ModelRenderer(this, 187, 0);
-      LeftDoor08.addBox(-0.5F, -8.5F, -8.7F, 1, 31, 1);
-      LeftDoor08.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor08.setTextureSize(256, 256);
-      LeftDoor08.mirror = true;
-      setRotation(LeftDoor08, 0F, 0F, 0F);
-      LeftDoor09 = new ModelRenderer(this, 18, 72);
-      LeftDoor09.addBox(-7.5F, -8.5F, -8.5F, 7, 1, 1);
-      LeftDoor09.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor09.setTextureSize(256, 256);
-      LeftDoor09.mirror = true;
-      setRotation(LeftDoor09, 0F, 0F, 0F);
-      LeftDoor10 = new ModelRenderer(this, 18, 72);
-      LeftDoor10.addBox(-7.5F, 6.5F, -8.5F, 7, 1, 1);
-      LeftDoor10.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor10.setTextureSize(256, 256);
-      LeftDoor10.mirror = true;
-      setRotation(LeftDoor10, 0F, 0F, 0F);
-      LeftDoor11 = new ModelRenderer(this, 18, 72);
-      LeftDoor11.addBox(-7.5F, 14F, -8.5F, 7, 1, 1);
-      LeftDoor11.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor11.setTextureSize(256, 256);
-      LeftDoor11.mirror = true;
-      setRotation(LeftDoor11, 0F, 0F, 0F);
-      LeftDoor12 = new ModelRenderer(this, 18, 72);
-      LeftDoor12.addBox(-7.5F, 21.5F, -8.5F, 7, 1, 1);
-      LeftDoor12.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor12.setTextureSize(256, 256);
-      LeftDoor12.mirror = true;
-      setRotation(LeftDoor12, 0F, 0F, 0F);
-      LeftDoor13 = new ModelRenderer(this, 0, 0);
-      LeftDoor13.addBox(-0.5F, -3.5F, -0.5F, 1, 7, 1);
-      LeftDoor13.setRotationPoint(-3.2F, -4.45F, -8.2F);
-      LeftDoor13.setTextureSize(256, 256);
-      LeftDoor13.mirror = true;
-      setRotation(LeftDoor13, 0F, 0.7853982F, 0F);
-      LeftDoor14 = new ModelRenderer(this, 0, 0);
-      LeftDoor14.addBox(-0.5F, -3.5F, -0.5F, 1, 7, 1);
-      LeftDoor14.setRotationPoint(-4.8F, -4.45F, -8.2F);
-      LeftDoor14.setTextureSize(256, 256);
-      LeftDoor14.mirror = true;
-      setRotation(LeftDoor14, 0F, 0.7853982F, 0F);
-      LeftDoor15 = new ModelRenderer(this, 0, 0);
-      LeftDoor15.addBox(-2.5F, -0.5F, -0.5F, 5, 1, 1);
-      LeftDoor15.setRotationPoint(-4F, -4.25F, -8.2F);
-      LeftDoor15.setTextureSize(256, 256);
-      LeftDoor15.mirror = true;
-      setRotation(LeftDoor15, 0.7853982F, 0F, 0F);
-      LeftDoor16 = new ModelRenderer(this, 0, 72);
-      LeftDoor16.addBox(-6.5F, -7.75F, -8.2F, 5, 30, 0);
-      LeftDoor16.setRotationPoint(0F, -0.5F, -0.5F);
-      LeftDoor16.setTextureSize(256, 256);
-      LeftDoor16.mirror = true;
-      setRotation(LeftDoor16, 0F, 0F, 0F);
-      LeftDoor17 = new ModelRenderer(this, 13, 33);
-      LeftDoor17.addBox(0F, -8F, 0F, 1, 31, 1);
-      LeftDoor17.setRotationPoint(-6.5F, -0.5F, -9F);
-      LeftDoor17.setTextureSize(256, 256);
-      LeftDoor17.mirror = true;
-      setRotation(LeftDoor17, 0F, -1.047198F, 0F);
-      LeftDoor18 = new ModelRenderer(this, 13, 33);
-      LeftDoor18.addBox(-1F, -8F, 0F, 1, 31, 1);
-      LeftDoor18.setRotationPoint(-1.5F, -0.5F, -9F);
-      LeftDoor18.setTextureSize(256, 256);
-      LeftDoor18.mirror = true;
-      setRotation(LeftDoor18, 0F, 1.047198F, 0F);
-      LeftDoor19 = new ModelRenderer(this, 18, 68);
-      LeftDoor19.addBox(-6.5F, 0F, 0F, 5, 1, 1);
-      LeftDoor19.setRotationPoint(0F, -7.5F, -9F);
-      LeftDoor19.setTextureSize(256, 256);
-      LeftDoor19.mirror = true;
-      setRotation(LeftDoor19, 1.047198F, 0F, 0F);
-      LeftDoor20 = new ModelRenderer(this, 18, 68);
-      LeftDoor20.addBox(-6.5F, -1F, 0F, 5, 1, 1);
-      LeftDoor20.setRotationPoint(0F, -1F, -9F);
-      LeftDoor20.setTextureSize(256, 256);
-      LeftDoor20.mirror = true;
-      setRotation(LeftDoor20, -1.047198F, 0F, 0F);
-      LeftDoor21 = new ModelRenderer(this, 13, 72);
-      LeftDoor21.addBox(-7.5F, -8.5F, -8.5F, 1, 31, 1);
-      LeftDoor21.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor21.setTextureSize(256, 256);
-      LeftDoor21.mirror = true;
-      setRotation(LeftDoor21, 0F, 0F, 0F);
-      LeftDoor22 = new ModelRenderer(this, 13, 106);
-      LeftDoor22.addBox(-1.5F, 6.5F, -8.9F, 1, 1, 1);
-      LeftDoor22.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor22.setTextureSize(256, 256);
-      LeftDoor22.mirror = true;
-      setRotation(LeftDoor22, 0F, 0F, 0F);
-      LeftDoor23 = new ModelRenderer(this, 18, 72);
-      LeftDoor23.addBox(-7.5F, -1F, -8.5F, 7, 1, 1);
-      LeftDoor23.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor23.setTextureSize(256, 256);
-      LeftDoor23.mirror = true;
-      setRotation(LeftDoor23, 0F, 0F, 0F);
-      LeftDoor24 = new ModelRenderer(this, 18, 68);
-      LeftDoor24.addBox(-6.5F, -1.3F, -8.45F, 5, 1, 1);
-      LeftDoor24.setRotationPoint(0F, 0F, -0.5F);
-      LeftDoor24.setTextureSize(256, 256);
-      LeftDoor24.mirror = true;
-      setRotation(LeftDoor24, 0F, 0F, 0F);
-  }
-  
-  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-  {
-    super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    LeftDoor01.render(f5);
-    LeftDoor02.render(f5);
-    LeftDoor03.render(f5);
-    LeftDoor04.render(f5);
-    LeftDoor05.render(f5);
-    LeftDoor06.render(f5);
-    LeftDoor07.render(f5);
-    LeftDoor08.render(f5);
-    LeftDoor09.render(f5);
-    LeftDoor10.render(f5);
-    LeftDoor11.render(f5);
-    LeftDoor12.render(f5);
-    LeftDoor13.render(f5);
-    LeftDoor14.render(f5);
-    LeftDoor15.render(f5);
-    LeftDoor16.render(f5);
-    LeftDoor17.render(f5);
-    LeftDoor18.render(f5);
-    LeftDoor19.render(f5);
-    LeftDoor20.render(f5);
-    LeftDoor21.render(f5);
-    LeftDoor22.render(f5);
-    LeftDoor23.render(f5);
-    LeftDoor24.render(f5);
-  }
-  
-  private void setRotation(ModelRenderer model, float x, float y, float z)
-  {
-    model.rotateAngleX = x;
-    model.rotateAngleY = y;
-    model.rotateAngleZ = z;
-  }
-  
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-  {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-  }
+public class ModelLeftDoor01 extends ModelBase {
 
+	ModelRenderer Shape1;
+	ModelRenderer Gen0;
+	ModelRenderer Gen1;
+	ModelRenderer Gen2;
+	ModelRenderer Gen3;
+	ModelRenderer Gen4;
+	ModelRenderer Gen5;
+	ModelRenderer Gen6;
+	ModelRenderer Gen7;
+	ModelRenderer Gen8;
+	ModelRenderer Gen9;
+	ModelRenderer Gen10;
+	ModelRenderer Gen11;
+	ModelRenderer Gen12;
+	ModelRenderer Gen13;
+	ModelRenderer Gen14;
+	ModelRenderer Gen15;
+	ModelRenderer Gen16;
+
+	public ModelLeftDoor01() { 
+
+		textureWidth = 256;
+		textureHeight = 256;
+
+		Shape1 = new ModelRenderer(this, 18, 72);
+		Shape1.addBox(0.5F, -1.0F, -8.5F, 7, 1, 1);
+		Shape1.setTextureSize(256, 256);
+		Shape1.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Shape1, 0.0F, 0.0F, 0.0F);
+		Shape1.mirror = false;
+
+		Gen0 = new ModelRenderer(this, 18, 72);
+		Gen0.addBox(0.5F, 21.5F, -8.5F, 7, 1, 1);
+		Gen0.setTextureSize(256, 256);
+		Gen0.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen0, 0.0F, 0.0F, 0.0F);
+		Gen0.mirror = false;
+
+		Gen1 = new ModelRenderer(this, 18, 72);
+		Gen1.addBox(0.5F, 6.5F, -8.5F, 7, 1, 1);
+		Gen1.setTextureSize(256, 256);
+		Gen1.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen1, 0.0F, 0.0F, 0.0F);
+		Gen1.mirror = false;
+
+		Gen2 = new ModelRenderer(this, 18, 72);
+		Gen2.addBox(0.5F, 14.0F, -8.5F, 7, 1, 1);
+		Gen2.setTextureSize(256, 256);
+		Gen2.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen2, 0.0F, 0.0F, 0.0F);
+		Gen2.mirror = false;
+
+		Gen3 = new ModelRenderer(this, 0, 0);
+		Gen3.addBox(-2.5F, -0.5F, -0.5F, 5, 1, 1);
+		Gen3.setTextureSize(256, 256);
+		Gen3.setRotationPoint(4.0F, -4.5F, -8.2F);
+		setRotation(Gen3, 0.7853981633974483F, 0.0F, 0.0F);
+		Gen3.mirror = false;
+
+		Gen4 = new ModelRenderer(this, 18, 72);
+		Gen4.addBox(0.5F, -8.5F, -8.5F, 7, 1, 1);
+		Gen4.setTextureSize(256, 256);
+		Gen4.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen4, 0.0F, 0.0F, 0.0F);
+		Gen4.mirror = false;
+
+		Gen5 = new ModelRenderer(this, 13, 72);
+		Gen5.addBox(0.5F, -8.5F, -6.5F, 1, 31, 1);
+		Gen5.setTextureSize(256, 256);
+		Gen5.setRotationPoint(0.0F, 0.0F, -2.5F);
+		setRotation(Gen5, 0.0F, 0.0F, 0.0F);
+		Gen5.mirror = false;
+
+		Gen6 = new ModelRenderer(this, 13, 72);
+		Gen6.addBox(6.5F, -8.0F, -8.5F, 1, 30, 1);
+		Gen6.setTextureSize(256, 256);
+		Gen6.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen6, 0.0F, 0.0F, 0.0F);
+		Gen6.mirror = false;
+
+		Gen7 = new ModelRenderer(this, 0, 0);
+		Gen7.addBox(-0.5F, -3.5F, -0.5F, 1, 7, 1);
+		Gen7.setTextureSize(256, 256);
+		Gen7.setRotationPoint(3.1F, -4.45F, -8.2F);
+		setRotation(Gen7, 0.0F, 0.7853981633974483F, 0.0F);
+		Gen7.mirror = false;
+
+		Gen8 = new ModelRenderer(this, 0, 0);
+		Gen8.addBox(-0.5F, -3.5F, -0.5F, 1, 7, 1);
+		Gen8.setTextureSize(256, 256);
+		Gen8.setRotationPoint(4.9F, -4.45F, -8.2F);
+		setRotation(Gen8, 0.0F, 0.7853981633974483F, 0.0F);
+		Gen8.mirror = false;
+
+		Gen9 = new ModelRenderer(this, 62, 86);
+		Gen9.addBox(3.8F, 3.55F, -8.4F, 1, 1, 1);
+		Gen9.setTextureSize(256, 256);
+		Gen9.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen9, 0.0F, 0.0F, 0.0F);
+		Gen9.mirror = false;
+
+		Gen10 = new ModelRenderer(this, 18, 68);
+		Gen10.addBox(1.5F, -1.5F, -8.45F, 5, 1, 1);
+		Gen10.setTextureSize(256, 256);
+		Gen10.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen10, 0.0F, 0.0F, 0.0F);
+		Gen10.mirror = false;
+
+		Gen11 = new ModelRenderer(this, 46, 81);
+		Gen11.addBox(1.5F, -7.0F, -8.2F, 5, 29, 0);
+		Gen11.setTextureSize(256, 256);
+		Gen11.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen11, 0.0F, 0.0F, 0.0F);
+		Gen11.mirror = false;
+
+		Gen12 = new ModelRenderer(this, 57, 81);
+		Gen12.addBox(3.0F, 2.75F, -8.3F, 2, 2, 1);
+		Gen12.setTextureSize(256, 256);
+		Gen12.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen12, 0.0F, 0.0F, 0.0F);
+		Gen12.mirror = false;
+
+		Gen13 = new ModelRenderer(this, 57, 86);
+		Gen13.addBox(3.5F, 3.25F, -8.5F, 1, 1, 1);
+		Gen13.setTextureSize(256, 256);
+		Gen13.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen13, 0.0F, 0.0F, 0.0F);
+		Gen13.mirror = false;
+
+		Gen14 = new ModelRenderer(this, 62, 86);
+		Gen14.addBox(3.2F, 3.55F, -8.4F, 1, 1, 1);
+		Gen14.setTextureSize(256, 256);
+		Gen14.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen14, 0.0F, 0.0F, 0.0F);
+		Gen14.mirror = false;
+
+		Gen15 = new ModelRenderer(this, 62, 86);
+		Gen15.addBox(3.8F, 2.95F, -8.4F, 1, 1, 1);
+		Gen15.setTextureSize(256, 256);
+		Gen15.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen15, 0.0F, 0.0F, 0.0F);
+		Gen15.mirror = false;
+
+		Gen16 = new ModelRenderer(this, 62, 86);
+		Gen16.addBox(3.2F, 2.95F, -8.4F, 1, 1, 1);
+		Gen16.setTextureSize(256, 256);
+		Gen16.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen16, 0.0F, 0.0F, 0.0F);
+		Gen16.mirror = false;
+
+	}
+	@Override
+	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+		RenderHelper.renderTransformAxis();
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-0.46875, 0, 0.53125F);
+		Shape1.render(scale);
+		Gen0.render(scale);
+		Gen1.render(scale);
+		Gen2.render(scale);
+		Gen3.render(scale);
+		Gen4.render(scale);
+		Gen5.render(scale);
+		Gen6.render(scale);
+		Gen7.render(scale);
+		Gen8.render(scale);
+		Gen9.render(scale);
+		Gen10.render(scale);
+		Gen11.render(scale);
+		Gen12.render(scale);
+		Gen13.render(scale);
+		Gen14.render(scale);
+		Gen15.render(scale);
+		Gen16.render(scale);
+		GlStateManager.popMatrix();
+	}
+	private void setRotation(ModelRenderer model, float x, float y, float z){
+		model.rotateAngleX = x;
+		model.rotateAngleY = y;
+		model.rotateAngleZ = z;
+	}
+
+	@Override
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
+	}
 }
