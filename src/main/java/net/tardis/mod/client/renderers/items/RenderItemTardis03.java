@@ -24,7 +24,6 @@ public class RenderItemTardis03 extends TileEntityItemStackRenderer {
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();
 		mc.getTextureManager().bindTexture(RenderTileDoor03.TEXTURE);
-		model.setLight(false);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		ld.render(null, 0, 0, 0, 0, 0, 0.0625F);

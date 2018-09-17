@@ -1,220 +1,152 @@
 package net.tardis.mod.client.models.exteriors;
 
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.tardis.mod.client.renderers.RenderHelper;
 
-public class ModelRightDoor03 extends ModelBase
-{
-  //fields
-    ModelRenderer NewberyRightDoor01;
-    ModelRenderer NewberyRightDoor02;
-    ModelRenderer NewberyRightDoor03;
-    ModelRenderer NewberyRightDoor04;
-    ModelRenderer NewberyRightDoor05;
-    ModelRenderer NewberyRightDoor06;
-    ModelRenderer NewberyRightDoor07;
-    ModelRenderer NewberyRightDoor08;
-    ModelRenderer NewberyRightDoor09;
-    ModelRenderer NewberyRightDoor10;
-    ModelRenderer NewberyRightDoor11;
-    ModelRenderer NewberyRightDoor12;
-    ModelRenderer NewberyRightDoor13;
-    ModelRenderer NewberyRightDoor14;
-    ModelRenderer NewberyRightDoor15;
-    ModelRenderer NewberyRightDoor16;
-    ModelRenderer NewberyRightDoor17;
-    ModelRenderer NewberyRightDoor18;
-    ModelRenderer NewberyRightDoor19;
-    ModelRenderer NewberyRightDoor20;
-    ModelRenderer NewberyRightDoor21;
-    ModelRenderer NewberyRightDoor22;
-    ModelRenderer NewberyRightDoor23;
-  
-  public ModelRightDoor03()
-  {
-    textureWidth = 256;
-    textureHeight = 256;
-    
-      NewberyRightDoor01 = new ModelRenderer(this, 0, 103);
-      NewberyRightDoor01.addBox(1.5F, -8.3F, -9F, 5, 30, 0);
-      NewberyRightDoor01.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor01.setTextureSize(256, 256);
-      NewberyRightDoor01.mirror = true;
-      setRotation(NewberyRightDoor01, 0F, 0F, 0F);
-      NewberyRightDoor02 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor02.addBox(0.5F, -1.7F, -9.5F, 7, 1, 1);
-      NewberyRightDoor02.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor02.setTextureSize(256, 256);
-      NewberyRightDoor02.mirror = true;
-      setRotation(NewberyRightDoor02, 0F, 0F, 0F);
-      NewberyRightDoor03 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor03.addBox(0.5F, 21.3F, -9.5F, 7, 1, 1);
-      NewberyRightDoor03.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor03.setTextureSize(256, 256);
-      NewberyRightDoor03.mirror = true;
-      setRotation(NewberyRightDoor03, 0F, 0F, 0F);
-      NewberyRightDoor04 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor04.addBox(0.5F, 20.8F, -9.5F, 7, 1, 1);
-      NewberyRightDoor04.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor04.setTextureSize(256, 256);
-      NewberyRightDoor04.mirror = true;
-      setRotation(NewberyRightDoor04, 0F, 0F, 0F);
-      NewberyRightDoor05 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor05.addBox(0.5F, 5.8F, -9.5F, 7, 1, 1);
-      NewberyRightDoor05.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor05.setTextureSize(256, 256);
-      NewberyRightDoor05.mirror = true;
-      setRotation(NewberyRightDoor05, 0F, 0F, 0F);
-      NewberyRightDoor06 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor06.addBox(0.5F, 13.3F, -9.5F, 7, 1, 1);
-      NewberyRightDoor06.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor06.setTextureSize(256, 256);
-      NewberyRightDoor06.mirror = true;
-      setRotation(NewberyRightDoor06, 0F, 0F, 0F);
-      NewberyRightDoor07 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor07.addBox(1.5F, 0F, 0F, 5, 1, 1);
-      NewberyRightDoor07.setRotationPoint(0F, 14.3F, -9.5F);
-      NewberyRightDoor07.setTextureSize(256, 256);
-      NewberyRightDoor07.mirror = true;
-      setRotation(NewberyRightDoor07, 1.134464F, 0F, 0F);
-      NewberyRightDoor08 = new ModelRenderer(this, 0, 0);
-      NewberyRightDoor08.addBox(-2.5F, -0.5F, -0.5F, 5, 1, 1);
-      NewberyRightDoor08.setRotationPoint(4F, -4.95F, -8.5F);
-      NewberyRightDoor08.setTextureSize(256, 256);
-      NewberyRightDoor08.mirror = true;
-      setRotation(NewberyRightDoor08, 0.7853982F, 0F, 0F);
-      NewberyRightDoor09 = new ModelRenderer(this, 13, 103);
-      NewberyRightDoor09.addBox(0.5F, 0.8F, -9.7F, 1, 1, 1);
-      NewberyRightDoor09.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor09.setTextureSize(256, 256);
-      NewberyRightDoor09.mirror = true;
-      setRotation(NewberyRightDoor09, 0F, 0F, 0F);
-      NewberyRightDoor10 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor10.addBox(0.5F, -9.2F, -9.5F, 7, 1, 1);
-      NewberyRightDoor10.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor10.setTextureSize(256, 256);
-      NewberyRightDoor10.mirror = true;
-      setRotation(NewberyRightDoor10, 0F, 0F, 0F);
-      NewberyRightDoor11 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor11.addBox(1.5F, 0F, 0F, 5, 1, 1);
-      NewberyRightDoor11.setRotationPoint(0F, -8.2F, -9.5F);
-      NewberyRightDoor11.setTextureSize(256, 256);
-      NewberyRightDoor11.mirror = true;
-      setRotation(NewberyRightDoor11, 1.134464F, 0F, 0F);
-      NewberyRightDoor12 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor12.addBox(1.5F, -1F, 0F, 5, 1, 1);
-      NewberyRightDoor12.setRotationPoint(0F, 20.8F, -9.5F);
-      NewberyRightDoor12.setTextureSize(256, 256);
-      NewberyRightDoor12.mirror = true;
-      setRotation(NewberyRightDoor12, -1.134464F, 0F, 0F);
-      NewberyRightDoor13 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor13.addBox(1.5F, 0F, 0F, 5, 1, 1);
-      NewberyRightDoor13.setRotationPoint(0F, -0.7F, -9.5F);
-      NewberyRightDoor13.setTextureSize(256, 256);
-      NewberyRightDoor13.mirror = true;
-      setRotation(NewberyRightDoor13, 1.134464F, 0F, 0F);
-      NewberyRightDoor14 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor14.addBox(1.5F, -1F, 0F, 5, 1, 1);
-      NewberyRightDoor14.setRotationPoint(0F, -1.7F, -9.5F);
-      NewberyRightDoor14.setTextureSize(256, 256);
-      NewberyRightDoor14.mirror = true;
-      setRotation(NewberyRightDoor14, -1.134464F, 0F, 0F);
-      NewberyRightDoor15 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor15.addBox(1.5F, 0F, 0F, 5, 1, 1);
-      NewberyRightDoor15.setRotationPoint(0F, 6.8F, -9.5F);
-      NewberyRightDoor15.setTextureSize(256, 256);
-      NewberyRightDoor15.mirror = true;
-      setRotation(NewberyRightDoor15, 1.134464F, 0F, 0F);
-      NewberyRightDoor16 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor16.addBox(1.5F, -1F, 0F, 5, 1, 1);
-      NewberyRightDoor16.setRotationPoint(0F, 5.8F, -9.5F);
-      NewberyRightDoor16.setTextureSize(256, 256);
-      NewberyRightDoor16.mirror = true;
-      setRotation(NewberyRightDoor16, -1.134464F, 0F, 0F);
-      NewberyRightDoor17 = new ModelRenderer(this, 18, 72);
-      NewberyRightDoor17.addBox(1.5F, -1F, 0F, 5, 1, 1);
-      NewberyRightDoor17.setRotationPoint(0F, 13.3F, -9.5F);
-      NewberyRightDoor17.setTextureSize(256, 256);
-      NewberyRightDoor17.mirror = true;
-      setRotation(NewberyRightDoor17, -1.134464F, 0F, 0F);
-      NewberyRightDoor18 = new ModelRenderer(this, 13, 72);
-      NewberyRightDoor18.addBox(0.5F, -8.2F, -9.5F, 1, 29, 1);
-      NewberyRightDoor18.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor18.setTextureSize(256, 256);
-      NewberyRightDoor18.mirror = true;
-      setRotation(NewberyRightDoor18, 0F, 0F, 0F);
-      NewberyRightDoor19 = new ModelRenderer(this, 13, 72);
-      NewberyRightDoor19.addBox(6.5F, -8.2F, -9.5F, 1, 29, 1);
-      NewberyRightDoor19.setRotationPoint(0F, 0F, 0F);
-      NewberyRightDoor19.setTextureSize(256, 256);
-      NewberyRightDoor19.mirror = true;
-      setRotation(NewberyRightDoor19, 0F, 0F, 0F);
-      NewberyRightDoor20 = new ModelRenderer(this, 0, 0);
-      NewberyRightDoor20.addBox(-0.5F, -3.5F, -0.5F, 1, 7, 1);
-      NewberyRightDoor20.setRotationPoint(3.2F, -4.95F, -8.5F);
-      NewberyRightDoor20.setTextureSize(256, 256);
-      NewberyRightDoor20.mirror = true;
-      setRotation(NewberyRightDoor20, 0F, 0.7853982F, 0F);
-      NewberyRightDoor21 = new ModelRenderer(this, 0, 0);
-      NewberyRightDoor21.addBox(-0.5F, -3.5F, -0.5F, 1, 7, 1);
-      NewberyRightDoor21.setRotationPoint(4.8F, -4.95F, -8.5F);
-      NewberyRightDoor21.setTextureSize(256, 256);
-      NewberyRightDoor21.mirror = true;
-      setRotation(NewberyRightDoor21, 0F, 0.7853982F, 0F);
-      NewberyRightDoor22 = new ModelRenderer(this, 13, 72);
-      NewberyRightDoor22.addBox(0F, -8.2F, 0F, 1, 29, 1);
-      NewberyRightDoor22.setRotationPoint(1.5F, 0F, -9.5F);
-      NewberyRightDoor22.setTextureSize(256, 256);
-      NewberyRightDoor22.mirror = true;
-      setRotation(NewberyRightDoor22, 0F, -1.134464F, 0F);
-      NewberyRightDoor23 = new ModelRenderer(this, 13, 72);
-      NewberyRightDoor23.addBox(-1F, -8.2F, 0F, 1, 29, 1);
-      NewberyRightDoor23.setRotationPoint(6.5F, 0F, -9.5F);
-      NewberyRightDoor23.setTextureSize(256, 256);
-      NewberyRightDoor23.mirror = true;
-      setRotation(NewberyRightDoor23, 0F, 1.134464F, 0F);
-  }
-  
-  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-  {
-    super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    NewberyRightDoor01.render(f5);
-    NewberyRightDoor02.render(f5);
-    NewberyRightDoor03.render(f5);
-    NewberyRightDoor04.render(f5);
-    NewberyRightDoor05.render(f5);
-    NewberyRightDoor06.render(f5);
-    NewberyRightDoor07.render(f5);
-    NewberyRightDoor08.render(f5);
-    NewberyRightDoor09.render(f5);
-    NewberyRightDoor10.render(f5);
-    NewberyRightDoor11.render(f5);
-    NewberyRightDoor12.render(f5);
-    NewberyRightDoor13.render(f5);
-    NewberyRightDoor14.render(f5);
-    NewberyRightDoor15.render(f5);
-    NewberyRightDoor16.render(f5);
-    NewberyRightDoor17.render(f5);
-    NewberyRightDoor18.render(f5);
-    NewberyRightDoor19.render(f5);
-    NewberyRightDoor20.render(f5);
-    NewberyRightDoor21.render(f5);
-    NewberyRightDoor22.render(f5);
-    NewberyRightDoor23.render(f5);
-  }
-  
-  private void setRotation(ModelRenderer model, float x, float y, float z)
-  {
-    model.rotateAngleX = x;
-    model.rotateAngleY = y;
-    model.rotateAngleZ = z;
-  }
-  
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-  {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-  }
+public class ModelRightDoor03 extends ModelBase {
 
+	ModelRenderer Shape1;
+	ModelRenderer Gen0;
+	ModelRenderer Gen1;
+	ModelRenderer Gen2;
+	ModelRenderer Gen3;
+	ModelRenderer Gen4;
+	ModelRenderer Gen5;
+	ModelRenderer Gen6;
+	ModelRenderer Gen7;
+	ModelRenderer Gen8;
+	ModelRenderer Gen9;
+	ModelRenderer Gen10;
+	ModelRenderer Gen11;
+
+	public ModelRightDoor03() { 
+
+		textureWidth = 256;
+		textureHeight = 256;
+
+		Shape1 = new ModelRenderer(this, 18, 72);
+		Shape1.addBox(0.5F, -1.0F, -9.0F, 7, 1, 1);
+		Shape1.setTextureSize(256, 256);
+		Shape1.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Shape1, 0.0F, 0.0F, 0.0F);
+		Shape1.mirror = false;
+
+		Gen0 = new ModelRenderer(this, 18, 72);
+		Gen0.addBox(0.5F, 21.5F, -9.0F, 7, 1, 1);
+		Gen0.setTextureSize(256, 256);
+		Gen0.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen0, 0.0F, 0.0F, 0.0F);
+		Gen0.mirror = false;
+
+		Gen1 = new ModelRenderer(this, 18, 72);
+		Gen1.addBox(0.5F, 6.5F, -9.0F, 7, 1, 1);
+		Gen1.setTextureSize(256, 256);
+		Gen1.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen1, 0.0F, 0.0F, 0.0F);
+		Gen1.mirror = false;
+
+		Gen2 = new ModelRenderer(this, 18, 72);
+		Gen2.addBox(0.5F, 14.0F, -9.0F, 7, 1, 1);
+		Gen2.setTextureSize(256, 256);
+		Gen2.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen2, 0.0F, 0.0F, 0.0F);
+		Gen2.mirror = false;
+
+		Gen3 = new ModelRenderer(this, 0, 0);
+		Gen3.addBox(-2.5F, -0.5F, -0.5F, 5, 1, 1);
+		Gen3.setTextureSize(256, 256);
+		Gen3.setRotationPoint(4.0F, -4.25F, -8.7F);
+		setRotation(Gen3, 0.7853981633974483F, 0.0F, 0.0F);
+		Gen3.mirror = false;
+
+		Gen4 = new ModelRenderer(this, 18, 72);
+		Gen4.addBox(0.5F, -8.5F, -9.0F, 7, 1, 1);
+		Gen4.setTextureSize(256, 256);
+		Gen4.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen4, 0.0F, 0.0F, 0.0F);
+		Gen4.mirror = false;
+
+		Gen5 = new ModelRenderer(this, 13, 72);
+		Gen5.addBox(0.5F, -7.5F, -7.0F, 1, 29, 1);
+		Gen5.setTextureSize(256, 256);
+		Gen5.setRotationPoint(0.0F, 0.0F, -2.5F);
+		setRotation(Gen5, 0.0F, 0.0F, 0.0F);
+		Gen5.mirror = false;
+
+		Gen6 = new ModelRenderer(this, 13, 72);
+		Gen6.addBox(6.5F, -7.5F, -9.0F, 1, 29, 1);
+		Gen6.setTextureSize(256, 256);
+		Gen6.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen6, 0.0F, 0.0F, 0.0F);
+		Gen6.mirror = false;
+
+		Gen7 = new ModelRenderer(this, 0, 0);
+		Gen7.addBox(-0.5F, -3.5F, -0.5F, 1, 7, 1);
+		Gen7.setTextureSize(256, 256);
+		Gen7.setRotationPoint(3.1F, -4.45F, -8.7F);
+		setRotation(Gen7, 0.0F, 0.7853981633974483F, 0.0F);
+		Gen7.mirror = false;
+
+		Gen8 = new ModelRenderer(this, 0, 0);
+		Gen8.addBox(-0.5F, -3.5F, -0.5F, 1, 7, 1);
+		Gen8.setTextureSize(256, 256);
+		Gen8.setRotationPoint(4.9F, -4.45F, -8.7F);
+		setRotation(Gen8, 0.0F, 0.7853981633974483F, 0.0F);
+		Gen8.mirror = false;
+
+		Gen9 = new ModelRenderer(this, 46, 90);
+		Gen9.addBox(1.5F, 0.5F, -8.7F, 5, 22, 0);
+		Gen9.setTextureSize(256, 256);
+		Gen9.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen9, 0.0F, 0.0F, 0.0F);
+		Gen9.mirror = false;
+
+		Gen10 = new ModelRenderer(this, 13, 106);
+		Gen10.addBox(0.5F, 1.5F, -9.1F, 1, 1, 1);
+		Gen10.setTextureSize(256, 256);
+		Gen10.setRotationPoint(0.0F, 0.0F, -0.5F);
+		setRotation(Gen10, 0.0F, 0.0F, 0.0F);
+		Gen10.mirror = false;
+
+		Gen11 = new ModelRenderer(this, 46, 81);
+		Gen11.addBox(1.5F, -7.75F, -8.7F, 5, 8, 0);
+		Gen11.setTextureSize(256, 256);
+		Gen11.setRotationPoint(0.0F, -0.5F, -0.5F);
+		setRotation(Gen11, 0.0F, 0.0F, 0.0F);
+		Gen11.mirror = false;
+
+	}
+	@Override
+	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-0.46875, 0, 0.5625);
+		Shape1.render(scale);
+		Gen0.render(scale);
+		Gen1.render(scale);
+		Gen2.render(scale);
+		Gen3.render(scale);
+		Gen4.render(scale);
+		Gen5.render(scale);
+		Gen6.render(scale);
+		Gen7.render(scale);
+		Gen8.render(scale);
+		Gen9.render(scale);
+		Gen10.render(scale);
+		Gen11.render(scale);
+		GlStateManager.popMatrix();
+	}
+	private void setRotation(ModelRenderer model, float x, float y, float z){
+		model.rotateAngleX = x;
+		model.rotateAngleY = y;
+		model.rotateAngleZ = z;
+	}
+
+	@Override
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
+	}
 }

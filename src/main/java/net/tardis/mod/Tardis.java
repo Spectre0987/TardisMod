@@ -112,6 +112,7 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
@@ -231,6 +232,7 @@ public class Tardis {
 		//Exteriors
 		registerTileEntity(TileEntityDoor01.class, "TileEntityDoor01");
 		registerTileEntity(TileEntityDoor03.class, "TileEntityDoor03");
+		registerTileEntity(TileEntityDoor04.class, "TileEntityDoor04");
 		registerTileEntity(TileEntityDoorCC.class, "TileEntityDoorCC");
 		
 		//Interiors

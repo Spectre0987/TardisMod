@@ -1,7 +1,5 @@
 package net.tardis.mod.client.renderers.exteriors;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -66,17 +64,35 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 	            }
 			}
 		}
-		if(open) RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, new Vec3d(1, 2.2, 0));
+		if(open)
+			RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, new Vec3d(1, 2.2, 0));
 	    GlStateManager.popMatrix();
+	    
 	    //RenderDoor
 	    {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
-			GlStateManager.rotate(180, 0, 0, 0);
-			if(mc.world.getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
-				GlStateManager.rotate(Helper.getAngleFromFacing(mc.world.getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
+			GlStateManager.rotate(180, 1, 0, 0);
+			if(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
+				EnumFacing face = te.getWorld().getBlockState(te.getPos()).getValue(BlockTardisTop.FACING);
+				GlStateManager.rotate(Helper.getAngleFromFacing(face), 0, 1, 0);
+				if(face == EnumFacing.NORTH || face == EnumFacing.SOUTH)
+					GlStateManager.rotate(180, 0, 1, 0);
 			}
 			mc.getTextureManager().bindTexture(TEXTURE);
+			model.renderGlow(0.0625F, true);
+			
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(-0.46875, 0, -0.5);
+			GlStateManager.rotate(open ? -85 : 0, 0, 1, 0);
+			ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.popMatrix();
+			
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(0.46875, 0, -0.5);
+			GlStateManager.rotate(open ? 85 : 0, 0, 1, 0);
+			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.popMatrix();
 			
 			GlStateManager.popMatrix();
 	    }

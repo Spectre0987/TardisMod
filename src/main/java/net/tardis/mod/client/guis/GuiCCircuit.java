@@ -22,7 +22,7 @@ public class GuiCCircuit extends GuiScreen {
 	
 	Minecraft mc;
 	public BlockPos pos = BlockPos.ORIGIN;
-	public static EnumExterior[] exteriors = new EnumExterior[] {EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.CC};
+	public static EnumExterior[] exteriors = new EnumExterior[] {EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FOURTH, EnumExterior.CC};
 	private ResourceLocation tex = new ResourceLocation(Tardis.MODID, "textures/gui/chameleon_circuit.png");
 	private GuiButton selectButton;
 	private GuiButton nextArrow;

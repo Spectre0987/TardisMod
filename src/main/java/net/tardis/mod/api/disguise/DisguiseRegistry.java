@@ -22,8 +22,10 @@ public class DisguiseRegistry {
 	/**Register a disguise for all biomes containing this string**/
 	public static void registerDisguiseAllBiomes(String name, ResourceLocation disguiseLoc) {
 		for(Biome b : EntityHelper.biomes) {
-			if(b.getRegistryName().toString().contains(name)) DISGUISES.put(b.getRegistryName().toString(), disguiseLoc);
-			System.out.println("DisguiseRegistry: registered " + b.getRegistryName().toString());
+			if(b.getRegistryName().toString().contains(name)) {
+				DISGUISES.put(b.getRegistryName().toString(), disguiseLoc);
+				System.out.println("DisguiseRegistry: registered " + b.getRegistryName().toString());
+			}
 		}
 	}
 	
