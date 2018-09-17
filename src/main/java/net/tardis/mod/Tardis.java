@@ -102,7 +102,6 @@ import net.tardis.mod.common.tileentity.TileEntityLight;
 import net.tardis.mod.common.tileentity.TileEntitySonicGun;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
-import net.tardis.mod.common.tileentity.TileEntityTemporalLab;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
@@ -113,10 +112,12 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
+import net.tardis.mod.handlers.GuiHandlerTardis;
 import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.packets.MessageCompanion;
@@ -210,7 +211,6 @@ public class Tardis {
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
-		registerTileEntity(TileEntityTemporalLab.class, "TileEntityTemporalLab");
 		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
 		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
@@ -233,6 +233,7 @@ public class Tardis {
 		registerTileEntity(TileEntityDoor01.class, "TileEntityDoor01");
 		registerTileEntity(TileEntityDoor03.class, "TileEntityDoor03");
 		registerTileEntity(TileEntityDoor04.class, "TileEntityDoor04");
+		registerTileEntity(TileEntityDoor05.class, "TileEntityDoor05");
 		registerTileEntity(TileEntityDoorCC.class, "TileEntityDoorCC");
 		
 		//Interiors
@@ -285,6 +286,9 @@ public class Tardis {
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
 		
 		DisguiseRegistry.init();
+		
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandlerTardis());
+		
 	}
 	
 	@EventHandler

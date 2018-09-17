@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -20,6 +22,7 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 
 
@@ -112,6 +115,7 @@ public class TBlocks {
 
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block");
 
+	public static Block circuit_repair = register(new BlockComponentRepair(Material.IRON, TileEntityComponentRepair::new), "circuit_repair");
 
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test") : null;
 

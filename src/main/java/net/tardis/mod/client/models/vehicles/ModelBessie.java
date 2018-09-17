@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ModelBessie extends ModelBase {
 
@@ -745,15 +746,17 @@ public class ModelBessie extends ModelBase {
 		NOTALIGHT78.render(scale);
 		NOTALIGHT79.render(scale);
 		
-		/*GlStateManager.pushMatrix();
-		GlStateManager.enableBlend();
-		GlStateManager.enableBlend();
-		GlStateManager.color(1F, 1F, 1F, 0.5F);
-		NOTALIGHT44.render(scale);
-		GlStateManager.color(1F, 1F, 1F, 1F);
-		GlStateManager.disableBlend();
-		GlStateManager.disableAlpha();
-		GlStateManager.popMatrix();*/
+		if(MinecraftForgeClient.getRenderPass() == 1) {
+			GlStateManager.pushMatrix();
+			GlStateManager.enableBlend();
+			GlStateManager.enableAlpha();
+			GlStateManager.color(1F, 1F, 1F, 0.5F);
+			NOTALIGHT44.render(scale);
+			GlStateManager.color(1F, 1F, 1F, 1F);
+			GlStateManager.disableBlend();
+			GlStateManager.disableAlpha();
+			GlStateManager.popMatrix();
+		}
 		
 		GlStateManager.pushMatrix();
 		Minecraft.getMinecraft().entityRenderer.disableLightmap();

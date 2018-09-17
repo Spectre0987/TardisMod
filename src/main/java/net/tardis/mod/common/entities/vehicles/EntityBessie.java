@@ -180,4 +180,14 @@ public class EntityBessie extends Entity{
 	public void playHorn() {
 		this.playSound(TSounds.bessieHorn, 1, 1);
 	}
+
+	@Override
+	public boolean shouldRenderInPass(int pass) {
+		return true;
+	}
+
+	@Override
+	public boolean shouldDismountInWater(Entity rider) {
+		return false;
+	}
 }

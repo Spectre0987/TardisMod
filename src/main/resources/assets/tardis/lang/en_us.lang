@@ -97,6 +97,7 @@ tile.tardis.hellbent_roof.name=Hellbent Ceiling Thing
 tile.tardis.json_test.name=Json Tester
 tile.tardis.telos_sand.name=Telos Sand
 tile.tardis.moon_dirt.name=Moon Dirt
+tile.tardis.circuit_repair.name=Steady State Micro-Welding
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!
