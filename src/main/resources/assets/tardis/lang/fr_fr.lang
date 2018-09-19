@@ -44,12 +44,15 @@ item.tardis.interiordoor.name=Porte intérieure
 item.tardis.sonic_screwdriver_13.name=Tournevis sonique du Treizième Docteur
 item.tardis.chameleon_circuit.name=Circuit Caméléon
 item.tardis.bessie.name=Bessie
+item.tardis.temporal_grace_circuits.name=Circuits de grâce temporel
+item.tardis.tardis_repairkit.name=Boîte à outils pour TARDIS
 
 tooltip.remote=Télécommande reliée au TARDIS à :
 tooltip.remote.time=Le TARDIS arrive dans 
 tooltip.remote.fuel=Batterie Artron 
 tooltip.remote.exteriorpos=Extérieur du TARDIS:
 tooltip.remote.bind=Pour lier, clic droit sur la console
+tooltip.tardis.toolkit=Clic droit sur la console pour réparer tous les systèmes non détruits de 15
 
 general.time.seconds=seconde
 
@@ -96,7 +99,11 @@ tile.tardis.hellbent_pole.name=Poteau de la montée en enfer
 tile.tardis.hellbent_roof.name=Chose au plafond de la montée en enfer
 tile.tardis.json_test.name=Testeur JSON
 tile.tardis.telos_sand.name=Sable de Telos
-tile.tardis.moon_dirt.name=Terre lunaire 
+tile.tardis.moon_dirt.name=Terre lunaire
+tile.tardis.circuit_repair.name=Micro-soudage à l'état d'équilibre
+tile.tardis.zero_room.name=Chambre Zéro
+tile.tardis.zero_room_slab.name=Dalle de pièce zéro
+tile.tardis.zero_room_stairs.name=Escalier de pièce zéro
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
@@ -255,3 +262,5 @@ companion.tardis.follow.false=Attends ici.
 companion.tardis.tardis=Retourne dans le TARDIS et attends-moi.
 companion.tardis.fetch=J'ai besoin que tu ailles chercher le TARDIS.
 companion.tardis.saved.dalek=Bon travail avec ces Daleks !
+
+jei.tardis.book.description=Acquis par un clic droit sur une console TARDIS avec un livre.
