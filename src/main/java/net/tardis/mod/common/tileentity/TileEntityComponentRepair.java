@@ -1,21 +1,28 @@
 package net.tardis.mod.common.tileentity;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.util.Constants;
+import net.tardis.mod.common.recipes.RepairRecipes;
 
-public class TileEntityComponentRepair extends TileEntity implements IInventory{
+public class TileEntityComponentRepair extends TileEntity implements IInventory, ITickable{
 	
 	private NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
+	public int progress = 200;
 	
 	public TileEntityComponentRepair() {}
 
@@ -84,9 +91,7 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory{
 	public void openInventory(EntityPlayer player) {}
 
 	@Override
-	public void closeInventory(EntityPlayer player) {
-		InventoryHelper.dropInventoryItems(player.world, player, this);
-	}
+	public void closeInventory(EntityPlayer player) {}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -95,15 +100,17 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory{
 
 	@Override
 	public int getField(int id) {
-		return 0;
+		return this.progress;
 	}
 
 	@Override
-	public void setField(int id, int value) {}
+	public void setField(int id, int value) {
+		this.progress = value;
+	}
 
 	@Override
 	public int getFieldCount() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -130,5 +137,54 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory{
 		}
 		compound.setTag("inv", list);
 		return super.writeToNBT(compound);
+	}
+
+	@Override
+	public void update() {
+		ItemStack comp = this.getStackInSlot(0);
+		if(!world.isRemote) {
+			if(!comp.isEmpty() && comp.getItemDamage() > 0 && RepairRecipes.getRepairItem(comp.getItem()) != null) {
+				if(RepairRecipes.getRepairItem(this.getStackInSlot(0).getItem()) == this.getStackInSlot(1).getItem()) {
+					--this.progress;
+					if(this.progress <= 0) {
+						this.complete();
+					}
+					for(EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16))) {
+						player.connection.sendPacket(this.getUpdatePacket());
+					}
+				}
+				else progress = 200;
+			}
+			else progress = 200;
+		}
+		
+	}
+	
+	public void complete() {
+		this.progress = 200;
+		Item item = this.getStackInSlot(0).getItem();
+		ItemStack ing = this.getStackInSlot(1).copy();
+		ing.shrink(1);
+		this.setInventorySlotContents(0, ItemStack.EMPTY);
+		this.setInventorySlotContents(1, ing);
+		this.setInventorySlotContents(2, new ItemStack(item));
+	}
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(this.getPos(), -1, this.getUpdateTag());
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setInteger("pro", progress);
+		return tag;
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		this.progress = pkt.getNbtCompound().getInteger("pro");
+		super.onDataPacket(net, pkt);
 	}
 }

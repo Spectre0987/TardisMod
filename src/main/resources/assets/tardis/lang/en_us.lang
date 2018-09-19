@@ -44,12 +44,15 @@ item.tardis.interiordoor.name=Interior Door
 item.tardis.sonic_screwdriver_13.name=Thirteen's Sonic
 item.tardis.chameleon_circuit.name=Chameleon Circuit
 item.tardis.bessie.name=Bessie
+item.tardis.temporal_grace_circuits.name=Temporal Grace Circuits
+item.tardis.tardis_repairkit.name=TARDIS Toolkit
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
 tooltip.remote.fuel=Artron Banks
 tooltip.remote.exteriorpos=TARDIS Exterior:
 tooltip.remote.bind=To bind, right click on a console.
+tooltip.tardis.toolkit=Right click the console to repair all non-destroyed systems by 15
 
 general.time.seconds=seconds
 
@@ -98,6 +101,9 @@ tile.tardis.json_test.name=Json Tester
 tile.tardis.telos_sand.name=Telos Sand
 tile.tardis.moon_dirt.name=Moon Dirt
 tile.tardis.circuit_repair.name=Steady State Micro-Welding
+tile.tardis.zero_room.name=Zero Room
+tile.tardis.zero_room_slab.name=Zero Room Slab
+tile.tardis.zero_room_stairs.name=Zero Room Stairs
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!
@@ -256,3 +262,5 @@ companion.tardis.follow.false=Wait here.
 companion.tardis.tardis=Go back to the TARDIS and wait for me.
 companion.tardis.fetch=I need you to go get the TARDIS.
 companion.tardis.saved.dalek=Good work with those Daleks!
+
+jei.tardis.book.description=Acquired by right clicking a TARDIS console with a vanilla book.

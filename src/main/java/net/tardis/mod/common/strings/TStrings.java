@@ -41,6 +41,7 @@ public class TStrings {
 		public static final String REMOTE_TIME = "tooltip.remote.time";
 		public static final String REMOTE_EPOS = "tooltip.remote.exteriorpos";
 		public static final String REMOTE_BIND = "tooltip.remote.bind";
+		public static final String TOOLKIT = "tooltip.tardis.toolkit";
 	}
 
 	public static class Commands{
@@ -61,6 +62,10 @@ public class TStrings {
 		public static final String GO_TO_TARDIS = "companion.tardis.tardis";
 		public static final String BRING_TARDIS = "companion.tardis.fetch";
 		public static final String SAVED = "companion.tardis.saved.dalek";
+	}
+	
+	public static class JEI{
+		public static final String MANUAL = "jei.tardis.book.description";
 	}
 	
 }
