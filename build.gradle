@@ -49,6 +49,10 @@ repositories {
         name = "JitPack"
         url = "https://jitpack.io"
     }
+    maven {
+        name = "Progwml6 maven"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
 }
 
 dependencies {
@@ -63,6 +67,10 @@ dependencies {
 
     //regeneration
     deobfProvided "com.github.SandedShoes:Regeneration:${project.regeneration_version}"
+    
+    //JEI
+    compileOnly "mezz.jei:jei_1.12.2:4.11.0.212:api"
+    runtime "mezz.jei:jei_1.12.2:4.11.0.212"
 }
 
 processResources {
