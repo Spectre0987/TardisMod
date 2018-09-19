@@ -4,6 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
@@ -79,6 +82,7 @@ import net.tardis.mod.common.protocols.ProtocolLock;
 import net.tardis.mod.common.protocols.ProtocolRegenRoom;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.TardisProtocol;
+import net.tardis.mod.common.recipes.RepairRecipes;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemAntenna;
@@ -108,7 +112,6 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
-import net.tardis.mod.common.tileentity.decoration.TileEntityRoundelChest;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
@@ -221,7 +224,6 @@ public class Tardis {
 		registerTileEntity(TileEntityHellbentMonitor.class, "TileEntityHellbentMonitor");
 		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
 		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
-		registerTileEntity(TileEntityRoundelChest.class, "TileEntityRoundelChest");
 		registerTileEntity(TileEntityComponentRepair.class, "TileEntityComponentRepair");
 		
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
@@ -287,6 +289,11 @@ public class Tardis {
 		DisguiseRegistry.init();
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandlerTardis());
+		
+		RepairRecipes.registerRecipe(TItems.fluid_link, TItems.mercuryBottle);
+		RepairRecipes.registerRecipe(TItems.artron_capacitor, Item.getItemFromBlock(Blocks.REDSTONE_BLOCK));
+		RepairRecipes.registerRecipe(TItems.demat_circut, Items.ENDER_PEARL);
+		RepairRecipes.registerRecipe(TItems.antenna, TItems.circuts);
 		
 	}
 	

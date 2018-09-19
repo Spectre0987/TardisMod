@@ -3,6 +3,7 @@ package net.tardis.mod.common.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -76,6 +77,8 @@ public class TItems {
 	public static Item sonicBlaster = createItem(new ItemSonicBlaster(), "sonic_blaster");
 	
 	public static Item bessie = createItem(new ItemESpawn(EntityBessie::new), "bessie");
+	
+	public static Item tardis_repairkit = createItem(new ItemRepairKit(), "tardis_repairkit");
 	
 	// Componenets
 	public static Item fluid_link = null;

@@ -1,11 +1,18 @@
 package net.tardis.mod.common.blocks;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
@@ -22,7 +29,6 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
-import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 
 
@@ -95,6 +101,10 @@ public class TBlocks {
 	public static Block hellbent_vents = register(new BlockLight(), "hellbent_vents");
 	public static Block hellbent_wall = register(new BlockBase(), "hellbent_wall");
 	
+	public static Block zero_room_glow = register(new BlockVerticalSlab(), "zero_room_slab");
+	public static Block zero_room = register(new BlockBase(), "zero_room");
+	public static Block zero_room_stairs = register(new BlockTStairs(zero_room.getDefaultState()), "zero_room_stairs");
+	
 	public static Block hellbent_light = register(new BlockFacingDecoration(TileEntityHellbentLight::new).setLightLevel(1F).setLightOpacity(0), "hellbent_light");
 	public static Block hellbent_monitor = register(new BlockMonitor(TileEntityHellbentMonitor::new), "hellbent_monitor");
 	public static Block hellbent_pole = register(new BlockDecoration(TileEntityHellbentPole::new), "hellbent_pole");
@@ -127,6 +137,49 @@ public class TBlocks {
 		blocks.add(block);
 		if(!(block instanceof INeedItem))TItems.items.add(new ItemBlock(block).setRegistryName(rl));
 		else TItems.items.add(((INeedItem)block).getItem().setRegistryName(rl));
+		if(Tardis.getIsDev()) {
+			try {
+				File f = new File(Minecraft.getMinecraft().mcDataDir + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + block.getRegistryName().getResourcePath() + ".json");
+				if(!f.exists()) {
+					GsonBuilder gson = new GsonBuilder();
+					gson.setPrettyPrinting();
+					JsonWriter jw = gson.create().newJsonWriter(new FileWriter(f));
+					jw.beginObject();
+					jw.name("forge_marker").value(1);
+					jw.name("defaults");
+					jw.beginObject();
+					jw.name("model").value(Tardis.MODID + ":" + "teisr");
+					jw.endObject();
+					jw.name("variants");
+					jw.beginObject();
+					jw.name("normal");
+					jw.beginArray();
+					jw.beginObject();
+					jw.endObject();
+					jw.endArray();
+					jw.name("inventory");
+					jw.beginArray();
+					jw.beginObject();
+					jw.endObject();
+					jw.endArray();
+					if(block instanceof BlockTardisTop) {
+						for(EnumFacing face : EnumFacing.Plane.HORIZONTAL.facings()) {
+							jw.name("facing=" + face.getName());
+							jw.beginArray();
+							jw.beginObject();
+							jw.endObject();
+							jw.endArray();
+						}
+					}
+					jw.endObject();
+					jw.endObject();
+					jw.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return block;
 	}
 	

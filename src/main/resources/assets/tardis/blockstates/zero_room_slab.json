@@ -1,0 +1,38 @@
+{
+    "forge_marker" : 1,
+    "defaults":{
+        "model":"tardis:vertical_slab",
+        "textures":{
+            "all":"tardis:blocks/zero_room"
+        }
+    },
+    "variants":{
+        "facing=north": {
+            "model":"tardis:vertical_slab",
+            "y" : 180
+        },
+         "facing=east": {
+            "model":"tardis:vertical_slab",
+            "y" : 270
+        },
+         "facing=south": {
+            "model":"tardis:vertical_slab",
+            "y" : 0
+        },
+         "facing=west": {
+            "model":"tardis:vertical_slab",
+            "y" : 90
+        },
+        "facing=up":{
+            "model":"tardis:vertical_slab",
+            "x" : 90
+        },
+        "facing=down":{
+            "model":"tardis:vertical_slab",
+            "x": 270
+        },
+        "inventory":{
+            "model":"tardis:vertical_slab"
+        }
+    }
+}
