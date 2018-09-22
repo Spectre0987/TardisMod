@@ -5,11 +5,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.helpers.Helper;
 
-public class SystemCCircuit extends ISystem{
+public class SystemCCircuit extends BaseSystem{
 
 	boolean checkActive = false;
 	

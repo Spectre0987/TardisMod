@@ -31,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -71,7 +72,7 @@ import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.TardisSystems;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
@@ -114,7 +115,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public EnumEvent currentEvent = EnumEvent.NONE;
 	public static float defaultFuelUse = 0.0001F;
 	public float fuelUseage = defaultFuelUse;
-	public ISystem[] systems;
+	public BaseSystem[] systems;
 	private EnumTardisState currentState = EnumTardisState.NORMAL;
 	public double power = 0;
 	public List<Vec3d> coordList = new ArrayList<>();
@@ -122,6 +123,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	//Is the TARDIS 'parked' in the Vortex?
 	private boolean parkingOrbit = false;
 	private float hullHealth = 1F;
+	private EnumCourseCorrect courseCorrect = EnumCourseCorrect.NONE;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -155,6 +157,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				else
 					++frame;
 				if(TardisConfig.MISC.camShake && (this.ticksToTravel < 200 || this.totalTimeToTravel - this.ticksToTravel < 200)) {
+					for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
+						player.rotationPitch += (rand.nextInt(10) - 5) * 0.1;
+						player.rotationYaw += (rand.nextInt(10) - 5) * 0.1;
+					}
+				}
+				if(this.getCourseCorrect() != EnumCourseCorrect.NONE) {
 					for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
 						player.rotationPitch += (rand.nextInt(10) - 5) * 0.1;
 						player.rotationYaw += (rand.nextInt(10) - 5) * 0.1;
@@ -195,16 +203,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			world.playSound(null, getPos(), TSounds.INTERIOR_HUM_1963, SoundCategory.BLOCKS, 0.5F, 1F);
 		}
 		this.createControls();
-		for(ISystem sys : this.systems) {
+		for(BaseSystem sys : this.systems) {
 			if(sys != null)sys.onUpdate(world, this.getPos());
 			else{
-				List<ISystem> systems = new ArrayList<>();
+				List<BaseSystem> systems = new ArrayList<>();
 				for(int i = 0; i < this.systems.length; ++i) {
 					if(this.systems[i] != null) {
 						systems.add(this.systems[i]);
 					}
 				}
-				this.systems = systems.toArray(new ISystem[] {});
+				this.systems = systems.toArray(new BaseSystem[] {});
 			}
 		}
 	}
@@ -255,13 +263,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			DimensionType type = DimensionManager.getProviderType(dimension);
 			if (type != null) this.currentDimName = type.getName();
 			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
-			for(ISystem sys : this.systems) {
+			for(BaseSystem sys : this.systems) {
 				sys.wear();
 			}
 		}
 		shouldDelayLoop = true;
 		
-		for(ISystem sys : systems) {
+		for(BaseSystem sys : systems) {
 			sys.onUpdate(this.world, getPos());
 		}
 	}
@@ -338,21 +346,21 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.blockTop = Block.getStateById(tardisTag.getInteger(NBT.EXTERIOR));
 			this.fuelUseage = tardisTag.getFloat(NBT.FUEL_USAGE);
 			
-			List<ISystem> newSystems = new ArrayList<>();
+			List<BaseSystem> newSystems = new ArrayList<>();
 			NBTTagList systemList = tardisTag.getTagList(NBT.SYSTEM_LIST, Constants.NBT.TAG_COMPOUND);
 			for(NBTBase base : systemList) {
 				NBTTagCompound systemTag = (NBTTagCompound)base;
-				ISystem sys = TardisSystems.createFromName(systemTag.getString("id"));
+				BaseSystem sys = TardisSystems.createFromName(systemTag.getString("id"));
 				if(sys != null)sys.readFromNBT(systemTag);
 				newSystems.add(sys);
 			}
 			if(newSystems != null) {
-				for(ISystem sys : this.systems) {
+				for(BaseSystem sys : this.systems) {
 					if(!newSystems.contains(sys)) {
 						newSystems.add(sys);
 					}
 				}
-				this.systems = newSystems.toArray(new ISystem[] {});
+				this.systems = newSystems.toArray(new BaseSystem[] {});
 			}
 			this.currentState = Enum.valueOf(EnumTardisState.class, tardisTag.getString(NBT.TARDIS_STATE_ID));
 			this.isLocked = tardisTag.getBoolean(NBT.IS_LOCKED);
@@ -395,7 +403,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setFloat(NBT.FUEL_USAGE, this.fuelUseage);
 			
 			NBTTagList systemList = new NBTTagList();
-			for(ISystem sys : systems) {
+			for(BaseSystem sys : systems) {
 				if(sys != null) {
 					String id = TardisSystems.getIdBySystem(sys);
 					if(id == null || id.isEmpty()) {
@@ -512,7 +520,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public boolean getCanFly() {
-		for(ISystem s : systems) {
+		for(BaseSystem s : systems) {
 			if(s.shouldStopFlight())return false;
 		}
 		return true;
@@ -547,7 +555,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setInteger("facing", this.facing.getHorizontalIndex());
 		tag.setInteger(NBT.EXTERIOR, Block.getStateId(this.blockTop));
 		NBTTagList sysList = new NBTTagList();
-		for(ISystem s : this.systems) {
+		for(BaseSystem s : this.systems) {
 			NBTTagCompound sT = new NBTTagCompound();
 			sT.setString("id", TardisSystems.getIdBySystem(s));
 			s.writetoNBT(sT);
@@ -582,14 +590,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.controls = controls.toArray(new EntityControl[0]);
 			this.facing = EnumFacing.getHorizontal(tag.getInteger("facing"));
 			this.blockTop = Block.getStateById(tag.getInteger(NBT.EXTERIOR));
-			List<ISystem> systems = new ArrayList<ISystem>();
+			List<BaseSystem> systems = new ArrayList<BaseSystem>();
 			for(NBTBase base : tag.getTagList(NBT.SYSTEM_LIST, Constants.NBT.TAG_COMPOUND)) {
 				NBTTagCompound sysTag = (NBTTagCompound)base;
-				ISystem system = TardisSystems.createFromName(sysTag.getString("id"));
+				BaseSystem system = TardisSystems.createFromName(sysTag.getString("id"));
 				system.readFromNBT(sysTag);
 				systems.add(system);
 			}
-			this.systems = systems.toArray(new ISystem[] {});
+			this.systems = systems.toArray(new BaseSystem[] {});
 		}
 	}
 	
@@ -686,7 +694,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, getPos().getX() + (rand.nextInt(3) - 1), getPos().getY() + (rand.nextInt(3) - 1), getPos().getZ() + (rand.nextInt(3) - 1), 0, 1, 0, 0);
 			}
 		}
-		for(ISystem s : systems) {
+		for(BaseSystem s : systems) {
 			s.damage();
 		}
 	}
@@ -845,13 +853,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return this.ticksToTravel;
 	}
 	
-	private ISystem[] createSystems() {
-		List<ISystem> systems = new ArrayList<>();
+	private BaseSystem[] createSystems() {
+		List<BaseSystem> systems = new ArrayList<>();
 		for(String s : TardisSystems.SYSTEMS.keySet()) {
-			ISystem system = TardisSystems.createFromName(s);
+			BaseSystem system = TardisSystems.createFromName(s);
 			if(system != null)systems.add(system);
 		}
-		return systems == null ? new ISystem[] {new SystemFlight()} : systems.toArray(new ISystem[] {});
+		return systems == null ? new BaseSystem[] {new SystemFlight()} : systems.toArray(new BaseSystem[] {});
 		
 	}
 	
@@ -921,7 +929,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public <T> T getSystem(Class<T> system) {
-		for(ISystem sys : this.systems) {
+		for(BaseSystem sys : this.systems) {
 			if(sys.getClass() == system) {
 				return (T)sys;
 			}
@@ -984,5 +992,35 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public float getHealth() {
 		return this.hullHealth;
+	}
+	
+	public void setCourseEvent(EnumCourseCorrect event) {
+		this.courseCorrect = event;
+	}
+	
+	public EnumCourseCorrect getCourseCorrect() {
+		return this.courseCorrect;
+	}
+	
+	public static enum EnumCourseCorrect{
+		NONE(null, ""),
+		DIRECTION(ControlX.class, "course.tardis.direction"),
+		DIMENSION(ControlDimChange.class, "course.tardis.dimension");
+		
+		Class<? extends EntityControl> control;
+		String langKey = "";
+		
+		EnumCourseCorrect(Class<? extends EntityControl> con, String nameKey) {
+			control = con;
+			langKey = nameKey;
+		}
+		
+		public Class<? extends EntityControl> getControl(){
+			return control;
+		}
+		
+		public TextComponentTranslation getTranslation() {
+			return new TextComponentTranslation(langKey);
+		} 
 	}
 }
