@@ -15,6 +15,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTardis.EnumCourseCorrect;
 import net.tardis.mod.config.TardisConfig;
 
 public abstract class EntityControl extends Entity implements IControl {
@@ -58,7 +59,12 @@ public abstract class EntityControl extends Entity implements IControl {
 	
 	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-		preformAction(player);
+		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(getConsolePos());
+		if(!tardis.isInFlight())preformAction(player);
+		else if(tardis.getCourseCorrect() != EnumCourseCorrect.NONE && this.getClass() == tardis.getCourseCorrect().getControl()) {
+			tardis.setCourseEvent(EnumCourseCorrect.NONE);
+			world.playSound(null, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getUseSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+		}
 		world.playSound(null, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getUseSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
 		return true;
 	}

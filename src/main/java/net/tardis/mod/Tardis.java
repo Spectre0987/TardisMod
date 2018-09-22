@@ -90,6 +90,7 @@ import net.tardis.mod.common.systems.SystemCCircuit;
 import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemFluidLinks;
+import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.systems.SystemTemporalGrace;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
@@ -130,6 +131,7 @@ import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageExteriorChange;
 import net.tardis.mod.packets.MessageHandlerProtocol;
 import net.tardis.mod.packets.MessageHandlerTeleport;
+import net.tardis.mod.packets.MessageMissControl;
 import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageSpawnItem;
 import net.tardis.mod.packets.MessageTelepathicCircut;
@@ -252,7 +254,8 @@ public class Tardis {
 		NETWORK.registerMessage(MessageSpawnItem.Handler.class, MessageSpawnItem.class, 8, Side.SERVER);
 		NETWORK.registerMessage(MessageDamageSystem.Helper.class, MessageDamageSystem.class, 9, Side.SERVER);
 		NETWORK.registerMessage(MessageUpdateBessie.Handler.class, MessageUpdateBessie.class, 10, Side.SERVER);
-		NETWORK.registerMessage(MessageCompanion.Handler.class, MessageCompanion.class, 12, Side.SERVER);
+		NETWORK.registerMessage(MessageCompanion.Handler.class, MessageCompanion.class, 11, Side.SERVER);
+		NETWORK.registerMessage(MessageMissControl.Handler.class, MessageMissControl.class, 12, Side.CLIENT);
 
 		ScrewdriverHandler.init();
 		
@@ -282,6 +285,7 @@ public class Tardis {
 		TardisSystems.register("antenna", SystemAntenna.class);
 		TardisSystems.register("chameleon", SystemCCircuit.class);
 		TardisSystems.register("temporal_grace", SystemTemporalGrace.class);
+		TardisSystems.register("stabilizers", SystemStabilizers.class);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);

@@ -7,6 +7,10 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.client.renderers.sky.SkyRendererMoon;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.dimensions.telos.ChunkGeneratorTelos;
 
@@ -49,6 +53,17 @@ public class MoonProvider extends WorldProvider{
 	@Override
 	public Vec3d getSkyColor(Entity cameraEntity, float partialTicks) {
 		return new Vec3d(0, 0, 0);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IRenderHandler getSkyRenderer() {
+		return new SkyRendererMoon();
+	}
+
+	@Override
+	public float[] calcSunriseSunsetColors(float celestialAngle, float partialTicks) {
+		return new float[] {0, 0, 0, 0};
 	}
 
 }

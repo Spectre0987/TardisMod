@@ -113,6 +113,7 @@ public class TBlocks {
 	public static Block telos_sand = register(new BlockBaseSand(), "telos_sand");
 	public static Block moon_dirt = register(new BlockBase(), "moon_dirt");
 	
+	public static Block suitcase = register(new BlockSuitcase(), "suitcase");
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");
 	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02");

@@ -11,16 +11,16 @@ import net.minecraft.world.World;
 
 public class TardisSystems {
 	
-	public static HashMap<String, Class<? extends ISystem>> SYSTEMS = new HashMap<>();
+	public static HashMap<String, Class<? extends BaseSystem>> SYSTEMS = new HashMap<>();
 	
-	public static void register(String name, Class<? extends ISystem> sys){
+	public static void register(String name, Class<? extends BaseSystem> sys){
 		if(SYSTEMS.containsKey(name)) {
 			return;
 		}
 		SYSTEMS.put(name, sys);
 	}
 	
-	public static ISystem createFromName(String s) {
+	public static BaseSystem createFromName(String s) {
 		if(!SYSTEMS.containsKey(s))return null;
 		try {
 			return SYSTEMS.get(s).newInstance();
@@ -29,9 +29,9 @@ public class TardisSystems {
 		return null;
 	}
 	
-	public static String getIdBySystem(ISystem sys) {
+	public static String getIdBySystem(BaseSystem sys) {
 		for(String key : SYSTEMS.keySet()) {
-			Class<? extends ISystem> clazz = SYSTEMS.get(key);
+			Class<? extends BaseSystem> clazz = SYSTEMS.get(key);
 			if(clazz == sys.getClass()) {
 				return key;
 			}
@@ -39,7 +39,7 @@ public class TardisSystems {
 		return null;
 	}
 	
-	public static abstract class ISystem{
+	public static abstract class BaseSystem{
 		
 		private float health = 0F;
 		

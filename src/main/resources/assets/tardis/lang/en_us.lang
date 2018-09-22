@@ -104,6 +104,7 @@ tile.tardis.circuit_repair.name=Steady State Micro-Welding
 tile.tardis.zero_room.name=Zero Room
 tile.tardis.zero_room_slab.name=Zero Room Slab
 tile.tardis.zero_room_stairs.name=Zero Room Stairs
+tile.tardis.suitcase.name=Mysterious Suitcase
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!
@@ -264,3 +265,6 @@ companion.tardis.fetch=I need you to go get the TARDIS.
 companion.tardis.saved.dalek=Good work with those Daleks!
 
 jei.tardis.book.description=Acquired by right clicking a TARDIS console with a vanilla book.
+
+course.tardis.direction=Directional Drift!
+course.tardis.dimension=Time De-sync!
