@@ -52,9 +52,13 @@ public class SystemStabilizers extends BaseSystem{
 					}
 				}
 				else {
+					this.controlsMissed = 0;
 					tardis.setCourseEvent(EnumCourseCorrect.NONE);
 				}
+				if(this.getHealth() > 0)
+					this.isStabilized = false;
 			}
+			
 		}
 	}
 
@@ -62,6 +66,8 @@ public class SystemStabilizers extends BaseSystem{
 		if(!world.isRemote) {
 			world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
 			Tardis.NETWORK.sendToAllAround(new MessageMissControl(pos), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 25D));
+			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(pos);
+			tardis.setDesination(tardis.getDestination().add(rand.nextInt(20) - 10, rand.nextInt(20) - 10, rand.nextInt(20) - 10), tardis.getTargetDim());
 		}
 	}
 	

@@ -36,8 +36,11 @@ public class ControlStabilizers extends EntityControl{
 		if(!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			SystemStabilizers stab = tardis.getSystem(SystemStabilizers.class);
-			stab.setOn(!stab.isOn());
-			player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.STABILIZERS_ON + stab.isOn()).getFormattedText()), true);
+			if(stab.getHealth() > 0) {
+				stab.setOn(!stab.isOn());
+				player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.STABILIZERS_ON + stab.isOn()).getFormattedText()), true);
+			}
+			else stab.setOn(false);
 		}
 	}
 
