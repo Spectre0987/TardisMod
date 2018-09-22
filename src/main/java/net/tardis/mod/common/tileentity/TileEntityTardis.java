@@ -563,6 +563,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			sysList.appendTag(sT);
 		}
 		tag.setTag(NBT.SYSTEM_LIST, sysList);
+		tag.setString("course_correct", this.getCourseCorrect().name());
 		return tag;
 	}
 	
@@ -599,6 +600,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				systems.add(system);
 			}
 			this.systems = systems.toArray(new BaseSystem[] {});
+			this.setCourseEvent(Enum.valueOf(EnumCourseCorrect.class, tag.getString("course_correct")));
 		}
 	}
 	

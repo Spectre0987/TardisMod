@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +13,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardis.EnumCourseCorrect;
@@ -55,7 +55,7 @@ public class SystemStabilizers extends BaseSystem{
 					this.controlsMissed = 0;
 					tardis.setCourseEvent(EnumCourseCorrect.NONE);
 				}
-				if(this.getHealth() > 0)
+				if(this.getHealth() <= 0)
 					this.isStabilized = false;
 			}
 			
@@ -76,7 +76,7 @@ public class SystemStabilizers extends BaseSystem{
 
 	@Override
 	public Item getRepairItem() {
-		return Items.IRON_AXE;
+		return TItems.stabilizers;
 	}
 
 	@Override
