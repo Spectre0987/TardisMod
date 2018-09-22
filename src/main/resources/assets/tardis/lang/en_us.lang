@@ -216,6 +216,9 @@ entity.tardis_door_control.name=Door Switch
 entity.tardis_magnitude.name=Coordinate Magnitude Adjuster
 entity.tardis_phone.name=Communicator
 
+tardis.stabilizers.true=Stabilizers on
+tardis.stabilizers.false=Stabilizers off
+
 entity.dalek.name=Dalek
 entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Invasion Cyberman

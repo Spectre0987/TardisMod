@@ -21,7 +21,7 @@ public class SkyRendererMoon extends IRenderHandler {
 	private int earthSize = 50;
 	private int starHeight = 100;
 	private int drawDist = 0;
-	private float starSize = 0.125F;
+	private float starSize = 0.25F;
 	
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {

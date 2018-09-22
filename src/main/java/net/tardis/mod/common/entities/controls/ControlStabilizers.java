@@ -2,7 +2,10 @@ package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
@@ -34,6 +37,7 @@ public class ControlStabilizers extends EntityControl{
 			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(this.getConsolePos());
 			SystemStabilizers stab = tardis.getSystem(SystemStabilizers.class);
 			stab.setOn(!stab.isOn());
+			player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.STABILIZERS_ON + stab.isOn()).getFormattedText()), true);
 		}
 	}
 

@@ -44,7 +44,6 @@ public class SystemStabilizers extends BaseSystem{
 						tardis.setCourseEvent(newEvent);
 						for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(consolePos).grow(16))) {
 							player.sendStatusMessage(new TextComponentString(newEvent.getTranslation().getFormattedText()), true);
-							player.sendStatusMessage(new TextComponentString("Controls Missed : " + this.controlsMissed), false);
 						}
 					}
 					else {
