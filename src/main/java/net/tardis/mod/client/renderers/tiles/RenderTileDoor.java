@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
@@ -72,21 +73,25 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			GlStateManager.rotate(Helper.get360FromFacing(facing), 0, 1, 0);
 			if(face == EnumFacing.WEST || face == EnumFacing.EAST) GlStateManager.rotate(180, 0, 1, 0);
 		}
-		this.mc.getTextureManager().bindTexture(TEXTURE);
-		GlStateManager.rotate(180, 1, 0, 0);
-		model.renderGlow(null, 0, 0, 0, 0, 0, 0.0625F, true);
-		
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.46875, 0, -0.53125);
-		GlStateManager.rotate(open ? 85 : 0, 0, 1, 0);
-		ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		GlStateManager.popMatrix();
-		
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(-0.46875, 0, -0.53125);
-		GlStateManager.rotate(open ? -85 : 0, 0, 1, 0);
-		rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		GlStateManager.popMatrix();
+		if(MinecraftForgeClient.getRenderPass() == 0) {
+			this.mc.getTextureManager().bindTexture(TEXTURE);
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(180, 1, 0, 0);
+			model.renderGlow(null, 0, 0, 0, 0, 0, 0.0625F, true);
+
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(0.46875, 0, -0.53125);
+			GlStateManager.rotate(open ? 85 : 0, 0, 1, 0);
+			ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.popMatrix();
+			
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(-0.46875, 0, -0.53125);
+			GlStateManager.rotate(open ? -85 : 0, 0, 1, 0);
+			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			GlStateManager.popMatrix();
+			GlStateManager.popMatrix();
+		}
 		
 		GlStateManager.popMatrix();
 	}

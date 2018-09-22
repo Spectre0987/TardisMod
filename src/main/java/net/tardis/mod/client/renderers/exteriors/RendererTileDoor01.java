@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor02;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor02;
@@ -69,15 +70,14 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 	    GlStateManager.popMatrix();
 	    
 	    //RenderDoor
-	    {
+	    if(MinecraftForgeClient.getRenderPass() == 0){
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 			GlStateManager.rotate(180, 1, 0, 0);
 			if(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
 				EnumFacing face = te.getWorld().getBlockState(te.getPos()).getValue(BlockTardisTop.FACING);
 				GlStateManager.rotate(Helper.getAngleFromFacing(face), 0, 1, 0);
-				if(face == EnumFacing.NORTH || face == EnumFacing.SOUTH)
-					GlStateManager.rotate(180, 0, 1, 0);
+				GlStateManager.rotate(180, 0, 1, 0);
 			}
 			mc.getTextureManager().bindTexture(TEXTURE);
 			model.renderGlow(0.0625F, true);
