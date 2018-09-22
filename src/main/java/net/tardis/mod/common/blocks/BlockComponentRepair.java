@@ -20,6 +20,7 @@ public class BlockComponentRepair extends BlockTileBase{
 	public BlockComponentRepair(Material materialIn, Supplier<TileEntity> tileEntity) {
 		super(materialIn, tileEntity);
 		this.setLightOpacity(0);
+		this.setCreativeTab(Tardis.tab);
 	}
 
 	@Override
