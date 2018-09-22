@@ -60,11 +60,11 @@ public abstract class EntityControl extends Entity implements IControl {
 	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
 		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(getConsolePos());
-		if(!tardis.isInFlight())preformAction(player);
+		if(!tardis.isInFlight()) preformAction(player);
 		else if(tardis.getCourseCorrect() != EnumCourseCorrect.NONE && this.getClass() == tardis.getCourseCorrect().getControl()) {
 			tardis.setCourseEvent(EnumCourseCorrect.NONE);
-			world.playSound(null, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getUseSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
 		}
+		else preformAction(player);
 		world.playSound(null, getPosition().getX(), getPosition().getY(), getPosition().getZ(), getUseSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
 		return true;
 	}

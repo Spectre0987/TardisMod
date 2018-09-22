@@ -65,6 +65,7 @@ import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlScanner;
 import net.tardis.mod.common.entities.controls.ControlSonicSlot;
+import net.tardis.mod.common.entities.controls.ControlStabilizers;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
@@ -202,6 +203,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlPhone.class, "tardis_phone");
 		EntityHelper.registerStatic(ControlMag.class, "tardis_magnitude");
 		EntityHelper.registerStatic(ControlSonicSlot.class, "sonic_slot");
+		EntityHelper.registerStatic(ControlStabilizers.class, "stabilizers");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");

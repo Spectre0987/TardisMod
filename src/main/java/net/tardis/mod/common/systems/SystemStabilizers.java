@@ -32,22 +32,27 @@ public class SystemStabilizers extends BaseSystem{
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
 		if(!world.isRemote) {
-			if(world.getWorldTime() % 150 == 0 && !this.isStabilized) {
+			if(world.getWorldTime() % 150 == 0) {
 				TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(consolePos);
-				if(tardis.isInFlight()) {
-					if(tardis.getCourseCorrect() != EnumCourseCorrect.NONE) {
-						++controlsMissed;
-						this.explode(world, consolePos);
+				if(!this.isStabilized) {
+					if(tardis.isInFlight()) {
+						if(tardis.getCourseCorrect() != EnumCourseCorrect.NONE) {
+							++controlsMissed;
+							this.explode(world, consolePos);
+						}
+						EnumCourseCorrect newEvent = EnumCourseCorrect.values()[rand.nextInt(EnumCourseCorrect.values().length)];
+						tardis.setCourseEvent(newEvent);
+						for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(consolePos).grow(16))) {
+							player.sendStatusMessage(new TextComponentString(newEvent.getTranslation().getFormattedText()), true);
+							player.sendStatusMessage(new TextComponentString("Controls Missed : " + this.controlsMissed), false);
+						}
 					}
-					EnumCourseCorrect newEvent = EnumCourseCorrect.values()[rand.nextInt(EnumCourseCorrect.values().length)];
-					tardis.setCourseEvent(newEvent);
-					for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(consolePos).grow(16))) {
-						player.sendStatusMessage(new TextComponentString(newEvent.getTranslation().getFormattedText()), true);
-						player.sendStatusMessage(new TextComponentString("Controls Missed : " + this.controlsMissed), false);
+					else {
+						this.controlsMissed = 0;
+						tardis.setCourseEvent(EnumCourseCorrect.NONE);
 					}
 				}
 				else {
-					this.controlsMissed = 0;
 					tardis.setCourseEvent(EnumCourseCorrect.NONE);
 				}
 			}

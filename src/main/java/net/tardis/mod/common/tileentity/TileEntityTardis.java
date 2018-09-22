@@ -62,6 +62,7 @@ import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlSonicSlot;
+import net.tardis.mod.common.entities.controls.ControlStabilizers;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
@@ -632,6 +633,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				ec.add(new ControlMag(this));
 				ec.add(new ControlPhone(this));
 				ec.add(new ControlSonicSlot(this));
+				ec.add(new ControlStabilizers(this));
 				int id = 0;
 				for(Vec3d pos : this.coordList) {
 					ec.add(new ControlSTCButton(this, id, pos));
