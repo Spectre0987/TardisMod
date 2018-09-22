@@ -269,5 +269,7 @@ companion.tardis.saved.dalek=Good work with those Daleks!
 
 jei.tardis.book.description=Acquired by right clicking a TARDIS console with a vanilla book.
 
-course.tardis.direction=Directional Drift!
-course.tardis.dimension=Time De-sync!
+course.tardis.direction.x=Directional Drift - X!
+course.tardis.direction.y=Directional Drift - Y!
+course.tardis.direction.z=Directional Drift - Z!
+course.tardis.dimension=Dimensional De-sync

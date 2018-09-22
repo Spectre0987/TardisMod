@@ -1006,7 +1006,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public static enum EnumCourseCorrect{
 		NONE(null, ""),
-		DIRECTION(ControlX.class, "course.tardis.direction"),
+		DIRECTION_X(ControlX.class, "course.tardis.direction.x"),
+		DIRECTION_Y(ControlY.class, "course.tardis.direction.y"),
+		DIRECTION_Z(ControlZ.class, "course.tardis.direction.z"),
 		DIMENSION(ControlDimChange.class, "course.tardis.dimension");
 		
 		Class<? extends EntityControl> control;
