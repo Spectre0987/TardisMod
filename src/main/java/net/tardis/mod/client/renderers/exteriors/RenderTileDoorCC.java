@@ -49,7 +49,7 @@ public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> 
 			if(facing == EnumFacing.EAST) GlStateManager.translate(0.125, 0, -1.001);
 			if(facing == EnumFacing.SOUTH) GlStateManager.translate(-0.875, 0, -1.01);
 			if(facing == EnumFacing.NORTH) GlStateManager.translate(0.125, 0, -0.001);
-			if(!te.isLocked())RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, position);
+			if(!te.isLocked())RenderHelper.renderPortal(renderShell, te, partialTicks, 90, new Vec3d(0, 0, -0.5), position);
 		}
 		GlStateManager.popMatrix();
 	}

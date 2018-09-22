@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
@@ -25,6 +26,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 	public ModelRightDoor01 rd = new ModelRightDoor01();
 	public ModelLeftDoor01 ld = new ModelLeftDoor01();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/exteriors/01.png");
+	public static final Vec3d POSITION = new Vec3d(0, 0, -0.5);
 	
 	public RenderTileDoor() {
 		mc = Minecraft.getMinecraft();
@@ -62,7 +64,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			}
 		}
 		if(open) {
-			RenderHelper.renderPortal(renderShell, te, partialTicks);
+			RenderHelper.renderPortal(renderShell, te, partialTicks, 90, POSITION);
 		}
 		GlStateManager.popMatrix();
 		

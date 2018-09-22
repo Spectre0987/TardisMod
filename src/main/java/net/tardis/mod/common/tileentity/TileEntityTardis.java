@@ -564,6 +564,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		tag.setTag(NBT.SYSTEM_LIST, sysList);
 		tag.setString("course_correct", this.getCourseCorrect().name());
+		tag.setBoolean(NBT.IS_LOCKED, this.isLocked);
 		return tag;
 	}
 	
@@ -601,6 +602,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			this.systems = systems.toArray(new BaseSystem[] {});
 			this.setCourseEvent(Enum.valueOf(EnumCourseCorrect.class, tag.getString("course_correct")));
+			this.isLocked = tag.getBoolean(NBT.IS_LOCKED);
 		}
 	}
 	
