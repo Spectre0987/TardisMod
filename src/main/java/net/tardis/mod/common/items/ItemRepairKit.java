@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.tardis.mod.common.strings.TStrings;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class ItemRepairKit extends ItemBase {
@@ -22,7 +22,7 @@ public class ItemRepairKit extends ItemBase {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te != null && te instanceof TileEntityTardis) {
-			for(ISystem sys : ((TileEntityTardis)te).systems) {
+			for(BaseSystem sys : ((TileEntityTardis)te).systems) {
 				if(sys.getHealth() > 0F) {
 					sys.setHealth(sys.getHealth() + 15);
 				}
