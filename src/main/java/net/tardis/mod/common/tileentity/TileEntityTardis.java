@@ -72,6 +72,7 @@ import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemFlight;
+import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.config.TardisConfig;
@@ -441,7 +442,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public int calcTimeToTravel() {
 		double dist = this.tardisLocation.getDistance(this.tardisDestination.getX(), this.tardisDestination.getY(), this.tardisDestination.getZ());
-		return (int) ((dist / MAX_TARDIS_SPEED) + 400 + (dimension == destDim ? 0 : 300));
+		return (int) ((dist / (MAX_TARDIS_SPEED * (this.getSystem(SystemStabilizers.class).isOn() ? 1 : 2))) + 400 + (dimension == destDim ? 0 : 300));
 	}
 	
 	public BlockPos getDestination() {
@@ -1013,7 +1014,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		DIRECTION_X(ControlX.class, "course.tardis.direction.x"),
 		DIRECTION_Y(ControlY.class, "course.tardis.direction.y"),
 		DIRECTION_Z(ControlZ.class, "course.tardis.direction.z"),
-		DIMENSION(ControlDimChange.class, "course.tardis.dimension");
+		DIMENSION(ControlDimChange.class, "course.tardis.dimension"),
+		ARTRON_LEAK(ControlFuel.class, "course.tardis.artron_leak"),
+		SPIN(ControlDirection.class, "course.tardis.spin");
 		
 		Class<? extends EntityControl> control;
 		String langKey = "";

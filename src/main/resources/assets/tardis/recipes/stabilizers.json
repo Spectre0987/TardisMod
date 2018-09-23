@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OQO",
+    "DCD",
+    "OQO"
+  ],
+  "key": {
+    "O":{
+        "item":"minecraft:obsidian"
+    },
+    "Q":{
+        "item":"minecraft:quartz"
+    },
+    "D":{
+        "item":"minecraft:diamond"
+    },
+    "C":{
+        "item":"tardis:circuts"
+    }
+  },
+  "result": {
+    "item": "tardis:stabilizers"
+  }
+}

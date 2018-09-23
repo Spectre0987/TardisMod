@@ -267,7 +267,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
 		TardisProtocol.register(new ProtocolConsole());
-		TardisProtocol.register(new ProtocolARS());
+		//TardisProtocol.register(new ProtocolARS());
 		TardisProtocol.register(new ProtocolRegenRoom());
 		TardisProtocol.register(new ProtocolLock());
 		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
@@ -300,6 +300,7 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.artron_capacitor, Item.getItemFromBlock(Blocks.REDSTONE_BLOCK));
 		RepairRecipes.registerRecipe(TItems.demat_circut, Items.ENDER_PEARL);
 		RepairRecipes.registerRecipe(TItems.antenna, TItems.circuts);
+		RepairRecipes.registerRecipe(TItems.stabilizers, TItems.circuts);
 		
 	}
 	

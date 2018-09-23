@@ -46,6 +46,7 @@ item.tardis.chameleon_circuit.name=Chameleon Circuit
 item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Temporal Grace Circuits
 item.tardis.tardis_repairkit.name=TARDIS Toolkit
+item.tardis.stabilizers.name=Stabilizer circuits
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
@@ -170,6 +171,7 @@ system.tardis.fluidlinks=Fluid Links
 systems.tardis.antenna=Interstitial Antenna
 system.tardis.ccircuit=Chameleon Circuit
 system.tardis.temporal_grace=Temporal Grace Circuits
+system.tardis.stabilizers=Stablilzers
 
 tardis.dimension=Nav-com Dimension is:
 
@@ -269,7 +271,15 @@ companion.tardis.saved.dalek=Good work with those Daleks!
 
 jei.tardis.book.description=Acquired by right clicking a TARDIS console with a vanilla book.
 
-course.tardis.direction.x=Directional Drift - X!
-course.tardis.direction.y=Directional Drift - Y!
-course.tardis.direction.z=Directional Drift - Z!
-course.tardis.dimension=Dimensional De-sync
+course.tardis.direction.x=Coordinate Slip - X!
+course.tardis.direction.y=Coordinate Slip - Y!
+course.tardis.direction.z=Coordinate Slip - Z!
+course.tardis.dimension=Dimensional Drift!
+course.tardis.artron_leak=Artron Leak!
+course.tardis.spin=You're fucking spining.
+
+box.tardis.01=1963 - Brachacki
+box.tardis.02=1966 - Altered Brachacki
+box.tardis.03=1976 - Newbery
+box.tardis.04=1996 - Hudolin
+box.tardis.cc=Disguised
