@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
 import net.tardis.mod.client.models.ModelBlocks;
@@ -34,10 +35,9 @@ public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> 
 		rl = DisguiseRegistry.getDisguise(name);
 		if(rl == null) rl = DisguiseRegistry.CACTUS;
 		if(!model.getKey().equals(rl) && rl != null) model = new ModelBlocks(rl);
-		if(model != null && model.getKey() != null) {
+		if(MinecraftForgeClient.getRenderPass() == 0 && model != null && model.getKey() != null) {
 			model.render();
 		}
-		else System.err.println("No Model!");
 		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		if(state.getBlock() instanceof BlockTardisTop) {
 			EnumFacing facing = state.getValue(BlockTardisTop.FACING);
@@ -49,7 +49,7 @@ public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> 
 			if(facing == EnumFacing.EAST) GlStateManager.translate(0.125, 0, -1.001);
 			if(facing == EnumFacing.SOUTH) GlStateManager.translate(-0.875, 0, -1.01);
 			if(facing == EnumFacing.NORTH) GlStateManager.translate(0.125, 0, -0.001);
-			if(!te.isLocked())RenderHelper.renderPortal(renderShell, te, partialTicks, 0, null, position);
+			if(!te.isLocked())RenderHelper.renderPortal(renderShell, te, partialTicks, 90, new Vec3d(0, 0, -0.5), position);
 		}
 		GlStateManager.popMatrix();
 	}

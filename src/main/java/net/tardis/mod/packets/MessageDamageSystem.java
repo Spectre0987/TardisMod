@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.systems.TardisSystems;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class MessageDamageSystem implements IMessage{
@@ -45,7 +45,7 @@ public class MessageDamageSystem implements IMessage{
 					WorldServer ws = ctx.getServerHandler().player.getServer().getWorld(TDimensions.TARDIS_ID);
 					TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(message.pos);
 					if (tardis != null) {
-						ISystem sys = tardis.getSystem(TardisSystems.createFromName(message.system).getClass());
+						BaseSystem sys = tardis.getSystem(TardisSystems.createFromName(message.system).getClass());
 						if(sys != null) {
 							sys.setHealth(0F);
 							System.out.println(message.pos);

@@ -104,16 +104,15 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	
 	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-		if (this.getConsolePos() != null) {
-			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
-			if (!player.isSneaking()) {
-				this.setOpen(!this.isOpen());
-				if (!world.isRemote) {
-					if (this.isOpen())
-						world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
-					else
-						world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
-				}
+		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
+		if(tardis == null || tardis.isLocked()) return false;
+		if (!player.isSneaking()) {
+			this.setOpen(!this.isOpen());
+			if (!world.isRemote) {
+				if (this.isOpen())
+					world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
+				else
+					world.playSound(null, this.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.5F, 0.5F);
 			}
 		}
 		return true;

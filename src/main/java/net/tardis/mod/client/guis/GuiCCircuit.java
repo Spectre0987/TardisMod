@@ -14,6 +14,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.packets.MessageExteriorChange;
@@ -24,12 +26,13 @@ public class GuiCCircuit extends GuiScreen {
 	public BlockPos pos = BlockPos.ORIGIN;
 	public static EnumExterior[] exteriors = new EnumExterior[] {EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FOURTH, EnumExterior.CC};
 	private ResourceLocation tex = new ResourceLocation(Tardis.MODID, "textures/gui/chameleon_circuit.png");
-	private GuiButton selectButton;
-	private GuiButton nextArrow;
-	private GuiButton prevArrow;
+	private GuiButtonExt selectButton;
+	private GuiButtonExt nextArrow;
+	private GuiButtonExt prevArrow;
 	private static final int WIDTH = 248;
 	private static final int HEIGHT = 166;
 	private static final int BOX_NAME_COLOR = new Color((float)111 / 255, (float)111 / 255, (float)111 / 255).getRGB();
+	private static final String title = "Chameleon Circuit";
 	private int index = 0;
 	
 	public GuiCCircuit() {
@@ -46,15 +49,14 @@ public class GuiCCircuit extends GuiScreen {
 		
 		 float rotX = 30 + (mouseY - height/2);
 		 float rotY = 45 + (mouseX - width/2);
-		
+		 //int BOX_NAME_COLOR = 0xffffff;
 		this.drawDefaultBackground();
 		mc.getTextureManager().bindTexture(tex);
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
 		this.drawTexturedModalRect(res.getScaledWidth() / 2 - WIDTH / 2, res.getScaledHeight() / 2 - HEIGHT / 2, 0, 0, WIDTH, HEIGHT);
 		GlStateManager.pushMatrix();
-		String title = "Chameleon Circuit";
 		mc.fontRenderer.drawStringWithShadow(title, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(title) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT, BOX_NAME_COLOR);
-		String boxName = "19Who gives a fuck - Doctor's Name";
+		String boxName = new TextComponentTranslation(exteriors[index].name).getFormattedText();
 		mc.fontRenderer.drawStringWithShadow(boxName, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(boxName) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT * 2.3F, BOX_NAME_COLOR);
 		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.popMatrix();
@@ -117,11 +119,11 @@ public class GuiCCircuit extends GuiScreen {
 		this.buttonList.clear();
 		String select = "Select";
 		ScaledResolution res = new ScaledResolution(mc);
-		this.selectButton = this.addButton(new GuiButton(0, res.getScaledWidth() / 2 - (mc.fontRenderer.getStringWidth(select) * 2) / 2, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT / 2) + 60, mc.fontRenderer.getStringWidth(select) * 2, mc.fontRenderer.FONT_HEIGHT * 2, select));
+		this.selectButton = this.addButton(new GuiButtonExt(0, res.getScaledWidth() / 2 - (mc.fontRenderer.getStringWidth(select) * 2) / 2, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT / 2) + 60, mc.fontRenderer.getStringWidth(select) * 2, mc.fontRenderer.FONT_HEIGHT * 2, select));
 		String nArrow = ">";
-		this.nextArrow = this.addButton(new GuiButton(1, (res.getScaledWidth() / 2 - (mc.fontRenderer.getStringWidth(nArrow) * 2) / 2) + 40, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT * 2) + 74, mc.fontRenderer.getStringWidth(nArrow) * 2, mc.fontRenderer.FONT_HEIGHT * 2, nArrow));
+		this.nextArrow = this.addButton(new GuiButtonExt(1, (res.getScaledWidth() / 2 - (mc.fontRenderer.getStringWidth(nArrow) * 2) / 2) + 40, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT * 2) + 74, mc.fontRenderer.getStringWidth(nArrow) * 2, mc.fontRenderer.FONT_HEIGHT * 2, nArrow));
 		String pArrow = "<";
-		this.prevArrow = this.addButton(new GuiButton(2, (res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(pArrow)) - 40, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT) + 65, mc.fontRenderer.getStringWidth(pArrow) * 2, mc.fontRenderer.FONT_HEIGHT * 2, pArrow));
+		this.prevArrow = this.addButton(new GuiButtonExt(2, (res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(pArrow)) - 40, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT) + 65, mc.fontRenderer.getStringWidth(pArrow) * 2, mc.fontRenderer.FONT_HEIGHT * 2, pArrow));
 	}
 
 	@Override

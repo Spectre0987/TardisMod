@@ -29,7 +29,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
-import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.client.worldshell.WorldShell;
@@ -58,6 +57,7 @@ public class ModelBlocks implements IExteriorModel{
 		if(world == null) world = new WorldBoti(0, Minecraft.getMinecraft().world, ws);
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
+		GlStateManager.enableAlpha();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.translate(offset.getX(), offset.getY(), offset.getZ());
 		GlStateManager.rotate((float)rotation.x, 1, 0, 0);
@@ -92,6 +92,7 @@ public class ModelBlocks implements IExteriorModel{
 			}
 		}
 		GlStateManager.disableBlend();
+		GlStateManager.disableAlpha();
 		GlStateManager.popMatrix();
 	}
 

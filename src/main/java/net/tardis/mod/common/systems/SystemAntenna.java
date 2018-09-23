@@ -6,9 +6,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 
-public class SystemAntenna extends ISystem{
+public class SystemAntenna extends BaseSystem{
 
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {}

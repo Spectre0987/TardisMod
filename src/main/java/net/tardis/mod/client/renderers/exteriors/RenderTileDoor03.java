@@ -9,12 +9,14 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor03;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor03;
 import net.tardis.mod.client.models.exteriors.ModelTardis03;
 import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
+import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -64,13 +66,13 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 		}
 
         if (open) {
-            RenderHelper.renderPortal(renderShell, te, partialTicks);
+            RenderHelper.renderPortal(renderShell, te, partialTicks, 90, RenderTileDoor.POSITION);
 
         }
 
 	    GlStateManager.popMatrix();
 	    //RenderDoor
-	    {
+	    if(MinecraftForgeClient.getRenderPass() == 0){
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 			GlStateManager.rotate(180, 0, 0, 1);

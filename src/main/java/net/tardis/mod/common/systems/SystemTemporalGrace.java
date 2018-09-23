@@ -4,9 +4,9 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 
-public class SystemTemporalGrace extends ISystem{
+public class SystemTemporalGrace extends BaseSystem{
 
 	public SystemTemporalGrace() {}
 	

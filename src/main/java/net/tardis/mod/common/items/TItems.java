@@ -3,7 +3,6 @@ package net.tardis.mod.common.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -87,6 +86,7 @@ public class TItems {
 	public static Item antenna = createItem(new ItemComponent(), "antenna");
 	public static Item chameleon_circuit = createItem(new ItemComponent(), "chameleon_circuit");
 	public static Item temporal_grace_circuits = createItem(new ItemComponent(), "temporal_grace_circuits");
+	public static Item stabilizers = createItem(new ItemComponent(), "stabilizers");
 
 
     @SubscribeEvent

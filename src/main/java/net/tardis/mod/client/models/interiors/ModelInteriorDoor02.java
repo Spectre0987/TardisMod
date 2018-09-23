@@ -10,7 +10,9 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.IInteriorModel;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor02;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor02;
+import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
+import net.tardis.mod.util.helpers.Helper;
 
 public class ModelInteriorDoor02 extends ModelBase implements IInteriorModel
 {
@@ -154,7 +156,7 @@ public class ModelInteriorDoor02 extends ModelBase implements IInteriorModel
 			GlStateManager.rotate(-90,0,1,0);
 			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			Minecraft.getMinecraft().getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
-			GlStateManager.translate(0, 0.095F, -1);
+			GlStateManager.translate(0.4375, 0.0625F, -0.46875);
 			GlStateManager.rotate(180, 0, 1, 0);
 			eld.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
@@ -166,7 +168,7 @@ public class ModelInteriorDoor02 extends ModelBase implements IInteriorModel
 			GlStateManager.rotate(90,0,1,0);
 			ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			Minecraft.getMinecraft().getTextureManager().bindTexture(RendererTileDoor01.TEXTURE);
-			GlStateManager.translate(0, 0.095F, -1);
+			GlStateManager.translate(-0.4375, 0.0625F, -0.46875);
 			GlStateManager.rotate(180, 0, 1, 0);
 			erd.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();

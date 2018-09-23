@@ -27,7 +27,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemDimension;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
@@ -59,7 +59,7 @@ public class BlockTardisTop extends BlockTileBase {
 				ItemStack held = playerIn.getHeldItem(hand);
 				SystemDimension dim = null;
 				if(held.getItem() == TItems.time_vector_generator) {
-					for(ISystem s : ((TileEntityTardis)te).systems) {
+					for(BaseSystem s : ((TileEntityTardis)te).systems) {
 						if(s.getClass() == SystemDimension.class) {
 							dim = (SystemDimension)s;
 						}

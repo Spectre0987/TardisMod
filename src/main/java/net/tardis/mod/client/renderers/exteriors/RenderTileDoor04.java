@@ -9,6 +9,7 @@ import net.tardis.mod.client.models.exteriors.ModelLeftDoor04;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor04;
 import net.tardis.mod.client.models.exteriors.ModelTardis04;
 import net.tardis.mod.client.renderers.RenderHelper;
+import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
@@ -37,7 +38,7 @@ public class RenderTileDoor04 extends TileEntitySpecialRenderer<TileEntityDoor04
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(0.5, 1.5, 0);
 			GlStateManager.rotate(180, 0, 0, 1);
-			RenderHelper.renderPortal(shell, te, partialTicks);
+			RenderHelper.renderPortal(shell, te, partialTicks, 90, RenderTileDoor.POSITION);
 			GlStateManager.popMatrix();
 		}
 		

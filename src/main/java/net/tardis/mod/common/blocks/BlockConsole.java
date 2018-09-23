@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.api.blocks.IBlock;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.entities.controls.EntityControl;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class BlockConsole extends BlockTileBase implements IRenderBox, IBlock {
@@ -74,7 +74,7 @@ public class BlockConsole extends BlockTileBase implements IRenderBox, IBlock {
 			else if(!held.isEmpty()) {
 				TileEntityTardis tardis = (TileEntityTardis)worldIn.getTileEntity(pos);
 				if(tardis != null) {
-					for(ISystem sys : tardis.systems) {
+					for(BaseSystem sys : tardis.systems) {
 						if(held.getItem() == sys.getRepairItem()) {
 							if(sys.repair(held)) {
 								playerIn.getHeldItem(hand).shrink(1);

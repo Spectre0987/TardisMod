@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.systems.TardisSystems;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.packets.MessageDamageSystem;
 import net.tardis.mod.packets.MessageSpawnItem;
@@ -44,9 +44,9 @@ public class GuiSystem extends GuiScreen{
 	public void initGui() {
 		super.initGui();
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-		int width = GUI_WIDTH / 2, height = GUI_HEIGHT / 2, id = 0;
-		for(ISystem s : tardis.systems) {
-			this.addButton(new GuiButton(id, width, height + (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%"));
+		int width = GUI_WIDTH / 2, height = GUI_HEIGHT, id = 0;
+		for(BaseSystem s : tardis.systems) {
+			this.addButton(new GuiButton(id, width - 15, height - (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%"));
 			++id;
 		}
 	}
@@ -54,7 +54,7 @@ public class GuiSystem extends GuiScreen{
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id < TardisSystems.SYSTEMS.size()) {
-			ISystem sys = tardis.systems[button.id];
+			BaseSystem sys = tardis.systems[button.id];
 			if(sys.getHealth() > 0.0F) {
 				ItemStack stack = new ItemStack(sys.getRepairItem());
 				stack.setItemDamage((int)(100 - (sys.getHealth() * 100)));

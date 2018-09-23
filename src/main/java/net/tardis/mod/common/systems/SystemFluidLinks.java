@@ -7,10 +7,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.systems.TardisSystems.ISystem;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.util.helpers.Helper;
 
-public class SystemFluidLinks extends ISystem{
+public class SystemFluidLinks extends BaseSystem{
 	
 	int ticksToHurt = 0;
 	

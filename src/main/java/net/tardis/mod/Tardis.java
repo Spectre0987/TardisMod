@@ -65,6 +65,7 @@ import net.tardis.mod.common.entities.controls.ControlSTCButton;
 import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlScanner;
 import net.tardis.mod.common.entities.controls.ControlSonicSlot;
+import net.tardis.mod.common.entities.controls.ControlStabilizers;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
@@ -90,6 +91,7 @@ import net.tardis.mod.common.systems.SystemCCircuit;
 import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemFluidLinks;
+import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.systems.SystemTemporalGrace;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
@@ -130,6 +132,7 @@ import net.tardis.mod.packets.MessageDoorOpen;
 import net.tardis.mod.packets.MessageExteriorChange;
 import net.tardis.mod.packets.MessageHandlerProtocol;
 import net.tardis.mod.packets.MessageHandlerTeleport;
+import net.tardis.mod.packets.MessageMissControl;
 import net.tardis.mod.packets.MessageProtocol;
 import net.tardis.mod.packets.MessageSpawnItem;
 import net.tardis.mod.packets.MessageTelepathicCircut;
@@ -200,6 +203,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlPhone.class, "tardis_phone");
 		EntityHelper.registerStatic(ControlMag.class, "tardis_magnitude");
 		EntityHelper.registerStatic(ControlSonicSlot.class, "sonic_slot");
+		EntityHelper.registerStatic(ControlStabilizers.class, "stabilizers");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityDalekRay.class, "ray_dalek");
 		EntityHelper.registerProjectiles(EntityRayCyberman.class, "cyber_ray");
@@ -252,7 +256,8 @@ public class Tardis {
 		NETWORK.registerMessage(MessageSpawnItem.Handler.class, MessageSpawnItem.class, 8, Side.SERVER);
 		NETWORK.registerMessage(MessageDamageSystem.Helper.class, MessageDamageSystem.class, 9, Side.SERVER);
 		NETWORK.registerMessage(MessageUpdateBessie.Handler.class, MessageUpdateBessie.class, 10, Side.SERVER);
-		NETWORK.registerMessage(MessageCompanion.Handler.class, MessageCompanion.class, 12, Side.SERVER);
+		NETWORK.registerMessage(MessageCompanion.Handler.class, MessageCompanion.class, 11, Side.SERVER);
+		NETWORK.registerMessage(MessageMissControl.Handler.class, MessageMissControl.class, 12, Side.CLIENT);
 
 		ScrewdriverHandler.init();
 		
@@ -262,7 +267,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
 		TardisProtocol.register(new ProtocolConsole());
-		TardisProtocol.register(new ProtocolARS());
+		//TardisProtocol.register(new ProtocolARS());
 		TardisProtocol.register(new ProtocolRegenRoom());
 		TardisProtocol.register(new ProtocolLock());
 		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
@@ -282,6 +287,7 @@ public class Tardis {
 		TardisSystems.register("antenna", SystemAntenna.class);
 		TardisSystems.register("chameleon", SystemCCircuit.class);
 		TardisSystems.register("temporal_grace", SystemTemporalGrace.class);
+		TardisSystems.register("stabilizers", SystemStabilizers.class);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
@@ -294,6 +300,7 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.artron_capacitor, Item.getItemFromBlock(Blocks.REDSTONE_BLOCK));
 		RepairRecipes.registerRecipe(TItems.demat_circut, Items.ENDER_PEARL);
 		RepairRecipes.registerRecipe(TItems.antenna, TItems.circuts);
+		RepairRecipes.registerRecipe(TItems.stabilizers, TItems.circuts);
 		
 	}
 	

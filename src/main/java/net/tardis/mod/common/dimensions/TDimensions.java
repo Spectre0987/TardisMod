@@ -95,6 +95,7 @@ public class TDimensions {
 		public static void init() {
 			registerBiome(TDimensions.telosBiome, "telos", BiomeDictionary.Type.SNOWY);
 			registerBiome(TDimensions.telosBiomeOrange, "telos_orange", BiomeDictionary.Type.SNOWY);
+			registerBiome(TDimensions.moonBiome, "moon", BiomeDictionary.Type.COLD);
 		}
 	}
 }

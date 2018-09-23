@@ -46,6 +46,7 @@ item.tardis.chameleon_circuit.name=Chameleon Circuit
 item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Temporal Grace Circuits
 item.tardis.tardis_repairkit.name=TARDIS Toolkit
+item.tardis.stabilizers.name=Stabilizer circuits
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS Arriving in
@@ -104,6 +105,7 @@ tile.tardis.circuit_repair.name=Steady State Micro-Welding
 tile.tardis.zero_room.name=Zero Room
 tile.tardis.zero_room_slab.name=Zero Room Slab
 tile.tardis.zero_room_stairs.name=Zero Room Stairs
+tile.tardis.suitcase.name=Mysterious Suitcase
 
 tardis.locked.true=TARDIS Locked!
 tardis.locked.false=TARDIS unlocked!
@@ -169,6 +171,7 @@ system.tardis.fluidlinks=Fluid Links
 systems.tardis.antenna=Interstitial Antenna
 system.tardis.ccircuit=Chameleon Circuit
 system.tardis.temporal_grace=Temporal Grace Circuits
+system.tardis.stabilizers=Stablilzers
 
 tardis.dimension=Nav-com Dimension is:
 
@@ -214,6 +217,9 @@ entity.telepathic_circuts.name=Telepathic Circuits
 entity.tardis_door_control.name=Door Switch
 entity.tardis_magnitude.name=Coordinate Magnitude Adjuster
 entity.tardis_phone.name=Communicator
+
+tardis.stabilizers.true=Stabilizers on
+tardis.stabilizers.false=Stabilizers off
 
 entity.dalek.name=Dalek
 entity.adipose.name=Adipose
@@ -264,3 +270,16 @@ companion.tardis.fetch=I need you to go get the TARDIS.
 companion.tardis.saved.dalek=Good work with those Daleks!
 
 jei.tardis.book.description=Acquired by right clicking a TARDIS console with a vanilla book.
+
+course.tardis.direction.x=Coordinate Slip - X!
+course.tardis.direction.y=Coordinate Slip - Y!
+course.tardis.direction.z=Coordinate Slip - Z!
+course.tardis.dimension=Dimensional Drift!
+course.tardis.artron_leak=Artron Leak!
+course.tardis.spin=You're fucking spining.
+
+box.tardis.01=1963 - Brachacki
+box.tardis.02=1966 - Altered Brachacki
+box.tardis.03=1976 - Newbery
+box.tardis.04=1996 - Hudolin
+box.tardis.cc=Disguised
