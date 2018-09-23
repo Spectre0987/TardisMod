@@ -4,6 +4,7 @@ package net.tardis.mod.client.models.exteriors;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelTardis02 extends ModelBase implements IExteriorModel {
@@ -1083,7 +1084,9 @@ public class ModelTardis02 extends ModelBase implements IExteriorModel {
 	}
 	@Override
 	public void renderClosed(float scale) {
+		GlStateManager.pushMatrix();
 		render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.popMatrix();
 	}
 	@Override
 	public void renderOpen(float scale) {
