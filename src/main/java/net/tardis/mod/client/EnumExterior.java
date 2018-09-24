@@ -12,11 +12,13 @@ import net.tardis.mod.client.models.exteriors.ModelTardis01;
 import net.tardis.mod.client.models.exteriors.ModelTardis02;
 import net.tardis.mod.client.models.exteriors.ModelTardis03;
 import net.tardis.mod.client.models.exteriors.ModelTardis04;
+import net.tardis.mod.client.models.exteriors.ModelTardis05;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor01;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor02;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor03;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor04;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoor05;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -28,7 +30,8 @@ public enum EnumExterior {
 	SECOND(new ModelTardis02(), new ModelInteriorDoor02(), RendererTileDoor01.TEXTURE, TBlocks.tardis_top_01, "box.tardis.02"),
 	THIRD(new ModelTardis03(), new ModelInteriorDoor03(), RenderTileDoor03.TEXTURE, TBlocks.tardis_top_02, "box.tardis.03"),
 	CC(new ModelBlocks(new ResourceLocation(Tardis.MODID + ":shells/tree.json")), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE, TBlocks.tardis_top_cc, "box.tardis.cc"),
-	FOURTH(new ModelTardis04(), new ModelInteriorDoor01(), RenderTileDoor04.TEXTURE, TBlocks.tardis_top_03, "box.tardis.04");
+	FOURTH(new ModelTardis04(), new ModelInteriorDoor01(), RenderTileDoor04.TEXTURE, TBlocks.tardis_top_03, "box.tardis.04"),
+	FITH(new ModelTardis05(), new ModelInteriorDoor01(), RenderTileDoor05.TEXTURE, TBlocks.tardis_top_04, "box.tardis.05");
 	
 	public IExteriorModel model;
 	public IInteriorModel interiorModel;

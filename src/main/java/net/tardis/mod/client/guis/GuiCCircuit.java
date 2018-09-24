@@ -24,7 +24,7 @@ public class GuiCCircuit extends GuiScreen {
 	
 	Minecraft mc;
 	public BlockPos pos = BlockPos.ORIGIN;
-	public static EnumExterior[] exteriors = new EnumExterior[] {EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FOURTH, EnumExterior.CC};
+	public static EnumExterior[] exteriors = new EnumExterior[] {EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FITH, EnumExterior.FOURTH, EnumExterior.CC};
 	private ResourceLocation tex = new ResourceLocation(Tardis.MODID, "textures/gui/chameleon_circuit.png");
 	private GuiButtonExt selectButton;
 	private GuiButtonExt nextArrow;
@@ -49,7 +49,6 @@ public class GuiCCircuit extends GuiScreen {
 		
 		 float rotX = 30 + (mouseY - height/2);
 		 float rotY = 45 + (mouseX - width/2);
-		 //int BOX_NAME_COLOR = 0xffffff;
 		this.drawDefaultBackground();
 		mc.getTextureManager().bindTexture(tex);
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());

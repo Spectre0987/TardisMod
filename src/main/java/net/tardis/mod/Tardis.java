@@ -229,6 +229,7 @@ public class Tardis {
 		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
 		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
 		registerTileEntity(TileEntityComponentRepair.class, "TileEntityComponentRepair");
+		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
 		
@@ -244,7 +245,6 @@ public class Tardis {
 		//Interiors
 		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");
 		registerTileEntity(TileEntityTardis02.class, "TileEntityTardis02");
-		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 1, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 2, Side.SERVER);
