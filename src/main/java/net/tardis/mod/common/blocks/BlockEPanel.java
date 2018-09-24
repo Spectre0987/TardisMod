@@ -8,55 +8,62 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.blocks.interfaces.INeedItem;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
-import net.tardis.mod.util.helpers.TardisHelper;
 
-public class BlockEPanel extends BlockTileBase implements INeedItem{
-	
-	public ItemBlock item = new ItemEPanel(this);
+public class BlockEPanel extends BlockTileBase {
 	
 	public BlockEPanel() {
         super(Material.IRON, TileEntityEPanel::new);
 		this.setHardness(1F);
 		this.setCreativeTab(Tardis.tab);
-		item.setCreativeTab(Tardis.tab);
 	}
 
     @Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
+		return EnumBlockRenderType.INVISIBLE;
 	}
 
 	@Override
-	public ItemBlock getItem() {
-		return item;
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
 	}
-	
-	public static class ItemEPanel extends ItemBlock{
 
-		public ItemEPanel(Block block) {
-			super(block);
-			this.setCreativeTab(Tardis.tab);
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntityEPanel panel = (TileEntityEPanel)world.getTileEntity(pos);
+		if(panel != null && Block.getStateById(panel.getID()).getBlock() != state.getBlock()) {
+			return Block.getStateById(panel.getID()).getLightValue(world, pos);
 		}
+		return super.getLightValue(state, world, pos);
+	}
 
-		@Override
-		public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side,float hitX, float hitY, float hitZ, IBlockState newState) {
-			boolean placed = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
-			if(placed && player.dimension == TDimensions.TARDIS_ID) {
-				if(TardisHelper.hasTardis(player.getGameProfile().getId())) {
-					if(TardisHelper.getTardis(player.getGameProfile().getId()).distanceSq(pos) < Math.pow(8 * 16, 2)) {
-						TileEntityEPanel panel = (TileEntityEPanel) world.getTileEntity(pos);
-						panel.setOwner(player.getGameProfile().getId());
-					}
-				}
-			}
-			return placed;
+	@Override
+	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+		return false;
+	}
+
+	@Override
+	public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntityEPanel panel = (TileEntityEPanel)world.getTileEntity(pos);
+		if(panel != null && Block.getStateById(panel.getID()).getBlock() != state.getBlock()) {
+			return 0;
 		}
-		
+		return super.getLightOpacity(state, world, pos);
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack held = playerIn.getHeldItem(hand);
+		if(held.getItem() instanceof ItemBlock) {
+			((TileEntityEPanel)worldIn.getTileEntity(pos)).setID(((ItemBlock)held.getItem()).getBlock().getDefaultState());
+			held.shrink(1);
+			return true;
+		}
+		return false;
 	}
 }

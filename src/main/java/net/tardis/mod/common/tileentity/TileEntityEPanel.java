@@ -1,52 +1,52 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.UUID;
-
 import javax.annotation.Nullable;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TileEntityEPanel extends TileEntity implements ITickable, IInventory {
 	
-	private UUID owner;
+	private int stateID = Block.getStateId(TBlocks.electric_panel.getDefaultState());
 	
 	public TileEntityEPanel() {}
 	
 	@Override
 	public void update() {
-		
+		if(!world.isRemote && world.getWorldTime() % 120 == 0) {
+			for(EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(getPos()).grow(64))) {
+				player.connection.sendPacket(this.getUpdatePacket());
+			}
+		}
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		this.owner = compound.getString("owner").isEmpty() ? null : UUID.fromString(compound.getString("owner"));
+		this.stateID = compound.getInteger("stateID");
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setString("owner", owner != null ? owner.toString() : "");
+		compound.setInteger("stateID", stateID);
 		return super.writeToNBT(compound);
-	}
-
-	public void setOwner(UUID id) {
-		this.owner = id;
-		this.markDirty();
 	}
 	
 	@Nullable
 	public BlockPos getConsolePos() {
-		if(owner != null && TardisHelper.hasTardis(owner)) {
-			return TardisHelper.getTardis(owner);
-		}
-		return BlockPos.ORIGIN;
+		return TardisHelper.getTardisForPosition(this.getPos());
 	}
 	
 	public IInventory getConsole() {
@@ -140,5 +140,34 @@ public class TileEntityEPanel extends TileEntity implements ITickable, IInventor
 			return tardis;
 		}
 		return null;
+	}
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(this.getPos(), -1, this.getUpdateTag());
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setInteger("id", this.stateID);
+		return tag;
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		this.stateID = pkt.getNbtCompound().getInteger("id");
+		super.onDataPacket(net, pkt);
+	}
+	
+	public int getID() {
+		return this.stateID;
+	}
+
+	public void setID(IBlockState defaultState) {
+		this.stateID = Block.getStateId(defaultState);
+		world.checkLight(this.getPos());
+		world.scheduleUpdate(this.getPos(), TBlocks.electric_panel, 1);
+		this.markDirty();
 	}
 }

@@ -84,7 +84,6 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 				EntityPlayerMP entityPlayer = world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner);
 				if (entityPlayer != null) {
 					entityPlayer.addItemStackToInventory(keyStack);
-					PlayerHelper.sendMessage(entityPlayer, "tardis.arrived", false);
 				}
 				else {
 					try {
