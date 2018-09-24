@@ -22,11 +22,13 @@ public class ItemRepairKit extends ItemBase {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te != null && te instanceof TileEntityTardis) {
-			for(BaseSystem sys : ((TileEntityTardis)te).systems) {
+			TileEntityTardis tardis = (TileEntityTardis)te;
+			for(BaseSystem sys : tardis.systems) {
 				if(sys.getHealth() > 0F) {
 					sys.setHealth(sys.getHealth() + 15);
 				}
 			}
+			tardis.setHealth(tardis.getHealth() - 0.15F);
 		}
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
