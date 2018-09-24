@@ -1,8 +1,5 @@
 package net.tardis.mod.common.dimensions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
@@ -18,6 +15,9 @@ import net.tardis.mod.common.dimensions.space.SpaceProvider;
 import net.tardis.mod.common.dimensions.telos.BiomeTelos;
 import net.tardis.mod.common.dimensions.telos.WorldProviderTelos;
 import net.tardis.mod.config.TardisConfig;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TDimensions {
 
@@ -46,7 +46,7 @@ public class TDimensions {
 		else {
 			TARDIS_ID = DimensionManager.getNextFreeDimId();
 		}
-		tardisType = DimensionType.register("tardis", "_tardis", TARDIS_ID, TardisProvider.class, false);
+        tardisType = DimensionType.register("tardis", "_tardis", TARDIS_ID, WorldProviderTardis.class, false);
 		DimensionManager.registerDimension(TARDIS_ID, tardisType);
 		
 		if(setDim) {

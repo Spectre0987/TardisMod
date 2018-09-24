@@ -1,9 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -81,6 +77,10 @@ import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
 	private Random rand = new Random();
@@ -139,8 +139,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 	}
 
+
 	@Override
 	public void update() {
+
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - this.calcFuelUse());
@@ -615,6 +617,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void onLoad() {
 		super.onLoad();
 		updateServer();
+
+		if (world.isRemote) {
+			//Minecraft.getMinecraft().getSoundHandler().playSound(new SoundInteriorHum(TSounds.INTERIOR_HUM_1963));
+		}
 	}
 	
 	public boolean createControls() {
