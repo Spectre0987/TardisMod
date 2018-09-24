@@ -21,6 +21,7 @@ public class TStrings {
 	public static final String OPTIFINE_INSTALLED = "mods.tardis.compat.optifine";
 	/**Add a boolean**/
 	public static final String STABILIZERS_ON = "tardis.stabilizers.";
+	public static final String REPAIR = "tardis.repair.";
 	
 	public static class ModIds {
 		public static final String GALACTICRAFT = "galacticraftcore";

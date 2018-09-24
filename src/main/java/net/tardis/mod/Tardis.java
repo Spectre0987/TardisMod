@@ -74,13 +74,13 @@ import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.protocols.ProtocolARS;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
 import net.tardis.mod.common.protocols.ProtocolLock;
 import net.tardis.mod.common.protocols.ProtocolRegenRoom;
+import net.tardis.mod.common.protocols.ProtocolRepair;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.recipes.RepairRecipes;
@@ -271,6 +271,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolRegenRoom());
 		TardisProtocol.register(new ProtocolLock());
 		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
+		TardisProtocol.register(new ProtocolRepair());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.

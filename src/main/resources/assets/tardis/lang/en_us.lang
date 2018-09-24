@@ -164,6 +164,10 @@ protocol.tardis.ars=Architectural Reconfiguration System
 protocol.tardis.regenroom=Regenerate Console Room
 protocol.tardis.lock=Double Lock
 protocol.tardis.destroy.rift=Consume Dimensional Rift
+protocol.tardis.repair=Repair the TARDIS
+
+tardis.repair.false=TARDIS is repairing
+tardis.repair.true=TARDIS is not repairing
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
@@ -275,8 +279,8 @@ course.tardis.direction.x=Coordinate Slip - X!
 course.tardis.direction.y=Coordinate Slip - Y!
 course.tardis.direction.z=Coordinate Slip - Z!
 course.tardis.dimension=Dimensional Drift!
-course.tardis.artron_leak=Artron Leak!
-course.tardis.spin=You're fucking spining.
+course.tardis.artron_leak=Fuel Over pressurized!
+course.tardis.spin=Angular Momentum Overload!
 
 box.tardis.01=1963 - Brachacki
 box.tardis.02=1966 - Altered Brachacki

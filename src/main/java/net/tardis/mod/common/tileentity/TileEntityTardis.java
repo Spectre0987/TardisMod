@@ -1,5 +1,9 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -77,10 +81,6 @@ import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
 	private Random rand = new Random();
@@ -126,6 +126,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean parkingOrbit = false;
 	private float hullHealth = 1F;
 	private EnumCourseCorrect courseCorrect = EnumCourseCorrect.NONE;
+	private boolean repairing = false;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -178,10 +179,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					this.crash();
 				}
 			}
-		} else if (this.isFueling()) {
-			if(!world.isRemote) {
-				WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-				this.setFuel(fuel + (RiftHelper.isRift(ws.getChunkFromBlockCoords(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
+		}
+		else {
+			if (this.isFueling()) {
+				if(!world.isRemote) {
+					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
+					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunkFromBlockCoords(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
+				}
+			}
+			if(this.getRepairing()) {
+				this.setHealth(this.getHealth() + 0.01F);
 			}
 		}
 		++ticks;
@@ -368,6 +375,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			this.currentState = Enum.valueOf(EnumTardisState.class, tardisTag.getString(NBT.TARDIS_STATE_ID));
 			this.isLocked = tardisTag.getBoolean(NBT.IS_LOCKED);
+			this.hullHealth = tardisTag.getFloat(NBT.HEALTH);
 		}
 	}
 	
@@ -422,6 +430,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 			tardisTag.setString(NBT.TARDIS_STATE_ID, this.currentState.name());
 			tardisTag.setBoolean(NBT.IS_LOCKED, this.isLocked);
+			tardisTag.setFloat(NBT.HEALTH, this.hullHealth);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -527,7 +536,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		for(BaseSystem s : systems) {
 			if(s.shouldStopFlight())return false;
 		}
-		return true;
+		return this.getHealth() > 0;
 	}
 
 	@Override
@@ -568,6 +577,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setTag(NBT.SYSTEM_LIST, sysList);
 		tag.setString("course_correct", this.getCourseCorrect().name());
 		tag.setBoolean(NBT.IS_LOCKED, this.isLocked);
+		tag.setFloat(NBT.HEALTH, this.hullHealth);
 		return tag;
 	}
 	
@@ -606,6 +616,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.systems = systems.toArray(new BaseSystem[] {});
 			this.setCourseEvent(Enum.valueOf(EnumCourseCorrect.class, tag.getString("course_correct")));
 			this.isLocked = tag.getBoolean(NBT.IS_LOCKED);
+			this.hullHealth = tag.getFloat(NBT.HEALTH);
 		}
 	}
 	
@@ -740,6 +751,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		public static final String CURRENT_DIM_NAME = "currentDimName";
 		public static final String MAGNITUDE = "magnitude";
 		public static final String EXTERIOR = "exterior";
+		public static final String HEALTH = "health";
 	}
 	
 	public EnumFacing getFacing() {
@@ -1009,10 +1021,20 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void setCourseEvent(EnumCourseCorrect event) {
 		this.courseCorrect = event;
+		this.markDirty();
 	}
 	
 	public EnumCourseCorrect getCourseCorrect() {
 		return this.courseCorrect;
+	}
+	
+	public void setRepairing(boolean b) {
+		this.repairing = b;
+		this.markDirty();
+	}
+	
+	public boolean getRepairing() {
+		return this.repairing;
 	}
 	
 	public static enum EnumCourseCorrect{

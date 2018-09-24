@@ -63,6 +63,8 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 			mc.fontRenderer.drawString("Time Left " + tardis.getTimeLeft() / 20, 0, mc.fontRenderer.FONT_HEIGHT * 5, Color.WHITE.getRGB());
 		else mc.fontRenderer.drawString("TARDIS Landed", 0, mc.fontRenderer.FONT_HEIGHT * 5, Color.WHITE.getRGB());
 		mc.fontRenderer.drawString("TARDIS Facing: " + tardis.facing.getName(), 0, mc.fontRenderer.FONT_HEIGHT * 6, Color.WHITE.getRGB());
+		String health = (tardis.getHealth() * 100 + "");
+		mc.fontRenderer.drawString("TARDIS Hull: " + health.substring(0, health.indexOf(".")) + "%", 0, mc.fontRenderer.FONT_HEIGHT * 7, Color.WHITE.getRGB());
 	}
 
 }
