@@ -1070,6 +1070,11 @@ public class ModelTardis02 extends ModelBase implements IExteriorModel {
 			LampGlow.render(scale);
 			Minecraft.getMinecraft().entityRenderer.enableLightmap();
 		}
+		else {
+			SignGlow1.render(scale);
+			SignGlow2.render(scale);
+			LampGlow.render(scale);
+		}
 	}
 	
 	private void setRotation(ModelRenderer model, float x, float y, float z){
@@ -1082,10 +1087,22 @@ public class ModelTardis02 extends ModelBase implements IExteriorModel {
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
+	
+	ModelBase rd = new ModelRightDoor01();
+	ModelBase ld = new ModelLeftDoor01();
+	
 	@Override
 	public void renderClosed(float scale) {
 		GlStateManager.pushMatrix();
 		render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-0.46875F, 0, -0.53125F);
+		rd.render(null, 0, 0, 0, 0, 0, scale);
+		GlStateManager.popMatrix();
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0.46875, 0, -0.53125F);
+		ld.render(null, 0, 0, 0, 0, 0, scale);
+		GlStateManager.popMatrix();
 		GlStateManager.popMatrix();
 	}
 	@Override

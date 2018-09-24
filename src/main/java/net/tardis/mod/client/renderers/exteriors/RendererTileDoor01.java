@@ -39,7 +39,6 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
-
 		boolean open = !te.isLocked();
 		if(te.getWorld() != null) {
 			IBlockState state = te.getWorld().getBlockState(te.getPos());
