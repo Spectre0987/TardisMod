@@ -39,10 +39,10 @@ public class InteractionGRoom implements IScrew {
 
 				Template temp = ws.getStructureTemplateManager().get(server, Structures.GENERIC_ROOM);
 				temp.addBlocksToWorld(ws, pos.add(getOffset(facing)), new PlacementSettings().setRotation(getRotation(facing)));
-				ChunkPos cPos = world.getChunkFromBlockCoords(pos).getPos();
+				ChunkPos cPos = world.getChunk(pos).getPos();
 				for (int x = -1; x < 3; ++x) {
 					for (int z = -1; z < 3; ++z) {
-						((EntityPlayerMP) player).connection.sendPacket(new SPacketChunkData(world.getChunkFromChunkCoords(cPos.x + x, cPos.z + z), 65535));
+						((EntityPlayerMP) player).connection.sendPacket(new SPacketChunkData(world.getChunk(cPos.x + x, cPos.z + z), 65535));
 					}
 				}
 			}

@@ -28,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.WorldBoti;
@@ -56,8 +57,6 @@ public class ModelBlocks implements IExteriorModel{
 	public void render() {
 		if(world == null) world = new WorldBoti(0, Minecraft.getMinecraft().world, ws);
 		GlStateManager.pushMatrix();
-		GlStateManager.enableBlend();
-		GlStateManager.enableAlpha();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.translate(offset.getX(), offset.getY(), offset.getZ());
 		GlStateManager.rotate((float)rotation.x, 1, 0, 0);
@@ -73,10 +72,9 @@ public class ModelBlocks implements IExteriorModel{
 				List<BakedQuad> quads = model.getQuads(state, null, 0);
 				VertexFormat vFormat = quads.size() > 0 ? quads.get(0).getFormat() : DefaultVertexFormats.ITEM;
 				bb.begin(GL11.GL_QUADS, vFormat);
-				int color = Minecraft.getMinecraft().getBlockColors().colorMultiplier(state, Minecraft.getMinecraft().world, Minecraft.getMinecraft().player.getPosition(), 0);
+				int color = Minecraft.getMinecraft().getBlockColors().colorMultiplier(state, world, Minecraft.getMinecraft().player.getPosition(), MinecraftForgeClient.getRenderPass());
 				for(BakedQuad bq : quads) {
 					bb.addVertexData(bq.getVertexData());
-					bb.putColor4(color);
 				}
 				for(EnumFacing f : EnumFacing.values()) {
 					for(BakedQuad quad : model.getQuads(state, f, 0)) {
@@ -91,8 +89,6 @@ public class ModelBlocks implements IExteriorModel{
 				e.printStackTrace();
 			}
 		}
-		GlStateManager.disableBlend();
-		GlStateManager.disableAlpha();
 		GlStateManager.popMatrix();
 	}
 

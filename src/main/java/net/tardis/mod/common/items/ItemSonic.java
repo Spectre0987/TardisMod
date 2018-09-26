@@ -75,7 +75,7 @@ public class ItemSonic extends Item {
 		ItemStack held = player.getHeldItem(handIn);
 		IScrew sc = (ScrewdriverHandler.MODES.get(getMode(held)));
 
-		BlockPos lookPos = worldIn.rayTraceBlocks(player.getPositionVector().addVector(0, player.getEyeHeight(), 0), player.getLookVec().scale(6)).getBlockPos();
+		BlockPos lookPos = worldIn.rayTraceBlocks(player.getPositionVector().add(0, player.getEyeHeight(), 0), player.getLookVec().scale(6)).getBlockPos();
 
 		if (player.isSneaking() && worldIn.getBlockState(lookPos).getBlock() != Blocks.DISPENSER) {
 			setMode(held, getMode(held) + 1);

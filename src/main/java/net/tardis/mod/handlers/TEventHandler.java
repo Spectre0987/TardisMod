@@ -20,6 +20,7 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -184,17 +185,8 @@ public class TEventHandler {
 	public static void givePlayerKey(PlayerLoggedInEvent event) {
 		if (TardisConfig.MISC.givePlayerKey) {
 			EntityPlayer player = event.player;
-			boolean hasKey = false;
-			for(ItemStack stack : player.inventory.mainInventory) {
-				if(stack.getItem() instanceof ItemKey) {
-					hasKey = true;
-				}
-			}
-			if(!hasKey) {
-				EntityItem ei = new EntityItem(player.world, player.posX, player.posY, player.posZ, new ItemStack(TItems.key));
-				if(!player.world.isRemote) {
-					player.world.spawnEntity(ei);
-				}
+			if(!TardisHelper.hasTardis(player.getGameProfile().getId())) {
+				InventoryHelper.spawnItemStack(player.world, player.posX, player.posY, player.posZ, new ItemStack(TBlocks.tardis_coral));
 			}
 		}
 		if(!event.player.world.isRemote) {

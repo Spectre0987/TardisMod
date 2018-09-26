@@ -25,7 +25,7 @@ public class ItemRepairKit extends ItemBase {
 			TileEntityTardis tardis = (TileEntityTardis)te;
 			for(BaseSystem sys : tardis.systems) {
 				if(sys.getHealth() > 0F) {
-					sys.setHealth(sys.getHealth() + 15);
+					sys.setHealth(sys.getHealth() + 0.15F);
 				}
 			}
 			tardis.setHealth(tardis.getHealth() - 0.15F);

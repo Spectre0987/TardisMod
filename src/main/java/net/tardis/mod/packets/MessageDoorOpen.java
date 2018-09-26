@@ -16,6 +16,7 @@ public class MessageDoorOpen implements IMessage {
 	public boolean isRemat;
 	public boolean isDemat;
 	public float alpha;
+	public int lightLevel;
 	
 	public MessageDoorOpen() {}
 	
@@ -24,6 +25,7 @@ public class MessageDoorOpen implements IMessage {
 		this.isOpen = !door.isLocked;
 		this.isRemat = door.isRemat;
 		this.isDemat = door.isDemat;
+		this.lightLevel = door.getLightLevel();
 	}
 	
 	@Override
@@ -33,6 +35,7 @@ public class MessageDoorOpen implements IMessage {
 		this.isDemat = buf.readBoolean();
 		this.isRemat = buf.readBoolean();
 		this.alpha = buf.readFloat();
+		this.lightLevel = buf.readInt();
 	}
 	
 	@Override
@@ -42,6 +45,7 @@ public class MessageDoorOpen implements IMessage {
 		buf.writeBoolean(this.isDemat);
 		buf.writeBoolean(this.isRemat);
 		buf.writeFloat(this.alpha);
+		buf.writeInt(this.lightLevel);
 	}
 	
 	public static class Handler implements IMessageHandler<MessageDoorOpen, IMessage> {
@@ -50,16 +54,20 @@ public class MessageDoorOpen implements IMessage {
 		
 		@Override
 		public IMessage onMessage(MessageDoorOpen mes, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(() -> {
-                Minecraft mc = Minecraft.getMinecraft();
-                TileEntity te = mc.world.getTileEntity(mes.pos);
-                if (te instanceof TileEntityDoor) {
-                    TileEntityDoor door = ((TileEntityDoor) te);
-                    door.isLocked = !mes.isOpen;
-                    door.isDemat = mes.isDemat;
-                    door.isRemat = mes.isRemat;
-                }
-            });
+			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+				@Override
+				public void run() {
+					Minecraft mc = Minecraft.getMinecraft();
+	                TileEntity te = mc.world.getTileEntity(mes.pos);
+	                if (te instanceof TileEntityDoor) {
+	                    TileEntityDoor door = ((TileEntityDoor) te);
+	                    door.isLocked = !mes.isOpen;
+	                    door.isDemat = mes.isDemat;
+	                    door.isRemat = mes.isRemat;
+	                    door.setLightLevel(mes.lightLevel);
+	                }
+				}
+			});
 			return null;
 		}
 	}

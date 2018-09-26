@@ -41,6 +41,7 @@ public class ControlDoorSwitch extends EntityControl{
 			TileEntity te = world.getTileEntity(getConsolePos());
 			if(te != null && te instanceof TileEntityTardis) {
 				TileEntityTardis tardis = (TileEntityTardis)te;
+				if(tardis.isLocked()) return;
 				if(!tardis.isInFlight()) {
 					for(Entity entity : world.getEntitiesWithinAABB(Entity.class, DOOR_BB.offset(getPositionVector()))) {
                         if(entity instanceof IDoor) {

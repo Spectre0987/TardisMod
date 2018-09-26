@@ -135,14 +135,14 @@ public class TBlocks {
 
 	public static Block register(Block block, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
-        block.setUnlocalizedName("tardis." + name);
+        block.setTranslationKey("tardis." + name);
 		block.setRegistryName(rl);
 		blocks.add(block);
 		if(!(block instanceof INeedItem))TItems.items.add(new ItemBlock(block).setRegistryName(rl));
 		else TItems.items.add(((INeedItem)block).getItem().setRegistryName(rl));
 		if(Tardis.getIsDev()) {
 			try {
-				File f = new File(Minecraft.getMinecraft().mcDataDir + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + block.getRegistryName().getResourcePath() + ".json");
+				File f = new File(Minecraft.getMinecraft().gameDir + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + block.getRegistryName().getPath() + ".json");
 				if(!f.exists()) {
 					GsonBuilder gson = new GsonBuilder();
 					gson.setPrettyPrinting();

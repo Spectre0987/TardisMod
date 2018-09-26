@@ -77,7 +77,7 @@ public class EntityAdipose extends EntityMob {
         }
         else {
             //Vec3d vec = this.getRidingEntity().getLookVec().add(this.getRidingEntity().getPositionVector()).addVector(0, this.getRidingEntity().getMountedYOffset()+0.3f,-0.7F);
-            Vec3d vec = this.getRidingEntity().getPositionVector().addVector(0,1.9,0);
+            Vec3d vec = this.getRidingEntity().getPositionVector().add(0,1.9,0);
             this.setPositionAndRotation(vec.x, vec.y, vec.z,this.getRidingEntity().getRotationYawHead(),this.getRidingEntity().rotationPitch);
         }
     }

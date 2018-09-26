@@ -124,7 +124,7 @@ public class BlockTardisTop extends BlockTileBase {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+		return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
 	}
 	
 	@Override
@@ -148,13 +148,8 @@ public class BlockTardisTop extends BlockTileBase {
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.SOLID;
-	}
-
-	@Override
-	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 
 	@Override
@@ -170,9 +165,18 @@ public class BlockTardisTop extends BlockTileBase {
 
 		@Override
 		public String getItemStackDisplayName(ItemStack stack) {
-			return new TextComponentTranslation(TBlocks.tardis_top.getUnlocalizedName() + ".name").getFormattedText();
+			return new TextComponentTranslation(TBlocks.tardis_top.getTranslationKey() + ".name").getFormattedText();
 		}
 		
+	}
+
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntityDoor door  = (TileEntityDoor)world.getTileEntity(pos);
+		if(door != null && !door.isLocked()) {
+			return door.getLightLevel();
+		}
+		return super.getLightValue(state, world, pos);
 	}
 	
 }

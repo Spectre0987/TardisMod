@@ -141,7 +141,7 @@ public class TItems {
 	
 	public static Item createItem(Item item, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
-		item.setUnlocalizedName("tardis." + name);
+		item.setTranslationKey("tardis." + name);
 		item.setRegistryName(rl);
 		items.add(item);
 		return item;

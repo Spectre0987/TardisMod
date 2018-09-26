@@ -21,7 +21,7 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 	
 	public void makeFood() {
 		if(!world.isRemote) {
-			for(TileEntity te : world.getChunkFromBlockCoords(getPos()).getTileEntityMap().values()) {
+			for(TileEntity te : world.getChunk(getPos()).getTileEntityMap().values()) {
 				if(te != null && te instanceof TileEntityTardis) {
 					TileEntityTardis tardis = (TileEntityTardis)te;
 					if(tardis.fuel >= 0.01) {

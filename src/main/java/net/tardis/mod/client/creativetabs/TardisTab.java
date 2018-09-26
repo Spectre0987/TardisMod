@@ -6,13 +6,14 @@ import net.tardis.mod.common.blocks.TBlocks;
 
 public class TardisTab extends CreativeTabs {
 	
+	public static final ItemStack ICON = new ItemStack(TBlocks.tardis_top);
 	public TardisTab() {
 		super("tardis");
 	}
-	
+
 	@Override
-	public ItemStack getTabIconItem() {
-		return new ItemStack(TBlocks.tardis_top);
+	public ItemStack createIcon() {
+		return ICON;
 	}
 	
 }

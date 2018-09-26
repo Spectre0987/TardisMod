@@ -142,12 +142,13 @@ public class ModelRightDoor04 extends ModelBase {
 		Gen14.setRotationPoint(0.0F, 0.0F, -1.0F);
 		setRotation(Gen14, 0.0F, 0.0F, 0.0F);
 		Gen14.mirror = false;
+		
 
 	}
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(-0.46875, 0, 0.5625);
+		GlStateManager.translate(-0.46875, -0.0625, 0.5625);
 		Shape1.render(scale);
 		Gen0.render(scale);
 		Gen1.render(scale);

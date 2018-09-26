@@ -49,7 +49,7 @@ public class BlockToyota extends BlockBase implements INeedItem{
 
 		@Override
 		public IBlockState getStateFromMeta(int meta) {
-			return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+			return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
 		}
 
 		@Override
@@ -132,7 +132,7 @@ public class BlockToyota extends BlockBase implements INeedItem{
 
 		@Override
 		public String getItemStackDisplayName(ItemStack stack) {
-			return new TextComponentTranslation(TBlocks.toyota_hexagon_1.getUnlocalizedName() + ".name").getFormattedText();
+			return new TextComponentTranslation(TBlocks.toyota_hexagon_1.getTranslationKey() + ".name").getFormattedText();
 		}
 		
 	}

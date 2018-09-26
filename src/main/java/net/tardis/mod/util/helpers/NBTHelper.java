@@ -11,7 +11,7 @@ public class NBTHelper {
             itemstack.writeToNBT(nbttagcompound);
         }
 
-        if (!nbttagcompound.hasNoTags()) {
+        if (!nbttagcompound.isEmpty()) {
             tag.setTag("saved_items", nbttagcompound);
         }
 

@@ -48,7 +48,7 @@ public class ItemMarker extends ItemBase {
 				BlockPos fp = BlockPos.fromLong(tag.getLong(NBT.FIRST_POS));
 				BlockPos ep = BlockPos.fromLong(tag.getLong(NBT.LAST_POS));
 				try {
-					File f = new File(Minecraft.getMinecraft().mcDataDir + "/shells");
+					File f = new File(Minecraft.getMinecraft().gameDir + "/shells");
 					f.mkdirs();
 					f = new File(f.getCanonicalPath() + "/render.json");
 					if(f.exists())f.createNewFile();

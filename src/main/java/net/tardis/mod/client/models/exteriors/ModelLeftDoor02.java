@@ -1,12 +1,12 @@
 package net.tardis.mod.client.models.exteriors;
 
 
+import java.lang.reflect.Field;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.tardis.mod.client.renderers.RenderHelper;
-import net.tardis.mod.util.helpers.Helper;
 
 public class ModelLeftDoor02 extends ModelBase {
 
@@ -127,12 +127,20 @@ public class ModelLeftDoor02 extends ModelBase {
 		Gen12.setRotationPoint(0.0F, 0.0F, 0.0F);
 		setRotation(Gen12, 0.0F, 0.0F, 0.0F);
 		Gen12.mirror = false;
+		
+		try {
+			for(Field f : this.getClass().getDeclaredFields()) {
+				f.setAccessible(true);
+				ModelRenderer mr = (ModelRenderer)f.get(this);
+				mr.offsetX = 0.46875F;
+				mr.offsetZ = 0.5F;
+			}
+		}
+		catch(Exception e){}
 
 	}
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.46875, 0, 0.5);
 		Shape1.render(scale);
 		Gen0.render(scale);
 		Gen1.render(scale);
@@ -147,7 +155,6 @@ public class ModelLeftDoor02 extends ModelBase {
 		Gen10.render(scale);
 		Gen11.render(scale);
 		Gen12.render(scale);
-		GlStateManager.popMatrix();
 	}
 	private void setRotation(ModelRenderer model, float x, float y, float z){
 		model.rotateAngleX = x;

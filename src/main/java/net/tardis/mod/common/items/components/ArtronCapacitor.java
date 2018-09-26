@@ -42,7 +42,7 @@ public class ArtronCapacitor extends ItemComponent {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		if(isSelected && !worldIn.isRemote && entityIn instanceof EntityPlayer && worldIn.getTotalWorldTime() % 20 == 0) {
 			EntityPlayer player = (EntityPlayer)entityIn;
-			player.sendStatusMessage(new TextComponentString("Rift: " + RiftHelper.isRift(worldIn.getChunkFromBlockCoords(entityIn.getPosition()).getPos(), worldIn)), true);
+			player.sendStatusMessage(new TextComponentString("Rift: " + RiftHelper.isRift(worldIn.getChunk(entityIn.getPosition()).getPos(), worldIn)), true);
 		}
 	}
 	

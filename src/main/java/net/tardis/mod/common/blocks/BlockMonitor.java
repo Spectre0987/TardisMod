@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiProtocol;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class BlockMonitor extends BlockFacingDecoration {
 
@@ -28,13 +29,7 @@ public class BlockMonitor extends BlockFacingDecoration {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack held = playerIn.getHeldItem(hand);
-		TileEntityTardis tardis = null;
-		for(TileEntity te : worldIn.getChunkFromBlockCoords(pos).getTileEntityMap().values()) {
-			if(te != null && te instanceof TileEntityTardis) {
-				tardis = (TileEntityTardis)te;
-				break;
-			}
-		}
+		TileEntityTardis tardis = (TileEntityTardis)worldIn.getTileEntity(TardisHelper.getTardisForPosition(pos));
 		if(tardis == null)return true;
 		if(held.getItem() instanceof ItemMap) {
 			if(!worldIn.isRemote) {

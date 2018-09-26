@@ -71,6 +71,11 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 	    //RenderDoor
 	    if(MinecraftForgeClient.getRenderPass() == 0){
 			GlStateManager.pushMatrix();
+			if(te.alpha < 0.999) {
+				GlStateManager.enableAlpha();
+				GlStateManager.enableBlend();
+			}
+			GlStateManager.color(1F, 1, 1, te.alpha);
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 			GlStateManager.rotate(180, 1, 0, 0);
 			if(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
@@ -82,17 +87,21 @@ public class RendererTileDoor01 extends TileEntitySpecialRenderer<TileEntityDoor
 			model.renderGlow(0.0625F, true);
 			
 			GlStateManager.pushMatrix();
+			GlStateManager.color(1F, 1, 1, te.alpha);
 			GlStateManager.translate(-0.46875, 0, -0.5);
 			GlStateManager.rotate(open ? -85 : 0, 0, 1, 0);
 			ld.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();
 			
 			GlStateManager.pushMatrix();
+			GlStateManager.color(1F, 1, 1, te.alpha);
 			GlStateManager.translate(0.46875, 0, -0.5);
 			GlStateManager.rotate(open ? 85 : 0, 0, 1, 0);
 			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();
 			
+			GlStateManager.disableAlpha();
+			GlStateManager.disableBlend();
 			GlStateManager.popMatrix();
 	    }
 	}

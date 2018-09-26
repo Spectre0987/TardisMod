@@ -82,7 +82,7 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 	@Override
 	public int getDimnesion() {
 		TileEntityTardis tardis = null;
-		for(TileEntity te : world.getChunkFromBlockCoords(getPos()).getTileEntityMap().values()) {
+		for(TileEntity te : world.getChunk(getPos()).getTileEntityMap().values()) {
 			if(te != null && te instanceof TileEntityTardis) {
 				tardis = (TileEntityTardis)te;
 				break;

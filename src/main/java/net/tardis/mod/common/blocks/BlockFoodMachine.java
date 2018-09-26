@@ -53,7 +53,7 @@ public class BlockFoodMachine extends BlockTileBase {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if (meta < 3 && meta > 0) return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+		if (meta < 3 && meta > 0) return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
 		return this.getDefaultState();
 	}
 	

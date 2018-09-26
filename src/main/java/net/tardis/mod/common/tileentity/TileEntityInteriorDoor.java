@@ -82,7 +82,7 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	public void update() {
 		if(!world.isRemote) {
 			TileEntityTardis tardis = null;
-			for(TileEntity te : this.world.getChunkFromBlockCoords(this.getPos()).getTileEntityMap().values()) {
+			for(TileEntity te : this.world.getChunk(this.getPos()).getTileEntityMap().values()) {
 				if(te instanceof TileEntityTardis) {
 					tardis = (TileEntityTardis)te;
 				}

@@ -155,7 +155,7 @@ public class ModelLeftDoor04 extends ModelBase {
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.46875, 0, 0.5625);
+		GlStateManager.translate(0.46875, -0.0625, 0.5625);
 		Shape1.render(scale);
 		Gen0.render(scale);
 		Gen1.render(scale);

@@ -184,7 +184,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (this.isFueling()) {
 				if(!world.isRemote) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunkFromBlockCoords(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
+					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
 				}
 			}
 			if(this.getRepairing()) {
@@ -202,9 +202,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				WorldServer ws = world.getMinecraftServer().getWorld(this.dimension);
 				if(ws == null)return;
 				tardisTicket = ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
-				ForgeChunkManager.forceChunk(tardisTicket, world.getChunkFromBlockCoords(this.getPos()).getPos());
+				ForgeChunkManager.forceChunk(tardisTicket, world.getChunk(this.getPos()).getPos());
 				this.tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, ws, ForgeChunkManager.Type.NORMAL);
-				ForgeChunkManager.forceChunk(tardisLocTicket, ws.getChunkFromBlockCoords(tardisLocation).getPos());
+				ForgeChunkManager.forceChunk(tardisLocTicket, ws.getChunk(tardisLocation).getPos());
 			}
 		}
 		if (world.isRemote && !this.isInFlight()) {
@@ -269,7 +269,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 			tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, dWorld, ForgeChunkManager.Type.NORMAL);
-			ForgeChunkManager.forceChunk(tardisLocTicket, dWorld.getChunkFromBlockCoords(tardisLocation).getPos());
+			ForgeChunkManager.forceChunk(tardisLocTicket, dWorld.getChunk(tardisLocation).getPos());
 			this.markDirty();
 			DimensionType type = DimensionManager.getProviderType(dimension);
 			if (type != null) this.currentDimName = type.getName();
@@ -287,8 +287,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void updateServer() {
 		if (!world.isRemote) {
-            if (this != null && !this.isInvalid())
-                world.getMinecraftServer().getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 8, TDimensions.TARDIS_ID, this.getUpdatePacket());
+            if (!this.isInvalid())
+                for(EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16))) {
+                	player.connection.sendPacket(this.getUpdatePacket());
+                }
 		}
 	}
 	
@@ -525,7 +527,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).setDemat();
 			}
 			this.saveCoords.set(this.saveCoords.size() - 1, new SpaceTimeCoord(this.getLocation(), this.dimension));
-			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunkFromBlockCoords(getLocation()).getPos());
+			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunk(getLocation()).getPos());
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 		}
 		this.markDirty();
@@ -604,7 +606,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				}
 			}
 			this.controls = controls.toArray(new EntityControl[0]);
-			this.facing = EnumFacing.getHorizontal(tag.getInteger("facing"));
+			this.facing = EnumFacing.byHorizontalIndex(tag.getInteger("facing"));
 			this.blockTop = Block.getStateById(tag.getInteger(NBT.EXTERIOR));
 			List<BaseSystem> systems = new ArrayList<BaseSystem>();
 			for(NBTBase base : tag.getTagList(NBT.SYSTEM_LIST, Constants.NBT.TAG_COMPOUND)) {
@@ -968,10 +970,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	 */
 	public List<TileEntity> getTilesInTardis(){
 		List<TileEntity> tes = new ArrayList<TileEntity>();
-		ChunkPos pos = this.world.getChunkFromBlockCoords(this.getLocation()).getPos();
+		ChunkPos pos = this.world.getChunk(this.getLocation()).getPos();
 		for(int x = -8; x < 8; ++x) {
 			for(int z = -8; z < 8; ++z) {
-				tes.addAll(world.getChunkFromChunkCoords(pos.x + x, pos.z + z).getTileEntityMap().values());
+				tes.addAll(world.getChunk(pos.x + x, pos.z + z).getTileEntityMap().values());
 			}
 		}
 		return tes;

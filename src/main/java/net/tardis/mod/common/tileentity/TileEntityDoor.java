@@ -61,6 +61,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public static int radius = 20;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	private AxisAlignedBB SHELL_AABB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10);
+	private static AxisAlignedBB RENDER_BB = new AxisAlignedBB(-5, -5, -5, 5, 5, 5);
+	private int lightLevel = 0;
 	
 	public TileEntityDoor() {
 		this.isRemat = true;
@@ -159,7 +161,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					tardis.enterTARDIS(entity);
 				}
 			}
-
+			if(tardis.getDoor() != null) this.lightLevel = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getLight(tardis.getDoor().getPosition());
 			//HADS
 			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(1D));
 			for(Entity e : projectiles) {
@@ -225,8 +227,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						else {
 							e.setPositionAndUpdate(tp.getX(), tp.getY(), tp.getZ());
 							e.changeDimension(TDimensions.TARDIS_ID);
-							System.out.println("Works: " + e.getDisplayName().getFormattedText() + " has been sent!");
-							System.out.println("Dimension: " + e.dimension + ", BlockPos: " + Helper.formatBlockPos(e.getPosition()));
 						}
 					}
 				}
@@ -244,7 +244,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				this.world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());
 			}
 		}
-		if(!this.isRemat && !this.isDemat)this.alpha = 1.0F;
+		if(!this.isRemat && !this.isDemat) this.alpha = 1.0F;
 	}
 	
 	public boolean canOpen() {
@@ -271,7 +271,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
-		return new AxisAlignedBB(getPos().getX(), getPos().getY() - 1, getPos().getZ(), getPos().getX() + 1, getPos().getY() + 1.5, getPos().getZ() + 1);
+		return RENDER_BB.offset(this.getPos());
 	}
 	
 	public void setConsolePos(BlockPos pos) {
@@ -285,7 +285,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	public void knock() {
 		if(!world.isRemote && this.getConsolePos() != null) {
-            WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+            WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 			if(ws != null) {
 				ws.playSound(null, getConsolePos(), knockSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
@@ -413,5 +413,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public int getDimnesion() {
 		return TDimensions.TARDIS_ID;
+	}
+
+	public int getLightLevel() {
+		return this.lightLevel;
+	}
+	
+	public void setLightLevel(int light) {
+		this.lightLevel = light;
+		world.checkLight(this.getPos());
 	}
 }

@@ -32,7 +32,6 @@ import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
-import net.tardis.mod.client.renderers.controls.RenderInteriorDoor;
 import net.tardis.mod.client.renderers.controls.RenderSonicSlot;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentCorridor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentDoor;
@@ -113,7 +112,6 @@ import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
-import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
@@ -158,9 +156,6 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorCC.class, new RenderTileDoorCC());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
-		
-		//Interior Door
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInteriorDoor.class, new RenderInteriorDoor());
 		
 		// Controls
 		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);

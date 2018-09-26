@@ -26,7 +26,7 @@ public class GenerateJson {
 	public static void generateFacingBlockstate(String name) {
 		
 		try{
-			File f = new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
+			File f = new File(Minecraft.getMinecraft().gameDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
 			if(!f.exists())f.createNewFile();
 			Writer fw = new OutputStreamWriter(new FileOutputStream(f), "UTF-8"); 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -66,7 +66,7 @@ public class GenerateJson {
 
 	public static void genCubeAll(String name) {
 		try {
-			File f = new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
+			File f = new File(Minecraft.getMinecraft().gameDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
 			if(!f.exists())f.createNewFile();
 			Writer writer = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -110,7 +110,7 @@ public class GenerateJson {
 	
 	public static void genHalfSlab(String name) {
 		try {
-			File f = new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
+			File f = new File(Minecraft.getMinecraft().gameDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
 			if(!f.exists())f.createNewFile();
 			Writer writer = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();

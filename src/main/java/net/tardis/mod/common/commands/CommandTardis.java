@@ -156,7 +156,7 @@ public class CommandTardis extends CommandBase {
     //Grow the tardis
     private void handleGrow(EntityPlayerMP player) {
         World world = player.getEntityWorld();
-        RayTraceResult ray = world.rayTraceBlocks(player.getPositionVector().addVector(0, player.getEyeHeight(), 0), player.getPositionVector().add(player.getLookVec().scale(16D)));
+        RayTraceResult ray = world.rayTraceBlocks(player.getPositionVector().add(0, player.getEyeHeight(), 0), player.getPositionVector().add(player.getLookVec().scale(16D)));
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
             TileEntity te = world.getTileEntity(ray.getBlockPos());
             if (te != null && te instanceof TileEntityTardisCoral) {
