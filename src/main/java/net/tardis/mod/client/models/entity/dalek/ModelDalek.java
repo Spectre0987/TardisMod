@@ -1,4 +1,4 @@
-package net.tardis.mod.client.models.entity;
+package net.tardis.mod.client.models.entity.dalek;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;

@@ -1,16 +1,15 @@
 package net.tardis.mod.client.renderers.entities;
 
-import javax.annotation.Nullable;
-
-import org.lwjgl.util.glu.Sphere;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.tardis.mod.client.models.entity.ModelDalek;
+import net.tardis.mod.client.models.entity.dalek.ModelDalek;
 import net.tardis.mod.common.entities.EntityDalek;
+import org.lwjgl.util.glu.Sphere;
+
+import javax.annotation.Nullable;
 
 public class RenderDalek extends RenderLiving<EntityDalek> {
 

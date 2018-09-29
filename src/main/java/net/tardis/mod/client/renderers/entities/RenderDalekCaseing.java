@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-import net.tardis.mod.client.models.entity.ModelDalek;
+import net.tardis.mod.client.models.entity.dalek.ModelDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 
 public class RenderDalekCaseing extends Render<EntityDalekCasing> {
