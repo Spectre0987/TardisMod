@@ -1,7 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -10,11 +8,13 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.BossInfo.Color;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.elements.ButtonText;
 import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.strings.TStrings;
-import net.tardis.mod.packets.MessageCompanion;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageCompanion;
+
+import java.io.IOException;
 
 public class GUICompanion extends GuiScreen {
 
@@ -42,7 +42,7 @@ public class GUICompanion extends GuiScreen {
 		else if(id == 1) action = EnumAction.GO_TO_TARDIS;
 		else if(id == 2) action = EnumAction.BRING_TARDIS;
 		if(action != null) {
-			Tardis.NETWORK.sendToServer(new MessageCompanion(entityID, action));
+			NetworkHandler.NETWORK.sendToServer(new MessageCompanion(entityID, action));
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 		super.actionPerformed(button);
@@ -75,9 +75,9 @@ public class GUICompanion extends GuiScreen {
 		return false;
 	}
 
-	public static enum EnumAction{
+	public enum EnumAction {
 		FOLLOW,
 		GO_TO_TARDIS,
-		BRING_TARDIS;
+		BRING_TARDIS
 	}
 }

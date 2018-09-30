@@ -8,12 +8,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.blocks.BlockInteriorDoor;
+import net.tardis.mod.network.NetworkHandler;
 
 public class TileEntityInteriorDoor extends TileEntity implements ITickable, IContainsWorldShell {
 	
@@ -96,7 +96,7 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 					this.shell.blockMap.put(pos, new BlockStorage(ws.getBlockState(pos), ws.getTileEntity(pos), ws.getLight(pos)));
 				}
 			}
-			Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(this.shell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16));
+			NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(this.shell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16));
 		}
 	}
 

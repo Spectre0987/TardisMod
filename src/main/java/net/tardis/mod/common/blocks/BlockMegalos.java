@@ -1,6 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 
 public class BlockMegalos extends BlockBase implements INeedItem{
@@ -25,8 +24,8 @@ public class BlockMegalos extends BlockBase implements INeedItem{
 	
 	public BlockMegalos() {
 		this.setLightOpacity(0);
-		this.setCreativeTab(Tardis.tab);
-		item.setCreativeTab(Tardis.tab);
+        this.setCreativeTab(TardisTabs.MAIN);
+        item.setCreativeTab(TardisTabs.MAIN);
 		item.setHasSubtypes(true);
 	}
 	
@@ -42,7 +41,7 @@ public class BlockMegalos extends BlockBase implements INeedItem{
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { TYPE });
+        return new BlockStateContainer(this, TYPE);
 	}
 	
 	@Override
@@ -80,18 +79,18 @@ public class BlockMegalos extends BlockBase implements INeedItem{
 	
 	@Override
 	public boolean isNormalCube(IBlockState state) {
-		return state.getValue(TYPE) >= 14 ? false : true;
+        return state.getValue(TYPE) < 14;
 	}
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
-		return state.getValue(TYPE) >= 14 ? false : true;
+        return state.getValue(TYPE) < 14;
 	}
 	
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
 		int meta = state.getValue(TYPE);
-		return meta == 14 || meta == 15 ? false : true;
+        return meta != 14 && meta != 15;
 	}
 
 	@Override

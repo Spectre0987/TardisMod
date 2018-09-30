@@ -1,7 +1,5 @@
 package net.tardis.mod.common.systems;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -12,12 +10,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardis.EnumCourseCorrect;
-import net.tardis.mod.packets.MessageMissControl;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageMissControl;
+
+import java.util.Random;
 
 public class SystemStabilizers extends BaseSystem{
 
@@ -68,7 +68,7 @@ public class SystemStabilizers extends BaseSystem{
 	public void explode(World world, BlockPos pos) {
 		if(!world.isRemote) {
 			world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
-			Tardis.NETWORK.sendToAllAround(new MessageMissControl(pos), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 25D));
+			NetworkHandler.NETWORK.sendToAllAround(new MessageMissControl(pos), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 25D));
 			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(pos);
 			tardis.setDesination(tardis.getDestination().add(rand.nextInt(20) - 10, rand.nextInt(20) - 10, rand.nextInt(20) - 10), tardis.getTargetDim());
 		}

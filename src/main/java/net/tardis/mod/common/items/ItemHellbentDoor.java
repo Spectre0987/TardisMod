@@ -7,7 +7,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class ItemHellbentDoor extends ItemBase {
 	

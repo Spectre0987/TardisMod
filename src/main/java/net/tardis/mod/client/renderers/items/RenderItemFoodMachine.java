@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelFoodMachine;
+import net.tardis.mod.client.models.decoration.ModelFoodMachine;
 
 public class RenderItemFoodMachine extends TileEntityItemStackRenderer {
 	

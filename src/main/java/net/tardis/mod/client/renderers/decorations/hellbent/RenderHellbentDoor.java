@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentDoor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderHellbentDoor extends Render<EntityHellbentDoor> {
 

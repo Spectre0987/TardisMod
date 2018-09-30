@@ -6,8 +6,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.math.BlockPos;
-import net.tardis.mod.Tardis;
-import net.tardis.mod.packets.MessageTeleport;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageTeleport;
 
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ public class GuiVortexM extends GuiScreen {
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if (button == this.teleport) {
 			BlockPos tpPos = new BlockPos(getInt(xCoord.getText(), COORD_TYPE.X), getInt(yCoord.getText(), COORD_TYPE.Y), getInt(zCoord.getText(), COORD_TYPE.Z));
-			Tardis.NETWORK.sendToServer(new MessageTeleport(tpPos, mc.player.getEntityId()));
+			NetworkHandler.NETWORK.sendToServer(new MessageTeleport(tpPos, mc.player.getEntityId()));
 		}
 		super.actionPerformed(button);
 	}

@@ -7,12 +7,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.IInteriorModel;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor02;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor02;
-import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
-import net.tardis.mod.util.helpers.Helper;
 
 public class ModelInteriorDoor02 extends ModelBase implements IInteriorModel
 {

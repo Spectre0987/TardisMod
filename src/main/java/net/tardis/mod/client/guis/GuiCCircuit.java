@@ -1,11 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.awt.Color;
-import java.io.IOException;
-
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -18,13 +12,19 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
-import net.tardis.mod.packets.MessageExteriorChange;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageExteriorChange;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class GuiCCircuit extends GuiScreen {
 	
 	Minecraft mc;
 	public BlockPos pos = BlockPos.ORIGIN;
-	public static EnumExterior[] exteriors = new EnumExterior[] {EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FITH, EnumExterior.FOURTH, EnumExterior.CC};
+	public static EnumExterior[] exteriors = new EnumExterior[]{EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FIFTH, EnumExterior.FOURTH, EnumExterior.CC};
 	private ResourceLocation tex = new ResourceLocation(Tardis.MODID, "textures/gui/chameleon_circuit.png");
 	private GuiButtonExt selectButton;
 	private GuiButtonExt nextArrow;
@@ -46,10 +46,10 @@ public class GuiCCircuit extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		
-		 float rotX = 30 + (mouseY - height/2);
-		 float rotY = 45 + (mouseX - width/2);
-		this.drawDefaultBackground();
+
+		int rotX = 30 + (mouseY - height / 2);
+		int rotY = 45 + (mouseX - width / 2);
+		drawDefaultBackground();
 		mc.getTextureManager().bindTexture(tex);
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
 		this.drawTexturedModalRect(res.getScaledWidth() / 2 - WIDTH / 2, res.getScaledHeight() / 2 - HEIGHT / 2, 0, 0, WIDTH, HEIGHT);
@@ -92,7 +92,7 @@ public class GuiCCircuit extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button == this.selectButton) {
-			Tardis.NETWORK.sendToServer(new MessageExteriorChange(pos, exteriors[index].block.getDefaultState()));
+			NetworkHandler.NETWORK.sendToServer(new MessageExteriorChange(pos, exteriors[index].block.getDefaultState()));
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 		else if(button == this.nextArrow) {

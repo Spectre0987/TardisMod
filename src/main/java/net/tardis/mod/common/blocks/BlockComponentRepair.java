@@ -1,7 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,7 +10,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.handlers.GuiHandlerTardis;
+
+import java.util.function.Supplier;
 
 public class BlockComponentRepair extends BlockTileBase{
 
@@ -20,7 +21,7 @@ public class BlockComponentRepair extends BlockTileBase{
 	public BlockComponentRepair(Material materialIn, Supplier<TileEntity> tileEntity) {
 		super(materialIn, tileEntity);
 		this.setLightOpacity(0);
-		this.setCreativeTab(Tardis.tab);
+        setCreativeTab(TardisTabs.MAIN);
 	}
 
 	@Override

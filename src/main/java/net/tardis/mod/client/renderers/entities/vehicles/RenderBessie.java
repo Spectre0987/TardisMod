@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.vehicles.ModelBessie;
+import net.tardis.mod.client.models.entity.vehicles.ModelBessie;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 
 public class RenderBessie extends Render<EntityBessie>{

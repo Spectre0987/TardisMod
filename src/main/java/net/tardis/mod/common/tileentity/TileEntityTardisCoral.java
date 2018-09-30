@@ -1,15 +1,8 @@
 package net.tardis.mod.common.tileentity;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.UUID;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -25,9 +18,14 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.world.Structures;
-import net.tardis.mod.util.helpers.PlayerHelper;
-import net.tardis.mod.util.helpers.RiftHelper;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.util.common.helpers.RiftHelper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TileEntityTardisCoral extends TileEntity implements ITickable{
 

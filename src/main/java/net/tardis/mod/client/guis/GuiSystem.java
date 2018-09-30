@@ -11,8 +11,9 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.packets.MessageDamageSystem;
-import net.tardis.mod.packets.MessageSpawnItem;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageDamageSystem;
+import net.tardis.mod.network.packets.MessageSpawnItem;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -58,8 +59,8 @@ public class GuiSystem extends GuiScreen{
 			if(sys.getHealth() > 0.0F) {
 				ItemStack stack = new ItemStack(sys.getRepairItem());
 				stack.setItemDamage((int)(100 - (sys.getHealth() * 100)));
-				Tardis.NETWORK.sendToServer(new MessageSpawnItem(stack));
-				Tardis.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
+				NetworkHandler.NETWORK.sendToServer(new MessageSpawnItem(stack));
+				NetworkHandler.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
 			}
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}

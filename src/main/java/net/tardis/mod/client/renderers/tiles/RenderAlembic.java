@@ -7,9 +7,9 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelAlembic;
+import net.tardis.mod.client.models.items.ModelAlembic;
 import net.tardis.mod.common.blocks.BlockAlembic;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderAlembic extends TileEntitySpecialRenderer {
 

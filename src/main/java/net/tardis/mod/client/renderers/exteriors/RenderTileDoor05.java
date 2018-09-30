@@ -8,12 +8,12 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor05;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor05;
 import net.tardis.mod.client.models.exteriors.ModelTardis05;
-import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.client.RenderHelper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderTileDoor05 extends TileEntitySpecialRenderer<TileEntityDoor05> {
 

@@ -1,9 +1,6 @@
 package net.tardis.mod.common.tileentity;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -17,14 +14,13 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.Tardis;
-import net.tardis.mod.client.worldshell.BlockStorage;
-import net.tardis.mod.client.worldshell.IContainsWorldShell;
-import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.client.worldshell.PlayerStorage;
-import net.tardis.mod.client.worldshell.WorldShell;
-import net.tardis.mod.util.helpers.Helper;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.client.worldshell.*;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.util.common.helpers.Helper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityHoloprojector extends TileEntity implements ITickable, IContainsWorldShell{
 	
@@ -62,7 +58,7 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 					}
 					worldShell.setPlayers(players);
 					worldShell.setEntities(lists);
-					Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
+					NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
 				}
 				return;
 			}

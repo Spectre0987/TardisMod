@@ -39,7 +39,7 @@ public class WeepingAngel {
 								BlockPos pos = ((TileEntityTardis)te).getLocation();
 								angel.setAttackTarget(null);
 								angel.setRevengeTarget(null);
-								angel.getMoveHelper().setMoveTo(pos.getX(),pos.getY(),pos.getZ(), angel.getAIMoveSpeed());
+								angel.moveTowards(pos);
 							}
 						}
 					}

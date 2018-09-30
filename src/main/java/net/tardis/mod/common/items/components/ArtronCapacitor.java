@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.RiftHelper;
+import net.tardis.mod.util.common.helpers.RiftHelper;
 
 public class ArtronCapacitor extends ItemComponent {
 	

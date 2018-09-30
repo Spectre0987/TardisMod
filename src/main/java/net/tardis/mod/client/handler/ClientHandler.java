@@ -6,9 +6,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
-import net.tardis.mod.packets.MessageUpdateBessie;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageUpdateBessie;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientHandler {
@@ -21,7 +21,7 @@ public class ClientHandler {
             Entity driver = bessie.getControllingPassenger();
             if (driver.getEntityId() == Minecraft.getMinecraft().player.getEntityId()) {
                 if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
-                    Tardis.NETWORK.sendToServer(new MessageUpdateBessie(bessie.getEntityId()));
+                    NetworkHandler.NETWORK.sendToServer(new MessageUpdateBessie(bessie.getEntityId()));
                 }
             }
         }

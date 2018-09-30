@@ -12,7 +12,7 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDoorSwitch extends EntityControl{
 	
@@ -45,12 +45,12 @@ public class ControlDoorSwitch extends EntityControl{
 				if(!tardis.isInFlight()) {
 					for(Entity entity : world.getEntitiesWithinAABB(Entity.class, DOOR_BB.offset(getPositionVector()))) {
                         if(entity instanceof IDoor) {
-                        	((IDoor)entity).setOpen(((IDoor)entity).isOpen() ? false : true);
+                            ((IDoor) entity).setOpen(!((IDoor) entity).isOpen());
                         }
                         if(entity instanceof ControlDoor) {
                         	if(!world.isRemote) {
                     			if(tardis == null)return;
-                    			WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
+                                WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
                     			if(ws == null)return;
                     			TileEntity door = ws.getTileEntity(tardis.getLocation().up());
                     			if (door instanceof TileEntityDoor) {

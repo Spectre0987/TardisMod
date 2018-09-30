@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelKey;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.client.models.items.ModelKey;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RendererKey extends TileEntityItemStackRenderer {
 	

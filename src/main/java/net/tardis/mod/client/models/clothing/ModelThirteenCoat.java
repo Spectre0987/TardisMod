@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.BodyPartHook;
+import net.tardis.mod.client.models.entity.BodyPartHook;
 
 public class ModelThirteenCoat extends ModelBiped
 {

@@ -3,7 +3,7 @@ package net.tardis.mod.common.tileentity.consoles;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class TileEntityTardis02 extends TileEntityTardis{
 

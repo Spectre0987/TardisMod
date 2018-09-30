@@ -9,13 +9,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelFez;
+import net.tardis.mod.client.creativetabs.TardisTabs;
+import net.tardis.mod.client.models.clothing.ModelFez;
 
 public class ItemFez extends ItemArmor {
 	
 	public ItemFez() {
 		super(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
-		this.setCreativeTab(Tardis.tab);
+        setCreativeTab(TardisTabs.MAIN);
 	}
 	
 	@Override

@@ -14,7 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
 
@@ -25,7 +25,7 @@ public class BlockAlembic extends BlockTileBase {
 	
 	public BlockAlembic() {
         super(Material.GLASS, TileEntityAlembic::new);
-		this.setCreativeTab(Tardis.tab);
+        setCreativeTab(TardisTabs.MAIN);
 	}
 
     @Override

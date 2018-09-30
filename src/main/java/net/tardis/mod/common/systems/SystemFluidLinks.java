@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class SystemFluidLinks extends BaseSystem{
 	

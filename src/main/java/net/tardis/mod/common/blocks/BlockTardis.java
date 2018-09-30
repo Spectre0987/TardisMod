@@ -11,8 +11,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.api.blocks.IBlock;
+import net.tardis.mod.client.creativetabs.TardisTabs;
 
 public class BlockTardis extends Block implements IBlock {
 	
@@ -22,7 +22,7 @@ public class BlockTardis extends Block implements IBlock {
 		super(Material.WOOD, MapColor.BLUE);
 		this.setBlockUnbreakable();
 		this.setResistance(999);
-		item.setCreativeTab(Tardis.tab);
+        item.setCreativeTab(TardisTabs.MAIN);
 	}
 	
 	@Override

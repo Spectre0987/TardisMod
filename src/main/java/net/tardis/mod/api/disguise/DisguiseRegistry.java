@@ -1,11 +1,11 @@
 package net.tardis.mod.api.disguise;
 
-import java.util.HashMap;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.util.helpers.EntityHelper;
+import net.tardis.mod.util.common.helpers.EntityHelper;
+
+import java.util.HashMap;
 
 public class DisguiseRegistry {
 	
@@ -24,7 +24,7 @@ public class DisguiseRegistry {
 		for(Biome b : EntityHelper.biomes) {
 			if(b.getRegistryName().toString().contains(name)) {
 				DISGUISES.put(b.getRegistryName().toString(), disguiseLoc);
-				System.out.println("DisguiseRegistry: registered " + b.getRegistryName().toString());
+                Tardis.LOG.info("DisguiseRegistry: registered " + b.getRegistryName().toString());
 			}
 		}
 	}

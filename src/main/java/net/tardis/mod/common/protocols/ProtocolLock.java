@@ -10,7 +10,7 @@ import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.PlayerHelper;
+import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 public class ProtocolLock implements ITardisProtocol {
 

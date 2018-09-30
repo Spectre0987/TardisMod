@@ -1,7 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +16,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiProtocol;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.util.function.Supplier;
 
 public class BlockMonitor extends BlockFacingDecoration {
 

@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderHellbentCorridor extends Render<EntityHellbentCorridor> {
 

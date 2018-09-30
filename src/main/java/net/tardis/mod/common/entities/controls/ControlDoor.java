@@ -1,8 +1,5 @@
 package net.tardis.mod.common.entities.controls;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -26,19 +23,18 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.Tardis;
-import net.tardis.mod.client.worldshell.BlockStorage;
-import net.tardis.mod.client.worldshell.IContainsWorldShell;
-import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.client.worldshell.PlayerStorage;
-import net.tardis.mod.client.worldshell.WorldShell;
+import net.tardis.mod.client.worldshell.*;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.Helper;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.util.common.helpers.Helper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	
@@ -162,7 +158,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 				shell.setTime(world.getWorldTime());
 				shell.setPlayers(players);
 				shell.setEntities(list);
-				Tardis.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
+				NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
 			if(world.isRemote)this.shell.setTime(shell.getTime() + 1);
 		}
@@ -177,7 +173,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 						entity.motionY += dir.y;
 						entity.motionZ += dir.z;
 						if(entity instanceof EntityPlayer && entity.getPositionVector().distanceTo(this.getPositionVector()) <= 1) {
-							if(!world.isRemote)tardis.transferPlayer((EntityPlayer)entity, false);
+							if (!world.isRemote) tardis.transferPlayer(entity, false);
 						}
 					}
 				}

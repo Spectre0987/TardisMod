@@ -1,7 +1,5 @@
 package net.tardis.mod.common.entities;
 
-import java.util.UUID;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -37,21 +35,23 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.api.events.TardisEnterEvent;
-import net.tardis.mod.api.events.TardisExitEvent;
+import net.tardis.mod.api.events.tardis.TardisEnterEvent;
+import net.tardis.mod.api.events.tardis.TardisExitEvent;
 import net.tardis.mod.client.guis.GUICompanion;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.Helper;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.util.common.helpers.Helper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.util.UUID;
 
 public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<String> TYPE = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.STRING);
 	public static final DataParameter<Float> TARDIS_XP = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.FLOAT);
-	private NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inv = NonNullList.withSize(27, ItemStack.EMPTY);
 	public BlockPos tardisPos = BlockPos.ORIGIN;
 	public boolean flyTardis = false;
 	UUID player;
@@ -255,11 +255,10 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	
 	public boolean isWrongSize() {
 		float[] size = this.getType().size;
-		if(this.width != size[0] || this.height != size[1])
-			return true;
-		return false;
-	}
-	public static enum EnumCompanionType{
+        return this.width != size[0] || this.height != size[1];
+    }
+
+    public enum EnumCompanionType {
 		CLAIRE("claire", "Claire"),
 		VASSILIS("vassilis", "Vassilis"),
 		ALEXA("alexa", "Alexa"),

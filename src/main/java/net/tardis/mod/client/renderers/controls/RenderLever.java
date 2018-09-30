@@ -7,7 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.client.models.console.contols.ModelLever;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderLever extends RenderControl {
 	

@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelFoodMachine;
+import net.tardis.mod.client.models.decoration.ModelFoodMachine;
 import net.tardis.mod.common.blocks.BlockFoodMachine;
 import net.tardis.mod.common.blocks.TBlocks;
 

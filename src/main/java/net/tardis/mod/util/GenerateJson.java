@@ -1,19 +1,15 @@
 package net.tardis.mod.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumFacing;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class GenerateJson {
 	
@@ -28,7 +24,7 @@ public class GenerateJson {
 		try{
 			File f = new File(Minecraft.getMinecraft().gameDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
 			if(!f.exists())f.createNewFile();
-			Writer fw = new OutputStreamWriter(new FileOutputStream(f), "UTF-8"); 
+            Writer fw = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			JsonWriter jw = gson.newJsonWriter(fw);
 
@@ -68,7 +64,7 @@ public class GenerateJson {
 		try {
 			File f = new File(Minecraft.getMinecraft().gameDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
 			if(!f.exists())f.createNewFile();
-			Writer writer = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+            Writer writer = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			JsonWriter jw = gson.newJsonWriter(writer);
 			
@@ -112,7 +108,7 @@ public class GenerateJson {
 		try {
 			File f = new File(Minecraft.getMinecraft().gameDir.getAbsolutePath() + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + name + ".json");
 			if(!f.exists())f.createNewFile();
-			Writer writer = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+            Writer writer = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			JsonWriter jw = gson.newJsonWriter(writer);
 			

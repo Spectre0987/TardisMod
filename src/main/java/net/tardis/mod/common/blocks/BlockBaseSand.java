@@ -1,12 +1,11 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.BlockFalling;
-import net.minecraft.block.material.Material;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TardisTabs;
 
 public class BlockBaseSand extends BlockFalling {
 
 	public BlockBaseSand() {
-		this.setCreativeTab(Tardis.tab);
+        setCreativeTab(TardisTabs.MAIN);
 	}
 }

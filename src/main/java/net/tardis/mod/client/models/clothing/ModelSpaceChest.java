@@ -3,7 +3,7 @@ package net.tardis.mod.client.models.clothing;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.tardis.mod.client.models.BodyPartHook;
+import net.tardis.mod.client.models.entity.BodyPartHook;
 
 public class ModelSpaceChest extends ModelBiped
 {

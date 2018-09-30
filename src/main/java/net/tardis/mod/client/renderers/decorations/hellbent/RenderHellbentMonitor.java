@@ -1,7 +1,5 @@
 package net.tardis.mod.client.renderers.decorations.hellbent;
 
-import java.awt.Color;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,8 +11,10 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentMonitor;
 import net.tardis.mod.common.blocks.BlockFacingDecoration;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.Helper;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.util.common.helpers.Helper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.awt.*;
 
 public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 

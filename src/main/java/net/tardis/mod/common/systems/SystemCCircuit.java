@@ -7,7 +7,7 @@ import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class SystemCCircuit extends BaseSystem{
 

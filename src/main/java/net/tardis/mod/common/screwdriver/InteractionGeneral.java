@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.util.helpers.PlayerHelper;
+import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
-import net.tardis.mod.client.models.ModelAlembic;
+import net.tardis.mod.client.models.items.ModelAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 
 public class RenderItemAlembic extends TileEntityItemStackRenderer{

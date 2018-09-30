@@ -1,7 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +13,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import javax.annotation.Nullable;
 
 public class TileEntityEPanel extends TileEntity implements ITickable, IInventory {
 	

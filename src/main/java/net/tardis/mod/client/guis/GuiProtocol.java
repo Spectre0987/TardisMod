@@ -14,7 +14,8 @@ import net.tardis.mod.common.protocols.ITardisProtocol;
 import net.tardis.mod.common.protocols.ProtocolRegenRoom;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.packets.MessageProtocol;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageProtocol;
 
 import java.io.IOException;
 
@@ -63,7 +64,7 @@ public class GuiProtocol extends GuiScreen {
 			regen(button.id);
 
 		} else {
-			Tardis.NETWORK.sendToServer(new MessageProtocol(pos, button.id));
+			NetworkHandler.NETWORK.sendToServer(new MessageProtocol(pos, button.id));
 			TardisProtocol.getProtocolFromId(button.id).onActivated(mc.world, (TileEntityTardis) mc.world.getTileEntity(pos));
 		}
 		super.actionPerformed(button);
@@ -78,7 +79,7 @@ public class GuiProtocol extends GuiScreen {
 	public void regen(int button) {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiYesNo((result, id) -> {
 			if (result) {
-				Tardis.NETWORK.sendToServer(new MessageProtocol(pos, button));
+				NetworkHandler.NETWORK.sendToServer(new MessageProtocol(pos, button));
 				Minecraft.getMinecraft().displayGuiScreen(null);
 			}
 			Minecraft.getMinecraft().displayGuiScreen(null);

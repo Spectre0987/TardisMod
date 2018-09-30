@@ -1,14 +1,8 @@
 package net.tardis.mod.handlers;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.HashMap;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -51,6 +45,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.dimensions.IDimensionProperties;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -69,15 +64,32 @@ import net.tardis.mod.common.systems.SystemTemporalGrace;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
-import net.tardis.mod.util.helpers.Helper;
-import net.tardis.mod.util.helpers.RiftHelper;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.util.common.helpers.Helper;
+import net.tardis.mod.util.common.helpers.RiftHelper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
 
 @Mod.EventBusSubscriber
 public class TEventHandler {
 	
 	public static TardisWorldSavedData data;
-	
+
+	@SubscribeEvent
+	public static void grav(LivingUpdateEvent event) {
+		if (event.getEntityLiving().world.provider instanceof IDimensionProperties) {
+			IDimensionProperties dimensionProperties = (IDimensionProperties) event.getEntityLiving().world.provider;
+			if (!event.getEntityLiving().onGround && !dimensionProperties.hasGravity()) {
+				event.getEntityLiving().motionY -= 0.01;
+				event.getEntityLiving().fallDistance *= 0.01D;
+			}
+		}
+	}
+
+
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {
 		// Blocks

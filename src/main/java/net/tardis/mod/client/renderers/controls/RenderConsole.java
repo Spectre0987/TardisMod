@@ -6,8 +6,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.client.models.console.contols.ModelAllControls;
+import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class RenderConsole extends TileEntitySpecialRenderer {

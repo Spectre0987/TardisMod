@@ -9,16 +9,14 @@ import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.api.dimensions.IDimensionProperties;
 import net.tardis.mod.client.renderers.sky.SkyRendererMoon;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.dimensions.telos.ChunkGeneratorTelos;
 
-public class MoonProvider extends WorldProvider{
+public class MoonProvider extends WorldProvider implements IDimensionProperties {
 
 	private static BiomeProviderSingle biomeP = new BiomeProviderSingle(TDimensions.moonBiome);
 	
@@ -81,20 +79,20 @@ public class MoonProvider extends WorldProvider{
 		super.onPlayerRemoved(player);
 		player.setNoGravity(false);
 	}
-	
-	@EventBusSubscriber
-	public static class Events{
-		
-		@SubscribeEvent
-		public static void grav(LivingUpdateEvent event) {
-			if(event.getEntityLiving().dimension == TDimensions.MOON_ID) {
-				if(!event.getEntityLiving().onGround) {
-					event.getEntityLiving().motionY -= 0.01;
-					event.getEntityLiving().fallDistance *= 0.01D;
-				}
-			}
-		}
-		
+
+	@Override
+	public boolean hasGravity() {
+		return false;
+	}
+
+	@Override
+	public boolean hasAir() {
+		return false;
+	}
+
+	@Override
+	public int getRadiationLevels() {
+		return 0;
 	}
 
 }

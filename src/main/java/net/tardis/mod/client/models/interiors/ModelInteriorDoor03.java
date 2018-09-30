@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.IInteriorModel;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor03;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor03;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;

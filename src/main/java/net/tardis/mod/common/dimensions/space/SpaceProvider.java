@@ -8,7 +8,7 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.client.renderers.sky.RenderNothing;
+import net.tardis.mod.client.renderers.sky.RenderVoid;
 import net.tardis.mod.common.dimensions.TDimensions;
 
 public class SpaceProvider extends WorldProvider{
@@ -43,7 +43,7 @@ public class SpaceProvider extends WorldProvider{
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IRenderHandler getCloudRenderer() {
-		return new RenderNothing();
+        return new RenderVoid();
 	}
 
 	@Override

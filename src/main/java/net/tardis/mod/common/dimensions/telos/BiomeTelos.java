@@ -1,8 +1,5 @@
 package net.tardis.mod.common.dimensions.telos;
 
-import java.awt.Color;
-import java.util.Random;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -11,9 +8,12 @@ import net.minecraft.world.biome.BiomeDesert;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityCybermanTomb;
 
+import java.awt.*;
+import java.util.Random;
+
 public class BiomeTelos extends BiomeDesert {
 
-	int grassColor = new Color(175 / 255F, 143 / 255F, 82F / 255F).getRGB();
+    private int grassColor = new Color(175 / 255F, 143 / 255F, 82F / 255F).getRGB();
 	
 	public BiomeTelos(boolean snow) {
 		super(new BiomeProperties("Telos").setTemperature(snow ? 0F : 0.3F).setBaseBiome("desert"));

@@ -6,8 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.tardis.mod.client.EnumClothes;
-import net.tardis.mod.util.helpers.Helper;
-import net.tardis.mod.util.helpers.RiftHelper;
+import net.tardis.mod.util.common.helpers.Helper;
+import net.tardis.mod.util.common.helpers.RiftHelper;
 
 public class ItemSonicShades extends ItemHat {
 

@@ -14,13 +14,13 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelLeftDoor03;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor03;
 import net.tardis.mod.client.models.exteriors.ModelTardis03;
-import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.client.RenderHelper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> {
 

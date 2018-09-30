@@ -8,11 +8,10 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.helpers.Helper;
-import net.tardis.mod.util.helpers.TardisHelper;
+import net.tardis.mod.util.common.helpers.Helper;
+import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class ModeSignal implements IScrew {
 
@@ -20,7 +19,7 @@ public class ModeSignal implements IScrew {
 	public EnumActionResult performAction(World world, EntityPlayer player, EnumHand hand) {
 		if(!world.isRemote) {
 			if(TardisHelper.hasTardis(player.getGameProfile().getId())) {
-				TileEntityTardis tardis = Helper.getTardis(((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(player.getGameProfile().getId())));
+                TileEntityTardis tardis = Helper.getTardis(world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(player.getGameProfile().getId())));
 				tardis.setDesination(player.getPosition(), player.dimension);
 			}
 		}

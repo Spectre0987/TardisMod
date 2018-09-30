@@ -9,9 +9,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
-import net.tardis.mod.client.util.ModelUtil;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.util.helpers.PlayerHelper;
+import net.tardis.mod.util.client.ModelUtil;
+import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 public class RenderLayerVortexM implements LayerRenderer{
 

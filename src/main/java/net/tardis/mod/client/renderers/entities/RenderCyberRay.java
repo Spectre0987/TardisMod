@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.models.ModelRay;
+import net.tardis.mod.client.models.entity.projectile.ModelRay;
 import net.tardis.mod.common.entities.EntityRayCyberman;
 
 public class RenderCyberRay extends Render<EntityRayCyberman> {

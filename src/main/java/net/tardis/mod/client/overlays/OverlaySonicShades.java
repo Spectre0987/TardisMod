@@ -1,7 +1,5 @@
 package net.tardis.mod.client.overlays;
 
-import java.awt.Color;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelPlayer;
@@ -17,7 +15,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
+
+import java.awt.*;
 
 public class OverlaySonicShades implements IOverlay {
 

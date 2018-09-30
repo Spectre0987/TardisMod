@@ -10,11 +10,11 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
 import net.tardis.mod.client.models.ModelBlocks;
-import net.tardis.mod.client.renderers.RenderHelper;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.client.RenderHelper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderTileDoorCC extends TileEntitySpecialRenderer<TileEntityDoor> {
 

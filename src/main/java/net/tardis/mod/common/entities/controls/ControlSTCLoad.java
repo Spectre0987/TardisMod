@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.util.helpers.Helper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlSTCLoad extends EntityControl {
 	
@@ -36,7 +36,7 @@ public class ControlSTCLoad extends EntityControl {
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
-			tardis.setLoading(tardis.getLoading() ? false : true);
+            tardis.setLoading(!tardis.getLoading());
 			this.dataManager.set(IS_LOADING, tardis.getLoading());
 		} else
 			this.ticks = 20;
