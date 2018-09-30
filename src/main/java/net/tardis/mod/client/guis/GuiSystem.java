@@ -7,6 +7,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
@@ -45,9 +46,11 @@ public class GuiSystem extends GuiScreen{
 	public void initGui() {
 		super.initGui();
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-		int width = GUI_WIDTH / 2, height = GUI_HEIGHT, id = 0;
+		int width = res.getScaledWidth() / 2, height = res.getScaledHeight() / 2, id = 0;
 		for(BaseSystem s : tardis.systems) {
-			this.addButton(new GuiButton(id, width - 15, height - (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%"));
+			GuiButtonExt button = new GuiButtonExt(id, width - 15, height - (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%");
+			button.enabled = s.getHealth() > 0.0F;
+			this.addButton(button);
 			++id;
 		}
 	}
