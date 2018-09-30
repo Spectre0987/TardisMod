@@ -28,10 +28,10 @@ public class WeepingAngel {
 		if (event.getEntityLiving() instanceof EntityWeepingAngel) {
 			if(!event.getEntityLiving().world.isRemote) {
 				EntityWeepingAngel angel = (EntityWeepingAngel) event.getEntityLiving();
-    if(event.getEntityLiving().dimension != TDimensions.TARDIS_ID) {
+				if(event.getEntityLiving().dimension != TDimensions.TARDIS_ID) {
 					ItemStack stack = angel.getHeldItemMainhand();
 					if(stack.getItem() instanceof ItemKey) {
-    WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+						WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 						BlockPos consolePos = ItemKey.getPos(stack);
 						if(consolePos != null && ws !=null) {
 							TileEntity te = ws.getTileEntity(consolePos);
@@ -39,7 +39,6 @@ public class WeepingAngel {
 								BlockPos pos = ((TileEntityTardis)te).getLocation();
 								angel.setAttackTarget(null);
 								angel.setRevengeTarget(null);
-								angel.moveTowards(pos);
 							}
 						}
 					}

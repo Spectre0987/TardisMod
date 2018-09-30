@@ -31,6 +31,7 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 
 
 public class TBlocks {
@@ -121,6 +122,7 @@ public class TBlocks {
 	public static Block tardis_top_03 = register(new BlockTardisTop(TileEntityDoor04::new), "tardis_top_03");
 	public static Block tardis_top_04 = register(new BlockTardisTop(TileEntityDoor05::new), "tardis_top_04");
 	public static Block tardis_top_cc = register(new BlockTardisTop(TileEntityDoorCC::new), "tardis_top_cc");
+	public static Block tardis_top_clock = register(new BlockTardisTop(TileEntityDoorClock::new), "tardis_top_clock");
 	
 	//Consoles
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01");
