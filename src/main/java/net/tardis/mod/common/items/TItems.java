@@ -79,6 +79,8 @@ public class TItems {
 	
 	public static Item tardis_repairkit = createItem(new ItemRepairKit(), "tardis_repairkit");
 	
+	public static Item tardis_locator = createItem(new ItemLocator(), "tardis_locator");
+	
 	// Componenets
 	public static Item fluid_link = null;
 	public static Item artron_capacitor = null;
