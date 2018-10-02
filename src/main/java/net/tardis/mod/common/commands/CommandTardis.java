@@ -38,7 +38,7 @@ public class CommandTardis extends CommandBase {
      */
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/tardis [grow | transfer | tp | summon | remove]";
+        return "/tardis [grow | transfer | interior | summon | remove]";
     }
 
     /**
