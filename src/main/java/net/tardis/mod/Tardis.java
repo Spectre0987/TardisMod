@@ -125,6 +125,7 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.common.helpers.EntityHelper;
 
+
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
 public class Tardis {
 
@@ -246,6 +247,7 @@ public class Tardis {
 			// Register All Mobs Here.
 			EntityHelper.registerMob(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance);
 			EntityHelper.registerNoSpawn(EntityDalek.class, "dalek");
+			EntityHelper.registerMob(EntityQuark.class, "quark", 5);
 			EntityHelper.registerNoSpawn(EntityCybermanTomb.class, "cyberman_tomb");
 			EntityHelper.registerMob(EntityAdipose.class,"adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance);
 		}
