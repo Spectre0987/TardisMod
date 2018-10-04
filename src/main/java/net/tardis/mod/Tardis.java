@@ -44,6 +44,7 @@ import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekRay;
 import net.tardis.mod.common.entities.EntityDalekScaro;
 import net.tardis.mod.common.entities.EntityForceField;
+import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.EntityRayCyberman;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;

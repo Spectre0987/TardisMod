@@ -3,10 +3,7 @@ package net.tardis.mod.client.models.exteriors;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.tardis.mod.util.client.RenderHelper;
-import net.tardis.mod.util.common.helpers.Helper;
 
 public class ModelTardisClock extends ModelBase implements IExteriorModel{
 
@@ -405,6 +402,25 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 		Hour12.render(scale);
 		ClockCenter.render(scale);
 		ClockHandMinute.render(scale);
+		ClockHandHour.render(scale);
+		DoorTop.render(scale);
+		DoorLeft.render(scale);
+		DoorRight.render(scale);
+		DoorBottom.render(scale);
+		DoorMid.render(scale);
+		DoorGlass.render(scale);
+		Door1.render(scale);
+		Door2.render(scale);
+		Door3.render(scale);
+		Door4.render(scale);
+		Door5.render(scale);
+		Door6.render(scale);
+		Door7.render(scale);
+		Door8.render(scale);
+		Door9.render(scale);
+		Door10.render(scale);
+		Door11.render(scale);
+		Door12.render(scale);
 		BottomBoy.render(scale);
 		Leg1T.render(scale);
 		Leg1B.render(scale);
@@ -427,48 +443,12 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 	}
 	@Override
 	public void renderClosed(float scale) {
-		//this.render(null, 0, 0, 0, 0, 0, scale);
-		this.renderDoor(scale, 0);
-		this.renderClockHand(0.0625F);
+		// TODO Auto-generated method stub
+		
 	}
 	@Override
 	public void renderOpen(float scale) {
-		this.render(null, 0, 0, 0, 0, 0, scale);
-		this.renderDoor(scale, -50);
-	}
-	
-	private void renderClockHand(float scale) {
-		GlStateManager.pushMatrix();
-		RenderHelper.renderTransformAxis();
-		GlStateManager.translate(0, 0, 0);
-		GlStateManager.rotate(45, 0, 0, 1);
-		ClockHandHour.render(scale);
-		GlStateManager.popMatrix();
-	}
-	
-	public void renderDoor(float scale, float rotation) {
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(Helper.precentToPixels(5.5F), 0, -Helper.precentToPixels(2.5F));
-		GlStateManager.rotate(rotation, 0, 1, 0);
-		GlStateManager.translate(-Helper.precentToPixels(5.5F), 0, Helper.precentToPixels(2.5F));
-		DoorTop.render(scale);
-		DoorLeft.render(scale);
-		DoorRight.render(scale);
-		DoorBottom.render(scale);
-		DoorMid.render(scale);
-		DoorGlass.render(scale);
-		Door1.render(scale);
-		Door2.render(scale);
-		Door3.render(scale);
-		Door4.render(scale);
-		Door5.render(scale);
-		Door6.render(scale);
-		Door7.render(scale);
-		Door8.render(scale);
-		Door9.render(scale);
-		Door10.render(scale);
-		Door11.render(scale);
-		Door12.render(scale);
-		GlStateManager.popMatrix();
+		// TODO Auto-generated method stub
+		
 	}
 }
