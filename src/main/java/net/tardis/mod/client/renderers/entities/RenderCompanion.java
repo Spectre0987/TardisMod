@@ -4,7 +4,6 @@ import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.common.entities.EntityCompanion;
 
 public class RenderCompanion extends RenderLiving<EntityCompanion>{

@@ -1,12 +1,11 @@
 package net.tardis.mod.client.models.exteriors;
 
 
-import java.lang.reflect.Field;
-
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+
+import java.lang.reflect.Field;
 
 public class ModelRightDoor02 extends ModelBase {
 

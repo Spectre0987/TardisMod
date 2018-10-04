@@ -9,6 +9,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
 
 public class ItemVortexManipulator extends Item {

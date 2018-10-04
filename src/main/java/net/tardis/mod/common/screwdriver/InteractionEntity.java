@@ -1,20 +1,15 @@
 package net.tardis.mod.common.screwdriver;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityPainting;
 import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityParrot;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;

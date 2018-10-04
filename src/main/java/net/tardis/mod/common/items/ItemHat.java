@@ -8,6 +8,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 
