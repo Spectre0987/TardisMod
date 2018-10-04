@@ -28,6 +28,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
+import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.CommandTardis;
@@ -41,6 +42,7 @@ import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekRay;
+import net.tardis.mod.common.entities.EntityDalekScaro;
 import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityRayCyberman;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -194,6 +196,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityHellbentDoor.class, "hellbent_door");
 		EntityHelper.registerNoSpawn(EntityBessie.class, "bessie");
 		EntityHelper.registerNoSpawn(EntityCompanion.class, "companion");
+		EntityHelper.registerNoSpawn(EntityDalekScaro.class, "dalek_scaro");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -222,6 +225,7 @@ public class Tardis {
 		registerTileEntity(TileEntityDoor05.class, "TileEntityDoor05");
 		registerTileEntity(TileEntityDoorCC.class, "TileEntityDoorCC");
 		registerTileEntity(TileEntityDoorClock.class, "TileEntityDoorClock");
+		registerTileEntity(TileEntityDoorTT.class, "TileEntityDoorTT");
 		
 		//Interiors
 		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");

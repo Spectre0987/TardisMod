@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.entities;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -8,11 +10,11 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.entity.projectile.ModelRay;
 import net.tardis.mod.common.entities.EntityDalekRay;
-import org.lwjgl.opengl.GL11;
 
 public class RenderRay extends Render<EntityDalekRay> {
 	
@@ -32,22 +34,24 @@ public class RenderRay extends Render<EntityDalekRay> {
 	
 	@Override
 	public void doRender(EntityDalekRay entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		Entity e = entity.world.getEntityByID(entity.getThrowerID());
+		Entity e = entity.world.getEntityByID(entity.getEntityId());
 		if(e != null) {
+			EntityPlayer player = Minecraft.getMinecraft().player;
+			Minecraft.getMinecraft().entityRenderer.disableLightmap();
 			GlStateManager.pushMatrix();
-			GlStateManager.translate(x, y, z);
-			
+			GlStateManager.disableTexture2D();
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
+			bb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
 			GL11.glLineWidth(8F);
-			bb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_TEX);
-			mc.getTextureManager().bindTexture(TEXTURE);
-			bb.pos(0, 0, 0).tex(0, 0).endVertex();
-			bb.pos(e.posX - entity.posX, e.posY - entity.posY, e.posZ - entity.posZ).tex(1, 1).endVertex();
+			bb.pos(e.posX, e.posY, e.posZ).color(1F, 0, 1F, 1F).endVertex();
+			bb.pos(entity.posX - e.posX, entity.posX - e.posY, entity.posX - e.posZ).color(0, 0, 1F, 1F).endVertex();
 			Tessellator.getInstance().draw();
-			GL11.glLineWidth(1F);
-			
 			GlStateManager.popMatrix();
+			GlStateManager.enableTexture2D();
+			GL11.glLineWidth(1F);
+			Minecraft.getMinecraft().entityRenderer.enableLightmap();
 		}
+		else System.out.println("E is null!");
 	}
 	
 }

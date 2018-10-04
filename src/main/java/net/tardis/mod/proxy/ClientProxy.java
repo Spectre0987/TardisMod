@@ -20,6 +20,7 @@ import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.models.consoles.ModelConsole;
+import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.client.models.items.ModelFirstCane;
 import net.tardis.mod.client.models.items.ModelKey01;
 import net.tardis.mod.client.models.items.ModelSonic13;
@@ -43,6 +44,7 @@ import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
 import net.tardis.mod.client.renderers.entities.RenderCybermanTomb;
 import net.tardis.mod.client.renderers.entities.RenderDalek;
 import net.tardis.mod.client.renderers.entities.RenderDalekCaseing;
+import net.tardis.mod.client.renderers.entities.RenderDalekScaro;
 import net.tardis.mod.client.renderers.entities.RenderRay;
 import net.tardis.mod.client.renderers.entities.RenderTardis;
 import net.tardis.mod.client.renderers.entities.vehicles.RenderBessie;
@@ -51,6 +53,7 @@ import net.tardis.mod.client.renderers.exteriors.RenderTileDoor04;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor05;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorCC;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorClock;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoorTT;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.items.RenderItemAlembic;
 import net.tardis.mod.client.renderers.items.RenderItemDemat;
@@ -81,6 +84,7 @@ import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekRay;
+import net.tardis.mod.common.entities.EntityDalekScaro;
 import net.tardis.mod.common.entities.EntityRayCyberman;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -157,6 +161,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor05.class, new RenderTileDoor05());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorCC.class, new RenderTileDoorCC());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorClock.class, new RenderTileDoorClock());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorTT.class, new RenderTileDoorTT());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 		
@@ -183,6 +188,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(ControlStabilizers.class, RenderInvis::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, RenderCorridor::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBessie.class, RenderBessie::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityDalekScaro.class, RenderDalekScaro::new);
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentCorridor.class, RenderHellbentCorridor::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentDoor.class, RenderHellbentDoor::new);

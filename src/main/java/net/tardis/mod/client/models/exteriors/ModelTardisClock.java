@@ -405,7 +405,6 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 		Hour12.render(scale);
 		ClockCenter.render(scale);
 		ClockHandMinute.render(scale);
-		ClockHandHour.render(scale);
 		BottomBoy.render(scale);
 		Leg1T.render(scale);
 		Leg1B.render(scale);
@@ -428,13 +427,23 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 	}
 	@Override
 	public void renderClosed(float scale) {
-		this.render(null, 0, 0, 0, 0, 0, scale);
+		//this.render(null, 0, 0, 0, 0, 0, scale);
 		this.renderDoor(scale, 0);
+		this.renderClockHand(0.0625F);
 	}
 	@Override
 	public void renderOpen(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, scale);
 		this.renderDoor(scale, -50);
+	}
+	
+	private void renderClockHand(float scale) {
+		GlStateManager.pushMatrix();
+		RenderHelper.renderTransformAxis();
+		GlStateManager.translate(0, 0, 0);
+		GlStateManager.rotate(45, 0, 0, 1);
+		ClockHandHour.render(scale);
+		GlStateManager.popMatrix();
 	}
 	
 	public void renderDoor(float scale, float rotation) {

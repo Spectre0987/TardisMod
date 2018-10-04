@@ -44,14 +44,13 @@ public abstract class ModelDalekBase extends ModelBase {
         GlStateManager.rotate(netHeadYaw, 0, 1, 0);
         renderHead();
 
-        GlStateManager.rotate(headPitch, 1, 0, 1);
+        GlStateManager.rotate(headPitch, 1, 0, 0);
         renderEyestalk();
         GlStateManager.popMatrix();
 
         //Render Body related things
         GlStateManager.pushMatrix();
         GlStateManager.rotate(entityIn.rotationYaw, 0, 1, 0);
-        GlStateManager.rotate(entityIn.rotationPitch, 1, 0, 0);
         renderBody();
         renderLeftAttachment();
         renderRightAttachment();

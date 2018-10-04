@@ -132,4 +132,9 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 		}
 		
 	}
+
+	@Override
+	public float getEyeHeight() {
+		return 1F;
+	}
 }
