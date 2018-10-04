@@ -65,7 +65,7 @@ dependencies {
     //weeping angels
     deobfProvided "com.github.SandedShoes:Weeping-Angels:${project.weeping_angels_version}"
 
-    //regeneration - Don't think this as needed anymore
+    //regeneration
     //deobfProvided "com.github.SandedShoes:Regeneration:${project.regeneration_version}"
     
     //JEI
