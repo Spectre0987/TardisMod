@@ -10,7 +10,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.handlers.GuiHandlerTardis;
 
 import java.util.function.Supplier;
@@ -21,7 +20,7 @@ public class BlockComponentRepair extends BlockTileBase{
 	public BlockComponentRepair(Material materialIn, Supplier<TileEntity> tileEntity) {
 		super(materialIn, tileEntity);
 		this.setLightOpacity(0);
-        setCreativeTab(TardisTabs.MAIN);
+        setCreativeTab(Tardis.tab);
 	}
 
 	@Override

@@ -10,7 +10,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 
 public class BlockJsonTester extends BlockTileBase {
@@ -19,7 +18,7 @@ public class BlockJsonTester extends BlockTileBase {
 	
 	public BlockJsonTester() {
         super(Material.CIRCUITS, TileEntityJsonTester::new);
-        this.setCreativeTab(TardisTabs.MAIN);
+        this.setCreativeTab(Tardis.tab);
 	}
 
 	@Override

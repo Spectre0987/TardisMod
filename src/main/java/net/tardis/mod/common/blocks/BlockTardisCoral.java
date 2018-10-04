@@ -8,7 +8,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 
 public class BlockTardisCoral extends BlockTileBase {
@@ -17,7 +16,7 @@ public class BlockTardisCoral extends BlockTileBase {
 
 	public BlockTardisCoral() {
 		super(Material.SPONGE, TileEntityTardisCoral::new);
-        setCreativeTab(TardisTabs.MAIN);
+        setCreativeTab(Tardis.tab);
 	}
 	
 	@Override

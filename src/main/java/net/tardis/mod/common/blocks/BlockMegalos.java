@@ -14,7 +14,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 
 public class BlockMegalos extends BlockBase implements INeedItem{
@@ -24,8 +23,8 @@ public class BlockMegalos extends BlockBase implements INeedItem{
 	
 	public BlockMegalos() {
 		this.setLightOpacity(0);
-        this.setCreativeTab(TardisTabs.MAIN);
-        item.setCreativeTab(TardisTabs.MAIN);
+        this.setCreativeTab(Tardis.tab);
+        item.setCreativeTab(Tardis.tab);
 		item.setHasSubtypes(true);
 	}
 	

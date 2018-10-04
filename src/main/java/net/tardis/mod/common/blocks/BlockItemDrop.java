@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 
 public class BlockItemDrop extends BlockBase {
 	
@@ -15,7 +14,7 @@ public class BlockItemDrop extends BlockBase {
 	
 	public BlockItemDrop(Item item) {
 		this.item = item;
-        setCreativeTab(TardisTabs.MAIN);
+        setCreativeTab(Tardis.tab);
 		this.setResistance(1F);
 	}
 	

@@ -4,7 +4,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumBlockRenderType;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 
 public class BlockHoloprojector extends BlockTileBase {
@@ -13,7 +12,7 @@ public class BlockHoloprojector extends BlockTileBase {
 	
 	public BlockHoloprojector() {
         super(Material.IRON, TileEntityHoloprojector::new);
-        setCreativeTab(TardisTabs.MAIN);
+        setCreativeTab(Tardis.tab);
 	}
 
 	@Override

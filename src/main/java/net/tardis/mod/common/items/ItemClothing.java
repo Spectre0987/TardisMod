@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.EnumClothes;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 
 public class ItemClothing extends ItemArmor {
@@ -18,7 +17,7 @@ public class ItemClothing extends ItemArmor {
 
 	public ItemClothing(EnumClothes enumClothes) {
 		super(ItemSpaceSuit.material, 0, EntityEquipmentSlot.CHEST);
-        setCreativeTab(TardisTabs.MAIN);
+        setCreativeTab(Tardis.tab);
 		this.clothing = enumClothes;
 	}
 

@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
@@ -28,7 +27,7 @@ public class ItemKey extends Item {
 	public static final ResourceLocation CONSOLE_ROOM = new ResourceLocation(Tardis.MODID, "console_room");
 	
 	public ItemKey() {
-        setCreativeTab(TardisTabs.MAIN);
+        setCreativeTab(Tardis.tab);
 		this.setMaxStackSize(1);
 	}
 	

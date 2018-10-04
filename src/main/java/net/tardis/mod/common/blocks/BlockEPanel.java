@@ -12,7 +12,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 
 public class BlockEPanel extends BlockTileBase {
@@ -20,7 +19,7 @@ public class BlockEPanel extends BlockTileBase {
 	public BlockEPanel() {
         super(Material.IRON, TileEntityEPanel::new);
 		this.setHardness(1F);
-        setCreativeTab(TardisTabs.MAIN);
+        setCreativeTab(Tardis.tab);
 	}
 
     @Override
