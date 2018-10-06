@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelTardisTT;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
@@ -24,9 +25,11 @@ public class RenderTileDoorTT extends TileEntitySpecialRenderer<TileEntityDoorTT
 	public void render(TileEntityDoorTT te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.pushMatrix();
-		GlStateManager.enableAlpha();
-		GlStateManager.enableBlend();
-		if(te.isDemat || te.isRemat)GlStateManager.color(1, 1, 1, te.alpha);
+		if(te.isDemat || te.isRemat) {
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			GlStateManager.color(1, 1, 1, te.alpha);
+		}
 		GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 		GlStateManager.rotate(180, 1, 0, 0);
 		if(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
@@ -42,10 +45,13 @@ public class RenderTileDoorTT extends TileEntitySpecialRenderer<TileEntityDoorTT
 			
 		}
 		
-		if(te.isLocked())model.renderClosed(0.0625F);
-		else model.renderOpen(0.0625F);
+		if(MinecraftForgeClient.getRenderPass() == 0) {
+			if(te.isLocked())model.renderClosed(0.0625F);
+			else model.renderOpen(0.0625F);
+		}
 		GlStateManager.disableAlpha();
 		GlStateManager.disableBlend();
+		GlStateManager.color(1, 1, 1, 1F);
 		GlStateManager.popMatrix();
 	}
 

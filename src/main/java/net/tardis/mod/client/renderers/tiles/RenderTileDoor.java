@@ -78,6 +78,7 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 		if(MinecraftForgeClient.getRenderPass() == 0) {
 			GlStateManager.enableAlpha();
 			GlStateManager.enableBlend();
+			GlStateManager.color(1, 1, 1, 1f);
 			if(te.isDemat || te.isRemat) GlStateManager.color(1, 1, 1, te.alpha);
 			this.mc.getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.pushMatrix();
