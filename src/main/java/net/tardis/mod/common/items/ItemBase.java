@@ -6,7 +6,7 @@ import net.tardis.mod.client.creativetabs.TardisTabs;
 public class ItemBase extends Item {
 	
 	public ItemBase() {
-        this.setCreativeTab(TardisTabs.MAIN);
+		setCreativeTab(TardisTabs.ITEMS);
 	}
 
 }

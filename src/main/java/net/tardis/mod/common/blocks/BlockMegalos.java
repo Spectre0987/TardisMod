@@ -24,8 +24,7 @@ public class BlockMegalos extends BlockBase implements INeedItem{
 	
 	public BlockMegalos() {
 		this.setLightOpacity(0);
-        this.setCreativeTab(TardisTabs.MAIN);
-        item.setCreativeTab(TardisTabs.MAIN);
+		item.setCreativeTab(TardisTabs.BLOCKS);
 		item.setHasSubtypes(true);
 	}
 	

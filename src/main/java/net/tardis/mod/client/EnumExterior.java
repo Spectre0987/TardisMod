@@ -43,7 +43,7 @@ public enum EnumExterior {
 	public IInteriorModel interiorModel;
 	public ResourceLocation tex;
 	public Block block;
-	public String name = "";
+	public String name;
 	
 	EnumExterior(IExteriorModel base, IInteriorModel intModel, ResourceLocation tex, Block block, String name){
 		this.model = base;

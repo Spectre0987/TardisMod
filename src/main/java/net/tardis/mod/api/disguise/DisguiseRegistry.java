@@ -24,7 +24,7 @@ public class DisguiseRegistry {
 		for(Biome b : EntityHelper.biomes) {
 			if(b.getRegistryName().toString().contains(name)) {
 				DISGUISES.put(b.getRegistryName().toString(), disguiseLoc);
-                Tardis.LOG.info("DisguiseRegistry: registered " + b.getRegistryName().toString());
+				Tardis.LOG.info("DisguiseRegistry has registered " + b.getRegistryName().toString());
 			}
 		}
 	}

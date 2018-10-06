@@ -11,7 +11,6 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.client.models.clothing.ModelSpaceChest;
 import net.tardis.mod.client.models.clothing.ModelSpaceHelm;
 import net.tardis.mod.client.models.clothing.ModelSpaceLegs;
@@ -22,8 +21,8 @@ public class ItemSpaceSuit extends ItemArmor {
 	
 	public ItemSpaceSuit(int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
 		super(material, renderIndexIn, equipmentSlotIn);
-        setCreativeTab(TardisTabs.MAIN);
-	}
+
+    }
 	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {

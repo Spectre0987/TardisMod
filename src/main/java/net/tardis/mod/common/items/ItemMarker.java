@@ -14,7 +14,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.util.common.helpers.Helper;
 
 import java.io.File;
@@ -25,7 +24,7 @@ import java.util.List;
 public class ItemMarker extends ItemBase {
 	
 	public ItemMarker() {
-        setCreativeTab(TardisTabs.MAIN);
+
 	}
 
 	@Override

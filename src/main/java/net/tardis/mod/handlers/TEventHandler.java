@@ -73,7 +73,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class TEventHandler {
 	
 	public static TardisWorldSavedData data;
@@ -93,7 +93,7 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {
 		// Blocks
-		for (Block block : TBlocks.blocks) {
+		for (Block block : TBlocks.BLOCKS) {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "normal"));
 		}
 		for (Item item : TItems.items) {
@@ -112,7 +112,7 @@ public class TEventHandler {
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
-		for (Block block : TBlocks.blocks) {
+		for (Block block : TBlocks.BLOCKS) {
 			event.getRegistry().register(block);
 		}
 	}

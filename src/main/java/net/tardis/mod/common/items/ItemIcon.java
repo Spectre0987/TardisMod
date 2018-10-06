@@ -10,7 +10,7 @@ public class ItemIcon extends ItemBlock {
 
     public ItemIcon(Block block) {
         super(block);
-        this.setMaxStackSize(1);
+        setMaxStackSize(1);
     }
 
     /**

@@ -1,13 +1,7 @@
 package net.tardis.mod.common.blocks;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -15,6 +9,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 import net.tardis.mod.common.items.TItems;
@@ -27,6 +22,11 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.exteriors.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
@@ -34,15 +34,14 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 
-
 public class TBlocks {
-	
-	public static List<Block> blocks = new ArrayList<Block>();
-	
-	public static Block tardis = register(new BlockTardis(), "tardis");
-	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top");
+
+	public static List<Block> BLOCKS = new ArrayList<Block>();
+
+	public static Block tardis = register(new BlockTardis(), "tardis", false);
+	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top", false);
 	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console");
-	public static Block panel = register(new BlockBase(), "panel");
+	public static Block panel = register(new BlockBase(), "panel", false);
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
 	public static Block holoprojector = register(new BlockHoloprojector(), "holoprojector");
@@ -118,19 +117,26 @@ public class TBlocks {
 	
 	public static Block suitcase = register(new BlockSuitcase(), "suitcase");
 	//Exteriors
-	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01");
-	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02");
-	public static Block tardis_top_03 = register(new BlockTardisTop(TileEntityDoor04::new), "tardis_top_03");
-	public static Block tardis_top_04 = register(new BlockTardisTop(TileEntityDoor05::new), "tardis_top_04");
-	public static Block tardis_top_cc = register(new BlockTardisTop(TileEntityDoorCC::new), "tardis_top_cc");
-	public static Block tardis_top_clock = register(new BlockTardisTop(TileEntityDoorClock::new), "tardis_top_clock");
-	public static Block tardis_top_tt = register(new BlockTardisTop(TileEntityDoorTT::new), "tardis_top_tt");
+	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01", false);
+	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02", false);
+	public static Block tardis_top_03 = register(new BlockTardisTop(TileEntityDoor04::new), "tardis_top_03", false);
+	public static Block tardis_top_04 = register(new BlockTardisTop(TileEntityDoor05::new), "tardis_top_04", false);
+	public static Block tardis_top_cc = register(new BlockTardisTop(TileEntityDoorCC::new), "tardis_top_cc", false);
+
+	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01", false);
+	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02", false));
+	public static Block tardis_top_03 = register(new BlockTardisTop(TileEntityDoor04::new), "tardis_top_03", false));
+	public static Block tardis_top_04 = register(new BlockTardisTop(TileEntityDoor05::new), "tardis_top_04", false));
+	public static Block tardis_top_cc = register(new BlockTardisTop(TileEntityDoorCC::new), "tardis_top_cc", false));
+	public static Block tardis_top_clock = register(new BlockTardisTop(TileEntityDoorClock::new), "tardis_top_clock", false));
+	public static Block tardis_top_tt = register(new BlockTardisTop(TileEntityDoorTT::new), "tardis_top_tt", false));
+
 	
 	//Consoles
-	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01");
-	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02");
+	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01", false);
+	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02", false);
 
-	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block");
+	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block", false);
 
 	public static Block circuit_repair = register(new BlockComponentRepair(Material.IRON, TileEntityComponentRepair::new), "circuit_repair");
 
@@ -138,12 +144,25 @@ public class TBlocks {
 
 
 	public static Block register(Block block, String name) {
+		return register(block, name, true);
+	}
+
+	public static Block register(Block block, String name, boolean addToTab) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
-        block.setTranslationKey("tardis." + name);
+		block.setTranslationKey("tardis." + name);
 		block.setRegistryName(rl);
-		blocks.add(block);
-		if(!(block instanceof INeedItem))TItems.items.add(new ItemBlock(block).setRegistryName(rl));
-		else TItems.items.add(((INeedItem)block).getItem().setRegistryName(rl));
+		BLOCKS.add(block);
+
+		if (addToTab) {
+			block.setCreativeTab(TardisTabs.BLOCKS);
+		}
+
+		if (block instanceof INeedItem) {
+			TItems.items.add(((INeedItem) block).getItem().setRegistryName(rl));
+		} else {
+			TItems.items.add(new ItemBlock(block).setRegistryName(rl));
+		}
+
 		if(Tardis.getIsDev()) {
 			try {
 				File f = new File(Minecraft.getMinecraft().gameDir + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + block.getRegistryName().getPath() + ".json");
@@ -182,11 +201,12 @@ public class TBlocks {
 					jw.endObject();
 					jw.close();
 				}
-			}
-			catch(Exception e) {
+			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
+
+
 		return block;
 	}
 	

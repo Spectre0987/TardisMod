@@ -21,7 +21,7 @@ public class BlockPanel extends BlockBase {
 	
 	public BlockPanel() {
 		this.setLightOpacity(0);
-        item.setCreativeTab(TardisTabs.MAIN);
+		item.setCreativeTab(TardisTabs.BLOCKS);
 	}
 	
 	public static void setType(IBlockState state, int i) {

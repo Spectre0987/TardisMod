@@ -21,19 +21,19 @@ public class EntityQuark extends EntityMob implements IRangedAttackMob {
     }
 
     protected void initEntityAI() {
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.5D));
-        this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 0.5D));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.applyEntityAI();
+        tasks.addTask(0, new EntityAISwimming(this));
+        tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.5D));
+        tasks.addTask(7, new EntityAIWanderAvoidWater(this, 0.5D));
+        tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        tasks.addTask(8, new EntityAILookIdle(this));
+        applyEntityAI();
     }
 
     private void applyEntityAI() {
-        this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 0.5D, false));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityIronGolem.class, true));
+        tasks.addTask(6, new EntityAIMoveThroughVillage(this, 0.5D, false));
+        targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
+        targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityIronGolem.class, true));
     }
 
 

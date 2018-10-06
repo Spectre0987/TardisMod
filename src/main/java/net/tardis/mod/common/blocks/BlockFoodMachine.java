@@ -12,7 +12,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 
 public class BlockFoodMachine extends BlockTileBase {
@@ -22,7 +21,7 @@ public class BlockFoodMachine extends BlockTileBase {
 	
 	public BlockFoodMachine() {
         super(Material.ANVIL, TileEntityFoodMachine::new);
-        setCreativeTab(TardisTabs.MAIN);
+
 		this.setLightOpacity(0);
 		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 	}

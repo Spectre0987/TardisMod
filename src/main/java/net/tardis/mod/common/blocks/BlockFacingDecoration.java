@@ -11,7 +11,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 
 import java.util.function.Supplier;
 
@@ -21,7 +20,7 @@ public class BlockFacingDecoration extends BlockTileBase {
 	
 	public BlockFacingDecoration(Supplier<TileEntity> tileEntity) {
 		super(Material.IRON, tileEntity);
-        setCreativeTab(TardisTabs.MAIN);
+
 	}
 
 	@Override

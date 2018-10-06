@@ -23,8 +23,7 @@ public class BlockToyota extends BlockBase implements INeedItem{
 	public ItemBlock item = new ItemBlockToyota(this);
 
 	public BlockToyota(boolean light) {
-        setCreativeTab(TardisTabs.MAIN);
-        this.item.setCreativeTab(TardisTabs.MAIN);
+		item.setCreativeTab(TardisTabs.BLOCKS);
 		if(light) {
 			this.setLightLevel(1);
 		}
@@ -38,7 +37,7 @@ public class BlockToyota extends BlockBase implements INeedItem{
 		
 		public BlockToyotaFacing(boolean light) {
 			super(light);
-            this.setCreativeTab(TardisTabs.MAIN);
+
 		}
 
 		@Override

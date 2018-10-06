@@ -22,7 +22,7 @@ public class BlockTardis extends Block implements IBlock {
 		super(Material.WOOD, MapColor.BLUE);
 		this.setBlockUnbreakable();
 		this.setResistance(999);
-        item.setCreativeTab(TardisTabs.MAIN);
+		item.setCreativeTab(TardisTabs.BLOCKS);
 	}
 	
 	@Override
