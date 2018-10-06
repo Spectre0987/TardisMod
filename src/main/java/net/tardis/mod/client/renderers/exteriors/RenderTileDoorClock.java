@@ -2,6 +2,8 @@ package net.tardis.mod.client.renderers.exteriors;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -29,7 +31,7 @@ public class RenderTileDoorClock extends TileEntitySpecialRenderer<TileEntityDoo
 		GlStateManager.rotate(180, 1, 0, 0);
 		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
-		if(te.isDemat || te.isRemat)GlStateManager.color(1, 1, 1, alpha);
+		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		if(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
 			GlStateManager.rotate(Helper.get360FromFacing(te.getWorld().getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 		}
@@ -40,6 +42,7 @@ public class RenderTileDoorClock extends TileEntitySpecialRenderer<TileEntityDoo
 			RenderHelper.renderPortal(renderShell, te, partialTicks, 90, RenderTileDoor.POSITION, SIZE, false);
 			GlStateManager.popMatrix();
 		}
+		if(te.isDemat || te.isRemat)GlStateManager.color(1, 1, 1, te.alpha);
 		if(te.isLocked())model.renderClosed(0.0625F);
 		else model.renderOpen(0.0625F);
 		GlStateManager.disableAlpha();

@@ -76,6 +76,9 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			if(face == EnumFacing.WEST || face == EnumFacing.EAST) GlStateManager.rotate(180, 0, 1, 0);
 		}
 		if(MinecraftForgeClient.getRenderPass() == 0) {
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			if(te.isDemat || te.isRemat) GlStateManager.color(1, 1, 1, te.alpha);
 			this.mc.getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(180, 1, 0, 0);
@@ -92,6 +95,8 @@ public class RenderTileDoor extends TileEntitySpecialRenderer<TileEntityDoor> {
 			GlStateManager.rotate(open ? -85 : 0, 0, 1, 0);
 			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();
+			GlStateManager.disableAlpha();
+			GlStateManager.disableBlend();
 			GlStateManager.popMatrix();
 		}
 		

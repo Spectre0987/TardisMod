@@ -311,7 +311,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					return landPos;
 				}
 			}
-			return pos;
 		}
 		for(int i = 0; i < 20; ++i) {
 			landPos = Helper.getSafePosLower(pos.add(rand.nextInt(20) - 10, 0, rand.nextInt(20) - 10), world, this.getFacing());

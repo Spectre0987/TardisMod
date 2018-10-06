@@ -1,9 +1,13 @@
 package net.tardis.mod.client.models.exteriors;
 
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.tardis.mod.util.client.RenderHelper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class ModelTardisClock extends ModelBase implements IExteriorModel{
 
@@ -402,25 +406,6 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 		Hour12.render(scale);
 		ClockCenter.render(scale);
 		ClockHandMinute.render(scale);
-		ClockHandHour.render(scale);
-		DoorTop.render(scale);
-		DoorLeft.render(scale);
-		DoorRight.render(scale);
-		DoorBottom.render(scale);
-		DoorMid.render(scale);
-		DoorGlass.render(scale);
-		Door1.render(scale);
-		Door2.render(scale);
-		Door3.render(scale);
-		Door4.render(scale);
-		Door5.render(scale);
-		Door6.render(scale);
-		Door7.render(scale);
-		Door8.render(scale);
-		Door9.render(scale);
-		Door10.render(scale);
-		Door11.render(scale);
-		Door12.render(scale);
 		BottomBoy.render(scale);
 		Leg1T.render(scale);
 		Leg1B.render(scale);
@@ -441,14 +426,49 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
+	
+	private void renderDoor(float scale, float rotation) {
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0.34375, 0, -0.15625);
+		GlStateManager.rotate(rotation, 0, 1, 0);
+		GlStateManager.translate(-0.34375, 0, 0.15625);
+		DoorTop.render(scale);
+		DoorLeft.render(scale);
+		DoorRight.render(scale);
+		DoorBottom.render(scale);
+		DoorMid.render(scale);
+		DoorGlass.render(scale);
+		Door1.render(scale);
+		Door2.render(scale);
+		Door3.render(scale);
+		Door4.render(scale);
+		Door5.render(scale);
+		Door6.render(scale);
+		Door7.render(scale);
+		Door8.render(scale);
+		Door9.render(scale);
+		Door10.render(scale);
+		Door11.render(scale);
+		Door12.render(scale);
+		GlStateManager.popMatrix();
+	}
+	
+	private void renderClockHand(float scale) {
+		ClockHandHour.render(scale);
+		setRotation(ClockHandHour, 0, 0, (float)Math.toRadians(((Minecraft.getMinecraft().world.getWorldTime() / 24000D) / 2) * 360));
+		setRotation(ClockHandMinute, 0, 0, (float)Math.toRadians(((Minecraft.getMinecraft().world.getWorldTime() % 1000) / 1000D) * 360));
+	}
+	
 	@Override
 	public void renderClosed(float scale) {
-		// TODO Auto-generated method stub
-		
+		this.renderClockHand(scale);
+		this.render(null, 0, 0, 0, 0, 0, scale);
+		this.renderDoor(0.0625F, 0);
 	}
 	@Override
 	public void renderOpen(float scale) {
-		// TODO Auto-generated method stub
-		
+		this.renderClockHand(scale);
+		this.render(null, 0, 0, 0, 0, 0, scale);
+		this.renderDoor(scale, -50);
 	}
 }
