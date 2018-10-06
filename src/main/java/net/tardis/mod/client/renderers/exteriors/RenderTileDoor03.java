@@ -67,13 +67,15 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 
         if (open) {
             RenderHelper.renderPortal(renderShell, te, partialTicks, 90, RenderTileDoor.POSITION);
-
         }
 
 	    GlStateManager.popMatrix();
 	    //RenderDoor
 	    if(MinecraftForgeClient.getRenderPass() == 0){
 			GlStateManager.pushMatrix();
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			if(te.isDemat || te.isRemat) GlStateManager.color(1, 1, 1, te.alpha);
 			GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 			GlStateManager.rotate(180, 0, 0, 1);
 			if(mc.world.getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop) {
@@ -96,6 +98,8 @@ public class RenderTileDoor03 extends TileEntitySpecialRenderer<TileEntityDoor> 
 			rd.render(null, 0, 0, 0, 0, 0, 0.0625F);
 			GlStateManager.popMatrix();
 			
+			GlStateManager.disableAlpha();
+			GlStateManager.disableBlend();
 			GlStateManager.popMatrix();
 	    }
 	}

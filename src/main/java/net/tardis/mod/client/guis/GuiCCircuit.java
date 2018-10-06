@@ -1,5 +1,11 @@
 package net.tardis.mod.client.guis;
 
+import java.awt.Color;
+import java.io.IOException;
+
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -14,17 +20,12 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageExteriorChange;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class GuiCCircuit extends GuiScreen {
 	
 	Minecraft mc;
 	public BlockPos pos = BlockPos.ORIGIN;
-	public static EnumExterior[] exteriors = new EnumExterior[]{EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FIFTH, EnumExterior.FOURTH, EnumExterior.CC};
+	public static EnumExterior[] exteriors = new EnumExterior[]{EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FIFTH, EnumExterior.FOURTH, EnumExterior.CLOCK, EnumExterior.TT, EnumExterior.CC};
 	private ResourceLocation tex = new ResourceLocation(Tardis.MODID, "textures/gui/chameleon_circuit.png");
 	private GuiButtonExt selectButton;
 	private GuiButtonExt nextArrow;

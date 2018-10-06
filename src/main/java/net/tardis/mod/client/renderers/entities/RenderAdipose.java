@@ -1,6 +1,8 @@
 package net.tardis.mod.client.renderers.entities;
 
-import com.sun.istack.internal.Nullable;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
