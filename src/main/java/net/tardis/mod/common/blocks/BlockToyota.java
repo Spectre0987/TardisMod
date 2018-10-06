@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 
 public class BlockToyota extends BlockBase implements INeedItem{
@@ -22,8 +23,7 @@ public class BlockToyota extends BlockBase implements INeedItem{
 	public ItemBlock item = new ItemBlockToyota(this);
 
 	public BlockToyota(boolean light) {
-        setCreativeTab(Tardis.tab);
-        this.item.setCreativeTab(Tardis.tab);
+		item.setCreativeTab(TardisTabs.BLOCKS);
 		if(light) {
 			this.setLightLevel(1);
 		}
@@ -37,7 +37,7 @@ public class BlockToyota extends BlockBase implements INeedItem{
 		
 		public BlockToyotaFacing(boolean light) {
 			super(light);
-            this.setCreativeTab(Tardis.tab);
+
 		}
 
 		@Override

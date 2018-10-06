@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class GUICompanion extends GuiScreen {
 
-	int entityID = 0;
+	int entityID;
 	EntityCompanion comp;
 	
 	public GUICompanion(EntityCompanion comp) {

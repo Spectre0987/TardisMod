@@ -14,7 +14,7 @@ public class BlockItemDrop extends BlockBase {
 	
 	public BlockItemDrop(Item item) {
 		this.item = item;
-        setCreativeTab(Tardis.tab);
+
 		this.setResistance(1F);
 	}
 	

@@ -19,7 +19,7 @@ public class BlockEPanel extends BlockTileBase {
 	public BlockEPanel() {
         super(Material.IRON, TileEntityEPanel::new);
 		this.setHardness(1F);
-        setCreativeTab(Tardis.tab);
+
 	}
 
     @Override

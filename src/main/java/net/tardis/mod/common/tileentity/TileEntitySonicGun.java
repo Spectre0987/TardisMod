@@ -27,7 +27,7 @@ public class TileEntitySonicGun extends TileEntity implements ITickable {
 
     public void setBlockState(IBlockState state) {
         this.state = state;
-        this.markDirty();
+        markDirty();
     }
 
     public IBlockState getState() {

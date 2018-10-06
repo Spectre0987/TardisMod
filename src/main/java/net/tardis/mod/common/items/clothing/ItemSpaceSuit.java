@@ -21,8 +21,8 @@ public class ItemSpaceSuit extends ItemArmor {
 	
 	public ItemSpaceSuit(int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
 		super(material, renderIndexIn, equipmentSlotIn);
-        setCreativeTab(Tardis.tab);
-	}
+
+    }
 	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {

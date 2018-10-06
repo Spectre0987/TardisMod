@@ -12,7 +12,7 @@ public class BlockHoloprojector extends BlockTileBase {
 	
 	public BlockHoloprojector() {
         super(Material.IRON, TileEntityHoloprojector::new);
-        setCreativeTab(Tardis.tab);
+
 	}
 
 	@Override

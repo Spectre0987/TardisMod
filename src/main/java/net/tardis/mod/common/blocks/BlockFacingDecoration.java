@@ -20,7 +20,7 @@ public class BlockFacingDecoration extends BlockTileBase {
 	
 	public BlockFacingDecoration(Supplier<TileEntity> tileEntity) {
 		super(Material.IRON, tileEntity);
-        setCreativeTab(Tardis.tab);
+
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class BlockFoodMachine extends BlockTileBase {
 	
 	public BlockFoodMachine() {
         super(Material.ANVIL, TileEntityFoodMachine::new);
-        setCreativeTab(Tardis.tab);
+
 		this.setLightOpacity(0);
 		this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 	}

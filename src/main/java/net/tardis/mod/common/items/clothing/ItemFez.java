@@ -15,8 +15,8 @@ public class ItemFez extends ItemArmor {
 	
 	public ItemFez() {
 		super(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
-        setCreativeTab(Tardis.tab);
-	}
+
+    }
 	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {

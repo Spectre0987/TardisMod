@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.common.screwdriver.IScrew;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.common.sounds.TSounds;
@@ -28,7 +27,7 @@ public class ItemSonic extends Item {
 	public static final String CONSOLE_POS = "console_pos";
 
 	public ItemSonic() {
-		setCreativeTab(Tardis.tab);
+
 		this.setMaxStackSize(1);
 	}
 

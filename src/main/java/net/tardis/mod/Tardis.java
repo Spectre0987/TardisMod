@@ -1,6 +1,5 @@
 package net.tardis.mod;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -15,14 +14,16 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
-import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.CommandTardis;
@@ -76,16 +77,9 @@ public class Tardis {
 
 	@Instance(MODID)
 	public static Tardis instance;
-	
+
 	@SidedProxy(clientSide = "net.tardis.mod.proxy.ClientProxy", serverSide = "net.tardis.mod.proxy.ServerProxy")
 	public static ServerProxy proxy;
-
-	@EventHandler
-	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-		LOG.warn("Invalid fingerprint detected! The file " + event.getSource().getName() + " may have been tampered with. This version will NOT be supported by the author!");
-	}
-
-	public static CreativeTabs tab;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -93,7 +87,6 @@ public class Tardis {
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
 		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
-		tab = new TardisTabs("tardis");
 		TItems.init();
 		TBlocks.register();
 		TDimensions.register();

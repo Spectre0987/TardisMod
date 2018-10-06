@@ -16,7 +16,7 @@ public class BlockTardisCoral extends BlockTileBase {
 
 	public BlockTardisCoral() {
 		super(Material.SPONGE, TileEntityTardisCoral::new);
-        setCreativeTab(Tardis.tab);
+
 	}
 	
 	@Override

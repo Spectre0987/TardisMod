@@ -12,8 +12,8 @@ public class ItemBowTie extends ItemArmor {
 	
 	public ItemBowTie() {
 		super(ArmorMaterial.LEATHER, 1, EntityEquipmentSlot.CHEST);
-        setCreativeTab(Tardis.tab);
-	}
+
+    }
 	
 	@SideOnly(Side.CLIENT)
 	@Override

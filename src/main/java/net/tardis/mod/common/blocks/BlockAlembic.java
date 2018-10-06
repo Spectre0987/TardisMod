@@ -24,7 +24,7 @@ public class BlockAlembic extends BlockTileBase {
 	
 	public BlockAlembic() {
         super(Material.GLASS, TileEntityAlembic::new);
-		setCreativeTab(Tardis.tab);
+
 	}
 
     @Override

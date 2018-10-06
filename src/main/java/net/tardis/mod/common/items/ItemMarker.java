@@ -24,7 +24,7 @@ import java.util.List;
 public class ItemMarker extends ItemBase {
 	
 	public ItemMarker() {
-        setCreativeTab(Tardis.tab);
+
 	}
 
 	@Override

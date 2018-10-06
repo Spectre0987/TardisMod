@@ -7,7 +7,7 @@ public class BlockTStairs extends BlockStairs {
 
 	public BlockTStairs(IBlockState modelState) {
 		super(modelState);
-        setCreativeTab(Tardis.tab);
+
 	}
 
 }

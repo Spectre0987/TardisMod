@@ -27,8 +27,8 @@ public class ItemKey extends Item {
 	public static final ResourceLocation CONSOLE_ROOM = new ResourceLocation(Tardis.MODID, "console_room");
 	
 	public ItemKey() {
-        setCreativeTab(Tardis.tab);
-		this.setMaxStackSize(1);
+
+        this.setMaxStackSize(1);
 	}
 	
 	public static void setPos(ItemStack stack, BlockPos pos) {

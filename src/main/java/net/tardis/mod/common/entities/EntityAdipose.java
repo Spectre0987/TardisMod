@@ -21,7 +21,7 @@ public class EntityAdipose extends EntityMob {
 
     public EntityAdipose(World worldIn) {
         super(worldIn);
-        this.setSize(0.6F, 0.85F);
+        setSize(0.6F, 0.85F);
     }
 
     @Override
@@ -30,17 +30,17 @@ public class EntityAdipose extends EntityMob {
         setMoveForward(0);
         setAIMoveSpeed(0.2F);
 
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIPanic(this, 0.4F));
-        this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(3, new EntityAILookIdle(this));
-        this.tasks.addTask(2, new EntityAIWanderAvoidWater(this, 0.2F));
+        tasks.addTask(0, new EntityAISwimming(this));
+        tasks.addTask(1, new EntityAIPanic(this, 0.4F));
+        tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        tasks.addTask(3, new EntityAILookIdle(this));
+        tasks.addTask(2, new EntityAIWanderAvoidWater(this, 0.2F));
     }
 
     @Override
     public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
         if (!player.isBeingRidden() && !player.isRiding()){
-            this.startRiding(player);
+            startRiding(player);
             return EnumActionResult.SUCCESS;
         }
         return EnumActionResult.FAIL;
@@ -56,7 +56,7 @@ public class EntityAdipose extends EntityMob {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
     }
 
     @Override
@@ -73,12 +73,12 @@ public class EntityAdipose extends EntityMob {
     public void updateRidden() {
         super.updateRidden();
         if (this.getRidingEntity().isSneaking()){
-            this.dismountRidingEntity();
+            dismountRidingEntity();
         }
         else {
             //Vec3d vec = this.getRidingEntity().getLookVec().add(this.getRidingEntity().getPositionVector()).addVector(0, this.getRidingEntity().getMountedYOffset()+0.3f,-0.7F);
             Vec3d vec = this.getRidingEntity().getPositionVector().add(0,1.9,0);
-            this.setPositionAndRotation(vec.x, vec.y, vec.z,this.getRidingEntity().getRotationYawHead(),this.getRidingEntity().rotationPitch);
+            setPositionAndRotation(vec.x, vec.y, vec.z, this.getRidingEntity().getRotationYawHead(), this.getRidingEntity().rotationPitch);
         }
     }
 }

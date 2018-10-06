@@ -18,7 +18,7 @@ public class BlockJsonTester extends BlockTileBase {
 	
 	public BlockJsonTester() {
         super(Material.CIRCUITS, TileEntityJsonTester::new);
-        this.setCreativeTab(Tardis.tab);
+
 	}
 
 	@Override

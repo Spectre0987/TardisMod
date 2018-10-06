@@ -268,7 +268,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		NONE("", "");
 		
 		ResourceLocation skin;
-		String formattedName = "";
+		String formattedName;
 		float[] size = {0.95F, 1.75F};
 		
 		@SideOnly(Side.CLIENT)

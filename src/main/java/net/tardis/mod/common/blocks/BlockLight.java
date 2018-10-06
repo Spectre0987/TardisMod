@@ -7,7 +7,7 @@ import net.minecraft.world.IBlockAccess;
 public class BlockLight extends BlockBase {
 
 	public BlockLight() {
-        setCreativeTab(Tardis.tab);
+
 	}
 
 	@Override

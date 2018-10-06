@@ -19,7 +19,7 @@ public class BlockUmbrellaStand extends BlockTileBase {
 	
 	public BlockUmbrellaStand() {
 		super(Material.CLAY, TileEntityUmbrellaStand::new);
-        setCreativeTab(Tardis.tab);
+
 	}
 
 	@Override

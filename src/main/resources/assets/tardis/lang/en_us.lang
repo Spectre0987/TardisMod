@@ -1,4 +1,5 @@
-itemGroup.tardis=TARDIS Mod
+itemGroup.tardis_blocks=TARDIS Mod Blocks
+itemGroup.tardis_items=TARDIS Mod Items
 
 item.tardis.key.name=TARDIS Key
 item.tardis.pos_setter.name=Coordnate Logger

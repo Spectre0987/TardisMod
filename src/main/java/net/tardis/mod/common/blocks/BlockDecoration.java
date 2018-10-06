@@ -12,7 +12,7 @@ public class BlockDecoration extends BlockTileBase implements IRenderBox{
 
 	public BlockDecoration(Supplier<TileEntity> te) {
 		super(Material.IRON, te);
-        setCreativeTab(Tardis.tab);
+
 	}
 
 	@Override
