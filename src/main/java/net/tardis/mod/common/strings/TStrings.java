@@ -45,6 +45,7 @@ public class TStrings {
 		public static final String REMOTE_EPOS = "tooltip.remote.exteriorpos";
 		public static final String REMOTE_BIND = "tooltip.remote.bind";
 		public static final String TOOLKIT = "tooltip.tardis.toolkit";
+		public static final String MANUAL_SUPERNOVA = "tooltip.manual.sn";
 	}
 
 	public static class Commands{

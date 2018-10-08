@@ -3,6 +3,7 @@ package net.tardis.mod.client.models.exteriors;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelTardis04 extends ModelBase implements IExteriorModel{
@@ -1215,12 +1216,38 @@ public class ModelTardis04 extends ModelBase implements IExteriorModel{
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
+	
+	ModelRightDoor04 rd = new ModelRightDoor04();
+	ModelLeftDoor04 ld = new ModelLeftDoor04();
+	
 	@Override
 	public void renderClosed(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0.46875, 0.0625, -0.5625);
+		rd.render(null, 0, 0, 0, 0, 0, scale);
+		GlStateManager.popMatrix();
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-0.46875, 0.0625, -0.5625);
+		ld.render(null, 0, 0, 0, 0, 0, scale);
+		GlStateManager.popMatrix();
 	}
 	@Override
 	public void renderOpen(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, 0.0625F);
+
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0.46875, 0.0625, -0.5625);
+		GlStateManager.rotate(80, 0, 1, 0);
+		rd.render(null, 0, 0, 0, 0, 0, scale);
+		GlStateManager.popMatrix();
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-0.46875, 0.0625, -0.5625);
+		GlStateManager.rotate(-80, 0, 1, 0);
+		ld.render(null, 0, 0, 0, 0, 0, scale);
+		GlStateManager.popMatrix();
 	}
 }

@@ -28,7 +28,6 @@ public class BlockConsole extends BlockTileBase implements IRenderBox, IBlock {
 		super(Material.ROCK, tile);
 		this.setBlockUnbreakable();
 		this.setResistance(9999F);
-		item.setCreativeTab(null);
 	}
 
 	@Override

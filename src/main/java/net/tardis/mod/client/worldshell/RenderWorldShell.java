@@ -37,7 +37,7 @@ public class RenderWorldShell {
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
-			GlStateManager.color(1, 1, 1);
+			//GlStateManager.color(1, 1, 1);
 			 
 			BlockPos offset = container.getWorldShell().getOffset();
 			GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());

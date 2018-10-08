@@ -2,6 +2,8 @@ package net.tardis.mod.client.renderers.tiles;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
@@ -21,6 +23,8 @@ public class RenderTileHolo extends TileEntitySpecialRenderer<TileEntityHoloproj
 		GlStateManager.scale(0.06, 0.06, 0.06);
 		try {
 			mc.entityRenderer.disableLightmap();
+			GlStateManager.blendFunc(SourceFactor.SRC_COLOR, DestFactor.DST_COLOR);
+			GlStateManager.color(0, 0, 1F);
 			renderShell.doRender(te, 0, 0, 0, 0, 0, null);
 			mc.entityRenderer.enableLightmap();
 		}

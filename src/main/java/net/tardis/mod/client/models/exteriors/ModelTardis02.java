@@ -1108,5 +1108,15 @@ public class ModelTardis02 extends ModelBase implements IExteriorModel {
 	@Override
 	public void renderOpen(float scale) {
 		render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-0.46875F, 0, -0.53125F);
+		GlStateManager.rotate(-80, 0, 1, 0);
+		rd.render(null, 0, 0, 0, 0, 0, scale);
+		GlStateManager.popMatrix();
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0.46875, 0, -0.53125F);
+		GlStateManager.rotate(80, 0, 1, 0);
+		ld.render(null, 0, 0, 0, 0, 0, scale);
+		GlStateManager.popMatrix();
 	}
 }

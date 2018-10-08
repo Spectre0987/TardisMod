@@ -31,7 +31,7 @@ import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class BlockTardisTop extends BlockTileBase {
+public class BlockTardisTop extends BlockTileBase implements INoBox{
 	
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);

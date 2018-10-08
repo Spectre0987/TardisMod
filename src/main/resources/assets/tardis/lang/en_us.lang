@@ -56,6 +56,8 @@ tooltip.remote.exteriorpos=TARDIS Exterior:
 tooltip.remote.bind=To bind, right click on a console.
 tooltip.tardis.toolkit=Right click the console to repair all non-destroyed systems by 15
 
+tooltip.manual.sn=Found in the heart of a supernova.
+
 general.time.seconds=seconds
 
 tile.tardis.tardis.name=TARDIS
