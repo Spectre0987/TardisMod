@@ -1,9 +1,13 @@
 package net.tardis.mod.common.dimensions.moon;
 
+import java.util.Random;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
@@ -13,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.api.dimensions.IDimensionProperties;
 import net.tardis.mod.client.renderers.sky.SkyRendererMoon;
+import net.tardis.mod.common.dimensions.IPopulatable;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.dimensions.telos.ChunkGeneratorTelos;
 
@@ -34,7 +39,18 @@ public class MoonProvider extends WorldProvider implements IDimensionProperties 
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return new ChunkGeneratorTelos(this.world, this.getSeed());
+		return new ChunkGeneratorTelos(this.world, this.getSeed(), new IPopulatable() {
+
+			GenCrater gen = new GenCrater();
+			
+			@Override
+			public void gen(World world, Random rand, int x, int z) {
+				if(rand.nextInt(100) <= 5) {
+					int size = 5 + rand.nextInt(10);
+					BlockPos pos = world.getTopSolidOrLiquidBlock(new BlockPos(x * 16, 0, z * 16)).add(16, size / 2, 16);
+					gen.genCrater(world, pos, size);
+				}
+			}});
 	}
 
 	@Override

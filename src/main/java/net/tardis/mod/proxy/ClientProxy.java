@@ -55,6 +55,7 @@ import net.tardis.mod.client.renderers.exteriors.RenderTileDoor05;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorCC;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorClock;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorTT;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoorWood;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.items.RenderItemAlembic;
 import net.tardis.mod.client.renderers.items.RenderItemDemat;
@@ -133,6 +134,7 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 import net.tardis.mod.config.TardisConfig;
 
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
@@ -164,6 +166,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorCC.class, new RenderTileDoorCC());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorClock.class, new RenderTileDoorClock());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorTT.class, new RenderTileDoorTT());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorWood.class, new RenderTileDoorWood());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 		

@@ -1,18 +1,28 @@
 package net.tardis.mod.common.dimensions.telos;
 
+import java.util.Random;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.ChunkGeneratorOverworld;
+import net.tardis.mod.common.dimensions.IPopulatable;
 
 public class ChunkGeneratorTelos extends ChunkGeneratorOverworld {
 	
 	World world;
+	Random rand = new Random();
+	IPopulatable pop;
 	
 	public ChunkGeneratorTelos(World worldIn, long seed) {
 		super(worldIn, seed, false, "");
 		world = worldIn;
+	}
+	
+	public ChunkGeneratorTelos(World worldIn, long seed, IPopulatable pop) {
+		this(worldIn, seed);
+		this.pop = pop;
 	}
 
 	@Override
@@ -30,6 +40,10 @@ public class ChunkGeneratorTelos extends ChunkGeneratorOverworld {
 	}
 
 	@Override
-	public void populate(int x, int z) {}
+	public void populate(int x, int z) {
+		if(pop != null) {
+			pop.gen(world, rand, x, z);
+		}
+	}
 
 }

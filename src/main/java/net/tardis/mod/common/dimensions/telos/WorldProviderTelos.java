@@ -2,6 +2,7 @@ package net.tardis.mod.common.dimensions.telos;
 
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
@@ -14,8 +15,13 @@ public class WorldProviderTelos extends WorldProvider {
 
 	public static final Vec3d fogColor = new Vec3d(0.611, 0.69, 0.788);
 	private BiomeProviderSingle biomeP = new BiomeProviderSingle(TDimensions.telosBiome);
+	private ChunkGeneratorFactory chunkGen = ChunkGeneratorTelos::new;
 	
 	public WorldProviderTelos() {}
+	
+	public WorldProviderTelos(ChunkGeneratorFactory gen) {
+		this.chunkGen = gen;
+	}
 	
 	@Override
 	public DimensionType getDimensionType() {
@@ -55,6 +61,10 @@ public class WorldProviderTelos extends WorldProvider {
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return new ChunkGeneratorTelos(this.world, this.getSeed());
+		return chunkGen.create(world, world.getSeed());
+	}
+	
+	public static interface ChunkGeneratorFactory<T extends IChunkGenerator>{
+		T create(World world, Long seed);
 	}
 }

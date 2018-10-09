@@ -4,7 +4,15 @@ package net.tardis.mod.common.entities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,9 +31,7 @@ import net.tardis.mod.common.sounds.TSounds;
 
 public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFlying, IDontSufficate {
 
-
 	private ItemStack[] deathItems = new ItemStack[]{new ItemStack(TItems.power_cell, 20 + rand.nextInt(11)), new ItemStack(TItems.gunstick, 1), new ItemStack(TItems.circuts, 7 + rand.nextInt(3))};
-
 
 	public EntityDalek(World world) {
 		super(world);
@@ -91,10 +97,13 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 				Vec3d dir = this.getAttackTarget().getPositionVector().subtract(this.getPositionVector()).normalize().scale(0.3D);
 				this.motionX = dir.x;
 				this.motionZ = dir.z;
-				this.faceEntity(this.getAttackTarget(), 1F,1F);
+				this.faceEntity(this.getAttackTarget(), 3F,1F);
 			}
 		}
 		if(this.onGround || !this.isAirBorne) this.setNoGravity(false);
+		if(this.rotationYaw - this.rotationYawHead > 90) {
+			this.rotationYaw = this.rotationYawHead;
+		}
 	}
 
 	@Override
