@@ -1,6 +1,4 @@
-package net.tardis.mod.client.renderers.entities;
-
-import org.lwjgl.opengl.GL11;
+package net.tardis.mod.client.renderers.entities.projectiles;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -15,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.entity.projectile.ModelRay;
 import net.tardis.mod.common.entities.EntityDalekRay;
+import org.lwjgl.opengl.GL11;
 
 public class RenderRay extends Render<EntityDalekRay> {
 	
@@ -53,5 +52,5 @@ public class RenderRay extends Render<EntityDalekRay> {
 		}
 		else System.out.println("E is null!");
 	}
-	
+
 }

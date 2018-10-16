@@ -8,6 +8,8 @@ import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class EntityCybermanInvasion extends EntityCyberman implements IRangedAttackMob
@@ -33,9 +35,9 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
     {
         tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
         targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-        targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-        targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
-        targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityIronGolem.class, true));
+        targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
+        targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityVillager.class, false));
+        targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityIronGolem.class, true));
     }
 
     protected void applyEntityAttributes()
@@ -69,13 +71,23 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
         return !world.canBlockSeeSky(this.getPosition().down()) && posY < 64 && world.getBlockState(getPosition().down()).getLightValue() < 2;
     }
 
-	@Override
-	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
-		EntityRayCyberman ray = new EntityRayCyberman(world, this);
-		ray.setPosition(posX, posY + this.getEyeHeight(), posZ);
-		world.spawnEntity(ray);
-		System.out.println(ray);
-	}
+    /**
+     * Attack the specified entity using a ranged attack.
+     *
+     * @param target
+     * @param distanceFactor
+     */
+    @Override
+    public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
+        faceEntity(target, 10, 30);
+        EntityRayCyberman laser = new EntityRayCyberman(world, this, 7, new Vec3d(0, 0, 1));
+        double x = target.posX - this.posX;
+        double y = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
+        double z = target.posZ - this.posZ;
+        double d3 = (double) MathHelper.sqrt(x * x + z * z);
+        laser.shoot(x, y + d3 * 0.20000000298023224D, z, 1.6F, (float) (14 - this.world.getDifficulty().getId() * 4));
+        this.world.spawnEntity(laser);
+    }
 
 	@Override
 	public void setSwingingArms(boolean swingingArms) {}
