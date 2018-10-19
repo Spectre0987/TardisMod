@@ -1,22 +1,22 @@
 package net.tardis.mod.client.renderers.decorations.hellbent;
 
+import java.awt.Color;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentMonitor;
 import net.tardis.mod.common.blocks.BlockFacingDecoration;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-import java.awt.*;
-
-public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
+public class RenderHellbentMonitor extends TileEntitySpecialRenderer<TileEntityHellbentMonitor> {
 
 	Minecraft mc;
 	public ModelHellbentMonitor model = new ModelHellbentMonitor();
@@ -27,7 +27,7 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer {
 	}
 	
 	@Override
-	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+	public void render(TileEntityHellbentMonitor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 1.25, z + 0.5);
 		GlStateManager.rotate(180, 1, 0, 0);

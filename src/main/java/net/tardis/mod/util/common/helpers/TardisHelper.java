@@ -1,16 +1,24 @@
 package net.tardis.mod.util.common.helpers;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.handlers.TEventHandler;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageSyncTardises;
 
 public class TardisHelper {
 	
@@ -81,4 +89,14 @@ public class TardisHelper {
 		return BlockPos.ORIGIN;
 	}
 	
+	@EventBusSubscriber(modid = Tardis.MODID)
+	public static class Events{
+		
+		@SubscribeEvent
+		public static void sync(LivingUpdateEvent event) {
+			if(event.getEntityLiving().world.getWorldTime() % 20 == 0 && !event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
+				NetworkHandler.NETWORK.sendTo(new MessageSyncTardises(), (EntityPlayerMP)event.getEntityLiving());
+			}
+		}
+	}
 }

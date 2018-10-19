@@ -159,51 +159,6 @@ public class TBlocks {
 		} else {
 			TItems.items.add(new ItemBlock(block).setRegistryName(rl));
 		}
-
-		if(Tardis.getIsDev()) {
-			try {
-				File f = new File(Minecraft.getMinecraft().gameDir + "\\..\\src\\main\\resources\\assets\\tardis\\blockstates\\" + block.getRegistryName().getPath() + ".json");
-				if(!f.exists()) {
-					GsonBuilder gson = new GsonBuilder();
-					gson.setPrettyPrinting();
-					JsonWriter jw = gson.create().newJsonWriter(new FileWriter(f));
-					jw.beginObject();
-					jw.name("forge_marker").value(1);
-					jw.name("defaults");
-					jw.beginObject();
-					jw.name("model").value(Tardis.MODID + ":" + "teisr");
-					jw.endObject();
-					jw.name("variants");
-					jw.beginObject();
-					jw.name("normal");
-					jw.beginArray();
-					jw.beginObject();
-					jw.endObject();
-					jw.endArray();
-					jw.name("inventory");
-					jw.beginArray();
-					jw.beginObject();
-					jw.endObject();
-					jw.endArray();
-					if(block instanceof BlockTardisTop) {
-						for(EnumFacing face : EnumFacing.Plane.HORIZONTAL.facings()) {
-							jw.name("facing=" + face.getName());
-							jw.beginArray();
-							jw.beginObject();
-							jw.endObject();
-							jw.endArray();
-						}
-					}
-					jw.endObject();
-					jw.endObject();
-					jw.close();
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-
 		return block;
 	}
 	
