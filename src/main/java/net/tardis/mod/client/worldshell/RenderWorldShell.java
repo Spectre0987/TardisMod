@@ -1,5 +1,9 @@
 package net.tardis.mod.client.worldshell;
 
+import javax.annotation.Nullable;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,9 +19,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nullable;
 
 public class RenderWorldShell {
 	
@@ -36,8 +37,6 @@ public class RenderWorldShell {
 			worldBoti.setShell(container.getWorldShell());
 			
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-
-			//GlStateManager.color(1, 1, 1);
 			 
 			BlockPos offset = container.getWorldShell().getOffset();
 			GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());
@@ -58,7 +57,6 @@ public class RenderWorldShell {
 			catch(Exception e) {}
 
 			Tessellator.getInstance().draw();
-			GlStateManager.depthFunc(GL11.GL_LEQUAL);
 	        GlStateManager.enableNormalize();
 	        GlStateManager.enableLighting();
 	        
@@ -66,11 +64,8 @@ public class RenderWorldShell {
 	        GlStateManager.color(1, 1, 1);
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
-					try {
-						t.setWorld(worldBoti);
-						TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),t.getPos().getZ(), partialTicks);
-					}
-					catch(Exception e) {}
+					t.setWorld(worldBoti);
+					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),t.getPos().getZ(), partialTicks);
 				}
 			}
 			try {
@@ -79,15 +74,15 @@ public class RenderWorldShell {
 						Entity e = EntityList.createEntityFromNBT(stor, worldBoti);
 						if(e != null) {
 							GlStateManager.pushMatrix();
-							GlStateManager.rotate(e.rotationYaw, 0, 1, 0);
 							Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 							GlStateManager.popMatrix();
 						}
 					}
 				}
 			}
-			catch(Exception e) {}
-			
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 			if(container.getWorldShell().getPlayers() != null) {
 				for(PlayerStorage stor : container.getWorldShell().getPlayers()) {
 					try {
@@ -111,9 +106,10 @@ public class RenderWorldShell {
 						GlStateManager.popMatrix();
 					} catch(Exception e) {}
 				}
-				RenderHelper.enableStandardItemLighting();
 			}
+			RenderHelper.enableStandardItemLighting();
 			GlStateManager.popMatrix();
+			GlStateManager.resetColor();
 		}
 	}
 

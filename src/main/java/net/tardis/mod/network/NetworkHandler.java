@@ -5,7 +5,20 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.network.packets.*;
+import net.tardis.mod.network.packets.MessageCompanion;
+import net.tardis.mod.network.packets.MessageDamageSystem;
+import net.tardis.mod.network.packets.MessageDemat;
+import net.tardis.mod.network.packets.MessageDoorOpen;
+import net.tardis.mod.network.packets.MessageExteriorChange;
+import net.tardis.mod.network.packets.MessageHandlerProtocol;
+import net.tardis.mod.network.packets.MessageHandlerTeleport;
+import net.tardis.mod.network.packets.MessageMissControl;
+import net.tardis.mod.network.packets.MessageProtocol;
+import net.tardis.mod.network.packets.MessageSpawnItem;
+import net.tardis.mod.network.packets.MessageSyncTardises;
+import net.tardis.mod.network.packets.MessageTelepathicCircut;
+import net.tardis.mod.network.packets.MessageTeleport;
+import net.tardis.mod.network.packets.MessageUpdateBessie;
 
 public class NetworkHandler {
 
@@ -24,6 +37,7 @@ public class NetworkHandler {
         NETWORK.registerMessage(MessageUpdateBessie.Handler.class, MessageUpdateBessie.class, 10, Side.SERVER);
         NETWORK.registerMessage(MessageCompanion.Handler.class, MessageCompanion.class, 11, Side.SERVER);
         NETWORK.registerMessage(MessageMissControl.Handler.class, MessageMissControl.class, 12, Side.CLIENT);
+        NETWORK.registerMessage(MessageSyncTardises.Handler.class, MessageSyncTardises.class, 13, Side.CLIENT);
     }
 
 
