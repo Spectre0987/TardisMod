@@ -9,7 +9,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.TDamageSources;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.sounds.TSounds;
 
@@ -28,7 +28,7 @@ public class ItemRayGun extends ItemBase {
 		ItemStack gun = playerIn.getHeldItem(handIn);
 		if (!playerIn.isSneaking()) {
 			if (getAmmo(gun) > 0) {
-				EntityLaserRay ball = new EntityLaserRay(worldIn, playerIn, 2, new EntityDalek.DamageSourceDalek(), new Vec3d(0, 1, 0));
+				EntityLaserRay ball = new EntityLaserRay(worldIn, playerIn, 2, TDamageSources.LASER, new Vec3d(0, 1, 0));
 				if (!worldIn.isRemote) worldIn.spawnEntity(ball);
 				setAmmo(gun, getAmmo(gun) - 1);
 				worldIn.playSound(null, playerIn.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);

@@ -14,11 +14,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.tardis.mod.api.entities.IDontSufficate;
+import net.tardis.mod.common.TDamageSources;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 
@@ -59,7 +57,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 		faceEntity(target, 10, 30);
-		EntityLaserRay laser = new EntityLaserRay(world, this, 7, new DamageSourceDalek(), new Vec3d(0, 1, 0));
+		EntityLaserRay laser = new EntityLaserRay(world, this, 7, TDamageSources.DALEK, new Vec3d(0, 1, 0));
 		double x = target.posX - this.posX;
 		double y = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
 		double z = target.posZ - this.posZ;
@@ -107,26 +105,6 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 			int index = rand.nextInt(deathItems.length);
 			InventoryHelper.spawnItemStack(world, posX, posY, posZ, deathItems[index]);
 		}
-	}
-
-	//TODO NO PLZ, FIX THIS
-	public static class DamageSourceDalek extends DamageSource{
-
-		public DamageSourceDalek() {
-			super("damage.dalek");
-			this.setProjectile();
-		}
-
-		@Override
-		public ITextComponent getDeathMessage(EntityLivingBase entity) {
-			return new TextComponentString(entity.getDisplayName().getFormattedText() + " " + (new TextComponentTranslation("damage.dalek").getFormattedText()));
-		}
-
-		@Override
-		public boolean isUnblockable() {
-			return false;
-		}
-		
 	}
 
 	@Override

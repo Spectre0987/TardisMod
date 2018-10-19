@@ -40,25 +40,6 @@ public class EntityCyberman extends EntityMob implements IDontSufficate{
 		}
 		
 	}
-	
-	public static class DamageSourceCyberGun extends DamageSource {
-
-		public DamageSourceCyberGun() {
-			super("death.cyberman.ray");
-			this.setProjectile();
-		}
-
-		@Override
-		public ITextComponent getDeathMessage(EntityLivingBase base) {
-			return new TextComponentString(base.getDisplayName().getFormattedText() + " " + new TextComponentTranslation("death.cyberman.ray").getFormattedText());
-		}
-
-		@Override
-		public boolean isUnblockable() {
-			return false;
-		}
-
-	}
 
 	@Override
 	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
