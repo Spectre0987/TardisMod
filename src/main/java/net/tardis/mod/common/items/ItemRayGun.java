@@ -1,21 +1,19 @@
 package net.tardis.mod.common.items;
 
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.tardis.mod.common.entities.EntityDalekRay;
+import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.sounds.TSounds;
+
+import java.util.List;
 
 public class ItemRayGun extends ItemBase {
 	
@@ -30,7 +28,7 @@ public class ItemRayGun extends ItemBase {
 		ItemStack gun = playerIn.getHeldItem(handIn);
 		if (!playerIn.isSneaking()) {
 			if (getAmmo(gun) > 0) {
-				EntityDalekRay ball = new EntityDalekRay(worldIn, playerIn);
+				EntityLaserRay ball = new EntityLaserRay(worldIn, playerIn, 2, new EntityDalek.DamageSourceDalek(), new Vec3d(0, 1, 0));
 				if (!worldIn.isRemote) worldIn.spawnEntity(ball);
 				setAmmo(gun, getAmmo(gun) - 1);
 				worldIn.playSound(null, playerIn.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);

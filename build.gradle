@@ -64,9 +64,6 @@ dependencies {
 
     //weeping angels
     deobfProvided "com.github.SandedShoes:Weeping-Angels:${project.weeping_angels_version}"
-
-    //regeneration
-    //deobfProvided "com.github.SandedShoes:Regeneration:${project.regeneration_version}"
     
     //JEI
     compileOnly "mezz.jei:jei_1.12.2:4.11.0.212:api"

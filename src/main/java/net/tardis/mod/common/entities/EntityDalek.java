@@ -12,6 +12,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -36,7 +37,6 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
         tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
         tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        tasks.addTask(8, new EntityAILookIdle(this));
         applyEntityAI();
     }
 
@@ -58,13 +58,15 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
-		Vec3d look = target.getPositionVector().subtract(this.getPositionVector());
-		faceEntity(target, 30, 30);
-		EntityDalekRay ball = new EntityDalekRay(world, this);
-		ball.setPosition(posX + this.getLookVec().x, posY + this.getEyeHeight(), posZ + this.getLookVec().z);
-		world.spawnEntity(ball);
-		world.playSound(null, this.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);
-		if(this.rand.nextInt(3) == 0)world.playSound(null, this.getPosition(), TSounds.dalek, SoundCategory.HOSTILE, 1F, 1F);
+		faceEntity(target, 10, 30);
+		EntityLaserRay laser = new EntityLaserRay(world, this, 7, new DamageSourceDalek(), new Vec3d(0, 1, 0));
+		double x = target.posX - this.posX;
+		double y = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
+		double z = target.posZ - this.posZ;
+		double d3 = (double) MathHelper.sqrt(x * x + z * z);
+		laser.shoot(x, y + d3 * 0.20000000298023224D, z, 1.6F, (float) (14 - this.world.getDifficulty().getId() * 4));
+		this.world.spawnEntity(laser);
+		world.playSound(null, this.getPosition(), TSounds.dalek, SoundCategory.HOSTILE, 1F, 1F);
 	}
 	
 	@Override

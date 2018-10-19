@@ -15,7 +15,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.tardis.mod.common.screwdriver.IScrew;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
-import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
@@ -25,10 +24,11 @@ public class ItemSonic extends Item {
 	
 	public static final String MODE_KEY = "mode";
 	public static final String CONSOLE_POS = "console_pos";
+	private SoundEvent sonicSound;
 
-	public ItemSonic() {
-
+	public ItemSonic(SoundEvent sonicSound) {
 		this.setMaxStackSize(1);
+		this.sonicSound = sonicSound;
 	}
 
 	public static int getCharge(ItemStack stack) {
@@ -83,7 +83,7 @@ public class ItemSonic extends Item {
 			EnumActionResult result = sc.performAction(worldIn, player, handIn);
 			if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
 				cooldown(held.getItem(), player, sc.getCoolDownAmount());
-				worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.25F, 1F);
+				worldIn.playSound(null, player.getPosition(), sonicSound, SoundCategory.PLAYERS, 0.25F, 1F);
 				setCharge(held, getCharge(held) - sc.energyRequired());
 			}
 		}
@@ -106,7 +106,7 @@ public class ItemSonic extends Item {
 				result = sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
 				if (sc.causesCoolDown() && EnumActionResult.SUCCESS.equals(result)) {
 					cooldown(held.getItem(), player, sc.getCoolDownAmount());
-					worldIn.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
+					worldIn.playSound(null, player.getPosition(), sonicSound, SoundCategory.PLAYERS, 0.5F, 1F);
 					setCharge(held, getCharge(held) - sc.energyRequired());
 				}
 			}
@@ -129,7 +129,7 @@ public class ItemSonic extends Item {
 				flag = sc.entityInteraction(stack, player, target, hand);
 				if (sc.causesCoolDown() && flag) {
 					cooldown(stack.getItem(), player, sc.getCoolDownAmount());
-					player.world.playSound(null, player.getPosition(), TSounds.sonic, SoundCategory.PLAYERS, 0.5F, 1F);
+					player.world.playSound(null, player.getPosition(), sonicSound, SoundCategory.PLAYERS, 0.5F, 1F);
 					setCharge(held, getCharge(held) - sc.energyRequired());
 				}
 			}

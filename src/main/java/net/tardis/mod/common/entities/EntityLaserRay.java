@@ -14,19 +14,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public class EntityRayCyberman extends EntityThrowable implements IEntityAdditionalSpawnData {
+public class EntityLaserRay extends EntityThrowable implements IEntityAdditionalSpawnData {
 
 	public float damage;
 	public Vec3d color;
+	private DamageSource source;
 
-	public EntityRayCyberman(World worldIn) {
+	public EntityLaserRay(World worldIn) {
 		super(worldIn);
 	}
 
-	public EntityRayCyberman(World worldIn, EntityLivingBase throwerIn, float damage, Vec3d color) {
+	public EntityLaserRay(World worldIn, EntityLivingBase throwerIn, float damage, DamageSource source, Vec3d color) {
 		super(worldIn, throwerIn);
 		this.damage = damage;
 		this.color = color;
+		this.source = source;
 	}
 
 	@Override

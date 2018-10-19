@@ -7,10 +7,7 @@ import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.tardis.mod.common.sounds.TSounds;
 
 public class EntityQuark extends EntityMob implements IRangedAttackMob {
 
@@ -44,14 +41,7 @@ public class EntityQuark extends EntityMob implements IRangedAttackMob {
 
     @Override //TODO - Not just copy pasting the dalek shooting
     public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
-        Vec3d look = target.getPositionVector().subtract(this.getPositionVector());
-        faceEntity(target, 30, 30);
-        EntityDalekRay ball = new EntityDalekRay(world, this);
-        ball.setPosition(posX + this.getLookVec().x, posY + this.getEyeHeight(), posZ + this.getLookVec().z);
-        world.spawnEntity(ball);
-        world.playSound(null, this.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);
-        if (this.rand.nextInt(3) == 0)
-            world.playSound(null, this.getPosition(), TSounds.dalek, SoundCategory.HOSTILE, 1F, 1F);
+
     }
 
     @Override

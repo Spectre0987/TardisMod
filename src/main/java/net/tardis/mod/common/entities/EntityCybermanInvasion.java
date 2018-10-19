@@ -80,7 +80,7 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
         faceEntity(target, 10, 30);
-        EntityRayCyberman laser = new EntityRayCyberman(world, this, 7, new Vec3d(0, 0, 1));
+        EntityLaserRay laser = new EntityLaserRay(world, this, 7, new DamageSourceCyber(), new Vec3d(0, 0, 1));
         double x = target.posX - this.posX;
         double y = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
         double z = target.posZ - this.posZ;

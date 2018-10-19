@@ -7,12 +7,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.tardis.mod.common.entities.EntityRayCyberman;
+import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.util.client.RenderHelper;
 
-public class RenderCyberRay extends Render<EntityRayCyberman> {
+public class RenderLaserRay extends Render<EntityLaserRay> {
 
-    public RenderCyberRay(RenderManager renderManager) {
+    public RenderLaserRay(RenderManager renderManager) {
         super(renderManager);
     }
 
@@ -22,7 +22,7 @@ public class RenderCyberRay extends Render<EntityRayCyberman> {
     }
 
     @Override
-    public void doRender(EntityRayCyberman entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void doRender(EntityLaserRay entity, double x, double y, double z, float entityYaw, float partialTicks) {
         RenderHelper.setupRenderLightning();
         GlStateManager.translate(x, y, z);
 
@@ -47,7 +47,7 @@ public class RenderCyberRay extends Render<EntityRayCyberman> {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(EntityRayCyberman entity) {
+    protected ResourceLocation getEntityTexture(EntityLaserRay entity) {
         return null;
     }
 
