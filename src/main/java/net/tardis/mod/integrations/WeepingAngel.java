@@ -1,6 +1,6 @@
 package net.tardis.mod.integrations;
 
-import me.sub.angels.common.entities.EntityWeepingAngel;
+import me.fril.angels.common.entities.EntityWeepingAngel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
