@@ -42,6 +42,7 @@ import net.tardis.mod.client.models.ModelConsole;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.dimensions.TardisChunkGenerator;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -71,6 +72,7 @@ import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.helpers.Helper;
 import net.tardis.mod.util.helpers.RiftHelper;
+import net.tardis.mod.util.helpers.TardisHelper;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
@@ -394,6 +396,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void setDesination(BlockPos pos, int dimension) {
+		if (TardisHelper.isThisBlockPosBehindWorldBorder(pos)){
+
+		}
 		this.tardisDestination = pos.down().toImmutable();
 		if(Helper.isDimensionBlocked(dimension))
 			dimension = 0;

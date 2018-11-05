@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.chunk.Chunk;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.handlers.TEventHandler;
@@ -70,6 +72,11 @@ public class TardisHelper {
 			if (pos != null && pos.equals(cPos)) return true;
 		}
 		return false;
+	}
+
+	public static boolean isThisBlockPosBehindWorldBorder(BlockPos pos){
+		WorldBorder border = Minecraft.getMinecraft().world.getWorldBorder();
+		return border.contains(pos);
 	}
 	
 }
