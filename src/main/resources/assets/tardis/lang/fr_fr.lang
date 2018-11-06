@@ -1,4 +1,5 @@
-itemGroup.tardis=TARDIS Mod
+itemGroup.tardis_blocks=TARDIS Mod Blocks
+itemGroup.tardis_items=TARDIS Mod Items
 
 item.tardis.tardis_key.name=Clé du TARDIS
 item.tardis.pos_setter.name=Enregistreur de coordonnées
@@ -46,6 +47,7 @@ item.tardis.chameleon_circuit.name=Circuit Caméléon
 item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Circuits de grâce temporel
 item.tardis.tardis_repairkit.name=Boîte à outils pour TARDIS
+item.tardis.stabilizers.name=Circuits stabilisateurs
 
 tooltip.remote=Télécommande reliée au TARDIS à :
 tooltip.remote.time=Le TARDIS arrive dans 
@@ -54,7 +56,9 @@ tooltip.remote.exteriorpos=Extérieur du TARDIS:
 tooltip.remote.bind=Pour lier, clic droit sur la console
 tooltip.tardis.toolkit=Clic droit sur la console pour réparer tous les systèmes non détruits de 15
 
-general.time.seconds=seconde
+tooltip.manual.sn=Trouvé au coeur d'une supernova.
+
+general.time.seconds=secondes
 
 tile.tardis.tardis.name=TARDIS
 tile.tardis.time_rotor.name=Console
@@ -104,6 +108,7 @@ tile.tardis.circuit_repair.name=Micro-soudage à l'état d'équilibre
 tile.tardis.zero_room.name=Chambre Zéro
 tile.tardis.zero_room_slab.name=Dalle de pièce zéro
 tile.tardis.zero_room_stairs.name=Escalier de pièce zéro
+tile.tardis.suitcase.name=Mystérieuse valise
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
@@ -169,6 +174,7 @@ system.tardis.fluidlinks=Liens pour liquide
 systems.tardis.antenna=Antenne interstitielle
 system.tardis.ccircuit=Circuit Caméléon
 system.tardis.temporal_grace=Circuits de grâce temporelle
+system.tardis.stabilizers=Stabilisateurs
 
 tardis.dimension=Dimension Nav-com est:
 
@@ -214,6 +220,10 @@ entity.telepathic_circuts.name=Circuits télépathiques
 entity.tardis_door_control.name=Interrupteur de porte
 entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 entity.tardis_phone.name=Communicateur
+entity.stabilizers.name=Stabilisateurs
+
+tardis.stabilizers.true=Stabilisateurs ON
+tardis.stabilizers.false=Stabilisateurs OFF
 
 entity.dalek.name=Dalek
 entity.adipose.name=Adipose
@@ -264,3 +274,19 @@ companion.tardis.fetch=J'ai besoin que tu ailles chercher le TARDIS.
 companion.tardis.saved.dalek=Bon travail avec ces Daleks !
 
 jei.tardis.book.description=Acquis par un clic droit sur une console TARDIS avec un livre.
+
+course.tardis.direction.x=Glissière de coordonnées - X!
+course.tardis.direction.y=Glissière de coordonnées - Y!
+course.tardis.direction.z=Glissière de coordonnées - Z!
+course.tardis.dimension=Dérive dimensionnelle!
+course.tardis.artron_leak=Surpression de carburant!
+course.tardis.spin=Moment de surcharge angulaire!
+
+box.tardis.01=1963 - Brachacki
+box.tardis.02=1966 - Altered Brachacki
+box.tardis.03=1976 - Newbery
+box.tardis.04=1996 - Hudolin
+box.tardis.05=1980 - Yardley-Jones
+box.tardis.cc=Camouflé
+box.master.clock=Horloge du Maitre
+box.tt=TT Capsule
