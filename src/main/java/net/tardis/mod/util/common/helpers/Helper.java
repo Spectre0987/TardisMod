@@ -1,6 +1,7 @@
 package net.tardis.mod.util.common.helpers;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -9,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
@@ -231,5 +233,9 @@ public class Helper {
 
 	public static TileEntityTardis getTardis(TileEntity te) {
 		return te != null && te instanceof TileEntityTardis ? ((TileEntityTardis)te) : null;
+	}
+
+	public static boolean isThisBlockBehindTheWorldBorder(BlockPos pos, int dim){
+		return Minecraft.getMinecraft().world.getWorldBorder().contains(pos) || dim != 0;
 	}
 }
