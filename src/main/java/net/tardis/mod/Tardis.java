@@ -53,7 +53,6 @@ import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.GuiHandlerTardis;
 import net.tardis.mod.integrations.Galacticraft;
-import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.common.helpers.EntityHelper;
@@ -87,7 +86,6 @@ public class Tardis {
 		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
-		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
 		TItems.init();
 		TBlocks.register();
 		TDimensions.register();
