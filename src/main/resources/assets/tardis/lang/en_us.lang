@@ -169,8 +169,8 @@ protocol.tardis.lock=Double Lock
 protocol.tardis.destroy.rift=Consume Dimensional Rift
 protocol.tardis.repair=Repair the TARDIS
 
-tardis.repair.false=TARDIS is repairing
-tardis.repair.true=TARDIS is not repairing
+tardis.repair.false=TARDIS is no longer repairing
+tardis.repair.true=TARDIS is repairing
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
