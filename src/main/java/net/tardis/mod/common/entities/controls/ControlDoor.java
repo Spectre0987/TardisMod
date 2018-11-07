@@ -1,5 +1,8 @@
 package net.tardis.mod.common.entities.controls;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -11,7 +14,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -23,18 +25,20 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.client.worldshell.*;
+import net.tardis.mod.client.worldshell.BlockStorage;
+import net.tardis.mod.client.worldshell.IContainsWorldShell;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.PlayerStorage;
+import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	
@@ -54,14 +58,8 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 		this.dataManager.register(FACING, EnumFacing.NORTH);
 	}
 	
-	public BlockPos getConsolePos() {
-		BlockPos pos = BlockPos.ORIGIN;
-		for(TileEntity te : world.loadedTileEntityList) {
-			if(te instanceof TileEntityTardis && te.getPos().distanceSq(this.getPosition()) < Math.pow(40, 2)) {
-				return te.getPos();
-			}
-		}
-		return pos;
+	public TileEntityTardis getConsole() {
+		return (TileEntityTardis)world.getTileEntity(TardisHelper.getTardisForPosition(getPosition()));
 	}
 
 	@Override
@@ -214,7 +212,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 
 	@Override
 	public int getDimnesion() {
-		return this.getConsolePos().equals(BlockPos.ORIGIN) ? 0 : ((TileEntityTardis)world.getTileEntity(getConsolePos())).dimension;
+		return this.getConsole() != null ? this.getConsole().getWorld().provider.getDimension() : TDimensions.TARDIS_ID;
 	}
 	
 }
