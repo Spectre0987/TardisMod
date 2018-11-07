@@ -440,16 +440,18 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void setDesination(BlockPos pos, int dimension) {
-		this.tardisDestination = pos.down();
-		if(Helper.isDimensionBlocked(dimension))
-			dimension = 0;
-		this.destDim = dimension;
-		this.markDirty();
-		if (!world.isRemote) {
-			DimensionType type = DimensionManager.getProviderType(dimension);
-			if (type != null) this.targetDimName = type.getName();
-			DimensionType currentType = DimensionManager.getProviderType(this.dimension);
-			if (type != null) this.currentDimName = currentType.getName();
+		if (Helper.isThisBlockBehindTheWorldBorder(pos, dimension)){
+			this.tardisDestination = pos.down();
+			if(Helper.isDimensionBlocked(dimension))
+				dimension = 0;
+			this.destDim = dimension;
+			this.markDirty();
+			if (!world.isRemote) {
+				DimensionType type = DimensionManager.getProviderType(dimension);
+				if (type != null) this.targetDimName = type.getName();
+				DimensionType currentType = DimensionManager.getProviderType(this.dimension);
+				if (type != null) this.currentDimName = currentType.getName();
+			}
 		}
 	}
 	
