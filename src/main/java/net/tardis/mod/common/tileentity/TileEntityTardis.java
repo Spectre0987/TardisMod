@@ -127,6 +127,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private float hullHealth = 1F;
 	private EnumCourseCorrect courseCorrect = EnumCourseCorrect.NONE;
 	private boolean repairing = false;
+	private float rechargeRate = 0.0001F;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -184,7 +185,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (this.isFueling()) {
 				if(!world.isRemote) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
+					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws) ? 0.0005F : this.rechargeRate));
 				}
 			}
 			if(this.getRepairing()) {

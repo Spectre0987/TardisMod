@@ -272,6 +272,7 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.antenna, TItems.circuts);
 		RepairRecipes.registerRecipe(TItems.stabilizers, TItems.circuts);
 		RepairRecipes.registerRecipe(TItems.time_vector_generator, Items.ENDER_PEARL);
+		RepairRecipes.registerRecipe(TItems.chameleon_circuit, TItems.circuts);
 		
 	}
 	
