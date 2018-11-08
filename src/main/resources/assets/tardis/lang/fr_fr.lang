@@ -167,6 +167,10 @@ protocol.tardis.ars=Système de Reconfiguration Architecturale
 protocol.tardis.regenroom=Regénérer la salle de contrôle
 protocol.tardis.lock=Double serrure
 protocol.tardis.destroy.rift=Consommer la Faille Dimensionnel
+protocol.tardis.repair=Réparer le TARDIS
+
+tardis.repair.false=TARDIS se répare
+tardis.repair.true=TARDIS ne se répare plus
 
 systems.tardis.flight=Système de vol
 systems.protocol.dimensions=Systèmes dimensionnel
