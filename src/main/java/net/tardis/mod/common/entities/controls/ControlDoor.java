@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -116,8 +117,9 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	public void onUpdate() {
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
+		TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
+		if(te == null || !(te instanceof TileEntityTardis)) return;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
-		if(tardis == null) return;
 		if(!world.isRemote && this.isOpen()) {
 			WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox());
