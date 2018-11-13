@@ -1,8 +1,11 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -56,6 +59,30 @@ public class BlockChair extends Block implements INoBox{
 		return true;
 	}
 
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		// TODO Auto-generated method stub
+		return super.getStateFromMeta(meta);
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		// TODO Auto-generated method stub
+		return super.getMetaFromState(state);
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, BlockHorizontal.FACING);
+	}
+
+	@Override
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
+			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		// TODO Auto-generated method stub
+		return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
+	}
 
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {

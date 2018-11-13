@@ -33,6 +33,7 @@ import net.tardis.mod.client.renderers.consoles.RenderConsole02;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.renderers.controls.RenderSonicSlot;
+import net.tardis.mod.client.renderers.decorations.RenderAmSphere;
 import net.tardis.mod.client.renderers.decorations.RendererChairBR;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentCorridor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentDoor;
@@ -124,6 +125,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
 import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
@@ -155,6 +157,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHelbentRoof.class, new RenderHellbentRoof());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChair.class, new RendererChairBR());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAmSphere.class, new RenderAmSphere());
 		
 		//Consoles
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());

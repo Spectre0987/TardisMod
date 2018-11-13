@@ -103,6 +103,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
 import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
@@ -200,6 +201,7 @@ public class Tardis {
 		registerTileEntity(TileEntityComponentRepair.class, "TileEntityComponentRepair");
 		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		registerTileEntity(TileEntityChair.class, "chair");
+		registerTileEntity(TileEntityAmSphere.class, "am_sphere");
 		
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
 		
