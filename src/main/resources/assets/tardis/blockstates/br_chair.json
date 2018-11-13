@@ -5,6 +5,8 @@
     },
     "variants":{
         "normal":[{}],
-        "inventory":[{}]
+        "inventory":{
+            "model":"tardis:item/chair_br"
+        }
     }
 }

@@ -61,8 +61,6 @@ dependencies {
     //ic2-ex
     compileOnly "net.industrial-craft:industrialcraft-2:${project.ic2ex_version}:api"
     runtime "net.industrial-craft:industrialcraft-2:${project.ic2ex_version}"
-
-    deobfProvided "com.github.SandedShoes:Weeping-Angels:${project.weeping_angels_version}"
     
     //JEI
     compileOnly "mezz.jei:jei_1.12.2:4.11.0.212:api"
