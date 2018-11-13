@@ -45,10 +45,9 @@ public class GuiSystem extends GuiScreen{
 	@Override
 	public void initGui() {
 		super.initGui();
-		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-		int width = res.getScaledWidth() / 2, height = res.getScaledHeight() / 2, id = 0;
+		int id = 0;
 		for(BaseSystem s : tardis.systems) {
-			GuiButtonExt button = new GuiButtonExt(id, width - 15, height - (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%");
+			GuiButtonExt button = new GuiButtonExt(id, width / 2 - 100, (height / 2 + 50) - (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%");
 			button.enabled = s.getHealth() > 0.0F;
 			this.addButton(button);
 			++id;
