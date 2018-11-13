@@ -1,12 +1,12 @@
 {
     "forge_marker": 1,
     "defaults":{
-        "model":"tardis:tesir"
+        "model":"tardis:teisr"
     },
     "variants":{
         "normal":[{}],
         "inventory":{
-            "model":"tardis:item/chair_br"
+            "model":"tardis:chair_br"
         }
     }
 }

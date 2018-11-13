@@ -59,7 +59,7 @@ public class TardisHelper {
 			}
 			return last;
 		}
-		return new BlockPos(8, 6, 8);
+		return new BlockPos(8, 128, 8);
 	}
 	
 	public static BlockPos getNextFree() {
