@@ -1,18 +1,11 @@
 package net.tardis.mod.common.blocks;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.creativetabs.TardisTabs;
@@ -118,6 +111,8 @@ public class TBlocks {
 	public static Block moon_dirt = register(new BlockBase(), "moon_dirt");
 	
 	public static Block suitcase = register(new BlockSuitcase(), "suitcase");
+	public static Block br_chair = register(new BlockChair(Material.WOOD), "br_chair");
+	
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01", false);
 	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02", false);

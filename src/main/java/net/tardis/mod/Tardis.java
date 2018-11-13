@@ -33,6 +33,7 @@ import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.CommandTardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityAdipose;
+import net.tardis.mod.common.entities.EntityChair;
 import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
@@ -102,6 +103,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
@@ -180,6 +182,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityBessie.class, "bessie");
 		EntityHelper.registerNoSpawn(EntityCompanion.class, "companion");
 		EntityHelper.registerNoSpawn(EntityDalekScaro.class, "dalek_scaro");
+		EntityHelper.registerStatic(EntityChair.class, "chair");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -196,6 +199,7 @@ public class Tardis {
 		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
 		registerTileEntity(TileEntityComponentRepair.class, "TileEntityComponentRepair");
 		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
+		registerTileEntity(TileEntityChair.class, "chair");
 		
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
 		
