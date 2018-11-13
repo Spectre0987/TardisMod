@@ -33,7 +33,6 @@ import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.CommandTardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityAdipose;
-import net.tardis.mod.common.entities.EntityAirshell;
 import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
@@ -41,7 +40,6 @@ import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekScaro;
-import net.tardis.mod.common.entities.EntityForceField;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -136,6 +134,7 @@ public class Tardis {
 	public static Logger LOG = LogManager.getLogger(NAME);
 
 	public static boolean hasIC2 = false;
+	public static final boolean updateChangesConfig = true;
 	
 	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 
@@ -164,7 +163,6 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlSTCLoad.class, "stc_load");
 		EntityHelper.registerStatic(ControlSTCButton.class, "stc_button");
 		EntityHelper.registerStatic(ControlFuel.class, "fuel");
-		EntityHelper.registerStatic(EntityForceField.class, "force_field");
 		EntityHelper.registerStatic(ControlLandType.class, "land_type");
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
 		EntityHelper.registerStatic(ControlFastReturn.class, "tardis_fast_return");
@@ -176,7 +174,6 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlStabilizers.class, "stabilizers");
 		EntityHelper.registerProjectiles(EntityLaserRay.class, "cyber_ray");
 		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
-		EntityHelper.registerNoSpawn(EntityAirshell.class, "airshell");
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
 		EntityHelper.registerNoSpawn(EntityHellbentCorridor.class, "hellbent_corridor");
 		EntityHelper.registerNoSpawn(EntityHellbentDoor.class, "hellbent_door");
