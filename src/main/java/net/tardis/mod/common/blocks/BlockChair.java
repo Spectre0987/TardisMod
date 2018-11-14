@@ -1,6 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -20,7 +19,7 @@ import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.entities.EntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 
-public class BlockChair extends Block implements INoBox{
+public class BlockChair extends BlockHorizontal implements INoBox {
 
 	public BlockChair(Material materialIn) {
 		super(materialIn);
@@ -62,26 +61,22 @@ public class BlockChair extends Block implements INoBox{
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		// TODO Auto-generated method stub
-		return super.getStateFromMeta(meta);
+		return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		// TODO Auto-generated method stub
-		return super.getMetaFromState(state);
+		return state.getValue(FACING).getHorizontalIndex();
 	}
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, BlockHorizontal.FACING);
+		return new BlockStateContainer(this, FACING);
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
-			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		// TODO Auto-generated method stub
-		return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 
 	@Override
