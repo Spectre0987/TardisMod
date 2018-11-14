@@ -113,7 +113,7 @@ public class TBlocks {
 	
 	public static Block suitcase = register(new BlockSuitcase(), "suitcase");
 	public static Block br_chair = register(new BlockChair(Material.WOOD), "br_chair");
-	public static Block am_sphere = register(new BlockDecoration(TileEntityAmSphere::new), "am_sphere").setCreativeTab(TardisTabs.BLOCKS);
+	public static Block am_sphere = register(new BlockFacingDecoration(TileEntityAmSphere::new), "am_sphere").setCreativeTab(TardisTabs.BLOCKS);
 	
 	//Exteriors
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01", false);
