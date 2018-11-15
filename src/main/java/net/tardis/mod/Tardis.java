@@ -44,16 +44,13 @@ import net.tardis.mod.common.tileentity.*;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
-import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
-import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.decoration.*;
 import net.tardis.mod.common.tileentity.exteriors.*;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.GuiHandlerTardis;
 import net.tardis.mod.integrations.Galacticraft;
-import net.tardis.mod.integrations.WeepingAngel;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.common.helpers.EntityHelper;
@@ -73,6 +70,7 @@ public class Tardis {
 	public static Logger LOG = LogManager.getLogger(NAME);
 
 	public static boolean hasIC2 = false;
+	public static final boolean updateChangesConfig = true;
 	
 	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 
@@ -87,10 +85,8 @@ public class Tardis {
 		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
-		if(Loader.isModLoaded(TStrings.ModIds.WEEPING_ANGELS)) WeepingAngel.preInit();
 		TItems.init();
 		TBlocks.register();
-		TDimensions.register();
 		EntityHelper.makeGoodBiomes();
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");
 		EntityHelper.registerStatic(ControlX.class, "x_valve");
@@ -101,10 +97,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDoor.class, "tardis_door");
 		EntityHelper.registerStatic(ControlSTCLoad.class, "stc_load");
 		EntityHelper.registerStatic(ControlSTCButton.class, "stc_button");
-		EntityHelper.registerStatic(ControlScanner.class, "scanner");
-		EntityHelper.registerStatic(ControlFlight.class, "control_flight");
 		EntityHelper.registerStatic(ControlFuel.class, "fuel");
-		EntityHelper.registerStatic(EntityForceField.class, "force_field");
 		EntityHelper.registerStatic(ControlLandType.class, "land_type");
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
 		EntityHelper.registerStatic(ControlFastReturn.class, "tardis_fast_return");
@@ -114,16 +107,15 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlMag.class, "tardis_magnitude");
 		EntityHelper.registerStatic(ControlSonicSlot.class, "sonic_slot");
 		EntityHelper.registerStatic(ControlStabilizers.class, "stabilizers");
-		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 		EntityHelper.registerProjectiles(EntityLaserRay.class, "cyber_ray");
 		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
-		EntityHelper.registerNoSpawn(EntityAirshell.class, "airshell");
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
 		EntityHelper.registerNoSpawn(EntityHellbentCorridor.class, "hellbent_corridor");
 		EntityHelper.registerNoSpawn(EntityHellbentDoor.class, "hellbent_door");
 		EntityHelper.registerNoSpawn(EntityBessie.class, "bessie");
 		EntityHelper.registerNoSpawn(EntityCompanion.class, "companion");
 		EntityHelper.registerNoSpawn(EntityDalekScaro.class, "dalek_scaro");
+		EntityHelper.registerStatic(EntityChair.class, "chair");
 		
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -140,6 +132,8 @@ public class Tardis {
 		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
 		registerTileEntity(TileEntityComponentRepair.class, "TileEntityComponentRepair");
 		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
+		registerTileEntity(TileEntityChair.class, "chair");
+		registerTileEntity(TileEntityAmSphere.class, "am_sphere");
 		
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
 		
@@ -204,6 +198,8 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.demat_circut, Items.ENDER_PEARL);
 		RepairRecipes.registerRecipe(TItems.antenna, TItems.circuts);
 		RepairRecipes.registerRecipe(TItems.stabilizers, TItems.circuts);
+		RepairRecipes.registerRecipe(TItems.time_vector_generator, Items.ENDER_PEARL);
+		RepairRecipes.registerRecipe(TItems.chameleon_circuit, TItems.circuts);
 		
 	}
 	
@@ -221,6 +217,11 @@ public class Tardis {
 		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself in their TARDIS");
 		PermissionAPI.registerNode(TStrings.Permissions.SUMMON_TARDIS, DefaultPermissionLevel.OP, "Allows players to summon a TARDIS owned by someone");
 		PermissionAPI.registerNode(TStrings.Permissions.REMOVE_TARDIS, DefaultPermissionLevel.OP, "Allows players to delete a TARDIS");
+		
+		
+		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
+		TDimensions.register();
+	
 	}
 	
 	@EventHandler
@@ -229,6 +230,7 @@ public class Tardis {
 		for(ItemStack cinnabar : OreDictionary.getOres("dustCinnabar")) {
 			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
 		}
+		
 	}
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {

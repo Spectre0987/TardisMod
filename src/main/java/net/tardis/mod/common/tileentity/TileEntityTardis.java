@@ -52,7 +52,6 @@ import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
 import net.tardis.mod.common.entities.controls.ControlFastReturn;
-import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
@@ -127,6 +126,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private float hullHealth = 1F;
 	private EnumCourseCorrect courseCorrect = EnumCourseCorrect.NONE;
 	private boolean repairing = false;
+	private float rechargeRate = 0.0001F;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -184,7 +184,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (this.isFueling()) {
 				if(!world.isRemote) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
+					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws) ? 0.0005F : this.rechargeRate));
 				}
 			}
 			if(this.getRepairing()) {
@@ -649,7 +649,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				ec.add(new ControlDimChange(this));
 				ec.add(new ControlRandom(this));
 				ec.add(new ControlSTCLoad(this));
-				ec.add(new ControlFlight(this));
 				ec.add(new ControlFuel(this));
 				ec.add(new ControlLandType(this));
 				ec.add(new ControlDirection(this));
