@@ -1,5 +1,8 @@
 package net.tardis.mod.common.dimensions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
@@ -15,9 +18,6 @@ import net.tardis.mod.common.dimensions.space.SpaceProvider;
 import net.tardis.mod.common.dimensions.telos.BiomeTelos;
 import net.tardis.mod.common.dimensions.telos.WorldProviderTelos;
 import net.tardis.mod.config.TardisConfig;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TDimensions {
 
@@ -40,27 +40,27 @@ public class TDimensions {
 		
 		boolean setDim = TardisConfig.Dimensions.setDimension;
 		
-		if (setDim) {
+		if(setDim)
 			TARDIS_ID = TardisConfig.Dimensions.tardisDimension;
-			TELOS_ID = TardisConfig.Dimensions.telosDimension;
-			SPACE_ID = TardisConfig.Dimensions.spaceDimension;
-			MOON_ID = TardisConfig.Dimensions.moonDimension;
-		} else {
-			TELOS_ID = DimensionManager.getNextFreeDimId();
-			SPACE_ID = DimensionManager.getNextFreeDimId();
-			TARDIS_ID = DimensionManager.getNextFreeDimId();
-			MOON_ID = DimensionManager.getNextFreeDimId();
-		}
-		
+		else TARDIS_ID = DimensionManager.getNextFreeDimId();
         tardisType = DimensionType.register("tardis", "_tardis", TARDIS_ID, WorldProviderTardis.class, false);
 		DimensionManager.registerDimension(TARDIS_ID, tardisType);
 		
+		if(setDim)
+			SPACE_ID = TardisConfig.Dimensions.spaceDimension;
+		else SPACE_ID = DimensionManager.getNextFreeDimId();
 		spaceType = DimensionType.register("space", "_space", SPACE_ID, SpaceProvider.class, false);
 		DimensionManager.registerDimension(SPACE_ID, spaceType);
 		
+		if(setDim)
+			TELOS_ID = TardisConfig.Dimensions.telosDimension;
+		else TELOS_ID = DimensionManager.getNextFreeDimId();
 		telosType = DimensionType.register("telos", "_telos", TELOS_ID, WorldProviderTelos.class, false);
 		DimensionManager.registerDimension(TELOS_ID, telosType);
 		
+		if(setDim)
+			MOON_ID = TardisConfig.Dimensions.moonDimension;
+		else MOON_ID = DimensionManager.getNextFreeDimId();
 		MOON_TYPE = DimensionType.register("moon", "_moon", MOON_ID, MoonProvider.class, false);
 		DimensionManager.registerDimension(MOON_ID, MOON_TYPE);
 		
