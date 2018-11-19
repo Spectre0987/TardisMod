@@ -42,36 +42,28 @@ public class TDimensions {
 		
 		if (setDim) {
 			TARDIS_ID = TardisConfig.Dimensions.tardisDimension;
-		}
-		else {
+			TELOS_ID = TardisConfig.Dimensions.telosDimension;
+			SPACE_ID = TardisConfig.Dimensions.spaceDimension;
+			MOON_ID = TardisConfig.Dimensions.moonDimension;
+		} else {
+			TELOS_ID = DimensionManager.getNextFreeDimId();
+			SPACE_ID = DimensionManager.getNextFreeDimId();
 			TARDIS_ID = DimensionManager.getNextFreeDimId();
+			MOON_ID = DimensionManager.getNextFreeDimId();
 		}
+		
         tardisType = DimensionType.register("tardis", "_tardis", TARDIS_ID, WorldProviderTardis.class, false);
 		DimensionManager.registerDimension(TARDIS_ID, tardisType);
 		
-		if(setDim) {
-			SPACE_ID = TardisConfig.Dimensions.spaceDimension;
-		}
-		else {
-			SPACE_ID = DimensionManager.getNextFreeDimId();
-		}
 		spaceType = DimensionType.register("space", "_space", SPACE_ID, SpaceProvider.class, false);
 		DimensionManager.registerDimension(SPACE_ID, spaceType);
-		
-		if(setDim) {
-			TELOS_ID = TardisConfig.Dimensions.telosDimension;
-		}
-		else{
-			TELOS_ID = DimensionManager.getNextFreeDimId();
-		}
 		
 		telosType = DimensionType.register("telos", "_telos", TELOS_ID, WorldProviderTelos.class, false);
 		DimensionManager.registerDimension(TELOS_ID, telosType);
 		
-		MOON_ID = DimensionManager.getNextFreeDimId();
 		MOON_TYPE = DimensionType.register("moon", "_moon", MOON_ID, MoonProvider.class, false);
 		DimensionManager.registerDimension(MOON_ID, MOON_TYPE);
-		 
+		
 		BiomeReg.init();
 	}
 	
