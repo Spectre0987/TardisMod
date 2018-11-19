@@ -30,7 +30,7 @@ public class ControlDimChange extends EntityControl {
 			return Helper.convertToPixels(2, -2.5, 13.5);
 		}
 		if(tardis instanceof TileEntityTardis03)
-			return Helper.convertToPixels(0, 0, 16);
+			return Helper.convertToPixels(-12, 0, -7);
 		return Helper.convertToPixels(-1.5, -2, -12);
 	}
 	
@@ -61,4 +61,13 @@ public class ControlDimChange extends EntityControl {
 		}
 		return index;
 	}
+
+	@Override
+	public void init(TileEntityTardis tardis) {
+		if(tardis != null) {
+			if(tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(6F), Helper.precentToPixels(6F));
+		}
+	}
+	
 }

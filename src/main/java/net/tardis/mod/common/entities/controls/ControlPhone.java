@@ -40,7 +40,7 @@ public class ControlPhone extends EntityControl{
 			return Helper.convertToPixels(0, -2, 8);
 		}
 		if(tardis instanceof TileEntityTardis03)
-			return Helper.convertToPixels(-14, 1, 8);
+			return Helper.convertToPixels(-11.5, 1, 9.5);
 		return Helper.convertToPixels(0,-1,-8);
 	}
 
@@ -104,4 +104,13 @@ public class ControlPhone extends EntityControl{
 			}
 		}
 	}
+
+	@Override
+	public void init(TileEntityTardis tardis) {
+		if(tardis != null) {
+			if(tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
+		}
+	}
+	
 }

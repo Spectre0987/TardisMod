@@ -124,6 +124,9 @@ public abstract class EntityControl extends Entity implements IControl {
 	
 	@Override
 	public void onUpdate() {
+		if(this.firstUpdate) {
+			init((TileEntityTardis)world.getTileEntity(this.getConsolePos()));
+		}
 		super.onUpdate();
 		if (ticks > 0) --ticks;
 		if(!this.world.isRemote) {
@@ -167,5 +170,7 @@ public abstract class EntityControl extends Entity implements IControl {
 	public SoundEvent getUseSound() {
 		return rand_sounds[rand.nextInt(rand_sounds.length)];
 	}
+	
+	public void init(TileEntityTardis tardis) {}
 	
 }
