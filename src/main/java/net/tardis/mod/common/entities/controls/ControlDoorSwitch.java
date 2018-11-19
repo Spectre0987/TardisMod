@@ -69,7 +69,7 @@ public class ControlDoorSwitch extends EntityControl{
 
 	@Override
 	public String getControlName() {
-		return "doorswitch";
+		return this.getDisplayName().getFormattedText();
 	}
 	
 	@Override

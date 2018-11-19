@@ -110,6 +110,7 @@ tile.tardis.zero_room_slab.name=Zero Room Slab
 tile.tardis.zero_room_stairs.name=Zero Room Stairs
 tile.tardis.suitcase.name=Mysterious Suitcase
 tile.tardis.br_chair.name=Chair
+tile.tardis.am_sphere.name=Armillary Sphere
 
 tardis.locked.true=TARDIS locked!
 tardis.locked.false=TARDIS unlocked!
