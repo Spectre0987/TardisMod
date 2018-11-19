@@ -2,7 +2,6 @@ package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
@@ -26,8 +25,7 @@ public class ControlPhone extends EntityControl{
 
 	public ControlPhone(TileEntityTardis tardis) {
 		super(tardis);
-		if(tardis instanceof TileEntityTardis03)
-			this.box = new AxisAlignedBB(0, 0, 0, Helper.precentToPixels(4F), 0.0625, 1);
+		this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
 	}
 	
 	public ControlPhone(World world) {
@@ -108,8 +106,7 @@ public class ControlPhone extends EntityControl{
 	@Override
 	public void init(TileEntityTardis tardis) {
 		if(tardis != null) {
-			if(tardis instanceof TileEntityTardis03)
-				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
+			this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
 		}
 	}
 	

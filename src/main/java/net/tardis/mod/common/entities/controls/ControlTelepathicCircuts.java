@@ -17,6 +17,7 @@ public class ControlTelepathicCircuts extends EntityControl{
 	
 	public ControlTelepathicCircuts(TileEntityTardis tardis) {
 		super(tardis);
+		this.setSize(0.125F, 0.125F);
 	}
 	
 	public ControlTelepathicCircuts(World world) {
@@ -52,6 +53,8 @@ public class ControlTelepathicCircuts extends EntityControl{
 		if(tardis != null) {
 			if(tardis instanceof TileEntityTardis03)
 				setSize(Helper.precentToPixels(8F), Helper.precentToPixels(4F));
+			if(tardis.getClass() == TileEntityTardis.class)
+				this.setSize(Helper.precentToPixels(4F), Helper.precentToPixels(2F));
 		}
 	}
 
