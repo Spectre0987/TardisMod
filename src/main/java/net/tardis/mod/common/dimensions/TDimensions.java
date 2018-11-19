@@ -63,8 +63,6 @@ public class TDimensions {
 		else MOON_ID = DimensionManager.getNextFreeDimId();
 		MOON_TYPE = DimensionType.register("moon", "_moon", MOON_ID, MoonProvider.class, false);
 		DimensionManager.registerDimension(MOON_ID, MOON_TYPE);
-		
-		BiomeReg.init();
 	}
 	
 	@EventBusSubscriber(modid = Tardis.MODID)
