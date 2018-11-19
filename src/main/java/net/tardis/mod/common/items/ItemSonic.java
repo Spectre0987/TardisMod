@@ -32,8 +32,7 @@ public class ItemSonic extends Item {
 	}
 
 	public static int getCharge(ItemStack stack) {
-		//return Helper.getStackTag(stack).getInteger("charge");
-		return 100;
+		return Helper.getStackTag(stack).getInteger("charge");
 	}
 
 	public static void setCharge(ItemStack stack, int charge) {

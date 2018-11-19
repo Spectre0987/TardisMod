@@ -1,5 +1,6 @@
 package net.tardis.mod.common.dimensions.space;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -78,6 +79,11 @@ public class SpaceProvider extends WorldProvider{
 	@Override
 	public IRenderHandler getSkyRenderer() {
 		return new RenderSpace();
+	}
+	
+	@Override
+	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
+		return WorldSleepResult.DENY;
 	}
 
 }
