@@ -10,6 +10,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -25,6 +26,7 @@ public abstract class EntityControl extends Entity implements IControl {
 	public static SoundEvent[] rand_sounds = {TSounds.control_01, TSounds.control_03};
 	public int ticks = 0;
 	public int direction = 1;
+	public AxisAlignedBB box = null;
 
 	public EntityControl(World worldIn) {
 		super(worldIn);
@@ -150,11 +152,6 @@ public abstract class EntityControl extends Entity implements IControl {
 		return false;
 	}
 	@Override
-	protected void setSize(float width, float height) {
-		super.setSize(width, height);
-	}
-	
-	@Override
 	public String getControlName() {
 		return this.getDisplayName().getUnformattedText();
 	}
@@ -170,4 +167,5 @@ public abstract class EntityControl extends Entity implements IControl {
 	public SoundEvent getUseSound() {
 		return rand_sounds[rand.nextInt(rand_sounds.length)];
 	}
+	
 }

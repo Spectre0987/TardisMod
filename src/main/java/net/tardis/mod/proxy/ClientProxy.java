@@ -30,6 +30,7 @@ import net.tardis.mod.client.overlays.OverlayHandler;
 import net.tardis.mod.client.renderers.RenderInvis;
 import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
+import net.tardis.mod.client.renderers.consoles.RenderConsole03;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.renderers.controls.RenderSonicSlot;
@@ -125,6 +126,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
 import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
@@ -142,6 +144,8 @@ import net.tardis.mod.config.TardisConfig;
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientProxy extends ServerProxy {
 
+	public static final boolean disableControlRender = true;
+	
 	public void registerRenders() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUmbrellaStand.class, new RenderUmbrellaStand());
@@ -162,6 +166,7 @@ public class ClientProxy extends ServerProxy {
 		//Consoles
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis02.class, new RenderConsole02());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis03.class, new RenderConsole03());
 		
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());
@@ -176,25 +181,28 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 		
 		// Controls
-		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlX.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlY.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlDimChange.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlLandType.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlFastReturn.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlTelepathicCircuts.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlDoorSwitch.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlMag.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, RenderInvis::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlSonicSlot.class, RenderSonicSlot::new);
-		RenderingRegistry.registerEntityRenderingHandler(ControlStabilizers.class, RenderInvis::new);
+		if(!ClientProxy.disableControlRender) {
+			RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlX.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlY.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlDimChange.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlLandType.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlFastReturn.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlTelepathicCircuts.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlDoorSwitch.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlMag.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlSonicSlot.class, RenderSonicSlot::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlStabilizers.class, RenderInvis::new);
+		}
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, RenderCorridor::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBessie.class, RenderBessie::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekScaro.class, RenderDalekScaro::new);

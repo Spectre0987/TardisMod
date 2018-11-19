@@ -2,6 +2,7 @@ package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
@@ -17,19 +18,20 @@ import net.tardis.mod.common.systems.SystemAntenna;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.common.helpers.Helper;
-
 
 public class ControlPhone extends EntityControl{
 
 	public ControlPhone(TileEntityTardis tardis) {
 		super(tardis);
+		if(tardis instanceof TileEntityTardis03)
+			this.box = new AxisAlignedBB(0, 0, 0, Helper.precentToPixels(4F), 0.0625, 1);
 	}
 	
 	public ControlPhone(World world) {
 		super(world);
-		this.setSize(Helper.precentToPixels(4), Helper.precentToPixels(4));
 	}
 
 	@Override
@@ -37,6 +39,8 @@ public class ControlPhone extends EntityControl{
 		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(0, -2, 8);
 		}
+		if(tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(-14, 1, 8);
 		return Helper.convertToPixels(0,-1,-8);
 	}
 

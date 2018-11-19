@@ -10,6 +10,7 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDimChange extends EntityControl {
@@ -28,6 +29,8 @@ public class ControlDimChange extends EntityControl {
 		if(tardis instanceof TileEntityTardis01 || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(2, -2.5, 13.5);
 		}
+		if(tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(0, 0, 16);
 		return Helper.convertToPixels(-1.5, -2, -12);
 	}
 	
