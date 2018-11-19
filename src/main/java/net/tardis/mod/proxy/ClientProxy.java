@@ -63,7 +63,7 @@ import java.util.ArrayList;
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientProxy extends ServerProxy {
 
-	public static final boolean disableControlRender = true;
+	public static final boolean disableControlRender = false;
 	
 	public void registerRenders() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
