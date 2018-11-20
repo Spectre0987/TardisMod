@@ -53,13 +53,13 @@ import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlMonitor;
 import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
-import net.tardis.mod.common.entities.controls.ControlSTCButton;
-import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 import net.tardis.mod.common.entities.controls.ControlStabilizers;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlWaypoint;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
@@ -75,6 +75,7 @@ import net.tardis.mod.common.protocols.ProtocolLock;
 import net.tardis.mod.common.protocols.ProtocolRegenRoom;
 import net.tardis.mod.common.protocols.ProtocolRepair;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
+import net.tardis.mod.common.protocols.ProtocolWaypoints;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.recipes.RepairRecipes;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
@@ -165,8 +166,6 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlDimChange.class, "dim_change");
 		EntityHelper.registerStatic(ControlRandom.class, "rand_control");
 		EntityHelper.registerStatic(ControlDoor.class, "tardis_door");
-		EntityHelper.registerStatic(ControlSTCLoad.class, "stc_load");
-		EntityHelper.registerStatic(ControlSTCButton.class, "stc_button");
 		EntityHelper.registerStatic(ControlFuel.class, "fuel");
 		EntityHelper.registerStatic(ControlLandType.class, "land_type");
 		EntityHelper.registerStatic(ControlDirection.class, "direction_control");
@@ -177,6 +176,8 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlMag.class, "tardis_magnitude");
 		EntityHelper.registerStatic(ControlSonicSlot.class, "sonic_slot");
 		EntityHelper.registerStatic(ControlStabilizers.class, "stabilizers");
+		EntityHelper.registerStatic(ControlMonitor.class, "monitor");
+		EntityHelper.registerStatic(ControlWaypoint.class, "waypoint_select");
 		EntityHelper.registerProjectiles(EntityLaserRay.class, "cyber_ray");
 		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
@@ -238,6 +239,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolLock());
 		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
 		TardisProtocol.register(new ProtocolRepair());
+		TardisProtocol.register(new ProtocolWaypoints());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
