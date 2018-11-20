@@ -30,7 +30,7 @@ public class ControlStabilizers extends EntityControl{
 			return Helper.convertToPixels(-3, -3, 13);
 		}
 		if(tardis instanceof TileEntityTardis03)
-			return Helper.convertToPixels(-6.5, 1, 15);
+			return Helper.convertToPixels(0, 1, 15);
 		if(tardis.getClass() == TileEntityTardis.class)
 			return Helper.convertToPixels(-14, -4, 6);
 		return new Vec3d(0, 0, 0);
@@ -54,6 +54,8 @@ public class ControlStabilizers extends EntityControl{
 		if(tardis != null) {
 			if(tardis.getClass() == TileEntityTardis.class)
 				this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
+			if(tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
 		}
 	}
 

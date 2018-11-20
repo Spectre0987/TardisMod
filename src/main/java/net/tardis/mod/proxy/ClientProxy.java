@@ -101,10 +101,9 @@ import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlMonitor;
 import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
-import net.tardis.mod.common.entities.controls.ControlSTCButton;
-import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 import net.tardis.mod.common.entities.controls.ControlStabilizers;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
@@ -189,8 +188,6 @@ public class ClientProxy extends ServerProxy {
 			RenderingRegistry.registerEntityRenderingHandler(ControlLaunch.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlDimChange.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlRandom.class, RenderInvis::new);
-			RenderingRegistry.registerEntityRenderingHandler(ControlSTCLoad.class, RenderInvis::new);
-			RenderingRegistry.registerEntityRenderingHandler(ControlSTCButton.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlFuel.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlLandType.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlDirection.class, RenderInvis::new);
@@ -201,6 +198,7 @@ public class ClientProxy extends ServerProxy {
 			RenderingRegistry.registerEntityRenderingHandler(ControlPhone.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlSonicSlot.class, RenderSonicSlot::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlStabilizers.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlMonitor.class, RenderInvis::new);
 		}
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, RenderCorridor::new);

@@ -33,7 +33,7 @@ public class ControlFastReturn extends EntityControl{
 	public void preformAction(EntityPlayer player) {
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 		if(!world.isRemote) {
-			tardis.setSpaceTimeCoordnate(tardis.saveCoords.get( tardis.saveCoords.size() - 1));
+			tardis.setSpaceTimeCoordnate(tardis.returnLocation);
 		}
 	}
 
