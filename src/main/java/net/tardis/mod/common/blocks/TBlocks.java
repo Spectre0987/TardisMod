@@ -36,8 +36,6 @@ public class TBlocks {
 	public static List<Block> BLOCKS = new ArrayList<Block>();
 
 	public static Block tardis = register(new BlockTardis(), "tardis", false);
-	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top", false);
-	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console", false);
 	public static Block panel = register(new BlockBase(), "panel", false);
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
@@ -117,6 +115,7 @@ public class TBlocks {
 	public static Block am_sphere = register(new BlockFacingDecoration(TileEntityAmSphere::new), "am_sphere").setCreativeTab(TardisTabs.BLOCKS);
 	
 	//Exteriors
+	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top", false);
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01", false);
 	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02", false);
 	public static Block tardis_top_03 = register(new BlockTardisTop(TileEntityDoor04::new), "tardis_top_03", false);
@@ -128,6 +127,7 @@ public class TBlocks {
 
 	
 	//Consoles
+	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console", false);
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01", false);
 	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02", false);
 	public static Block console_03 = register(new BlockConsole(TileEntityTardis03::new), "console_03", false);
