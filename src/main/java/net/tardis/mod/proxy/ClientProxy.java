@@ -107,6 +107,7 @@ import net.tardis.mod.common.entities.controls.ControlRandom;
 import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 import net.tardis.mod.common.entities.controls.ControlStabilizers;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlWaypoint;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
@@ -199,6 +200,7 @@ public class ClientProxy extends ServerProxy {
 			RenderingRegistry.registerEntityRenderingHandler(ControlSonicSlot.class, RenderSonicSlot::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlStabilizers.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlMonitor.class, RenderInvis::new);
+			RenderingRegistry.registerEntityRenderingHandler(ControlWaypoint.class, RenderInvis::new);
 		}
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, RenderCorridor::new);
