@@ -37,7 +37,7 @@ public class TBlocks {
 
 	public static Block tardis = register(new BlockTardis(), "tardis", false);
 	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top", false);
-	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console");
+	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console", false);
 	public static Block panel = register(new BlockBase(), "panel", false);
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
@@ -124,7 +124,7 @@ public class TBlocks {
 	public static Block tardis_top_cc = register(new BlockTardisTop(TileEntityDoorCC::new), "tardis_top_cc", false);
     public static Block tardis_top_clock = register(new BlockTardisTop(TileEntityDoorClock::new), "tardis_top_clock", false);
     public static Block tardis_top_tt = register(new BlockTardisTop(TileEntityDoorTT::new), "tardis_top_tt", false);
-    public static Block tardis_top_wood_door = register(new BlockTardisTop(TileEntityDoorWood::new), "tardis_top_wood_door");
+    public static Block tardis_top_wood_door = register(new BlockTardisTop(TileEntityDoorWood::new), "tardis_top_wood_door", false);
 
 	
 	//Consoles

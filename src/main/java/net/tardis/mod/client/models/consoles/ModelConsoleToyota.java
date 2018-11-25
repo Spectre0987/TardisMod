@@ -1434,7 +1434,6 @@ public class ModelConsoleToyota extends ModelBase {
 		RotorGlow2.render(scale);
 		RotorGlow5.render(scale);
 		Minecraft.getMinecraft().entityRenderer.enableLightmap();
-		MoveMeUpAndDownInFlight.render(scale);
 		MoveMeDownAndUpInFlight.render(scale);
 		GlStateManager.popMatrix();
 	}
@@ -1448,5 +1447,9 @@ public class ModelConsoleToyota extends ModelBase {
 	@Override
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
+	}
+	
+	public void renderRotor(float scale) {
+		MoveMeUpAndDownInFlight.render(scale);
 	}
 }

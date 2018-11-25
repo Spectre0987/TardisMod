@@ -23,6 +23,10 @@ public class RenderConsole03 extends TileEntitySpecialRenderer<TileEntityTardis0
 		GlStateManager.rotate(180, 0, 0, 1);
 		this.bindTexture(new ResourceLocation(Tardis.MODID, "textures/consoles/toyota.png"));
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.pushMatrix();
+		if(te.isInFlight())GlStateManager.translate(0, - 0.125 + Math.cos(te.getWorld().getTotalWorldTime() % 50 * 0.5) / 25, 0); //TODO: Slow this down but keep the translation size - maybe don't use cosine?
+		model.renderRotor(0.0625F);
+		GlStateManager.popMatrix();
 		this.bindTexture(CONTROLS);
 		GlStateManager.translate(0, -1, 0);
 		controls.render(null, 0, 0, 0, 0, 0, 0.0625F);
