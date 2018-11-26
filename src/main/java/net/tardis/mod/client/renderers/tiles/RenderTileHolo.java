@@ -23,12 +23,10 @@ public class RenderTileHolo extends TileEntitySpecialRenderer<TileEntityHoloproj
 		GlStateManager.scale(0.06, 0.06, 0.06);
 		try {
 			mc.entityRenderer.disableLightmap();
-			GlStateManager.blendFunc(SourceFactor.SRC_COLOR, DestFactor.DST_COLOR);
-			GlStateManager.color(0, 0, 1F);
 			renderShell.doRender(te, 0, 0, 0, 0, 0, null);
 			mc.entityRenderer.enableLightmap();
 		}
-		catch(Exception e) {}
+		catch(Exception e) {e.printStackTrace();}
 		GlStateManager.popMatrix();
 	}
 
