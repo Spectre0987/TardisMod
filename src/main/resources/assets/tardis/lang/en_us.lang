@@ -170,8 +170,7 @@ protocol.tardis.regenroom=Regenerate Console Room
 protocol.tardis.lock=Double Lock Doors
 protocol.tardis.destroy.rift=Consume Dimensional Rift
 protocol.tardis.repair=Repair the TARDIS
-protocol.tardis.waypoint.save=Save a Waypoint
-protocol.tardis.waypoint.load=Load Waypoint
+protocol.tardis.waypoint.load=Waypoints
 
 tardis.repair.false=TARDIS is no longer repairing
 tardis.repair.true=TARDIS is repairing

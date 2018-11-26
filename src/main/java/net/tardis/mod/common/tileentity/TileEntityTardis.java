@@ -298,6 +298,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		for(BaseSystem sys : systems) {
 			sys.onUpdate(this.world, getPos());
 		}
+		
+		this.setLocation(this.getCurrentPosOnPath());
 	}
 	
 	public void updateServer() {
@@ -457,7 +459,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void setDesination(BlockPos pos, int dimension) {
 		if (Helper.isThisBlockBehindTheWorldBorder(pos, dimension)){
-			this.tardisDestination = pos.down();
+			this.tardisDestination = pos.toImmutable();
 			if(Helper.isDimensionBlocked(dimension))
 				dimension = 0;
 			this.destDim = dimension;
