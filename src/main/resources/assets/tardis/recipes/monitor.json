@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "ACA",
+    "RIR"
+  ],
+  "key": {
+    "I":{
+      "item":"minecraft:iron_block"
+    },
+    "R":{
+      "item":"minecraft:redstone"
+    },
+    "C":{
+      "item":"tardis:circuts"
+    },
+    "A":{
+      "item":"tardis:artron_capacitor"
+    },
+    "G":{
+      "item":"minecraft:glass_pane"
+    }
+  },
+  "result": {
+    "item": "tardis:hellbent_monitor"
+  }
+}
