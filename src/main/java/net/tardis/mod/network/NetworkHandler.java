@@ -19,6 +19,8 @@ import net.tardis.mod.network.packets.MessageSyncTardises;
 import net.tardis.mod.network.packets.MessageTelepathicCircut;
 import net.tardis.mod.network.packets.MessageTeleport;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
+import net.tardis.mod.network.packets.MessageWaypointLoad;
+import net.tardis.mod.network.packets.MessageWaypointSave;
 
 public class NetworkHandler {
 
@@ -38,6 +40,8 @@ public class NetworkHandler {
         NETWORK.registerMessage(MessageCompanion.Handler.class, MessageCompanion.class, 11, Side.SERVER);
         NETWORK.registerMessage(MessageMissControl.Handler.class, MessageMissControl.class, 12, Side.CLIENT);
         NETWORK.registerMessage(MessageSyncTardises.Handler.class, MessageSyncTardises.class, 13, Side.CLIENT);
+        NETWORK.registerMessage(MessageWaypointSave.Handler.class, MessageWaypointSave.class, 14, Side.SERVER);
+        NETWORK.registerMessage(MessageWaypointLoad.Handler.class, MessageWaypointLoad.class, 15, Side.SERVER);
     }
 
 

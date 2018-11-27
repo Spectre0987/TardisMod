@@ -5,7 +5,7 @@
     },
     "variants":{
         "inventory":[{}],
-        "facing=normal":[{}],
+        "normal":[{}],
         "facing=north":[{}],
         "facing=east":[{}],
         "facing=west":[{}],

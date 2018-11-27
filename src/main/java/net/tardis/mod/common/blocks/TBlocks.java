@@ -18,6 +18,7 @@ import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
@@ -35,8 +36,6 @@ public class TBlocks {
 	public static List<Block> BLOCKS = new ArrayList<Block>();
 
 	public static Block tardis = register(new BlockTardis(), "tardis", false);
-	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top", false);
-	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console");
 	public static Block panel = register(new BlockBase(), "panel", false);
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
@@ -116,6 +115,7 @@ public class TBlocks {
 	public static Block am_sphere = register(new BlockFacingDecoration(TileEntityAmSphere::new), "am_sphere").setCreativeTab(TardisTabs.BLOCKS);
 	
 	//Exteriors
+	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top", false);
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01", false);
 	public static Block tardis_top_02 = register(new BlockTardisTop(TileEntityDoor03::new), "tardis_top_02", false);
 	public static Block tardis_top_03 = register(new BlockTardisTop(TileEntityDoor04::new), "tardis_top_03", false);
@@ -123,12 +123,14 @@ public class TBlocks {
 	public static Block tardis_top_cc = register(new BlockTardisTop(TileEntityDoorCC::new), "tardis_top_cc", false);
     public static Block tardis_top_clock = register(new BlockTardisTop(TileEntityDoorClock::new), "tardis_top_clock", false);
     public static Block tardis_top_tt = register(new BlockTardisTop(TileEntityDoorTT::new), "tardis_top_tt", false);
-    public static Block tardis_top_wood_door = register(new BlockTardisTop(TileEntityDoorWood::new), "tardis_top_wood_door");
+    public static Block tardis_top_wood_door = register(new BlockTardisTop(TileEntityDoorWood::new), "tardis_top_wood_door", false);
 
 	
 	//Consoles
+	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console", false);
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01", false);
 	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02", false);
+	public static Block console_03 = register(new BlockConsole(TileEntityTardis03::new), "console_03", false);
 
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block", false);
 

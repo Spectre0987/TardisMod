@@ -1,5 +1,7 @@
 package net.tardis.mod.common.items;
 
+import java.util.List;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +17,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
-
-import java.util.List;
 
 public class ItemRemote extends ItemBase {
 	
@@ -36,12 +37,13 @@ public class ItemRemote extends ItemBase {
             TileEntity tte = worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos(player.getHeldItem(hand)));
 			if(tte != null && tte instanceof TileEntityTardis) {
 				TileEntityTardis tardis = ((TileEntityTardis)tte);
-				tardis.setDesination(pos.up(2), player.dimension);
+				tardis.getSystem(SystemStabilizers.class).setOn(true);
+				tardis.setDesination(pos.up(1), player.dimension);
 				tardis.setFacing(player.getHorizontalFacing().getOpposite());
 				tardis.startFlight();
 			}
 		}
-		return EnumActionResult.PASS;
+		return EnumActionResult.SUCCESS;
 	}
 
 	/*@Override

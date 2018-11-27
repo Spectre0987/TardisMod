@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlY extends EntityControl {
@@ -24,6 +25,8 @@ public class ControlY extends EntityControl {
 		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-0.5, -2.5, -13.5);
 		}
+		if(tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(0, 3, 9);
 		return Helper.convertToPixels(-7.5, -0.5, 4.5);
 	}
 	
@@ -37,5 +40,11 @@ public class ControlY extends EntityControl {
 			direction = player.isSneaking() ? -1 : 1;
 		}
 	}
-	
+	@Override
+	public void init(TileEntityTardis tardis) {
+		if(tardis != null) {
+			if(tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(2F));
+		}
+	}
 }

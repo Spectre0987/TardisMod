@@ -12,6 +12,7 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDoorSwitch extends EntityControl{
@@ -32,6 +33,8 @@ public class ControlDoorSwitch extends EntityControl{
 		if(tardis instanceof TileEntityTardis01 || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-13.5, -3, -4.5);
 		}
+		if(tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(-4, 2, -16);
 		return Helper.convertToPixels(0,-2,11);
 	}
 
@@ -66,7 +69,15 @@ public class ControlDoorSwitch extends EntityControl{
 
 	@Override
 	public String getControlName() {
-		return "doorswitch";
+		return this.getDisplayName().getFormattedText();
+	}
+	
+	@Override
+	public void init(TileEntityTardis tardis) {
+		if(tardis != null) {
+			if(tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
+		}
 	}
 
 }

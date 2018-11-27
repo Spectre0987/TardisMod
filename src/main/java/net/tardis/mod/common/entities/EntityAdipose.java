@@ -1,7 +1,11 @@
 package net.tardis.mod.common.entities;
 
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -72,6 +76,7 @@ public class EntityAdipose extends EntityMob {
     @Override
     public void updateRidden() {
         super.updateRidden();
+        if(this.getRidingEntity() == null) return;
         if (this.getRidingEntity().isSneaking()){
             dismountRidingEntity();
         }

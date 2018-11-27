@@ -3,6 +3,7 @@ package net.tardis.mod.handlers;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import com.google.gson.GsonBuilder;

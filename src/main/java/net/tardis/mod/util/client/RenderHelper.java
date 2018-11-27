@@ -1,10 +1,22 @@
 package net.tardis.mod.util.client;
 
+import java.lang.reflect.Field;
+import java.nio.FloatBuffer;
+
+import javax.annotation.Nullable;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -16,11 +28,6 @@ import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.proxy.ClientProxy;
-import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nullable;
-import java.lang.reflect.Field;
-import java.nio.FloatBuffer;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
@@ -156,8 +163,10 @@ public class RenderHelper {
 	public static void setRenderGlobalWorld(WorldClient world) {
 		try {
 			Field f = Minecraft.getMinecraft().renderGlobal.getClass().getDeclaredField(Tardis.getIsDev() ? "world" : "field_72769_h");
-			f.setAccessible(true);
-			f.set(Minecraft.getMinecraft().renderGlobal, world);
+			if(f != null) {
+				f.setAccessible(true);
+				f.set(Minecraft.getMinecraft().renderGlobal, world);
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
