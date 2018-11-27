@@ -7,6 +7,10 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.client.renderers.sky.RenderVoid;
 
 public class WorldProviderTardis extends WorldProvider {
 
@@ -76,5 +80,16 @@ public class WorldProviderTardis extends WorldProvider {
 	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
 		return WorldSleepResult.ALLOW;
 	}
-	
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IRenderHandler getCloudRenderer() {
+		return new RenderVoid();
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IRenderHandler getSkyRenderer() {
+		return new RenderVoid();
+	}
 }

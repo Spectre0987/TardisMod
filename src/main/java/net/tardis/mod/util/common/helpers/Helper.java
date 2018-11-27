@@ -22,6 +22,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.tardis.mod.api.dimensions.IBlockedDimension;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
@@ -236,6 +237,6 @@ public class Helper {
 	}
 
 	public static boolean isThisBlockBehindTheWorldBorder(BlockPos pos, int dim){
-		return Minecraft.getMinecraft().world.getWorldBorder().contains(pos) || dim != 0;
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(dim).getWorldBorder().contains(pos);
 	}
 }

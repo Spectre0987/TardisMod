@@ -14,6 +14,11 @@ public class SystemFluidLinks extends BaseSystem{
 	
 	int ticksToHurt = 0;
 	
+	public SystemFluidLinks() {
+		this.ticksToHurt = 0;
+		this.setHealth(1F);
+	}
+	
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
 		if(this.getHealth() <= 0.00F && ticksToHurt > 0) {

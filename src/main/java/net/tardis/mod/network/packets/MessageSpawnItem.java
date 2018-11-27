@@ -1,6 +1,7 @@
 package net.tardis.mod.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -34,7 +35,10 @@ public class MessageSpawnItem implements IMessage{
 		public IMessage onMessage(MessageSpawnItem message, MessageContext ctx) {
             ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 EntityPlayerMP player = ctx.getServerHandler().player;
-                if (player != null) player.inventory.addItemStackToInventory(message.stack);
+                if (player != null) {
+                	EntityItem item = new EntityItem(player.world, player.posX, player.posY, player.posZ, message.stack);
+                	player.world.spawnEntity(item);
+                }
             });
 			return null;
 		}}

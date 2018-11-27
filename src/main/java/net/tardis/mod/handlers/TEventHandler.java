@@ -1,13 +1,19 @@
 package net.tardis.mod.handlers;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
@@ -27,7 +33,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -51,8 +56,6 @@ import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.data.TimeLord;
-import net.tardis.mod.common.entities.EntityDalekCasing;
-import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
@@ -67,11 +70,6 @@ import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.HashMap;
 
 @Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class TEventHandler {
@@ -135,24 +133,8 @@ public class TEventHandler {
 		event.getRegistry().register(new RecipeRemote("remote_bind"));
 	}
 	
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
-	public static void stopRender(RenderPlayerEvent.Pre event) {
-		if (event.getEntityPlayer().getRidingEntity() != null && event.getEntityPlayer().getRidingEntity() instanceof EntityTardis || event.getEntityPlayer().getRidingEntity() instanceof EntityDalekCasing) {
-			event.setCanceled(true);
-		}
-	}
-	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void stopHurt(LivingHurtEvent event) {
-		if (event.getEntityLiving().getRidingEntity() != null) {
-			Entity e = event.getEntityLiving().getRidingEntity();
-			event.setCanceled(e instanceof EntityTardis || e instanceof EntityDalekCasing);
-			if(e instanceof EntityDalekCasing) {
-                e.attackEntityFrom(event.getSource(), event.getAmount());
-			}
-		}
 		if(event.getSource().equals(Tardis.SUFFICATION)) {
 			if(event.getEntityLiving() instanceof EntityPlayer) {
 				int count = 0;

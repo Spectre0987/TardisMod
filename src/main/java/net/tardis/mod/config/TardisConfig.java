@@ -30,19 +30,28 @@ public class TardisConfig {
 		public int[] bDims = new int[] {};
 		
 		@Config.LangKey("config.dim.usewhitelist")
+		@Config.Comment("If this is enabled, only a specific list of dimensions can be travelled to via the Tardis")
 		public boolean USE_WHITELIST = false;
 		
 		@Config.LangKey("config.setdim")
+		@Config.Comment("If this is enabled, You can set dimensions manually below")
 		public boolean setDimension = false;
 		
 		@Config.LangKey("config.tDim")
+		@Config.Comment("Tardis Dimension ID")
 		public int tardisDimension = 10;
 		
 		@Config.LangKey("config.bhDim")
+		@Config.Comment("Space Dimension ID")
 		public int spaceDimension = 22;
 
 		@Config.LangKey("config.telosDim")
+		@Config.Comment("Telos Dimension ID")
 		public int telosDimension = 23;
+		
+		@Config.LangKey("config.moonDim")
+		@Config.Comment("Moon Dimension ID")
+		public int moonDimension = 24;
 	}
 	
 	public static class UseEntities {
@@ -64,6 +73,7 @@ public class TardisConfig {
 		public boolean invasions = true;
 		
 		@Config.LangKey("config.misc.givekey")
+		@Config.Comment("If enabled, this will give the player a Tardis coral on their first join")
 		public boolean givePlayerKey = false;
 		
 		@Config.LangKey("config.misc.maxrand")
@@ -81,9 +91,11 @@ public class TardisConfig {
 	public static class Boti{
 		
 		@Config.LangKey("config.boti.enabled")
+		@Config.Comment("This is used to toggle the bigger on the inside effect")
 		public boolean enabled = true;
 		
 		@Config.LangKey("config.boti.skip")
+		@Config.Comment("This is used to block any blocks from specfic mods from being rendered in the Bigger on the inside effect (For compatibility)")
 		public String[] modids = {};
 	}
 

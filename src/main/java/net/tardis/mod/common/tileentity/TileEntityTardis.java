@@ -52,24 +52,23 @@ import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
 import net.tardis.mod.common.entities.controls.ControlFastReturn;
-import net.tardis.mod.common.entities.controls.ControlFlight;
 import net.tardis.mod.common.entities.controls.ControlFuel;
 import net.tardis.mod.common.entities.controls.ControlLandType;
 import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlMag;
 import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
-import net.tardis.mod.common.entities.controls.ControlSTCButton;
-import net.tardis.mod.common.entities.controls.ControlSTCLoad;
 import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 import net.tardis.mod.common.entities.controls.ControlStabilizers;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlWaypoint;
 import net.tardis.mod.common.entities.controls.ControlX;
 import net.tardis.mod.common.entities.controls.ControlY;
 import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
+import net.tardis.mod.common.misc.TardisControlFactory;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemStabilizers;
@@ -120,24 +119,39 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public BaseSystem[] systems;
 	private EnumTardisState currentState = EnumTardisState.NORMAL;
 	public double power = 0;
-	public List<Vec3d> coordList = new ArrayList<>();
 	private boolean isLocked = false;
 	//Is the TARDIS 'parked' in the Vortex?
 	private boolean parkingOrbit = false;
 	private float hullHealth = 1F;
 	private EnumCourseCorrect courseCorrect = EnumCourseCorrect.NONE;
 	private boolean repairing = false;
+	private float rechargeRate = 0.0001F;
+	public List<TardisControlFactory> controlClases = new ArrayList<>();
+	public int waypointIndex = 0;
+	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
 	
 	public TileEntityTardis() {
 		if(systems == null) {
 			this.systems = this.createSystems();
 		}
-		if(this.getClass() == TileEntityTardis.class) {
-			this.coordList.add(Helper.convertToPixels(-8.5, -1.5, -8.25));
-			this.coordList.add(Helper.convertToPixels(-8.75, -1.5, -6.75));
-			this.coordList.add(Helper.convertToPixels(-9.5, -1.5, -5.75));
-			this.coordList.add(Helper.convertToPixels(-10.25, -1.5, -4.5));
-		}
+		this.controlClases.add(ControlDimChange::new);
+		this.controlClases.add(ControlDirection::new);
+		this.controlClases.add(ControlDoorSwitch::new);
+		this.controlClases.add(ControlFastReturn::new);
+		this.controlClases.add(ControlFuel::new);
+		this.controlClases.add(ControlLandType::new);
+		this.controlClases.add(ControlLaunch::new);
+		this.controlClases.add(ControlMag::new);
+		this.controlClases.add(ControlPhone::new);
+		this.controlClases.add(ControlRandom::new);
+		this.controlClases.add(ControlStabilizers::new);
+		this.controlClases.add(ControlTelepathicCircuts::new);
+		this.controlClases.add(ControlX::new);
+		this.controlClases.add(ControlY::new);
+		this.controlClases.add(ControlZ::new);
+		this.controlClases.add(ControlWaypoint::new);
+		if(this.getClass() == TileEntityTardis.class)
+			this.controlClases.add(ControlSonicSlot::new);
 	}
 
 
@@ -184,7 +198,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (this.isFueling()) {
 				if(!world.isRemote) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws) ? 0.0005F : 0.0001F));
+					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws) ? 0.0005F : this.rechargeRate));
 				}
 			}
 			if(this.getRepairing()) {
@@ -284,6 +298,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		for(BaseSystem sys : systems) {
 			sys.onUpdate(this.world, getPos());
 		}
+		
+		this.setLocation(this.getCurrentPosOnPath());
 	}
 	
 	public void updateServer() {
@@ -378,6 +394,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.currentState = Enum.valueOf(EnumTardisState.class, tardisTag.getString(NBT.TARDIS_STATE_ID));
 			this.isLocked = tardisTag.getBoolean(NBT.IS_LOCKED);
 			this.hullHealth = tardisTag.getFloat(NBT.HEALTH);
+			this.waypointIndex = tardisTag.getInteger(NBT.WAYPOINT_INDEX);
 		}
 	}
 	
@@ -433,6 +450,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setString(NBT.TARDIS_STATE_ID, this.currentState.name());
 			tardisTag.setBoolean(NBT.IS_LOCKED, this.isLocked);
 			tardisTag.setFloat(NBT.HEALTH, this.hullHealth);
+			tardisTag.setInteger(NBT.WAYPOINT_INDEX, this.waypointIndex);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -441,7 +459,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void setDesination(BlockPos pos, int dimension) {
 		if (Helper.isThisBlockBehindTheWorldBorder(pos, dimension)){
-			this.tardisDestination = pos.down();
+			this.tardisDestination = pos.toImmutable();
 			if(Helper.isDimensionBlocked(dimension))
 				dimension = 0;
 			this.destDim = dimension;
@@ -528,7 +546,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(oWorld.getTileEntity(tardisLocation.up()) != null) {				
 				((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).setDemat();
 			}
-			this.saveCoords.set(this.saveCoords.size() - 1, new SpaceTimeCoord(this.getLocation(), this.dimension));
+			this.returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "Return Location");
 			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunk(getLocation()).getPos());
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
 		}
@@ -582,6 +600,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setString("course_correct", this.getCourseCorrect().name());
 		tag.setBoolean(NBT.IS_LOCKED, this.isLocked);
 		tag.setFloat(NBT.HEALTH, this.hullHealth);
+		tag.setInteger(NBT.WAYPOINT_INDEX, this.waypointIndex);
 		return tag;
 	}
 	
@@ -621,6 +640,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.setCourseEvent(Enum.valueOf(EnumCourseCorrect.class, tag.getString("course_correct")));
 			this.isLocked = tag.getBoolean(NBT.IS_LOCKED);
 			this.hullHealth = tag.getFloat(NBT.HEALTH);
+			this.waypointIndex = tag.getInteger(NBT.WAYPOINT_INDEX);
 		}
 	}
 	
@@ -642,28 +662,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if(!world.isRemote) {
 			if (controls == null || controls.length == 0) {
 				List<EntityControl> ec = new ArrayList<EntityControl>();
-				ec.add(new ControlLaunch(this));
-				ec.add(new ControlX(this));
-				ec.add(new ControlY(this));
-				ec.add(new ControlZ(this));
-				ec.add(new ControlDimChange(this));
-				ec.add(new ControlRandom(this));
-				ec.add(new ControlSTCLoad(this));
-				ec.add(new ControlFlight(this));
-				ec.add(new ControlFuel(this));
-				ec.add(new ControlLandType(this));
-				ec.add(new ControlDirection(this));
-				ec.add(new ControlFastReturn(this));
-				ec.add(new ControlTelepathicCircuts(this));
-				ec.add(new ControlDoorSwitch(this));
-				ec.add(new ControlMag(this));
-				ec.add(new ControlPhone(this));
-				ec.add(new ControlSonicSlot(this));
-				ec.add(new ControlStabilizers(this));
-				int id = 0;
-				for(Vec3d pos : this.coordList) {
-					ec.add(new ControlSTCButton(this, id, pos));
-					++id;
+				for(TardisControlFactory cont : this.controlClases) {
+					ec.add(cont.createControl(this));
 				}
 				for (EntityControl con : ec) {
 					con.setPosition(this.getPos().getX() + con.getOffset(this).x + 0.5, this.getPos().getY() + con.getOffset(this).y + 1, this.getPos().getZ() + con.getOffset(this).z + 0.5);
@@ -742,6 +742,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public static class NBT {
+		public static final String WAYPOINT_INDEX = "waypoint_index";
 		public static final String IS_LOCKED = "is_locked";
 		public static final String TARDIS_STATE_ID = "tardis_state_id";
 		public static final String SYSTEM_LIST = "system_list";
@@ -952,8 +953,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			player.connection.setPlayerLocation(pos.x, pos.y, pos.z, Helper.get360FromFacing(face), 0);
 		}
 		else if(!(entity instanceof EntityPlayer)){
-			entity.setPosition(pos.x, pos.y, pos.z);
-			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
+			Entity e = entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
+			e.setPosition(pos.x, pos.y, pos.z);
 		}
 	}
 	

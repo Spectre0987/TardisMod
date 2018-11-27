@@ -17,19 +17,19 @@ import net.tardis.mod.common.systems.SystemAntenna;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.common.helpers.Helper;
-
 
 public class ControlPhone extends EntityControl{
 
 	public ControlPhone(TileEntityTardis tardis) {
 		super(tardis);
+		this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
 	}
 	
 	public ControlPhone(World world) {
 		super(world);
-		this.setSize(Helper.precentToPixels(4), Helper.precentToPixels(4));
 	}
 
 	@Override
@@ -37,6 +37,8 @@ public class ControlPhone extends EntityControl{
 		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(0, -2, 8);
 		}
+		if(tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(-11.5, 1, 9.5);
 		return Helper.convertToPixels(0,-1,-8);
 	}
 
@@ -100,4 +102,12 @@ public class ControlPhone extends EntityControl{
 			}
 		}
 	}
+
+	@Override
+	public void init(TileEntityTardis tardis) {
+		if(tardis != null) {
+			this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
+		}
+	}
+	
 }

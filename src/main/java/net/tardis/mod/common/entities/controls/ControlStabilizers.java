@@ -10,6 +10,7 @@ import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlStabilizers extends EntityControl{
@@ -28,6 +29,10 @@ public class ControlStabilizers extends EntityControl{
 		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-3, -3, 13);
 		}
+		if(tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(0, 1, 15);
+		if(tardis.getClass() == TileEntityTardis.class)
+			return Helper.convertToPixels(-14, -4, 6);
 		return new Vec3d(0, 0, 0);
 	}
 
@@ -41,6 +46,16 @@ public class ControlStabilizers extends EntityControl{
 				player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.STABILIZERS_ON + stab.isOn()).getFormattedText()), true);
 			}
 			else stab.setOn(false);
+		}
+	}
+	
+	@Override
+	public void init(TileEntityTardis tardis) {
+		if(tardis != null) {
+			if(tardis.getClass() == TileEntityTardis.class)
+				this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
+			if(tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
 		}
 	}
 

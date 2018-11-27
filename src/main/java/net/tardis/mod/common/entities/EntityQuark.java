@@ -46,6 +46,6 @@ public class EntityQuark extends EntityMob implements IRangedAttackMob {
 
     @Override
     public void setSwingingArms(boolean b) {
-        //what even is this for
+    
     }
 }

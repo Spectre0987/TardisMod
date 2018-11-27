@@ -5,13 +5,15 @@ import net.minecraft.util.math.BlockPos;
 
 public class SpaceTimeCoord {
 	
-	public static final SpaceTimeCoord ORIGIN = new SpaceTimeCoord(BlockPos.ORIGIN, 0);
+	public static final SpaceTimeCoord ORIGIN = new SpaceTimeCoord(BlockPos.ORIGIN, 0, "None");
 	private BlockPos pos;
 	private int dimension;
+	public String name = "None";
 	
-	public SpaceTimeCoord(BlockPos p, int dim) {
+	public SpaceTimeCoord(BlockPos p, int dim, String name) {
 		this.dimension = dim;
 		pos = p.toImmutable();
+		this.name = name;
 	}
 	
 	public BlockPos getPos() {
@@ -23,12 +25,13 @@ public class SpaceTimeCoord {
 	}
 	
 	public static SpaceTimeCoord readFromNBT(NBTTagCompound tag) {
-		return new SpaceTimeCoord(BlockPos.fromLong(tag.getLong("stcPos")), tag.getInteger("stcDim"));
+		return new SpaceTimeCoord(BlockPos.fromLong(tag.getLong("stcPos")), tag.getInteger("stcDim"), tag.getString("name"));
 	}
 	
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		tag.setLong("stcPos", getPos().toLong());
 		tag.setInteger("stcDim", getDimension());
+		tag.setString("name", name);
 		return tag;
 	}
 	

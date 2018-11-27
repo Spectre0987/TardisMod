@@ -21,8 +21,10 @@ public class WorldGenTardis implements IWorldGenerator {
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		if(random.nextInt(100) < 90) {
-			CINNABAR_GEN.generate(world, random, new BlockPos(chunkX * 16, random.nextInt(80), chunkZ * 16).add(8, 0, 8));
+		for(int chances = 0; chances < 5; ++chances) {
+			if(random.nextInt(100) < 90) {
+				CINNABAR_GEN.generate(world, random, new BlockPos(chunkX * 16, random.nextInt(80), chunkZ * 16).add(8, 0, 8));
+			}
 		}
 		if(random.nextInt(100) < 70) {
 			RUBY_GEN.generate(world, random, new BlockPos(chunkX * 16, random.nextInt(80), chunkZ * 16).add(8, 0, 8));

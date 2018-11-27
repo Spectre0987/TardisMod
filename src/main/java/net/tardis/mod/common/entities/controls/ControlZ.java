@@ -1,12 +1,12 @@
 package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlZ extends EntityControl {
@@ -25,6 +25,8 @@ public class ControlZ extends EntityControl {
 		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-2, -2.5, -13.5);
 		}
+		if(tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(1.5, 3, 9);
 		return Helper.convertToPixels(-7, -0.5, 5.5);
 	}
 	
@@ -38,17 +40,15 @@ public class ControlZ extends EntityControl {
 			direction = player.isSneaking() ? -1 : 1;
 		}
 	}
-	
+
 	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
-		
+	public void init(TileEntityTardis tardis) {
+		if(tardis != null) {
+			if(tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(2F));
+		}
 	}
 	
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 }
