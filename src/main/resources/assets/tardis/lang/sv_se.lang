@@ -170,8 +170,7 @@ protocol.tardis.regenroom=Återskapa Konsol Rummet
 protocol.tardis.lock=Dubbla Lås Dörrar
 protocol.tardis.destroy.rift=Konsumera dimensionell klyfta
 protocol.tardis.repair=Reparera TARDIS
-protocol.tardis.waypoint.save=Spara en navigeringspunkt
-protocol.tardis.waypoint.load=Ladda navigeringspunkt
+protocol.tardis.waypoint.load=Vägpunkter
 
 tardis.repair.false=TARDIS reparerar inte längre
 tardis.repair.true=TARDIS reparerar
