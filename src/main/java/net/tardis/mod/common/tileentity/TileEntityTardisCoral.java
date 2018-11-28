@@ -73,7 +73,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable{
 				tardisWorld.setBlockState(pos, TBlocks.console_02.getDefaultState());
 				TileEntityTardis tardis = (TileEntityTardis)tardisWorld.getTileEntity(pos);
 				this.getWorld().setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-				tardis.setDesination(getPos().up(), this.getWorld().provider.getDimension());
+				tardis.setDesination(getPos(), this.getWorld().provider.getDimension());
 				tardis.startFlight();
 				tardis.travel();
 				ItemStack keyStack = new ItemStack(TItems.key);
