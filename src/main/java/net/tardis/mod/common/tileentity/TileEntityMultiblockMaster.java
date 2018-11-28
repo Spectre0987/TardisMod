@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class TileEntityMultiblockMaster extends TileEntity{
+public class TileEntityMultiblockMaster extends TileEntityMultiblock{
 	
 	private List<BlockPos> children = new ArrayList<>();
 	
