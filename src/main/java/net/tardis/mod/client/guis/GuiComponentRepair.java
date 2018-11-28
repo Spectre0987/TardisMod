@@ -24,6 +24,7 @@ public class GuiComponentRepair extends GuiContainer{
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		this.drawDefaultBackground();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 		this.drawTexturedModalRect(res.getScaledWidth() / 2 - WIDTH / 2, res.getScaledHeight() / 2 - HEIGHT / 2, 0, 0, WIDTH, HEIGHT);
 		this.drawTexturedModalRect(res.getScaledWidth() / 2 - 3, res.getScaledHeight() / 2 - 48, 177, 14, Math.round(22 * (float)(200 - cont.progress) / 200), 16);
