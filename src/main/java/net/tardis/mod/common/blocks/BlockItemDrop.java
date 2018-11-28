@@ -10,19 +10,20 @@ import net.minecraft.world.IBlockAccess;
 public class BlockItemDrop extends BlockBase {
 	
 	private Item item;
-	private int count = 1;
-	
-	public BlockItemDrop(Item item) {
-		this.item = item;
-
-		this.setResistance(1F);
-	}
+	private int count;
 	
 	public BlockItemDrop(Item item, int count) {
-		this(item);
+		this.item = item;
 		this.count = count;
+		this.setResistance(1F);
 	}
 
+	
+	public BlockItemDrop(Item item) {
+		this(item, 1);
+	}
+	
+	
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {
 		drops.add(new ItemStack(item, count));
