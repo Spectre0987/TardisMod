@@ -17,16 +17,13 @@ public class BlockItemDrop extends BlockBase {
 		this.count = count;
 		this.setResistance(1F);
 	}
-
 	
 	public BlockItemDrop(Item item) {
 		this(item, 1);
-	}
-	
+	}	
 	
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {
 		drops.add(new ItemStack(item, count));
 	}
-
 }
