@@ -15,6 +15,8 @@ public class TileEntityMultiblockMaster extends TileEntityMultiblock{
 	
 	private List<BlockPos> children = new ArrayList<>();
 	
+	public TileEntityMultiblockMaster() {}
+	
 	public List<BlockPos> getChildren() {
 		return children;
 	}

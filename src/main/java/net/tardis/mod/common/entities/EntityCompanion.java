@@ -1,5 +1,7 @@
 package net.tardis.mod.common.entities;
 
+import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -44,8 +46,6 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-import java.util.UUID;
-
 public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
@@ -59,12 +59,19 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	public EntityCompanion(World worldIn) {
 		super(worldIn);
 		this.stepHeight = 1;
+	}
+
+	
+	@Override
+	protected void initEntityAI() {
+		super.initEntityAI();
 		this.tasks.addTask(2, new EntityAIFollowOwner(this, 1D));
 		this.tasks.addTask(3, new EntityAIWander(this, 0.5D));
 		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityPlayer.class, 30));
 		this.tasks.addTask(1, new EntityAIEnterTardis(this, 1.0D));
 		this.tasks.addTask(0, new EntityAISwimming(this));
 	}
+
 
 	@Override
 	protected void applyEntityAttributes() {
@@ -268,7 +275,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		NONE("", "");
 		
 		ResourceLocation skin;
-		String formattedName;
+		String formattedName = "";
 		float[] size = {0.95F, 1.75F};
 		
 		@SideOnly(Side.CLIENT)

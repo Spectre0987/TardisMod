@@ -99,6 +99,8 @@ import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityLight;
+import net.tardis.mod.common.tileentity.TileEntityMultiblock;
+import net.tardis.mod.common.tileentity.TileEntityMultiblockMaster;
 import net.tardis.mod.common.tileentity.TileEntitySonicGun;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
@@ -205,6 +207,9 @@ public class Tardis {
 		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		registerTileEntity(TileEntityChair.class, "chair");
 		registerTileEntity(TileEntityAmSphere.class, "am_sphere");
+		
+		registerTileEntity(TileEntityMultiblockMaster.class, "multi_master");
+		registerTileEntity(TileEntityMultiblock.class, "multi");
 		
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
 		
