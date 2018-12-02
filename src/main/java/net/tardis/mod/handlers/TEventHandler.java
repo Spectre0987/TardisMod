@@ -56,6 +56,7 @@ import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.data.TimeLord;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
@@ -242,7 +243,7 @@ public class TEventHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
-		if(e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
+		if(e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().dimension != TDimensions.TARDIS_ID && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
 			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
 		}
 	}
