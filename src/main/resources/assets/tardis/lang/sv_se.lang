@@ -228,6 +228,7 @@ entity.tardis_door_control.name=DörrBrytare
 entity.tardis_magnitude.name=Koordinat för steg modifierare
 entity.tardis_phone.name=Kommunikatör
 entity.stabilizers.name=Stabilisatorer
+entity.monitor.name=Övervaka
 
 tardis.stabilizers.true=Stabilisatorer på
 tardis.stabilizers.false=Stabilisatorer av
