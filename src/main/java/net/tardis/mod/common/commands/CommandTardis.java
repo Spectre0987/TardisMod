@@ -1,5 +1,10 @@
 package net.tardis.mod.common.commands;
 
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -14,13 +19,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.TardisSystems;
+import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.util.common.helpers.TardisHelper;
-
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
 public class CommandTardis extends CommandBase {
     /**
@@ -38,7 +41,7 @@ public class CommandTardis extends CommandBase {
      */
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/tardis [grow | transfer | interior | summon | remove]";
+        return "/tardis [grow | transfer | interior | summon | remove | restoresys]";
     }
 
     /**
@@ -91,6 +94,18 @@ public class CommandTardis extends CommandBase {
                     } else {
                         throw new CommandException("You do not have permission to run this command.");
                     }
+                }
+                
+                if(alias.equals("restoresys")) {
+                	BaseSystem system = TardisSystems.createFromName(args[1]);
+                	if(system != null && TardisHelper.hasTardis(player.getPersistentID())) {
+                		TileEntityTardis tardis = (TileEntityTardis) player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(player.getUniqueID()));
+                		if(tardis != null) {
+                			BaseSystem sys = tardis.getSystem(system.getClass());
+                			if(sys != null)
+                				sys.setHealth(1F);
+                		}
+                	}
                 }
             }
             else {
