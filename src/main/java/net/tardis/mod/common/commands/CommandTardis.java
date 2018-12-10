@@ -2,6 +2,7 @@ package net.tardis.mod.common.commands;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -63,6 +64,15 @@ public class CommandTardis extends CommandBase {
             
             String alias = args[0];
 
+            if(args.length > 1 && args[0].equals("restoresys")) {
+            	EntityPlayerMP p;
+            	if(args.length == 3)
+            		 p = player.world.getMinecraftServer().getPlayerList().getPlayerByUsername(args[2]);
+            	else p = player;
+            	if(p != null) {
+            		this.restoreSystem(args[1], p, p.getUniqueID());
+            	}
+            }
             if (args.length == 1){
                 if (alias.equals("grow")) {
                     handleGrow(player);
@@ -95,18 +105,6 @@ public class CommandTardis extends CommandBase {
                         throw new CommandException("You do not have permission to run this command.");
                     }
                 }
-                
-                if(alias.equals("restoresys")) {
-                	BaseSystem system = TardisSystems.createFromName(args[1]);
-                	if(system != null && TardisHelper.hasTardis(player.getPersistentID())) {
-                		TileEntityTardis tardis = (TileEntityTardis) player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(player.getUniqueID()));
-                		if(tardis != null) {
-                			BaseSystem sys = tardis.getSystem(system.getClass());
-                			if(sys != null)
-                				sys.setHealth(1F);
-                		}
-                	}
-                }
             }
             else {
                 throw new CommandException("/tardis [summon | remove | transfer] <username>");
@@ -114,6 +112,23 @@ public class CommandTardis extends CommandBase {
         } else {
             throw new CommandException("You are not a player. You must run these commands in game.");
         }
+    }
+    
+    private void restoreSystem(String name, EntityPlayerMP player, @Nullable UUID id) throws CommandException {
+    	BaseSystem systemBase = TardisSystems.createFromName(name);
+    	if(systemBase != null) {
+    		UUID owner = (id == null ? player.getUniqueID() : id);
+    		if(TardisHelper.hasTardis(owner)) {
+    			TileEntityTardis tardis = (TileEntityTardis)player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(owner));
+    			if(tardis != null) {
+    				tardis.getSystem(systemBase.getClass()).setHealth(1F);
+    				player.sendStatusMessage(new TextComponentTranslation(TStrings.Commands.SYSTEM_RESTORED), false);
+    			}
+    			else throw new CommandException(TStrings.Commands.NO_TARIDS_IN_WORLD);
+    		}
+    		else throw new CommandException(TStrings.Commands.NO_TARDIS_OWNED);
+    	}
+    	else throw new CommandException(TStrings.Commands.NO_SYSTEM);
     }
 
     //Handle removing the Tardis
