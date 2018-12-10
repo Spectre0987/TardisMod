@@ -120,12 +120,10 @@ public class CommandTardis extends CommandBase {
                     }
                 }
             }
-            else {
                 throw new CommandException("/tardis [summon | remove | transfer] <username>");
-            }
-        } else {
-            throw new CommandException("You are not a player. You must run these commands in game.");
         }
+        else
+            throw new CommandException("You are not a player. You must run these commands in game.");
     }
     
     private void restoreSystem(String name, EntityPlayerMP player, @Nullable UUID id) throws CommandException {
