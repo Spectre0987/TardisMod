@@ -1,10 +1,7 @@
 package net.tardis.mod.common.commands;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import javax.annotation.Nullable;
 
@@ -226,6 +223,13 @@ public class CommandTardis extends CommandBase {
         }
         if (args[0].equals("summon") || args[0].equals("remove") || args[0].equals("transfer")){
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+        }
+        if (args[0].equals("restoresys")){
+            List<String> systemNames = new ArrayList<String>();
+            for (Map.Entry<String,Class<? extends BaseSystem>> entry : TardisSystems.SYSTEMS.entrySet()) {
+                systemNames.add(entry.getKey());
+            }
+            return getListOfStringsMatchingLastWord(args, systemNames);
         }
         return Collections.emptyList();
     }
