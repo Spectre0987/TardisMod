@@ -53,6 +53,9 @@ public class TStrings {
 		public static final String NO_PLAYER_FOUND = "command.no_player_found";
 		public static final String TARDIS_TRAVEL = "command.tardis_travel";
 		public static final String TARDIS_DELETED = "command.tardis_deleted";
+		public static final String NO_SYSTEM = "command.tardis.nosystem";
+		public static final String NO_TARIDS_IN_WORLD = "command.tardis.notinworld";
+		public static final String SYSTEM_RESTORED = "commands.tardis.system_restored";
 	}
 
 	public static class Permissions{
