@@ -1,7 +1,12 @@
 package net.tardis.mod.common.commands;
 
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -47,7 +52,7 @@ public class CommandTardis extends CommandBase {
         StringBuilder usageString = new StringBuilder();
         usageString.append("/tardis ");
         for (String subcommand : subcommands ) {
-            usageString.append(MessageFormat.format("{0} | ",subcommand));
+            usageString.append(MessageFormat.format("{0} | ", subcommand));
         }
         return usageString.toString();
     }
@@ -73,12 +78,10 @@ public class CommandTardis extends CommandBase {
 
             if(args.length > 1 && args[0].equals("restoresys")) {
                 if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
-                    EntityPlayerMP p;
                     if(args.length == 3)
-                        p = player.world.getMinecraftServer().getPlayerList().getPlayerByUsername(args[2]);
-                    else p = player;
-                    if(p != null) {
-                        this.restoreSystem(args[1], p, p.getUniqueID());
+                        player = player.world.getMinecraftServer().getPlayerList().getPlayerByUsername(args[2]);
+                    if(player != null) {
+                        this.restoreSystem(args[1], player, player.getUniqueID());
                     }
                 } else {
                     throw new CommandException("You do not have permission to run this command.");
@@ -117,12 +120,10 @@ public class CommandTardis extends CommandBase {
                     }
                 }
             }
-            else {
                 throw new CommandException("/tardis [summon | remove | transfer] <username>");
-            }
-        } else {
-            throw new CommandException("You are not a player. You must run these commands in game.");
         }
+        else
+            throw new CommandException("You are not a player. You must run these commands in game.");
     }
     
     private void restoreSystem(String name, EntityPlayerMP player, @Nullable UUID id) throws CommandException {
