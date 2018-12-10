@@ -49,7 +49,7 @@ public class CommandTardis extends CommandBase {
         StringBuilder usageString = new StringBuilder();
         usageString.append("/tardis ");
         for (String subcommand : subcommands ) {
-            usageString.append(MessageFormat.format("{0} |",subcommand));
+            usageString.append(MessageFormat.format("{0} | ",subcommand));
         }
         return usageString.toString();
     }
