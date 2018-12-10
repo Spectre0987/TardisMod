@@ -10,6 +10,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.manual.GuiManual;
 import net.tardis.mod.common.strings.TStrings;
 
@@ -29,9 +31,13 @@ public class ItemManual extends ItemBase {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		if (worldIn.isRemote) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiManual());
+			openGui();
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 	
+	@SideOnly(Side.CLIENT)
+	public void openGui() {
+		Minecraft.getMinecraft().displayGuiScreen(new GuiManual());
+	}
 }
