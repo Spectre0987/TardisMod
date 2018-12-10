@@ -72,13 +72,17 @@ public class CommandTardis extends CommandBase {
             String alias = args[0];
 
             if(args.length > 1 && args[0].equals("restoresys")) {
-            	EntityPlayerMP p;
-            	if(args.length == 3)
-            		 p = player.world.getMinecraftServer().getPlayerList().getPlayerByUsername(args[2]);
-            	else p = player;
-            	if(p != null) {
-            		this.restoreSystem(args[1], p, p.getUniqueID());
-            	}
+                if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
+                    EntityPlayerMP p;
+                    if(args.length == 3)
+                        p = player.world.getMinecraftServer().getPlayerList().getPlayerByUsername(args[2]);
+                    else p = player;
+                    if(p != null) {
+                        this.restoreSystem(args[1], p, p.getUniqueID());
+                    }
+                } else {
+                    throw new CommandException("You do not have permission to run this command.");
+                }
             }
             if (args.length == 1){
                 if (alias.equals("grow")) {
