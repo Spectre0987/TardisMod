@@ -1,5 +1,7 @@
 package net.tardis.mod.common.commands;
 
+import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +27,10 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
+
 public class CommandTardis extends CommandBase {
+
+    public static final List<String> subcommands = Arrays.asList("grow", "transfer", "interior", "summon", "remove", "restoresys");
     /**
      * Gets the name of the command
      */
@@ -41,7 +46,12 @@ public class CommandTardis extends CommandBase {
      */
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/tardis [grow | transfer | interior | summon | remove | restoresys]";
+        StringBuilder usageString = new StringBuilder();
+        usageString.append("/tardis ");
+        for (String subcommand : subcommands ) {
+            usageString.append(MessageFormat.format("{0} |",subcommand));
+        }
+        return usageString.toString();
     }
 
     /**
@@ -97,15 +107,11 @@ public class CommandTardis extends CommandBase {
                 }
                 
                 if(alias.equals("restoresys")) {
-                	BaseSystem system = TardisSystems.createFromName(args[1]);
-                	if(system != null && TardisHelper.hasTardis(player.getPersistentID())) {
-                		TileEntityTardis tardis = (TileEntityTardis) player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(player.getUniqueID()));
-                		if(tardis != null) {
-                			BaseSystem sys = tardis.getSystem(system.getClass());
-                			if(sys != null)
-                				sys.setHealth(1F);
-                		}
-                	}
+                	if (PermissionAPI.hasPermission(player,TStrings.Permissions.RESTORE_TARDIS)){
+                	    handleRestore(player,args[1]);
+                    } else {
+                        throw new CommandException("You do not have permission to run this command.");
+                    }
                 }
             }
             else {
@@ -191,13 +197,26 @@ public class CommandTardis extends CommandBase {
         }
     }
 
+    //Handle restoresys
+    private void handleRestore(EntityPlayerMP player, String arg){
+        BaseSystem system = TardisSystems.createFromName(arg);
+        if(system != null && TardisHelper.hasTardis(player.getPersistentID())) {
+            TileEntityTardis tardis = (TileEntityTardis) player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(player.getUniqueID()));
+            if(tardis != null) {
+                BaseSystem sys = tardis.getSystem(system.getClass());
+                if(sys != null)
+                    sys.setHealth(1F);
+            }
+        }
+    }
+
     /**
      * Get a list of options for when the user presses the TAB key
      */
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if(args.length < 2 ) {
-            return getListOfStringsMatchingLastWord(args, "grow", "transfer", "interior", "summon", "remove");
+            return getListOfStringsMatchingLastWord(args, subcommands);
         }
         if (args[0].equals("summon") || args[0].equals("remove") || args[0].equals("transfer")){
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());

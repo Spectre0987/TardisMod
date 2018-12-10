@@ -164,6 +164,4 @@ public class TBlocks {
 		return block;
 	}
 	
-	public static void register() {}
-	
 }

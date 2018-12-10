@@ -158,7 +158,6 @@ public class Tardis {
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
 		TItems.init();
-		TBlocks.register();
 		BiomeReg.init();
 		EntityHelper.makeGoodBiomes();
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");
@@ -295,7 +294,7 @@ public class Tardis {
 		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself in their TARDIS");
 		PermissionAPI.registerNode(TStrings.Permissions.SUMMON_TARDIS, DefaultPermissionLevel.OP, "Allows players to summon a TARDIS owned by someone");
 		PermissionAPI.registerNode(TStrings.Permissions.REMOVE_TARDIS, DefaultPermissionLevel.OP, "Allows players to delete a TARDIS");
-		
+		PermissionAPI.registerNode(TStrings.Permissions.RESTORE_TARDIS,DefaultPermissionLevel.OP,"Allows players to restore their TARDIS Systems");
 		
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
