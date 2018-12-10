@@ -163,7 +163,7 @@ public class TBlocks {
 		}
 		return block;
 	}
-	
-	public static void register() {}
+
+	public static void register(){}
 	
 }
