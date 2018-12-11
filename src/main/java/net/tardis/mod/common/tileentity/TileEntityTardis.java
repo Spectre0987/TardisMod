@@ -3,6 +3,7 @@ package net.tardis.mod.common.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -953,8 +954,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			player.connection.setPlayerLocation(pos.x, pos.y, pos.z, Helper.get360FromFacing(face), 0);
 		}
 		else if(!(entity instanceof EntityPlayer)){
-			Entity e = entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
-			e.setPosition(pos.x, pos.y, pos.z);
+			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
+			entity.setPosition(pos.x, pos.y, pos.z);
 		}
 	}
 	

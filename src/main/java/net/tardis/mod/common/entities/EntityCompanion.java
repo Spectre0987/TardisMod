@@ -5,7 +5,6 @@ import java.util.UUID;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -279,7 +278,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		float[] size = {0.95F, 1.75F};
 		
 		@SideOnly(Side.CLIENT)
-		public ModelBase model = new ModelPlayer(0.0625F, false);
+		public ModelBase model;
 		
 		EnumCompanionType(String name, String formatName) {
 			skin = new ResourceLocation(Tardis.MODID, "textures/entity/" + name + ".png");

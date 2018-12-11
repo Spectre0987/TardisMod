@@ -71,9 +71,7 @@ public class ControlPhone extends EntityControl{
 						}
 					}
 				}
-				else {
-					tardis.currentEvent = EnumEvent.NONE;
-				}
+				else tardis.currentEvent = EnumEvent.NONE;
 			}
 		}
 	}
