@@ -86,8 +86,7 @@ public class CommandTardis extends CommandBase {
                 } else {
                     throw new CommandException("You do not have permission to run this command.");
                 }
-            }
-            if (args.length == 1){
+            } else if (args.length == 1){
                 if (alias.equals("grow")) {
                     handleGrow(player);
                 }
@@ -120,6 +119,7 @@ public class CommandTardis extends CommandBase {
                     }
                 }
             }
+            else
                 throw new CommandException("/tardis [summon | remove | transfer] <username>");
         }
         else
@@ -233,6 +233,9 @@ public class CommandTardis extends CommandBase {
             List<String> systemNames = new ArrayList<String>();
             for (Map.Entry<String,Class<? extends BaseSystem>> entry : TardisSystems.SYSTEMS.entrySet()) {
                 systemNames.add(entry.getKey());
+            }
+            if (args.length == 2){
+                systemNames.addAll(Arrays.asList(server.getOnlinePlayerNames()));
             }
             return getListOfStringsMatchingLastWord(args, systemNames);
         }
