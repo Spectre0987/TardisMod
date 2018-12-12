@@ -38,6 +38,7 @@ public class WorldShell implements IBlockAccess {
 	private BlockPos offset;
 	private long time = 0L;
 	
+	private float rotation = 0F;
     private Biome shellBiome = Biome.getBiome(0);
 
     @SideOnly(Side.CLIENT)
@@ -153,5 +154,14 @@ public class WorldShell implements IBlockAccess {
 	
 	public void setTime(long time) {
 		this.time = time;
+	}
+	
+	/**Gets the rotation to render the world from (In the case of doors)**/
+	public float getRotation() {
+		return this.rotation;
+	}
+	
+	public void setRotation(float rot) {
+		this.rotation = rot;
 	}
 }

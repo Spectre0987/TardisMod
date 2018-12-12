@@ -13,7 +13,7 @@ public class BlockBase extends Block {
 
 	public BlockBase() {
 		super(Material.IRON);
-		this.setHardness(1F);
+		this.setHardness(2F);
 		this.setResistance(99999F);
 		setCreativeTab(TardisTabs.BLOCKS);
     }

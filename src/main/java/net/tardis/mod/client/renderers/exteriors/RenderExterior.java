@@ -22,6 +22,7 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
 		GlStateManager.rotate(180, 1, 0, 0);
 		if(te.getWorld() == null || te.getPos() == null) return;
+		if(!(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop)) return;
 		GlStateManager.rotate(Helper.get360FromFacing(te.getWorld().getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.color(1, 1, 1, te.alpha);
