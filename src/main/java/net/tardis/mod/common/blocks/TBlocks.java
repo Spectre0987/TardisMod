@@ -70,7 +70,7 @@ public class TBlocks {
 	public static Block toyota_wallroundel_5 = register(new BlockToyota(false), "toyota_wallroundel_5");
 	public static Block toyota_wallroundel_6 = register(new BlockToyota(false), "toyota_wallroundel_6");
 	
-	public static Block toyota_spin = register(new BlockDecoration(TileEntityToyotaSpin::new), "toyota_spin");
+	public static Block toyota_spin = register(new BlockToyotaSpin(TileEntityToyotaSpin::new), "toyota_spin");
 	
 	public static Block toyota_platform_full;
 	public static Block toyota_platform_slab;

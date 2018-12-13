@@ -60,4 +60,9 @@ public class TileEntityMultiblockMaster extends TileEntityMultiblock{
 		}
 		return list;
 	}
+
+	@Override
+	public BlockPos getMasterPos() {
+		return this.getPos();
+	}
 }
