@@ -1,6 +1,5 @@
 package net.tardis.mod.util.client;
 
-import java.lang.reflect.Field;
 import java.nio.FloatBuffer;
 
 import javax.annotation.Nullable;
@@ -16,13 +15,11 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
@@ -161,16 +158,7 @@ public class RenderHelper {
 	}
 
 	public static void setRenderGlobalWorld(WorldClient world) {
-		try {
-			Field f = Minecraft.getMinecraft().renderGlobal.getClass().getDeclaredField(Tardis.getIsDev() ? "world" : "field_72769_h");
-			if(f != null) {
-				f.setAccessible(true);
-				f.set(Minecraft.getMinecraft().renderGlobal, world);
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		Minecraft.getMinecraft().world = world;
 	}
 	
 	public static void renderTransformAxis() {

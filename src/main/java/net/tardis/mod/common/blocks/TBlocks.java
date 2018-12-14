@@ -23,6 +23,7 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.decoration.TileEntityToyotaSpin;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
@@ -68,6 +69,8 @@ public class TBlocks {
 	public static Block toyota_wallroundel_4 = register(new BlockToyota(false), "toyota_wallroundel_4");
 	public static Block toyota_wallroundel_5 = register(new BlockToyota(false), "toyota_wallroundel_5");
 	public static Block toyota_wallroundel_6 = register(new BlockToyota(false), "toyota_wallroundel_6");
+	
+	public static Block toyota_spin = register(new BlockToyotaSpin(TileEntityToyotaSpin::new), "toyota_spin");
 	
 	public static Block toyota_platform_full;
 	public static Block toyota_platform_slab;

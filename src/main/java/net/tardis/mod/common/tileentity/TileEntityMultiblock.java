@@ -8,9 +8,7 @@ public class TileEntityMultiblock extends TileEntity{
 	
 	BlockPos masterPos = BlockPos.ORIGIN;
 	
-	public TileEntityMultiblock() {
-		System.out.println("I exist at: " + this.getPos());
-	}
+	public TileEntityMultiblock() {}
 	
 	public void setMasterPos(BlockPos pos) {
 		this.masterPos = pos;

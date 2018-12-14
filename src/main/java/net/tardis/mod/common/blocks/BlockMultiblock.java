@@ -81,4 +81,11 @@ public class BlockMultiblock extends BlockContainer {
 		}
 		
 	}
+
+	@Override
+	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+		//if(worldIn != null && worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileEntityMultiblock && !(worldIn.getTileEntity(pos) instanceof TileEntityMultiblockMaster))
+			//return worldIn.getBlockState(((TileEntityMultiblock)worldIn.getTileEntity(pos)).getMasterPos()).getBlockHardness(blockState, worldIn, pos);
+		return super.getBlockHardness(blockState, worldIn, pos);
+	}
 }

@@ -7,9 +7,7 @@ import net.minecraftforge.common.util.ITeleporter;
 
 public class TardisTeleporter implements ITeleporter {
 
-	public TardisTeleporter() {
-		
-	}
+	public TardisTeleporter() {}
 	
 	public TardisTeleporter(WorldServer es) {}
 	

@@ -67,6 +67,10 @@ dependencies {
     //runtime "mezz.jei:jei_1.12.2:4.11.0.212"
 }
 
+manifest {
+    attributes 'FMLAT': 'tardis_at.cfg'
+}
+
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version

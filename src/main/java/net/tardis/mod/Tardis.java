@@ -113,6 +113,7 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.decoration.TileEntityToyotaSpin;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
@@ -207,6 +208,7 @@ public class Tardis {
 		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		registerTileEntity(TileEntityChair.class, "chair");
 		registerTileEntity(TileEntityAmSphere.class, "am_sphere");
+		registerTileEntity(TileEntityToyotaSpin.class, "toyota_spinnything");
 		
 		registerTileEntity(TileEntityMultiblockMaster.class, "multi_master");
 		registerTileEntity(TileEntityMultiblock.class, "multi");
@@ -278,6 +280,7 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.stabilizers, TItems.circuts);
 		RepairRecipes.registerRecipe(TItems.time_vector_generator, Items.ENDER_PEARL);
 		RepairRecipes.registerRecipe(TItems.chameleon_circuit, TItems.circuts);
+		RepairRecipes.registerRecipe(TItems.temporal_grace_circuits, Items.SHIELD);
 		
 	}
 	
