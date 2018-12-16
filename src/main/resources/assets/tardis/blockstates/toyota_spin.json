@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults":{
+        "model":"tardis:toyota_spin"
+    },
+    "variants":{
+        "normal":[{}],
+        "inventory":[{}]
+    }
+}

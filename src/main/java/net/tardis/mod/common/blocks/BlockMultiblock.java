@@ -29,7 +29,7 @@ public class BlockMultiblock extends BlockContainer {
 
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
+		return EnumBlockRenderType.INVISIBLE;
 	}
 
 	@Override
@@ -56,32 +56,7 @@ public class BlockMultiblock extends BlockContainer {
 		return new TileEntityMultiblock();
 	}
 
-	public static class ItemMultiblock extends ItemBlock{
-
-		public ItemMultiblock(Block block) {
-			super(block);
-		}
-
-		@Override
-		public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
-			boolean place = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
-			if(place) {
-				for(EnumFacing face : EnumFacing.VALUES) {
-					if(face != side.getOpposite()) {
-						BlockPos setPos = pos.offset(face);
-						world.setBlockState(setPos, TBlocks.multiblock.getDefaultState());
-						TileEntityMultiblock block = (TileEntityMultiblock) world.getTileEntity(setPos);
-						if(block != null)
-							block.setMasterPos(pos);
-					}
-					((TileEntityMultiblockMaster) world.getTileEntity(pos)).addChildren(pos);
-				}
-			}
-			return place;
-		}
-		
-	}
-
+	
 	@Override
 	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
 		//if(worldIn != null && worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileEntityMultiblock && !(worldIn.getTileEntity(pos) instanceof TileEntityMultiblockMaster))

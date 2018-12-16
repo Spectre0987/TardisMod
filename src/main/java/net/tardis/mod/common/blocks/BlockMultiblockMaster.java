@@ -10,8 +10,6 @@ import net.tardis.mod.common.tileentity.TileEntityMultiblockMaster;
 
 public class BlockMultiblockMaster extends BlockMultiblock implements INeedItem{
 
-	public ItemMultiblock item = new ItemMultiblock(this);
-
 	public BlockMultiblockMaster(Material material) {
 		super(material);
 		this.setCreativeTab(TardisTabs.BLOCKS);
@@ -24,7 +22,7 @@ public class BlockMultiblockMaster extends BlockMultiblock implements INeedItem{
 
 	@Override
 	public ItemBlock getItem() {
-		return item;
+		return new ItemBlock(this);
 	}
 
 }
