@@ -1,15 +1,5 @@
 package net.tardis.mod.common.commands;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -28,7 +18,13 @@ import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
+import net.tardis.mod.util.common.helpers.FileHelper;
+import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import javax.annotation.Nullable;
+import java.text.MessageFormat;
+import java.util.*;
 
 
 public class CommandTardis extends CommandBase {
@@ -146,10 +142,12 @@ public class CommandTardis extends CommandBase {
     //Handle removing the Tardis
     private void handleRemove(EntityPlayerMP senderPlayer, String toBeRemoved) {
         MinecraftServer server = senderPlayer.getServer();
-        EntityPlayer player = server.getPlayerList().getPlayerByUsername(toBeRemoved);
-        if (player != null) {
-            if (TardisHelper.hasTardis(player.getGameProfile().getId())) {
-                TardisHelper.tardisOwners.remove(player.getGameProfile().getId().toString());
+        Map<UUID,String> playersMap = FileHelper.getPlayersFromServerFile();
+
+        if (playersMap.containsValue(toBeRemoved)) {
+            UUID toBeRemovedID = Helper.getKeyByValue(playersMap,toBeRemoved);
+            if (TardisHelper.hasTardis(toBeRemovedID)) {
+                TardisHelper.tardisOwners.remove(toBeRemovedID.toString());
                 senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.TARDIS_DELETED));
             } else {
                 senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
@@ -162,13 +160,15 @@ public class CommandTardis extends CommandBase {
     //Handle summoning the Tardis
     private void handleSummon(EntityPlayerMP senderPlayer, String owner) {
         MinecraftServer server = senderPlayer.getServer();
-        EntityPlayerMP ownerPlayer = server.getPlayerList().getPlayerByUsername(owner);
-        if (ownerPlayer != null) {
-            if (TardisHelper.hasTardis(ownerPlayer.getUniqueID())) {
-                BlockPos tardisbp = TardisHelper.getTardis(ownerPlayer.getUniqueID());
+        Map<UUID, String> playersMap = FileHelper.getPlayersFromServerFile();
+
+        if (playersMap.containsValue(owner)) {
+            UUID ownerUUID = Helper.getKeyByValue(playersMap,owner);
+            if (TardisHelper.hasTardis(ownerUUID)) {
+                BlockPos tardisbp = TardisHelper.getTardis(ownerUUID);
                 TileEntity te = server.getWorld(TDimensions.TARDIS_ID).getTileEntity(tardisbp);
                 if (te instanceof TileEntityTardis) {
-                    ((TileEntityTardis) te).setDesination(ownerPlayer.getPosition().add(1, 0, 1), ownerPlayer.dimension);
+                    ((TileEntityTardis) te).setDesination(senderPlayer.getPosition().add(1, 0, 1), senderPlayer.dimension);
                     ((TileEntityTardis) te).startFlight();
                     senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.TARDIS_TRAVEL));
                 }
@@ -226,14 +226,19 @@ public class CommandTardis extends CommandBase {
         if(args.length < 2 ) {
             return getListOfStringsMatchingLastWord(args, subcommands);
         }
-        if (args[0].equals("summon") || args[0].equals("remove") || args[0].equals("transfer")){
+        else if (args[0].equals("summon") || args[0].equals("remove")){
+            return getListOfStringsMatchingLastWord(args, FileHelper.getPlayersFromServerFile().values());
+        }
+        else if(args[0].equals("transfer")){
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
         }
-        if (args[0].equals("restoresys")){
+        else if (args[0].equals("restoresys")){
             List<String> systemNames = new ArrayList<String>();
+
             for (Map.Entry<String,Class<? extends BaseSystem>> entry : TardisSystems.SYSTEMS.entrySet()) {
                 systemNames.add(entry.getKey());
             }
+
             if (args.length == 2){
                 systemNames.addAll(Arrays.asList(server.getOnlinePlayerNames()));
             }
