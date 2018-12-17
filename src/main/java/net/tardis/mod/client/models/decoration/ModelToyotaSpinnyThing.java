@@ -832,8 +832,11 @@ public class ModelToyotaSpinnyThing extends ModelBase {
 	
 	public void renderAnimated(float scale, boolean animate) {
 		
-		long baseAngle = Minecraft.getMinecraft().world.getWorldTime() % 360;
-		float time = (baseAngle - 1) - ((baseAngle - 1) - baseAngle) * Minecraft.getMinecraft().getRenderPartialTicks();
+		float time = 0F;
+		if(animate) {
+			long baseAngle = Minecraft.getMinecraft().world.getWorldTime() % 360;
+			time = (baseAngle - 1) - ((baseAngle - 1) - baseAngle) * Minecraft.getMinecraft().getRenderPartialTicks();
+		}
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(time, 0, 1, 0);
 		TopSpin1.render(scale);
