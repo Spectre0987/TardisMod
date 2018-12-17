@@ -1,7 +1,6 @@
 package net.tardis.mod.util.common.helpers;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -10,7 +9,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
@@ -32,6 +30,8 @@ import net.tardis.mod.util.TardisTeleporter;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 public class Helper {
@@ -238,5 +238,14 @@ public class Helper {
 
 	public static boolean isThisBlockBehindTheWorldBorder(BlockPos pos, int dim){
 		return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(dim).getWorldBorder().contains(pos);
+	}
+
+	public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+		for (Map.Entry<T, E> entry : map.entrySet()) {
+			if (Objects.equals(value, entry.getValue())) {
+				return entry.getKey();
+			}
+		}
+		return null;
 	}
 }
