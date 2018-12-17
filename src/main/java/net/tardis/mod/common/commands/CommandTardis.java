@@ -226,13 +226,16 @@ public class CommandTardis extends CommandBase {
         if(args.length < 2 ) {
             return getListOfStringsMatchingLastWord(args, subcommands);
         }
-        else if (args[0].equals("summon") || args[0].equals("remove")){
+
+        if (args[0].equals("summon") || args[0].equals("remove")){
             return getListOfStringsMatchingLastWord(args, FileHelper.getPlayersFromServerFile().values());
         }
-        else if(args[0].equals("transfer")){
+
+        if(args[0].equals("transfer")){
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
         }
-        else if (args[0].equals("restoresys")){
+
+        if (args[0].equals("restoresys")){
             List<String> systemNames = new ArrayList<String>();
 
             for (Map.Entry<String,Class<? extends BaseSystem>> entry : TardisSystems.SYSTEMS.entrySet()) {
