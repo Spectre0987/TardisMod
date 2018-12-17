@@ -9,6 +9,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
@@ -102,39 +103,50 @@ public class CommandTardis extends CommandBase {
                 break;
 
             case 4: //restoresys
-                if(args.length > 1){
+                if(args.length > 1) {
                     if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
-                        if(args.length == 3)
+                        if (player.world.getMinecraftServer().getPlayerList().getPlayers().contains(args[2]))
                             player = player.world.getMinecraftServer().getPlayerList().getPlayerByUsername(args[2]);
-                        if(player != null) {
-                            this.restoreSystem(args[1], player, player.getUniqueID());
-                        }
-                    } else {
+
+                        List<String> systemNames = new ArrayList<>();
+                        for (int i = 1; i < args.length; i++)
+                            systemNames.add(args[i]);
+
+                        this.restoreSystem(player, player.getUniqueID(), systemNames.toArray(new String[]{}));
+                    } else
                         throw new CommandException("You do not have permission to run this command.");
-                    }
                 }
                 else
-                    throw new CommandException("/tardis restoresys <username> <system>");
+                    throw new CommandException("/tardis restoresys <username> <system...s>");
                 break;
             }
     }
 
     //handle restoring systems
-    private void restoreSystem(String name, EntityPlayerMP player, @Nullable UUID id) throws CommandException {
-    	BaseSystem systemBase = TardisSystems.createFromName(name);
-    	if(systemBase != null) {
-    		UUID owner = (id == null ? player.getUniqueID() : id);
-    		if(TardisHelper.hasTardis(owner)) {
-    			TileEntityTardis tardis = (TileEntityTardis)player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(owner));
-    			if(tardis != null) {
-    				tardis.getSystem(systemBase.getClass()).setHealth(1F);
-    				player.sendStatusMessage(new TextComponentTranslation(TStrings.Commands.SYSTEM_RESTORED), false);
-    			}
-    			else throw new CommandException(TStrings.Commands.NO_TARIDS_IN_WORLD);
-    		}
-    		else throw new CommandException(TStrings.Commands.NO_TARDIS_OWNED);
-    	}
-    	else throw new CommandException(TStrings.Commands.NO_SYSTEM);
+    private void restoreSystem(EntityPlayerMP player, @Nullable UUID id, String... names) throws CommandException {
+    	List <BaseSystem> systemBases = new ArrayList<>();
+        UUID owner = (id == null ? player.getUniqueID() : id);
+
+    	for (String s : names){
+            BaseSystem system = TardisSystems.createFromName(s);
+            if (system != null)
+                systemBases.add(system);
+            else
+                player.sendMessage(new TextComponentString(s + ": " + new TextComponentTranslation(TStrings.Commands.NO_SYSTEM)));
+        }
+
+        if(TardisHelper.hasTardis(owner)) {
+            TileEntityTardis tardis = (TileEntityTardis)player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(owner));
+            if(tardis != null) {
+                for (BaseSystem system : systemBases){
+                    tardis.getSystem(system.getClass()).setHealth(1F);
+                }
+                player.sendStatusMessage(new TextComponentTranslation(TStrings.Commands.SYSTEM_RESTORED), false);
+            }
+            else throw new CommandException(TStrings.Commands.NO_TARIDS_IN_WORLD);
+        }
+        else throw new CommandException(TStrings.Commands.NO_TARDIS_OWNED);
+
     }
 
     //Handle removing the Tardis
