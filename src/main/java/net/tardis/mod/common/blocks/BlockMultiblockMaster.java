@@ -17,7 +17,6 @@ public class BlockMultiblockMaster extends BlockMultiblock implements INeedItem{
 	
 	public BlockMultiblockMaster(Material material) {
 		super(material);
-		this.setCreativeTab(TardisTabs.BLOCKS);
 	}
 
 	@Override
