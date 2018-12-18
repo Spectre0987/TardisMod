@@ -55,6 +55,7 @@ public class BlockMonitor extends BlockFacingDecoration {
 
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		drops.clear();
 		drops.add(new ItemStack(this));
 		super.getDrops(drops, world, pos, state, fortune);
 	}
