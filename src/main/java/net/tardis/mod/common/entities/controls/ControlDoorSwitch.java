@@ -17,7 +17,7 @@ import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDoorSwitch extends EntityControl{
 	
-	private AxisAlignedBB DOOR_BB = new AxisAlignedBB(-20, -20, -20, 20, 20, 20);
+	private AxisAlignedBB DOOR_BB = new AxisAlignedBB(0, 0, 0, 1, 1, 1).grow(8 * 16);
 
 	public ControlDoorSwitch(TileEntityTardis tardis) {
 		super(tardis);
