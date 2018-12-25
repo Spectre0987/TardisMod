@@ -22,6 +22,7 @@ public class ItemInteriorDoor extends ItemBase{
 				ControlDoor door = new ControlDoor(worldIn);
 				door.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + (player.isSneaking() ? 0 : 0.5), Helper.getAngleFromFacing(player.getHorizontalFacing()), 0);
 				worldIn.spawnEntity(door);
+				player.getHeldItem(hand).shrink(1);
 			}
 		}
 		return EnumActionResult.SUCCESS;

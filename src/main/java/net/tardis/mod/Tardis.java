@@ -243,7 +243,6 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolSystemReadout());
 		TardisProtocol.register(new ProtocolConsole());
 		TardisProtocol.register(new ProtocolRegenRoom());
-		TardisProtocol.register(new ProtocolLock());
 		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
 		TardisProtocol.register(new ProtocolRepair());
 		TardisProtocol.register(new ProtocolWaypoints());

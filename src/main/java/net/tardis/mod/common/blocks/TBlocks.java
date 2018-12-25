@@ -139,10 +139,10 @@ public class TBlocks {
 
 	public static Block circuit_repair = register(new BlockComponentRepair(Material.IRON, TileEntityComponentRepair::new), "circuit_repair");
 	
-	public static Block multiblock = register(new BlockMultiblock(Material.WOOD), "multiblock");
-	public static Block multiblock_master = register(new BlockMultiblockMaster(Material.WOOD), "multiblock_master");
+	public static Block multiblock = register(new BlockMultiblock(Material.WOOD), "multiblock", false);
+	public static Block multiblock_master = register(new BlockMultiblockMaster(Material.WOOD), "multiblock_master", false);
 
-	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test") : null;
+	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
 
 
 	public static Block register(Block block, String name) {

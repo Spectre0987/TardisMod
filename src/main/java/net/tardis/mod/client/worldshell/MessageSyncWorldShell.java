@@ -103,6 +103,7 @@ public class MessageSyncWorldShell implements IMessage {
             	@Override
             	public void run() {
 	                World world = Minecraft.getMinecraft().world;
+	                if(mes == null || world == null) return;
 	                if (mes.id == -1) {
 	                    TileEntity te = world.getTileEntity(mes.tilePos);
 	                    if (te != null && te instanceof IContainsWorldShell) {

@@ -1,5 +1,7 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.function.Supplier;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -12,14 +14,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.function.Supplier;
-
 public class BlockFacingDecoration extends BlockTileBase {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	
 	public BlockFacingDecoration(Supplier<TileEntity> tileEntity) {
 		super(Material.IRON, tileEntity);
+		this.setHardness(5F);
 
 	}
 

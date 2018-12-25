@@ -52,6 +52,10 @@ public class TardisConfig {
 		@Config.LangKey("config.moonDim")
 		@Config.Comment("Moon Dimension ID")
 		public int moonDimension = 24;
+		
+		@Config.LangKey("config.tardis.oregen")
+		@Config.Comment("Should the TARDIS Mod generate ores?")
+		public boolean generateOres = true;
 	}
 	
 	public static class UseEntities {

@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
@@ -58,6 +59,8 @@ public class WorldShell implements IBlockAccess {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public TileEntity getTileEntity(BlockPos pos) {
+		//Just return a bull shit TileEntity 'cause I'm afraid to return null. (I'm too lazy to check if that's allowed or not.)
+		if(pos == null || !blockMap.containsKey(pos)) return new TileEntityFurnace();
 		return TileEntity.create(Minecraft.getMinecraft().world, blockMap.get(pos).tileentity);
 	}
 

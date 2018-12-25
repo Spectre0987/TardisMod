@@ -111,6 +111,7 @@ tile.tardis.zero_room_stairs.name=Zero Room Stairs
 tile.tardis.suitcase.name=Mysterious Suitcase
 tile.tardis.br_chair.name=Chair
 tile.tardis.am_sphere.name=Armillary Sphere
+tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
 
 tardis.locked.true=TARDIS locked!
 tardis.locked.false=TARDIS unlocked!
