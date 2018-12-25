@@ -98,11 +98,8 @@ public class ItemSonic extends Item {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack held = player.getHeldItem(hand);
 		EnumActionResult result = EnumActionResult.FAIL;
-
-		if(!held.hasTagCompound()){
-			NBTTagCompound nbt = held.getTagCompound();
-			nbt.setInteger("charge", getCharge(held));
-		}
+		
+		Helper.getStackTag(held).setInteger("charge", getCharge(held));
 		
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
