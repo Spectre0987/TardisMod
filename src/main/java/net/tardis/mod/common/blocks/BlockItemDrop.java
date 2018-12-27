@@ -28,6 +28,5 @@ public class BlockItemDrop extends BlockBase {
 		super.getDrops(drops, world, pos, state, fortune);
 		drops.clear();
 		drops.add(new ItemStack(item, count * (fortune + 1)));
-		System.out.println("Item: " + item);
 	}
 }
