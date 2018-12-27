@@ -157,8 +157,8 @@ public class Tardis {
 		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
-		TBlocks.register();
 		TItems.init();
+		TBlocks.register();
 		BiomeReg.init();
 		EntityHelper.makeGoodBiomes();
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");
