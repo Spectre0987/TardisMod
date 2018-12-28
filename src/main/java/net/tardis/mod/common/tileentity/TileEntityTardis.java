@@ -216,6 +216,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 	}
 	
+	public Ticket getTardisTicket() {
+		return tardisTicket;
+	}
+	
+	public Ticket getTardisLocTicket() {
+		return tardisLocTicket;
+	}
+	
 	public void travel() {
 		if (!world.isRemote) {
 			Random rand = new Random();
@@ -279,9 +287,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void updateServer() {
 		if (!world.isRemote) {
             if (!this.isInvalid())
-                for(EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16))) {
-                	player.connection.sendPacket(this.getUpdatePacket());
-                }
+				world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16)).forEach(playerMP -> {
+					playerMP.connection.sendPacket(this.getUpdatePacket());
+				});
 		}
 	}
 	
@@ -887,6 +895,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				pos = door.getPos().down().offset(face, 2);
 				TardisTeleporter.move(entity, dimension, pos);
 			}
+		} else {
+			TardisTeleporter.move(entity, dimension, pos);
 		}
 	}
 

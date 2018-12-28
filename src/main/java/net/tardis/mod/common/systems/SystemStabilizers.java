@@ -31,6 +31,7 @@ public class SystemStabilizers extends BaseSystem{
 	
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
+		if (world == null || consolePos == null) return;
 		if(!world.isRemote) {
 			if(world.getWorldTime() % 150 == 0) {
 				TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(consolePos);
