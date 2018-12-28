@@ -1,7 +1,6 @@
 package net.tardis.mod.api.disguise;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.util.common.helpers.EntityHelper;
 
@@ -21,12 +20,12 @@ public class DisguiseRegistry {
 	
 	/**Register a disguise for all biomes containing this string**/
 	public static void registerDisguiseAllBiomes(String name, ResourceLocation disguiseLoc) {
-		for(Biome b : EntityHelper.biomes) {
-			if(b.getRegistryName().toString().contains(name)) {
-				DISGUISES.put(b.getRegistryName().toString(), disguiseLoc);
-				Tardis.LOG.info("DisguiseRegistry has registered " + b.getRegistryName().toString());
+		EntityHelper.biomes.forEach(biome -> {
+			if (biome.getRegistryName().toString().contains(name)) {
+				DISGUISES.put(biome.getRegistryName().toString(), disguiseLoc);
+				Tardis.LOG.info("DisguiseRegistry has registered " + biome.getRegistryName().toString());
 			}
-		}
+		});
 	}
 	
 	public static ResourceLocation getDisguise(String name) {

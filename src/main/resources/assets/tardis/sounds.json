@@ -180,6 +180,16 @@
       }
     ]
   },
+  "tardis_land": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:tardis_land",
+        "stream": true
+      }
+    ]
+  },
+  
   "1963_interior_hum": {
     "category": "blocks",
     "sounds": [

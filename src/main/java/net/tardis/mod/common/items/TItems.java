@@ -90,9 +90,7 @@ public class TItems {
 
     @SubscribeEvent
 	public static void regItems(RegistryEvent.Register<Item> event) {
-		for (Item item : items) {
-			event.getRegistry().register(item);
-		}
+		items.forEach(item -> event.getRegistry().register(item));
 	}
 	
 	public static void init() {

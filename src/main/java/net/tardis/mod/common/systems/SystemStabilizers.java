@@ -45,9 +45,7 @@ public class SystemStabilizers extends BaseSystem{
 						}
 						EnumCourseCorrect newEvent = EnumCourseCorrect.values()[rand.nextInt(EnumCourseCorrect.values().length)];
 						tardis.setCourseEvent(newEvent);
-						for(EntityPlayer player : world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(consolePos).grow(16))) {
-							player.sendStatusMessage(new TextComponentString(newEvent.getTranslation().getFormattedText()), true);
-						}
+						world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.offset(consolePos).grow(16)).forEach(entityPlayer -> entityPlayer.sendStatusMessage(new TextComponentString(newEvent.getTranslation().getFormattedText()), true));
 					}
 					else {
 						this.controlsMissed = 0;

@@ -1,8 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -10,7 +7,6 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -28,11 +24,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.client.worldshell.BlockStorage;
-import net.tardis.mod.client.worldshell.IContainsWorldShell;
-import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.client.worldshell.PlayerStorage;
-import net.tardis.mod.client.worldshell.WorldShell;
+import net.tardis.mod.client.worldshell.*;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -46,6 +38,9 @@ import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
@@ -218,17 +213,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				alpha += 0.005F;
 				if(!world.isRemote) {
 					BlockPos tp = this.getConsolePos().offset(EnumFacing.SOUTH, 3);
-					for(Entity e : world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(0,0,0,1,2,1).offset(this.getPos().down()))) {
-						if(e instanceof EntityPlayerMP) {
-							EntityPlayerMP mp = (EntityPlayerMP)e;
-							mp.connection.setPlayerLocation(tp.getX(), tp.getY(), tp.getZ(), 0, 0);
-							world.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer)world));
-						}
-						else {
-							e.setPositionAndUpdate(tp.getX(), tp.getY(), tp.getZ());
-							e.changeDimension(TDimensions.TARDIS_ID);
-						}
-					}
+					world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(0, 0, 0, 1, 2, 1).offset(this.getPos().down())).forEach(entity -> {
+						TardisTeleporter.move(entity, TDimensions.TARDIS_ID, tp);
+					});
 				}
 			}
 			else {
