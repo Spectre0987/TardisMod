@@ -71,7 +71,6 @@ import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
-import net.tardis.mod.common.protocols.ProtocolLock;
 import net.tardis.mod.common.protocols.ProtocolRegenRoom;
 import net.tardis.mod.common.protocols.ProtocolRepair;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
@@ -158,8 +157,8 @@ public class Tardis {
 		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
-		TBlocks.register();
 		TItems.init();
+		TBlocks.register();
 		BiomeReg.init();
 		EntityHelper.makeGoodBiomes();
 		EntityHelper.registerStatic(ControlLaunch.class, "launch_lever");

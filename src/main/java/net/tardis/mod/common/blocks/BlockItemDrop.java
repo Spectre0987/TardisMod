@@ -15,7 +15,8 @@ public class BlockItemDrop extends BlockBase {
 	public BlockItemDrop(Item item, int count) {
 		this.item = item;
 		this.count = count;
-		this.setResistance(1F);
+		this.setHardness(3F);
+		this.setHarvestLevel("pickaxe", -1);
 	}
 	
 	public BlockItemDrop(Item item) {
@@ -24,6 +25,8 @@ public class BlockItemDrop extends BlockBase {
 	
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {
-		drops.add(new ItemStack(item, count));
+		super.getDrops(drops, world, pos, state, fortune);
+		drops.clear();
+		drops.add(new ItemStack(item, count * (fortune + 1)));
 	}
 }

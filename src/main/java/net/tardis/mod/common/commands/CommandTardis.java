@@ -111,8 +111,8 @@ public class CommandTardis extends CommandBase {
             case 4: //restoresys
                 if(args.length > 1) {
                     if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
-                        if (player.world.getMinecraftServer().getPlayerList().getPlayers().contains(args[2]))
-                            player = player.world.getMinecraftServer().getPlayerList().getPlayerByUsername(args[2]);
+                        if (Arrays.asList(server.getOnlinePlayerNames()).contains(args[2]))
+                            player = server.getPlayerList().getPlayerByUsername(args[2]);
 
                         List<String> systemNames = new ArrayList<>();
                         for (int i = 1; i < args.length; i++)

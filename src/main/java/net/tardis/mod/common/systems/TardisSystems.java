@@ -1,6 +1,7 @@
 package net.tardis.mod.common.systems;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,7 +42,8 @@ public class TardisSystems {
 	
 	public static abstract class BaseSystem{
 		
-		private float health = 0F;
+		private static Random rand = new Random();
+		private float health = MathHelper.clamp(rand.nextInt(100) * 0.01F, 0, 1);
 		
 		public float getHealth() {
 			return health;
