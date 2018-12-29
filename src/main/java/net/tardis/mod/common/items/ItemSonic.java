@@ -33,6 +33,7 @@ public class ItemSonic extends Item {
 	}
 
 	public static int getCharge(ItemStack stack) {
+		//return 100;
 		return Helper.getStackTag(stack).getInteger("charge");
 	}
 

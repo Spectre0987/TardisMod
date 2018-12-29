@@ -26,9 +26,6 @@ public class TStrings {
 	public static class ModIds {
 		public static final String GALACTICRAFT = "galacticraftcore";
 		public static final String INDUSTRIAL_CRAFT = "ic2";
-		public static final String WEEPING_ANGELS = "weeping-angels";
-        public static final String REGENERATION = "lcm-regen";
-        public static final String LCORE = "lucraftcore";
 		public static final String OPTIFINE = "optifine";
 		public static final String DIM_DOORS = "dimdoors";
 		public static final String ALBEDO = "albedo";
