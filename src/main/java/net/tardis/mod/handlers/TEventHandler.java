@@ -1,15 +1,8 @@
 package net.tardis.mod.handlers;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -72,6 +65,11 @@ import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+
 @Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class TEventHandler {
 	
@@ -111,9 +109,7 @@ public class TEventHandler {
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
-		for (Block block : TBlocks.BLOCKS) {
-			event.getRegistry().register(block);
-		}
+		TBlocks.BLOCKS.forEach(block -> event.getRegistry().register(block));
 	}
 	
 	@SubscribeEvent

@@ -39,19 +39,13 @@ public class Helper {
 	public static Random rand = new Random();
 	
 	public static void transferToOwnedTardis(EntityPlayerMP player, WorldServer world, BlockPos pos) {
-        player.getServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter(world));
 		pos = pos.offset(EnumFacing.SOUTH, 4);
-		player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+		TardisTeleporter.move(player, TDimensions.TARDIS_ID, pos);
 	}
 	
 	public static String formatBlockPos(BlockPos pos) {
 		if (pos == null || pos.equals(BlockPos.ORIGIN)) return "None";
 		return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
-	}
-	
-	public static void transferToWorld(EntityPlayerMP player, WorldServer world, BlockPos pos, int dim) {
-		world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dim, new TardisTeleporter(world));
-		player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 	}
 	
 	public static Vec3d convertToPixels(Vec3d vec) {

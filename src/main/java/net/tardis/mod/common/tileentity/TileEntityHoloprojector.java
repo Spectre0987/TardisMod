@@ -45,17 +45,18 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 					}
 					List<NBTTagCompound> lists = new ArrayList<>();
 					List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-					for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 7))) {
-						if(EntityList.getKey(e) != null) {
+					ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 7)).forEach(entity -> {
+						if (EntityList.getKey(entity) != null) {
 							NBTTagCompound tag = new NBTTagCompound();
-							e.writeToNBT(tag);
-							tag.setString("id", EntityList.getKey(e).toString());
+							entity.writeToNBT(tag);
+							tag.setString("id", EntityList.getKey(entity).toString());
 							lists.add(tag);
 						}
-						if(e instanceof EntityPlayerMP) {
-							players.add(new PlayerStorage((EntityPlayerMP)e));
+						if (entity instanceof EntityPlayerMP) {
+							players.add(new PlayerStorage((EntityPlayerMP) entity));
 						}
-					}
+					});
+					
 					worldShell.setPlayers(players);
 					worldShell.setEntities(lists);
 					NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
