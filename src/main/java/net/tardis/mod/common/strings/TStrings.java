@@ -14,6 +14,7 @@ public class TStrings {
 	//Add in int
 	public static final String MAGNITUDE = "tardis.magnitude";
 	public static final String HADS_ENABLED = "tardis.hads.enabled.";
+	public static final String HUM_TOGGLED = "tardis.hum.enabled.";
 	public static final String TARDIS_DIMENSION = "tardis.dimension";
 	
 	public static final String SECONDS = "general.time.seconds";
