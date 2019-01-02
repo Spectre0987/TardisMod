@@ -1,9 +1,5 @@
 package net.tardis.mod.client.worldshell;
 
-import javax.annotation.Nullable;
-
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -19,6 +15,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nullable;
 
 public class RenderWorldShell {
 	
@@ -27,7 +26,8 @@ public class RenderWorldShell {
 	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks, @Nullable WorldBoti worldBoti) {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		//Moving this will crash
-		if(worldBoti == null)worldBoti = new WorldBoti(entity.getDimnesion(), Minecraft.getMinecraft().world, entity.getWorldShell());
+        if (worldBoti == null)
+            worldBoti = new WorldBoti(entity.getDimension(), Minecraft.getMinecraft().world, entity.getWorldShell());
 		if (entity instanceof IContainsWorldShell) {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 

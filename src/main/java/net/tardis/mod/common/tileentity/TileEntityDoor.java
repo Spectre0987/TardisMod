@@ -47,17 +47,16 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public BlockPos consolePos = BlockPos.ORIGIN;
 	public SoundEvent knockSound = SoundEvents.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD;
 	public boolean isLocked = true;
-	public int lockCooldown = 0;
+	public int lockCooldown, openingTicks = 0;
 	private int updateTicks = 0;
-	public int openingTicks = 0;
 	public float alpha = 1;
-	public boolean isDemat, isRemat = false;
+	public boolean isDemat, isRemat, damsPresent = true;
 	public static int radius = 20;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	private AxisAlignedBB SHELL_AABB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10);
 	private static AxisAlignedBB RENDER_BB = new AxisAlignedBB(-5, -5, -5, 5, 5, 5);
 	private int lightLevel = 0;
-	
+
 	public TileEntityDoor() {
 		this.isRemat = true;
 		this.alpha = 0.0F;
@@ -89,7 +88,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			if(tardis != null && tardis.getTardisState() == EnumTardisState.NORMAL) {
 				if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0 && alpha >= 1.0F && !tardis.isLocked()) {
 					lockCooldown = 20;
-		            isLocked = !isLocked;
+					isLocked = !isLocked;
 					this.markDirty();
 					NetworkHandler.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this), world.provider.getDimension());
 					if (isLocked)
@@ -106,10 +105,17 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 							}
 						}
 					}
-				}
-				else if(tardis.isLocked()) {
+				} else if(tardis.isLocked()) {
 					player.sendStatusMessage(new TextComponentTranslation(TStrings.DOUBLE_LOCKED + true), false);
 				}
+			} else {
+
+				//If the dams aint here, we're gonna inform the player
+				if (!damsPresent) {
+					player.sendStatusMessage(new TextComponentTranslation(TStrings.NO_DAMS), false);
+					world.playSound(null, getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1, 1);
+				}
+
 			}
 		}
 	}
@@ -157,6 +163,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				}
 			}
 			if(tardis.getDoor() != null) this.lightLevel = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getLight(tardis.getDoor().getPosition());
+
 			//HADS
 			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(1D));
 			for(Entity e : projectiles) {
@@ -167,6 +174,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					catch(Exception exc) {}
 				}
 			}
+
+
 			if (lockCooldown > 0) --lockCooldown;
 			++this.updateTicks;
 			if (this.updateTicks > 20) {
@@ -213,10 +222,16 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				alpha += 0.005F;
 				if(!world.isRemote) {
 					BlockPos tp = this.getConsolePos().offset(EnumFacing.SOUTH, 3);
-					world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(0, 0, 0, 1, 2, 1).offset(this.getPos().down())).forEach(entity -> {
-						TardisTeleporter.move(entity, TDimensions.TARDIS_ID, tp);
-					});
+					List<Entity> entitiesWithinAABB = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(0, 0, 0, 1, 2, 1).offset(this.getPos().down()));
+					if (TardisHelper.getConsole(getConsolePos()).getTardisState() != EnumTardisState.DISABLED) {
+						damsPresent = true;
+						entitiesWithinAABB.forEach(entity -> TardisTeleporter.move(entity, TDimensions.TARDIS_ID, tp));
+					} else {
+						damsPresent = false;
+						setLocked(true);
+					}
 				}
+
 			}
 			else {
 				this.isRemat = false;
@@ -246,11 +261,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public boolean isLocked() {
 		return this.isLocked;
 	}
-	
-	public class NBT {
-		public static final String LOCKED = "locked";
-	}
-	
+
 	@Override
 	public void onLoad() {
 		super.onLoad();
@@ -400,7 +411,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	}
 
 	@Override
-	public int getDimnesion() {
+	public int getDimension() {
 		return TDimensions.TARDIS_ID;
 	}
 

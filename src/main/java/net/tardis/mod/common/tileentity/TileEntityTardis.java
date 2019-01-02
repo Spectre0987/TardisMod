@@ -885,8 +885,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(door != null) {
 				EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
 				pos = door.getPos().down().offset(face, 2);
-				TardisTeleporter.move(entity, dimension, pos);
+				TardisTeleporter.move(entity, dimension, getLocation());
 			}
+		} else {
+			TardisTeleporter.move(entity, dimension, getLocation());
 		}
 	}
 
