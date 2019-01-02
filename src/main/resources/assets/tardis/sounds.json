@@ -219,6 +219,15 @@
         "name":"tardis:control_03",
         "stream" : true
     }]
+  },
+  "vm_teleport": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:vm_teleport",
+        "stream": true
+      }
+    ]
   }
 
 }
