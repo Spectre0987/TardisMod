@@ -18,6 +18,7 @@ public class TStrings {
 	
 	public static final String SECONDS = "general.time.seconds";
 	public static final String DOUBLE_LOCKED = "door.tardis.locked.";
+	public static final String NO_DAMS = "door.tardis.no_dams";
 	public static final String OPTIFINE_INSTALLED = "mods.tardis.compat.optifine";
 	/**Add a boolean**/
 	public static final String STABILIZERS_ON = "tardis.stabilizers.";

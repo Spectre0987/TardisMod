@@ -1,18 +1,8 @@
 package net.tardis.mod.util.client;
 
-import java.nio.FloatBuffer;
-
-import javax.annotation.Nullable;
-
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.math.MathHelper;
@@ -25,6 +15,10 @@ import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.proxy.ClientProxy;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nullable;
+import java.nio.FloatBuffer;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
@@ -61,7 +55,8 @@ public class RenderHelper {
 			// Draw scene from portal view
 			
 			try {
-				if(wBoti == null || wBoti.dimension != te.getDimnesion()) wBoti = new WorldBoti(te.getDimnesion(), Minecraft.getMinecraft().world, te.getWorldShell());
+                if (wBoti == null || wBoti.dimension != te.getDimension())
+                    wBoti = new WorldBoti(te.getDimension(), Minecraft.getMinecraft().world, te.getWorldShell());
 				WorldClient oldW = Minecraft.getMinecraft().world;
 				wBoti.setWorldTime(te.getWorldShell().getTime());
 				RenderHelper.setRenderGlobalWorld(wBoti);
