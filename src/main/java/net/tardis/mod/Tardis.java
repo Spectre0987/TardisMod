@@ -174,6 +174,7 @@ public class Tardis {
 		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
 		TardisProtocol.register(new ProtocolRepair());
 		TardisProtocol.register(new ProtocolWaypoints());
+		TardisProtocol.register(new ProtocolToggleHum());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
