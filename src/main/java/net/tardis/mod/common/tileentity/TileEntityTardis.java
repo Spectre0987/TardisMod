@@ -58,8 +58,7 @@ import java.util.Random;
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
 	private Random rand = new Random();
-	private int ticksToTravel = 0;
-	private int ticks = 0;
+    private int ticksToTravel = 0, ticks = 0;
 	private BlockPos tardisLocation = BlockPos.ORIGIN;
 	private BlockPos tardisDestination = BlockPos.ORIGIN;
 	public int dimension = 0;
@@ -97,10 +96,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean isLocked = false;
 	//Is the TARDIS 'parked' in the Vortex?
 	private boolean parkingOrbit = false;
-	private float hullHealth = 1F;
+    private float hullHealth = 1F, rechargeRate = 0.0001F;
 	private EnumCourseCorrect courseCorrect = EnumCourseCorrect.NONE;
 	private boolean repairing = false;
-	private float rechargeRate = 0.0001F;
 	public List<TardisControlFactory> controlClases = new ArrayList<>();
 	public int waypointIndex = 0;
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
@@ -128,7 +126,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if(this.getClass() == TileEntityTardis.class)
 			this.controlClases.add(ControlSonicSlot::new);
 	}
-
 
 	@Override
 	public void update() {
