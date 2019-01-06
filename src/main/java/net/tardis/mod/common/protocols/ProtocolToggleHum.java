@@ -6,14 +6,15 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
+//TODO: Oh god I'm broken!
 public class ProtocolToggleHum implements ITardisProtocol {
     @Override
     public void onActivated(World world, TileEntityTardis tardis) {
         if (!world.isRemote){
-            tardis.toggleHum();
+            //tardis.toggleHum();
             EntityPlayer player = world.getClosestPlayer(tardis.getPos().getX(), tardis.getPos().getY(), tardis.getPos().getZ(), 10D, false);
             if(player != null) {
-                player.sendStatusMessage(new TextComponentTranslation(TStrings.HUM_TOGGLED + tardis.isHumEnabled()), true);
+                //player.sendStatusMessage(new TextComponentTranslation(TStrings.HUM_TOGGLED + tardis.isHumEnabled()), true);
             }
         }
     }

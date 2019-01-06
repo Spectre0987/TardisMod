@@ -39,13 +39,7 @@ public class Helper {
 	public static Random rand = new Random();
 	
 	public static void transferToOwnedTardis(EntityPlayerMP player, WorldServer world, BlockPos pos) {
-        player.getServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter(world));
-		pos = pos.offset(EnumFacing.SOUTH, 4);
-<<<<<<< HEAD
-		TardisTeleporter.move(player, TDimensions.TARDIS_ID, pos, EnumFacing.NORTH);
-=======
-		player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
->>>>>>> parent of 0a3d984f... Fixed entity teleporting, Added that dudes new sounds, fixed BOTI null crash
+        
 	}
 	
 	public static String formatBlockPos(BlockPos pos) {
