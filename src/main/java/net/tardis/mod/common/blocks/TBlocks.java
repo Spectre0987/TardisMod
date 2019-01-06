@@ -1,10 +1,8 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
@@ -19,18 +17,11 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
-import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
-import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
-import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
-import net.tardis.mod.common.tileentity.decoration.TileEntityToyotaSpin;
-import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
-import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
-import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
-import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
-import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
-import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
-import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
+import net.tardis.mod.common.tileentity.decoration.*;
+import net.tardis.mod.common.tileentity.exteriors.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TBlocks {
 
@@ -160,9 +151,22 @@ public class TBlocks {
 		}
 
 		if (block instanceof INeedItem) {
-			TItems.items.add(((INeedItem) block).getItem().setRegistryName(rl));
+
+			Item itemBlock = ((INeedItem) block).getItem().setRegistryName(rl);
+			if (addToTab) {
+				itemBlock.setCreativeTab(TardisTabs.BLOCKS);
+			}
+
+			TItems.items.add(itemBlock);
 		} else {
-			TItems.items.add(new ItemBlock(block).setRegistryName(rl));
+
+			Item itemBlock = new ItemBlock(block).setRegistryName(rl);
+
+			if (addToTab) {
+				itemBlock.setCreativeTab(TardisTabs.BLOCKS);
+			}
+
+			TItems.items.add(itemBlock);
 		}
 		return block;
 	}

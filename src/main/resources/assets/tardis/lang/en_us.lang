@@ -239,6 +239,7 @@ tardis.stabilizers.false=Stabilizers Off
 entity.dalek.name=Dalek
 entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Invasion Cyberman
+entity.cyberman_tomb.name=Tomb Cyberman
 
 death.cyberman.generic=was converted!
 

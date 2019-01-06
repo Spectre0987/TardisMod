@@ -54,18 +54,15 @@ public class MessageDoorOpen implements IMessage {
 		
 		@Override
 		public IMessage onMessage(MessageDoorOpen mes, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-				@Override
-				public void run() {
-					Minecraft mc = Minecraft.getMinecraft();
-	                TileEntity te = mc.world.getTileEntity(mes.pos);
-	                if (te instanceof TileEntityDoor) {
-	                    TileEntityDoor door = ((TileEntityDoor) te);
-	                    door.isLocked = !mes.isOpen;
-	                    door.isDemat = mes.isDemat;
-	                    door.isRemat = mes.isRemat;
-	                    door.setLightLevel(mes.lightLevel);
-	                }
+			Minecraft.getMinecraft().addScheduledTask(() -> {
+				Minecraft mc = Minecraft.getMinecraft();
+				TileEntity te = mc.world.getTileEntity(mes.pos);
+				if (te instanceof TileEntityDoor) {
+					TileEntityDoor door = ((TileEntityDoor) te);
+					door.isLocked = !mes.isOpen;
+					door.isDemat = mes.isDemat;
+					door.isRemat = mes.isRemat;
+					door.setLightLevel(mes.lightLevel);
 				}
 			});
 			return null;
