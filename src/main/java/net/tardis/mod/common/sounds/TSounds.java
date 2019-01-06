@@ -1,5 +1,7 @@
 package net.tardis.mod.common.sounds;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -7,12 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 
-import java.util.ArrayList;
-
 @Mod.EventBusSubscriber
 public class TSounds {
-	
-	private static ArrayList<SoundEvent> sounds = new ArrayList<SoundEvent>();
 	
 	public static SoundEvent takeoff = register("takeoff");
 	public static SoundEvent loop = register("loop");
@@ -40,21 +38,25 @@ public class TSounds {
 	public static SoundEvent INTERIOR_HUM_1963 = register("1963_interior_hum");
 	public static SoundEvent INTERIOR_DOOR_1963 = register("1963_int_door");
 	public static SoundEvent FOOD_MACHINE = register("1963_food_machine");
-	
-	public static SoundEvent tardis_land = register("tardis_land");
-	
-	
-	public static SoundEvent register(String name) {
+
+    public static SoundEvent register(String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
 		SoundEvent event = new SoundEvent(rl);
 		event.setRegistryName(rl);
-		sounds.add(event);
 		return event;
 	}
 	
 	@SubscribeEvent
 	public static void regSounds(RegistryEvent.Register<SoundEvent> e) {
-		sounds.forEach(soundEvent -> e.getRegistry().register(soundEvent));
+		for (Field field : TSounds.class.getDeclaredFields()) {
+			SoundEvent sound = null;
+			try {
+				sound = (SoundEvent) field.get(null);
+			} catch (IllegalAccessException e1) {
+				// No log spam
+			}
+			e.getRegistry().register(sound);
+		}
 	}
 	
 }
