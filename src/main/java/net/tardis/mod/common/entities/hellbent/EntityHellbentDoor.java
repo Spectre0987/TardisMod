@@ -90,14 +90,9 @@ public class EntityHellbentDoor extends Entity implements IDoor{
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getTrueSource() instanceof EntityPlayer) { //We only want players to be able to kill doors
-			if (!world.isRemote) {
-				InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(TItems.hellbent_door));
-				this.setDead();
-				return true;
-			}
-		}
-		return false;
+		if(!world.isRemote)InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(TItems.hellbent_door));
+		this.setDead();
+		return true;
 	}
 
 
