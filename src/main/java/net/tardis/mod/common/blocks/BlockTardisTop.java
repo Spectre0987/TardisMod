@@ -111,9 +111,11 @@ public class BlockTardisTop extends BlockTileBase implements INoBox{
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		super.onBlockAdded(worldIn, pos, state);
+		try {
 			if (!worldIn.isRemote) {
 				worldIn.playSound(null, pos, TSounds.tardis_land, SoundCategory.BLOCKS, 1F, 1F);
 			}
+		} catch (Exception e) {}
 	}
 
 	@Override

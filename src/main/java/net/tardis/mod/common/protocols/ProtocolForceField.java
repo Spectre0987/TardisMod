@@ -11,16 +11,16 @@ public class ProtocolForceField implements ITardisProtocol {
     @Override
     public void onActivated(World world, TileEntityTardis tardis) {
         if (!world.isRemote) {
-            tardis.forceFields = !tardis.forceFields;
+            tardis.setForceFieldEnabled(!tardis.isForceFieldEnabled());
             EntityPlayer player = world.getClosestPlayer(tardis.getPos().getX(), tardis.getPos().getY(), tardis.getPos().getZ(), 10D, false);
             if (player != null) {
-                player.sendStatusMessage(new TextComponentTranslation(TStrings.FORCE_TOGGLED + tardis.forceFields), true);
+                player.sendStatusMessage(new TextComponentTranslation(TStrings.FORCE_TOGGLED + tardis.isForceFieldEnabled()), true);
             }
         }
     }
 
     @Override
     public String getNameKey() {
-        return "protocol.ff";
+        return "protocol.tardis.ff";
     }
 }
