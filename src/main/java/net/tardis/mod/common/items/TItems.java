@@ -1,8 +1,5 @@
 package net.tardis.mod.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -16,12 +13,11 @@ import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
-import net.tardis.mod.common.items.components.ItemArtronCapacitor;
-import net.tardis.mod.common.items.components.ItemComponent;
-import net.tardis.mod.common.items.components.ItemDematCircut;
-import net.tardis.mod.common.items.components.ItemFluidLink;
-import net.tardis.mod.common.items.components.ItemTVG;
+import net.tardis.mod.common.items.components.*;
 import net.tardis.mod.common.sounds.TSounds;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TItems {
@@ -34,13 +30,13 @@ public class TItems {
 	public static Item gunstick = null;
 	public static Item power_cell = null;
 	public static Item fob_watch = null;
-	
+
 	public static Item ray_gun = null;
-	
+
 	public static Item void_specs = null;
 	public static Item fez = null;
 	public static Item bowtie = null;
-	
+
 	public static Item sonic_cane = null;
 	public static Item umbrella_closed = null;
 	public static Item umbrella_open = null;
@@ -48,7 +44,7 @@ public class TItems {
 	public static Item sonic_screwdriver = null;
 	public static Item manual = null;
 	public static Item sonic_pen = null;
-	
+
 	public static Item space_helm = null;
 	public static Item space_chest = null;
 	public static Item space_legs = null;
@@ -57,32 +53,32 @@ public class TItems {
 	public static Item fourth_hat = null;
 	public static Item thirteen_coat = null;
 	public static Item symbiotic_nuclei = null;
-	
+
 	public static Item stattenheim_remote = null;
 	public static Item sonic_shades = null;
 	public static Item time_vector_generator = null;
 	public static Item biodampener = null;
-	
+
 	public static Item ruby = null;
 	public static Item mercuryBottle = null;
 	public static Item crushedCinnabar = null;
-	
+
 	public static Item hellbent_corridor = null;
 	public static Item hellbent_door = null;
 
-    public static Item interior_door = null;
+	public static Item interior_door = null;
 
-    public static Item marker = null;
-	
-    public static Item sonic13th = null;
+	public static Item marker = null;
+
+	public static Item sonic13th = null;
 	public static Item sonicBlaster = createItem(new ItemSonicBlaster(), "sonic_blaster");
-	
+
 	public static Item bessie = createItem(new ItemESpawn(EntityBessie::new), "bessie");
-	
+
 	public static Item tardis_repairkit = createItem(new ItemRepairKit(), "tardis_repairkit");
-	
+
 	public static Item tardis_locator = createItem(new ItemLocator(), "tardis_locator");
-	
+
 	// Componenets
 	public static Item fluid_link = null;
 	public static Item artron_capacitor = null;
@@ -93,13 +89,11 @@ public class TItems {
 	public static Item stabilizers = createItem(new ItemComponent(), "stabilizers");
 
 
-    @SubscribeEvent
+	@SubscribeEvent
 	public static void regItems(RegistryEvent.Register<Item> event) {
-		for (Item item : items) {
-			event.getRegistry().register(item);
-		}
+		items.forEach(item -> event.getRegistry().register(item));
 	}
-	
+
 	public static void init() {
 		key = createItem(new ItemKey(), "key");
 		circuts = createItem(new ItemBase(), "circuts");
@@ -132,22 +126,23 @@ public class TItems {
 		crushedCinnabar = createItem(new ItemBase(), "cinnabar");
 		hellbent_corridor = createItem(new ItemHellbentCorridor(), "hellbent_corridor");
 		hellbent_door = createItem(new ItemHellbentDoor(), "hellbent_door");
-		
+
 		interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
-        marker = createItem(new ItemMarker(), "marker");
+		marker = createItem(new ItemMarker(), "marker");
 		sonic13th = createItem(new ItemSonic(TSounds.sonic), "sonic_screwdriver_13");
-		
+
 		// TARDIS Components
 		fluid_link = createItem(new ItemFluidLink(), "fluid_link");
 		artron_capacitor = createItem(new ItemArtronCapacitor(), "artron_capacitor");
 		demat_circut = createItem(new ItemDematCircut(), "demat_circut");
 	}
-	
+
 	public static Item createItem(Item item, String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
 		item.setTranslationKey("tardis." + name);
 		item.setRegistryName(rl);
 		items.add(item);
+		item.setCreativeTab(TardisTabs.ITEMS);
 		return item;
 	}
 }

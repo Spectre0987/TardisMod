@@ -32,7 +32,7 @@ public class TBlocks {
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
 	public static Block holoprojector = register(new BlockHoloprojector(), "holoprojector");
-	
+
 	public static Block toyota_hexagon_1 = register(new BlockToyota(false), "toyota_hexagon_1");
 	public static Block toyota_hexagon_2 = register(new BlockToyota(false), "toyota_hexagon_2");
 	public static Block toyota_hexagon_3 = register(new BlockToyota(false), "toyota_hexagon_3");
@@ -60,22 +60,22 @@ public class TBlocks {
 	public static Block toyota_wallroundel_4 = register(new BlockToyota(false), "toyota_wallroundel_4");
 	public static Block toyota_wallroundel_5 = register(new BlockToyota(false), "toyota_wallroundel_5");
 	public static Block toyota_wallroundel_6 = register(new BlockToyota(false), "toyota_wallroundel_6");
-	
+
 	public static Block toyota_spin = register(new BlockToyotaSpin(TileEntityToyotaSpin::new), "toyota_spin");
-	
+
 	public static Block toyota_platform_full;
 	public static Block toyota_platform_slab;
-	
+
 	public static Block sonicRedstone;
-	
+
 	public static Block electric_panel = register(new BlockEPanel(), "electric_panel");
-	
+
 	public static Block ruby_ore = register(new BlockItemDrop(TItems.ruby), "ruby_ore");
 	public static Block cinnabar_ore = register(new BlockItemDrop(TItems.crushedCinnabar, 3), "cinnabar_ore");
 	public static Block tardis_coral = register(new BlockTardisCoral(), "tardis_coral");
-	
+
 	public static Block alembic = register(new BlockAlembic(), "alembic");
-	
+
 	public static Block hellbent_floor = register(new BlockBase(), "hellbent_floor");
 	public static Block hellbent_glass01 = register(new BlockBase(), "hellbent_glass01");
 	public static Block hellbent_glass02 = register(new BlockBase(), "hellbent_glass02");
@@ -91,23 +91,23 @@ public class TBlocks {
 	public static Block hellbent_silverwall = register(new BlockBase(), "hellbent_silverwall");
 	public static Block hellbent_vents = register(new BlockLight(), "hellbent_vents");
 	public static Block hellbent_wall = register(new BlockBase(), "hellbent_wall");
-	
+
 	public static Block zero_room_glow = register(new BlockVerticalSlab(), "zero_room_slab");
 	public static Block zero_room = register(new BlockBase(), "zero_room");
 	public static Block zero_room_stairs = register(new BlockTStairs(zero_room.getDefaultState()), "zero_room_stairs");
-	
+
 	public static Block hellbent_light = register(new BlockFacingDecoration(TileEntityHellbentLight::new).setLightLevel(1F).setLightOpacity(0), "hellbent_light");
 	public static Block hellbent_monitor = register(new BlockMonitor(TileEntityHellbentMonitor::new), "hellbent_monitor");
 	public static Block hellbent_pole = register(new BlockDecoration(TileEntityHellbentPole::new), "hellbent_pole");
 	public static Block hellbent_roof = register(new BlockDecoration(TileEntityHelbentRoof::new).setLightLevel(1F).setLightOpacity(0), "hellbent_roof");
-	
+
 	public static Block telos_sand = register(new BlockBaseSand(), "telos_sand");
 	public static Block moon_dirt = register(new BlockBase(), "moon_dirt");
-	
+
 	public static Block suitcase = register(new BlockSuitcase(), "suitcase");
 	public static Block br_chair = register(new BlockChair(Material.WOOD), "br_chair");
 	public static Block am_sphere = register(new BlockFacingDecoration(TileEntityAmSphere::new), "am_sphere").setCreativeTab(TardisTabs.BLOCKS);
-	
+
 	//Exteriors
 	public static Block tardis_top = register(new BlockTardisTop(TileEntityDoor::new), "tardis_top", false);
 	public static Block tardis_top_01 = register(new BlockTardisTop(TileEntityDoor01::new), "tardis_top_01", false);
@@ -115,11 +115,11 @@ public class TBlocks {
 	public static Block tardis_top_03 = register(new BlockTardisTop(TileEntityDoor04::new), "tardis_top_03", false);
 	public static Block tardis_top_04 = register(new BlockTardisTop(TileEntityDoor05::new), "tardis_top_04", false);
 	public static Block tardis_top_cc = register(new BlockTardisTop(TileEntityDoorCC::new), "tardis_top_cc", false);
-    public static Block tardis_top_clock = register(new BlockTardisTop(TileEntityDoorClock::new), "tardis_top_clock", false);
-    public static Block tardis_top_tt = register(new BlockTardisTop(TileEntityDoorTT::new), "tardis_top_tt", false);
-    public static Block tardis_top_wood_door = register(new BlockTardisTop(TileEntityDoorWood::new), "tardis_top_wood_door", false);
+	public static Block tardis_top_clock = register(new BlockTardisTop(TileEntityDoorClock::new), "tardis_top_clock", false);
+	public static Block tardis_top_tt = register(new BlockTardisTop(TileEntityDoorTT::new), "tardis_top_tt", false);
+	public static Block tardis_top_wood_door = register(new BlockTardisTop(TileEntityDoorWood::new), "tardis_top_wood_door", false);
 
-	
+
 	//Consoles
 	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console", false);
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01", false);
@@ -129,7 +129,7 @@ public class TBlocks {
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block", false);
 
 	public static Block circuit_repair = register(new BlockComponentRepair(Material.IRON, TileEntityComponentRepair::new), "circuit_repair");
-	
+
 	public static Block multiblock = register(new BlockMultiblock(Material.WOOD), "multiblock", false);
 	public static Block multiblock_master = register(new BlockMultiblockMaster(Material.WOOD), "multiblock_master", false);
 
@@ -172,5 +172,5 @@ public class TBlocks {
 	}
 
 	public static void register(){}
-	
+
 }
