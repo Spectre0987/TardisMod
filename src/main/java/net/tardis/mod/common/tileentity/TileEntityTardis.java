@@ -69,6 +69,7 @@ import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.misc.TardisControlFactory;
+import net.tardis.mod.common.sounds.InteriorHum;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.SystemFlight;
 import net.tardis.mod.common.systems.SystemStabilizers;
@@ -129,6 +130,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public List<TardisControlFactory> controlClases = new ArrayList<>();
 	public int waypointIndex = 0;
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
+	private InteriorHum hum = InteriorHum.DEFAULT;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -224,8 +226,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (world.isRemote && !this.isInFlight()) {
 			frame = 0;
 		}
-		if (world.getTotalWorldTime() % 50 == 0 && !world.isRemote) {
-			world.playSound(null, getPos(), TSounds.INTERIOR_HUM_1963, SoundCategory.BLOCKS, 0.5F, 1F);
+		if(hum != null) {
+			if (world.getTotalWorldTime() % hum.getTicks() == 0 && !world.isRemote) {
+				world.playSound(null, getPos(), hum.getSound(), SoundCategory.BLOCKS, 0.5F, 1F);
+			}
 		}
 		this.createControls();
 		for(BaseSystem sys : this.systems) {
