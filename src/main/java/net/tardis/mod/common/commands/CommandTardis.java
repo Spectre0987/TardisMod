@@ -1,15 +1,5 @@
 package net.tardis.mod.common.commands;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -32,6 +22,10 @@ import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import net.tardis.mod.util.common.helpers.FileHelper;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import javax.annotation.Nullable;
+import java.text.MessageFormat;
+import java.util.*;
 
 
 public class CommandTardis extends CommandBase {
@@ -205,7 +199,12 @@ public class CommandTardis extends CommandBase {
         if (TardisHelper.hasTardis(player.getUniqueID())) {
             BlockPos pos = TardisHelper.getTardis(player.getUniqueID());
             player.dismountRidingEntity();
-            ((TileEntityTardis) server.getWorld(TDimensions.TARDIS_ID).getTileEntity(pos)).enterTARDIS(player);
+            TileEntityTardis tileTardis = TardisHelper.getConsole(pos);
+            if (tileTardis != null) {
+                tileTardis.enterTARDIS(player);
+            } else {
+                player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED + " but most likely a issue has arisen somewhere..."));
+            }
         } else {
             player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
         }

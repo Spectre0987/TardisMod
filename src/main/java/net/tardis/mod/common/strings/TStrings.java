@@ -14,10 +14,13 @@ public class TStrings {
 	//Add in int
 	public static final String MAGNITUDE = "tardis.magnitude";
 	public static final String HADS_ENABLED = "tardis.hads.enabled.";
+	public static final String HUM_TOGGLED = "tardis.hum.enabled.";
+	public static final String FORCE_TOGGLED = "tardis.force.enabled.";
 	public static final String TARDIS_DIMENSION = "tardis.dimension";
 	
 	public static final String SECONDS = "general.time.seconds";
 	public static final String DOUBLE_LOCKED = "door.tardis.locked.";
+	public static final String NO_DAMS = "door.tardis.no_dams";
 	public static final String OPTIFINE_INSTALLED = "mods.tardis.compat.optifine";
 	/**Add a boolean**/
 	public static final String STABILIZERS_ON = "tardis.stabilizers.";

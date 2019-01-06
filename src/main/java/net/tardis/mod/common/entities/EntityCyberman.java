@@ -1,6 +1,5 @@
 package net.tardis.mod.common.entities;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,9 +10,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.tardis.mod.api.entities.IDontSufficate;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -26,19 +22,6 @@ public class EntityCyberman extends EntityMob implements IDontSufficate{
 	public EntityCyberman(World worldIn) {
 		super(worldIn);
 		this.tasks.addTask(6, new EntityAIMoveToTARDIS(this, 1.0D));
-	}
-
-	public static class DamageSourceCyber extends DamageSource{
-
-		public DamageSourceCyber() {
-			super("death.cyberman.generic");
-		}
-
-		@Override
-		public ITextComponent getDeathMessage(EntityLivingBase entity) {
-			return new TextComponentString(entity.getDisplayName().getFormattedText() + " " + (new TextComponentTranslation("death.cyberman.generic").getFormattedText()));
-		}
-		
 	}
 
 	@Override

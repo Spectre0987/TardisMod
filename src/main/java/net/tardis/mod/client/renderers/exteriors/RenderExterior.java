@@ -5,10 +5,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.util.client.RenderHelper;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntityDoor>{
@@ -34,6 +37,8 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.disableAlpha();
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
+
+		renderForceField(te, x, y, z, partialTicks);
 	}
 	
 	public abstract void renderExterior(TileEntityDoor te);
@@ -41,5 +46,21 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 	public abstract void renderPortal(TileEntityDoor te, float partialTicks);
 	
 	public abstract ResourceLocation getTexture();
+
+	public void renderForceField(TileEntityDoor tileEntityDoor, double x, double y, double z, float partialTicks) {
+		if (!tileEntityDoor.forceField) return;
+		GlStateManager.pushMatrix();
+		if (tileEntityDoor.getWorld().rand.nextInt(3) == 1) {
+			GlStateManager.translate(0, tileEntityDoor.getWorld().rand.nextInt(2) / 100.0f, 0);
+		}
+
+		AxisAlignedBB forceFieldAABB = tileEntityDoor.getRenderBoundingBox();
+		Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+		double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks;
+		double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks;
+		double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks;
+		RenderHelper.renderOffsetAABB(forceFieldAABB, -d0, -d1, -d2);
+		GlStateManager.popMatrix();
+	}
 
 }

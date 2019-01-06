@@ -35,7 +35,7 @@ public class SystemStabilizers extends BaseSystem{
 			if(world.getWorldTime() % 150 == 0) {
 				TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(consolePos);
 				if(!this.isStabilized) {
-					if(tardis.isInFlight()) {
+					if (tardis != null && tardis.isInFlight()) {
 						if(tardis.getCourseCorrect() != EnumCourseCorrect.NONE) {
 							++controlsMissed;
 							this.explode(world, consolePos);
@@ -49,12 +49,16 @@ public class SystemStabilizers extends BaseSystem{
 					}
 					else {
 						this.controlsMissed = 0;
-						tardis.setCourseEvent(EnumCourseCorrect.NONE);
+						if (tardis != null) {
+							tardis.setCourseEvent(EnumCourseCorrect.NONE);
+						}
 					}
 				}
 				else {
 					this.controlsMissed = 0;
-					tardis.setCourseEvent(EnumCourseCorrect.NONE);
+					if (tardis != null) {
+						tardis.setCourseEvent(EnumCourseCorrect.NONE);
+					}
 				}
 				if(this.getHealth() <= 0)
 					this.isStabilized = false;

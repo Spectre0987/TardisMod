@@ -11,7 +11,6 @@ import net.tardis.mod.Tardis;
 import java.util.ArrayList;
 import java.util.List;
 
-//Like Hell
 public class EntityHelper {
 	
 	public static int id = 0;
@@ -20,20 +19,29 @@ public class EntityHelper {
 	public static void registerStatic(Class entityClass, String name) {
 		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 120, 10, false);
 	}
-	
+
+	public static void registerMobEgg(Class entityClass, String name, int chance, int primary, int secondary) {
+		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 80, 3, false, primary, secondary);
+		EntityRegistry.addSpawn(entityClass, chance, 1, 1, EnumCreatureType.MONSTER, biomes.toArray(new Biome[1]));
+	}
+
 	public static void registerMob(Class entityClass, String name, int chance) {
 		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 80, 3, false);
 		EntityRegistry.addSpawn(entityClass, chance, 1, 1, EnumCreatureType.MONSTER, biomes.toArray(new Biome[1]));
 	}
-	
+
 	public static void registerNoSpawn(Class entityClass, String name) {
 		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 64, 1, true);
+	}
+
+	public static void registerNoSpawnEgg(Class entityClass, String name, int primary, int secondary) {
+		EntityRegistry.registerModEntity(new ResourceLocation(Tardis.MODID, name), entityClass, name, ++id, Tardis.instance, 64, 1, true, primary, secondary);
 	}
 	
 	public static void makeGoodBiomes() {
 		for (ResourceLocation rl : Biome.REGISTRY.getKeys()) {
 			Biome b = Biome.REGISTRY.getObject(rl);
-			if (b != Biomes.HELL && b != Biomes.SKY) biomes.add(b);
+			if (b != Biomes.HELL && b != Biomes.SKY && !b.getRegistryName().toString().contains("ocean")) biomes.add(b);
 		}
 	}
 	

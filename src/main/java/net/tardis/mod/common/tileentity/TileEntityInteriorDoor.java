@@ -101,7 +101,7 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	}
 
 	@Override
-	public int getDimnesion() {
+    public int getDimension() {
 		return 0;
 	}
 

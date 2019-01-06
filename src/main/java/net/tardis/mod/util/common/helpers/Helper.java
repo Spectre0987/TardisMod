@@ -40,7 +40,7 @@ public class Helper {
 	
 	public static void transferToOwnedTardis(EntityPlayerMP player, WorldServer world, BlockPos pos) {
 		pos = pos.offset(EnumFacing.SOUTH, 4);
-		TardisTeleporter.move(player, TDimensions.TARDIS_ID, pos);
+		TardisTeleporter.move(player, TDimensions.TARDIS_ID, pos, EnumFacing.NORTH);
 	}
 	
 	public static String formatBlockPos(BlockPos pos) {

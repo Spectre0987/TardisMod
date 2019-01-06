@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
+import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
@@ -141,6 +142,7 @@ public class TItems {
 		item.setTranslationKey("tardis." + name);
 		item.setRegistryName(rl);
 		items.add(item);
+		item.setCreativeTab(TardisTabs.ITEMS);
 		return item;
 	}
 }

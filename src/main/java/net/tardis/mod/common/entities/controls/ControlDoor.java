@@ -1,8 +1,5 @@
 package net.tardis.mod.common.entities.controls;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -26,11 +23,7 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.client.worldshell.BlockStorage;
-import net.tardis.mod.client.worldshell.IContainsWorldShell;
-import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.client.worldshell.PlayerStorage;
-import net.tardis.mod.client.worldshell.WorldShell;
+import net.tardis.mod.client.worldshell.*;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -40,6 +33,9 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	
@@ -213,7 +209,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	}
 
 	@Override
-	public int getDimnesion() {
+    public int getDimension() {
 		return this.getConsole() != null ? this.getConsole().getWorld().provider.getDimension() : TDimensions.TARDIS_ID;
 	}
 	

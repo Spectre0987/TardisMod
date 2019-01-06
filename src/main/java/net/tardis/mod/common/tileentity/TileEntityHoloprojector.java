@@ -77,7 +77,7 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 	}
 
 	@Override
-	public int getDimnesion() {
+    public int getDimension() {
 		TileEntityTardis tardis = null;
 		for(TileEntity te : world.getChunk(getPos()).getTileEntityMap().values()) {
 			if(te != null && te instanceof TileEntityTardis) {

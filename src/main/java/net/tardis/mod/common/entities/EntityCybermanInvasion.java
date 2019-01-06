@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tardis.mod.common.TDamageSources;
 
 public class EntityCybermanInvasion extends EntityCyberman implements IRangedAttackMob
 {
@@ -62,7 +63,7 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
 
     @Override
     public boolean attackEntityAsMob(Entity entityIn) {
-        entityIn.attackEntityFrom(new EntityCyberman.DamageSourceCyber(), 2F);
+        entityIn.attackEntityFrom(TDamageSources.CYBERMAN, 2F);
         return true;
     }
 
@@ -80,7 +81,7 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
         faceEntity(target, 10, 30);
-        EntityLaserRay laser = new EntityLaserRay(world, this, 7, new DamageSourceCyber(), new Vec3d(0, 0, 1));
+        EntityLaserRay laser = new EntityLaserRay(world, this, 7, TDamageSources.CYBERMAN, new Vec3d(0, 0, 1));
         double x = target.posX - this.posX;
         double y = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
         double z = target.posZ - this.posZ;
