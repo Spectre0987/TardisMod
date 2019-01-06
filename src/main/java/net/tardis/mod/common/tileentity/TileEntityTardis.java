@@ -259,7 +259,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					if (isACrash) {
 						dWorld.playSound(null, nPos, TSounds.cloister_bell, SoundCategory.BLOCKS, 1, 1);
 						for (int i = 0; i < 6; i++) {
-							System.out.println(i);
 							EntityLightningBolt bold = new EntityLightningBolt(world, nPos.getX() + rand.nextInt(3), nPos.getY() + rand.nextInt(3), nPos.getZ() + rand.nextInt(3), true);
 							dWorld.addWeatherEffect(bold);
 						}
