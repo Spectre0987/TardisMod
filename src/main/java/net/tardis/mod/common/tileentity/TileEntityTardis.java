@@ -102,6 +102,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public List<TardisControlFactory> controlClases = new ArrayList<>();
 	public int waypointIndex = 0;
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
+	private boolean humEnabled = true;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -129,7 +130,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	@Override
 	public void update() {
-
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - this.calcFuelUse());
@@ -196,7 +196,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (world.isRemote && !this.isInFlight()) {
 			frame = 0;
 		}
-		if (world.getTotalWorldTime() % 50 == 0 && !world.isRemote) {
+		if (world.getTotalWorldTime() % 50 == 0 && !world.isRemote && humEnabled) {
 			world.playSound(null, getPos(), TSounds.INTERIOR_HUM_1963, SoundCategory.BLOCKS, 0.5F, 1F);
 		}
 		this.createControls();
@@ -358,6 +358,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.hadsEnabled = tardisTag.getBoolean(NBT.HADS_ENABLED);
 			this.blockTop = Block.getStateById(tardisTag.getInteger(NBT.EXTERIOR));
 			this.fuelUseage = tardisTag.getFloat(NBT.FUEL_USAGE);
+			this.humEnabled = tardisTag.getBoolean(NBT.HUM_ENABLED);
 			
 			List<BaseSystem> newSystems = new ArrayList<>();
 			NBTTagList systemList = tardisTag.getTagList(NBT.SYSTEM_LIST, Constants.NBT.TAG_COMPOUND);
@@ -416,6 +417,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setBoolean(NBT.HADS_ENABLED, this.hadsEnabled);
 			tardisTag.setInteger(NBT.EXTERIOR, Block.getStateId(this.blockTop));
 			tardisTag.setFloat(NBT.FUEL_USAGE, this.fuelUseage);
+			tardisTag.setBoolean(NBT.HUM_ENABLED, this.humEnabled);
 			
 			NBTTagList systemList = new NBTTagList();
 			for(BaseSystem sys : systems) {
@@ -724,7 +726,15 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			ws.setBlockState(this.getLocation().up(), Blocks.AIR.getDefaultState());
 		}
 	}
-	
+
+	public void toggleHum(){
+		humEnabled = !humEnabled;
+	}
+
+	public boolean isHumEnabled() {
+		return humEnabled;
+	}
+
 	public static class NBT {
 		public static final String WAYPOINT_INDEX = "waypoint_index";
 		public static final String IS_LOCKED = "is_locked";
@@ -732,6 +742,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		public static final String SYSTEM_LIST = "system_list";
 		public static final String FUEL_USAGE = "fuelUseage";
 		public static final String HADS_ENABLED = "isHADSEnabled";
+		public static final String HUM_ENABLED = "isHumEnabled";
 		public static final String CONTROL_IDS = "control_ids";
 		public static final String COMPOENET_LIST = "componentList";
 		public static final String LAND_ON_SURFACE = "landOnGround";

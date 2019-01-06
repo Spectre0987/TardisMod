@@ -162,9 +162,12 @@ tardis.magnitude=TARDIS Coordinate modifier is
 
 tardis.hads.enabled.true=H.A.D.S has been enabled
 tardis.hads.enabled.false=H.A.D.S has been disabled
+tardis.hum.enabled.true=Hum has been enabled
+tardis.hum.enabled.false=Hum has been disabled
 
 protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
+protocol.hum=Toggle hum
 protocol.tardis.find_rift=Find nearest Rift
 protocol.tardis.systemreadout=Sub-System readout
 protocol.tardis.change.console=Change Console

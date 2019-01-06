@@ -9,11 +9,10 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 public class ProtocolEnabledHADS implements ITardisProtocol {
 
 	@Override
-	public void onActivated(World world, TileEntityTardis tt) {
+	public void onActivated(World world, TileEntityTardis tardis) {
 		if(!world.isRemote){
-			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(tt.getPos());
-			tardis.setHADS(tardis.isHADSEnabled() ? false : true);
-			EntityPlayer player = world.getClosestPlayer(tt.getPos().getX(), tt.getPos().getY(), tt.getPos().getZ(), 10D, false);
+			tardis.setHADS(!tardis.isHADSEnabled());
+			EntityPlayer player = world.getClosestPlayer(tardis.getPos().getX(), tardis.getPos().getY(), tardis.getPos().getZ(), 10D, false);
 			if(player != null) {
 				player.sendStatusMessage(new TextComponentTranslation(TStrings.HADS_ENABLED + tardis.isHADSEnabled()), true);
 			}
