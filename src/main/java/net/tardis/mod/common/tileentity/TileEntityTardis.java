@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -215,8 +216,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 		}
 	}
-	
+
 	public void travel() {
+		travel(false);
+	}
+
+	public void travel(boolean isACrash) {
 		if (!world.isRemote) {
 			Random rand = new Random();
 			this.ticksToTravel = 0;
@@ -250,6 +255,15 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				if (door instanceof TileEntityDoor) {
 					((TileEntityDoor) door).setConsolePos(this.getPos());
 					((TileEntityDoor) dWorld.getTileEntity(nPos.up())).setRemat();
+
+					if (isACrash) {
+						dWorld.playSound(null, nPos, TSounds.cloister_bell, SoundCategory.BLOCKS, 1, 1);
+						for (int i = 0; i < 6; i++) {
+							System.out.println(i);
+							EntityLightningBolt bold = new EntityLightningBolt(world, nPos.getX() + rand.nextInt(3), nPos.getY() + rand.nextInt(3), nPos.getZ() + rand.nextInt(3), true);
+							dWorld.addWeatherEffect(bold);
+						}
+					}
 				}
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
@@ -688,7 +702,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
 				world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
 			}
-			this.travel();
+			this.travel(true);
 			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
 		} else if(explode){
 			Random rand = new Random();
@@ -702,7 +716,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void crash() {
-		crash(true);
+		crash(false);
 	}
 	
 	public void startHADS() {

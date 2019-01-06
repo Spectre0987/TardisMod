@@ -3,7 +3,6 @@ package net.tardis.mod;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -237,10 +236,7 @@ public class Tardis {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit();
-		for(ItemStack cinnabar : OreDictionary.getOres("dustCinnabar")) {
-			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
-		}
-		
+		OreDictionary.getOres("dustCinnabar").forEach(itemStack -> AlembicRecipe.registerRecipe(itemStack.getItem(), TItems.mercuryBottle));
 	}
 	
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {

@@ -49,12 +49,16 @@ public class SystemStabilizers extends BaseSystem{
 					}
 					else {
 						this.controlsMissed = 0;
-						tardis.setCourseEvent(EnumCourseCorrect.NONE);
+						if (tardis != null) {
+							tardis.setCourseEvent(EnumCourseCorrect.NONE);
+						}
 					}
 				}
 				else {
 					this.controlsMissed = 0;
-					tardis.setCourseEvent(EnumCourseCorrect.NONE);
+					if (tardis != null) {
+						tardis.setCourseEvent(EnumCourseCorrect.NONE);
+					}
 				}
 				if(this.getHealth() <= 0)
 					this.isStabilized = false;
