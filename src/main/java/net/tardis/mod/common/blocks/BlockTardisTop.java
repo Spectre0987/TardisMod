@@ -1,7 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -12,11 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -30,6 +24,8 @@ import net.tardis.mod.common.systems.SystemDimension;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+
+import java.util.function.Supplier;
 
 public class BlockTardisTop extends BlockTileBase implements INoBox{
 	
@@ -117,7 +113,7 @@ public class BlockTardisTop extends BlockTileBase implements INoBox{
 		super.onBlockAdded(worldIn, pos, state);
 		try {
 			if (!worldIn.isRemote) {
-				worldIn.playSound(null, pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
+				worldIn.playSound(null, pos, TSounds.tardis_land, SoundCategory.BLOCKS, 1F, 1F);
 			}
 		} catch (Exception e) {}
 	}
