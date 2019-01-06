@@ -225,7 +225,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					List<Entity> entitiesWithinAABB = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(0, 0, 0, 1, 2, 1).offset(this.getPos().down()));
 					if (TardisHelper.getConsole(getConsolePos()).getTardisState() != EnumTardisState.DISABLED) {
 						damsPresent = true;
-						entitiesWithinAABB.forEach(entity -> TardisTeleporter.move(entity, TDimensions.TARDIS_ID, tp));
+                        entitiesWithinAABB.forEach(entity -> TardisTeleporter.move(entity, TDimensions.TARDIS_ID, tp, EnumFacing.NORTH));
 					} else {
 						damsPresent = false;
 						setLocked(true);

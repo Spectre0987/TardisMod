@@ -885,10 +885,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(door != null) {
 				EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
 				pos = door.getPos().down().offset(face, 2);
-				TardisTeleporter.move(entity, dimension, getLocation());
+				TardisTeleporter.move(entity, dimension, getLocation(), EnumFacing.NORTH);
 			}
 		} else {
-			TardisTeleporter.move(entity, dimension, getLocation());
+			TardisTeleporter.move(entity, dimension, getLocation(), EnumFacing.NORTH);
 		}
 	}
 
@@ -905,8 +905,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			pos = door.getPositionVector().add(door.getLookVec());
 			face = door.getHorizontalFacing();
 		}
-		
-		TardisTeleporter.move(entity, TDimensions.TARDIS_ID, pos);
+
+		TardisTeleporter.move(entity, TDimensions.TARDIS_ID, pos, face);
 	}
 	
 	public <T> T getSystem(Class<T> system) {
