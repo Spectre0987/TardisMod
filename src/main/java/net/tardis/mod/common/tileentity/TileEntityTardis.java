@@ -98,12 +98,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean parkingOrbit = false;
     private float hullHealth = 1F, rechargeRate = 0.0001F;
 	private EnumCourseCorrect courseCorrect = EnumCourseCorrect.NONE;
-	private boolean repairing = false;
 	public List<TardisControlFactory> controlClases = new ArrayList<>();
 	public int waypointIndex = 0;
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
-	private boolean humEnabled = true;
-	
+	public boolean forceFields = false;
+	public AxisAlignedBB forceFieldAABB = new AxisAlignedBB(getPos().add(16, 2, 16), getPos().add(-16, -2, -16));
+	private boolean humEnabled = true, repairing = false;
+
 	public TileEntityTardis() {
 		if(systems == null) {
 			this.systems = this.createSystems();
@@ -126,6 +127,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.controlClases.add(ControlWaypoint::new);
 		if(this.getClass() == TileEntityTardis.class)
 			this.controlClases.add(ControlSonicSlot::new);
+	}
+
+	public AxisAlignedBB getForceFieldAABB() {
+		return forceFieldAABB;
 	}
 
 	@Override
@@ -338,6 +343,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.dimension = tardisTag.getInteger("dim");
 			this.destDim = tardisTag.getInteger("destDim");
 			this.fuel = tardisTag.getFloat("fuel");
+			this.forceFields = tardisTag.getBoolean("forceFields");
 			this.landOnSurface = tardisTag.getBoolean(NBT.LAND_ON_SURFACE);
 			NBTTagList coordList = tardisTag.getTagList("coordList", Constants.NBT.TAG_COMPOUND);
 			int i = 0;
@@ -393,6 +399,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		
 		NBTTagCompound tardisTag = new NBTTagCompound();
 		{
+			tardisTag.setBoolean("forceFields", forceFields);
 			tardisTag.setInteger("timeLeft", this.ticksToTravel);
 			tardisTag.setLong("tardisDest", this.tardisDestination.toLong());
 			tardisTag.setLong("tardisLoc", this.tardisLocation.toLong());

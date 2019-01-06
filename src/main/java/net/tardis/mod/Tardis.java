@@ -175,6 +175,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolRepair());
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
+        TardisProtocol.register(new ProtocolForceField());
 		
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.

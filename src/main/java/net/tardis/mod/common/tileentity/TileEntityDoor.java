@@ -26,6 +26,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.client.worldshell.*;
 import net.tardis.mod.common.IDoor;
+import net.tardis.mod.common.TDamageSources;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -43,14 +44,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
-	
+
 	public BlockPos consolePos = BlockPos.ORIGIN;
 	public SoundEvent knockSound = SoundEvents.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD;
 	public boolean isLocked = true;
 	public int lockCooldown, openingTicks = 0;
 	private int updateTicks = 0;
 	public float alpha = 1;
-	public boolean isDemat, isRemat, damsPresent = true;
+	public boolean isDemat, isRemat, damsPresent, forceField = true;
 	public static int radius = 20;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	private AxisAlignedBB SHELL_AABB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10);
@@ -61,7 +62,15 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.isRemat = true;
 		this.alpha = 0.0F;
 	}
-	
+
+	public boolean isForceField() {
+		return forceField;
+	}
+
+	public void setForceField(boolean forceField) {
+		this.forceField = forceField;
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
@@ -70,6 +79,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.isDemat = tag.getBoolean("demat");
 		this.isRemat = tag.getBoolean("remat");
 		this.alpha = tag.getFloat("alpha");
+		this.forceField = tag.getBoolean("forcefield");
 	}
 	
 	@Override
@@ -79,6 +89,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		tag.setBoolean("demat", this.isDemat);
 		tag.setBoolean("remat", this.isRemat);
 		tag.setFloat("alpha", this.alpha);
+		tag.setBoolean("forcefield", this.forceField);
 		return super.writeToNBT(tag);
 	}
 	
@@ -148,13 +159,18 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void update() {
 		if (!world.isRemote) {
 			WorldServer ws = (WorldServer) world;
-			
+
+			if (forceField) {
+				handleForceField();
+			}
+
 			AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
 			
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
-			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
+			TileEntityTardis tardis = TardisHelper.getConsole(getConsolePos());
 			if(tardis == null) return;
-			if(tardis != null)tardis.setLocation(this.getPos().down());
+
+			tardis.setLocation(this.getPos().down());
 			if (!entities.isEmpty() && !this.isLocked()) {
 				for (Entity entity : entities) {
 					entity.dismountRidingEntity();
@@ -182,6 +198,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				NetworkHandler.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(), this), new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64D));
 				this.updateTicks = 0;
 			}
+
 			//World Shell
 			if(world.getWorldTime() % 5 == 0) {
 				if(!this.isLocked()) {
@@ -422,5 +439,20 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void setLightLevel(int light) {
 		this.lightLevel = light;
 		world.checkLight(this.getPos());
+	}
+
+
+	public void handleForceField() {
+		world.getEntitiesWithinAABB(Entity.class, RENDER_BB.offset(this.getPos())).forEach(entity -> {
+
+			if (entity instanceof IProjectile) {
+				entity.setDead();
+			}
+
+			if (entity instanceof IMob) {
+				entity.attackEntityFrom(TDamageSources.FORCEFIELD, 4.0F);
+			}
+
+		});
 	}
 }

@@ -32,7 +32,7 @@ public class TardisTeleporter {
 			if (entity.dimension != dimension) {
 				FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().transferPlayerToDimension(entityPlayerMP, dimension, new TTTeleport(x, y, z, facing));
 			}
-			entityPlayerMP.connection.setPlayerLocation(x, y, z, entity.rotationYaw, entity.rotationPitch);
+			entityPlayerMP.connection.setPlayerLocation(x, y, z, entity.rotationYaw, facing.getHorizontalIndex());
 			return entityPlayerMP;
 		}
 
@@ -58,7 +58,7 @@ public class TardisTeleporter {
 		
 		@Override
 		public void placeEntity(World world, Entity entity, float yaw) {
-			entity.setLocationAndAngles(x, y, z, yaw, facing.getHorizontalIndex());
+			entity.setLocationAndAngles(x, y, z, yaw, entity.rotationPitch);
 		}
 	}
 }
