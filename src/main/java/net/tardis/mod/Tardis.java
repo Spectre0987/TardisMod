@@ -3,6 +3,7 @@ package net.tardis.mod;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -72,7 +73,7 @@ public class Tardis {
 
 	public static boolean hasIC2 = false;
 	public static final boolean updateChangesConfig = true;
-	
+
 	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 
 	@Instance(MODID)
@@ -118,7 +119,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityCompanion.class, "companion");
 		EntityHelper.registerNoSpawn(EntityDalekSkaro.class, "dalek_scaro");
 		EntityHelper.registerStatic(EntityChair.class, "chair");
-		
+
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
 		registerTileEntity(TileEntityUmbrellaStand.class, "TileEntityUmbrellaStand");
@@ -137,14 +138,14 @@ public class Tardis {
 		registerTileEntity(TileEntityChair.class, "chair");
 		registerTileEntity(TileEntityAmSphere.class, "am_sphere");
 		registerTileEntity(TileEntityToyotaSpin.class, "toyota_spinnything");
-		
+
 		registerTileEntity(TileEntityMultiblockMaster.class, "multi_master");
 		registerTileEntity(TileEntityMultiblock.class, "multi");
-		
+
 		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
-		
+
 		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
-		
+
 		//Exteriors
 		registerTileEntity(TileEntityDoor01.class, "TileEntityDoor01");
 		registerTileEntity(TileEntityDoor03.class, "TileEntityDoor03");
@@ -154,7 +155,7 @@ public class Tardis {
 		registerTileEntity(TileEntityDoorClock.class, "TileEntityDoorClock");
 		registerTileEntity(TileEntityDoorTT.class, "TileEntityDoorTT");
 		registerTileEntity(TileEntityDoorWood.class, "TileEntityDoorWood");
-		
+
 		//Interiors
 		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");
 		registerTileEntity(TileEntityTardis02.class, "TileEntityTardis02");
@@ -163,9 +164,9 @@ public class Tardis {
 		NetworkHandler.init();
 
 		ScrewdriverHandler.init();
-		
+
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
-		
+
 		TardisProtocol.register(new ProtocolCCircuit());
 		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
@@ -174,9 +175,7 @@ public class Tardis {
 		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
 		TardisProtocol.register(new ProtocolRepair());
 		TardisProtocol.register(new ProtocolWaypoints());
-		TardisProtocol.register(new ProtocolToggleHum());
-        TardisProtocol.register(new ProtocolForceField());
-		
+
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
 			EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
@@ -187,7 +186,7 @@ public class Tardis {
 		}
 
 		proxy.preInit();
-		
+
 		TardisSystems.register("flight", SystemFlight.class);
 		TardisSystems.register("dimensional", SystemDimension.class);
 		TardisSystems.register("fluid_links", SystemFluidLinks.class);
@@ -195,14 +194,14 @@ public class Tardis {
 		TardisSystems.register("chameleon", SystemCCircuit.class);
 		TardisSystems.register("temporal_grace", SystemTemporalGrace.class);
 		TardisSystems.register("stabilizers", SystemStabilizers.class);
-		
-		
+
+
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
-		
+
 		DisguiseRegistry.init();
-		
+
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandlerTardis());
-		
+
 		RepairRecipes.registerRecipe(TItems.fluid_link, TItems.mercuryBottle);
 		RepairRecipes.registerRecipe(TItems.artron_capacitor, Item.getItemFromBlock(Blocks.REDSTONE_BLOCK));
 		RepairRecipes.registerRecipe(TItems.demat_circut, Items.ENDER_PEARL);
@@ -211,9 +210,9 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.time_vector_generator, Items.ENDER_PEARL);
 		RepairRecipes.registerRecipe(TItems.chameleon_circuit, TItems.circuts);
 		RepairRecipes.registerRecipe(TItems.temporal_grace_circuits, Items.SHIELD);
-		
+
 	}
-	
+
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.init();
@@ -229,22 +228,25 @@ public class Tardis {
 		PermissionAPI.registerNode(TStrings.Permissions.SUMMON_TARDIS, DefaultPermissionLevel.OP, "Allows players to summon a TARDIS owned by someone");
 		PermissionAPI.registerNode(TStrings.Permissions.REMOVE_TARDIS, DefaultPermissionLevel.OP, "Allows players to delete a TARDIS");
 		PermissionAPI.registerNode(TStrings.Permissions.RESTORE_TARDIS,DefaultPermissionLevel.OP,"Allows players to restore their TARDIS Systems");
-		
+
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
-	
+
 	}
-	
+
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit();
-		OreDictionary.getOres("dustCinnabar").forEach(itemStack -> AlembicRecipe.registerRecipe(itemStack.getItem(), TItems.mercuryBottle));
+		for (ItemStack cinnabar : OreDictionary.getOres("dustCinnabar")) {
+			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
+		}
+
 	}
-	
+
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
 		GameRegistry.registerTileEntity(clazz, new ResourceLocation(Tardis.MODID, name));
 	}
-	
+
 	public static boolean getIsDev() {
 		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
 	}

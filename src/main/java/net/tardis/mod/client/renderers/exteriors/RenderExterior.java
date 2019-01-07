@@ -38,8 +38,8 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 
-		//TODO: Me too
-		//renderForceField(te, x, y, z, partialTicks);
+
+        renderForceField(te, x, y, z, partialTicks);
 	}
 	
 	public abstract void renderExterior(TileEntityDoor te);
@@ -48,7 +48,7 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 	
 	public abstract ResourceLocation getTexture();
 
-	/*public void renderForceField(TileEntityDoor tileEntityDoor, double x, double y, double z, float partialTicks) {
+    public void renderForceField(TileEntityDoor tileEntityDoor, double x, double y, double z, float partialTicks) {
 		if (!tileEntityDoor.forceField) return;
 		GlStateManager.pushMatrix();
 		if (tileEntityDoor.getWorld().rand.nextInt(3) == 1) {
@@ -62,7 +62,7 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks;
 		RenderHelper.renderOffsetAABB(forceFieldAABB, -d0, -d1, -d2);
 		GlStateManager.popMatrix();
-	}*/
-	//TODO: Halp
+    }
+
 
 }

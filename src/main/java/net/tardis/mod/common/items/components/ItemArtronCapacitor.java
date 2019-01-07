@@ -27,7 +27,7 @@ public class ItemArtronCapacitor extends Item {
 				TileEntity te = worldIn.getTileEntity(pos);
 				if(te != null && te instanceof TileEntityTardis) {
 					TileEntityTardis tardis = (TileEntityTardis)te;
-					tardis.setFuel(tardis.fuel + (tag.getFloat("artron") * 0.1));
+					//tardis.setFuel(tardis.fuel + (tag.getFloat("artron") * 0.1));
 				}
 			}
 		}

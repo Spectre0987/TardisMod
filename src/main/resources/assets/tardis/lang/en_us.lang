@@ -118,8 +118,6 @@ tardis.locked.false=TARDIS unlocked!
 
 door.tardis.locked.true=This TARDIS is now double locked!
 door.tardis.locked.false=Double lock lifted.
-door.tardis.no_dams=No dimensional dams are present, please replace them.
-door.tardis.relocating=This TARDIS Capsule does not have a dimensional dam, you are being relocated.
 
 death.attack.dalek=killed by a Dalek Ray Gun!
 death.cyberman.ray=was deleted.
@@ -242,7 +240,6 @@ tardis.stabilizers.false=Stabilizers Off
 entity.dalek.name=Dalek
 entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Invasion Cyberman
-entity.cyberman_tomb.name=Tomb Cyberman
 
 death.cyberman.generic=was converted!
 

@@ -112,7 +112,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int totalTimeToTravel;
 	public int rotorUpdate = 0;
 	public int frame = 0;
-	private boolean hadsEnabled = false;
+	private boolean hadsEnabled = false, forceFields = false;
 	public int magnitude = 10;
 	public EnumEvent currentEvent = EnumEvent.NONE;
 	public static float defaultFuelUse = 0.0001F;
@@ -131,6 +131,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int waypointIndex = 0;
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
 	private InteriorHum hum = InteriorHum.DEFAULT;
+
+	private boolean humEnabled = true;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -159,7 +161,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	@Override
 	public void update() {
-
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - this.calcFuelUse());
@@ -230,6 +231,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (world.getTotalWorldTime() % hum.getTicks() == 0 && !world.isRemote) {
 				world.playSound(null, getPos(), hum.getSound(), SoundCategory.BLOCKS, 0.5F, 1F);
 			}
+		}
+		if (world.getTotalWorldTime() % 50 == 0 && !world.isRemote && humEnabled) {
+			world.playSound(null, getPos(), TSounds.INTERIOR_HUM_1963, SoundCategory.BLOCKS, 0.5F, 1F);
 		}
 		this.createControls();
 		for(BaseSystem sys : this.systems) {
@@ -744,7 +748,25 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			ws.setBlockState(this.getLocation().up(), Blocks.AIR.getDefaultState());
 		}
 	}
-	
+
+	//Hum
+	public void toggleHum() {
+		humEnabled = !humEnabled;
+	}
+
+	public boolean isHumEnabled() {
+		return humEnabled;
+	}
+
+	//Forcefield
+	public boolean isForceFieldEnabled() {
+		return forceFields;
+	}
+
+	public void setForceFieldEnabled(boolean forceFields) {
+		this.forceFields = forceFields;
+	}
+
 	public static class NBT {
 		public static final String WAYPOINT_INDEX = "waypoint_index";
 		public static final String IS_LOCKED = "is_locked";
