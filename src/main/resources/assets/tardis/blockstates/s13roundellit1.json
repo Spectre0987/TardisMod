@@ -1,0 +1,10 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:s13roundellit1"
+        },
+        "inventory":{
+             "model":"tardis:s13roundellit1"
+        }
+    }
+}

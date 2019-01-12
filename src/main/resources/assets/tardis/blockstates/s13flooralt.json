@@ -1,0 +1,10 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:s13flooralt"
+        },
+        "inventory":{
+             "model":"tardis:s13flooralt"
+        }
+    }
+}
