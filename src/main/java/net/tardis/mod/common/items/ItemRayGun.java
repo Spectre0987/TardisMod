@@ -26,11 +26,16 @@ public class ItemRayGun extends ItemBase {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack gun = playerIn.getHeldItem(handIn);
+
 		if (!playerIn.isSneaking()) {
 			if (getAmmo(gun) > 0) {
+				Vec3d v3 = playerIn.getLook(1);
 				EntityLaserRay ball = new EntityLaserRay(worldIn, playerIn, 2, TDamageSources.LASER, new Vec3d(0, 1, 0));
-				if (!worldIn.isRemote) worldIn.spawnEntity(ball);
-				setAmmo(gun, getAmmo(gun) - 1);
+				if (!worldIn.isRemote) {
+					ball.shoot(v3.x, v3.y, v3.z, 1.6F, (float) (14 - worldIn.getDifficulty().getId() * 4));
+					worldIn.spawnEntity(ball);
+					setAmmo(gun, getAmmo(gun) - 1);
+				}
 				worldIn.playSound(null, playerIn.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);
 				return ActionResult.newResult(EnumActionResult.SUCCESS, gun);
 			}
