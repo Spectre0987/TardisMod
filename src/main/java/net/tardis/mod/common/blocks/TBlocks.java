@@ -101,6 +101,7 @@ public class TBlocks {
 	public static Block s13floor = register(new BlockBase(), "s13floor");
 	public static Block s13flooralt = register(new BlockBase(), "s13flooralt");
 	
+	public static Block brachackitable = register(new BlockTable(), "brachackitable");
 
 	public static Block zero_room_glow = register(new BlockVerticalSlab(), "zero_room_slab");
 	public static Block zero_room = register(new BlockBase(), "zero_room");

@@ -109,6 +109,7 @@ tile.tardis.s13blankroundel2.name=S13 Roundel
 tile.tardis.s13blankroundel3.name=S13 Roundel
 tile.tardis.s13floor.name=S13 Floor
 tile.tardis.s13flooralt.name=S13 Floor
+tile.tardis.brachackitable.name=Brachacki Table
 tile.tardis.json_test.name=Json Tester
 tile.tardis.telos_sand.name=Telos Sand
 tile.tardis.moon_dirt.name=Moon Dirt
