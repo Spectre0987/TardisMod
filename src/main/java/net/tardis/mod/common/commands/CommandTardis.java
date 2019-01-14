@@ -47,10 +47,14 @@ public class CommandTardis extends CommandBase {
     @Override
     public String getUsage(ICommandSender sender) {
         StringBuilder usageString = new StringBuilder();
+
         usageString.append("/tardis ");
-        for (String subcommand : subcommands ) {
-            usageString.append(MessageFormat.format("{0} | ", subcommand));
+        usageString.append(subcommands.get(0));
+
+        for (String subcommand : subcommands.subList(1,subcommands.size())) {
+            usageString.append(MessageFormat.format(" | {0}", subcommand));
         }
+
         return usageString.toString();
     }
 
