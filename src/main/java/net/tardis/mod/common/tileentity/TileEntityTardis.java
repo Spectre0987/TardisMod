@@ -227,13 +227,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (world.isRemote && !this.isInFlight()) {
 			frame = 0;
 		}
-		if(hum != null) {
+		if(hum != null && humEnabled) {
 			if (world.getTotalWorldTime() % hum.getTicks() == 0 && !world.isRemote) {
 				world.playSound(null, getPos(), hum.getSound(), SoundCategory.BLOCKS, 0.5F, 1F);
 			}
-		}
-		if (world.getTotalWorldTime() % 50 == 0 && !world.isRemote && humEnabled) {
-			world.playSound(null, getPos(), TSounds.INTERIOR_HUM_1963, SoundCategory.BLOCKS, 0.5F, 1F);
 		}
 		this.createControls();
 		for(BaseSystem sys : this.systems) {

@@ -18,7 +18,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.MapData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.client.guis.GuiProtocol;
+import net.tardis.mod.client.guis.GuiMonitor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
@@ -50,7 +50,7 @@ public class BlockMonitor extends BlockFacingDecoration {
 	
 	@SideOnly(Side.CLIENT)
 	public void openGui(TileEntityTardis tardis) {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiProtocol(tardis.getPos()));
+		Minecraft.getMinecraft().displayGuiScreen(new GuiMonitor(tardis.getPos()));
 	}
 
 	@Override

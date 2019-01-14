@@ -5,6 +5,7 @@ import net.minecraft.util.SoundEvent;
 public class InteriorHum {
 
 	public static InteriorHum DEFAULT = new InteriorHum(TSounds.interior_hum_80, 20);
+	public static InteriorHum INTERIOR_HUM_1963 = new InteriorHum(TSounds.INTERIOR_HUM_1963,50);
 	
 	private SoundEvent event = null;
 	private int timeToPlay = 0;

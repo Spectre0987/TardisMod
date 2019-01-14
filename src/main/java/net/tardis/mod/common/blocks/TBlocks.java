@@ -91,6 +91,17 @@ public class TBlocks {
 	public static Block hellbent_silverwall = register(new BlockBase(), "hellbent_silverwall");
 	public static Block hellbent_vents = register(new BlockLight(), "hellbent_vents");
 	public static Block hellbent_wall = register(new BlockBase(), "hellbent_wall");
+	
+	public static Block s13roundellit1 = register(new BlockLight(), "s13roundellit1");
+	public static Block s13roundellit2 = register(new BlockLight(), "s13roundellit2");
+	public static Block s13roundellit3 = register(new BlockLight(), "s13roundellit3");
+	public static Block s13blankroundel1 = register(new BlockBase(), "s13blankroundel1");
+	public static Block s13blankroundel2 = register(new BlockBase(), "s13blankroundel2");
+	public static Block s13blankroundel3 = register(new BlockBase(), "s13blankroundel3");
+	public static Block s13floor = register(new BlockBase(), "s13floor");
+	public static Block s13flooralt = register(new BlockBase(), "s13flooralt");
+	
+	public static Block brachackitable = register(new BlockTable(), "brachackitable");
 
 	public static Block zero_room_glow = register(new BlockVerticalSlab(), "zero_room_slab");
 	public static Block zero_room = register(new BlockBase(), "zero_room");
