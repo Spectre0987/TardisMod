@@ -132,8 +132,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
 	private InteriorHum hum = InteriorHum.DEFAULT;
 
-	private boolean humEnabled = true;
-	
 	public TileEntityTardis() {
 		if(systems == null) {
 			this.systems = this.createSystems();
@@ -227,7 +225,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (world.isRemote && !this.isInFlight()) {
 			frame = 0;
 		}
-		if(hum != null && humEnabled) {
+		if(hum != null) {
 			if (world.getTotalWorldTime() % hum.getTicks() == 0 && !world.isRemote) {
 				world.playSound(null, getPos(), hum.getSound(), SoundCategory.BLOCKS, 0.5F, 1F);
 			}
@@ -748,11 +746,21 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	//Hum
 	public void toggleHum() {
-		humEnabled = !humEnabled;
+		if (hum != null){
+			int index = InteriorHum.hums.indexOf(hum);
+			if (index + 1 < InteriorHum.hums.size())
+				hum = InteriorHum.hums.get(index + 1);
+			else
+				hum = null;
+		}
+		else{
+			hum = InteriorHum.hums.get(0);
+		}
+
 	}
 
-	public boolean isHumEnabled() {
-		return humEnabled;
+	public InteriorHum getHum() {
+		return hum;
 	}
 
 	//Forcefield
