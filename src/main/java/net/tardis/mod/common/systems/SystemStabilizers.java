@@ -1,5 +1,7 @@
 package net.tardis.mod.common.systems;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -17,8 +19,6 @@ import net.tardis.mod.common.tileentity.TileEntityTardis.EnumCourseCorrect;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageMissControl;
 
-import java.util.Random;
-
 public class SystemStabilizers extends BaseSystem{
 
 	private boolean isStabilized = false;
@@ -34,6 +34,7 @@ public class SystemStabilizers extends BaseSystem{
 		if(!world.isRemote) {
 			if(world.getWorldTime() % 150 == 0) {
 				TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(consolePos);
+				if(tardis.overrideStabilizers) return;
 				if(!this.isStabilized) {
 					if (tardis != null && tardis.isInFlight()) {
 						if(tardis.getCourseCorrect() != EnumCourseCorrect.NONE) {

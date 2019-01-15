@@ -131,6 +131,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int waypointIndex = 0;
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
 	private InteriorHum hum = InteriorHum.DEFAULT;
+	public boolean overrideStabilizers = false;
 
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -303,6 +304,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		
 		this.setLocation(this.getCurrentPosOnPath());
+		
+		this.overrideStabilizers = false;
 	}
 	
 	public void updateServer() {
@@ -473,6 +476,18 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				DimensionType currentType = DimensionManager.getProviderType(this.dimension);
 				if (type != null) this.currentDimName = currentType.getName();
 			}
+		}
+	}
+	
+	public void setAbsoluteDesination(BlockPos pos, int dimension) {
+		this.tardisDestination = pos.toImmutable();
+		this.destDim = dimension;
+		this.markDirty();
+		if (!world.isRemote) {
+			DimensionType type = DimensionManager.getProviderType(dimension);
+			if (type != null) this.targetDimName = type.getName();
+			DimensionType currentType = DimensionManager.getProviderType(this.dimension);
+			if (type != null) this.currentDimName = currentType.getName();
 		}
 	}
 	
