@@ -6,7 +6,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.client.guis.GuiProtocol;
+import net.tardis.mod.client.guis.GuiMonitor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 
@@ -34,7 +34,7 @@ public class ControlMonitor extends EntityControl{
 	
 	@SideOnly(Side.CLIENT)
 	public void opem() {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiProtocol(this.getConsolePos()));
+		Minecraft.getMinecraft().displayGuiScreen(new GuiMonitor(this.getConsolePos()));
 	}
 	
 	@Override

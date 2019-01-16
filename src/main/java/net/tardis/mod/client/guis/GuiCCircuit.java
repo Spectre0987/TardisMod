@@ -7,6 +7,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -18,46 +19,44 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
+import net.tardis.mod.client.guis.GuiCCircuit.ChameleonButton;
+import net.tardis.mod.client.guis.elements.MonitorButton;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageExteriorChange;
 
 public class GuiCCircuit extends GuiScreen {
 	
-	Minecraft mc;
 	public BlockPos pos = BlockPos.ORIGIN;
 	public static EnumExterior[] exteriors = new EnumExterior[]{EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FIFTH, EnumExterior.FOURTH, EnumExterior.CLOCK, EnumExterior.TT, EnumExterior.WOOD_DOOR, EnumExterior.CC};
-	private ResourceLocation tex = new ResourceLocation(Tardis.MODID, "textures/gui/chameleon_circuit.png");
-	private GuiButtonExt selectButton;
-	private GuiButtonExt nextArrow;
-	private GuiButtonExt prevArrow;
-	private static final int WIDTH = 248;
-	private static final int HEIGHT = 166;
+	private ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/chameleon_ui.png");
+	static final int GUI_WIDTH = 256;
+	static final int GUI_HEIGHT = 192;
+	private GuiButton selectButton;
+	private GuiButton nextArrow;
+	private GuiButton prevArrow;
+	private int index = 0;
 	private static final int BOX_NAME_COLOR = new Color((float)111 / 255, (float)111 / 255, (float)111 / 255).getRGB();
 	private static final String title = "Chameleon Circuit";
-	private int index = 0;
 	
-	public GuiCCircuit() {
-		mc = Minecraft.getMinecraft();
-	}
 	
 	public GuiCCircuit(BlockPos pos) {
-		this();
 		this.pos = pos.toImmutable();
 	}
-
+	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-
 		int rotX = 30 + (mouseY - height / 2);
 		int rotY = 45 + (mouseX - width / 2);
 		drawDefaultBackground();
-		mc.getTextureManager().bindTexture(tex);
+		mc.getTextureManager().bindTexture(TEXTURE);
+		int x = (width - GUI_WIDTH) / 2;
+		int y = (height - GUI_HEIGHT) / 2;
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-		this.drawTexturedModalRect(res.getScaledWidth() / 2 - WIDTH / 2, res.getScaledHeight() / 2 - HEIGHT / 2, 0, 0, WIDTH, HEIGHT);
+		this.drawTexturedModalRect(x, y, 0, 0, GUI_WIDTH, GUI_HEIGHT);
 		GlStateManager.pushMatrix();
-		mc.fontRenderer.drawStringWithShadow(title, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(title) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT, BOX_NAME_COLOR);
+		mc.fontRenderer.drawStringWithShadow(title, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(title) / 2, (res.getScaledHeight() / 2 - GUI_HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT + 10, BOX_NAME_COLOR);
 		String boxName = new TextComponentTranslation(exteriors[index].name).getFormattedText();
-		mc.fontRenderer.drawStringWithShadow(boxName, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(boxName) / 2, (res.getScaledHeight() / 2 - HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT * 2.3F, BOX_NAME_COLOR);
+		mc.fontRenderer.drawStringWithShadow(boxName, res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(boxName) / 2, (res.getScaledHeight() / 2 - GUI_HEIGHT / 2) + mc.fontRenderer.FONT_HEIGHT * 2.3F + 10, BOX_NAME_COLOR);
 		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.popMatrix();
 		{
@@ -81,15 +80,29 @@ public class GuiCCircuit extends GuiScreen {
 			GL11.glDepthFunc(GL11.GL_LEQUAL);
 			GlStateManager.popMatrix();
 		}
+		
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
-
+	
     private boolean isMouseDown() {
         boolean mouse = Mouse.isButtonDown(0);
         boolean bloodyButtons = buttonList.get(0).isMouseOver() || buttonList.get(1).isMouseOver() || buttonList.get(2).isMouseOver();
         return mouse && !bloodyButtons;
     }
-
+	
+	@Override
+	public void initGui() {
+		this.buttonList.clear();
+		
+		int posX = (width - GUI_WIDTH) / 2;
+		int posY = (height - GUI_HEIGHT) / 2;
+		
+		this.selectButton = this.addButton(new MonitorButton(0, posX + 90, posY + 151, "Select"));
+		this.nextArrow = this.addButton(new ChameleonButton(1, posX + 193, posY + 151, ">"));
+		this.prevArrow = this.addButton(new ChameleonButton(2, posX + 39, posY + 151, "<"));
+		
+	}
+	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button == this.selectButton) {
@@ -112,23 +125,50 @@ public class GuiCCircuit extends GuiScreen {
 		}
 		super.actionPerformed(button);
 	}
-
-	@Override
-	public void initGui() {
-		super.initGui();
-		this.buttonList.clear();
-		String select = "Select";
-		ScaledResolution res = new ScaledResolution(mc);
-		this.selectButton = this.addButton(new GuiButtonExt(0, res.getScaledWidth() / 2 - (mc.fontRenderer.getStringWidth(select) * 2) / 2, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT / 2) + 60, mc.fontRenderer.getStringWidth(select) * 2, mc.fontRenderer.FONT_HEIGHT * 2, select));
-		String nArrow = ">";
-		this.nextArrow = this.addButton(new GuiButtonExt(1, (res.getScaledWidth() / 2 - (mc.fontRenderer.getStringWidth(nArrow) * 2) / 2) + 40, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT * 2) + 74, mc.fontRenderer.getStringWidth(nArrow) * 2, mc.fontRenderer.FONT_HEIGHT * 2, nArrow));
-		String pArrow = "<";
-		this.prevArrow = this.addButton(new GuiButtonExt(2, (res.getScaledWidth() / 2 - mc.fontRenderer.getStringWidth(pArrow)) - 40, (res.getScaledHeight() / 2 - mc.fontRenderer.FONT_HEIGHT) + 65, mc.fontRenderer.getStringWidth(pArrow) * 2, mc.fontRenderer.FONT_HEIGHT * 2, pArrow));
-	}
-
+	
 	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
+	}
+	
+	public class ChameleonButton extends GuiButton {
+		
+		private ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/chameleon_ui.png");
+		int colour = 0x00938F;
+		int BUTTON_WIDTH = 23;
+		int BUTTON_HEIGHT = 32;
+
+		public ChameleonButton(int buttonId, int x, int y, String buttonText) {
+			super(buttonId, x, y, 23, 32, buttonText);
+		}
+		
+		@Override
+		public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+			if(visible) {
+				FontRenderer fontRenderer = mc.fontRenderer;
+				mc.getTextureManager().bindTexture(TEXTURE);
+				
+				if(mouseX >= this.x && mouseX <= this.x + BUTTON_WIDTH && mouseY >= this.y && mouseY <= this.y + BUTTON_HEIGHT) {
+					hovered = true;
+					colour = 0xCE8F23;
+				} else {
+					hovered = false;
+					colour = 0x00938F;
+				}
+				
+				if(hovered) {
+					this.drawTexturedModalRect(this.x, this.y, 227, 209, BUTTON_WIDTH, BUTTON_HEIGHT);
+				} else {
+					this.drawTexturedModalRect(this.x, this.y, 191, 209, BUTTON_WIDTH, BUTTON_HEIGHT);
+				}
+				
+				GlStateManager.pushMatrix();
+				this.drawCenteredString(fontRenderer, this.displayString, this.x + 11, this.y + 12, colour);
+				GlStateManager.color(1, 1, 1);
+				GlStateManager.popMatrix();
+			}
+		}
+		
 	}
 
 }
