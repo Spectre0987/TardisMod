@@ -1,6 +1,7 @@
 package net.tardis.mod.common.systems;
 
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -29,6 +30,18 @@ public class SystemThermo extends BaseSystem{
 		if(this.getHealth() > 0) {
 			this.crashed = false;
 		}
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		this.crashed = tag.getBoolean("crash");
+	}
+
+	@Override
+	public NBTTagCompound writetoNBT(NBTTagCompound tag) {
+		tag.setBoolean("crash", crashed);
+		return super.writetoNBT(tag);
 	}
 
 	@Override
