@@ -83,6 +83,11 @@ public class SystemDimension extends BaseSystem{
 	public boolean shouldStopFlight() {
 		return false;
 	}
+	
+	@Override
+	public String getUsage() {
+		return "have";
+	}
 
 	@Override
 	public void wear() {}

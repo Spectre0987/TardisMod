@@ -68,17 +68,18 @@ public class GuiSystem extends GuiScreen {
 		if(button.id < TardisSystems.SYSTEMS.size()) {
 			BaseSystem sys = tardis.systems[button.id];
 			if(sys.getHealth() > 0.0F) {
-				Minecraft.getMinecraft().displayGuiScreen(new GuiYesNo((result, id) -> {
+				Minecraft.getMinecraft().displayGuiScreen(new GUIConfirm((result, id) -> {
 					if (result) {
 						ItemStack stack = new ItemStack(sys.getRepairItem());
 						stack.setItemDamage((int)(100 - (sys.getHealth() * 100)));
 						NetworkHandler.NETWORK.sendToServer(new MessageSpawnItem(stack));
 						NetworkHandler.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
+						Minecraft.getMinecraft().displayGuiScreen(null);
+					} else {
+						Minecraft.getMinecraft().displayGuiScreen(this);
 					}
-					Minecraft.getMinecraft().displayGuiScreen(null);
 
-
-				}, I18n.format("Are you sure you want to remove your " + new TextComponentTranslation(sys.getNameKey()).getFormattedText() + "?"), "This will impact TARDIS usage", I18n.format("Remove System"), I18n.format("gui.cancel"), 0));
+				}, I18n.format("Are you sure you want to remove your " + new TextComponentTranslation(sys.getNameKey()).getFormattedText() + "?"), I18n.format("Your TARDIS will no longer " + sys.getUsage()), I18n.format("Remove System"), I18n.format("gui.cancel"), 0));
 
 			}
 		}

@@ -71,6 +71,8 @@ public class TardisSystems {
 		}
 		public abstract String getNameKey();
 		/**Take damage at the end of each flight**/
+		
+		public abstract String getUsage(); /**Used in removing the system: "Your TARDIS will no longer " + this string **/
 		public abstract void wear();
 		
 		public boolean shouldStopFlight() {

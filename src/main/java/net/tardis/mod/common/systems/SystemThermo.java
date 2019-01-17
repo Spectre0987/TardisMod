@@ -58,6 +58,11 @@ public class SystemThermo extends BaseSystem{
 	public String getNameKey() {
 		return "system.tardis.thermo";
 	}
+	
+	@Override
+	public String getUsage() {
+		return "land correctly and will result in your TARDIS landing in the control room";
+	}
 
 	@Override
 	public void wear() {}

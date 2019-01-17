@@ -25,6 +25,11 @@ public class SystemTemporalGrace extends BaseSystem{
 	public String getNameKey() {
 		return "system.tardis.temporal_grace";
 	}
+	
+	@Override
+	public String getUsage() {
+		return "negate any damage taken while inside the control room";
+	}
 
 	@Override
 	public void wear() {}

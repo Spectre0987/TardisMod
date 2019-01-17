@@ -61,7 +61,12 @@ public class SystemFluidLinks extends BaseSystem{
 	public String getNameKey() {
 		return "system.tardis.fluidlinks";
 	}
-
+	
+	@Override
+	public String getUsage() {
+		return "have functioning flight systems";
+	}
+	
 	@Override
 	public void wear() {
 		this.setHealth(this.getHealth() - 0.015F);

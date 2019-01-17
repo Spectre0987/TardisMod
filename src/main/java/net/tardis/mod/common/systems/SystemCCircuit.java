@@ -36,6 +36,11 @@ public class SystemCCircuit extends BaseSystem{
 	public String getNameKey() {
 		return "system.tardis.ccircuit";
 	}
+	
+	@Override
+	public String getUsage() {
+		return "be able to change exterior";
+	}
 
 	@Override
 	public void wear() {

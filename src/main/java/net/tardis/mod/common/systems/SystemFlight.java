@@ -27,6 +27,11 @@ public class SystemFlight extends BaseSystem{
 	public String getNameKey() {
 		return "systems.tardis.flight";
 	}
+	
+	@Override
+	public String getUsage() {
+		return "have functioning flight systems";
+	}
 
 	@Override
 	public void wear() {

@@ -91,6 +91,11 @@ public class SystemStabilizers extends BaseSystem{
 	public String getNameKey() {
 		return "system.tardis.stabilizers";
 	}
+	
+	@Override
+	public String getUsage() {
+		return "";
+	}
 
 	@Override
 	public void wear() {

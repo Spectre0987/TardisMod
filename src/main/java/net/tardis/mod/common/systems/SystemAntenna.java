@@ -34,6 +34,11 @@ public class SystemAntenna extends BaseSystem{
 	public String getNameKey() {
 		return "systems.tardis.antenna";
 	}
+	
+	@Override
+	public String getUsage() {
+		return "recieve distress calls";
+	}
 
 	@Override
 	public void wear() {}
