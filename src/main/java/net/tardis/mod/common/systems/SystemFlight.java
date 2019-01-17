@@ -30,7 +30,7 @@ public class SystemFlight extends BaseSystem{
 	
 	@Override
 	public String getUsage() {
-		return "have functioning flight systems";
+		return "Without this system, you will not be able to fly the TARDIS";
 	}
 
 	@Override

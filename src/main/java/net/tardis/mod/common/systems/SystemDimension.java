@@ -86,7 +86,7 @@ public class SystemDimension extends BaseSystem{
 	
 	@Override
 	public String getUsage() {
-		return "have";
+		return "Without this system, your interior dimensions will collapse, leaving you unable to enter your TARDIS";
 	}
 
 	@Override

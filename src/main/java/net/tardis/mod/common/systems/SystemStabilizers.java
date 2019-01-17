@@ -94,7 +94,7 @@ public class SystemStabilizers extends BaseSystem{
 	
 	@Override
 	public String getUsage() {
-		return "";
+		return "Without this system, you will not be able to pilot your TARDIS without console dancing";
 	}
 
 	@Override

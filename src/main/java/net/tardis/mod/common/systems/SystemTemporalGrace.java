@@ -28,7 +28,7 @@ public class SystemTemporalGrace extends BaseSystem{
 	
 	@Override
 	public String getUsage() {
-		return "negate any damage taken while inside the control room";
+		return "Without this system, your tardis will not negate damage taken while inside the control room";
 	}
 
 	@Override
