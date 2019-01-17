@@ -37,7 +37,7 @@ public class SystemAntenna extends BaseSystem{
 	
 	@Override
 	public String getUsage() {
-		return "recieve distress calls";
+		return "Without this system, your TARDIS will not recieve distress calls";
 	}
 
 	@Override

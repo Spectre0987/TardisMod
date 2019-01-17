@@ -39,7 +39,7 @@ public class SystemCCircuit extends BaseSystem{
 	
 	@Override
 	public String getUsage() {
-		return "be able to change exterior";
+		return "Without this system, you will not be able to change your TARDIS exterior";
 	}
 
 	@Override

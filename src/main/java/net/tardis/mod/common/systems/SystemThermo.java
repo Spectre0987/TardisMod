@@ -61,7 +61,7 @@ public class SystemThermo extends BaseSystem{
 	
 	@Override
 	public String getUsage() {
-		return "land correctly and will result in your TARDIS landing in the control room";
+		return "Without this system, your TARDIS will not land correctly, resulting in your TARDIS landing inside the control room";
 	}
 
 	@Override

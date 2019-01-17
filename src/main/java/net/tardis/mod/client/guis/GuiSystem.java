@@ -79,7 +79,7 @@ public class GuiSystem extends GuiScreen {
 						Minecraft.getMinecraft().displayGuiScreen(this);
 					}
 
-				}, I18n.format("Are you sure you want to remove your " + new TextComponentTranslation(sys.getNameKey()).getFormattedText() + "?"), I18n.format("Your TARDIS will no longer " + sys.getUsage()), I18n.format("Remove System"), I18n.format("gui.cancel"), 0));
+				}, I18n.format("Are you sure you want to remove your " + new TextComponentTranslation(sys.getNameKey()).getFormattedText() + "?"), I18n.format(sys.getUsage()), I18n.format("Remove System"), I18n.format("gui.cancel"), 0));
 
 			}
 		}
