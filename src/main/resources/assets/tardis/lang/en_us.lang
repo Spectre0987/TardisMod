@@ -193,6 +193,7 @@ systems.tardis.antenna=Interstitial Antenna
 system.tardis.ccircuit=Chameleon Circuit
 system.tardis.temporal_grace=Temporal Grace Circuits
 system.tardis.stabilizers=Stabilizers
+system.tardis.thermo=Thermo- Couplings
 
 tardis.dimension=Nav-Com Dimension is:
 
