@@ -48,6 +48,7 @@ item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Temporal Grace Circuits
 item.tardis.tardis_repairkit.name=TARDIS Toolkit
 item.tardis.stabilizers.name=Stabilizer circuits
+item.tardis.thermo.name=Thermo- Couplings
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS arriving in

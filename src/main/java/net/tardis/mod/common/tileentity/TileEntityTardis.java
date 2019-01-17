@@ -670,10 +670,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void onLoad() {
 		super.onLoad();
 		updateServer();
-
-		if (world.isRemote) {
-			//Minecraft.getMinecraft().getSoundHandler().playSound(new SoundInteriorHum(TSounds.INTERIOR_HUM_1963));
-		}
 	}
 	
 	public boolean createControls() {
@@ -686,7 +682,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				for (EntityControl con : ec) {
 					con.setPosition(this.getPos().getX() + con.getOffset(this).x + 0.5, this.getPos().getY() + con.getOffset(this).y + 1, this.getPos().getZ() + con.getOffset(this).z + 0.5);
 					world.spawnEntity(con);
-					
 				}
 				this.controls = ec.toArray(new EntityControl[] {});
 				return true;
