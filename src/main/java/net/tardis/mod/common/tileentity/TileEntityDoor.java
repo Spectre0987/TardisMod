@@ -1,4 +1,3 @@
-
 package net.tardis.mod.common.tileentity;
 
 import net.minecraft.block.Block;
@@ -46,27 +45,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
-	
+
+	public static int radius = 20;
+	public static AxisAlignedBB aabb = new AxisAlignedBB(0.25, 0, 0.25, 0.75, 2, 0.75);
+	private static AxisAlignedBB RENDER_BB = new AxisAlignedBB(-5, -5, -5, 5, 5, 5);
 	public BlockPos consolePos = BlockPos.ORIGIN;
 	public SoundEvent knockSound = SoundEvents.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD;
 	public boolean isLocked = true;
 	public int lockCooldown = 0;
 	public boolean forceField = false;
-	private int updateTicks = 0;
 	public int openingTicks = 0;
 	public float alpha = 1;
 	public boolean isDemat, isRemat = false;
-	public static int radius = 20;
+	private int updateTicks = 0;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	private AxisAlignedBB SHELL_AABB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10);
-	private static AxisAlignedBB RENDER_BB = new AxisAlignedBB(-5, -5, -5, 5, 5, 5);
 	private int lightLevel = 0;
-	
+
 	public TileEntityDoor() {
 		this.isRemat = true;
 		this.alpha = 0.0F;
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
@@ -77,7 +77,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.alpha = tag.getFloat("alpha");
 		this.forceField = tag.getBoolean("forcefield");
 	}
-	
+
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		tag.setLong("tPos", consolePos.toLong());
@@ -88,14 +88,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		tag.setBoolean("forcefield", forceField);
 		return super.writeToNBT(tag);
 	}
-	
+
 	public void toggleLocked(EntityPlayer player) {
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
-			if(tardis != null && tardis.getTardisState() == EnumTardisState.NORMAL) {
+			if (tardis != null && tardis.getTardisState() == EnumTardisState.NORMAL) {
 				if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0 && alpha >= 1.0F && !tardis.isLocked()) {
 					lockCooldown = 20;
-		            isLocked = !isLocked;
+					isLocked = !isLocked;
 					this.markDirty();
 					NetworkHandler.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this), world.provider.getDimension());
 					if (isLocked)
@@ -104,36 +104,30 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						world.playSound(null, getPos(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 1F);
 					player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + isLocked), true);
 					ControlDoor door = tardis.getDoor();
-					if(door != null) {
+					if (door != null) {
 						door.setOpen(!this.isLocked());
-						for(Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(door.getPositionVector()).grow(20))) {
-							if(e instanceof IDoor) {
-								((IDoor)e).setOpen(!this.isLocked());
+						for (Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(door.getPositionVector()).grow(20))) {
+							if (e instanceof IDoor) {
+								((IDoor) e).setOpen(!this.isLocked());
 							}
 						}
 					}
-				}
-				else if(tardis.isLocked()) {
+				} else if (tardis.isLocked()) {
 					player.sendStatusMessage(new TextComponentTranslation(TStrings.DOUBLE_LOCKED + true), false);
 				}
 			}
 		}
 	}
-	
+
 	public void toggleLockedNoKey(EntityPlayer player) {
 		if (lockCooldown == 0) {
 			lockCooldown = 20;
-            isLocked = !isLocked;
+			isLocked = !isLocked;
 			this.markDirty();
 			player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_LOCKED + isLocked), true);
 		}
 	}
-	
-	public void setLocked(boolean b) {
-		this.isLocked = b;
-		this.markDirty();
-	}
-	
+
 	public EnumFacing getFacing() {
 		IBlockState state = world.getBlockState(this.getPos());
 		if (state.getBlock() instanceof BlockTardisTop) {
@@ -141,20 +135,18 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		}
 		return EnumFacing.NORTH;
 	}
-	
-	public static AxisAlignedBB aabb = new AxisAlignedBB(0.25, 0, 0.25, 0.75, 2, 0.75);
-	
+
 	@Override
 	public void update() {
 		if (!world.isRemote) {
 			WorldServer ws = (WorldServer) world;
-			
+
 			AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
-			
+
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
 			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
-			if(tardis == null) return;
-			if(tardis != null)tardis.setLocation(this.getPos().down());
+			if (tardis == null) return;
+			if (tardis != null) tardis.setLocation(this.getPos().down());
 
 			forceField = tardis.isForceFieldEnabled();
 
@@ -165,7 +157,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					tardis.enterTARDIS(entity);
 				}
 			}
-			if(tardis.getDoor() != null) this.lightLevel = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getLight(tardis.getDoor().getPosition());
+			if (tardis.getDoor() != null)
+				this.lightLevel = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getLight(tardis.getDoor().getPosition());
 
 			if (canOpen() && forceField) {
 				handleForceField();
@@ -174,12 +167,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 
 			//HADS
 			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(1D));
-			for(Entity e : projectiles) {
-				if(e instanceof IProjectile || e instanceof IMob) {
-					try{
-                        ((TileEntityTardis) DimensionManager.getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos())).startHADS();
+			for (Entity e : projectiles) {
+				if (e instanceof IProjectile || e instanceof IMob) {
+					try {
+						((TileEntityTardis) DimensionManager.getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos())).startHADS();
+					} catch (Exception exc) {
 					}
-					catch(Exception exc) {}
 				}
 			}
 			if (lockCooldown > 0) --lockCooldown;
@@ -189,28 +182,27 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				this.updateTicks = 0;
 			}
 			//World Shell
-			if(world.getWorldTime() % 5 == 0) {
-				if(!this.isLocked()) {
-					if(tardis.getDoor() == null)return;
+			if (world.getWorldTime() % 5 == 0) {
+				if (!this.isLocked()) {
+					if (tardis.getDoor() == null) return;
 					worldShell = new WorldShell(tardis.getDoor().getPosition());
-	                WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-					for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(0, radius, radius)), worldShell.getOffset().add(new Vec3i(radius, radius, radius)))) {
+					WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+					for (BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(0, radius, radius)), worldShell.getOffset().add(new Vec3i(radius, radius, radius)))) {
 						IBlockState state = tardisWorld.getBlockState(pos);
-						if(state.getBlock() != Blocks.AIR) {
+						if (state.getBlock() != Blocks.AIR) {
 							worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), 15));
 						}
 					}
 					List<NBTTagCompound> lists = new ArrayList<NBTTagCompound>();
 					List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-					for(Entity e : tardisWorld.getEntitiesWithinAABB(Entity.class, Helper.createBB(getConsolePos(), 10))) {
-						if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
+					for (Entity e : tardisWorld.getEntitiesWithinAABB(Entity.class, Helper.createBB(getConsolePos(), 10))) {
+						if (EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
 							NBTTagCompound tag = new NBTTagCompound();
 							e.writeToNBT(tag);
 							tag.setString("id", EntityList.getKey(e).toString());
 							lists.add(tag);
-						}
-						else if(e instanceof EntityPlayer) {
-							players.add(new PlayerStorage((EntityPlayer)e));
+						} else if (e instanceof EntityPlayer) {
+							players.add(new PlayerStorage((EntityPlayer) e));
 						}
 					}
 					worldShell.setPlayers(players);
@@ -219,44 +211,42 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				}
 			}
 		}
-		if(openingTicks > 0) {
+		if (openingTicks > 0) {
 			--openingTicks;
 		}
-		
-		if(isRemat) {
-			if(alpha < 1.0F) {
+
+		if (isRemat) {
+			if (alpha < 1.0F) {
 				alpha += 0.005F;
-				if(!world.isRemote) {
+				if (!world.isRemote) {
 					BlockPos tp = this.getConsolePos().offset(EnumFacing.SOUTH, 3);
-					for(Entity e : world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(0,0,0,1,2,1).offset(this.getPos().down()))) {
-						if(e instanceof EntityPlayerMP) {
-							EntityPlayerMP mp = (EntityPlayerMP)e;
+					for (Entity e : world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(0, 0, 0, 1, 2, 1).offset(this.getPos().down()))) {
+						if (e instanceof EntityPlayerMP) {
+							EntityPlayerMP mp = (EntityPlayerMP) e;
 							mp.connection.setPlayerLocation(tp.getX(), tp.getY(), tp.getZ(), 0, 0);
-							world.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer)world));
-						}
-						else {
+							world.getMinecraftServer().getPlayerList().transferPlayerToDimension(mp, TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer) world));
+						} else {
 							e.setPositionAndUpdate(tp.getX(), tp.getY(), tp.getZ());
 							e.changeDimension(TDimensions.TARDIS_ID);
 						}
 					}
 				}
-			}
-			else {
+			} else {
 				this.isRemat = false;
 				this.alpha = 1.0F;
 			}
 		}
-		if(isDemat) {
+		if (isDemat) {
 			alpha -= 0.005F;
-			if(alpha <= 0) {
+			if (alpha <= 0) {
 				this.isDemat = false;
 				this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
 				this.world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());
 			}
 		}
-		if(!this.isRemat && !this.isDemat) this.alpha = 1.0F;
+		if (!this.isRemat && !this.isDemat) this.alpha = 1.0F;
 	}
-	
+
 	public boolean canOpen() {
 		return !this.isDemat && !this.isRemat;
 	}
@@ -265,30 +255,26 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (!world.isRemote)
 			NetworkHandler.NETWORK.sendToAllAround(new MessageDemat(this.getPos(), demat), new TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 64));
 	}
-	
+
 	public boolean isLocked() {
 		return this.isLocked;
 	}
-	
-	public class NBT {
-		public static final String LOCKED = "locked";
+
+	public void setLocked(boolean b) {
+		this.isLocked = b;
+		this.markDirty();
 	}
-	
+
 	@Override
 	public void onLoad() {
 		super.onLoad();
 		if (!world.isRemote)
 			NetworkHandler.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this), world.provider.getDimension());
 	}
-	
+
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return RENDER_BB.offset(this.getPos());
-	}
-	
-	public void setConsolePos(BlockPos pos) {
-		this.consolePos = pos.toImmutable();
-		this.markDirty();
 	}
 
 	public void handleForceField() {
@@ -305,23 +291,27 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		});
 	}
 
-
 	public BlockPos getConsolePos() {
 		return this.consolePos;
 	}
-	
+
+	public void setConsolePos(BlockPos pos) {
+		this.consolePos = pos.toImmutable();
+		this.markDirty();
+	}
+
 	public void knock() {
-		if(!world.isRemote && this.getConsolePos() != null) {
-            WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-			if(ws != null) {
+		if (!world.isRemote && this.getConsolePos() != null) {
+			WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+			if (ws != null) {
 				ws.playSound(null, getConsolePos(), knockSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 		}
 	}
-	
+
 	public IInventory getLinkedInv() {
 		if (!world.isRemote && this.getConsolePos() != null) {
-            WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+			WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 			if (ws != null) {
 				TileEntity te = ws.getTileEntity(getConsolePos());
 				if (te instanceof TileEntityTardis) return ((TileEntityTardis) te);
@@ -329,81 +319,84 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		}
 		return DummyTardis.INSTANCE;
 	}
-	
+
 	@Override
 	public String getName() {
 		return this.getLinkedInv().getName();
 	}
-	
+
 	@Override
 	public boolean hasCustomName() {
 		return false;
 	}
-	
+
 	@Override
 	public int getSizeInventory() {
 		return this.getLinkedInv().getSizeInventory();
 	}
-	
+
 	@Override
 	public boolean isEmpty() {
 		return this.getLinkedInv().isEmpty();
 	}
-	
+
 	@Override
 	public ItemStack getStackInSlot(int index) {
 		return this.getLinkedInv().getStackInSlot(index);
 	}
-	
+
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
 		return this.getLinkedInv().decrStackSize(index, count);
 	}
-	
+
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		return this.getLinkedInv().removeStackFromSlot(index);
 	}
-	
+
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
 		this.getLinkedInv().setInventorySlotContents(index, stack);
 	}
-	
+
 	@Override
 	public int getInventoryStackLimit() {
 		return this.getLinkedInv().getInventoryStackLimit();
 	}
-	
+
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
 		return false;
 	}
-	
+
 	@Override
-	public void openInventory(EntityPlayer player) {}
-	
+	public void openInventory(EntityPlayer player) {
+	}
+
 	@Override
-	public void closeInventory(EntityPlayer player) {}
-	
+	public void closeInventory(EntityPlayer player) {
+	}
+
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		return true;
 	}
-	
+
 	@Override
 	public int getField(int id) {
 		return 0;
 	}
-	
+
 	@Override
-	public void setField(int id, int value) {}
-	
+	public void setField(int id, int value) {
+	}
+
 	@Override
 	public int getFieldCount() {
 		return 0;
 	}
-	
+
 	@Override
 	public void clear() {
 		this.getLinkedInv().clear();
@@ -418,13 +411,13 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void setWorldShell(WorldShell worldShell) {
 		this.worldShell = worldShell;
 	}
-	
+
 	public void setRemat() {
 		this.alpha = 0;
 		this.isRemat = true;
 		this.sendDematPacket(false);
 	}
-	
+
 	public void setDemat() {
 		this.alpha = 1;
 		this.isDemat = true;
@@ -440,7 +433,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public int getLightLevel() {
 		return this.lightLevel;
 	}
-	
+
 	public void setLightLevel(int light) {
 		this.lightLevel = light;
 		world.checkLight(this.getPos());
@@ -449,5 +442,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public int getDimension() {
 		return TDimensions.TARDIS_ID;
+	}
+
+	public class NBT {
+		public static final String LOCKED = "locked";
 	}
 }

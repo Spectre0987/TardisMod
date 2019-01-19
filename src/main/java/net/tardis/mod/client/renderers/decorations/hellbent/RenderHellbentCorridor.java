@@ -12,10 +12,10 @@ import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderHellbentCorridor extends Render<EntityHellbentCorridor> {
 
-	Minecraft mc;
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/hellbent/corridor.png");
 	public ModelHellbentCorridor model = new ModelHellbentCorridor();
-	
+	Minecraft mc;
+
 	public RenderHellbentCorridor(RenderManager manager) {
 		super(manager);
 		mc = Minecraft.getMinecraft();
@@ -35,23 +35,21 @@ public class RenderHellbentCorridor extends Render<EntityHellbentCorridor> {
 		GlStateManager.translate(-1.5, 0, 0);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		
-		if(entity.getOpen()) {
+
+		if (entity.getOpen()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(Helper.precentToPixels(12), 0, Helper.precentToPixels(8));
 			GlStateManager.rotate(85, 0, 1, 0);
 			model.renderLeftDoor(0.0625F);
-		    GlStateManager.popMatrix();
-		}
-		else model.renderLeftDoor(0.0625F);
-	    if(entity.getOpen()) {
-	    	GlStateManager.pushMatrix();
-	    	GlStateManager.rotate(-90, 0, 1, 0);
-	    	GlStateManager.translate(-2.5, 0, -2 - Helper.precentToPixels(2.5F));
-	    	model.renderRightDoor(0.0625F);
-	    	GlStateManager.popMatrix();
-	    }
-	    else model.renderRightDoor(0.0625F);
+			GlStateManager.popMatrix();
+		} else model.renderLeftDoor(0.0625F);
+		if (entity.getOpen()) {
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(-90, 0, 1, 0);
+			GlStateManager.translate(-2.5, 0, -2 - Helper.precentToPixels(2.5F));
+			model.renderRightDoor(0.0625F);
+			GlStateManager.popMatrix();
+		} else model.renderRightDoor(0.0625F);
 		GlStateManager.popMatrix();
 	}
 

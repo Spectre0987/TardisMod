@@ -6,15 +6,18 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 
-public class SystemTemporalGrace extends BaseSystem{
+public class SystemTemporalGrace extends BaseSystem {
 
-	public SystemTemporalGrace() {}
-	
-	@Override
-	public void onUpdate(World world, BlockPos consolePos) {}
+	public SystemTemporalGrace() {
+	}
 
 	@Override
-	public void damage() {}
+	public void onUpdate(World world, BlockPos consolePos) {
+	}
+
+	@Override
+	public void damage() {
+	}
 
 	@Override
 	public Item getRepairItem() {
@@ -25,14 +28,15 @@ public class SystemTemporalGrace extends BaseSystem{
 	public String getNameKey() {
 		return "system.tardis.temporal_grace";
 	}
-	
+
 	@Override
 	public String getUsage() {
 		return "Without this system, your tardis will not negate damage taken while inside the control room";
 	}
 
 	@Override
-	public void wear() {}
+	public void wear() {
+	}
 
 	@Override
 	public boolean shouldStopFlight() {

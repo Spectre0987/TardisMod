@@ -9,19 +9,19 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class GuiTardis extends GuiScreen {
-	
+
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/tardis_coords.png");
 	Minecraft mc;
 	TileEntityTardis tardis;
 	int pWidth = 248;
 	int pHeight = 166;
 	int line = 0;
-	
+
 	public GuiTardis(TileEntityTardis t) {
 		mc = Minecraft.getMinecraft();
 		tardis = t;
 	}
-	
+
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		mc.getTextureManager().bindTexture(TEXTURE);
@@ -36,16 +36,16 @@ public class GuiTardis extends GuiScreen {
 			this.drawText("TARDIS' Current Dimension: " + tardis.dimension);
 		}
 	}
-	
+
 	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
 	}
-	
+
 	public void drawText(String s) {
 		FontRenderer fr = mc.fontRenderer;
 		this.drawCenteredString(fr, s, (width / 2), ((height / 2) - (fr.FONT_HEIGHT * 4 / 2)) + (line * fr.FONT_HEIGHT), 000);
 		++line;
 	}
-	
+
 }

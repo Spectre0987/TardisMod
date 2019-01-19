@@ -7,20 +7,20 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class TardisEnterEvent extends Event {
 
-    private final BlockPos interiorPos;
-    private final Entity entity;
+	private final BlockPos interiorPos;
+	private final Entity entity;
 
-    public TardisEnterEvent(Entity entity, BlockPos interiorPos) {
-        this.entity = entity;
-        this.interiorPos = interiorPos;
-    }
+	public TardisEnterEvent(Entity entity, BlockPos interiorPos) {
+		this.entity = entity;
+		this.interiorPos = interiorPos;
+	}
 
-    public Entity getEntity() {
-        return entity;
-    }
+	public Entity getEntity() {
+		return entity;
+	}
 
-    public BlockPos getInteriorPos() {
-        return interiorPos;
-    }
+	public BlockPos getInteriorPos() {
+		return interiorPos;
+	}
 
 }

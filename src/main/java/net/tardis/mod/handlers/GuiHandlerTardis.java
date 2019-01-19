@@ -14,12 +14,12 @@ public class GuiHandlerTardis implements IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return new ContainerCR(player.inventory, (IInventory)world.getTileEntity(new BlockPos(x, y, z)));
+		return new ContainerCR(player.inventory, (IInventory) world.getTileEntity(new BlockPos(x, y, z)));
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return new GuiComponentRepair(new ContainerCR(player.inventory, (IInventory)world.getTileEntity(new BlockPos(x, y, z))));
+		return new GuiComponentRepair(new ContainerCR(player.inventory, (IInventory) world.getTileEntity(new BlockPos(x, y, z))));
 	}
 
 }

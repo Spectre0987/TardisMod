@@ -1,7 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +20,8 @@ import net.tardis.mod.client.guis.GuiMonitor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
+import java.util.function.Supplier;
+
 public class BlockMonitor extends BlockFacingDecoration {
 
 	public BlockMonitor(Supplier<TileEntity> tileEntity) {
@@ -31,23 +31,22 @@ public class BlockMonitor extends BlockFacingDecoration {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack held = playerIn.getHeldItem(hand);
-		TileEntityTardis tardis = (TileEntityTardis)worldIn.getTileEntity(TardisHelper.getTardisForPosition(pos));
-		if(tardis == null)return true;
-		if(held.getItem() instanceof ItemMap) {
-			if(!worldIn.isRemote) {
+		TileEntityTardis tardis = (TileEntityTardis) worldIn.getTileEntity(TardisHelper.getTardisForPosition(pos));
+		if (tardis == null) return true;
+		if (held.getItem() instanceof ItemMap) {
+			if (!worldIn.isRemote) {
 				MapData data = ItemMap.loadMapData(held.getItemDamage(), worldIn);
 				WorldServer ws = worldIn.getMinecraftServer().getWorld(data.dimension);
 				tardis.setDesination(ws.getTopSolidOrLiquidBlock(new BlockPos(data.xCenter, 0, data.zCenter)), data.dimension);
 			}
-		}
-		else {
-			if(worldIn.isRemote) {
+		} else {
+			if (worldIn.isRemote) {
 				this.openGui(tardis);
 			}
 		}
 		return true;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void openGui(TileEntityTardis tardis) {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiMonitor(tardis.getPos()));

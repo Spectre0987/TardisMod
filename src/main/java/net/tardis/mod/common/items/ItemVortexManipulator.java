@@ -11,14 +11,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.config.TardisConfig;
 
 public class ItemVortexManipulator extends Item {
-	
+
 	public ItemVortexManipulator() {
 		this.setMaxStackSize(1);
 	}
-	
+
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		if (worldIn.isRemote && playerIn.dimension != TDimensions.TARDIS_ID) {
@@ -26,7 +25,7 @@ public class ItemVortexManipulator extends Item {
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void openVM() {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());

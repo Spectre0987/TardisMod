@@ -189,26 +189,32 @@
       }
     ]
   },
-  "control_01":{
-    "category":"blocks",
-    "sounds":[{
-      "name": "tardis:control_01",
-      "stream": true
-    }]
+  "control_01": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:control_01",
+        "stream": true
+      }
+    ]
   },
-  "control_02":{
-    "category":"blocks",
-    "sounds":[{
-      "name": "tardis:control_02",
-      "stream": true
-    }]
+  "control_02": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:control_02",
+        "stream": true
+      }
+    ]
   },
-  "control_03":{
-    "category":"blocks",
-    "sounds":[{
-      "name": "tardis:control_03",
-      "stream": true
-    }]
+  "control_03": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:control_03",
+        "stream": true
+      }
+    ]
   },
   "vm_teleport": {
     "category": "ambient",
@@ -219,5 +225,4 @@
       }
     ]
   }
-
 }

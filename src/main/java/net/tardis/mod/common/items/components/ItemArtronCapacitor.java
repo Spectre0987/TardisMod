@@ -15,18 +15,18 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class ItemArtronCapacitor extends Item {
 
-    public ItemArtronCapacitor() {
+	public ItemArtronCapacitor() {
 		this.setMaxStackSize(1);
 	}
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!worldIn.isRemote) {
+		if (!worldIn.isRemote) {
 			NBTTagCompound tag = player.getHeldItem(hand).getTagCompound();
-			if(tag != null && tag.hasKey("artron")) {
+			if (tag != null && tag.hasKey("artron")) {
 				TileEntity te = worldIn.getTileEntity(pos);
-				if(te != null && te instanceof TileEntityTardis) {
-					TileEntityTardis tardis = (TileEntityTardis)te;
+				if (te != null && te instanceof TileEntityTardis) {
+					TileEntityTardis tardis = (TileEntityTardis) te;
 					//tardis.setFuel(tardis.fuel + (tag.getFloat("artron") * 0.1));
 				}
 			}
@@ -37,9 +37,9 @@ public class ItemArtronCapacitor extends Item {
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-		if(isSelected && !worldIn.isRemote && entityIn instanceof EntityPlayer) {
-			
+		if (isSelected && !worldIn.isRemote && entityIn instanceof EntityPlayer) {
+
 		}
 	}
-	
+
 }

@@ -11,7 +11,7 @@ public class ProtocolARS implements ITardisProtocol {
 
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
-		if(world.isRemote) {
+		if (world.isRemote) {
 			this.openGui();
 		}
 	}
@@ -20,7 +20,7 @@ public class ProtocolARS implements ITardisProtocol {
 	public String getNameKey() {
 		return "protocol.tardis.ars";
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void openGui() {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiARS());

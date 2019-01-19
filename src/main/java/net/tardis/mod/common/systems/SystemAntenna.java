@@ -8,13 +8,15 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 
-public class SystemAntenna extends BaseSystem{
+public class SystemAntenna extends BaseSystem {
 
 	@Override
-	public void onUpdate(World world, BlockPos consolePos) {}
+	public void onUpdate(World world, BlockPos consolePos) {
+	}
 
 	@Override
-	public void damage() {}
+	public void damage() {
+	}
 
 	@Override
 	public Item getRepairItem() {
@@ -23,7 +25,7 @@ public class SystemAntenna extends BaseSystem{
 
 	@Override
 	public boolean repair(ItemStack stack) {
-		if(this.getHealth() < 1.0F) {
+		if (this.getHealth() < 1.0F) {
 			this.setHealth(MathHelper.clamp(this.getHealth() + (stack.getMaxDamage() - stack.getItemDamage()) / 100F, 0.0F, 1.0F));
 			return true;
 		}
@@ -34,14 +36,15 @@ public class SystemAntenna extends BaseSystem{
 	public String getNameKey() {
 		return "systems.tardis.antenna";
 	}
-	
+
 	@Override
 	public String getUsage() {
 		return "Without this system, your TARDIS will not recieve distress calls";
 	}
 
 	@Override
-	public void wear() {}
+	public void wear() {
+	}
 
 	@Override
 	public boolean shouldStopFlight() {

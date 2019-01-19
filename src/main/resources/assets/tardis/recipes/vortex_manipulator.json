@@ -9,14 +9,14 @@
     "L": {
       "item": "minecraft:leather"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     },
-    "D":{
-        "item":"tardis:demat_circut"
+    "D": {
+      "item": "tardis:demat_circut"
     },
-    "A":{
-        "item":"tardis:artron_capacitor"
+    "A": {
+      "item": "tardis:artron_capacitor"
     }
   },
   "result": {

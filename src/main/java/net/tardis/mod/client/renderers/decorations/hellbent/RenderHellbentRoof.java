@@ -9,10 +9,10 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelRoof;
 
 public class RenderHellbentRoof extends TileEntitySpecialRenderer {
-	
-	Minecraft mc;
-	public ModelRoof model = new ModelRoof();
+
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/hellbent/ceiling.png");
+	public ModelRoof model = new ModelRoof();
+	Minecraft mc;
 
 	public RenderHellbentRoof() {
 		mc = Minecraft.getMinecraft();

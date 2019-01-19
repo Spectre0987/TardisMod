@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:toyota_platform_top"
-        },
-        "inventory":{
-             "model":"tardis:toyota_platform_top"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:toyota_platform_top"
+    },
+    "inventory": {
+      "model": "tardis:toyota_platform_top"
     }
+  }
 }

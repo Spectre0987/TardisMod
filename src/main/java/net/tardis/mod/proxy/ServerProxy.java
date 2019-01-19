@@ -2,10 +2,13 @@ package net.tardis.mod.proxy;
 
 public class ServerProxy {
 
-	public void preInit() {}
+	public void preInit() {
+	}
 
-	public void init() {}
+	public void init() {
+	}
 
-	public void postInit() {}
-	
+	public void postInit() {
+	}
+
 }

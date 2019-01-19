@@ -8,11 +8,12 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderRandom extends RenderControl {
-	
-	public RenderRandom() {}
-	
+
 	ModelRandom model = new ModelRandom();
-	
+
+	public RenderRandom() {
+	}
+
 	@Override
 	public void renderControl(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks, TileEntityTardis tType) {
 		GlStateManager.pushMatrix();
@@ -32,5 +33,5 @@ public class RenderRandom extends RenderControl {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
-	
+
 }

@@ -7,6 +7,7 @@ import net.minecraftforge.client.IRenderHandler;
 public class RenderVoid extends IRenderHandler {
 
 	@Override
-	public void render(float partialTicks, WorldClient world, Minecraft mc) {}
+	public void render(float partialTicks, WorldClient world, Minecraft mc) {
+	}
 
 }

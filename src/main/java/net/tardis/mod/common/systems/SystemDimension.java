@@ -14,37 +14,37 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
-public class SystemDimension extends BaseSystem{
+public class SystemDimension extends BaseSystem {
 
 	boolean shouldFix = false;
 	boolean runOnce = false;
-	
+
 	public SystemDimension() {
 		this.setHealth(1F);
 	}
-	
+
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
-		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(consolePos);
-		if(this.getHealth() <= 0.00F) {
-			if(runOnce) {
+		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(consolePos);
+		if (this.getHealth() <= 0.00F) {
+			if (runOnce) {
 				tardis.setTardisState(EnumTardisState.DISABLED);
-				for(EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(consolePos, 8 * 16))) {
+				for (EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(consolePos, 8 * 16))) {
 					PlayerHelper.sendMessage(p, "door.tardis.relocating", false);
 					tardis.transferPlayer(p, false);
 					ControlDoor door = tardis.getDoor();
-					if(door != null)door.setOpen(false);
+					if (door != null) door.setOpen(false);
 				}
 				runOnce = false;
 			}
-			if(!world.isRemote) {
-				for(EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(consolePos, 20))) {
+			if (!world.isRemote) {
+				for (EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(consolePos, 20))) {
 					PlayerHelper.sendMessage(p, "door.tardis.relocating", false);
 					tardis.transferPlayer(p, false);
 				}
 			}
 		}
-		if(shouldFix) {
+		if (shouldFix) {
 			tardis.setTardisState(EnumTardisState.NORMAL);
 			this.shouldFix = false;
 		}
@@ -66,7 +66,7 @@ public class SystemDimension extends BaseSystem{
 	@Override
 	public void damage() {
 		this.setHealth(this.getHealth() - 0.2F);
-		if(this.getHealth() <= 0.00F) runOnce = true;
+		if (this.getHealth() <= 0.00F) runOnce = true;
 	}
 
 	@Override
@@ -83,25 +83,26 @@ public class SystemDimension extends BaseSystem{
 	public boolean shouldStopFlight() {
 		return false;
 	}
-	
+
 	@Override
 	public String getUsage() {
 		return "Without this system, your interior dimensions will collapse, leaving you unable to enter your TARDIS";
 	}
 
 	@Override
-	public void wear() {}
+	public void wear() {
+	}
 
 	@Override
 	public void setHealth(float health) {
 		super.setHealth(health);
-		if(this.getHealth() <= 0.0F) this.runOnce = true;
+		if (this.getHealth() <= 0.0F) this.runOnce = true;
 	}
 
 	@Override
 	public boolean repair(ItemStack stack) {
 		boolean b = super.repair(stack);
-		if(b) {
+		if (b) {
 			this.shouldFix = true;
 		}
 		return b;

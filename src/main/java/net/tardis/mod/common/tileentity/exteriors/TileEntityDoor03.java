@@ -2,8 +2,9 @@ package net.tardis.mod.common.tileentity.exteriors;
 
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 
-public class TileEntityDoor03 extends TileEntityDoor{
-	
-	public TileEntityDoor03() {}
+public class TileEntityDoor03 extends TileEntityDoor {
+
+	public TileEntityDoor03() {
+	}
 
 }

@@ -9,12 +9,12 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentPole;
 
 public class RenderHellbentPole extends TileEntitySpecialRenderer {
-	
-	Minecraft mc;
-	public ModelHellbentPole model = new ModelHellbentPole();
+
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/hellbent/pole.png");
-	
-	
+	public ModelHellbentPole model = new ModelHellbentPole();
+	Minecraft mc;
+
+
 	public RenderHellbentPole() {
 		mc = Minecraft.getMinecraft();
 	}

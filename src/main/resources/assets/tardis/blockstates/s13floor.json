@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:s13floor"
-        },
-        "inventory":{
-             "model":"tardis:s13floor"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:s13floor"
+    },
+    "inventory": {
+      "model": "tardis:s13floor"
     }
+  }
 }

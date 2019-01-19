@@ -9,16 +9,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 
 public class ItemBowTie extends ItemArmor {
-	
+
 	public ItemBowTie() {
 		super(ArmorMaterial.LEATHER, 1, EntityEquipmentSlot.CHEST);
 
-    }
-	
+	}
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
 		return Tardis.MODID + ":textures/clothing/bowtie.png";
 	}
-	
+
 }

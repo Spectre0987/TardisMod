@@ -6,12 +6,12 @@
     "w  "
   ],
   "key": {
-    "w":{
-        "item":"minecraft:wool",
-        "data": 15
+    "w": {
+      "item": "minecraft:wool",
+      "data": 15
     },
-    "s":{
-        "item":"tardis:sonic_screwdriver"
+    "s": {
+      "item": "tardis:sonic_screwdriver"
     }
   },
   "result": {

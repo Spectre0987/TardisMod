@@ -8,14 +8,14 @@ import net.tardis.mod.client.models.entity.ModelQuark;
 import net.tardis.mod.common.entities.EntityQuark;
 
 public class RenderQuark extends RenderLiving<EntityQuark> {
-    private ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/quark.png");
+	private ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/quark.png");
 
-    public RenderQuark(RenderManager rendermanagerIn) {
-        super(rendermanagerIn, new ModelQuark(), 0.2F);
-    }
+	public RenderQuark(RenderManager rendermanagerIn) {
+		super(rendermanagerIn, new ModelQuark(), 0.2F);
+	}
 
-    @Override
-    protected ResourceLocation getEntityTexture(EntityQuark entity) {
-        return TEXTURE;
-    }
+	@Override
+	protected ResourceLocation getEntityTexture(EntityQuark entity) {
+		return TEXTURE;
+	}
 }

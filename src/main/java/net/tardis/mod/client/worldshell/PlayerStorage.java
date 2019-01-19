@@ -1,22 +1,22 @@
 package net.tardis.mod.client.worldshell;
 
-import java.util.UUID;
-
 import com.mojang.authlib.GameProfile;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
-public class PlayerStorage{
-	
+import java.util.UUID;
+
+public class PlayerStorage {
+
 	public GameProfile profile;
 	public double posX, posY, posZ, rotationYaw;
 	public NBTTagCompound tag = new NBTTagCompound();
-	
-	public PlayerStorage() {}
-	
+
+	public PlayerStorage() {
+	}
+
 	public PlayerStorage(EntityPlayer player) {
 		profile = player.getGameProfile();
 		posX = player.posX;
@@ -33,15 +33,6 @@ public class PlayerStorage{
 		tag.setFloat("rotationYawHead", player.rotationYawHead);
 	}
 
-	
-	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeUTF8String(buf, profile.getId().toString());
-		buf.writeDouble(posX);
-		buf.writeDouble(posY);
-		buf.writeDouble(posZ);
-		ByteBufUtils.writeTag(buf, tag);
-	}
-	
 	public static PlayerStorage fromBytes(ByteBuf buf) {
 		PlayerStorage stor = new PlayerStorage();
 		stor.profile = new GameProfile(UUID.fromString(ByteBufUtils.readUTF8String(buf)), "name");
@@ -50,5 +41,13 @@ public class PlayerStorage{
 		stor.posZ = buf.readDouble();
 		stor.tag = ByteBufUtils.readTag(buf);
 		return stor;
+	}
+
+	public void toBytes(ByteBuf buf) {
+		ByteBufUtils.writeUTF8String(buf, profile.getId().toString());
+		buf.writeDouble(posX);
+		buf.writeDouble(posY);
+		buf.writeDouble(posZ);
+		ByteBufUtils.writeTag(buf, tag);
 	}
 }

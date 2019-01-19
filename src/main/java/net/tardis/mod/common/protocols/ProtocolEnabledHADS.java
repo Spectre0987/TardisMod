@@ -10,10 +10,10 @@ public class ProtocolEnabledHADS implements ITardisProtocol {
 
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
-		if(!world.isRemote){
+		if (!world.isRemote) {
 			tardis.setHADS(!tardis.isHADSEnabled());
 			EntityPlayer player = world.getClosestPlayer(tardis.getPos().getX(), tardis.getPos().getY(), tardis.getPos().getZ(), 10D, false);
-			if(player != null) {
+			if (player != null) {
 				player.sendStatusMessage(new TextComponentTranslation(TStrings.HADS_ENABLED + tardis.isHADSEnabled()), true);
 			}
 		}

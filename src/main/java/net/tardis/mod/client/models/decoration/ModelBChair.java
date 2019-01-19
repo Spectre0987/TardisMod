@@ -48,7 +48,7 @@ public class ModelBChair extends ModelBase {
 	ModelRenderer Gen37;
 	ModelRenderer Gen38;
 
-	public ModelBChair() { 
+	public ModelBChair() {
 
 		textureWidth = 128;
 		textureHeight = 128;
@@ -334,6 +334,7 @@ public class ModelBChair extends ModelBase {
 		Gen38.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		Shape1.render(scale);
@@ -377,14 +378,15 @@ public class ModelBChair extends ModelBase {
 		Gen37.render(scale);
 		Gen38.render(scale);
 	}
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
 }

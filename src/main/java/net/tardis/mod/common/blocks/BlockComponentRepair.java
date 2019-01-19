@@ -14,14 +14,14 @@ import net.tardis.mod.handlers.GuiHandlerTardis;
 
 import java.util.function.Supplier;
 
-public class BlockComponentRepair extends BlockTileBase{
+public class BlockComponentRepair extends BlockTileBase {
 
-	
+
 	public BlockComponentRepair(Material materialIn, Supplier<TileEntity> tileEntity) {
 		super(materialIn, tileEntity);
 		this.setLightOpacity(0);
 
-    }
+	}
 
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
@@ -39,8 +39,8 @@ public class BlockComponentRepair extends BlockTileBase{
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!playerIn.isSneaking()) {
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (!playerIn.isSneaking()) {
 			playerIn.openGui(Tardis.instance, GuiHandlerTardis.REPAIR_GUI, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}

@@ -13,23 +13,23 @@ import net.tardis.mod.common.dimensions.WorldProviderTardis;
  */
 public class SoundInteriorHum extends MovingSound {
 
-    private EntityPlayer player = Minecraft.getMinecraft().player;
+	private EntityPlayer player = Minecraft.getMinecraft().player;
 
-    public SoundInteriorHum(SoundEvent soundIn) {
-        super(soundIn, SoundCategory.MASTER);
-        this.repeat = true;
-    }
+	public SoundInteriorHum(SoundEvent soundIn) {
+		super(soundIn, SoundCategory.MASTER);
+		this.repeat = true;
+	}
 
-    @Override
-    public void update() {
+	@Override
+	public void update() {
 
-        if (player == null) return;
-        if (!(player.world.provider instanceof WorldProviderTardis)) {
-            this.donePlaying = true;
-        }
-        this.xPosF = (float) this.player.posX;
-        this.yPosF = (float) this.player.posY;
-        this.zPosF = (float) this.player.posZ;
-        volume = 0.3F;
-    }
+		if (player == null) return;
+		if (!(player.world.provider instanceof WorldProviderTardis)) {
+			this.donePlaying = true;
+		}
+		this.xPosF = (float) this.player.posX;
+		this.yPosF = (float) this.player.posY;
+		this.zPosF = (float) this.player.posZ;
+		volume = 0.3F;
+	}
 }

@@ -13,25 +13,26 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.util.client.ModelUtil;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
-public class RenderLayerVortexM implements LayerRenderer{
+public class RenderLayerVortexM implements LayerRenderer {
 
 	private Minecraft mc;
 	private ModelVortexM model = new ModelVortexM();
 	private RenderPlayer renderPlayer;
-	
+
 	public RenderLayerVortexM(RenderPlayer rp) {
 		mc = Minecraft.getMinecraft();
 		this.renderPlayer = rp;
 	}
+
 	@Override
-	public void doRenderLayer(EntityLivingBase entity, float f, float f1,float partialTicks, float f2, float f3, float f4, float f5) {
-		if(entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer)entity;
-			if(player.inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
+	public void doRenderLayer(EntityLivingBase entity, float f, float f1, float partialTicks, float f2, float f3, float f4, float f5) {
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (player.inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
 				boolean slim = PlayerHelper.hasSmallArms((AbstractClientPlayer) player);
 				GlStateManager.pushMatrix();
-				if(!slim) GlStateManager.translate(-0.03125, 0, 0);
-                mc.getTextureManager().bindTexture(ModelVortexM.TEXTURE);
+				if (!slim) GlStateManager.translate(-0.03125, 0, 0);
+				mc.getTextureManager().bindTexture(ModelVortexM.TEXTURE);
 				ModelUtil.copyAngle(renderPlayer.getMainModel().bipedRightArm, model.Cuff);
 				model.render(entity, f, f1, f2, f3, f4, f5);
 				GlStateManager.popMatrix();

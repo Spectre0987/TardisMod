@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 
-public class RenderSonicSlot extends Render<ControlSonicSlot>{
+public class RenderSonicSlot extends Render<ControlSonicSlot> {
 
 	public RenderSonicSlot(RenderManager renderM) {
 		super(renderM);

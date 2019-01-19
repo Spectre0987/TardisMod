@@ -11,19 +11,19 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 
 public class BlockTardisCoral extends BlockTileBase {
-	
+
 	public ItemBlock item = new ItemBlock(this);
 
 	public BlockTardisCoral() {
 		super(Material.SPONGE, TileEntityTardisCoral::new);
 
 	}
-	
+
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,ItemStack stack) {
-		if(!worldIn.isRemote && placer instanceof EntityPlayer) {
-			TileEntityTardisCoral coral = (TileEntityTardisCoral)worldIn.getTileEntity(pos);
-			coral.setOwner(((EntityPlayer)placer).getGameProfile().getId());
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		if (!worldIn.isRemote && placer instanceof EntityPlayer) {
+			TileEntityTardisCoral coral = (TileEntityTardisCoral) worldIn.getTileEntity(pos);
+			coral.setOwner(((EntityPlayer) placer).getGameProfile().getId());
 		}
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
@@ -37,6 +37,6 @@ public class BlockTardisCoral extends BlockTileBase {
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
-	
+
+
 }

@@ -13,12 +13,12 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
-public class ControlStabilizers extends EntityControl{
+public class ControlStabilizers extends EntityControl {
 
 	public ControlStabilizers(TileEntityTardis tardis) {
 		super(tardis);
 	}
-	
+
 	public ControlStabilizers(World world) {
 		super(world);
 		this.setSize(0.125F, 0.125F);
@@ -26,35 +26,34 @@ public class ControlStabilizers extends EntityControl{
 
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
+		if (tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-3, -3, 13);
 		}
-		if(tardis instanceof TileEntityTardis03)
+		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(0, 1, 15);
-		if(tardis.getClass() == TileEntityTardis.class)
+		if (tardis.getClass() == TileEntityTardis.class)
 			return Helper.convertToPixels(-14, -4, 6);
 		return new Vec3d(0, 0, 0);
 	}
 
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if(!world.isRemote) {
-			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(this.getConsolePos());
+		if (!world.isRemote) {
+			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
 			SystemStabilizers stab = tardis.getSystem(SystemStabilizers.class);
-			if(stab.getHealth() > 0) {
+			if (stab.getHealth() > 0) {
 				stab.setOn(!stab.isOn());
 				player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.STABILIZERS_ON + stab.isOn()).getFormattedText()), true);
-			}
-			else stab.setOn(false);
+			} else stab.setOn(false);
 		}
 	}
-	
+
 	@Override
 	public void init(TileEntityTardis tardis) {
-		if(tardis != null) {
-			if(tardis.getClass() == TileEntityTardis.class)
+		if (tardis != null) {
+			if (tardis.getClass() == TileEntityTardis.class)
 				this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
-			if(tardis instanceof TileEntityTardis03)
+			if (tardis instanceof TileEntityTardis03)
 				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
 		}
 	}

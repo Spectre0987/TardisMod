@@ -10,11 +10,12 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderLever extends RenderControl {
-	
+
 	ModelLever model = new ModelLever();
-	
-	public RenderLever() {}
-	
+
+	public RenderLever() {
+	}
+
 	@Override
 	public void renderControl(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks, TileEntityTardis tType) {
 		GlStateManager.pushMatrix();
@@ -24,8 +25,8 @@ public class RenderLever extends RenderControl {
 		GlStateManager.rotate(60F, 0, 1, 0);
 		Vec3d offset = Helper.convertToPixels(-0.5, -2.5, 0);
 		TileEntity te = mc.world.getTileEntity(entity.getConsolePos());
-		if(te != null && te instanceof TileEntityTardis) {
-			TileEntityTardis tardis = (TileEntityTardis)te;
+		if (te != null && te instanceof TileEntityTardis) {
+			TileEntityTardis tardis = (TileEntityTardis) te;
 			if (!tardis.isInFlight())
 				offset = Helper.convertToPixels(-0.5, -2.5, 0);
 			else
@@ -35,10 +36,10 @@ public class RenderLever extends RenderControl {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
-	
+
 	@Override
 	public void doRender(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 	}
-	
+
 }

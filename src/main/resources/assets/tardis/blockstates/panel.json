@@ -1,29 +1,35 @@
 {
-    "forge_marker":1,
-    "defaults":{
-        "model":"cube_bottom_top",
-        "textures":{
-            "side":"tardis:blocks/panel",
-            "top":"tardis:blocks/panel_top",
-            "bottom":"tardis:blocks/panel_top"
-        }
-    },
-    "variants":{
-        "normal":[{}],
-        "inventory":[{}],
-        "type=0":[{}],
-        "type=1":{
-            "model":"cube_bottom_top",
-            "textures":{
-                "side":"tardis:blocks/panel_roomgen"
-            }
-        },
-        "type=2":{
-            "model":"cube_bottom_top",
-            "textures":{
-                "side":"tardis:blocks/panel_roomremove",
-                "top":"tardis:blocks/panel_roomremove"
-            }
-        }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_bottom_top",
+    "textures": {
+      "side": "tardis:blocks/panel",
+      "top": "tardis:blocks/panel_top",
+      "bottom": "tardis:blocks/panel_top"
     }
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ],
+    "type=0": [
+      {}
+    ],
+    "type=1": {
+      "model": "cube_bottom_top",
+      "textures": {
+        "side": "tardis:blocks/panel_roomgen"
+      }
+    },
+    "type=2": {
+      "model": "cube_bottom_top",
+      "textures": {
+        "side": "tardis:blocks/panel_roomremove",
+        "top": "tardis:blocks/panel_roomremove"
+      }
+    }
+  }
 }

@@ -1,13 +1,9 @@
 package net.tardis.mod.client.guis;
 
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -21,19 +17,19 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageProtocol;
 
+import java.io.IOException;
+
 public class GuiMonitor extends GuiScreen {
-	
-	public BlockPos pos = BlockPos.ORIGIN;
-	
+
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/monitor_ui.png");
 	static final int GUI_WIDTH = 256;
 	static final int GUI_HEIGHT = 192;
-	
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/monitor_ui.png");
-	
+	public BlockPos pos = BlockPos.ORIGIN;
+
 	public GuiMonitor(BlockPos pos) {
 		this.pos = pos;
 	}
-	
+
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
@@ -43,7 +39,7 @@ public class GuiMonitor extends GuiScreen {
 		this.drawTexturedModalRect(x, y, 0, 0, GUI_WIDTH, GUI_HEIGHT);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
-	
+
 	@Override
 	public void initGui() {
 		this.buttonList.clear();
@@ -54,13 +50,13 @@ public class GuiMonitor extends GuiScreen {
 			this.addButton(new MonitorButton(id, ((width - GUI_WIDTH) / 2) + 11 + x_change, ((height - GUI_HEIGHT) / 2) + 8 + y_change, new TextComponentTranslation(p.getNameKey()).getFormattedText()));
 			id++;
 			x_change += 80;
-			if(id % 3 == 0){
+			if (id % 3 == 0) {
 				x_change = 0;
 				y_change += 36;
 			}
 		}
 	}
-	
+
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		Minecraft.getMinecraft().displayGuiScreen(null);
@@ -74,7 +70,7 @@ public class GuiMonitor extends GuiScreen {
 		}
 		super.actionPerformed(button);
 	}
-	
+
 	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
@@ -92,5 +88,5 @@ public class GuiMonitor extends GuiScreen {
 
 		}, I18n.format("Are you sure you want to regenerate your interior?"), "This will completely wipe anything you have placed", I18n.format("Regenerate Interior"), I18n.format("gui.cancel"), 0));
 	}
-	
+
 }

@@ -11,10 +11,10 @@ import net.tardis.mod.common.entities.EntityCybermanTomb;
 
 public class RenderCybermanTomb extends Render<EntityCybermanTomb> {
 
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cyberman_tomb.png");
 	Minecraft mc;
 	ModelCybermanTomb model = new ModelCybermanTomb();
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cyberman_tomb.png");
-	
+
 	public RenderCybermanTomb(RenderManager manager) {
 		super(manager);
 		mc = Minecraft.getMinecraft();

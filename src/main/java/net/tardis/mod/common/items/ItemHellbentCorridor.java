@@ -10,12 +10,13 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 
 public class ItemHellbentCorridor extends ItemBase {
-	
-	public ItemHellbentCorridor(){}
+
+	public ItemHellbentCorridor() {
+	}
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!worldIn.isRemote) {
+		if (!worldIn.isRemote) {
 			EntityHellbentCorridor e = new EntityHellbentCorridor(worldIn);
 			Vec3d look = player.getLookVec().rotateYaw(0.25F);
 			e.setPosition(pos.getX(), pos.getY() + 1, pos.getZ() + 0.5);

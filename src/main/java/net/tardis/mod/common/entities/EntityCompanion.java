@@ -1,7 +1,5 @@
 package net.tardis.mod.common.entities;
 
-import java.util.UUID;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -45,22 +43,24 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable{
+import java.util.UUID;
+
+public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable {
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<String> TYPE = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.STRING);
 	public static final DataParameter<Float> TARDIS_XP = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.FLOAT);
-    private NonNullList<ItemStack> inv = NonNullList.withSize(27, ItemStack.EMPTY);
 	public BlockPos tardisPos = BlockPos.ORIGIN;
 	public boolean flyTardis = false;
 	UUID player;
-	
+	private NonNullList<ItemStack> inv = NonNullList.withSize(27, ItemStack.EMPTY);
+
 	public EntityCompanion(World worldIn) {
 		super(worldIn);
 		this.stepHeight = 1;
 	}
 
-	
+
 	@Override
 	protected void initEntityAI() {
 		super.initEntityAI();
@@ -88,19 +88,19 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if(!world.isRemote && this.dimension == TDimensions.TARDIS_ID && world.getWorldTime() % 20 == 0) {
+		if (!world.isRemote && this.dimension == TDimensions.TARDIS_ID && world.getWorldTime() % 20 == 0) {
 			TileEntityTardis tardis = null;
-			for(TileEntity te : world.loadedTileEntityList) {
-				if(te instanceof TileEntityTardis && te.getPos().distanceSq(this.getPosition()) < Math.pow(16, 2)) {
-					tardis = (TileEntityTardis)te;
+			for (TileEntity te : world.loadedTileEntityList) {
+				if (te instanceof TileEntityTardis && te.getPos().distanceSq(this.getPosition()) < Math.pow(16, 2)) {
+					tardis = (TileEntityTardis) te;
 					break;
 				}
 			}
-			if(tardis != null && tardis.isInFlight()) {
+			if (tardis != null && tardis.isInFlight()) {
 				this.setXP(this.getXP() + 0.001F);
 			}
 		}
-		if(this.isWrongSize()) {
+		if (this.isWrongSize()) {
 			this.setSize(this.getType().size[0], this.getType().size[1]);
 		}
 	}
@@ -113,11 +113,11 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	public EnumCompanionType getType() {
 		return Enum.valueOf(EnumCompanionType.class, this.getDataManager().get(TYPE));
 	}
-	
+
 	public void setType(EnumCompanionType type) {
 		this.getDataManager().set(TYPE, type.name());
 	}
-	
+
 	@Override
 	public int getSizeInventory() {
 		return inv.size();
@@ -147,7 +147,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		if(index < inv.size()) {
+		if (index < inv.size()) {
 			inv.set(index, stack);
 		}
 	}
@@ -158,7 +158,8 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	}
 
 	@Override
-	public void markDirty() {}
+	public void markDirty() {
+	}
 
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
@@ -166,10 +167,12 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {}
+	public void openInventory(EntityPlayer player) {
+	}
 
 	@Override
-	public void closeInventory(EntityPlayer player) {}
+	public void closeInventory(EntityPlayer player) {
+	}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -182,7 +185,8 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	}
 
 	@Override
-	public void setField(int id, int value) {}
+	public void setField(int id, int value) {
+	}
 
 	@Override
 	public int getFieldCount() {
@@ -194,17 +198,17 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		inv.clear();
 	}
 
-	public void setOwner(EntityPlayer player){
-		this.player = player.getGameProfile().getId();
-	}
-	
 	public EntityPlayer getOwner() {
-		if(this.player != null && world.getPlayerEntityByUUID(player) != null) {
+		if (this.player != null && world.getPlayerEntityByUUID(player) != null) {
 			return world.getPlayerEntityByUUID(player);
 		}
 		return null;
 	}
-	
+
+	public void setOwner(EntityPlayer player) {
+		this.player = player.getGameProfile().getId();
+	}
+
 	@SideOnly(Side.CLIENT)
 	public void openGui() {
 		Minecraft.getMinecraft().displayGuiScreen(new GUICompanion(this));
@@ -218,7 +222,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		NBTTagList list = new NBTTagList();
-		for(ItemStack stack : inv) {
+		for (ItemStack stack : inv) {
 			list.appendTag(stack.writeToNBT(new NBTTagCompound()));
 		}
 		compound.setTag("inv", list);
@@ -233,99 +237,120 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		super.readFromNBT(compound);
 		int id = 0;
 		NBTTagList list = compound.getTagList("inv", NBT.TAG_COMPOUND);
-		for(NBTBase base : list) {
-			inv.set(id, new ItemStack((NBTTagCompound)base));
+		for (NBTBase base : list) {
+			inv.set(id, new ItemStack((NBTTagCompound) base));
 			++id;
 		}
-		if(!compound.getString("owner").isEmpty()) player = UUID.fromString(compound.getString("owner"));
-		if(compound.getString("type") != null && !compound.getString("type").isEmpty()) this.setType(Enum.valueOf(EnumCompanionType.class, compound.getString("type")));
+		if (!compound.getString("owner").isEmpty()) player = UUID.fromString(compound.getString("owner"));
+		if (compound.getString("type") != null && !compound.getString("type").isEmpty())
+			this.setType(Enum.valueOf(EnumCompanionType.class, compound.getString("type")));
 		this.setXP(compound.getFloat("xp"));
 	}
 
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if(world.isRemote && player.getGameProfile().getId().equals(this.getOwnerId())) openGui();
-		else if(this.getOwnerId() == null) {
+		if (world.isRemote && player.getGameProfile().getId().equals(this.getOwnerId())) openGui();
+		else if (this.getOwnerId() == null) {
 			this.setOwner(player);
-			if(!world.isRemote) {
+			if (!world.isRemote) {
 				player.sendStatusMessage(new TextComponentTranslation(TStrings.Companions.SAVED), false);
 			}
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean getAlwaysRenderNameTag() {
 		return true;
 	}
-	
+
 	public boolean isWrongSize() {
 		float[] size = this.getType().size;
-        return this.width != size[0] || this.height != size[1];
-    }
-
-    public enum EnumCompanionType {
-		CLAIRE("claire", "Claire"),
-		VASSILIS("vassilis", "Vassilis"),
-		ALEXA("alexa", "Alexa"),
-		PETER("peter", "Peter"),
-		VANDHAM("vandham", "Vandham"),
-		WOLSEY("black", "Wolsey", new float[] {0.75F, 1F}),
-		NONE("", "");
-		
-		ResourceLocation skin;
-		String formattedName = "";
-		float[] size = {0.95F, 1.75F};
-		
-		@SideOnly(Side.CLIENT)
-		public ModelBase model;
-		
-		EnumCompanionType(String name, String formatName) {
-			skin = new ResourceLocation(Tardis.MODID, "textures/entity/" + name + ".png");
-			formattedName = formatName;
-		}
-		
-		EnumCompanionType(String name, String formattedName, float[] size){
-			this(name, formattedName);
-			this.size = size;
-		}
-		
-		public ResourceLocation getTexture() {
-			return this.skin;
-		}
-		
-		public String getName() {
-			return this.formattedName;
-		}
-		
-		@SideOnly(Side.CLIENT)
-		public void setModel(ModelBase model) {
-			this.model = model;
-		}
-		
-		@SideOnly(Side.CLIENT)
-		public ModelBase getModel() {
-			model.isChild = false;
-			return model;
-		}
+		return this.width != size[0] || this.height != size[1];
 	}
 
 	@Override
 	public UUID getOwnerId() {
 		return this.player;
 	}
-	
-	public static class EntityAIFollowOwner extends EntityAIBase{
+
+	public boolean getSit() {
+		return this.getDataManager().get(SITTING);
+	}
+
+	public void setSit(boolean sit) {
+		this.getDataManager().set(SITTING, sit);
+	}
+
+	public float getXP() {
+		return this.getDataManager().get(TARDIS_XP);
+	}
+
+	public void setXP(float xp) {
+		this.getDataManager().set(TARDIS_XP, xp);
+	}
+
+	@Override
+	public boolean isChild() {
+		return false;
+	}
+
+	public enum EnumCompanionType {
+		CLAIRE("claire", "Claire"),
+		VASSILIS("vassilis", "Vassilis"),
+		ALEXA("alexa", "Alexa"),
+		PETER("peter", "Peter"),
+		VANDHAM("vandham", "Vandham"),
+		WOLSEY("black", "Wolsey", new float[]{0.75F, 1F}),
+		NONE("", "");
+
+		@SideOnly(Side.CLIENT)
+		public ModelBase model;
+		ResourceLocation skin;
+		String formattedName = "";
+		float[] size = {0.95F, 1.75F};
+
+		EnumCompanionType(String name, String formatName) {
+			skin = new ResourceLocation(Tardis.MODID, "textures/entity/" + name + ".png");
+			formattedName = formatName;
+		}
+
+		EnumCompanionType(String name, String formattedName, float[] size) {
+			this(name, formattedName);
+			this.size = size;
+		}
+
+		public ResourceLocation getTexture() {
+			return this.skin;
+		}
+
+		public String getName() {
+			return this.formattedName;
+		}
+
+		@SideOnly(Side.CLIENT)
+		public ModelBase getModel() {
+			model.isChild = false;
+			return model;
+		}
+
+		@SideOnly(Side.CLIENT)
+		public void setModel(ModelBase model) {
+			this.model = model;
+		}
+	}
+
+	public static class EntityAIFollowOwner extends EntityAIBase {
 
 		EntityCompanion entity;
 		double speed;
-		
+
 		public EntityAIFollowOwner(EntityCompanion entity, double speed) {
 			this.entity = entity;
 			this.speed = speed;
 			this.setMutexBits(1);
 		}
-		
+
 		@Override
 		public boolean shouldExecute() {
 			return entity.getOwner() != null && !entity.getDataManager().get(EntityCompanion.SITTING);
@@ -340,28 +365,29 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		public void updateTask() {
 			super.updateTask();
 			EntityPlayer player = entity.getOwner();
-			if(player == null) return;
-			if(player.getPositionVector().distanceTo(entity.getPositionVector()) > 5)entity.moveHelper.setMoveTo(player.posX, player.posY, player.posZ, speed);
+			if (player == null) return;
+			if (player.getPositionVector().distanceTo(entity.getPositionVector()) > 5)
+				entity.moveHelper.setMoveTo(player.posX, player.posY, player.posZ, speed);
 		}
 
 		@Override
 		public boolean shouldContinueExecuting() {
 			return entity.getOwner() != null && entity.getOwner().getPositionVector().distanceTo(entity.getPositionVector()) > 5 && !entity.getDataManager().get(EntityCompanion.SITTING);
 		}
-		
+
 	}
-	
-	public static class EntityAIEnterTardis extends EntityAIBase{
+
+	public static class EntityAIEnterTardis extends EntityAIBase {
 
 		double speed;
 		EntityCompanion comp;
-		
+
 		public EntityAIEnterTardis(EntityCompanion com, double s) {
 			this.comp = com;
 			this.speed = s;
 			this.setMutexBits(1);
 		}
-		
+
 		@Override
 		public boolean shouldExecute() {
 			return !comp.tardisPos.equals(BlockPos.ORIGIN);
@@ -374,17 +400,16 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 
 		@Override
 		public void updateTask() {
-			if(Helper.blockPosToVec3d(comp.tardisPos).distanceTo(comp.getPositionVector()) > 3) {
+			if (Helper.blockPosToVec3d(comp.tardisPos).distanceTo(comp.getPositionVector()) > 3) {
 				comp.moveHelper.setMoveTo(comp.tardisPos.getX(), comp.tardisPos.getY(), comp.tardisPos.getZ(), speed);
-			}
-			else {
+			} else {
 				comp.tardisPos = BlockPos.ORIGIN;
 				WorldServer world = comp.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-				if(comp.getOwner() != null && TardisHelper.hasTardis(comp.getOwner().getGameProfile().getId())) {
+				if (comp.getOwner() != null && TardisHelper.hasTardis(comp.getOwner().getGameProfile().getId())) {
 					TileEntityTardis tardis = Helper.getTardis((world.getTileEntity(TardisHelper.getTardis(comp.getOwner().getGameProfile().getId()))));
-					if(tardis != null) {
+					if (tardis != null) {
 						tardis.enterTARDIS(comp);
-						if(comp.flyTardis) {
+						if (comp.flyTardis) {
 							tardis.setDesination(comp.getOwner().getPosition(), comp.getOwner().dimension);
 							tardis.startFlight();
 							comp.flyTardis = false;
@@ -395,61 +420,40 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		}
 	}
 
-	public boolean getSit() {
-		return this.getDataManager().get(SITTING);
-	}
-	
-	public void setSit(boolean sit) {
-		this.getDataManager().set(SITTING, sit);
-	}
-	
-	public void setXP(float xp) {
-		this.getDataManager().set(TARDIS_XP, xp);
-	}
-	
-	public float getXP() {
-		return this.getDataManager().get(TARDIS_XP);
-	}
-	
 	@EventBusSubscriber
-	public static class Events{
-		
+	public static class Events {
+
 		@SubscribeEvent
 		public static void enterTardis(TardisEnterEvent event) {
-			if(!event.getEntity().world.isRemote && event.getEntity() instanceof EntityPlayer) {
-				EntityPlayer player = (EntityPlayer)event.getEntity();
-				for(EntityCompanion e : player.getEntityWorld().getEntitiesWithinAABB(EntityCompanion.class, Block.FULL_BLOCK_AABB.offset(player.getPositionVector()).grow(16))) {
-					if(!e.getSit() && e.getOwner() != null && e.getOwner() == player) {
+			if (!event.getEntity().world.isRemote && event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getEntity();
+				for (EntityCompanion e : player.getEntityWorld().getEntitiesWithinAABB(EntityCompanion.class, Block.FULL_BLOCK_AABB.offset(player.getPositionVector()).grow(16))) {
+					if (!e.getSit() && e.getOwner() != null && e.getOwner() == player) {
 						WorldServer world = player.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 						TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(event.getInteriorPos()));
-						if(tardis != null) {
+						if (tardis != null) {
 							tardis.enterTARDIS(e);
 						}
 					}
 				}
 			}
 		}
-		
+
 		@SubscribeEvent
 		public static void exitTardis(TardisExitEvent event) {
-			if(!event.getEntity().world.isRemote && event.getEntity() instanceof EntityPlayer) {
-				EntityPlayer player = (EntityPlayer)event.getEntity();
+			if (!event.getEntity().world.isRemote && event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getEntity();
 				WorldServer world = player.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-				for(EntityCompanion c : player.world.getEntitiesWithinAABB(EntityCompanion.class, Block.FULL_BLOCK_AABB.offset(player.getPositionVector()).grow(16))) {
-					if(!c.getSit() && c.getOwner() != null && c.getOwner() == player) {
+				for (EntityCompanion c : player.world.getEntitiesWithinAABB(EntityCompanion.class, Block.FULL_BLOCK_AABB.offset(player.getPositionVector()).grow(16))) {
+					if (!c.getSit() && c.getOwner() != null && c.getOwner() == player) {
 						TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(event.getPos()));
-						if(tardis != null) {
+						if (tardis != null) {
 							tardis.transferPlayer(c, true);
 						}
 					}
 				}
 			}
 		}
-	}
-
-	@Override
-	public boolean isChild() {
-		return false;
 	}
 
 }

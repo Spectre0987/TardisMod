@@ -23,61 +23,64 @@ import java.nio.FloatBuffer;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
-	
+
 	static Framebuffer fb;
 	static WorldBoti wBoti;
 	static FloatBuffer FOG_BUFFER = GLAllocation.createDirectFloatBuffer(16);
-	
-	public RenderHelper() {}
-	
+	private static float lastBrightnessX = OpenGlHelper.lastBrightnessX;
+	private static float lastBrightnessY = OpenGlHelper.lastBrightnessY;
+
+	public RenderHelper() {
+	}
+
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size, boolean renderFog) {
-		if(ClientProxy.getRenderBOTI() && MinecraftForgeClient.getRenderPass() == 1) {
-			
-			if(offset == null)offset = new Vec3d(-1, 0, -7);
+		if (ClientProxy.getRenderBOTI() && MinecraftForgeClient.getRenderPass() == 1) {
+
+			if (offset == null) offset = new Vec3d(-1, 0, -7);
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1, 1, 1);
-			
+
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
-			
+
 			// Always write to stencil buffer
 			GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xFF);
 			GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_REPLACE);
 			GL11.glStencilMask(0xFF);
 			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-	
+
 			GlStateManager.depthMask(false);
 			drawOutline(size);
 			GlStateManager.depthMask(true);
-	
+
 			// Only pass stencil test if equal to 1(So only if rendered before)
 			GL11.glStencilMask(0x00);
 			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
-	
+
 			// Draw scene from portal view
-			
+
 			try {
-                if (wBoti == null || wBoti.dimension != te.getDimension())
-                    wBoti = new WorldBoti(te.getDimension(), Minecraft.getMinecraft().world, te.getWorldShell());
+				if (wBoti == null || wBoti.dimension != te.getDimension())
+					wBoti = new WorldBoti(te.getDimension(), Minecraft.getMinecraft().world, te.getWorldShell());
 				WorldClient oldW = Minecraft.getMinecraft().world;
 				wBoti.setWorldTime(te.getWorldShell().getTime());
 				RenderHelper.setRenderGlobalWorld(wBoti);
 				Minecraft.getMinecraft().world = wBoti;
 				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
 				int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
-				if(fb == null) fb = new Framebuffer(width, height, true);
+				if (fb == null) fb = new Framebuffer(width, height, true);
 				GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
 				GlStateManager.pushMatrix();
 				GlStateManager.rotate(180, 0, 1, 0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
-				if(!wBoti.provider.isSkyColored()) {
+				if (!wBoti.provider.isSkyColored()) {
 					GlStateManager.pushMatrix();
 					Vec3d color = wBoti.provider.getFogColor(0, 0);
 					GlStateManager.enableFog();
 					GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
-					if(color != null) {
+					if (color != null) {
 						FOG_BUFFER.clear();
-						FOG_BUFFER.put((float)color.x).put((float)color.y).put((float)color.z).put(1F);
+						FOG_BUFFER.put((float) color.x).put((float) color.y).put((float) color.z).put(1F);
 						FOG_BUFFER.flip();
 						GlStateManager.glFog(2918, FOG_BUFFER);
 					}
@@ -91,55 +94,53 @@ public class RenderHelper {
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
-				
+
 				RenderHelper.setRenderGlobalWorld(oldW);
-				
+
 				old.bindFramebuffer(true);
-					
+
 				fb.deleteFramebuffer();
 				Minecraft.getMinecraft().world = oldW;
-				
-			}
-			catch(Exception e) {
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
-			
+
 			GL11.glColorMask(false, false, false, false);
 			GlStateManager.depthMask(false);
 			drawOutline(size);
-			
+
 			//Set things back
 			GL11.glColorMask(true, true, true, true);
 			GlStateManager.depthMask(true);
-		   
-		   
+
+
 			GlStateManager.popMatrix();
-		}
-		else if(!ClientProxy.getRenderBOTI()){
+		} else if (!ClientProxy.getRenderBOTI()) {
 			RenderHelper.drawOutline(size);
 		}
 	}
-	
+
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size) {
 		RenderHelper.renderPortal(renderShell, te, partialTicks, rotation, offset, size, false);
 	}
-	
+
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks) {
 		RenderHelper.renderPortal(renderShell, te, partialTicks, 0F, null, null, false);
 	}
-	
+
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rot) {
 		RenderHelper.renderPortal(renderShell, te, partialTicks, rot, null, null, false);
 	}
-	
+
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rot, Vec3d offset) {
 		RenderHelper.renderPortal(renderShell, te, partialTicks, rot, offset, null, false);
 	}
-	
+
 	public static void drawOutline(@Nullable Vec3d size) {
-		if(size == null)size = new Vec3d(1, 2, 0);
+		if (size == null) size = new Vec3d(1, 2, 0);
 		GlStateManager.pushMatrix();
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
@@ -156,7 +157,7 @@ public class RenderHelper {
 	public static void setRenderGlobalWorld(WorldClient world) {
 		Minecraft.getMinecraft().world = world;
 	}
-	
+
 	public static void renderTransformAxis() {
 		GlStateManager.pushMatrix();
 		GlStateManager.disableTexture2D();
@@ -164,20 +165,16 @@ public class RenderHelper {
 		bb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
 		bb.pos(-1, 0, 0).color(1F, 0, 0, 1F).endVertex();
 		bb.pos(1, 0, 0).color(1F, 0, 0, 1F).endVertex();
-		
+
 		bb.pos(0, -1, 0).color(0F, 0, 1, 1F).endVertex();
 		bb.pos(0, 1, 0).color(0F, 0, 1, 1F).endVertex();
-		
+
 		bb.pos(0, 0, -1).color(0F, 1, 0, 1F).endVertex();
 		bb.pos(0, 0, 1).color(0F, 1, 0, 1F).endVertex();
 		Tessellator.getInstance().draw();
 		GlStateManager.enableTexture2D();
 		GlStateManager.popMatrix();
 	}
-
-
-	private static float lastBrightnessX = OpenGlHelper.lastBrightnessX;
-	private static float lastBrightnessY = OpenGlHelper.lastBrightnessY;
 
 	public static void setLightmapTextureCoords(float x, float y) {
 		lastBrightnessX = OpenGlHelper.lastBrightnessX;
@@ -312,53 +309,53 @@ public class RenderHelper {
 	}
 
 
-    /**
-     * Renders a white box with the bounds of the AABB trasnlated by an offset.
-     */
-    public static void renderOffsetAABB(AxisAlignedBB boundingBox, double x, double y, double z) {
-        GlStateManager.disableTexture2D();
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
-        bufferbuilder.setTranslation(x, y, z);
+	/**
+	 * Renders a white box with the bounds of the AABB trasnlated by an offset.
+	 */
+	public static void renderOffsetAABB(AxisAlignedBB boundingBox, double x, double y, double z) {
+		GlStateManager.disableTexture2D();
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		bufferbuilder.setTranslation(x, y, z);
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(1, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color(0.2f, 0.2f, 1, 0.5f);
-        GL11.glDisable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(1, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GlStateManager.color(0.2f, 0.2f, 1, 0.5f);
+		GL11.glDisable(GL11.GL_CULL_FACE);
 
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_NORMAL);
-        bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).normal(0.0F, 0.0F, -1.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).normal(0.0F, 0.0F, -1.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).normal(0.0F, 0.0F, -1.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).normal(0.0F, 0.0F, -1.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).normal(0.0F, 0.0F, 1.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).normal(0.0F, 0.0F, 1.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).normal(0.0F, 0.0F, 1.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).normal(0.0F, 0.0F, 1.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).normal(0.0F, -1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).normal(0.0F, -1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).normal(0.0F, -1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).normal(0.0F, -1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).normal(0.0F, 1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).normal(0.0F, 1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).normal(0.0F, 1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).normal(0.0F, 1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).normal(-1.0F, 0.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).normal(-1.0F, 0.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).normal(-1.0F, 0.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).normal(-1.0F, 0.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).normal(1.0F, 0.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).normal(1.0F, 0.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).normal(1.0F, 0.0F, 0.0F).endVertex();
-        bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).normal(1.0F, 0.0F, 0.0F).endVertex();
-        tessellator.draw();
-        bufferbuilder.setTranslation(0.0D, 0.0D, 0.0D);
-        GlStateManager.enableTexture2D();
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_NORMAL);
+		bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).normal(0.0F, 0.0F, -1.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).normal(0.0F, 0.0F, -1.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).normal(0.0F, 0.0F, -1.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).normal(0.0F, 0.0F, -1.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).normal(0.0F, 0.0F, 1.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).normal(0.0F, 0.0F, 1.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).normal(0.0F, 0.0F, 1.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).normal(0.0F, 0.0F, 1.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).normal(0.0F, -1.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).normal(0.0F, -1.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).normal(0.0F, -1.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).normal(0.0F, -1.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).normal(0.0F, 1.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).normal(0.0F, 1.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).normal(0.0F, 1.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).normal(0.0F, 1.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).normal(-1.0F, 0.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).normal(-1.0F, 0.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).normal(-1.0F, 0.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).normal(-1.0F, 0.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).normal(1.0F, 0.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).normal(1.0F, 0.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).normal(1.0F, 0.0F, 0.0F).endVertex();
+		bufferbuilder.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).normal(1.0F, 0.0F, 0.0F).endVertex();
+		tessellator.draw();
+		bufferbuilder.setTranslation(0.0D, 0.0D, 0.0D);
+		GlStateManager.enableTexture2D();
 
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GlStateManager.color(1, 1, 1, 1);
-        GL11.glDisable(GL11.GL_BLEND);
-    }
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GlStateManager.color(1, 1, 1, 1);
+		GL11.glDisable(GL11.GL_BLEND);
+	}
 
 
 }

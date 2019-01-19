@@ -17,29 +17,30 @@ public class BlockTable extends Block {
 		this.setHardness(2F);
 		this.setResistance(99999F);
 		setCreativeTab(TardisTabs.BLOCKS);
-    }
-	
+	}
+
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		drops.add(new ItemStack(this));
 	}
-	
+
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
-    @Override
-    public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
-    	return false;
-    }
-    @Override
-    public boolean isTranslucent(IBlockState state)
-    {
-        return true;
-    }
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
+	@Override
+	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
+		return false;
+	}
+
+	@Override
+	public boolean isTranslucent(IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
 }

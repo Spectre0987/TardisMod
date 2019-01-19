@@ -11,11 +11,11 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 import java.util.Map;
 
 public class TardisWorldSavedData extends WorldSavedData {
-	
+
 	public TardisWorldSavedData(String name) {
 		super(name);
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		NBTTagList list = nbt.getTagList("tardises", Constants.NBT.TAG_COMPOUND);
@@ -27,19 +27,19 @@ public class TardisWorldSavedData extends WorldSavedData {
 		}
 		//System.out.println(nbt.toString());
 	}
-	
+
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		NBTTagList list = new NBTTagList();
 		Map<String, BlockPos> map = TardisHelper.tardisOwners;
 		for (int i = 0; i < map.size(); ++i) {
 			NBTTagCompound tag = new NBTTagCompound();
-			tag.setString("name", map.keySet().toArray(new String[] {})[i]);
-			tag.setLong("pos", map.values().toArray(new BlockPos[] {})[i].toLong());
+			tag.setString("name", map.keySet().toArray(new String[]{})[i]);
+			tag.setLong("pos", map.values().toArray(new BlockPos[]{})[i].toLong());
 			list.appendTag(tag);
 		}
 		nbt.setTag("tardises", list);
 		return nbt;
 	}
-	
+
 }

@@ -1,8 +1,5 @@
 package net.tardis.mod.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -16,12 +13,11 @@ import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
-import net.tardis.mod.common.items.components.ItemArtronCapacitor;
-import net.tardis.mod.common.items.components.ItemComponent;
-import net.tardis.mod.common.items.components.ItemDematCircut;
-import net.tardis.mod.common.items.components.ItemFluidLink;
-import net.tardis.mod.common.items.components.ItemTVG;
+import net.tardis.mod.common.items.components.*;
 import net.tardis.mod.common.sounds.TSounds;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TItems {

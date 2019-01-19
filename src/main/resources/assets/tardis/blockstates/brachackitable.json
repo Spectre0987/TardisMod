@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:brachackitable"
-        },
-        "inventory":{
-             "model":"tardis:brachackitable"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:brachackitable"
+    },
+    "inventory": {
+      "model": "tardis:brachackitable"
     }
+  }
 }

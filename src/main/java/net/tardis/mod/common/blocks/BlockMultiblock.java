@@ -25,6 +25,13 @@ public class BlockMultiblock extends BlockContainer {
 		this.hasTileEntity = true;
 	}
 
+	public static IBlockState getMasterState(World world, BlockPos pos) {
+		TileEntityMultiblock multi = (TileEntityMultiblock) world.getTileEntity(pos);
+		if (multi != null)
+			return world.getBlockState(multi.getMasterPos());
+		return BlockMultiblockMaster.DUMMY.getDefaultState();
+	}
+
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
@@ -39,14 +46,14 @@ public class BlockMultiblock extends BlockContainer {
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
 		TileEntityMultiblock tile = (TileEntityMultiblock) worldIn.getTileEntity(pos);
-		if(tile != null) {
+		if (tile != null) {
 			TileEntityMultiblockMaster master = (TileEntityMultiblockMaster) worldIn.getTileEntity(tile.getMasterPos());
-			if(master != null) {
-				for(BlockPos child : master.getChildren()) {
+			if (master != null) {
+				for (BlockPos child : master.getChildren()) {
 					worldIn.getBlockState(child).getBlock().harvestBlock(worldIn, player, pos, state, worldIn.getTileEntity(child), player.getHeldItemMainhand());
 					worldIn.setBlockToAir(child);
 				}
@@ -54,15 +61,15 @@ public class BlockMultiblock extends BlockContainer {
 		}
 		super.onBlockHarvested(worldIn, pos, state, player);
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		TileEntityMultiblock mBlock = (TileEntityMultiblock)worldIn.getTileEntity(pos);
-		if(mBlock == null || mBlock.getMasterPos() == null) return false;
-		TileEntityMultiblockMaster master = (TileEntityMultiblockMaster)worldIn.getTileEntity(mBlock.getMasterPos());
-		if(master != null && master.getChildren() != null) {
-			for(BlockPos child : master.getChildren()) {
-				if(child == null) continue;
+		TileEntityMultiblock mBlock = (TileEntityMultiblock) worldIn.getTileEntity(pos);
+		if (mBlock == null || mBlock.getMasterPos() == null) return false;
+		TileEntityMultiblockMaster master = (TileEntityMultiblockMaster) worldIn.getTileEntity(mBlock.getMasterPos());
+		if (master != null && master.getChildren() != null) {
+			for (BlockPos child : master.getChildren()) {
+				if (child == null) continue;
 				IBlockState childState = worldIn.getBlockState(child);
 				childState.getBlock().onBlockActivated(worldIn, child, childState, playerIn, hand, facing, hitX, hitY, hitZ);
 			}
@@ -75,16 +82,9 @@ public class BlockMultiblock extends BlockContainer {
 		return new TileEntityMultiblock();
 	}
 
-	public static IBlockState getMasterState(World world, BlockPos pos) {
-		TileEntityMultiblock multi = (TileEntityMultiblock) world.getTileEntity(pos);
-		if(multi != null)
-			return world.getBlockState(multi.getMasterPos());
-		return BlockMultiblockMaster.DUMMY.getDefaultState();
-	}
-
 	@Override
 	public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
-		IBlockState master = this.getMasterState(worldIn, pos);
+		IBlockState master = getMasterState(worldIn, pos);
 		return master.getBlockHardness(worldIn, pos);
 	}
 
@@ -95,14 +95,15 @@ public class BlockMultiblock extends BlockContainer {
 
 	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-		return new ItemStack(this.getMasterState(world, pos).getBlock());
+		return new ItemStack(getMasterState(world, pos).getBlock());
 	}
 
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {}
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+	}
 
 	@Override
 	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
-		return this.getMasterState(worldIn, pos).getBlockHardness(worldIn, pos);
+		return getMasterState(worldIn, pos).getBlockHardness(worldIn, pos);
 	}
 }

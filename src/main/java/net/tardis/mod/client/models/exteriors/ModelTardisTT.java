@@ -5,10 +5,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.tardis.mod.util.client.RenderHelper;
-import net.tardis.mod.util.common.helpers.Helper;
 
-public class ModelTardisTT extends ModelBase implements IExteriorModel{
+public class ModelTardisTT extends ModelBase implements IExteriorModel {
 
 	ModelRenderer MS1;
 	ModelRenderer MS2;
@@ -34,7 +32,7 @@ public class ModelTardisTT extends ModelBase implements IExteriorModel{
 	ModelRenderer Gen13;
 	ModelRenderer Gen14;
 
-	public ModelTardisTT() { 
+	public ModelTardisTT() {
 
 		textureWidth = 256;
 		textureHeight = 256;
@@ -201,6 +199,7 @@ public class ModelTardisTT extends ModelBase implements IExteriorModel{
 		Gen14.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		MS1.render(scale);
@@ -225,45 +224,45 @@ public class ModelTardisTT extends ModelBase implements IExteriorModel{
 		Gen13.render(scale);
 		Gen14.render(scale);
 	}
-	
+
 	public void renderDoors(boolean open, float scale) {
-		if(open) {
+		if (open) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(-0.375, 0, -0.34375);
 			GlStateManager.rotate(-80, 0, 1, 0);
 			GlStateManager.translate(0.375, 0, 0.34375);
 			Door1.render(scale);
 			GlStateManager.popMatrix();
-			
+
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(0.375, 0, -0.34375);
 			GlStateManager.rotate(80, 0, 1, 0);
 			GlStateManager.translate(-0.375, 0, 0.34375);
 			Door2.render(scale);
 			GlStateManager.popMatrix();
-		}
-		else {
+		} else {
 			Door1.render(scale);
 			Door2.render(scale);
 		}
 	}
-	
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
-	
+
 	@Override
 	public void renderClosed(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, scale);
 		this.renderDoors(false, scale);
 	}
+
 	@Override
 	public void renderOpen(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, scale);

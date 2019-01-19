@@ -9,11 +9,11 @@
     "R": {
       "item": "minecraft:redstone_block"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     },
-    "T":{
-        "item":"minecraft:redstone_torch"
+    "T": {
+      "item": "minecraft:redstone_torch"
     }
   },
   "result": {

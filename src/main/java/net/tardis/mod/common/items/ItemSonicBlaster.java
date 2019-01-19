@@ -18,54 +18,55 @@ import net.tardis.mod.common.tileentity.TileEntitySonicGun;
 
 public class ItemSonicBlaster extends ItemBase {
 
-    private AxisAlignedBB axisAlignedBB;
+	private AxisAlignedBB axisAlignedBB;
 
-    public void setAxisAlignedBB(AxisAlignedBB axisAlignedBB) {
-        this.axisAlignedBB = axisAlignedBB;
-    }
+	public static AxisAlignedBB posToHelper(EntityPlayer player, BlockPos pos) {
 
-    public AxisAlignedBB getAxisAlignedBB(EntityPlayer player, BlockPos pos) {
-        return posToHelper(player, pos);
-    }
+		System.out.println(player.rotationPitch);
 
-    public AxisAlignedBB getAxisAlignedBB() {
-        return axisAlignedBB;
-    }
+		if (MathHelper.ceil(player.getLookVec().y) > -20 || MathHelper.ceil(player.getLookVec().y) < 20) {
+			return new AxisAlignedBB(pos.north().west(), pos.south().east());
+		}
 
-    public static AxisAlignedBB posToHelper(EntityPlayer player, BlockPos pos) {
-    	
-    	 System.out.println(player.rotationPitch);
-    	
-    	  if(MathHelper.ceil(player.getLookVec().y) > -20 || MathHelper.ceil(player.getLookVec().y) < 20){
-              return new AxisAlignedBB(pos.north().west(), pos.south().east());
-          }
-    	  
-        return new AxisAlignedBB(pos.west().up(), pos.east().down());
-    }
+		return new AxisAlignedBB(pos.west().up(), pos.east().down());
+	}
 
-    @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public AxisAlignedBB getAxisAlignedBB(EntityPlayer player, BlockPos pos) {
+		return posToHelper(player, pos);
+	}
 
-        IBlockState state = worldIn.getBlockState(pos);
-        if (state.getBlock() == Blocks.AIR || state.getBlock() instanceof IBlock && !((IBlock) state.getBlock()).doesDelete()) return EnumActionResult.FAIL;
+	public AxisAlignedBB getAxisAlignedBB() {
+		return axisAlignedBB;
+	}
 
-        AxisAlignedBB box = posToHelper(player, pos);
+	public void setAxisAlignedBB(AxisAlignedBB axisAlignedBB) {
+		this.axisAlignedBB = axisAlignedBB;
+	}
 
-        for (int x = (int) box.minX; x <= box.maxX; x++) {
-            for (int y = (int) box.minY; y <= box.maxY; y++) {
-                for (int z = (int) box.minZ; z <= box.maxZ; z++) {
-                    BlockPos changePos = new BlockPos(x, y, z);
-                    IBlockState oldState = worldIn.getBlockState(changePos);
-                    if (oldState.getBlock() != Blocks.AIR) {
-                        worldIn.setBlockState(changePos, TBlocks.sonic_blaster.getDefaultState());
-                        TileEntitySonicGun tile = (TileEntitySonicGun) worldIn.getTileEntity(changePos);
-                        tile.setBlockState(oldState);
-                        MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(worldIn, pos, oldState, player));
-                    }
-                }
-            }
-        }
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
-        return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-    }
+		IBlockState state = worldIn.getBlockState(pos);
+		if (state.getBlock() == Blocks.AIR || state.getBlock() instanceof IBlock && !((IBlock) state.getBlock()).doesDelete())
+			return EnumActionResult.FAIL;
+
+		AxisAlignedBB box = posToHelper(player, pos);
+
+		for (int x = (int) box.minX; x <= box.maxX; x++) {
+			for (int y = (int) box.minY; y <= box.maxY; y++) {
+				for (int z = (int) box.minZ; z <= box.maxZ; z++) {
+					BlockPos changePos = new BlockPos(x, y, z);
+					IBlockState oldState = worldIn.getBlockState(changePos);
+					if (oldState.getBlock() != Blocks.AIR) {
+						worldIn.setBlockState(changePos, TBlocks.sonic_blaster.getDefaultState());
+						TileEntitySonicGun tile = (TileEntitySonicGun) worldIn.getTileEntity(changePos);
+						tile.setBlockState(oldState);
+						MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(worldIn, pos, oldState, player));
+					}
+				}
+			}
+		}
+
+		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+	}
 }

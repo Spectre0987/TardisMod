@@ -32,11 +32,11 @@ public class ModelKey extends ModelBase {
 	ModelRenderer KeyBack4;
 	ModelRenderer KeyBack5;
 	ModelRenderer KeyBack6;
-	
+
 	public ModelKey() {
 		textureWidth = 64;
 		textureHeight = 64;
-		
+
 		KeyBase1 = new ModelRenderer(this, 0, 20);
 		KeyBase1.addBox(0F, 0F, 0F, 5, 11, 1);
 		KeyBase1.setRotationPoint(-3F, 13F, 0F);
@@ -194,7 +194,7 @@ public class ModelKey extends ModelBase {
 		KeyBack6.mirror = true;
 		setRotation(KeyBack6, 0F, 0F, 0F);
 	}
-	
+
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
@@ -225,15 +225,15 @@ public class ModelKey extends ModelBase {
 		KeyBack5.render(f5);
 		KeyBack6.render(f5);
 	}
-	
+
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
-	
+
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 	}
-	
+
 }

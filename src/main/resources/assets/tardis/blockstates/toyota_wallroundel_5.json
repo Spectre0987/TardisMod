@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:toyota_wallroundel_5"
-        },
-        "inventory":{
-             "model":"tardis:toyota_wallroundel_5"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:toyota_wallroundel_5"
+    },
+    "inventory": {
+      "model": "tardis:toyota_wallroundel_5"
     }
+  }
 }

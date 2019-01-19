@@ -15,7 +15,7 @@ public class RenderHellbentDoor extends Render<EntityHellbentDoor> {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/hellbent/door.png");
 	public ModelHellbentDoor door = new ModelHellbentDoor();
 	Minecraft mc;
-	
+
 	public RenderHellbentDoor(RenderManager manager) {
 		super(manager);
 		mc = Minecraft.getMinecraft();
@@ -36,23 +36,21 @@ public class RenderHellbentDoor extends Render<EntityHellbentDoor> {
 		mc.getTextureManager().bindTexture(TEXTURE);
 		door.render(null, 0, 0, 0, 0, 0, 0.0625F);
 
-		if(entity.isOpen()) {
+		if (entity.isOpen()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(1, 0, -2 + Helper.precentToPixels(2));
 			GlStateManager.rotate(-85, 0, 1, 0);
 			door.renderLeftDoor(0.0625F);
 			GlStateManager.popMatrix();
-		}
-		else door.renderLeftDoor(0.0625F);
+		} else door.renderLeftDoor(0.0625F);
 
-		if(entity.isOpen()) {
+		if (entity.isOpen()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(0, 0, -1 + Helper.precentToPixels(2));
 			GlStateManager.rotate(85, 0, 1, 0);
 			door.renderRightDoor(0.0625F);
 			GlStateManager.popMatrix();
-		}
-		else door.renderRightDoor(0.0625F);
+		} else door.renderRightDoor(0.0625F);
 		GlStateManager.popMatrix();
 	}
 

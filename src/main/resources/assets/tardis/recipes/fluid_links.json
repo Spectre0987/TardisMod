@@ -6,14 +6,14 @@
     "ICI"
   ],
   "key": {
-    "I":{
-        "item":"minecraft:iron_ingot"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     },
-    "M":{
-        "item":"tardis:mercury_bottle"
+    "M": {
+      "item": "tardis:mercury_bottle"
     }
   },
   "result": {

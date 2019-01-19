@@ -90,7 +90,7 @@ public class InteractionGRoom implements IScrew {
 				return Rotation.NONE;
 		}
 	}
-	
+
 	private Vec3i getOffset(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:
@@ -103,5 +103,5 @@ public class InteractionGRoom implements IScrew {
 				return new BlockPos(-8, -2, 4);
 		}
 	}
-	
+
 }

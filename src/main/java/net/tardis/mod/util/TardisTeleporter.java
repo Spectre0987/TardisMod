@@ -6,13 +6,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
 public class TardisTeleporter extends Teleporter {
-	
+
 	public TardisTeleporter(WorldServer world) {
 		super(world);
 	}
 
 	@Override
-	public void placeInPortal(Entity entityIn, float rotationYaw) {}
+	public void placeInPortal(Entity entityIn, float rotationYaw) {
+	}
 
 	@Override
 	public boolean placeInExistingPortal(Entity entityIn, float rotationYaw) {
@@ -25,7 +26,8 @@ public class TardisTeleporter extends Teleporter {
 	}
 
 	@Override
-	public void removeStalePortalLocations(long worldTime) {}
+	public void removeStalePortalLocations(long worldTime) {
+	}
 
 	@Override
 	public void placeEntity(World world, Entity entity, float yaw) {

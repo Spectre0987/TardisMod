@@ -6,20 +6,20 @@
     "RIR"
   ],
   "key": {
-    "I":{
-      "item":"minecraft:iron_block"
+    "I": {
+      "item": "minecraft:iron_block"
     },
-    "R":{
-      "item":"minecraft:redstone"
+    "R": {
+      "item": "minecraft:redstone"
     },
-    "C":{
-      "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     },
-    "A":{
-      "item":"tardis:artron_capacitor"
+    "A": {
+      "item": "tardis:artron_capacitor"
     },
-    "G":{
-      "item":"minecraft:glass_pane"
+    "G": {
+      "item": "minecraft:glass_pane"
     }
   },
   "result": {

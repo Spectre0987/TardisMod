@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
-public class ModelTardis04 extends ModelBase implements IExteriorModel{
+public class ModelTardis04 extends ModelBase implements IExteriorModel {
 
 	ModelRenderer Shape1;
 	ModelRenderer Gen0;
@@ -140,8 +140,10 @@ public class ModelTardis04 extends ModelBase implements IExteriorModel{
 	ModelRenderer Gen125;
 	ModelRenderer LampGlow;
 	ModelRenderer Gen126;
+	ModelRightDoor04 rd = new ModelRightDoor04();
+	ModelLeftDoor04 ld = new ModelLeftDoor04();
 
-	public ModelTardis04() { 
+	public ModelTardis04() {
 
 		textureWidth = 256;
 		textureHeight = 256;
@@ -1071,6 +1073,7 @@ public class ModelTardis04 extends ModelBase implements IExteriorModel{
 		Gen126.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		Shape1.render(scale);
@@ -1206,34 +1209,33 @@ public class ModelTardis04 extends ModelBase implements IExteriorModel{
 		LampGlow.render(scale);
 		Gen126.render(scale);
 	}
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
-	
-	ModelRightDoor04 rd = new ModelRightDoor04();
-	ModelLeftDoor04 ld = new ModelLeftDoor04();
-	
+
 	@Override
 	public void renderClosed(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.46875, 0.0625, -0.5625);
 		rd.render(null, 0, 0, 0, 0, 0, scale);
 		GlStateManager.popMatrix();
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(-0.46875, 0.0625, -0.5625);
 		ld.render(null, 0, 0, 0, 0, 0, scale);
 		GlStateManager.popMatrix();
 	}
+
 	@Override
 	public void renderOpen(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, 0.0625F);
@@ -1243,7 +1245,7 @@ public class ModelTardis04 extends ModelBase implements IExteriorModel{
 		GlStateManager.rotate(80, 0, 1, 0);
 		rd.render(null, 0, 0, 0, 0, 0, scale);
 		GlStateManager.popMatrix();
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(-0.46875, 0.0625, -0.5625);
 		GlStateManager.rotate(-80, 0, 1, 0);

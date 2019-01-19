@@ -9,19 +9,19 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 
-public class GuiARS extends GuiScreen{
+public class GuiARS extends GuiScreen {
 
-	Minecraft mc;
-	public int gui_width = 248, gui_height = 166;
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/ars.png");
-	
+	public int gui_width = 248, gui_height = 166;
+	Minecraft mc;
+
 	public GuiARS() {
 		mc = Minecraft.getMinecraft();
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		
+
 		GlStateManager.pushMatrix();
 		mc.getTextureManager().bindTexture(TEXTURE);
 		ScaledResolution res = new ScaledResolution(mc);

@@ -13,14 +13,15 @@ public class MessageDemat implements IMessage {
 
 	public boolean isDemat;
 	public BlockPos pos;
-	
-	public MessageDemat() {}
-	
-	public MessageDemat(BlockPos pos1, boolean b){
+
+	public MessageDemat() {
+	}
+
+	public MessageDemat(BlockPos pos1, boolean b) {
 		this.pos = pos1;
 		this.isDemat = b;
 	}
-	
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.pos = BlockPos.fromLong(buf.readLong());
@@ -33,10 +34,11 @@ public class MessageDemat implements IMessage {
 		buf.writeBoolean(isDemat);
 	}
 
-	public static class Handler implements IMessageHandler<MessageDemat, IMessage>{
+	public static class Handler implements IMessageHandler<MessageDemat, IMessage> {
 
-		public Handler() {}
-		
+		public Handler() {
+		}
+
 		@Override
 		public IMessage onMessage(MessageDemat mes, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
@@ -50,5 +52,6 @@ public class MessageDemat implements IMessage {
 				}
 			});
 			return null;
-		}}
+		}
+	}
 }

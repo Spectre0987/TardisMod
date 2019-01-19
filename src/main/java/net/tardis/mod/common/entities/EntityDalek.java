@@ -27,23 +27,23 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	public EntityDalek(World world) {
 		super(world);
 	}
-	
-	@Override
-	 protected void initEntityAI(){
-        tasks.addTask(0, new EntityAISwimming(this));
-        tasks.addTask(2, new EntityAIAttackRanged(this, 0.75D, 40, 30F));
-        tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
-        tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
-        tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        applyEntityAI();
-    }
 
-    protected void applyEntityAI() {
-        tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
-        targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-        targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-        targetTasks.addTask(0, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 100, true, false, input -> !(input instanceof EntityDalek)));
-    }
+	@Override
+	protected void initEntityAI() {
+		tasks.addTask(0, new EntityAISwimming(this));
+		tasks.addTask(2, new EntityAIAttackRanged(this, 0.75D, 40, 30F));
+		tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
+		tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
+		tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		applyEntityAI();
+	}
+
+	protected void applyEntityAI() {
+		tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
+		targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
+		targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
+		targetTasks.addTask(0, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 100, true, false, input -> !(input instanceof EntityDalek)));
+	}
 
 	@Override
 	protected void applyEntityAttributes() {
@@ -53,7 +53,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
 	}
-	
+
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 		faceEntity(target, 10, 30);
@@ -66,9 +66,10 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 		this.world.spawnEntity(laser);
 		world.playSound(null, this.getPosition(), TSounds.dalek, SoundCategory.HOSTILE, 1F, 1F);
 	}
-	
+
 	@Override
-	public void setSwingingArms(boolean swingingArms) {}
+	public void setSwingingArms(boolean swingingArms) {
+	}
 
 	@Override
 	protected void jump() {
@@ -78,22 +79,21 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if(this.getAttackTarget() != null) {
+		if (this.getAttackTarget() != null) {
 			if (this.getAttackTarget().posY >= this.posY + 1 || this.isInWater() || isAirBorne) {
 				this.setNoGravity(true);
 				this.motionY = 0.02;
-			}
-			else if(this.hasNoGravity())this.motionY = -0.02;
+			} else if (this.hasNoGravity()) this.motionY = -0.02;
 			this.fallDistance = 0;
-			if(this.hasNoGravity() && this.getAttackTarget().getPositionVector().distanceTo(this.getPositionVector()) > 5) {
+			if (this.hasNoGravity() && this.getAttackTarget().getPositionVector().distanceTo(this.getPositionVector()) > 5) {
 				Vec3d dir = this.getAttackTarget().getPositionVector().subtract(this.getPositionVector()).normalize().scale(0.3D);
 				this.motionX = dir.x;
 				this.motionZ = dir.z;
-				this.faceEntity(this.getAttackTarget(), 3F,1F);
+				this.faceEntity(this.getAttackTarget(), 3F, 1F);
 			}
 		}
-		if(this.onGround || !this.isAirBorne) this.setNoGravity(false);
-		if(this.rotationYaw - this.rotationYawHead > 90) {
+		if (this.onGround || !this.isAirBorne) this.setNoGravity(false);
+		if (this.rotationYaw - this.rotationYawHead > 90) {
 			this.rotationYaw = this.rotationYawHead;
 		}
 	}

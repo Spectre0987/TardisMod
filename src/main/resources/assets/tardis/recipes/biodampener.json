@@ -6,14 +6,14 @@
     "GAG"
   ],
   "key": {
-    "G":{
-        "item":"minecraft:gold_ingot"
+    "G": {
+      "item": "minecraft:gold_ingot"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     },
-    "A":{
-        "item":"tardis:artron_capacitor"
+    "A": {
+      "item": "tardis:artron_capacitor"
     }
   },
   "result": {

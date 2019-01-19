@@ -18,9 +18,10 @@ public class MessageDoorOpen implements IMessage {
 	public float alpha;
 	public int lightLevel;
 
-    public MessageDoorOpen() {}
+	public MessageDoorOpen() {
+	}
 
-    public MessageDoorOpen(BlockPos pos, TileEntityDoor door) {
+	public MessageDoorOpen(BlockPos pos, TileEntityDoor door) {
 		this.pos = pos;
 		this.isOpen = !door.isLocked;
 		this.isRemat = door.isRemat;
@@ -28,7 +29,7 @@ public class MessageDoorOpen implements IMessage {
 		this.lightLevel = door.getLightLevel();
 	}
 
-    @Override
+	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.pos = BlockPos.fromLong(buf.readLong());
 		this.isOpen = buf.readBoolean();
@@ -38,7 +39,7 @@ public class MessageDoorOpen implements IMessage {
 		this.lightLevel = buf.readInt();
 	}
 
-    @Override
+	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeLong(this.pos.toLong());
 		buf.writeBoolean(this.isOpen);
@@ -48,24 +49,25 @@ public class MessageDoorOpen implements IMessage {
 		buf.writeInt(this.lightLevel);
 	}
 
-    public static class Handler implements IMessageHandler<MessageDoorOpen, IMessage> {
+	public static class Handler implements IMessageHandler<MessageDoorOpen, IMessage> {
 
-        public Handler() {}
+		public Handler() {
+		}
 
-        @Override
+		@Override
 		public IMessage onMessage(MessageDoorOpen mes, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-                @Override
-                public void run() {
-                    Minecraft mc = Minecraft.getMinecraft();
-                    TileEntity te = mc.world.getTileEntity(mes.pos);
-                    if (te instanceof TileEntityDoor) {
-                        TileEntityDoor door = ((TileEntityDoor) te);
-                        door.isLocked = !mes.isOpen;
-                        door.isDemat = mes.isDemat;
-                        door.isRemat = mes.isRemat;
-                        door.setLightLevel(mes.lightLevel);
-                    }
+			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+				@Override
+				public void run() {
+					Minecraft mc = Minecraft.getMinecraft();
+					TileEntity te = mc.world.getTileEntity(mes.pos);
+					if (te instanceof TileEntityDoor) {
+						TileEntityDoor door = ((TileEntityDoor) te);
+						door.isLocked = !mes.isOpen;
+						door.isDemat = mes.isDemat;
+						door.isRemat = mes.isRemat;
+						door.setLightLevel(mes.lightLevel);
+					}
 				}
 			});
 			return null;

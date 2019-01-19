@@ -1,7 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -11,23 +9,25 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageWaypointSave;
 import net.tardis.mod.util.SpaceTimeCoord;
 
+import java.io.IOException;
+
 public class GuiWaypointSave extends GuiScreen {
-	
+
 	public BlockPos tardisPos = BlockPos.ORIGIN;
-	
+
 	public GuiTextField field;
 
 	public GuiWaypointSave(BlockPos pos) {
 		this.tardisPos = pos;
 	}
-	
+
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		field.textboxKeyTyped(typedChar, keyCode);
-		if(keyCode == 28) {
+		if (keyCode == 28) {
 			Minecraft.getMinecraft().displayGuiScreen(null);
-			TileEntityTardis tardis = (TileEntityTardis)Minecraft.getMinecraft().world.getTileEntity(tardisPos);
-			if(tardis == null) return;
+			TileEntityTardis tardis = (TileEntityTardis) Minecraft.getMinecraft().world.getTileEntity(tardisPos);
+			if (tardis == null) return;
 			SpaceTimeCoord coord = new SpaceTimeCoord(tardis.getLocation(), tardis.dimension, field.getText());
 			NetworkHandler.NETWORK.sendToServer(new MessageWaypointSave(tardisPos, coord));
 		}
@@ -44,8 +44,8 @@ public class GuiWaypointSave extends GuiScreen {
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
-		if(mouseX > field.x && mouseX < field.x + field.width) {
-			if(mouseY > field.y && mouseY < field.y + field.height) {
+		if (mouseX > field.x && mouseX < field.x + field.width) {
+			if (mouseY > field.y && mouseY < field.y + field.height) {
 				field.setFocused(true);
 			}
 		}

@@ -1,7 +1,5 @@
 package net.tardis.mod.client.renderers.decorations.hellbent;
 
-import java.awt.Color;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -16,31 +14,33 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
+import java.awt.*;
+
 public class RenderHellbentMonitor extends TileEntitySpecialRenderer<TileEntityHellbentMonitor> {
 
-	Minecraft mc;
-	public ModelHellbentMonitor model = new ModelHellbentMonitor();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/hellbent/monitor.png");
-	
+	public ModelHellbentMonitor model = new ModelHellbentMonitor();
+	Minecraft mc;
+
 	public RenderHellbentMonitor() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void render(TileEntityHellbentMonitor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 1.25, z + 0.5);
 		GlStateManager.rotate(180, 1, 0, 0);
 		IBlockState state = te.getWorld().getBlockState(te.getPos());
-		if(state.getBlock() instanceof BlockFacingDecoration) {
+		if (state.getBlock() instanceof BlockFacingDecoration) {
 			GlStateManager.rotate(Helper.getAngleFromFacing(state.getValue(BlockFacingDecoration.FACING)), 0, 1, 0);
 		}
 		GlStateManager.translate(0, -Helper.precentToPixels(4), Helper.precentToPixels(5));
 		mc.getTextureManager().bindTexture(TEXTURE);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		
-		TileEntityTardis tardis = (TileEntityTardis)te.getWorld().getTileEntity(TardisHelper.getTardisForPosition(te.getPos()));
-		if(tardis != null) {
+
+		TileEntityTardis tardis = (TileEntityTardis) te.getWorld().getTileEntity(TardisHelper.getTardisForPosition(te.getPos()));
+		if (tardis != null) {
 			GlStateManager.pushMatrix();
 			double scale = 0.007;
 			GlStateManager.translate(-Helper.precentToPixels(8), Helper.precentToPixels(8), -1);
@@ -48,7 +48,7 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer<TileEntityH
 			drawInfo(tardis);
 			GlStateManager.popMatrix();
 		}
-		
+
 		GlStateManager.popMatrix();
 	}
 
