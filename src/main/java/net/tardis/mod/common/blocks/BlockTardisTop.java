@@ -163,6 +163,7 @@ public class BlockTardisTop extends BlockTileBase implements INoBox {
 		return super.getLightValue(state, world, pos);
 	}
 
+
 	public static class ItemBlockTardis extends ItemBlock {
 
 		public ItemBlockTardis(Block block) {
