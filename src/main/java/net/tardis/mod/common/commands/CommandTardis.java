@@ -30,212 +30,219 @@ import java.util.*;
 
 public class CommandTardis extends CommandBase {
 
-	public static final List<String> subcommands = Arrays.asList("grow", "transfer", "interior", "remove", "restoresys");
+    public static final List<String> subcommands = Arrays.asList("grow", "transfer", "interior", "remove", "restoresys");
+    /**
+     * Gets the name of the command
+     */
+    @Override
+    public String getName() {
+        return "tardis";
+    }
 
-	/**
-	 * Gets the name of the command
-	 */
-	@Override
-	public String getName() {
-		return "tardis";
-	}
+    /**
+     * Gets the usage string for the command.
+     *
+     * @param sender
+     */
+    @Override
+    public String getUsage(ICommandSender sender) {
+        StringBuilder usageString = new StringBuilder();
 
-	/**
-	 * Gets the usage string for the command.
-	 *
-	 * @param sender
-	 */
-	@Override
-	public String getUsage(ICommandSender sender) {
-		StringBuilder usageString = new StringBuilder();
-		usageString.append("/tardis ");
-		for (String subcommand : subcommands) {
-			usageString.append(MessageFormat.format("{0} | ", subcommand));
-		}
-		return usageString.toString();
-	}
+        usageString.append("/tardis ");
+        usageString.append(subcommands.get(0));
 
-	/**
-	 * Callback for when the command is executed
-	 *
-	 * @param server
-	 * @param sender
-	 * @param args
-	 */
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        for (String subcommand : subcommands.subList(1,subcommands.size())) {
+            usageString.append(MessageFormat.format(" | {0}", subcommand));
+        }
 
-		if (!(sender instanceof EntityPlayerMP))
-			throw new CommandException("You are not a player. You must run these commands in game.");
+        return usageString.toString();
+    }
 
-		if (args.length == 0 || !subcommands.contains(args[0]))
-			throw new CommandException("You need to include a argument of the following: " + this.getUsage(sender));
+    /**
+     * Callback for when the command is executed
+     *
+     * @param server
+     * @param sender
+     * @param args
+     */
+    @Override
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
-		EntityPlayerMP player = getCommandSenderAsPlayer(sender);
+        if (!(sender instanceof EntityPlayerMP))
+            throw new CommandException("You are not a player. You must run these commands in game.");
 
-		switch (subcommands.indexOf(args[0])) {
-			case 0: //grow
-				handleGrow(player);
-				break;
+        if (args.length == 0 || !subcommands.contains(args[0]))
+            throw new CommandException("You need to include a argument of the following: " + this.getUsage(sender));
 
-			case 1: //transfer
-				if (args.length == 2)
-					handlerOwner(player, args[1]);
-				else
-					throw new CommandException("/tardis transfer <username>");
-				break;
+        EntityPlayerMP player = getCommandSenderAsPlayer(sender);
 
-			case 2: //interior
-				if (PermissionAPI.hasPermission(player, TStrings.Permissions.TP_IN_TARDIS))
-					handleTeleport(player);
-				else
-					throw new CommandException("You do not have permission to run this command.");
-				break;
+        switch (subcommands.indexOf(args[0])){
+            case 0: //grow
+                handleGrow(player);
+                break;
 
-			case 3: //remove
-				if (args.length == 2) {
-					if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS))
-						handleRemove(player, args[1]);
-					else
-						throw new CommandException("You do not have permission to run this command.");
-				} else
-					throw new CommandException("/tardis remove <username>");
-				break;
+            case 1: //transfer
+                if (args.length == 2)
+                    handlerOwner(player, args[1]);
+                else
+                    throw new CommandException("/tardis transfer <username>");
+                break;
 
-			case 4: //restoresys
-				if (args.length > 1) {
-					if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
-						if (Arrays.asList(server.getOnlinePlayerNames()).contains(args[2]))
-							player = server.getPlayerList().getPlayerByUsername(args[2]);
+            case 2: //interior
+                if (PermissionAPI.hasPermission(player, TStrings.Permissions.TP_IN_TARDIS))
+                    handleTeleport(player);
+                else
+                    throw new CommandException("You do not have permission to run this command.");
+                break;
 
-						List<String> systemNames = new ArrayList<>();
-						for (int i = 1; i < args.length; i++)
-							systemNames.add(args[i]);
+            case 3: //remove
+                if (args.length == 2){
+                    if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS))
+                        handleRemove(player, args[1]);
+                    else
+                        throw new CommandException("You do not have permission to run this command.");
+                }
+                else
+                    throw new CommandException("/tardis remove <username>");
+                break;
 
-						this.restoreSystem(player, player.getUniqueID(), systemNames.toArray(new String[]{}));
-					} else
-						throw new CommandException("You do not have permission to run this command.");
-				} else
-					throw new CommandException("/tardis restoresys <username> <system...s>");
-				break;
-		}
-	}
+            case 4: //restoresys
+                if(args.length > 1) {
+                    if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
+                        if (Arrays.asList(server.getOnlinePlayerNames()).contains(args[2]))
+                            player = server.getPlayerList().getPlayerByUsername(args[2]);
 
-	//handle restoring systems
-	private void restoreSystem(EntityPlayerMP player, @Nullable UUID id, String... names) throws CommandException {
-		List<BaseSystem> systemBases = new ArrayList<>();
-		UUID owner = (id == null ? player.getUniqueID() : id);
+                        List<String> systemNames = new ArrayList<>();
+                        for (int i = 1; i < args.length; i++)
+                            systemNames.add(args[i]);
 
-		for (String s : names) {
-			BaseSystem system = TardisSystems.createFromName(s);
-			if (system != null)
-				systemBases.add(system);
-			else
-				player.sendMessage(new TextComponentString(s + ": " + new TextComponentTranslation(TStrings.Commands.NO_SYSTEM)));
-		}
+                        this.restoreSystem(player, player.getUniqueID(), systemNames.toArray(new String[]{}));
+                    } else
+                        throw new CommandException("You do not have permission to run this command.");
+                }
+                else
+                    throw new CommandException("/tardis restoresys <username> <system...s>");
+                break;
+            }
+    }
 
-		if (TardisHelper.hasTardis(owner)) {
-			TileEntityTardis tardis = (TileEntityTardis) player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(owner));
-			if (tardis != null) {
-				for (BaseSystem system : systemBases) {
-					tardis.getSystem(system.getClass()).setHealth(1F);
-				}
-				player.sendStatusMessage(new TextComponentTranslation(TStrings.Commands.SYSTEM_RESTORED), false);
-			} else throw new CommandException(TStrings.Commands.NO_TARIDS_IN_WORLD);
-		} else throw new CommandException(TStrings.Commands.NO_TARDIS_OWNED);
+    //handle restoring systems
+    private void restoreSystem(EntityPlayerMP player, @Nullable UUID id, String... names) throws CommandException {
+    	List <BaseSystem> systemBases = new ArrayList<>();
+        UUID owner = (id == null ? player.getUniqueID() : id);
 
-	}
+    	for (String s : names){
+            BaseSystem system = TardisSystems.createFromName(s);
+            if (system != null)
+                systemBases.add(system);
+            else
+                player.sendMessage(new TextComponentString(s + ": " + new TextComponentTranslation(TStrings.Commands.NO_SYSTEM)));
+        }
 
-	//Handle removing the Tardis
-	private void handleRemove(EntityPlayerMP senderPlayer, String toBeRemoved) {
-		MinecraftServer server = senderPlayer.getServer();
-		Map<UUID, String> playersMap = FileHelper.getPlayersFromServerFile();
+        if(TardisHelper.hasTardis(owner)) {
+            TileEntityTardis tardis = (TileEntityTardis)player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(owner));
+            if(tardis != null) {
+                for (BaseSystem system : systemBases){
+                    tardis.getSystem(system.getClass()).setHealth(1F);
+                }
+                player.sendStatusMessage(new TextComponentTranslation(TStrings.Commands.SYSTEM_RESTORED), false);
+            }
+            else throw new CommandException(TStrings.Commands.NO_TARIDS_IN_WORLD);
+        }
+        else throw new CommandException(TStrings.Commands.NO_TARDIS_OWNED);
 
-		if (playersMap.containsValue(toBeRemoved)) {
-			UUID toBeRemovedID = Helper.getKeyByValue(playersMap, toBeRemoved);
-			if (TardisHelper.hasTardis(toBeRemovedID)) {
-				server.getWorld(TDimensions.TARDIS_ID).setBlockToAir(TardisHelper.getTardis(toBeRemovedID));
-				TardisHelper.tardisOwners.remove(toBeRemovedID.toString());
-				senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.TARDIS_DELETED));
-			} else {
-				senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
-			}
-		} else {
-			senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_PLAYER_FOUND));
-		}
-	}
+    }
 
-	//Handles transfering Tardis ownership
-	private void handlerOwner(EntityPlayerMP player, String newOwnerName) {
-		MinecraftServer server = player.getServer();
-		EntityPlayer newOwner = server.getPlayerList().getPlayerByUsername(newOwnerName);
-		if (newOwner != null && TardisHelper.hasTardis(player.getGameProfile().getId()) && !TardisHelper.hasTardis(newOwner.getGameProfile().getId())) {
-			BlockPos pos = TardisHelper.getTardis(player.getGameProfile().getId());
-			if (pos != null) {
-				TardisHelper.tardisOwners.remove(player.getGameProfile().getId().toString());
-				TardisHelper.tardisOwners.put(newOwner.getGameProfile().getId().toString(), pos.toImmutable());
-			}
-		}
-	}
+    //Handle removing the Tardis
+    private void handleRemove(EntityPlayerMP senderPlayer, String toBeRemoved) {
+        MinecraftServer server = senderPlayer.getServer();
+        Map<UUID,String> playersMap = FileHelper.getPlayersFromServerFile();
 
-	//Grow the tardis
-	private void handleGrow(EntityPlayerMP player) {
-		World world = player.getEntityWorld();
-		RayTraceResult ray = world.rayTraceBlocks(player.getPositionVector().add(0, player.getEyeHeight(), 0), player.getPositionVector().add(player.getLookVec().scale(16D)));
-		if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
-			TileEntity te = world.getTileEntity(ray.getBlockPos());
-			if (te != null && te instanceof TileEntityTardisCoral) {
-				((TileEntityTardisCoral) te).grow();
-			}
-		}
-	}
+        if (playersMap.containsValue(toBeRemoved)) {
+            UUID toBeRemovedID = Helper.getKeyByValue(playersMap,toBeRemoved);
+            if (TardisHelper.hasTardis(toBeRemovedID)) {
+            	server.getWorld(TDimensions.TARDIS_ID).setBlockToAir(TardisHelper.getTardis(toBeRemovedID));
+                TardisHelper.tardisOwners.remove(toBeRemovedID.toString());
+                senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.TARDIS_DELETED));
+            } else {
+                senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
+            }
+        } else {
+            senderPlayer.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_PLAYER_FOUND));
+        }
+    }
 
-	//Handles teleporting the user to their interior
-	private void handleTeleport(EntityPlayerMP player) {
-		MinecraftServer server = player.getServer();
-		if (TardisHelper.hasTardis(player.getUniqueID())) {
-			BlockPos pos = TardisHelper.getTardis(player.getUniqueID());
-			player.dismountRidingEntity();
-			TileEntityTardis tileTardis = TardisHelper.getConsole(pos);
-			if (tileTardis != null) {
-				tileTardis.enterTARDIS(player);
-			} else {
-				player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED + " but most likely a issue has arisen somewhere..."));
-			}
-		} else {
-			player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
-		}
-	}
+    //Handles transfering Tardis ownership
+    private void handlerOwner(EntityPlayerMP player, String newOwnerName) {
+        MinecraftServer server = player.getServer();
+        EntityPlayer newOwner = server.getPlayerList().getPlayerByUsername(newOwnerName);
+        if (newOwner != null && TardisHelper.hasTardis(player.getGameProfile().getId()) && !TardisHelper.hasTardis(newOwner.getGameProfile().getId())) {
+            BlockPos pos = TardisHelper.getTardis(player.getGameProfile().getId());
+            if (pos != null) {
+                TardisHelper.tardisOwners.remove(player.getGameProfile().getId().toString());
+                TardisHelper.tardisOwners.put(newOwner.getGameProfile().getId().toString(), pos.toImmutable());
+            }
+        }
+    }
 
-	/**
-	 * Get a list of options for when the user presses the TAB key
-	 */
-	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-		if (args.length < 2) {
-			return getListOfStringsMatchingLastWord(args, subcommands);
-		}
+    //Grow the tardis
+    private void handleGrow(EntityPlayerMP player) {
+        World world = player.getEntityWorld();
+        RayTraceResult ray = world.rayTraceBlocks(player.getPositionVector().add(0, player.getEyeHeight(), 0), player.getPositionVector().add(player.getLookVec().scale(16D)));
+        if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK) {
+            TileEntity te = world.getTileEntity(ray.getBlockPos());
+            if (te != null && te instanceof TileEntityTardisCoral) {
+                ((TileEntityTardisCoral) te).grow();
+            }
+        }
+    }
 
-		if (args[0].equals("remove")) {
-			return getListOfStringsMatchingLastWord(args, FileHelper.getPlayersFromServerFile().values());
-		}
+    //Handles teleporting the user to their interior
+    private void handleTeleport(EntityPlayerMP player) {
+        MinecraftServer server = player.getServer();
+        if (TardisHelper.hasTardis(player.getUniqueID())) {
+            BlockPos pos = TardisHelper.getTardis(player.getUniqueID());
+            player.dismountRidingEntity();
+            TileEntityTardis tileTardis = TardisHelper.getConsole(pos);
+            if (tileTardis != null) {
+                tileTardis.enterTARDIS(player);
+            } else {
+                player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED + " but most likely a issue has arisen somewhere..."));
+            }
+        } else {
+            player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
+        }
+    }
 
-		if (args[0].equals("transfer")) {
-			return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
-		}
+    /**
+     * Get a list of options for when the user presses the TAB key
+     */
+    @Override
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        if(args.length < 2 ) {
+            return getListOfStringsMatchingLastWord(args, subcommands);
+        }
 
-		if (args[0].equals("restoresys")) {
-			List<String> systemNames = new ArrayList<String>();
+        if (args[0].equals("remove")){
+            return getListOfStringsMatchingLastWord(args, FileHelper.getPlayersFromServerFile().values());
+        }
 
-			for (Map.Entry<String, Class<? extends BaseSystem>> entry : TardisSystems.SYSTEMS.entrySet()) {
-				systemNames.add(entry.getKey());
-			}
+        if(args[0].equals("transfer")){
+            return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+        }
 
-			if (args.length == 2) {
-				systemNames.addAll(Arrays.asList(server.getOnlinePlayerNames()));
-			}
-			return getListOfStringsMatchingLastWord(args, systemNames);
-		}
-		return Collections.emptyList();
-	}
+        if (args[0].equals("restoresys")){
+            List<String> systemNames = new ArrayList<String>();
+
+            for (Map.Entry<String,Class<? extends BaseSystem>> entry : TardisSystems.SYSTEMS.entrySet()) {
+                systemNames.add(entry.getKey());
+            }
+
+            if (args.length == 2){
+                systemNames.addAll(Arrays.asList(server.getOnlinePlayerNames()));
+            }
+            return getListOfStringsMatchingLastWord(args, systemNames);
+        }
+        return Collections.emptyList();
+    }
 }
