@@ -1,18 +1,27 @@
 package net.tardis.mod.common.entities;
 
 import io.netty.buffer.ByteBuf;
+import javafx.scene.effect.Light;
+import net.minecraft.block.BlockTNT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityTNTPrimed;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+
+import static net.minecraft.block.BlockTNT.EXPLODE;
 
 public class EntityLaserRay extends EntityThrowable implements IEntityAdditionalSpawnData {
 
@@ -52,9 +61,11 @@ public class EntityLaserRay extends EntityThrowable implements IEntityAdditional
 
 			IBlockState block = world.getBlockState(result.getBlockPos());
 
-			if (block.getBlock() == Blocks.TNT) {
-				//	BlockTNT tnt = (BlockTNT) block;
-				//tnt.explode(world, result.getBlockPos(), block, getThrower());
+			if (block.getBlock() instanceof BlockTNT) {
+				BlockPos pos = result.getBlockPos();
+				EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(world, (double)((float)pos.getX() + 0.5F), (double)pos.getY(), (double)((float)pos.getZ() + 0.5F), getThrower());
+				world.spawnEntity(entitytntprimed);
+				world.playSound((EntityPlayer)null, entitytntprimed.posX, entitytntprimed.posY, entitytntprimed.posZ, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 		}
 
