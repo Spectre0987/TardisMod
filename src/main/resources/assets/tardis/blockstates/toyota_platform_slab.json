@@ -17,7 +17,11 @@
         "x": 180
       }
     ],
-    "inventory":[{}],
-    "normal":[{}]
+    "inventory": [
+      {}
+    ],
+    "normal": [
+      {}
+    ]
   }
 }

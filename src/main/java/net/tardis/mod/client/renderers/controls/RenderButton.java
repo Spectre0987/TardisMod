@@ -8,9 +8,9 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderButton extends RenderControl {
-	
+
 	public ModelButton model = new ModelButton();
-	
+
 	@Override
 	public void doRender(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
@@ -24,10 +24,10 @@ public class RenderButton extends RenderControl {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
-	
+
 	@Override
 	public void renderControl(EntityControl entity, double x, double y, double z, float entityYaw, float partialTicks, TileEntityTardis tType) {
-		
+
 	}
-	
+
 }

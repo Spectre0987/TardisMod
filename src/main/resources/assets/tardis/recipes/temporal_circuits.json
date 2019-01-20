@@ -6,11 +6,11 @@
     " s "
   ],
   "key": {
-    "s":{
-        "item":"minecraft:shield"
+    "s": {
+      "item": "minecraft:shield"
     },
-    "c":{
-        "item":"tardis:circuts"
+    "c": {
+      "item": "tardis:circuts"
     }
   },
   "result": {

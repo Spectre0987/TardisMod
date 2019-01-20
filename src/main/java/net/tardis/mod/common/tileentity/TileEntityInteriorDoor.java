@@ -16,12 +16,11 @@ import net.tardis.mod.common.blocks.BlockInteriorDoor;
 import net.tardis.mod.network.NetworkHandler;
 
 public class TileEntityInteriorDoor extends TileEntity implements ITickable, IContainsWorldShell {
-	
+
+	public int openCooldown = 0;
 	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 	private Vec3i rad = new Vec3i(10, 10, 10);
-
 	private boolean open;
-	public int openCooldown = 0;
 	private BlockInteriorDoor.DoorTypes doorType;
 
 	public TileEntityInteriorDoor() {
@@ -54,11 +53,11 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	}
 
 	public void setOpen(boolean open) {
-		if(openCooldown == 0) {
+		if (openCooldown == 0) {
 			openCooldown = 20;
 			this.open = open;
-	        world.setBlockState(pos, this.getWorld().getBlockState(pos), 10);
-	        world.markBlockRangeForRenderUpdate(pos, pos);
+			world.setBlockState(pos, this.getWorld().getBlockState(pos), 10);
+			world.markBlockRangeForRenderUpdate(pos, pos);
 			this.markDirty();
 		}
 	}
@@ -77,22 +76,22 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	public void setWorldShell(WorldShell worldShell) {
 		this.shell = worldShell;
 	}
-	
+
 	@Override
 	public void update() {
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 			TileEntityTardis tardis = null;
-			for(TileEntity te : this.world.getChunk(this.getPos()).getTileEntityMap().values()) {
-				if(te instanceof TileEntityTardis) {
-					tardis = (TileEntityTardis)te;
+			for (TileEntity te : this.world.getChunk(this.getPos()).getTileEntityMap().values()) {
+				if (te instanceof TileEntityTardis) {
+					tardis = (TileEntityTardis) te;
 				}
 			}
-			
-			if(openCooldown > 0) openCooldown--;
-			if(tardis != null) {
+
+			if (openCooldown > 0) openCooldown--;
+			if (tardis != null) {
 				WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 				shell = new WorldShell(tardis.getLocation());
-				for(BlockPos pos : BlockPos.getAllInBox(tardis.getLocation().subtract(rad), tardis.getLocation().add(rad))) {
+				for (BlockPos pos : BlockPos.getAllInBox(tardis.getLocation().subtract(rad), tardis.getLocation().add(rad))) {
 					this.shell.blockMap.put(pos, new BlockStorage(ws.getBlockState(pos), ws.getTileEntity(pos), ws.getLight(pos)));
 				}
 			}
@@ -101,7 +100,7 @@ public class TileEntityInteriorDoor extends TileEntity implements ITickable, ICo
 	}
 
 	@Override
-    public int getDimension() {
+	public int getDimension() {
 		return 0;
 	}
 

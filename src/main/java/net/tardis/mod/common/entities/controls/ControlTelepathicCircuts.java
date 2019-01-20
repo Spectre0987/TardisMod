@@ -13,13 +13,13 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
-public class ControlTelepathicCircuts extends EntityControl{
-	
+public class ControlTelepathicCircuts extends EntityControl {
+
 	public ControlTelepathicCircuts(TileEntityTardis tardis) {
 		super(tardis);
 		this.setSize(0.125F, 0.125F);
 	}
-	
+
 	public ControlTelepathicCircuts(World world) {
 		super(world);
 		this.setSize(0.125F, 0.125F);
@@ -27,22 +27,22 @@ public class ControlTelepathicCircuts extends EntityControl{
 
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
+		if (tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(0, -2, -10);
 		}
-		if(tardis instanceof TileEntityTardis03)
+		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(8.5, 2, 5.5);
-		
-		return Helper.convertToPixels(10, -2,-6);
+
+		return Helper.convertToPixels(10, -2, -6);
 	}
 
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if(world.isRemote) {
+		if (world.isRemote) {
 			openGui();
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void openGui() {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiTelepathicCircuts(this.getConsolePos()));
@@ -50,10 +50,10 @@ public class ControlTelepathicCircuts extends EntityControl{
 
 	@Override
 	public void init(TileEntityTardis tardis) {
-		if(tardis != null) {
-			if(tardis instanceof TileEntityTardis03)
+		if (tardis != null) {
+			if (tardis instanceof TileEntityTardis03)
 				setSize(Helper.precentToPixels(8F), Helper.precentToPixels(4F));
-			if(tardis.getClass() == TileEntityTardis.class)
+			if (tardis.getClass() == TileEntityTardis.class)
 				this.setSize(Helper.precentToPixels(4F), Helper.precentToPixels(2F));
 		}
 	}

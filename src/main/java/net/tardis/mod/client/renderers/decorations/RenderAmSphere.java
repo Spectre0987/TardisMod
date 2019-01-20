@@ -15,14 +15,14 @@ public class RenderAmSphere extends TileEntitySpecialRenderer {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/am_sphere.png");
 	public ModelASphere model = new ModelASphere();
-	
+
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
 		GlStateManager.rotate(180, 0, 0, 1);
 		this.bindTexture(TEXTURE);
-		if(te.getWorld() != null && te.getWorld().getBlockState(te.getPos()).getBlock() == TBlocks.am_sphere) {
+		if (te.getWorld() != null && te.getWorld().getBlockState(te.getPos()).getBlock() == TBlocks.am_sphere) {
 			GlStateManager.rotate(Helper.getAngleFromFacing(te.getWorld().getBlockState(te.getPos()).getValue(BlockHorizontal.FACING)), 0, 1, 0);
 		}
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);

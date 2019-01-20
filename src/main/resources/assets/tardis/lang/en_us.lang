@@ -48,6 +48,9 @@ item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Temporal Grace Circuits
 item.tardis.tardis_repairkit.name=TARDIS Toolkit
 item.tardis.stabilizers.name=Stabilizer circuits
+item.tardis.thermo.name=Thermo- Couplings
+item.tardis.sonic_third.name=Third Doctor's Sonic
+item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS arriving in
@@ -169,8 +172,6 @@ tardis.magnitude=TARDIS Coordinate modifier is
 
 tardis.hads.enabled.true=H.A.D.S has been enabled
 tardis.hads.enabled.false=H.A.D.S has been disabled
-tardis.hum.enabled.true=Hum has been enabled
-tardis.hum.enabled.false=Hum has been disabled
 
 protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
@@ -195,6 +196,7 @@ systems.tardis.antenna=Interstitial Antenna
 system.tardis.ccircuit=Chameleon Circuit
 system.tardis.temporal_grace=Temporal Grace Circuits
 system.tardis.stabilizers=Stabilizers
+system.tardis.thermo=Thermo- Couplings
 
 tardis.dimension=Nav-Com Dimension is:
 

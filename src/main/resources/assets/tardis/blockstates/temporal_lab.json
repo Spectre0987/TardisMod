@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:temporal_lab"
-        },
-        "inventory":{
-            "model":"tardis:temporal_lab"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:temporal_lab"
+    },
+    "inventory": {
+      "model": "tardis:temporal_lab"
     }
+  }
 }

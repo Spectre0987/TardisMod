@@ -7,5 +7,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public interface IExteriorModel {
 
 	void renderClosed(float scale);
+
 	void renderOpen(float scale);
 }

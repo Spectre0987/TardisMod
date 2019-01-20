@@ -9,15 +9,15 @@ import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 
-public class SystemCCircuit extends BaseSystem{
+public class SystemCCircuit extends BaseSystem {
 
 	boolean checkActive = false;
-	
+
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
-		if(checkActive) {
+		if (checkActive) {
 			TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(consolePos));
-			if(tardis != null && tardis.getTopBlock().getBlock() == TBlocks.tardis_top_cc) {
+			if (tardis != null && tardis.getTopBlock().getBlock() == TBlocks.tardis_top_cc) {
 				this.setHealth(this.getHealth() - 0.01F);
 			}
 			checkActive = false;
@@ -25,7 +25,8 @@ public class SystemCCircuit extends BaseSystem{
 	}
 
 	@Override
-	public void damage() {}
+	public void damage() {
+	}
 
 	@Override
 	public Item getRepairItem() {
@@ -35,6 +36,11 @@ public class SystemCCircuit extends BaseSystem{
 	@Override
 	public String getNameKey() {
 		return "system.tardis.ccircuit";
+	}
+
+	@Override
+	public String getUsage() {
+		return "Without this system, you will not be able to change your TARDIS exterior";
 	}
 
 	@Override

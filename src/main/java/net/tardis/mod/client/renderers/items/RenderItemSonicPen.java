@@ -10,20 +10,20 @@ import net.tardis.mod.client.models.items.ModelPen;
 
 public class RenderItemSonicPen extends TileEntityItemStackRenderer {
 
-	Minecraft mc;
-	public ModelPen model = new ModelPen();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/items/sonic_pen.png");
-	
+	public ModelPen model = new ModelPen();
+	Minecraft mc;
+
 	public RenderItemSonicPen() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();
 		mc.getTextureManager().bindTexture(TEXTURE);
-		GlStateManager.rotate(180F,0,0,1);
-		GlStateManager.scale(0.5,0.5,0.5);
+		GlStateManager.rotate(180F, 0, 0, 1);
+		GlStateManager.scale(0.5, 0.5, 0.5);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}

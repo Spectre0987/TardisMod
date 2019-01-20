@@ -6,15 +6,15 @@
     " G "
   ],
   "key": {
-    "G":{
-        "item":"minecraft:tallgrass",
-        "data": 1
+    "G": {
+      "item": "minecraft:tallgrass",
+      "data": 1
     },
-    "V":{
-        "item":"minecraft:vine"
+    "V": {
+      "item": "minecraft:vine"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     }
   },
   "result": {

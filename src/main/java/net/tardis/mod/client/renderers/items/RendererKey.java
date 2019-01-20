@@ -11,16 +11,16 @@ import net.tardis.mod.client.models.items.ModelKey;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class RendererKey extends TileEntityItemStackRenderer {
-	
+
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/items/key.png");
 	public ModelKey model = new ModelKey();
-	
+
 	Minecraft mc;
-	
+
 	public RendererKey() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();
@@ -32,5 +32,5 @@ public class RendererKey extends TileEntityItemStackRenderer {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
-	
+
 }

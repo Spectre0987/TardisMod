@@ -1,14 +1,26 @@
 {
-    "forge_marker": 1,
-    "defaults":{
-        "model":"tardis:hellbent_light"
-    },
-    "variants":{
-        "inventory":[{}],
-        "normal":[{}],
-        "facing=north":[{}],
-        "facing=east":[{}],
-        "facing=west":[{}],
-        "facing=south":[{}]
-    }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tardis:hellbent_light"
+  },
+  "variants": {
+    "inventory": [
+      {}
+    ],
+    "normal": [
+      {}
+    ],
+    "facing=north": [
+      {}
+    ],
+    "facing=east": [
+      {}
+    ],
+    "facing=west": [
+      {}
+    ],
+    "facing=south": [
+      {}
+    ]
+  }
 }

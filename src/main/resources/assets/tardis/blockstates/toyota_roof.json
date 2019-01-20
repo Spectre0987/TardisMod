@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:toyota_roof"
-        },
-        "inventory":{
-             "model":"tardis:toyota_roof"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:toyota_roof"
+    },
+    "inventory": {
+      "model": "tardis:toyota_roof"
     }
+  }
 }

@@ -18,14 +18,15 @@ public class MessageCompanion implements IMessage {
 
 	public int id;
 	public EnumAction action;
-	
-	public MessageCompanion() {}
-	
+
+	public MessageCompanion() {
+	}
+
 	public MessageCompanion(int id, EnumAction act) {
 		this.id = id;
 		this.action = act;
 	}
-	
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.id = buf.readInt();
@@ -38,34 +39,32 @@ public class MessageCompanion implements IMessage {
 		ByteBufUtils.writeUTF8String(buf, action.name());
 	}
 
-	public static class Handler implements IMessageHandler<MessageCompanion, IMessage>{
+	public static class Handler implements IMessageHandler<MessageCompanion, IMessage> {
 		@Override
 		public IMessage onMessage(MessageCompanion message, MessageContext ctx) {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					EntityCompanion comp = (EntityCompanion)ctx.getServerHandler().player.getServerWorld().getEntityByID(message.id);
-					if(comp != null) {
-						if(message.action == EnumAction.GO_TO_TARDIS) {
+					EntityCompanion comp = (EntityCompanion) ctx.getServerHandler().player.getServerWorld().getEntityByID(message.id);
+					if (comp != null) {
+						if (message.action == EnumAction.GO_TO_TARDIS) {
 							WorldServer world = ctx.getServerHandler().player.getServer().getWorld(TDimensions.TARDIS_ID);
 							BlockPos pos = TardisHelper.hasTardis(ctx.getServerHandler().player.getGameProfile().getId()) ? TardisHelper.getTardis(ctx.getServerHandler().player.getGameProfile().getId()) : BlockPos.ORIGIN;
-							if(pos.equals(BlockPos.ORIGIN)) return;
+							if (pos.equals(BlockPos.ORIGIN)) return;
 							TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(pos));
-							if(tardis != null) {
+							if (tardis != null) {
 								comp.setSit(true);
 								comp.tardisPos = tardis.getLocation().toImmutable();
 							}
-						}
-						else if(message.action == EnumAction.FOLLOW){
+						} else if (message.action == EnumAction.FOLLOW) {
 							comp.setSit(!comp.getSit());
 							comp.tardisPos = BlockPos.ORIGIN;
-						}
-						else if(message.action == EnumAction.BRING_TARDIS) {
-							if(comp.dimension != TDimensions.TARDIS_ID) {
+						} else if (message.action == EnumAction.BRING_TARDIS) {
+							if (comp.dimension != TDimensions.TARDIS_ID) {
 								WorldServer world = ctx.getServerHandler().player.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-								if(comp.getOwner() != null && TardisHelper.hasTardis(comp.getOwner().getGameProfile().getId())) {
+								if (comp.getOwner() != null && TardisHelper.hasTardis(comp.getOwner().getGameProfile().getId())) {
 									TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(TardisHelper.getTardis(comp.getOwner().getGameProfile().getId())));
-									if(tardis != null) {
+									if (tardis != null) {
 										comp.setSit(true);
 										comp.tardisPos = tardis.getLocation();
 										comp.flyTardis = true;
@@ -74,9 +73,10 @@ public class MessageCompanion implements IMessage {
 							}
 						}
 					}
-				}});
+				}
+			});
 			return null;
 		}
-		
+
 	}
 }

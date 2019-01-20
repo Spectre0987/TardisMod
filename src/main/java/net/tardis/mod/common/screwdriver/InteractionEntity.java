@@ -17,80 +17,80 @@ import net.minecraft.world.World;
 
 public class InteractionEntity implements IScrew {
 
-    @Override
-    public EnumActionResult performAction(World world, EntityPlayer player, EnumHand hand) {
-        return EnumActionResult.FAIL;
-    }
+	@Override
+	public EnumActionResult performAction(World world, EntityPlayer player, EnumHand hand) {
+		return EnumActionResult.FAIL;
+	}
 
-    @Override
-    public EnumActionResult blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-        return EnumActionResult.FAIL;
-    }
+	@Override
+	public EnumActionResult blockInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return EnumActionResult.FAIL;
+	}
 
-    @Override
-    public boolean entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
+	@Override
+	public boolean entityInteraction(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
 
-        //Creeper - Boom!
-        if(target instanceof EntityCreeper){
-            EntityCreeper creeper = (EntityCreeper) target;
-            creeper.ignite();
-            return true;
-        }
+		//Creeper - Boom!
+		if (target instanceof EntityCreeper) {
+			EntityCreeper creeper = (EntityCreeper) target;
+			creeper.ignite();
+			return true;
+		}
 
-        //Player
-        if(target instanceof EntityPlayer){
-            EntityPlayer player = (EntityPlayer) target;
+		//Player
+		if (target instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) target;
 
-        }
+		}
 
-        //Sheep - Sheering
-        if(target instanceof EntitySheep){
-            EntitySheep sheep = (EntitySheep) target;
-            if (!sheep.world.isRemote) {
-                if (!sheep.getSheared()) {
-                    sheep.setSheared(true);
-                    int woolAmount = 1 + sheep.world.rand.nextInt(3);
-                    for (int currentAmount = 0; currentAmount < woolAmount; ++currentAmount) {
-                        sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.WOOL), woolAmount, sheep.getFleeceColor().getMetadata()), 1.0F);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        }
+		//Sheep - Sheering
+		if (target instanceof EntitySheep) {
+			EntitySheep sheep = (EntitySheep) target;
+			if (!sheep.world.isRemote) {
+				if (!sheep.getSheared()) {
+					sheep.setSheared(true);
+					int woolAmount = 1 + sheep.world.rand.nextInt(3);
+					for (int currentAmount = 0; currentAmount < woolAmount; ++currentAmount) {
+						sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.WOOL), woolAmount, sheep.getFleeceColor().getMetadata()), 1.0F);
+					}
+					return true;
+				}
+				return false;
+			}
+		}
 
-        //Parrot
-        if(target instanceof EntityParrot){
-            return false;
-        }
+		//Parrot
+		if (target instanceof EntityParrot) {
+			return false;
+		}
 
-        //Rabbit - Jumping
-        if(target instanceof EntityRabbit) {
-            EntityRabbit rabbit = (EntityRabbit) target;
-            rabbit.startJumping();
-            return true;
-        }
+		//Rabbit - Jumping
+		if (target instanceof EntityRabbit) {
+			EntityRabbit rabbit = (EntityRabbit) target;
+			rabbit.startJumping();
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public String getName() {
-        return "screw.entity";
-    }
+	@Override
+	public String getName() {
+		return "screw.entity";
+	}
 
-    @Override
-    public int getCoolDownAmount() {
-        return 50;
-    }
+	@Override
+	public int getCoolDownAmount() {
+		return 50;
+	}
 
-    @Override
-    public boolean causesCoolDown() {
-        return true;
-    }
+	@Override
+	public boolean causesCoolDown() {
+		return true;
+	}
 
-    @Override
-    public int energyRequired() {
-        return 5;
-    }
+	@Override
+	public int energyRequired() {
+		return 5;
+	}
 }

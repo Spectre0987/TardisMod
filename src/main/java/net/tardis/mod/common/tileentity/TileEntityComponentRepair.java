@@ -19,12 +19,13 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.mod.common.recipes.RepairRecipes;
 
-public class TileEntityComponentRepair extends TileEntity implements IInventory, ITickable{
-	
-	private NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
+public class TileEntityComponentRepair extends TileEntity implements IInventory, ITickable {
+
 	public int progress = 200;
-	
-	public TileEntityComponentRepair() {}
+	private NonNullList<ItemStack> inv = NonNullList.withSize(3, ItemStack.EMPTY);
+
+	public TileEntityComponentRepair() {
+	}
 
 	@Override
 	public String getName() {
@@ -64,7 +65,7 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory,
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		ItemStack stack = this.getStackInSlot(index);
-		if(index < inv.size()) {
+		if (index < inv.size()) {
 			inv.set(index, ItemStack.EMPTY);
 		}
 		return stack;
@@ -72,7 +73,7 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory,
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		if(index < inv.size()) {
+		if (index < inv.size()) {
 			inv.set(index, stack);
 		}
 	}
@@ -88,10 +89,12 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory,
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {}
+	public void openInventory(EntityPlayer player) {
+	}
 
 	@Override
-	public void closeInventory(EntityPlayer player) {}
+	public void closeInventory(EntityPlayer player) {
+	}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -123,8 +126,8 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory,
 		super.readFromNBT(compound);
 		NBTTagList list = compound.getTagList("inv", Constants.NBT.TAG_COMPOUND);
 		int id = 0;
-		for(NBTBase base : list) {
-			inv.set(id, new ItemStack((NBTTagCompound)base));
+		for (NBTBase base : list) {
+			inv.set(id, new ItemStack((NBTTagCompound) base));
 			++id;
 		}
 	}
@@ -132,7 +135,7 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory,
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		NBTTagList list = new NBTTagList();
-		for(ItemStack stack : inv) {
+		for (ItemStack stack : inv) {
 			list.appendTag(stack.writeToNBT(new NBTTagCompound()));
 		}
 		compound.setTag("inv", list);
@@ -142,24 +145,22 @@ public class TileEntityComponentRepair extends TileEntity implements IInventory,
 	@Override
 	public void update() {
 		ItemStack comp = this.getStackInSlot(0);
-		if(!world.isRemote) {
-			if(!comp.isEmpty() && comp.getItemDamage() > 0 && RepairRecipes.getRepairItem(comp.getItem()) != null) {
-				if(RepairRecipes.getRepairItem(this.getStackInSlot(0).getItem()) == this.getStackInSlot(1).getItem()) {
+		if (!world.isRemote) {
+			if (!comp.isEmpty() && comp.getItemDamage() > 0 && RepairRecipes.getRepairItem(comp.getItem()) != null) {
+				if (RepairRecipes.getRepairItem(this.getStackInSlot(0).getItem()) == this.getStackInSlot(1).getItem()) {
 					--this.progress;
-					if(this.progress <= 0) {
+					if (this.progress <= 0) {
 						this.complete();
 					}
-					for(EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16))) {
+					for (EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16))) {
 						player.connection.sendPacket(this.getUpdatePacket());
 					}
-				}
-				else progress = 200;
-			}
-			else progress = 200;
+				} else progress = 200;
+			} else progress = 200;
 		}
-		
+
 	}
-	
+
 	public void complete() {
 		this.progress = 200;
 		Item item = this.getStackInSlot(0).getItem();

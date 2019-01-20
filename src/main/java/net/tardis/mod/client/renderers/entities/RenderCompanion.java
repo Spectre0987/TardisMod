@@ -6,12 +6,12 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.common.entities.EntityCompanion;
 
-public class RenderCompanion extends RenderLiving<EntityCompanion>{
+public class RenderCompanion extends RenderLiving<EntityCompanion> {
 
-	
+
 	public static ModelPlayer STEVE = new ModelPlayer(0.0625F, false);
 	public static ModelPlayer ALEX = new ModelPlayer(0.0625F, true);
-	
+
 	public RenderCompanion(RenderManager rendermanagerIn) {
 		super(rendermanagerIn, STEVE, 0.3F);
 		STEVE.isChild = false;

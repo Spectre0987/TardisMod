@@ -6,10 +6,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.tardis.mod.util.client.RenderHelper;
-import net.tardis.mod.util.common.helpers.Helper;
 
-public class ModelTardisClock extends ModelBase implements IExteriorModel{
+public class ModelTardisClock extends ModelBase implements IExteriorModel {
 
 	ModelRenderer MS1;
 	ModelRenderer MS2;
@@ -58,7 +56,7 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 	ModelRenderer Leg4T;
 	ModelRenderer Leg4B;
 
-	public ModelTardisClock() { 
+	public ModelTardisClock() {
 
 		textureWidth = 128;
 		textureHeight = 128;
@@ -386,6 +384,7 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 		Leg4B.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		MS1.render(scale);
@@ -416,17 +415,18 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 		Leg4T.render(scale);
 		Leg4B.render(scale);
 	}
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
-	
+
 	private void renderDoor(float scale, float rotation) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.34375, 0, -0.15625);
@@ -452,19 +452,20 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel{
 		Door12.render(scale);
 		GlStateManager.popMatrix();
 	}
-	
+
 	private void renderClockHand(float scale) {
 		ClockHandHour.render(scale);
-		setRotation(ClockHandHour, 0, 0, (float)Math.toRadians(((Minecraft.getMinecraft().world.getWorldTime() / 24000D) / 2) * 360));
-		setRotation(ClockHandMinute, 0, 0, (float)Math.toRadians(((Minecraft.getMinecraft().world.getWorldTime() % 1000) / 1000D) * 360));
+		setRotation(ClockHandHour, 0, 0, (float) Math.toRadians(((Minecraft.getMinecraft().world.getWorldTime() / 24000D) / 2) * 360));
+		setRotation(ClockHandMinute, 0, 0, (float) Math.toRadians(((Minecraft.getMinecraft().world.getWorldTime() % 1000) / 1000D) * 360));
 	}
-	
+
 	@Override
 	public void renderClosed(float scale) {
 		this.renderClockHand(scale);
 		this.render(null, 0, 0, 0, 0, 0, scale);
 		this.renderDoor(0.0625F, 0);
 	}
+
 	@Override
 	public void renderOpen(float scale) {
 		this.renderClockHand(scale);

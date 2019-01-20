@@ -13,10 +13,10 @@ import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderAlembic extends TileEntitySpecialRenderer {
 
-	Minecraft mc;
-	public ModelAlembic model = new ModelAlembic();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/alembic.png");
-	
+	public ModelAlembic model = new ModelAlembic();
+	Minecraft mc;
+
 	public RenderAlembic() {
 		mc = Minecraft.getMinecraft();
 	}
@@ -27,7 +27,7 @@ public class RenderAlembic extends TileEntitySpecialRenderer {
 		GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
 		GlStateManager.rotate(180, 1, 0, 0);
 		IBlockState state = te.getWorld().getBlockState(te.getPos());
-		if(state.getBlock() instanceof BlockAlembic) {
+		if (state.getBlock() instanceof BlockAlembic) {
 			GlStateManager.rotate(Helper.getAngleFromFacing(state.getValue(BlockAlembic.FACING)), 0, 1, 0);
 		}
 		mc.getTextureManager().bindTexture(TEXTURE);

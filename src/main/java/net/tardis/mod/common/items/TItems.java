@@ -1,5 +1,8 @@
 package net.tardis.mod.common.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -13,11 +16,12 @@ import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
-import net.tardis.mod.common.items.components.*;
+import net.tardis.mod.common.items.components.ItemArtronCapacitor;
+import net.tardis.mod.common.items.components.ItemComponent;
+import net.tardis.mod.common.items.components.ItemDematCircut;
+import net.tardis.mod.common.items.components.ItemFluidLink;
+import net.tardis.mod.common.items.components.ItemTVG;
 import net.tardis.mod.common.sounds.TSounds;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mod.EventBusSubscriber
 public class TItems {
@@ -43,7 +47,6 @@ public class TItems {
 	public static Item vortex_manip = null;
 	public static Item sonic_screwdriver = null;
 	public static Item manual = null;
-	public static Item sonic_pen = null;
 
 	public static Item space_helm = null;
 	public static Item space_chest = null;
@@ -87,6 +90,13 @@ public class TItems {
 	public static Item chameleon_circuit = createItem(new ItemComponent(), "chameleon_circuit");
 	public static Item temporal_grace_circuits = createItem(new ItemComponent(), "temporal_grace_circuits");
 	public static Item stabilizers = createItem(new ItemComponent(), "stabilizers");
+	public static Item thermo = createItem(new ItemComponent(), "thermo");
+	
+	//Sonic screwdrivers
+	public static Item sonic_third = createItem(new ItemSonic(TSounds.sonic), "sonic_third");
+	public static Item sonic_second = createItem(new ItemSonic(TSounds.sonic), "sonic_second");
+	public static Item sonic_fourth = createItem(new ItemSonic(TSounds.sonic), "sonic_fourth");
+	public static Item sonic_fifth = createItem(new ItemSonic(TSounds.sonic), "sonic_fifth");
 
 
 	@SubscribeEvent
@@ -111,7 +121,6 @@ public class TItems {
 		space_chest = createItem(new ItemSpaceSuit(1, EntityEquipmentSlot.CHEST), "space_chest");
 		space_legs = createItem(new ItemSpaceSuit(2, EntityEquipmentSlot.LEGS), "space_legs");
 		manual = createItem(new ItemManual(), "tardis_manual");
-		sonic_pen = createItem(new ItemSonic(TSounds.sonic), "sonic_pen");
 		key_01 = createItem(new ItemKey(), "key_01");
 		first_cane = createItem(new ItemCane(), "first_cane");
 		fourth_hat = createItem(new ItemHat(EnumClothes.HAT_FOURTH_DOC), "fourth_hat");
@@ -130,6 +139,7 @@ public class TItems {
 		interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
 		marker = createItem(new ItemMarker(), "marker");
 		sonic13th = createItem(new ItemSonic(TSounds.sonic), "sonic_screwdriver_13");
+	
 
 		// TARDIS Components
 		fluid_link = createItem(new ItemFluidLink(), "fluid_link");

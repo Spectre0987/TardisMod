@@ -15,14 +15,14 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 
 public class BlockEPanel extends BlockTileBase {
-	
+
 	public BlockEPanel() {
-        super(Material.IRON, TileEntityEPanel::new);
+		super(Material.IRON, TileEntityEPanel::new);
 		this.setHardness(1F);
 
 	}
 
-    @Override
+	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.INVISIBLE;
 	}
@@ -34,8 +34,8 @@ public class BlockEPanel extends BlockTileBase {
 
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TileEntityEPanel panel = (TileEntityEPanel)world.getTileEntity(pos);
-		if(panel != null && Block.getStateById(panel.getID()).getBlock() != state.getBlock()) {
+		TileEntityEPanel panel = (TileEntityEPanel) world.getTileEntity(pos);
+		if (panel != null && Block.getStateById(panel.getID()).getBlock() != state.getBlock()) {
 			return Block.getStateById(panel.getID()).getLightValue(world, pos);
 		}
 		return super.getLightValue(state, world, pos);
@@ -48,8 +48,8 @@ public class BlockEPanel extends BlockTileBase {
 
 	@Override
 	public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TileEntityEPanel panel = (TileEntityEPanel)world.getTileEntity(pos);
-		if(panel != null && Block.getStateById(panel.getID()).getBlock() != state.getBlock()) {
+		TileEntityEPanel panel = (TileEntityEPanel) world.getTileEntity(pos);
+		if (panel != null && Block.getStateById(panel.getID()).getBlock() != state.getBlock()) {
 			return 0;
 		}
 		return super.getLightOpacity(state, world, pos);
@@ -58,8 +58,8 @@ public class BlockEPanel extends BlockTileBase {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack held = playerIn.getHeldItem(hand);
-		if(held.getItem() instanceof ItemBlock) {
-			((TileEntityEPanel)worldIn.getTileEntity(pos)).setID(((ItemBlock)held.getItem()).getBlock().getDefaultState());
+		if (held.getItem() instanceof ItemBlock) {
+			((TileEntityEPanel) worldIn.getTileEntity(pos)).setID(((ItemBlock) held.getItem()).getBlock().getDefaultState());
 			held.shrink(1);
 			return true;
 		}

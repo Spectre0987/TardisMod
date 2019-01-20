@@ -12,10 +12,10 @@ public class ProtocolWaypoints implements ITardisProtocol {
 
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
-		if(world.isRemote)
+		if (world.isRemote)
 			open(tardis.getPos());
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void open(BlockPos pos) {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiWaypoints(pos));

@@ -1,8 +1,10 @@
 {
-    "variants": {
-        "normal": { "model": "tardis:tardis_coral" },
-        "inventory":{
-            "model":"tardis:tardis_coral"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:tardis_coral"
+    },
+    "inventory": {
+      "model": "tardis:tardis_coral"
     }
+  }
 }

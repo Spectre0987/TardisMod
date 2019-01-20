@@ -1,9 +1,5 @@
 package net.tardis.mod.client.renderers.sky;
 
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -13,6 +9,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IRenderHandler;
 import net.tardis.mod.Tardis;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Random;
 
 public class SkyRendererMoon extends IRenderHandler {
 
@@ -22,17 +21,17 @@ public class SkyRendererMoon extends IRenderHandler {
 	private int starHeight = 100;
 	private int drawDist = 0;
 	private float starSize = 0.25F;
-	
+
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 		GlStateManager.pushMatrix();
 		GlStateManager.disableFog();
 		mc.getTextureManager().bindTexture(EARTH_TEXTURE);
-		if(drawDist == 0) drawDist = mc.gameSettings.renderDistanceChunks * 16 * 4;
+		if (drawDist == 0) drawDist = mc.gameSettings.renderDistanceChunks * 16 * 4;
 		BufferBuilder bb = Tessellator.getInstance().getBuffer();
 		GlStateManager.disableTexture2D();
 		bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-		for(int i = 0; i < 500; ++ i) {
+		for (int i = 0; i < 500; ++i) {
 			int posX = rand.nextInt(drawDist) - drawDist / 2;
 			int posZ = rand.nextInt(drawDist) - drawDist / 2;
 			bb.pos(posX / 2, starHeight, posZ / 2).color(1F, 1F, 1F, 1F).endVertex();

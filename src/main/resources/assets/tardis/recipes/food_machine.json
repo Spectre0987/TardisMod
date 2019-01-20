@@ -6,17 +6,17 @@
     "ICI"
   ],
   "key": {
-    "I":{
-        "item":"minecraft:iron_ingot"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
-    "P":{
-        "item":"minecraft:ender_pearl"
+    "P": {
+      "item": "minecraft:ender_pearl"
     },
-    "R":{
-        "item":"minecraft:redstone_block"
+    "R": {
+      "item": "minecraft:redstone_block"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     }
   },
   "result": {

@@ -10,7 +10,7 @@ import net.tardis.mod.common.entities.EntityDalekSkaro;
 public class RenderDalekScaro extends RenderLiving<EntityDalekSkaro> {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/dalek_scaro.png");
-	
+
 	public RenderDalekScaro(RenderManager rendermanagerIn) {
 		super(rendermanagerIn, new ModelDalekScaro(), 0.03F);
 	}

@@ -9,9 +9,9 @@ import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 public class BlockHoloprojector extends BlockTileBase {
 
 	public ItemBlock item = new ItemBlock(this);
-	
+
 	public BlockHoloprojector() {
-        super(Material.IRON, TileEntityHoloprojector::new);
+		super(Material.IRON, TileEntityHoloprojector::new);
 
 	}
 

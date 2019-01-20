@@ -7,8 +7,9 @@ import net.minecraftforge.client.IRenderHandler;
 public class RenderSpace extends IRenderHandler {
 
 	float lastRot = 0;
-	
+
 	@Override
-	public void render(float partialTicks, WorldClient world, Minecraft mc) {}
+	public void render(float partialTicks, WorldClient world, Minecraft mc) {
+	}
 
 }

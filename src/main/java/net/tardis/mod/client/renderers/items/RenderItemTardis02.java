@@ -15,11 +15,11 @@ public class RenderItemTardis02 extends TileEntityItemStackRenderer {
 	ModelTardis02 model = new ModelTardis02();
 	ModelRightDoor02 rd = new ModelRightDoor02();
 	ModelLeftDoor02 ld = new ModelLeftDoor02();
-	
+
 	public RenderItemTardis02() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();

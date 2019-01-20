@@ -23,7 +23,7 @@ public class ModelRightDoor02 extends ModelBase {
 	ModelRenderer Gen10;
 	ModelRenderer Gen11;
 
-	public ModelRightDoor02() { 
+	public ModelRightDoor02() {
 
 		textureWidth = 256;
 		textureHeight = 256;
@@ -118,20 +118,21 @@ public class ModelRightDoor02 extends ModelBase {
 		Gen11.setRotationPoint(0.0F, -0.5F, 0.0F);
 		setRotation(Gen11, 0.0F, 0.0F, 0.0F);
 		Gen11.mirror = false;
-		
+
 		try {
 			Field[] fields = this.getClass().getDeclaredFields();
-			for(Field f : fields) {
+			for (Field f : fields) {
 				f.setAccessible(true);
-				ModelRenderer mr = ((ModelRenderer)f.get(this));
+				ModelRenderer mr = ((ModelRenderer) f.get(this));
 				mr.offsetX += -(0.46875);
 				mr.offsetZ += (0.5);
 				f.set(this, mr);
 			}
+		} catch (Exception e) {
 		}
-		catch(Exception e) {}
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		Shape1.render(scale);
@@ -148,14 +149,15 @@ public class ModelRightDoor02 extends ModelBase {
 		Gen10.render(scale);
 		Gen11.render(scale);
 	}
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
 }

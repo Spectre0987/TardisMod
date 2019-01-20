@@ -1,14 +1,14 @@
 {
-    "forge_marker":1,
-    "defaults":{
-        "transform":"forge:default-block"
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": {
+      "model": "tardis:chronodine_generator"
     },
-    "variants":{
-        "normal":{
-            "model":"tardis:chronodine_generator"
-        },
-        "inventory":{
-            "model":"tardis:chronodine_generator"
-        }
+    "inventory": {
+      "model": "tardis:chronodine_generator"
     }
+  }
 }

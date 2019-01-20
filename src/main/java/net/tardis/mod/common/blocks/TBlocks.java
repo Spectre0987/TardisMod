@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.creativetabs.TardisTabs;
@@ -70,8 +71,8 @@ public class TBlocks {
 
 	public static Block electric_panel = register(new BlockEPanel(), "electric_panel");
 
-	public static Block ruby_ore = register(new BlockItemDrop(TItems.ruby), "ruby_ore");
-	public static Block cinnabar_ore = register(new BlockItemDrop(TItems.crushedCinnabar, 3), "cinnabar_ore");
+	public static Block ruby_ore = register(new BlockItemDrop(() -> new ItemStack(TItems.ruby), 1, 1), "ruby_ore");
+	public static Block cinnabar_ore = register(new BlockItemDrop(() -> new ItemStack(TItems.crushedCinnabar), 1, 1), "cinnabar_ore");
 	public static Block tardis_coral = register(new BlockTardisCoral(), "tardis_coral");
 
 	public static Block alembic = register(new BlockAlembic(), "alembic");
@@ -91,7 +92,7 @@ public class TBlocks {
 	public static Block hellbent_silverwall = register(new BlockBase(), "hellbent_silverwall");
 	public static Block hellbent_vents = register(new BlockLight(), "hellbent_vents");
 	public static Block hellbent_wall = register(new BlockBase(), "hellbent_wall");
-	
+
 	public static Block s13roundellit1 = register(new BlockLight(), "s13roundellit1");
 	public static Block s13roundellit2 = register(new BlockLight(), "s13roundellit2");
 	public static Block s13roundellit3 = register(new BlockLight(), "s13roundellit3");
@@ -100,8 +101,8 @@ public class TBlocks {
 	public static Block s13blankroundel3 = register(new BlockBase(), "s13blankroundel3");
 	public static Block s13floor = register(new BlockBase(), "s13floor");
 	public static Block s13flooralt = register(new BlockBase(), "s13flooralt");
-	
-	public static Block brachackitable = register(new BlockTable(), "brachackitable");
+
+	public static Block brachackitable = register(new BlockTable(), "table_brachacki");
 
 	public static Block zero_room_glow = register(new BlockVerticalSlab(), "zero_room_slab");
 	public static Block zero_room = register(new BlockBase(), "zero_room");
@@ -182,6 +183,7 @@ public class TBlocks {
 		return block;
 	}
 
-	public static void register(){}
+	public static void register() {
+	}
 
 }

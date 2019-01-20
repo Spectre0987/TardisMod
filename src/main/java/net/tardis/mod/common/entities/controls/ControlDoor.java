@@ -37,8 +37,8 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
-	
+public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
+
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<EnumFacing> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FACING);
 	public int antiSpamTicks = 0;
@@ -48,20 +48,20 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 		super(world);
 		this.setSize(1F, 2F);
 	}
-	
+
 	@Override
 	protected void entityInit() {
 		this.dataManager.register(IS_OPEN, false);
 		this.dataManager.register(FACING, EnumFacing.NORTH);
 	}
-	
+
 	public TileEntityTardis getConsole() {
-		return (TileEntityTardis)world.getTileEntity(TardisHelper.getTardisForPosition(getPosition()));
+		return (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(getPosition()));
 	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 			this.setDead();
 			InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(TItems.interior_door));
 		}
@@ -72,31 +72,31 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	public boolean canBePushed() {
 		return false;
 	}
-	
-	public void setFacing(EnumFacing facing) {
-		this.dataManager.set(FACING, facing);
-	}
-	
+
 	public EnumFacing getFacing() {
 		return this.dataManager.get(FACING);
 	}
-	
-	public void setOpen(boolean b) {
-		this.dataManager.set(IS_OPEN, b);
+
+	public void setFacing(EnumFacing facing) {
+		this.dataManager.set(FACING, facing);
 	}
-	
+
 	public boolean isOpen() {
 		return this.dataManager.get(IS_OPEN);
 	}
-	
+
+	public void setOpen(boolean b) {
+		this.dataManager.set(IS_OPEN, b);
+	}
+
 	public long getTime() {
 		return 1l;
 	}
-	
+
 	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
-		if(tardis == null || tardis.isLocked()) return false;
+		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
+		if (tardis == null || tardis.isLocked()) return false;
 		if (!player.isSneaking()) {
 			this.setOpen(!this.isOpen());
 			if (!world.isRemote) {
@@ -114,41 +114,40 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 		super.onUpdate();
 		if (antiSpamTicks > 0) --antiSpamTicks;
 		TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
-		if(te == null || !(te instanceof TileEntityTardis)) return;
+		if (te == null || !(te instanceof TileEntityTardis)) return;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
-		if(!world.isRemote && this.isOpen()) {
+		if (!world.isRemote && this.isOpen()) {
 			WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox());
-			for(Entity e : entities) {
-				if(e == this || e instanceof IControl || e instanceof IDoor) continue;
-				if(!e.isSneaking())tardis.transferPlayer(e, true);
+			for (Entity e : entities) {
+				if (e == this || e instanceof IControl || e instanceof IDoor) continue;
+				if (!e.isSneaking()) tardis.transferPlayer(e, true);
 			}
-			if(this.ticksExisted % 10 == 0) {
+			if (this.ticksExisted % 10 == 0) {
 				this.shell = new WorldShell(tardis.getLocation().up().offset(this.getFacing(), 11));
 				Vec3i r = new Vec3i(10, 10, 10);
 				IBlockState doorState = ws.getBlockState(tardis.getLocation().up());
 				EnumFacing facing = EnumFacing.NORTH;
-				if(doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
+				if (doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
 					facing = doorState.getValue(BlockTardisTop.FACING);
 				}
-				for(BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(r), shell.getOffset().add(r))) {
+				for (BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(r), shell.getOffset().add(r))) {
 					IBlockState state = ws.getBlockState(pos);
-					if(state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
+					if (state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
 						this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
 					}
 				}
 				this.setFacing(facing);
-                List<NBTTagCompound> list = new ArrayList<>();
-                List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-				for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation().offset(facing, 10), 10))) {
-					if(EntityList.getKey(e) != null) {
+				List<NBTTagCompound> list = new ArrayList<>();
+				List<PlayerStorage> players = new ArrayList<PlayerStorage>();
+				for (Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation().offset(facing, 10), 10))) {
+					if (EntityList.getKey(e) != null) {
 						NBTTagCompound tag = new NBTTagCompound();
 						e.writeToNBT(tag);
 						tag.setString("id", EntityList.getKey(e).toString());
 						list.add(tag);
-					}
-					else if(e instanceof EntityPlayer) {
-						players.add(new PlayerStorage((EntityPlayer)e));
+					} else if (e instanceof EntityPlayer) {
+						players.add(new PlayerStorage((EntityPlayer) e));
 					}
 				}
 				shell.setTime(world.getWorldTime());
@@ -156,26 +155,26 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 				shell.setEntities(list);
 				NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
-			if(world.isRemote)this.shell.setTime(shell.getTime() + 1);
+			if (world.isRemote) this.shell.setTime(shell.getTime() + 1);
 		}
 		try {
-			if(tardis.isInFlight() && this.isOpen()) {
+			if (tardis.isInFlight() && this.isOpen()) {
 				AxisAlignedBB voidBB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10).offset(this.getPosition());
-				
-				for(Entity entity : world.getEntitiesWithinAABB(Entity.class, voidBB)) {
-					if(!entity.isDead) {
+
+				for (Entity entity : world.getEntitiesWithinAABB(Entity.class, voidBB)) {
+					if (!entity.isDead) {
 						Vec3d dir = entity.getPositionVector().subtract(this.getPositionVector()).normalize().scale(-1).scale(0.12);
 						entity.motionX += dir.x;
 						entity.motionY += dir.y;
 						entity.motionZ += dir.z;
-						if(entity instanceof EntityPlayer && entity.getPositionVector().distanceTo(this.getPositionVector()) <= 1) {
+						if (entity instanceof EntityPlayer && entity.getPositionVector().distanceTo(this.getPositionVector()) <= 1) {
 							if (!world.isRemote) tardis.transferPlayer(entity, false);
 						}
 					}
 				}
 			}
+		} catch (Exception e) {
 		}
-		catch(Exception e) {}
 	}
 
 	@Override
@@ -209,8 +208,8 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor{
 	}
 
 	@Override
-    public int getDimension() {
+	public int getDimension() {
 		return this.getConsole() != null ? this.getConsole().getWorld().provider.getDimension() : TDimensions.TARDIS_ID;
 	}
-	
+
 }

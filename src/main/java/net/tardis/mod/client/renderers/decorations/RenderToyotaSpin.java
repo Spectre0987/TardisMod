@@ -10,9 +10,9 @@ import net.tardis.mod.common.tileentity.decoration.TileEntityToyotaSpin;
 
 public class RenderToyotaSpin extends TileEntitySpecialRenderer<TileEntityToyotaSpin> {
 
-	ModelToyotaSpinnyThing model = new ModelToyotaSpinnyThing();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/toyota/spinny_thingamajig.png");
-	
+	ModelToyotaSpinnyThing model = new ModelToyotaSpinnyThing();
+
 	@Override
 	public void render(TileEntityToyotaSpin te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();

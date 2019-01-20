@@ -54,7 +54,9 @@ public class TSounds {
 
 	@SubscribeEvent
 	public static void regSounds(RegistryEvent.Register<SoundEvent> e) {
-		sounds.forEach(soundEvent -> e.getRegistry().register(soundEvent));
+		for (SoundEvent sound : sounds) {
+			e.getRegistry().register(sound);
+		}
 	}
 
 }

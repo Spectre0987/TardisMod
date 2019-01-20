@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 
 public class ModelConsole extends ModelBase {
 	// fields
-	public static final double[] frames = { 0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22, 0.24, 0.26, 0.28, 0.3, 0.32, 0.34, 0.36, 0.38, 0.4, 0.42, 0.44, 0.46, 0.48, 0.5, 0.48, 0.46, 0.44, 0.42, 0.4, 0.38, 0.36, 0.34, 0.32, 0.3, 0.28, 0.26, 0.24, 0.22, 0.2, 0.18, 0.16, 0.14, 0.12, 0.1, 0.08, 0.06, 0.04, 0.02, 0 };
+	public static final double[] frames = {0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22, 0.24, 0.26, 0.28, 0.3, 0.32, 0.34, 0.36, 0.38, 0.4, 0.42, 0.44, 0.46, 0.48, 0.5, 0.48, 0.46, 0.44, 0.42, 0.4, 0.38, 0.36, 0.34, 0.32, 0.3, 0.28, 0.26, 0.24, 0.22, 0.2, 0.18, 0.16, 0.14, 0.12, 0.1, 0.08, 0.06, 0.04, 0.02, 0};
 	ModelRenderer Rotor1;
 	ModelRenderer Rotor2;
 	ModelRenderer Rotor3;
@@ -126,11 +126,11 @@ public class ModelConsole extends ModelBase {
 	ModelRenderer P103;
 	ModelRenderer P104;
 	ModelRenderer P105;
-	
+
 	public ModelConsole() {
 		textureWidth = 256;
 		textureHeight = 256;
-		
+
 		Rotor1 = new ModelRenderer(this, 0, 0);
 		Rotor1.addBox(-0.5F, -2F, -5F, 1, 7, 1);
 		Rotor1.setRotationPoint(0F, 0F, 0F);
@@ -834,7 +834,7 @@ public class ModelConsole extends ModelBase {
 		P105.mirror = true;
 		setRotation(P105, 0F, 3.141593F, 0F);
 	}
-	
+
 	public void render(Entity entity, int f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, 0, 0, f2, f3, f4, f5);
 		setRotationAngles(0, 0, f2, f3, f4, f5, entity);
@@ -965,17 +965,17 @@ public class ModelConsole extends ModelBase {
 		P104.render(f5);
 		P105.render(f5);
 	}
-	
+
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
-	
+
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 	}
-	
+
 	public int wrap(int d0, int d1) {
 		return d0 > d1 || d0 < 0 ? 0 : d0;
 	}

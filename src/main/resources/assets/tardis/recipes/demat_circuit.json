@@ -9,14 +9,14 @@
     "P": {
       "item": "minecraft:ender_pearl"
     },
-    "I":{
-        "item":"minecraft:iron_ingot"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
-    "R":{
-        "item":"minecraft:redstone"
+    "R": {
+      "item": "minecraft:redstone"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     }
   },
   "result": {

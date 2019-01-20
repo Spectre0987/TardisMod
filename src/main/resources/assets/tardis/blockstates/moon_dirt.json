@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:moon_dirt"
-        },
-        "inventory":{
-            "model":"tardis:moon_dirt"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:moon_dirt"
+    },
+    "inventory": {
+      "model": "tardis:moon_dirt"
     }
+  }
 }

@@ -11,18 +11,18 @@ import javax.annotation.Nullable;
 
 public class BlockSonicBlaster extends BlockAir {
 
-    public BlockSonicBlaster() {
-        super();
-    }
+	public BlockSonicBlaster() {
+		super();
+	}
 
-    @Override
-    public boolean hasTileEntity(IBlockState state) {
-        return true;
-    }
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
 
-    @Nullable
-    @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
-        return new TileEntitySonicGun();
-    }
+	@Nullable
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
+		return new TileEntitySonicGun();
+	}
 }

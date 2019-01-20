@@ -1,9 +1,5 @@
 package net.tardis.mod.client.worldshell;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -16,26 +12,31 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+
 public class MessageSyncWorldShell implements IMessage {
 	//Sync the world shell from client to server
 
 	public WorldShell worldShell;
 	public BlockPos tilePos = BlockPos.ORIGIN;
 	public int id;
-	
+
 	public MessageSyncWorldShell(WorldShell ws, int id) {
 		this.id = id;
 		worldShell = ws;
 	}
-	
+
 	public MessageSyncWorldShell(WorldShell ws, BlockPos pos) {
 		this.tilePos = pos.toImmutable();
 		this.worldShell = ws;
 		this.id = -1;
 	}
-	
-	public MessageSyncWorldShell() {}
-	
+
+	public MessageSyncWorldShell() {
+	}
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.id = buf.readInt();
@@ -50,17 +51,17 @@ public class MessageSyncWorldShell implements IMessage {
 		}
 		worldShell.setTESRs();
 		worldShell.updateRequired = true;
-		
+
 		List<NBTTagCompound> tagList = new ArrayList<>();
 		int max = buf.readInt();
-		for(int i = 0; i < max; ++i) {
+		for (int i = 0; i < max; ++i) {
 			tagList.add(ByteBufUtils.readTag(buf));
 		}
 		worldShell.setEntities(tagList);
-		
+
 		List<PlayerStorage> players = new ArrayList<PlayerStorage>();
 		int playerSize = buf.readInt();
-		for(int pIndex = 0; pIndex < playerSize; ++pIndex) {
+		for (int pIndex = 0; pIndex < playerSize; ++pIndex) {
 			players.add(PlayerStorage.fromBytes(buf));
 		}
 		worldShell.setPlayers(players);
@@ -73,50 +74,50 @@ public class MessageSyncWorldShell implements IMessage {
 		buf.writeLong(tilePos.toLong());
 		buf.writeInt(worldShell.blockMap.size());
 		buf.writeLong(worldShell.getOffset().toLong());
-		for(Entry<BlockPos,BlockStorage> e:worldShell.blockMap.entrySet()) {
+		for (Entry<BlockPos, BlockStorage> e : worldShell.blockMap.entrySet()) {
 			buf.writeLong(e.getKey().toLong());
 			e.getValue().toBuf(buf);
 		}
-		
-		if(worldShell.getEntities() != null && worldShell.getEntities().size() > 0) {
+
+		if (worldShell.getEntities() != null && worldShell.getEntities().size() > 0) {
 			buf.writeInt(worldShell.getEntities().size());
-			for(NBTTagCompound tag : worldShell.getEntities()) {
+			for (NBTTagCompound tag : worldShell.getEntities()) {
 				ByteBufUtils.writeTag(buf, tag);
 			}
-		}
-		else buf.writeInt(0);
-		
+		} else buf.writeInt(0);
+
 		buf.writeInt(worldShell.getPlayers().size());
-		for(PlayerStorage stor : worldShell.getPlayers()) {
+		for (PlayerStorage stor : worldShell.getPlayers()) {
 			stor.toBytes(buf);
 		}
 		buf.writeLong(worldShell.getTime());
 	}
-	
+
 	public static class Handler implements IMessageHandler<MessageSyncWorldShell, IMessage> {
 
-		public Handler() {}
-		
+		public Handler() {
+		}
+
 		@Override
 		public IMessage onMessage(MessageSyncWorldShell mes, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(new Runnable(){
-            	@Override
-            	public void run() {
-	                World world = Minecraft.getMinecraft().world;
-	                if(mes == null || world == null) return;
-	                if (mes.id == -1) {
-	                    TileEntity te = world.getTileEntity(mes.tilePos);
-	                    if (te != null && te instanceof IContainsWorldShell) {
-	                        ((IContainsWorldShell) te).setWorldShell(mes.worldShell);
-	                    }
-	                } else {
-	                    Entity entity = world.getEntityByID(mes.id);
-	                    if (entity != null && entity instanceof IContainsWorldShell) {
-	                        ((IContainsWorldShell) entity).setWorldShell(mes.worldShell);
-	                    }
-	                }
-            	}
-            });
+			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+				@Override
+				public void run() {
+					World world = Minecraft.getMinecraft().world;
+					if (mes == null || world == null) return;
+					if (mes.id == -1) {
+						TileEntity te = world.getTileEntity(mes.tilePos);
+						if (te != null && te instanceof IContainsWorldShell) {
+							((IContainsWorldShell) te).setWorldShell(mes.worldShell);
+						}
+					} else {
+						Entity entity = world.getEntityByID(mes.id);
+						if (entity != null && entity instanceof IContainsWorldShell) {
+							((IContainsWorldShell) entity).setWorldShell(mes.worldShell);
+						}
+					}
+				}
+			});
 			return null;
 		}
 

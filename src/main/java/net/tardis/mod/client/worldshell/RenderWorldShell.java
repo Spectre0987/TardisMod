@@ -20,76 +20,75 @@ import org.lwjgl.opengl.GL11;
 import javax.annotation.Nullable;
 
 public class RenderWorldShell {
-	
-	public RenderWorldShell() {}
-	
+
+	public RenderWorldShell() {
+	}
+
 	public void doRender(IContainsWorldShell entity, double x, double y, double z, float entityYaw, float partialTicks, @Nullable WorldBoti worldBoti) {
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		//Moving this will crash
-        if (worldBoti == null)
-            worldBoti = new WorldBoti(entity.getDimension(), Minecraft.getMinecraft().world, entity.getWorldShell());
+		if (worldBoti == null)
+			worldBoti = new WorldBoti(entity.getDimension(), Minecraft.getMinecraft().world, entity.getWorldShell());
 		if (entity instanceof IContainsWorldShell) {
 			BufferBuilder bb = Tessellator.getInstance().getBuffer();
 
-            IContainsWorldShell container = entity;
-			
+			IContainsWorldShell container = entity;
+
 			GlStateManager.pushMatrix();
 			worldBoti.setShell(container.getWorldShell());
-			
+
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-			 
+
 			BlockPos offset = container.getWorldShell().getOffset();
 			GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());
-	        
+
 			try {
 				if (container.getWorldShell().bufferstate == null || container.getWorldShell().updateRequired) {
 					for (BlockPos bp : container.getWorldShell().blockMap.keySet()) {
 						if (bp == null)
 							continue;
-							Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
+						Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(container.getWorldShell().getBlockState(bp), bp, container.getWorldShell(), bb);
 					}
 					container.getWorldShell().bufferstate = bb.getVertexState();
-				}
-				else {
+				} else {
 					bb.setVertexState(container.getWorldShell().bufferstate);
 				}
+			} catch (Exception e) {
 			}
-			catch(Exception e) {}
 
 			Tessellator.getInstance().draw();
-	        GlStateManager.enableNormalize();
-	        GlStateManager.enableLighting();
-	        
-	        RenderHelper.disableStandardItemLighting();
-	        GlStateManager.color(1, 1, 1);
+			GlStateManager.enableNormalize();
+			GlStateManager.enableLighting();
+
+			RenderHelper.disableStandardItemLighting();
+			GlStateManager.color(1, 1, 1);
 			for (TileEntity t : container.getWorldShell().getTESRs()) {
 				if (t != null) {
 					t.setWorld(worldBoti);
-					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(),t.getPos().getZ(), partialTicks);
+					TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(), t.getPos().getZ(), partialTicks);
 				}
 			}
 			try {
-				if(container.getWorldShell().getEntities() != null) {
-					for(NBTTagCompound stor : container.getWorldShell().getEntities()) {
+				if (container.getWorldShell().getEntities() != null) {
+					for (NBTTagCompound stor : container.getWorldShell().getEntities()) {
 						Entity e = EntityList.createEntityFromNBT(stor, worldBoti);
-						if(e != null) {
+						if (e != null) {
 							GlStateManager.pushMatrix();
 							Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 							GlStateManager.popMatrix();
 						}
 					}
 				}
-			}
-			catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if(container.getWorldShell().getPlayers() != null) {
-				for(PlayerStorage stor : container.getWorldShell().getPlayers()) {
+			if (container.getWorldShell().getPlayers() != null) {
+				for (PlayerStorage stor : container.getWorldShell().getPlayers()) {
 					try {
 						GlStateManager.pushMatrix();
 						Minecraft.getMinecraft().getTextureManager().bindTexture(Minecraft.getMinecraft().getConnection().getPlayerInfo(stor.profile.getId()).getLocationSkin());
 						FakeClientPlayer player = new FakeClientPlayer(worldBoti, stor.profile);
-						if(stor.tag != null) {
+						if (stor.tag != null) {
 							player.readFromNBT(stor.tag);
 							player.setSneaking(stor.tag.getBoolean("sneak"));
 							player.ticksExisted = stor.tag.getInteger("ageInTicks");
@@ -104,7 +103,8 @@ public class RenderWorldShell {
 						GlStateManager.rotate(-player.rotationYawHead, 0, 1, 0);
 						Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(player).doRender(player, 0, 0, 0, 0, 0);
 						GlStateManager.popMatrix();
-					} catch(Exception e) {}
+					} catch (Exception e) {
+					}
 				}
 			}
 			RenderHelper.enableStandardItemLighting();
@@ -117,7 +117,7 @@ public class RenderWorldShell {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(locationBlocksTexture);
 	}
 
-	
+
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		return TextureMap.LOCATION_BLOCKS_TEXTURE;
 	}

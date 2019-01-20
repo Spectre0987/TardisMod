@@ -1,15 +1,8 @@
 package net.tardis.mod.handlers;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -72,9 +65,14 @@ import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+
 @Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class TEventHandler {
-	
+
 	public static TardisWorldSavedData data;
 
 	@SubscribeEvent
@@ -102,135 +100,133 @@ public class TEventHandler {
 				for (int i = 0; i < list.size(); i++) {
 					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "type=" + i));
 				}
-			}
-			else
+			} else
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 	}
-	
-	
+
+
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		for (Block block : TBlocks.BLOCKS) {
 			event.getRegistry().register(block);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void loadTardises(WorldEvent.Load event) {
 		data = (TardisWorldSavedData) event.getWorld().getMapStorage().getOrLoadData(TardisWorldSavedData.class, "tardis");
 		if (data == null) data = new TardisWorldSavedData("tardis");
 	}
-	
+
 	@SubscribeEvent
 	public static void saveTardises(WorldEvent.Save event) {
 		event.getWorld().getMapStorage().setData("tardis", data);
 	}
-	
+
 	@SubscribeEvent
 	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 		event.getRegistry().register(new RecipeKey(Tardis.MODID + ":spare_key"));
 		event.getRegistry().register(new RecipeCinnabar(Tardis.MODID + ":cinnabar"));
 		event.getRegistry().register(new RecipeRemote("remote_bind"));
 	}
-	
+
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void stopHurt(LivingHurtEvent event) {
-		if(event.getSource().equals(Tardis.SUFFICATION)) {
-			if(event.getEntityLiving() instanceof EntityPlayer) {
+		if (event.getSource().equals(Tardis.SUFFICATION)) {
+			if (event.getEntityLiving() instanceof EntityPlayer) {
 				int count = 0;
-                for (ItemStack stack : event.getEntityLiving().getArmorInventoryList()) {
-					if(stack.getItem() instanceof ItemSpaceSuit) {
+				for (ItemStack stack : event.getEntityLiving().getArmorInventoryList()) {
+					if (stack.getItem() instanceof ItemSpaceSuit) {
 						++count;
 					}
 				}
-				if(count >= 3) {
+				if (count >= 3) {
 					event.setCanceled(true);
 				}
 			}
 		}
 		EntityLivingBase e = event.getEntityLiving();
-		if(!(e instanceof IMob) && !TardisHelper.getTardisForPosition(e.getPosition()).equals(BlockPos.ORIGIN)) {
-			TileEntityTardis tardis = (TileEntityTardis)e.world.getTileEntity(TardisHelper.getTardisForPosition(e.getPosition()));
-			if(tardis != null && tardis.getSystem(SystemTemporalGrace.class) != null) {
+		if (!(e instanceof IMob) && !TardisHelper.getTardisForPosition(e.getPosition()).equals(BlockPos.ORIGIN)) {
+			TileEntityTardis tardis = (TileEntityTardis) e.world.getTileEntity(TardisHelper.getTardisForPosition(e.getPosition()));
+			if (tardis != null && tardis.getSystem(SystemTemporalGrace.class) != null) {
 				SystemTemporalGrace sys = tardis.getSystem(SystemTemporalGrace.class);
-				if(sys.getHealth() > 0.0F) {
+				if (sys.getHealth() > 0.0F) {
 					sys.setHealth(sys.getHealth() - 0.01F);
 					event.setCanceled(true);
 				}
 			}
 		}
 	}
-	
+
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-    public static void cancelBBRender(DrawBlockHighlightEvent event) {
+	public static void cancelBBRender(DrawBlockHighlightEvent event) {
 		World world = event.getPlayer().world;
 		BlockPos pos = event.getTarget().getBlockPos();
 		if (pos != null && !pos.equals(BlockPos.ORIGIN)) {
-            if (world.getBlockState(pos).getBlock() instanceof IRenderBox) {
-                IRenderBox block = (IRenderBox) world.getBlockState(pos).getBlock();
-                event.setCanceled(!block.shouldRenderBox());
-            }
-        }
+			if (world.getBlockState(pos).getBlock() instanceof IRenderBox) {
+				IRenderBox block = (IRenderBox) world.getBlockState(pos).getBlock();
+				event.setCanceled(!block.shouldRenderBox());
+			}
+		}
 	}
-	
+
 	@SubscribeEvent
 	public static void givePlayerKey(PlayerLoggedInEvent event) {
 		if (TardisConfig.MISC.givePlayerKey) {
 			EntityPlayer player = event.player;
-			if(!TardisHelper.hasTardis(player.getGameProfile().getId())) {
+			if (!TardisHelper.hasTardis(player.getGameProfile().getId())) {
 				InventoryHelper.spawnItemStack(player.world, player.posX, player.posY, player.posZ, new ItemStack(TBlocks.tardis_coral));
 			}
 		}
-		if(!event.player.world.isRemote) {
+		if (!event.player.world.isRemote) {
 			try {
 				HashMap<String, Long> map = new HashMap<String, Long>();
 				File f = new File(event.player.world.getMinecraftServer().getDataDirectory() + "/pending_keys.json");
-				if(f.exists()) {
+				if (f.exists()) {
 					JsonReader jr = new JsonReader(new FileReader(f));
 					jr.beginObject();
-					while(jr.hasNext()) {
+					while (jr.hasNext()) {
 						map.put(jr.nextName(), Long.parseLong(jr.nextString()));
 					}
 					jr.endObject();
 					jr.close();
-					
-					if(map.containsKey(event.player.getGameProfile().getId().toString())) {
+
+					if (map.containsKey(event.player.getGameProfile().getId().toString())) {
 						ItemStack stack = new ItemStack(TItems.key);
 						ItemKey.setPos(stack, BlockPos.fromLong(map.get(event.player.getGameProfile().getId().toString())));
 						event.player.inventory.addItemStackToInventory(stack);
-						
+
 						GsonBuilder gb = new GsonBuilder();
 						gb.setPrettyPrinting();
 						JsonWriter jw = gb.create().newJsonWriter(new FileWriter(f));
 						jw.beginObject();
 						map.remove(event.player.getGameProfile().getId().toString());
-						for(String name : map.keySet()) {
+						for (String name : map.keySet()) {
 							jw.name(name).value(map.get(name).toString());
 						}
 						jw.endObject();
 						jw.close();
 					}
 				}
-			}
-			catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void giveManual(PlayerInteractEvent.RightClickBlock event) {
-		if(!event.getWorld().isRemote) {
-			if(event.getItemStack().getItem() == Items.BOOK) {
+		if (!event.getWorld().isRemote) {
+			if (event.getItemStack().getItem() == Items.BOOK) {
 				World world = event.getWorld();
 				IBlockState state = world.getBlockState(event.getPos());
-				if(state.getBlock() instanceof BlockConsole) {
+				if (state.getBlock() instanceof BlockConsole) {
 					EntityPlayer player = event.getEntityPlayer();
 					int slot = Helper.getSlotForItem(player, Items.BOOK);
-					if(slot != -1) {
+					if (slot != -1) {
 						player.inventory.getStackInSlot(slot).shrink(1);
 						EntityItem ei = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.manual));
 						world.spawnEntity(ei);
@@ -239,46 +235,45 @@ public class TEventHandler {
 			}
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
-		if(e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().dimension != TDimensions.TARDIS_ID && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
+		if (e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().dimension != TDimensions.TARDIS_ID && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
 			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void stopDrown(LivingUpdateEvent event) {
 		EntityLivingBase base = event.getEntityLiving();
 		int count = 0;
-		for(ItemStack stack : base.getArmorInventoryList()) {
-			if(stack.getItem() instanceof ItemSpaceSuit) {
+		for (ItemStack stack : base.getArmorInventoryList()) {
+			if (stack.getItem() instanceof ItemSpaceSuit) {
 				count++;
 			}
 		}
-		if(count >= 3) {
+		if (count >= 3) {
 			base.setAir(200);
 		}
 	}
-	
+
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void useRegen(LivingDeathEvent event) {
-		if(event.getEntityLiving() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-			if(TimeLord.isTimeLord(player)) {
-				if(TimeLord.useRegen(player)) {
+		if (event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+			if (TimeLord.isTimeLord(player)) {
+				if (TimeLord.useRegen(player)) {
 					event.setCanceled(true);
 					player.setHealth(player.getMaxHealth());
 					player.sendMessage(new TextComponentString("You have " + TimeLord.getRegens(player) + " regenerations left."));
 					Potion[] me = {MobEffects.WEAKNESS, MobEffects.SLOWNESS, MobEffects.MINING_FATIGUE, MobEffects.ABSORPTION, MobEffects.REGENERATION, MobEffects.HUNGER};
-					for(Potion p : me) {
+					for (Potion p : me) {
 						player.addPotionEffect(new PotionEffect(p, 600, 0));
 					}
 					player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300, 0));
 					return;
-				}
-				else TimeLord.setTimeLord(player);
+				} else TimeLord.setTimeLord(player);
 			}
 		}
 	}
@@ -298,14 +293,15 @@ public class TEventHandler {
 				player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Changelog: " + TextFormatting.AQUA + changes));
 			}
 		}*/
-		if(Loader.isModLoaded(TStrings.ModIds.OPTIFINE))player.sendStatusMessage(new TextComponentTranslation(TStrings.OPTIFINE_INSTALLED), false);
+		if (Loader.isModLoaded(TStrings.ModIds.OPTIFINE))
+			player.sendStatusMessage(new TextComponentTranslation(TStrings.OPTIFINE_INSTALLED), false);
 	}
-	
+
 	@SubscribeEvent
 	public static void saveChunkData(ChunkDataEvent.Save event) {
 		RiftHelper.writeRiftStatus(event.getChunk(), event.getWorld(), event.getData());
 	}
-	
+
 	@SubscribeEvent
 	public static void loadChunkData(ChunkDataEvent.Load event) {
 		RiftHelper.readRiftStatus(event.getChunk(), event.getWorld(), event.getData());

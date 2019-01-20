@@ -35,27 +35,27 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Helper {
-	
+
 	public static Random rand = new Random();
-	
+
 	public static void transferToOwnedTardis(EntityPlayerMP player, WorldServer world, BlockPos pos) {
-        
+
 	}
-	
+
 	public static String formatBlockPos(BlockPos pos) {
 		if (pos == null || pos.equals(BlockPos.ORIGIN)) return "None";
 		return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
 	}
-	
+
 	public static void transferToWorld(EntityPlayerMP player, WorldServer world, BlockPos pos, int dim) {
 		world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dim, new TardisTeleporter(world));
 		player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 	}
-	
+
 	public static Vec3d convertToPixels(Vec3d vec) {
 		return new Vec3d(vec.x / 16, vec.y / 16, vec.z / 16);
 	}
-	
+
 	public static Vec3d convertToPixels(double x, double y, double z) {
 		return new Vec3d(x / 16, y / 16, z / 16);
 	}
@@ -63,39 +63,39 @@ public class Helper {
 	public static BlockPos getLowestBlock(World world, BlockPos pos) {
 		pos = new BlockPos(pos.getX(), 0, pos.getZ());
 		for (int i = 0; i < 256; ++i) {
-			if (world.getBlockState(pos).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == Blocks.AIR) return pos;
+			if (world.getBlockState(pos).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == Blocks.AIR)
+				return pos;
 			pos = pos.up();
 		}
 		return null;
 	}
-	
+
 	public static double clamp(double f, double f1) {
 		return f > f1 ? f1 : f;
 	}
-	
+
 	public static AxisAlignedBB createBB(BlockPos pos, double i) {
 		return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).grow(i);
 	}
-	
+
 	public static boolean isSafe(World world, BlockPos pos, EnumFacing facing) {
 		return world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR);
 	}
-	
+
 	public static boolean isDimensionBlocked(int id) {
-       if (id == TDimensions.TARDIS_ID) return true;
-        if(DimensionManager.createProviderFor(id) instanceof IBlockedDimension)return true;
-        boolean isW = TardisConfig.Dimensions.USE_WHITELIST;
+		if (id == TDimensions.TARDIS_ID) return true;
+		if (DimensionManager.createProviderFor(id) instanceof IBlockedDimension) return true;
+		boolean isW = TardisConfig.Dimensions.USE_WHITELIST;
 		for (int i : TardisConfig.Dimensions.bDims) {
-			if(isW) {
+			if (isW) {
 				if (id == i) return false;
-			}
-			else {
+			} else {
 				if (id == i) return true;
 			}
 		}
 		return isW;
 	}
-	
+
 	public static float getAngleFromFacing(EnumFacing facing) {
 		float angle = 0;
 		if (facing.equals(EnumFacing.EAST)) angle = 90;
@@ -103,7 +103,7 @@ public class Helper {
 		if (facing.equals(EnumFacing.WEST)) angle = 270;
 		return angle;
 	}
-	
+
 	public static Rotation getRotationFromFacing(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:
@@ -118,7 +118,7 @@ public class Helper {
 				return Rotation.NONE;
 		}
 	}
-	
+
 	public static float get360FromFacing(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:
@@ -131,14 +131,14 @@ public class Helper {
 				return 90;
 		}
 	}
-	
+
 	public static boolean isIntInRange(int min, int max, int num) {
 		return num < max && num > min;
 	}
 
 	public static int getSlotForItem(EntityPlayer player, Item item) {
-		for(int i = 0; i < player.inventory.mainInventory.size(); ++i) {
-			if(player.inventory.getStackInSlot(i).getItem() == item) {
+		for (int i = 0; i < player.inventory.mainInventory.size(); ++i) {
+			if (player.inventory.getStackInSlot(i).getItem() == item) {
 				return i;
 			}
 		}
@@ -148,43 +148,42 @@ public class Helper {
 	public static Biome findBiomeByName(String string) {
 		List<Biome> biomes = EntityHelper.biomes;
 		try {
-			Field field; 
-			if((Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
+			Field field;
+			if ((Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
 				field = Biome.class.getDeclaredField("biomeName");
-			}
-			else {
+			} else {
 				field = Biome.class.getDeclaredField("field_76791_y");
 			}
 			field.setAccessible(true);
-			for(Biome b : biomes) {
+			for (Biome b : biomes) {
 				Object obj = field.get(b);
-				if(((String)obj).trim().toLowerCase().equals(string)) {
+				if (((String) obj).trim().toLowerCase().equals(string)) {
 					return b;
 				}
 			}
+		} catch (Exception e) {
 		}
-		catch(Exception e) {}
 		return null;
 	}
 
 	public static Vec3d blockPosToVec3d(Vec3i pos) {
 		return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
 	}
-	
+
 	public static BlockPos getSafePosLower(BlockPos pos, World world, EnumFacing facing) {
-		for(int y = pos.getY(); y > 0; --y) {
+		for (int y = pos.getY(); y > 0; --y) {
 			BlockPos lPos = new BlockPos(pos.getX(), y, pos.getZ());
-			if(Helper.isSafe(world, lPos, facing)) {
+			if (Helper.isSafe(world, lPos, facing)) {
 				return lPos;
 			}
 		}
 		return BlockPos.ORIGIN;
 	}
-	
+
 	public static BlockPos getSafeHigherPos(World world, BlockPos pos, EnumFacing facing) {
-		for(int y = pos.getY(); y < world.getHeight(); ++y) {
+		for (int y = pos.getY(); y < world.getHeight(); ++y) {
 			BlockPos lPos = new BlockPos(pos.getX(), y, pos.getZ());
-			if(Helper.isSafe(world, lPos, facing)) {
+			if (Helper.isSafe(world, lPos, facing)) {
 				return lPos;
 			}
 		}
@@ -194,12 +193,12 @@ public class Helper {
 	public static float precentToPixels(float f) {
 		return f / 16.0F;
 	}
-	
+
 	public static String formatDimensionName(String name) {
 		name = name.replace("_", " ");
 		char[] nameChars = name.toCharArray();
-		for(int index = 0; index < nameChars.length; ++index) {
-			if(nameChars[index] == ' ' && index + 1 < nameChars.length) {
+		for (int index = 0; index < nameChars.length; ++index) {
+			if (nameChars[index] == ' ' && index + 1 < nameChars.length) {
 				char c = nameChars[index + 1];
 				nameChars[index + 1] = Character.toUpperCase(c);
 			}
@@ -207,19 +206,19 @@ public class Helper {
 		nameChars[0] = Character.toUpperCase(nameChars[0]);
 		return new String(nameChars);
 	}
-	
+
 	/**
 	 * Stops those nasty null pointers
-	 * **/
+	 **/
 	public static NBTTagCompound getStackTag(ItemStack stack) {
-		if(stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
+		if (stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
 		return stack.getTagCompound();
 	}
 
 	public static boolean hasSpaceSuit(EntityLivingBase player) {
 		int count = 0;
-		for(ItemStack stack : player.getArmorInventoryList()) {
-			if(stack.getItem() instanceof ItemSpaceSuit) {
+		for (ItemStack stack : player.getArmorInventoryList()) {
+			if (stack.getItem() instanceof ItemSpaceSuit) {
 				++count;
 			}
 		}
@@ -231,10 +230,10 @@ public class Helper {
 	}
 
 	public static TileEntityTardis getTardis(TileEntity te) {
-		return te != null && te instanceof TileEntityTardis ? ((TileEntityTardis)te) : null;
+		return te != null && te instanceof TileEntityTardis ? ((TileEntityTardis) te) : null;
 	}
 
-	public static boolean isThisBlockBehindTheWorldBorder(BlockPos pos, int dim){
+	public static boolean isThisBlockBehindTheWorldBorder(BlockPos pos, int dim) {
 		return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(dim).getWorldBorder().contains(pos);
 	}
 
