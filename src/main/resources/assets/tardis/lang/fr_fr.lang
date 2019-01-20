@@ -48,10 +48,13 @@ item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Circuits de grâce temporel
 item.tardis.tardis_repairkit.name=Boîte à outils pour TARDIS
 item.tardis.stabilizers.name=Circuits stabilisateurs
+item.tardis.thermo.name=Raccords thermiques
+item.tardis.sonic_third.name=Troisième sonique du docteur
+item.tardis.sonic_screwdriver.name=Tournevis sonique
 
 tooltip.remote=Télécommande reliée au TARDIS à :
-tooltip.remote.time=Le TARDIS arrive dans 
-tooltip.remote.fuel=Batterie Artron 
+tooltip.remote.time=Le TARDIS arrive dans
+tooltip.remote.fuel=Batterie Artron
 tooltip.remote.exteriorpos=Extérieur du TARDIS:
 tooltip.remote.bind=Pour lier, clic droit sur la console
 tooltip.tardis.toolkit=Clic droit sur la console pour réparer tous les systèmes non détruits de 15
@@ -101,6 +104,15 @@ tile.tardis.hellbent_light.name=Feux de localisation de défauts de la montée e
 tile.tardis.hellbent_monitor.name=Moniteur de la montée en enfer
 tile.tardis.hellbent_pole.name=Poteau de la montée en enfer
 tile.tardis.hellbent_roof.name=Chose au plafond de la montée en enfer
+tile.tardis.s13roundellit1.name=S13 Rondelle
+tile.tardis.s13roundellit2.name=S13 Rondelle
+tile.tardis.s13roundellit3.name=S13 Rondelle
+tile.tardis.s13blankroundel1.name=S13 Rondelle
+tile.tardis.s13blankroundel2.name=S13 Rondelle
+tile.tardis.s13blankroundel3.name=S13 Rondelle
+tile.tardis.s13floor.name=S13 Sol
+tile.tardis.s13flooralt.name=S13 Sol
+tile.tardis.brachackitable.name=Table de Brachacki
 tile.tardis.json_test.name=Testeur JSON
 tile.tardis.telos_sand.name=Sable de Telos
 tile.tardis.moon_dirt.name=Terre lunaire
@@ -111,6 +123,8 @@ tile.tardis.zero_room_stairs.name=Escalier de pièce zéro
 tile.tardis.suitcase.name=Mystérieuse valise
 tile.tardis.br_chair.name=Fauteuil
 tile.tardis.am_sphere.name=Sphère armillaire
+tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
+
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
@@ -299,3 +313,9 @@ box.tardis.05=1980 - Yardley-Jones
 box.tardis.cc=Camouflé
 box.master.clock=Horloge du Maitre
 box.tt=TT Capsule
+
+tardis.hum.interior_hum_80=Bourdonnement de 1980
+tardis.hum.1963_interior_hum=Bourdonnement de 1963
+tardis.hum.null=Bourdonnement désactivé
+
+tardis.keybinds.snap=Claquement de doigts
