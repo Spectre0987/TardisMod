@@ -236,5 +236,14 @@
         "stream": false
       }
     ]
+  },
+  "snap": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:snap",
+        "stream": false
+      }
+    ]
   }
 }
