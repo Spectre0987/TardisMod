@@ -1,5 +1,7 @@
 package net.tardis.mod.common.items;
 
+import java.util.List;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,18 +10,22 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.screwdriver.IScrew;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
-
-import java.util.List;
 
 public class ItemSonic extends Item {
 
@@ -167,5 +173,10 @@ public class ItemSonic extends Item {
 
 	private void cooldown(Item stack, EntityPlayer player, int ticks) {
 		player.getCooldownTracker().setCooldown(stack, ticks);
+	}
+
+	@Override
+	public String getTranslationKey(ItemStack stack) {
+		return "item." + Tardis.MODID + ".sonic_screwdriver";
 	}
 }

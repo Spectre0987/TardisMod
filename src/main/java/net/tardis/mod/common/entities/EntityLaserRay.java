@@ -1,14 +1,12 @@
 package net.tardis.mod.common.entities;
 
 import io.netty.buffer.ByteBuf;
-import javafx.scene.effect.Light;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -20,8 +18,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-
-import static net.minecraft.block.BlockTNT.EXPLODE;
 
 public class EntityLaserRay extends EntityThrowable implements IEntityAdditionalSpawnData {
 
