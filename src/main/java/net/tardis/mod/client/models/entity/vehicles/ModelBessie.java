@@ -92,7 +92,7 @@ public class ModelBessie extends ModelBase {
 	ModelRenderer NOTALIGHT78;
 	ModelRenderer NOTALIGHT79;
 
-	public ModelBessie() { 
+	public ModelBessie() {
 
 		textureWidth = 512;
 		textureHeight = 512;
@@ -298,7 +298,7 @@ public class ModelBessie extends ModelBase {
 		NOTALIGHT29.setTextureSize(512, 512);
 		NOTALIGHT29.setRotationPoint(9.0F, 14.0F, 12.0F);
 		setRotation(NOTALIGHT29, 0.0F, 0.0F, 0.0F);
-        NOTALIGHT29.mirror = false;
+		NOTALIGHT29.mirror = false;
 
 		NOTALIGHT30 = new ModelRenderer(this, 0, 151);
 		NOTALIGHT30.addBox(0.0F, 0.0F, 0.0F, 22, 2, 6);
@@ -665,6 +665,7 @@ public class ModelBessie extends ModelBase {
 		NOTALIGHT79.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		NOTALIGHT1.render(scale);
@@ -745,8 +746,8 @@ public class ModelBessie extends ModelBase {
 		NOTALIGHT77.render(scale);
 		NOTALIGHT78.render(scale);
 		NOTALIGHT79.render(scale);
-		
-		if(MinecraftForgeClient.getRenderPass() == 1) {
+
+		if (MinecraftForgeClient.getRenderPass() == 1) {
 			GlStateManager.pushMatrix();
 			GlStateManager.enableBlend();
 			GlStateManager.enableAlpha();
@@ -757,7 +758,7 @@ public class ModelBessie extends ModelBase {
 			GlStateManager.disableAlpha();
 			GlStateManager.popMatrix();
 		}
-		
+
 		GlStateManager.pushMatrix();
 		Minecraft.getMinecraft().entityRenderer.disableLightmap();
 		IAMALIGHT1.render(scale);
@@ -766,7 +767,7 @@ public class ModelBessie extends ModelBase {
 		GlStateManager.popMatrix();
 	}
 
-    private void setRotation(ModelRenderer model, float x, float y, float z){
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

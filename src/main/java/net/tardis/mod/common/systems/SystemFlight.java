@@ -6,12 +6,14 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 
-public class SystemFlight extends BaseSystem{
-	
-	public SystemFlight() {}
-	
+public class SystemFlight extends BaseSystem {
+
+	public SystemFlight() {
+	}
+
 	@Override
-	public void onUpdate(World world, BlockPos consolePos) {}
+	public void onUpdate(World world, BlockPos consolePos) {
+	}
 
 	@Override
 	public void damage() {
@@ -26,6 +28,11 @@ public class SystemFlight extends BaseSystem{
 	@Override
 	public String getNameKey() {
 		return "systems.tardis.flight";
+	}
+
+	@Override
+	public String getUsage() {
+		return "Without this system, you will not be able to fly the TARDIS";
 	}
 
 	@Override

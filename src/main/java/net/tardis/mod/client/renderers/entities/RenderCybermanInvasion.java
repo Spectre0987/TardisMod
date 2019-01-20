@@ -11,10 +11,10 @@ import net.tardis.mod.common.entities.EntityCybermanInvasion;
 
 public class RenderCybermanInvasion extends RenderLiving<EntityCybermanInvasion> {
 
-	Minecraft mc;
-	public static ModelCybermanInvasion model = new ModelCybermanInvasion();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cyberman_invasion.png");
-	
+	public static ModelCybermanInvasion model = new ModelCybermanInvasion();
+	Minecraft mc;
+
 	public RenderCybermanInvasion(RenderManager manager) {
 		super(manager, model, 0.03F);
 		mc = Minecraft.getMinecraft();
@@ -32,7 +32,7 @@ public class RenderCybermanInvasion extends RenderLiving<EntityCybermanInvasion>
 	}
 
 	@Override
-	protected void renderModel(EntityCybermanInvasion entitylivingbaseIn, float limbSwing, float limbSwingAmount,float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+	protected void renderModel(EntityCybermanInvasion entitylivingbaseIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
 		super.renderModel(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
 	}
 

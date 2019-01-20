@@ -13,7 +13,7 @@ import net.tardis.mod.common.items.TItems;
 public class RecipeCinnabar implements IRecipe {
 
 	private ResourceLocation loc;
-	
+
 	public RecipeCinnabar(String name) {
 		loc = new ResourceLocation(name);
 	}
@@ -38,10 +38,10 @@ public class RecipeCinnabar implements IRecipe {
 	public boolean matches(InventoryCrafting inv, World worldIn) {
 		boolean hasPick = false;
 		boolean hasOre = false;
-		for(ItemStack cin : OreDictionary.getOres("oreCinnabar")) {
-			for(int i = 0; i < inv.getSizeInventory(); ++i) {
-				if(inv.getStackInSlot(i).getItem() instanceof ItemPickaxe) hasPick = true;
-				if(inv.getStackInSlot(i).isItemEqual(cin)) hasOre = true;
+		for (ItemStack cin : OreDictionary.getOres("oreCinnabar")) {
+			for (int i = 0; i < inv.getSizeInventory(); ++i) {
+				if (inv.getStackInSlot(i).getItem() instanceof ItemPickaxe) hasPick = true;
+				if (inv.getStackInSlot(i).isItemEqual(cin)) hasOre = true;
 			}
 		}
 		return hasPick && hasOre;
@@ -61,12 +61,13 @@ public class RecipeCinnabar implements IRecipe {
 	public ItemStack getRecipeOutput() {
 		return new ItemStack(TItems.crushedCinnabar);
 	}
+
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
-		NonNullList<ItemStack> list = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
-		for(int i = 0; i < inv.getSizeInventory(); ++i) {
+		NonNullList<ItemStack> list = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+		for (int i = 0; i < inv.getSizeInventory(); ++i) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if(stack.getItem() instanceof ItemPickaxe) {
+			if (stack.getItem() instanceof ItemPickaxe) {
 				stack.setItemDamage(stack.getItemDamage() + 1);
 				list.set(i, stack.copy());
 				return list;

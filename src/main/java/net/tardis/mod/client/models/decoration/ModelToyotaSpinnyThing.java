@@ -100,7 +100,7 @@ public class ModelToyotaSpinnyThing extends ModelBase {
 	ModelRenderer BopDivider17;
 	ModelRenderer BopDivider18;
 
-	public ModelToyotaSpinnyThing() { 
+	public ModelToyotaSpinnyThing() {
 
 		textureWidth = 256;
 		textureHeight = 256;
@@ -736,6 +736,7 @@ public class ModelToyotaSpinnyThing extends ModelBase {
 		BopDivider18.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		TopSpin1.render(scale);
@@ -829,11 +830,11 @@ public class ModelToyotaSpinnyThing extends ModelBase {
 		BopDivider17.render(scale);
 		BopDivider18.render(scale);
 	}
-	
+
 	public void renderAnimated(float scale, boolean animate) {
-		
+
 		float time = 0F;
-		if(animate) {
+		if (animate) {
 			long baseAngle = Minecraft.getMinecraft().world.getWorldTime() % 360;
 			time = (baseAngle - 1) - ((baseAngle - 1) - baseAngle) * Minecraft.getMinecraft().getRenderPartialTicks();
 		}
@@ -858,7 +859,7 @@ public class ModelToyotaSpinnyThing extends ModelBase {
 		TopSpinDivider8.render(scale);
 		TopSpinDivider9.render(scale);
 		GlStateManager.popMatrix();
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(-time, 0, 1, 0);
 		MidSpin1.render(scale);
@@ -880,7 +881,7 @@ public class ModelToyotaSpinnyThing extends ModelBase {
 		MidSpinDivider8.render(scale);
 		MidSpinDivider9.render(scale);
 		GlStateManager.popMatrix();
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(time, 0, 1, 0);
 		LowSpin1.render(scale);
@@ -902,7 +903,7 @@ public class ModelToyotaSpinnyThing extends ModelBase {
 		LowSpinDivider8.render(scale);
 		LowSpinDivider9.render(scale);
 		GlStateManager.popMatrix();
-		
+
 		DooblyBop1.render(scale);
 		DooblyBop2.render(scale);
 		DooblyBop3.render(scale);
@@ -940,15 +941,15 @@ public class ModelToyotaSpinnyThing extends ModelBase {
 		BopDivider17.render(scale);
 		BopDivider18.render(scale);
 	}
-	
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
 }

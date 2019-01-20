@@ -1,8 +1,20 @@
 {
   "data": {
-    "size": [5, 6, 5],
-    "position": [3, 1, -2],
-    "rotation": [180, 0, 0]
+    "size": [
+      5,
+      6,
+      5
+    ],
+    "position": [
+      3,
+      1,
+      -2
+    ],
+    "rotation": [
+      180,
+      0,
+      0
+    ]
   },
   "structure": {
     "blocks": {

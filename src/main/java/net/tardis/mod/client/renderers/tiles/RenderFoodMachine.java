@@ -13,15 +13,15 @@ import net.tardis.mod.common.blocks.BlockFoodMachine;
 import net.tardis.mod.common.blocks.TBlocks;
 
 public class RenderFoodMachine extends TileEntitySpecialRenderer {
-	
-	Minecraft mc;
-	public ModelFoodMachine model = new ModelFoodMachine();
+
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/food_machine.png");
-	
+	public ModelFoodMachine model = new ModelFoodMachine();
+	Minecraft mc;
+
 	public RenderFoodMachine() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();

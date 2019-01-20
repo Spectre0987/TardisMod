@@ -68,12 +68,9 @@ public class Tardis {
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
 	public static final String VERSION = "0.0.8A";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
-
-	public static Logger LOG = LogManager.getLogger(NAME);
-
-	public static boolean hasIC2 = false;
 	public static final boolean updateChangesConfig = true;
-
+	public static Logger LOG = LogManager.getLogger(NAME);
+	public static boolean hasIC2 = false;
 	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 
 	@Instance(MODID)
@@ -81,6 +78,14 @@ public class Tardis {
 
 	@SidedProxy(clientSide = "net.tardis.mod.proxy.ClientProxy", serverSide = "net.tardis.mod.proxy.ServerProxy")
 	public static ServerProxy proxy;
+
+	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
+		GameRegistry.registerTileEntity(clazz, new ResourceLocation(Tardis.MODID, name));
+	}
+
+	public static boolean getIsDev() {
+		return (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -172,7 +177,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolSystemReadout());
 		TardisProtocol.register(new ProtocolConsole());
 		TardisProtocol.register(new ProtocolRegenRoom());
-		if(Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
+		if (Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
 		TardisProtocol.register(new ProtocolRepair());
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
@@ -195,6 +200,7 @@ public class Tardis {
 		TardisSystems.register("chameleon", SystemCCircuit.class);
 		TardisSystems.register("temporal_grace", SystemTemporalGrace.class);
 		TardisSystems.register("stabilizers", SystemStabilizers.class);
+		TardisSystems.register("thermo", SystemThermo.class);
 
 
 		GameRegistry.registerWorldGenerator(new WorldGenTardis(), 1);
@@ -228,7 +234,7 @@ public class Tardis {
 		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself in their TARDIS");
 		PermissionAPI.registerNode(TStrings.Permissions.SUMMON_TARDIS, DefaultPermissionLevel.OP, "Allows players to summon a TARDIS owned by someone");
 		PermissionAPI.registerNode(TStrings.Permissions.REMOVE_TARDIS, DefaultPermissionLevel.OP, "Allows players to delete a TARDIS");
-		PermissionAPI.registerNode(TStrings.Permissions.RESTORE_TARDIS,DefaultPermissionLevel.OP,"Allows players to restore their TARDIS Systems");
+		PermissionAPI.registerNode(TStrings.Permissions.RESTORE_TARDIS, DefaultPermissionLevel.OP, "Allows players to restore their TARDIS Systems");
 
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
@@ -244,18 +250,10 @@ public class Tardis {
 
 	}
 
-	public static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
-		GameRegistry.registerTileEntity(clazz, new ResourceLocation(Tardis.MODID, name));
-	}
-
-	public static boolean getIsDev() {
-		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
-	}
-
 	@EventHandler
-	public void serverStarting(FMLServerStartingEvent event){
+	public void serverStarting(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandTardis());
-		if(Tardis.getIsDev()) {
+		if (Tardis.getIsDev()) {
 			event.registerServerCommand(new CommandDebug());
 		}
 	}

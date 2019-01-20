@@ -1,14 +1,14 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 
-public class BlockDecoration extends BlockTileBase implements IRenderBox{
+import java.util.function.Supplier;
+
+public class BlockDecoration extends BlockTileBase implements IRenderBox {
 
 	public BlockDecoration(Supplier<TileEntity> te) {
 		super(Material.IRON, te);

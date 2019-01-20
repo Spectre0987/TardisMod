@@ -1,7 +1,5 @@
 package net.tardis.mod.common.items;
 
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,15 +14,17 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
+import java.util.List;
+
 public class ItemRepairKit extends ItemBase {
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity te = worldIn.getTileEntity(pos);
-		if(te != null && te instanceof TileEntityTardis) {
-			TileEntityTardis tardis = (TileEntityTardis)te;
-			for(BaseSystem sys : tardis.systems) {
-				if(sys.getHealth() > 0F) {
+		if (te != null && te instanceof TileEntityTardis) {
+			TileEntityTardis tardis = (TileEntityTardis) te;
+			for (BaseSystem sys : tardis.systems) {
+				if (sys.getHealth() > 0F) {
 					sys.setHealth(sys.getHealth() + 0.15F);
 				}
 			}

@@ -2,10 +2,10 @@ package net.tardis.mod.api.dimensions;
 
 public interface IDimensionProperties {
 
-    boolean hasGravity();
+	boolean hasGravity();
 
-    boolean hasAir();
+	boolean hasAir();
 
-    int getRadiationLevels();
+	int getRadiationLevels();
 
 }

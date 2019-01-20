@@ -13,13 +13,13 @@ public class RenderTileDoorWood extends RenderExterior {
 
 	public static RenderWorldShell renderShell = new RenderWorldShell();
 	public static ModelTardisWoodDoor model = new ModelTardisWoodDoor();
-	
+
 	@Override
 	public void renderExterior(TileEntityDoor te) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5, 0, -1.3125);
 		GlStateManager.rotate(180, 0, 0, 1);
-		if(te.isLocked())model.renderClosed(0.0625F);
+		if (te.isLocked()) model.renderClosed(0.0625F);
 		else model.renderOpen(0.0625f);
 		GlStateManager.popMatrix();
 	}

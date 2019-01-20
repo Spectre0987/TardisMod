@@ -12,14 +12,15 @@ public class MessageWaypointLoad implements IMessage {
 
 	public BlockPos pos = BlockPos.ORIGIN;
 	public boolean isDelete = false;
-	
+
 	public MessageWaypointLoad(BlockPos pos, boolean del) {
 		this.pos = pos;
 		this.isDelete = del;
 	}
-	
-	public MessageWaypointLoad() {}
-	
+
+	public MessageWaypointLoad() {
+	}
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		pos = BlockPos.fromLong(buf.readLong());
@@ -31,8 +32,8 @@ public class MessageWaypointLoad implements IMessage {
 		buf.writeLong(pos.toLong());
 		buf.writeBoolean(isDelete);
 	}
-	
-	public static class Handler implements IMessageHandler<MessageWaypointLoad, IMessage>{
+
+	public static class Handler implements IMessageHandler<MessageWaypointLoad, IMessage> {
 
 		@Override
 		public IMessage onMessage(MessageWaypointLoad message, MessageContext ctx) {
@@ -40,14 +41,16 @@ public class MessageWaypointLoad implements IMessage {
 				@Override
 				public void run() {
 					TileEntityTardis tardis = (TileEntityTardis) ctx.getServerHandler().player.getServerWorld().getTileEntity(message.pos);
-					if(tardis != null) {
-						if(message.isDelete)
+					if (tardis != null) {
+						if (message.isDelete)
 							tardis.saveCoords.set(tardis.waypointIndex, SpaceTimeCoord.ORIGIN);
 						else
 							tardis.setSpaceTimeCoordnate(tardis.saveCoords.get(tardis.waypointIndex));
 					}
-				}});
+				}
+			});
 			return null;
-		}}
+		}
+	}
 
 }

@@ -12,11 +12,11 @@ public class RenderTEISRItem extends TileEntityItemStackRenderer {
 	private Minecraft mc;
 	private ModelBase base;
 	private ResourceLocation texture;
-	
-	public RenderTEISRItem(){
+
+	public RenderTEISRItem() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	public RenderTEISRItem(ModelBase model, ResourceLocation rl) {
 		this();
 		this.base = model;
@@ -27,11 +27,11 @@ public class RenderTEISRItem extends TileEntityItemStackRenderer {
 		this.base = modelBase;
 		this.texture = null;
 	}
-	
+
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();
-		if(texture != null) {
+		if (texture != null) {
 			mc.getTextureManager().bindTexture(this.texture);
 		}
 		base.render(null, 0, 0, 0, 0, 0, 0.0625F);

@@ -6,17 +6,17 @@
     "OQO"
   ],
   "key": {
-    "O":{
-        "item":"minecraft:obsidian"
+    "O": {
+      "item": "minecraft:obsidian"
     },
-    "Q":{
-        "item":"minecraft:quartz"
+    "Q": {
+      "item": "minecraft:quartz"
     },
-    "D":{
-        "item":"minecraft:diamond"
+    "D": {
+      "item": "minecraft:diamond"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     }
   },
   "result": {

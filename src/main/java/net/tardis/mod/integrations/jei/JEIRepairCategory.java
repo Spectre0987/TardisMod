@@ -1,7 +1,5 @@
 package net.tardis.mod.integrations.jei;
 
-import org.lwjgl.opengl.GL11;
-
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
@@ -13,12 +11,13 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiComponentRepair;
+import org.lwjgl.opengl.GL11;
 
 public class JEIRepairCategory implements IRecipeCategory {
 
 	public static final String id = "jei.tardis.category.repair";
 	private static DrawRecipeScreen gui = new DrawRecipeScreen();
-	
+
 	@Override
 	public String getUid() {
 		return id;
@@ -43,8 +42,8 @@ public class JEIRepairCategory implements IRecipeCategory {
 	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		recipeLayout.getItemStacks().init(0, true, 50, 50);
 	}
-	
-	public static class DrawRecipeScreen implements IDrawable{
+
+	public static class DrawRecipeScreen implements IDrawable {
 
 		@Override
 		public int getWidth() {
@@ -68,7 +67,7 @@ public class JEIRepairCategory implements IRecipeCategory {
 			bb.pos(0, 0, yOffset + height).tex(0, 1).endVertex();
 			Tessellator.getInstance().draw();
 		}
-		
+
 	}
 
 }

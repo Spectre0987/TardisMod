@@ -11,12 +11,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
 public class TileEntityUmbrellaStand extends TileEntity implements ITickable {
-	
+
 	public ItemStack umbrella = ItemStack.EMPTY;
 	int ticks = 20;
-	
-	public TileEntityUmbrellaStand() {}
-	
+
+	public TileEntityUmbrellaStand() {
+	}
+
 	public void setItem(ItemStack stack) {
 		if (!world.isRemote && !umbrella.isEmpty()) {
 			EntityItem ei = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, umbrella);
@@ -25,35 +26,35 @@ public class TileEntityUmbrellaStand extends TileEntity implements ITickable {
 		umbrella = stack;
 		this.markDirty();
 	}
-	
+
 	public ItemStack getUmbrella() {
 		return this.umbrella;
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		umbrella = new ItemStack(tag.getCompoundTag("umbrella"));
 		super.readFromNBT(tag);
 	}
-	
+
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		tag.setTag("umbrella", umbrella.writeToNBT(new NBTTagCompound()));
 		return super.writeToNBT(tag);
 	}
-	
+
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
 		return new SPacketUpdateTileEntity(pos, -1, this.getUpdateTag());
 	}
-	
+
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setTag("item", umbrella.writeToNBT(new NBTTagCompound()));
 		return tag;
 	}
-	
+
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		if (world.isRemote) {
@@ -61,7 +62,7 @@ public class TileEntityUmbrellaStand extends TileEntity implements ITickable {
 		}
 		super.onDataPacket(net, pkt);
 	}
-	
+
 	@Override
 	public void onLoad() {
 		super.onLoad();
@@ -70,9 +71,9 @@ public class TileEntityUmbrellaStand extends TileEntity implements ITickable {
 				((EntityPlayerMP) player).connection.sendPacket(this.getUpdatePacket());
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void update() {
 		if (!world.isRemote) {
@@ -85,5 +86,5 @@ public class TileEntityUmbrellaStand extends TileEntity implements ITickable {
 			}
 		}
 	}
-	
+
 }

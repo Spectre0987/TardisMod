@@ -8,28 +8,28 @@ import net.tardis.mod.api.entities.IDontSufficate;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 
 public class Galacticraft {
-	
+
 	public static void preInit() {
 		MinecraftForge.EVENT_BUS.register(new Galacticraft.EventHandler());
 	}
-	
+
 	public static class EventHandler {
-		
+
 		@SubscribeEvent
 		public void stopSuffication(GCCoreOxygenSuffocationEvent.Pre event) {
 			Iterable<ItemStack> armor = event.getEntityLiving().getArmorInventoryList();
 			int count = 0;
-			for(ItemStack stack : armor) {
-				if(stack.getItem() instanceof ItemSpaceSuit) {
+			for (ItemStack stack : armor) {
+				if (stack.getItem() instanceof ItemSpaceSuit) {
 					++count;
 				}
 			}
-			
-			if(count >= 3) {
+
+			if (count >= 3) {
 				event.setCanceled(true);
 			}
-			
-			if(event.getEntityLiving() instanceof IDontSufficate) {
+
+			if (event.getEntityLiving() instanceof IDontSufficate) {
 				event.setCanceled(true);
 			}
 		}

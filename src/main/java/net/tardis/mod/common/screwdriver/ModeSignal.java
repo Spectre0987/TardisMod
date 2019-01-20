@@ -17,9 +17,9 @@ public class ModeSignal implements IScrew {
 
 	@Override
 	public EnumActionResult performAction(World world, EntityPlayer player, EnumHand hand) {
-		if(!world.isRemote) {
-			if(TardisHelper.hasTardis(player.getGameProfile().getId())) {
-                TileEntityTardis tardis = Helper.getTardis(world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(player.getGameProfile().getId())));
+		if (!world.isRemote) {
+			if (TardisHelper.hasTardis(player.getGameProfile().getId())) {
+				TileEntityTardis tardis = Helper.getTardis(world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(TardisHelper.getTardis(player.getGameProfile().getId())));
 				tardis.setDesination(player.getPosition(), player.dimension);
 			}
 		}

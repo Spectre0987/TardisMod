@@ -39,15 +39,16 @@ public class BlockChair extends BlockHorizontal implements INoBox {
 	}
 
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		drops.add(new ItemStack(this));
 	}
 
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(worldIn.isRemote) return true;
-		TileEntityChair chair = (TileEntityChair)worldIn.getTileEntity(pos);
-		if(chair != null && chair.isSit == false) {
+		if (worldIn.isRemote) return true;
+		TileEntityChair chair = (TileEntityChair) worldIn.getTileEntity(pos);
+		if (chair != null && !chair.isSit) {
 			EntityChair entity = new EntityChair(worldIn);
 			entity.setChairPos(pos);
 			entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
@@ -75,7 +76,7 @@ public class BlockChair extends BlockHorizontal implements INoBox {
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 

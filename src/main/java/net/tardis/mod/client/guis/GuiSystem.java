@@ -3,12 +3,12 @@ package net.tardis.mod.client.guis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.guis.elements.MonitorButton;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -20,52 +20,68 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GuiSystem extends GuiScreen{
-	
-	private static ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/tardis_coords.png");
-	private static int GUI_WIDTH = 248, GUI_HEIGHT = 166;
+public class GuiSystem extends GuiScreen {
+
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/monitor_ui.png");
+	static final int GUI_WIDTH = 256;
+	static final int GUI_HEIGHT = 192;
 	private Map<Integer, String> sys = new HashMap<>();
 	private TileEntityTardis tardis;
-	
-	public GuiSystem() {}
-	
+
 	public GuiSystem(TileEntityTardis t) {
 		tardis = t;
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
-		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-		int width = res.getScaledWidth() / 2 - GUI_WIDTH / 2, height = res.getScaledHeight() / 2 - GUI_HEIGHT / 2;
-		this.drawTexturedModalRect(width, height, 0, 0, GUI_WIDTH, GUI_HEIGHT);
+		this.drawDefaultBackground();
+		mc.getTextureManager().bindTexture(TEXTURE);
+		int x = (width - GUI_WIDTH) / 2;
+		int y = (height - GUI_HEIGHT) / 2;
+		this.drawTexturedModalRect(x, y, 0, 0, GUI_WIDTH, GUI_HEIGHT);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override
 	public void initGui() {
-		super.initGui();
+		this.buttonList.clear();
+		int x_change = 0;
+		int y_change = 0;
 		int id = 0;
-		for(BaseSystem s : tardis.systems) {
-			GuiButtonExt button = new GuiButtonExt(id, width / 2 - 100, (height / 2 + 50) - (Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * id, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%");
+		for (BaseSystem s : tardis.systems) {
+			GuiButton button = new MonitorButton(id, ((width - GUI_WIDTH) / 2) + 11 + x_change, ((height - GUI_HEIGHT) / 2) + 8 + y_change, new TextComponentTranslation(s.getNameKey()).getFormattedText() + " " + Math.round(s.getHealth() * 100) + "%");
 			button.enabled = s.getHealth() > 0.0F;
 			this.addButton(button);
-			++id;
+			id++;
+			x_change += 80;
+			if (id % 3 == 0) {
+				x_change = 0;
+				y_change += 36;
+			}
 		}
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		if(button.id < TardisSystems.SYSTEMS.size()) {
+		if (button.id < TardisSystems.SYSTEMS.size()) {
 			BaseSystem sys = tardis.systems[button.id];
-			if(sys.getHealth() > 0.0F) {
-				ItemStack stack = new ItemStack(sys.getRepairItem());
-				stack.setItemDamage((int)(100 - (sys.getHealth() * 100)));
-				NetworkHandler.NETWORK.sendToServer(new MessageSpawnItem(stack));
-				NetworkHandler.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
+			if (sys.getHealth() > 0.0F) {
+				Minecraft.getMinecraft().displayGuiScreen(new GUIConfirm((result, id) -> {
+					if (result) {
+						ItemStack stack = new ItemStack(sys.getRepairItem());
+						stack.setItemDamage((int) (100 - (sys.getHealth() * 100)));
+						NetworkHandler.NETWORK.sendToServer(new MessageSpawnItem(stack));
+						NetworkHandler.NETWORK.sendToServer(new MessageDamageSystem(tardis.getPos(), TardisSystems.getIdBySystem(sys)));
+						Minecraft.getMinecraft().displayGuiScreen(null);
+					} else {
+						Minecraft.getMinecraft().displayGuiScreen(this);
+					}
+
+				}, I18n.format("Are you sure you want to remove your " + new TextComponentTranslation(sys.getNameKey()).getFormattedText() + "?"), I18n.format(sys.getUsage()), I18n.format("Remove System"), I18n.format("gui.cancel"), 0));
+
 			}
-			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 		super.actionPerformed(button);
 	}
+
 }

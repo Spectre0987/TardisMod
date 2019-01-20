@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "normal": {
+      "model": "tardis:table_brachacki"
+    },
+    "inventory": {
+      "model": "tardis:table_brachacki"
+    }
+  }
+}

@@ -18,15 +18,14 @@ public class ItemSonicShades extends ItemHat {
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
 		super.onArmorTick(world, player, stack);
-		if(!world.isRemote && world.getWorldTime() % 20 == 0) {
+		if (!world.isRemote && world.getWorldTime() % 20 == 0) {
 			NBTTagCompound tag = Helper.getStackTag(player.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
 			boolean inRift = RiftHelper.isRift(world.getChunk(player.getPosition()).getPos(), world);
-			if(!tag.hasKey("rift")) {
+			if (!tag.hasKey("rift")) {
 				tag.setBoolean("rift", RiftHelper.isRift(world.getChunk(player.getPosition()).getPos(), world));
-			}
-			else {
+			} else {
 				boolean rift = tag.getBoolean("rift");
-				if(rift != inRift) {
+				if (rift != inRift) {
 					tag.setBoolean("rift", inRift);
 				}
 			}

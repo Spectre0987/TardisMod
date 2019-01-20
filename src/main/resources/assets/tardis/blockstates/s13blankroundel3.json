@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:s13blankroundel3"
-        },
-        "inventory":{
-             "model":"tardis:s13blankroundel3"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:s13blankroundel3"
+    },
+    "inventory": {
+      "model": "tardis:s13blankroundel3"
     }
+  }
 }

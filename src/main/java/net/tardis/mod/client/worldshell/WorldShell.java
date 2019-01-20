@@ -27,6 +27,9 @@ public class WorldShell implements IBlockAccess {
 
 	// Keeps stores a collection of BlockAcess's mapped to blockpos coords
 	public Map<BlockPos, BlockStorage> blockMap;
+	@SideOnly(Side.CLIENT)
+	public BufferBuilder.State bufferstate;
+	public boolean updateRequired = false;
 	// Contains every TESR to speed up rendering
 	private List<TileEntity> tesrs;
 	//Entities to render
@@ -37,18 +40,13 @@ public class WorldShell implements IBlockAccess {
 	// rendering
 	private BlockPos offset;
 	private long time = 0L;
-	
 	private float rotation = 0F;
-    private Biome shellBiome = Biome.getBiome(0);
-
-    @SideOnly(Side.CLIENT)
-	public BufferBuilder.State bufferstate;
-	public boolean updateRequired = false;
+	private Biome shellBiome = Biome.getBiome(0);
 
 	public WorldShell(BlockPos bp) {
-        blockMap = new HashMap<>();
+		blockMap = new HashMap<>();
 		offset = bp;
-        tesrs = new ArrayList<>();
+		tesrs = new ArrayList<>();
 	}
 
 	public BlockPos getOffset() {
@@ -73,9 +71,9 @@ public class WorldShell implements IBlockAccess {
 	}
 
 
-    public void setShellBiome(Biome shellBiome) {
-        this.shellBiome = shellBiome;
-    }
+	public void setShellBiome(Biome shellBiome) {
+		this.shellBiome = shellBiome;
+	}
 
 	@Override
 	public IBlockState getBlockState(BlockPos pos) {
@@ -94,7 +92,7 @@ public class WorldShell implements IBlockAccess {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public Biome getBiome(BlockPos pos) {
-        return shellBiome;
+		return shellBiome;
 	}
 
 	@Override
@@ -124,44 +122,46 @@ public class WorldShell implements IBlockAccess {
 		for (BlockStorage bs : blockMap.values()) {
 			if (bs.tileentity != null) {
 				TileEntity te = TileEntity.create(Minecraft.getMinecraft().world, bs.tileentity);
-                if(te != null) {
-                	TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers.get(te.getClass());
-    				if (renderer != null)
-    					tesrs.add(te);
-                }
+				if (te != null) {
+					TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers.get(te.getClass());
+					if (renderer != null)
+						tesrs.add(te);
+				}
 			}
 		}
 	}
-	
-	public List<NBTTagCompound> getEntities(){
+
+	public List<NBTTagCompound> getEntities() {
 		return this.entities;
 	}
-	
+
 	public void setEntities(List<NBTTagCompound> entity) {
 		this.entities = entity;
 	}
-	
-	public void setPlayers(List<PlayerStorage> storage) {
-		this.players = storage;
-	}
-	
+
 	public List<PlayerStorage> getPlayers() {
 		return this.players;
+	}
+
+	public void setPlayers(List<PlayerStorage> storage) {
+		this.players = storage;
 	}
 
 	public long getTime() {
 		return time;
 	}
-	
+
 	public void setTime(long time) {
 		this.time = time;
 	}
-	
-	/**Gets the rotation to render the world from (In the case of doors)**/
+
+	/**
+	 * Gets the rotation to render the world from (In the case of doors)
+	 **/
 	public float getRotation() {
 		return this.rotation;
 	}
-	
+
 	public void setRotation(float rot) {
 		this.rotation = rot;
 	}

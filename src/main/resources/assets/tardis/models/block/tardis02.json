@@ -1,10 +1,22 @@
 {
-    "parent":"builtin/entity",
-    "display":{
-        "gui":{
-            "transform":[0,-5,0],
-            "rotation":[22.5, 225,180],
-            "scale":[0.3,0.3,0.3]
-        }
+  "parent": "builtin/entity",
+  "display": {
+    "gui": {
+      "transform": [
+        0,
+        -5,
+        0
+      ],
+      "rotation": [
+        22.5,
+        225,
+        180
+      ],
+      "scale": [
+        0.3,
+        0.3,
+        0.3
+      ]
     }
+  }
 }

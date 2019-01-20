@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:toyota_light_emergency"
-        },
-        "inventory":{
-             "model":"tardis:toyota_light_emergency"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:toyota_light_emergency"
+    },
+    "inventory": {
+      "model": "tardis:toyota_light_emergency"
     }
+  }
 }

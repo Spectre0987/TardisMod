@@ -16,14 +16,15 @@ public class MessageWaypointSave implements IMessage {
 
 	BlockPos pos = BlockPos.ORIGIN;
 	SpaceTimeCoord coord = SpaceTimeCoord.ORIGIN;
-	
-	public MessageWaypointSave() {}
-	
+
+	public MessageWaypointSave() {
+	}
+
 	public MessageWaypointSave(BlockPos pos, SpaceTimeCoord coord) {
 		this.pos = pos.toImmutable();
 		this.coord = coord;
 	}
-	
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.coord = SpaceTimeCoord.readFromNBT(ByteBufUtils.readTag(buf));
@@ -36,7 +37,7 @@ public class MessageWaypointSave implements IMessage {
 		buf.writeLong(pos.toLong());
 	}
 
-	public static class Handler implements IMessageHandler<MessageWaypointSave, IMessage>{
+	public static class Handler implements IMessageHandler<MessageWaypointSave, IMessage> {
 
 		@Override
 		public IMessage onMessage(MessageWaypointSave message, MessageContext ctx) {
@@ -46,17 +47,17 @@ public class MessageWaypointSave implements IMessage {
 				public void run() {
 					WorldServer world = ctx.getServerHandler().player.getServerWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 					TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(message.pos);
-					if(tardis != null) {
-						for(int i = 0; i < tardis.saveCoords.size(); ++i) {
-							if(SpaceTimeCoord.ORIGIN.equals(tardis.saveCoords.get(i))) {
+					if (tardis != null) {
+						for (int i = 0; i < tardis.saveCoords.size(); ++i) {
+							if (SpaceTimeCoord.ORIGIN.equals(tardis.saveCoords.get(i))) {
 								tardis.saveCoords.set(i, message.coord);
 								break;
 							}
 						}
-					}
-					else System.out.println("No TARDIS, " + message.pos);
+					} else System.out.println("No TARDIS, " + message.pos);
 				}
 			});
 			return null;
-		}}
+		}
+	}
 }

@@ -6,17 +6,17 @@
     "IAI"
   ],
   "key": {
-    "I":{
-        "item":"minecraft:iron_ingot"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
-    "C":{
-        "item":"minecraft:compass"
+    "C": {
+      "item": "minecraft:compass"
     },
-    "B":{
-        "item":"tardis:circuts"
+    "B": {
+      "item": "tardis:circuts"
     },
-    "A":{
-        "item":"tardis:artron_capacitor"
+    "A": {
+      "item": "tardis:artron_capacitor"
     }
   },
   "result": {

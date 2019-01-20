@@ -14,9 +14,9 @@ import net.tardis.mod.common.items.ItemSUmbrella;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 
 public class BlockUmbrellaStand extends BlockTileBase {
-	
+
 	public ItemBlock item = new ItemBlock(this);
-	
+
 	public BlockUmbrellaStand() {
 		super(Material.CLAY, TileEntityUmbrellaStand::new);
 
@@ -26,17 +26,17 @@ public class BlockUmbrellaStand extends BlockTileBase {
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
 	}
-	
+
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (playerIn.getHeldItem(hand).getItem() instanceof ItemSUmbrella || playerIn.getHeldItem(hand).isEmpty()) {
@@ -46,5 +46,5 @@ public class BlockUmbrellaStand extends BlockTileBase {
 		}
 		return true;
 	}
-	
+
 }

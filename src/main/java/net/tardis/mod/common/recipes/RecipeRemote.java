@@ -1,8 +1,5 @@
 package net.tardis.mod.common.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,14 +13,17 @@ import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.ItemRemote;
 import net.tardis.mod.common.items.TItems;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RecipeRemote implements IRecipe {
 
 	private ResourceLocation rl;
-	
+
 	public RecipeRemote(String name) {
 		rl = new ResourceLocation(Tardis.MODID, name);
 	}
-	
+
 	@Override
 	public IRecipe setRegistryName(ResourceLocation name) {
 		rl = name;
@@ -44,9 +44,9 @@ public class RecipeRemote implements IRecipe {
 	public boolean matches(InventoryCrafting inv, World worldIn) {
 		List<Item> items = new ArrayList<>();
 		boolean hasKey = false;
-		for(int i = 0; i < inv.getSizeInventory(); ++i) {
+		for (int i = 0; i < inv.getSizeInventory(); ++i) {
 			items.add(inv.getStackInSlot(i).getItem());
-			if(inv.getStackInSlot(i).getItem() instanceof ItemRemote) {
+			if (inv.getStackInSlot(i).getItem() instanceof ItemRemote) {
 				hasKey = true;
 			}
 		}
@@ -56,15 +56,15 @@ public class RecipeRemote implements IRecipe {
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		ItemStack keyStack = ItemStack.EMPTY;
-		for(int i = 0; i < inv.getSizeInventory(); ++i) {
+		for (int i = 0; i < inv.getSizeInventory(); ++i) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if(stack.getItem() instanceof ItemKey) {
+			if (stack.getItem() instanceof ItemKey) {
 				keyStack = stack;
 			}
 		}
 		ItemStack remoteStack = new ItemStack(TItems.stattenheim_remote);
 		BlockPos pos = ItemKey.getPos(keyStack);
-		if(pos != null && !pos.equals(BlockPos.ORIGIN)) ItemRemote.setConsolePos(remoteStack, pos);
+		if (pos != null && !pos.equals(BlockPos.ORIGIN)) ItemRemote.setConsolePos(remoteStack, pos);
 		return remoteStack;
 	}
 
@@ -81,8 +81,8 @@ public class RecipeRemote implements IRecipe {
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
 		NonNullList<ItemStack> list = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
-		for(int i = 0; i < inv.getSizeInventory(); ++i) {
-			if(inv.getStackInSlot(i).getItem() != TItems.stattenheim_remote)
+		for (int i = 0; i < inv.getSizeInventory(); ++i) {
+			if (inv.getStackInSlot(i).getItem() != TItems.stattenheim_remote)
 				list.set(i, inv.getStackInSlot(i).copy());
 		}
 		return list;

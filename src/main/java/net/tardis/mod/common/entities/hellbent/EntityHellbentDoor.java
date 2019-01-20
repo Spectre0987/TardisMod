@@ -19,7 +19,7 @@ import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 
-public class EntityHellbentDoor extends Entity implements IDoor{
+public class EntityHellbentDoor extends Entity implements IDoor {
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(EntityHellbentDoor.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<Integer> OPENING_TICKS = EntityDataManager.createKey(EntityHellbentDoor.class, DataSerializers.VARINT);
@@ -46,16 +46,16 @@ public class EntityHellbentDoor extends Entity implements IDoor{
 		compound.setBoolean("open", this.dataManager.get(IS_OPEN));
 		compound.setInteger("opening_ticks", this.dataManager.get(OPENING_TICKS));
 	}
-	
-	public void setOpen(boolean b) {
-		this.dataManager.set(IS_OPEN, b);
-		if(isOpen()){
-			playSound(TSounds.INTERIOR_DOOR_1963, 1.0F, 1.0F);
-		}
-	}
-	
+
 	public boolean isOpen() {
 		return this.dataManager.get(IS_OPEN);
+	}
+
+	public void setOpen(boolean b) {
+		this.dataManager.set(IS_OPEN, b);
+		if (isOpen()) {
+			playSound(TSounds.INTERIOR_DOOR_1963, 1.0F, 1.0F);
+		}
 	}
 
 	public int getOpeningTicks() {

@@ -13,11 +13,11 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 
 public class BlockJsonTester extends BlockTileBase {
-	
+
 	public ItemBlock block = new ItemBlock(this);
-	
+
 	public BlockJsonTester() {
-        super(Material.CIRCUITS, TileEntityJsonTester::new);
+		super(Material.CIRCUITS, TileEntityJsonTester::new);
 
 	}
 
@@ -27,10 +27,10 @@ public class BlockJsonTester extends BlockTileBase {
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity te = worldIn.getTileEntity(pos);
-		if(te != null && te instanceof TileEntityJsonTester) {
-			((TileEntityJsonTester)te).stack = playerIn.getHeldItemMainhand().copy();
+		if (te != null && te instanceof TileEntityJsonTester) {
+			((TileEntityJsonTester) te).stack = playerIn.getHeldItemMainhand().copy();
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}

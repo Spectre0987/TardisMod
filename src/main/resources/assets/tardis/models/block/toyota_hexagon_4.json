@@ -1,6 +1,6 @@
 {
-    "parent":"block/cube_all",
-    "textures":{
-        "all":"tardis:blocks/toyota/toyota_hexagon_blank_4"
-    }
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "tardis:blocks/toyota/toyota_hexagon_blank_4"
+  }
 }

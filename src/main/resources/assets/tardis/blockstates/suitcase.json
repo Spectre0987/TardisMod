@@ -1,22 +1,26 @@
 {
-    "forge_marker": 1,
-    "defaults":{
-        "model":"tardis:suitcase"
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tardis:suitcase"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ],
+    "facing=north": {
+      "y": 0
     },
-    "variants":{
-        "normal":[{}],
-        "inventory":[{}],
-        "facing=north":{
-            "y": 0
-        },
-        "facing=south":{
-            "y": 180
-        },
-        "facing=east":{
-            "y": 90
-        },
-        "facing=west":{
-            "y": 270
-        }
+    "facing=south": {
+      "y": 180
+    },
+    "facing=east": {
+      "y": 90
+    },
+    "facing=west": {
+      "y": 270
     }
+  }
 }

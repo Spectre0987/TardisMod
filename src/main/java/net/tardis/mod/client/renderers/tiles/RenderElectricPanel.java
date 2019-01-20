@@ -1,7 +1,5 @@
 package net.tardis.mod.client.renderers.tiles;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -14,6 +12,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
+import org.lwjgl.opengl.GL11;
 
 public class RenderElectricPanel extends TileEntitySpecialRenderer<TileEntityEPanel> {
 
@@ -25,11 +24,11 @@ public class RenderElectricPanel extends TileEntitySpecialRenderer<TileEntityEPa
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		bb.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
 		IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(Block.getStateById(te.getID()));
-		for(BakedQuad q : model.getQuads(Block.getStateById(te.getID()), null, 0)) {
+		for (BakedQuad q : model.getQuads(Block.getStateById(te.getID()), null, 0)) {
 			bb.addVertexData(q.getVertexData());
 		}
-		for(EnumFacing f : EnumFacing.values()) {
-			for(BakedQuad q : model.getQuads(Block.getStateById(te.getID()), f, 0)) {
+		for (EnumFacing f : EnumFacing.values()) {
+			for (BakedQuad q : model.getQuads(Block.getStateById(te.getID()), f, 0)) {
 				bb.addVertexData(q.getVertexData());
 			}
 		}

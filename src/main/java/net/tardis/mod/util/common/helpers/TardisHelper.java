@@ -25,39 +25,38 @@ import java.util.Map;
 import java.util.UUID;
 
 public class TardisHelper {
-	
-	public static Map<String, BlockPos> tardisOwners = new HashMap<String, BlockPos>();
-	
+
 	public static final int TARDIS_SIZE = 16;
-	
+	public static Map<String, BlockPos> tardisOwners = new HashMap<String, BlockPos>();
+
 	public static boolean isConsoleChunk(Chunk c) {
-        return c.x % TARDIS_SIZE == 0 && c.z % TARDIS_SIZE == 0;
-    }
-	
+		return c.x % TARDIS_SIZE == 0 && c.z % TARDIS_SIZE == 0;
+	}
+
 	public static boolean hasTardis(UUID id) {
 		return tardisOwners.containsKey(id.toString());
 	}
-	
+
 	public static BlockPos getTardis(UUID id) {
 		if (hasTardis(id)) {
 			return tardisOwners.get(id.toString());
 		}
 		return addTardis(id);
 	}
-	
+
 	public static BlockPos addTardis(UUID id) {
 		BlockPos pos = getNextFree();
 		tardisOwners.put(id.toString(), pos.toImmutable());
 		if (TEventHandler.data != null) TEventHandler.data.markDirty();
 		return pos;
 	}
-	
+
 	public static BlockPos getLastPos() {
 		int size = tardisOwners.size();
 		if (size > 0) {
 			BlockPos last = BlockPos.ORIGIN;
-			for(BlockPos pos : tardisOwners.values().toArray(new BlockPos[] {})) {
-				if(pos.getX() > last.getX() && pos.getZ() > last.getZ()) {
+			for (BlockPos pos : tardisOwners.values().toArray(new BlockPos[]{})) {
+				if (pos.getX() > last.getX() && pos.getZ() > last.getZ()) {
 					last = pos;
 				}
 			}
@@ -65,28 +64,27 @@ public class TardisHelper {
 		}
 		return new BlockPos(8, 128, 8);
 	}
-	
+
 	public static BlockPos getNextFree() {
 		return getLastPos().add(TARDIS_SIZE * 16, 0, TARDIS_SIZE * 16);
 	}
-	
+
 	public static boolean hasValidKey(EntityLivingBase player, BlockPos cPos) {
 		ItemStack stack = player.getHeldItemMainhand();
 		ItemStack otherStack = player.getHeldItemOffhand();
 		if (stack.getItem() instanceof ItemKey) {
 			BlockPos pos = ItemKey.getPos(stack);
-            return pos != null && pos.equals(cPos);
-		}
-		else if(otherStack.getItem() instanceof ItemKey) {
+			return pos != null && pos.equals(cPos);
+		} else if (otherStack.getItem() instanceof ItemKey) {
 			BlockPos pos = ItemKey.getPos(otherStack);
-            return pos != null && pos.equals(cPos);
+			return pos != null && pos.equals(cPos);
 		}
 		return false;
 	}
-	
+
 	public static BlockPos getTardisForPosition(Vec3i vec) {
-		for(BlockPos pos : tardisOwners.values()) {
-			if(pos.getDistance(vec.getX(), vec.getY(), vec.getZ()) < (TARDIS_SIZE / 2) * 16 - 8) {
+		for (BlockPos pos : tardisOwners.values()) {
+			if (pos.getDistance(vec.getX(), vec.getY(), vec.getZ()) < (TARDIS_SIZE / 2) * 16 - 8) {
 				return pos;
 			}
 		}
@@ -102,14 +100,14 @@ public class TardisHelper {
 		}
 		return null;
 	}
-	
+
 	@EventBusSubscriber(modid = Tardis.MODID)
-	public static class Events{
-		
+	public static class Events {
+
 		@SubscribeEvent
 		public static void sync(LivingUpdateEvent event) {
-			if(event.getEntityLiving().world.getWorldTime() % 20 == 0 && !event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
-				NetworkHandler.NETWORK.sendTo(new MessageSyncTardises(), (EntityPlayerMP)event.getEntityLiving());
+			if (event.getEntityLiving().world.getWorldTime() % 20 == 0 && !event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
+				NetworkHandler.NETWORK.sendTo(new MessageSyncTardises(), (EntityPlayerMP) event.getEntityLiving());
 			}
 		}
 	}

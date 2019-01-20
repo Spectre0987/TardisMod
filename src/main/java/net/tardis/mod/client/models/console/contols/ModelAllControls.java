@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 
 public class ModelAllControls extends ModelBase {
 	// fields
-	
+
 	ModelRenderer Glow1;
 	ModelRenderer Glow2;
 	ModelRenderer Glow3;
@@ -124,11 +124,11 @@ public class ModelAllControls extends ModelBase {
 	ModelRenderer Panel6DNG23;
 	ModelRenderer Panel6DNG24;
 	ModelRenderer Panel6Lever;
-	
+
 	public ModelAllControls() {
 		textureWidth = 80;
 		textureHeight = 80;
-		
+
 		Glow1 = new ModelRenderer(this, 0, 0);
 		Glow1.addBox(-1.5F, 3F, -7.3F, 3, 1, 1);
 		Glow1.setRotationPoint(0F, 11F, 0F);
@@ -820,11 +820,11 @@ public class ModelAllControls extends ModelBase {
 		Panel6Lever.mirror = true;
 		setRotation(Panel6Lever, -1.012291F, 1.047198F, 0F);
 	}
-	
+
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		
+
 		DoNotGlow1.render(f5);
 		DoNotGlow2.render(f5);
 		DoNotGlow3.render(f5);
@@ -908,7 +908,7 @@ public class ModelAllControls extends ModelBase {
 		Panel6DNG23.render(f5);
 		Panel6DNG24.render(f5);
 		Panel6Lever.render(f5);
-		
+
 		// OpenGlHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.disableLighting();
@@ -950,15 +950,15 @@ public class ModelAllControls extends ModelBase {
 		GlStateManager.enableLighting();
 		GlStateManager.popMatrix();
 	}
-	
+
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
-	
+
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 	}
-	
+
 }

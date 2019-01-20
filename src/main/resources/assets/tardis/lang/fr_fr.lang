@@ -159,8 +159,6 @@ tardis.magnitude=Le modificateur de coordonnées TARDIS est
 
 tardis.hads.enabled.true=H.A.D.S a été activé
 tardis.hads.enabled.false=H.A.D.S a été désactivé
-tardis.hum.enabled.true=Le bourdonnement a été activé
-tardis.hum.enabled.false=Le bourdonnement a été désactivé
 
 protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S

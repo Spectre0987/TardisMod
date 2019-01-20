@@ -7,19 +7,19 @@
   ],
   "key": {
     "B": {
-      "item":"minecraft:iron_bars"
+      "item": "minecraft:iron_bars"
     },
-    "I":{
-        "item":"minecraft:iron_ingot"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     },
-    "R":{
-        "item":"minecraft:redstone"
+    "R": {
+      "item": "minecraft:redstone"
     },
-    "A":{
-        "item":"tardis:artron_capacitor"
+    "A": {
+      "item": "tardis:artron_capacitor"
     }
   },
   "result": {

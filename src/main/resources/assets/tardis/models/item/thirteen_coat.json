@@ -1,6 +1,6 @@
 {
-    "parent":"item/generated",
-    "textures":{
-        "layer0":"tardis:items/twelve_coat"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tardis:items/twelve_coat"
+  }
 }

@@ -4,20 +4,21 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityMultiblock extends TileEntity{
-	
+public class TileEntityMultiblock extends TileEntity {
+
 	BlockPos masterPos = BlockPos.ORIGIN;
-	
-	public TileEntityMultiblock() {}
-	
-	public void setMasterPos(BlockPos pos) {
-		this.masterPos = pos;
-		((TileEntityMultiblockMaster)this.getWorld().getTileEntity(pos)).addChildren(this.getPos());
-		this.markDirty();
+
+	public TileEntityMultiblock() {
 	}
-	
+
 	public BlockPos getMasterPos() {
 		return this.masterPos;
+	}
+
+	public void setMasterPos(BlockPos pos) {
+		this.masterPos = pos;
+		((TileEntityMultiblockMaster) this.getWorld().getTileEntity(pos)).addChildren(this.getPos());
+		this.markDirty();
 	}
 
 	@Override

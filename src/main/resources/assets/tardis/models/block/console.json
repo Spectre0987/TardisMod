@@ -1,6 +1,10 @@
 {
-    "parent":"builtin/entity",
-    "display":{
-        "translation":[0,0,0]
-    }
+  "parent": "builtin/entity",
+  "display": {
+    "translation": [
+      0,
+      0,
+      0
+    ]
+  }
 }

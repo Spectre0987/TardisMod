@@ -16,13 +16,14 @@ public class WorldProviderTelos extends WorldProvider {
 	public static final Vec3d fogColor = new Vec3d(0.611, 0.69, 0.788);
 	private BiomeProviderSingle biomeP = new BiomeProviderSingle(TDimensions.telosBiome);
 	private ChunkGeneratorFactory chunkGen = ChunkGeneratorTelos::new;
-	
-	public WorldProviderTelos() {}
-	
+
+	public WorldProviderTelos() {
+	}
+
 	public WorldProviderTelos(ChunkGeneratorFactory gen) {
 		this.chunkGen = gen;
 	}
-	
+
 	@Override
 	public DimensionType getDimensionType() {
 		return TDimensions.telosType;
@@ -63,8 +64,8 @@ public class WorldProviderTelos extends WorldProvider {
 	public IChunkGenerator createChunkGenerator() {
 		return chunkGen.create(world, world.getSeed());
 	}
-	
-	public static interface ChunkGeneratorFactory<T extends IChunkGenerator>{
+
+	public interface ChunkGeneratorFactory<T extends IChunkGenerator> {
 		T create(World world, Long seed);
 	}
 }

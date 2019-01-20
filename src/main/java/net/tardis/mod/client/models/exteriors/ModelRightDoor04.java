@@ -25,7 +25,7 @@ public class ModelRightDoor04 extends ModelBase {
 	ModelRenderer Gen13;
 	ModelRenderer Gen14;
 
-	public ModelRightDoor04() { 
+	public ModelRightDoor04() {
 
 		textureWidth = 256;
 		textureHeight = 256;
@@ -141,9 +141,10 @@ public class ModelRightDoor04 extends ModelBase {
 		Gen14.setRotationPoint(0.0F, 0.0F, -1.0F);
 		setRotation(Gen14, 0.0F, 0.0F, 0.0F);
 		Gen14.mirror = false;
-		
+
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
@@ -166,14 +167,15 @@ public class ModelRightDoor04 extends ModelBase {
 		Gen14.render(scale);
 		GlStateManager.popMatrix();
 	}
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
 }

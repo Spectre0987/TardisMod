@@ -16,34 +16,35 @@ public class WorldProviderTardis extends WorldProvider {
 
 	public WorldProviderTardis() {
 	}
-	
+
 	@Override
 	public IChunkGenerator createChunkGenerator() {
 		return new TardisChunkGenerator(this.world, this.world.getSeed());
 	}
-	
+
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks) {
 		return 0.5F;
 	}
-	
+
 	@Override
 	public float[] calcSunriseSunsetColors(float celestialAngle, float partialTicks) {
 		return super.calcSunriseSunsetColors(celestialAngle, partialTicks);
 	}
-	
+
 	@Override
 	public int getDimension() {
 		return super.getDimension();
 	}
-	
+
 	@Override
 	public Biome getBiomeForCoords(BlockPos pos) {
 		return Biomes.DESERT;
 	}
-	
+
 	@Override
-	public void calculateInitialWeather() {}
+	public void calculateInitialWeather() {
+	}
 
 	@Override
 	protected void generateLightBrightnessTable() {
@@ -64,13 +65,14 @@ public class WorldProviderTardis extends WorldProvider {
 	}
 
 	@Override
-	public void updateWeather() {}
-	
+	public void updateWeather() {
+	}
+
 	@Override
 	public DimensionType getDimensionType() {
 		return TDimensions.tardisType;
 	}
-	
+
 	@Override
 	public boolean canRespawnHere() {
 		return false;

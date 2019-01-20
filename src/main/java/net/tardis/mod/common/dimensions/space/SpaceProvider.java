@@ -12,10 +12,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.renderers.sky.RenderVoid;
 import net.tardis.mod.common.dimensions.TDimensions;
 
-public class SpaceProvider extends WorldProvider{
+public class SpaceProvider extends WorldProvider {
 
-	public SpaceProvider() {}
-	
+	public SpaceProvider() {
+	}
+
 	@Override
 	public DimensionType getDimensionType() {
 		return TDimensions.spaceType;
@@ -44,7 +45,7 @@ public class SpaceProvider extends WorldProvider{
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IRenderHandler getCloudRenderer() {
-        return new RenderVoid();
+		return new RenderVoid();
 	}
 
 	@Override
@@ -53,10 +54,12 @@ public class SpaceProvider extends WorldProvider{
 	}
 
 	@Override
-	public void calculateInitialWeather() {}
+	public void calculateInitialWeather() {
+	}
 
 	@Override
-	public void updateWeather() {}
+	public void updateWeather() {
+	}
 
 	@Override
 	public boolean canBlockFreeze(BlockPos pos, boolean byWater) {
@@ -80,7 +83,7 @@ public class SpaceProvider extends WorldProvider{
 	public IRenderHandler getSkyRenderer() {
 		return new RenderSpace();
 	}
-	
+
 	@Override
 	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
 		return WorldSleepResult.DENY;

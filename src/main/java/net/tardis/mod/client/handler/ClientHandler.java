@@ -17,25 +17,25 @@ import net.tardis.mod.network.packets.MessageUpdateBessie;
 @Mod.EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientHandler {
 
-    @SubscribeEvent
-    public static void honkMyHorn(TickEvent.ClientTickEvent e) {
-        if (Minecraft.getMinecraft().player == null) return;
-        if (Minecraft.getMinecraft().player.getRidingEntity() instanceof EntityBessie) {
-            EntityBessie bessie = (EntityBessie) Minecraft.getMinecraft().player.getRidingEntity();
-            Entity driver = bessie.getControllingPassenger();
-            if (driver.getEntityId() == Minecraft.getMinecraft().player.getEntityId()) {
-                if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
-                    NetworkHandler.NETWORK.sendToServer(new MessageUpdateBessie(bessie.getEntityId()));
-                }
-            }
-        }
-    }
-    
-    @SubscribeEvent
-    public static void cancelBB(DrawBlockHighlightEvent event) {
-    	if(event.getTarget() != null && event.getTarget().getBlockPos() != null && !BlockPos.ORIGIN.equals(event.getTarget().getBlockPos()) && event.getPlayer().world.getBlockState(event.getTarget().getBlockPos()).getBlock() instanceof INoBox) {
-    		event.setCanceled(true);
-    	}
-    }
+	@SubscribeEvent
+	public static void honkMyHorn(TickEvent.ClientTickEvent e) {
+		if (Minecraft.getMinecraft().player == null) return;
+		if (Minecraft.getMinecraft().player.getRidingEntity() instanceof EntityBessie) {
+			EntityBessie bessie = (EntityBessie) Minecraft.getMinecraft().player.getRidingEntity();
+			Entity driver = bessie.getControllingPassenger();
+			if (driver.getEntityId() == Minecraft.getMinecraft().player.getEntityId()) {
+				if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
+					NetworkHandler.NETWORK.sendToServer(new MessageUpdateBessie(bessie.getEntityId()));
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void cancelBB(DrawBlockHighlightEvent event) {
+		if (event.getTarget() != null && event.getTarget().getBlockPos() != null && !BlockPos.ORIGIN.equals(event.getTarget().getBlockPos()) && event.getPlayer().world.getBlockState(event.getTarget().getBlockPos()).getBlock() instanceof INoBox) {
+			event.setCanceled(true);
+		}
+	}
 
 }

@@ -7,10 +7,10 @@
   ],
   "key": {
     "s": {
-      "item":"minecraft:stick"
+      "item": "minecraft:stick"
     },
-    "b":{
-        "item": "minecraft:glass_bottle"
+    "b": {
+      "item": "minecraft:glass_bottle"
     }
   },
   "result": {

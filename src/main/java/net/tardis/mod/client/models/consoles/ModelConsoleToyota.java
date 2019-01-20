@@ -167,7 +167,7 @@ public class ModelConsoleToyota extends ModelBase {
 	ModelRenderer RotorGlow6;
 	ModelRenderer Gen146;
 
-	public ModelConsoleToyota() { 
+	public ModelConsoleToyota() {
 
 		textureWidth = 256;
 		textureHeight = 256;
@@ -1272,6 +1272,7 @@ public class ModelConsoleToyota extends ModelBase {
 		Gen146.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 
@@ -1424,7 +1425,7 @@ public class ModelConsoleToyota extends ModelBase {
 		Gen144.render(scale);
 		Gen145.render(scale);
 		Gen146.render(scale);
-		
+
 		GlStateManager.pushMatrix();
 		Minecraft.getMinecraft().entityRenderer.disableLightmap();
 		RotorGlow3.render(scale);
@@ -1437,18 +1438,18 @@ public class ModelConsoleToyota extends ModelBase {
 		MoveMeDownAndUpInFlight.render(scale);
 		GlStateManager.popMatrix();
 	}
-	
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
-	
+
 	public void renderRotor(float scale) {
 		MoveMeUpAndDownInFlight.render(scale);
 	}
