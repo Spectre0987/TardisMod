@@ -27,7 +27,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageSyncTardises.Handler.class, MessageSyncTardises.class, 13, Side.CLIENT);
 		NETWORK.registerMessage(MessageWaypointSave.Handler.class, MessageWaypointSave.class, 14, Side.SERVER);
 		NETWORK.registerMessage(MessageWaypointLoad.Handler.class, MessageWaypointLoad.class, 15, Side.SERVER);
-		NETWORK.registerMessage(MessageSnap.Handler.class, MessageSnap.class, 16, Side.CLIENT);
+		NETWORK.registerMessage(MessageSnap.Handler.class, MessageSnap.class, 16, Side.SERVER);
 	}
 
 

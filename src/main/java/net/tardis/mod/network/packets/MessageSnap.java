@@ -2,12 +2,14 @@ package net.tardis.mod.network.packets;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
@@ -15,7 +17,7 @@ import java.util.UUID;
 
 public class MessageSnap implements IMessage {
 
-    UUID playerID;
+    private UUID playerID;
 
     public MessageSnap() {
     }
@@ -43,8 +45,15 @@ public class MessageSnap implements IMessage {
             ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 TileEntityTardis tardis = TardisHelper.getConsole(TardisHelper.getTardis(message.playerID));
                 if (tardis != null){
-                    tardis.getDoor().setOpen(!tardis.getDoor().isOpen());
                     ctx.getServerHandler().player.world.playSound(null, ctx.getServerHandler().player.getPosition(), TSounds.snap, SoundCategory.AMBIENT, 1F, 1F);
+
+                    TileEntity door = ctx.getServerHandler().player.server.worlds[tardis.dimension].getTileEntity(tardis.getLocation().up());
+                    ((TileEntityDoor)door).toggleLockedNoKey(ctx.getServerHandler().player);
+                    tardis.getDoor().setOpen(!((TileEntityDoor)door).isLocked);
+                    if (((TileEntityDoor)door).isLocked)
+                        ctx.getServerHandler().player.world.playSound(null, ctx.getServerHandler().player.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.2F, 1F);
+                    else
+                        ctx.getServerHandler().player.world.playSound(null, ctx.getServerHandler().player.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.2F, 1F);
                 }
             });
             return null;
