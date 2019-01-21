@@ -29,6 +29,7 @@ public class TSounds {
 	public static SoundEvent engine_stutter = register("stutter");
 	public static SoundEvent phone = register("phone");
 	public static SoundEvent knocking = register("knocking");
+	public static SoundEvent snap = register("snap");
 	public static SoundEvent vmSound = register("vm_teleport");
 	public static SoundEvent flyLoop = register("fly_loop");
 	public static SoundEvent bessieHorn = register("bessie_horn");
@@ -42,7 +43,6 @@ public class TSounds {
 	public static SoundEvent FOOD_MACHINE = register("1963_food_machine");
 
 	public static SoundEvent tardis_land = register("tardis_land");
-
 
 	public static SoundEvent register(String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
