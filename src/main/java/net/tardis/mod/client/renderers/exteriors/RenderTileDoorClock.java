@@ -31,7 +31,7 @@ public class RenderTileDoorClock extends RenderExterior {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.25, 0.6, -0.171875);
 		GlStateManager.rotate(180, 0, 0, 1);
-		RenderHelper.renderPortal(renderShell, te, partialTicks, 90, RenderTileDoor.POSITION, SIZE, false);
+		RenderHelper.renderPortal(renderShell, te, partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, SIZE, false);
 		GlStateManager.popMatrix();
 	}
 
