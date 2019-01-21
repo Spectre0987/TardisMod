@@ -1,5 +1,8 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -13,6 +16,8 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -20,12 +25,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.client.worldshell.*;
+import net.tardis.mod.client.worldshell.BlockStorage;
+import net.tardis.mod.client.worldshell.IContainsWorldShell;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.TDamageSources;
 import net.tardis.mod.common.blocks.BlockTardisTop;
@@ -38,11 +45,7 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.util.TardisTeleporter;
-import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 
@@ -61,6 +64,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
 	private AxisAlignedBB SHELL_AABB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10);
 	private int lightLevel = 0;
+	//The rotation to render the interior as
+	private float renderAngle = 90;
 
 	public TileEntityDoor() {
 		this.isRemat = true;
@@ -76,6 +81,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.isRemat = tag.getBoolean("remat");
 		this.alpha = tag.getFloat("alpha");
 		this.forceField = tag.getBoolean("forcefield");
+		this.renderAngle = tag.getFloat("renderAngle");
 	}
 
 	@Override
@@ -86,6 +92,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		tag.setBoolean("remat", this.isRemat);
 		tag.setFloat("alpha", this.alpha);
 		tag.setBoolean("forcefield", forceField);
+		tag.setFloat("renderAngle", renderAngle);
 		return super.writeToNBT(tag);
 	}
 
@@ -163,6 +170,13 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			if (canOpen() && forceField) {
 				handleForceField();
 			}
+			
+			if(world.getWorldTime() % 200 == 0 && tardis.getDoor() != null) {
+				this.renderAngle = tardis.getDoor().rotationYaw;
+				for(EntityPlayer player : world.playerEntities) {
+					((EntityPlayerMP)player).connection.sendPacket(this.getUpdatePacket());
+				}
+			}
 
 
 			//HADS
@@ -171,8 +185,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				if (e instanceof IProjectile || e instanceof IMob) {
 					try {
 						((TileEntityTardis) DimensionManager.getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos())).startHADS();
-					} catch (Exception exc) {
 					}
+					catch (Exception exc) {}
 				}
 			}
 			if (lockCooldown > 0) --lockCooldown;
@@ -185,28 +199,39 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			if (world.getWorldTime() % 5 == 0) {
 				if (!this.isLocked()) {
 					if (tardis.getDoor() == null) return;
-					worldShell = new WorldShell(tardis.getDoor().getPosition());
-					WorldServer tardisWorld = ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-					for (BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(new Vec3i(0, radius, radius)), worldShell.getOffset().add(new Vec3i(radius, radius, radius)))) {
-						IBlockState state = tardisWorld.getBlockState(pos);
-						if (state.getBlock() != Blocks.AIR) {
-							worldShell.blockMap.put(pos, new BlockStorage(state, tardisWorld.getTileEntity(pos), 15));
-						}
+					EnumFacing face = tardis.getDoor().getHorizontalFacing();
+					BlockPos doorPos = tardis.getDoor().getPosition();
+					AxisAlignedBB BB;
+					if(face == EnumFacing.NORTH) {
+						BB = new AxisAlignedBB(-radius, -radius, -radius, radius, radius, 1);
+						doorPos = doorPos.add(1, 0, 0);
 					}
-					List<NBTTagCompound> lists = new ArrayList<NBTTagCompound>();
-					List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-					for (Entity e : tardisWorld.getEntitiesWithinAABB(Entity.class, Helper.createBB(getConsolePos(), 10))) {
-						if (EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
+					else if(face == EnumFacing.SOUTH) {
+						BB = new AxisAlignedBB(-radius, -radius, 0, radius, radius, radius);
+						doorPos = doorPos.add(0, 0, 0);
+					}
+					else if(face == EnumFacing.EAST) {
+						BB = new AxisAlignedBB(0, -radius, -radius, radius, radius, radius);
+						doorPos = doorPos.add(0, 0, 1);
+					}
+					else {
+						BB = new AxisAlignedBB(-radius, -radius, -radius, 0, radius, radius);
+						doorPos = doorPos.add(0, 0, 0);
+					}
+					if(worldShell == null || !worldShell.getOffset().equals(doorPos)) worldShell = new WorldShell(doorPos);
+					for(BlockPos pos : this.getBlocksInAABB(BB.offset(doorPos))) {
+						worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
+					}
+					List<NBTTagCompound> bEnt = new ArrayList<NBTTagCompound>();
+					for(Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, BB.offset(doorPos))) {
+						if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
 							NBTTagCompound tag = new NBTTagCompound();
 							e.writeToNBT(tag);
 							tag.setString("id", EntityList.getKey(e).toString());
-							lists.add(tag);
-						} else if (e instanceof EntityPlayer) {
-							players.add(new PlayerStorage((EntityPlayer) e));
+							bEnt.add(tag);
 						}
 					}
-					worldShell.setPlayers(players);
-					worldShell.setEntities(lists);
+					worldShell.setEntities(bEnt);
 					NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
 				}
 			}
@@ -270,6 +295,19 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		super.onLoad();
 		if (!world.isRemote)
 			NetworkHandler.NETWORK.sendToDimension(new MessageDoorOpen(this.getPos(), this), world.provider.getDimension());
+	}
+	
+	public List<BlockPos> getBlocksInAABB(AxisAlignedBB bb){
+		List<BlockPos> poses = new ArrayList<BlockPos>();
+		if(bb == null) return poses;
+		for(int x = (int)bb.minX; x < bb.maxX; ++x) {
+			for(int y = (int)bb.minY; y < bb.maxY; ++y) {
+				for(int z = (int)bb.minZ; z < bb.maxZ; ++z) {
+					poses.add(new BlockPos(x, y, z));
+				}
+			}
+		}
+		return poses;
 	}
 
 	@Override
@@ -446,5 +484,28 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 
 	public class NBT {
 		public static final String LOCKED = "locked";
+	}
+
+	public float getDoorAngle() {
+		return this.renderAngle;
+	}
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(this.getPos(), -1, this.getUpdateTag());
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setFloat("angle", this.renderAngle);
+		return tag;
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		super.onDataPacket(net, pkt);
+		this.renderAngle = pkt.getNbtCompound().getFloat("angle");
+		System.out.println("Angle recieved as: " + this.renderAngle);
 	}
 }

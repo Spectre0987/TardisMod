@@ -26,7 +26,7 @@ import java.util.Map;
 public class WorldShell implements IBlockAccess {
 
 	// Keeps stores a collection of BlockAcess's mapped to blockpos coords
-	public Map<BlockPos, BlockStorage> blockMap;
+	public Map<BlockPos, BlockStorage> blockMap = new HashMap<>();
 	@SideOnly(Side.CLIENT)
 	public BufferBuilder.State bufferstate;
 	public boolean updateRequired = false;

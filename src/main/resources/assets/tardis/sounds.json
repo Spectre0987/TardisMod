@@ -5,7 +5,7 @@
     "sounds": [
       {
         "name": "tardis:takeoff",
-        "stream": false
+        "stream": true
       }
     ]
   },
@@ -16,7 +16,7 @@
     "sounds": [
       {
         "name": "tardis:tardis_land",
-        "stream": false
+        "stream": true
       }
     ]
   },
