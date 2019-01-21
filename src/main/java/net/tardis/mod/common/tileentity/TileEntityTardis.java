@@ -19,7 +19,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketCustomSound;
 import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -487,6 +486,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				DimensionType currentType = DimensionManager.getProviderType(this.dimension);
 				if (type != null) this.currentDimName = currentType.getName();
 			}
+			this.markDirty();
+			this.ticksToTravel = this.totalTimeToTravel = this.calcTimeToTravel();
 		}
 	}
 
@@ -500,6 +501,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			DimensionType currentType = DimensionManager.getProviderType(this.dimension);
 			if (type != null) this.currentDimName = currentType.getName();
 		}
+		this.markDirty();
 	}
 
 	public int calcTimeToTravel() {
