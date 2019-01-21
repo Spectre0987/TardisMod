@@ -62,10 +62,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public boolean isDemat, isRemat = false;
 	private int updateTicks = 0;
 	private WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
-	private AxisAlignedBB SHELL_AABB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10);
 	private int lightLevel = 0;
 	//The rotation to render the interior as
 	private float renderAngle = 90;
+	
+	public static final AxisAlignedBB NORTH = new AxisAlignedBB(0, 0, -0.1, 1, 2, 0);
+	public static final AxisAlignedBB EAST = new AxisAlignedBB(1, 0, 0, 1.1, 2, 1);
+	public static final AxisAlignedBB WEST = new AxisAlignedBB(-0.1, 0, 0, 0, 2, 1);
+	public static final AxisAlignedBB SOUTH = new AxisAlignedBB(0, 0, 1, 1, 2, 1.1);
 
 	public TileEntityDoor() {
 		this.isRemat = true;
@@ -148,7 +152,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (!world.isRemote) {
 			WorldServer ws = (WorldServer) world;
 
-			AxisAlignedBB bounds = aabb.offset(getPos().down().offset(getFacing()));
+			AxisAlignedBB bounds;
+			if(this.getFacing() == EnumFacing.NORTH)
+				bounds = NORTH.offset(getPos().down());
+			else if(this.getFacing() == EnumFacing.EAST)
+				bounds = EAST.offset(this.getPos().down());
+			else if(this.getFacing() == EnumFacing.SOUTH)
+				bounds = SOUTH.offset(this.getPos().down());
+			else bounds = WEST.offset(this.getPos().down());
 
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, bounds);
 			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
@@ -171,7 +182,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				handleForceField();
 			}
 			
-			if(world.getWorldTime() % 200 == 0 && tardis.getDoor() != null) {
+			if(world.getWorldTime() % 20 == 0 && tardis.getDoor() != null) {
 				this.renderAngle = tardis.getDoor().rotationYaw;
 				for(EntityPlayer player : world.playerEntities) {
 					((EntityPlayerMP)player).connection.sendPacket(this.getUpdatePacket());
@@ -203,7 +214,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					BlockPos doorPos = tardis.getDoor().getPosition();
 					AxisAlignedBB BB;
 					if(face == EnumFacing.NORTH) {
-						BB = new AxisAlignedBB(-radius, -radius, -radius, radius, radius, 1);
+						BB = new AxisAlignedBB(-radius, -radius, -radius, radius, radius, 0);
 						doorPos = doorPos.add(1, 0, 0);
 					}
 					else if(face == EnumFacing.SOUTH) {
@@ -506,6 +517,5 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		super.onDataPacket(net, pkt);
 		this.renderAngle = pkt.getNbtCompound().getFloat("angle");
-		System.out.println("Angle recieved as: " + this.renderAngle);
 	}
 }
