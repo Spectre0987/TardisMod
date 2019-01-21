@@ -1,6 +1,7 @@
 package net.tardis.mod.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
@@ -46,22 +47,23 @@ public class MessageSnap implements IMessage {
             ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 TileEntityTardis tardis = TardisHelper.getConsole(TardisHelper.getTardis(message.playerID));
                 if (tardis != null){
+                    EntityPlayerMP player = ctx.getServerHandler().player;
                     //If the exterior distance < 30
-                    if (ctx.getServerHandler().player.dimension != TDimensions.TARDIS_ID && tardis.getDoor().getDistance((int)ctx.getServerHandler().player.posX,(int)ctx.getServerHandler().player.posY,(int)ctx.getServerHandler().player.posZ) > 30) return;
+                    if (ctx.getServerHandler().player.dimension != TDimensions.TARDIS_ID && tardis.getLocation().getDistance((int)player.posX,(int)player.posY, (int)player.posZ) > 30) return;
 
                     //And if the interior distance is below 10
-                    if (ctx.getServerHandler().player.dimension == TDimensions.TARDIS_ID && tardis.getDoor().getDistance((int)ctx.getServerHandler().player.posX,(int)ctx.getServerHandler().player.posY,(int)ctx.getServerHandler().player.posZ) > 10) return;
+                    if (ctx.getServerHandler().player.dimension == TDimensions.TARDIS_ID && tardis.getDoor().getDistance(player) > 10) return;
 
                     //Then, we can open the doors
-                    ctx.getServerHandler().player.world.playSound(null, ctx.getServerHandler().player.getPosition(), TSounds.snap, SoundCategory.AMBIENT, 1F, 1F);
-                    TileEntity door = ctx.getServerHandler().player.server.worlds[tardis.dimension].getTileEntity(tardis.getLocation().up());
-                    ((TileEntityDoor)door).toggleLockedNoKey(ctx.getServerHandler().player);
+                    ctx.getServerHandler().player.world.playSound(null, player.getPosition(), TSounds.snap, SoundCategory.AMBIENT, 1F, 1F);
+                    TileEntity door = player.server.worlds[tardis.dimension].getTileEntity(tardis.getLocation().up());
+                    ((TileEntityDoor)door).toggleLockedNoKey(player);
                     tardis.getDoor().setOpen(!((TileEntityDoor)door).isLocked);
 
                     if (((TileEntityDoor)door).isLocked)
-                        ctx.getServerHandler().player.world.playSound(null, ctx.getServerHandler().player.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.2F, 1F);
+                        ctx.getServerHandler().player.world.playSound(null, player.getPosition(), TSounds.door_closed, SoundCategory.BLOCKS, 0.2F, 1F);
                     else
-                        ctx.getServerHandler().player.world.playSound(null, ctx.getServerHandler().player.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.2F, 1F);
+                        ctx.getServerHandler().player.world.playSound(null, player.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.2F, 1F);
 
                 }
             });
