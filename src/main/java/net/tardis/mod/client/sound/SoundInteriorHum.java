@@ -6,6 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.tardis.mod.common.dimensions.WorldProviderTardis;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
+
+import java.util.function.Supplier;
 
 /**
  * Created by Sub
@@ -14,10 +17,12 @@ import net.tardis.mod.common.dimensions.WorldProviderTardis;
 public class SoundInteriorHum extends MovingSound {
 
 	private EntityPlayer player = Minecraft.getMinecraft().player;
-
-	public SoundInteriorHum(SoundEvent soundIn) {
-		super(soundIn, SoundCategory.MASTER);
+	private final TileEntityTardis stopCondition;
+	
+	public SoundInteriorHum(SoundEvent soundIn, TileEntityTardis tardis) {
+		super(soundIn, SoundCategory.AMBIENT);
 		this.repeat = true;
+		this.stopCondition = tardis;
 	}
 
 	@Override
@@ -30,6 +35,11 @@ public class SoundInteriorHum extends MovingSound {
 		this.xPosF = (float) this.player.posX;
 		this.yPosF = (float) this.player.posY;
 		this.zPosF = (float) this.player.posZ;
-		volume = 0.3F;
+		volume = 1.5F;
+	}
+	
+	@Override
+	public boolean isDonePlaying() {
+		return stopCondition.soundChanged || !(player.world.provider instanceof WorldProviderTardis);
 	}
 }
