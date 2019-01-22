@@ -1,5 +1,6 @@
 package net.tardis.mod.common.items;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -31,11 +32,13 @@ public class ItemSonic extends Item {
 
 	public static final String MODE_KEY = "mode";
 	public static final String CONSOLE_POS = "console_pos";
+	public static List<ItemStack> SONICS = new ArrayList<ItemStack>();
 	private SoundEvent sonicSound;
 
 	public ItemSonic(SoundEvent sonicSound) {
 		this.setMaxStackSize(1);
 		this.sonicSound = sonicSound;
+		SONICS.add(new ItemStack(this));
 	}
 
 	public static int getCharge(ItemStack stack) {

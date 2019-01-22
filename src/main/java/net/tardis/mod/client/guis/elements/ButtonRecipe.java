@@ -3,6 +3,7 @@ package net.tardis.mod.client.guis.elements;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -23,7 +24,9 @@ public class ButtonRecipe extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+		RenderHelper.enableGUIStandardItemLighting();
 		mc.getRenderItem().renderItemIntoGUI(stackToRender, this.x + 1, this.y + 1);
+		RenderHelper.disableStandardItemLighting();
 	}
 
 	public IBlockState getBlock() {

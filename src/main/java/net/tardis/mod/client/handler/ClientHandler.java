@@ -9,11 +9,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.TardisKeyBinds;
 import net.tardis.mod.common.blocks.INoBox;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.network.NetworkHandler;
-import net.tardis.mod.network.packets.MessageSnap;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 
 @Mod.EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
@@ -37,13 +35,6 @@ public class ClientHandler {
 	public static void cancelBB(DrawBlockHighlightEvent event) {
 		if (event.getTarget() != null && event.getTarget().getBlockPos() != null && !BlockPos.ORIGIN.equals(event.getTarget().getBlockPos()) && event.getPlayer().world.getBlockState(event.getTarget().getBlockPos()).getBlock() instanceof INoBox) {
 			event.setCanceled(true);
-		}
-	}
-
-	@SubscribeEvent
-	public static void onClientTick(TickEvent.ClientTickEvent e) {
-		if (TardisKeyBinds.SNAP.isPressed()){
-			NetworkHandler.NETWORK.sendToServer(new MessageSnap(Minecraft.getMinecraft().player.getGameProfile().getId()));
 		}
 	}
 

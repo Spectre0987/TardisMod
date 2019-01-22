@@ -33,7 +33,7 @@ public class RendererTileDoor01 extends RenderExterior {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5, 0.9375, 0);
 		GlStateManager.rotate(180, 0, 0, 1);
-		RenderHelper.renderPortal(renderShell, te, partialTicks, 90, RenderTileDoor.POSITION, null, false);
+		RenderHelper.renderPortal(renderShell, te, partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, null, false);
 		GlStateManager.popMatrix();
 	}
 

@@ -15,7 +15,7 @@ import net.tardis.mod.util.client.RenderHelper;
 public class RenderTileDoor extends RenderExterior {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/exteriors/01.png");
-	public static final Vec3d POSITION = new Vec3d(0, 0, -0.5);
+	public static final Vec3d POSITION = new Vec3d(0, 0, 0);
 	public ModelTardis01 model = new ModelTardis01();
 	public ModelRightDoor01 rd = new ModelRightDoor01();
 	public ModelLeftDoor01 ld = new ModelLeftDoor01();
@@ -35,7 +35,7 @@ public class RenderTileDoor extends RenderExterior {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5, 1, 0);
 		GlStateManager.rotate(180, 0, 0, 1);
-		RenderHelper.renderPortal(renderShell, te, partialTicks, 90, RenderTileDoor.POSITION, null, false);
+		RenderHelper.renderPortal(renderShell, te, partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, null, false);
 		GlStateManager.popMatrix();
 	}
 
