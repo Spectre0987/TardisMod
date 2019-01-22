@@ -16,7 +16,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
-import net.tardis.mod.client.TardisKeyBinds;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.models.consoles.ModelConsole;
@@ -215,8 +214,5 @@ public class ClientProxy extends ServerProxy {
 		EnumCompanionType.VANDHAM.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.VASSILIS.setModel(new ModelPlayer(0.0625F, false));
 		EnumCompanionType.WOLSEY.setModel(new ModelOcelot());
-
-		//Keybinds
-		TardisKeyBinds.init();
 	}
 }

@@ -1,5 +1,8 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -18,11 +21,18 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.decoration.*;
-import net.tardis.mod.common.tileentity.exteriors.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
+import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentPole;
+import net.tardis.mod.common.tileentity.decoration.TileEntityToyotaSpin;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor01;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor03;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 
 public class TBlocks {
 
@@ -131,7 +141,6 @@ public class TBlocks {
 	public static Block tardis_top_tt = register(new BlockTardisTop(TileEntityDoorTT::new), "tardis_top_tt", false);
 	public static Block tardis_top_wood_door = register(new BlockTardisTop(TileEntityDoorWood::new), "tardis_top_wood_door", false);
 
-
 	//Consoles
 	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console", false);
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01", false);
@@ -144,6 +153,8 @@ public class TBlocks {
 
 	public static Block multiblock = register(new BlockMultiblock(Material.WOOD), "multiblock", false);
 	public static Block multiblock_master = register(new BlockMultiblockMaster(Material.WOOD), "multiblock_master", false);
+	
+	public static Block sonic_workbench = register(new BlockSonicWorkbench(), "sonic_workbench");
 
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
 

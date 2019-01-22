@@ -7,6 +7,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -19,6 +20,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketCustomSound;
 import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -80,6 +82,7 @@ import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
+import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
@@ -131,9 +134,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public List<TardisControlFactory> controlClases = new ArrayList<>();
 	public int waypointIndex = 0;
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
-	private InteriorHum hum = InteriorHum.DEFAULT;
+	public InteriorHum hum = InteriorHum.DEFAULT;
 	public boolean overrideStabilizers = false;
-
+	public boolean soundChanged = false;
+	
 	public TileEntityTardis() {
 		if(systems == null) {
 			this.systems = this.createSystems();
@@ -157,10 +161,19 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if(this.getClass() == TileEntityTardis.class)
 			this.controlClases.add(ControlSonicSlot::new);
 	}
-
-
+	
 	@Override
 	public void update() {
+		if(world.isRemote) {
+			if (Minecraft.getMinecraft().player != null) {
+				System.out.println(Minecraft.getMinecraft().player.ticksExisted);
+				if (Minecraft.getMinecraft().player.ticksExisted == 20 || soundChanged) {
+					PlayerHelper.playHum(hum.getSound().getRegistryName().toString(), this);
+					soundChanged = false;
+				}
+			}
+		}
+		
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - this.calcFuelUse());
@@ -235,11 +248,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		if (world.isRemote && !this.isInFlight()) {
 			frame = 0;
-		}
-		if(hum != null) {
-			if (world.getTotalWorldTime() % hum.getTicks() == 0 && !world.isRemote) {
-				world.playSound(null, getPos(), hum.getSound(), SoundCategory.BLOCKS, 0.5F, 1F);
-			}
 		}
 		this.createControls();
 		for(BaseSystem sys : this.systems) {
@@ -486,8 +494,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				DimensionType currentType = DimensionManager.getProviderType(this.dimension);
 				if (type != null) this.currentDimName = currentType.getName();
 			}
-			this.markDirty();
-			this.ticksToTravel = this.totalTimeToTravel = this.calcTimeToTravel();
 		}
 	}
 
@@ -501,7 +507,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			DimensionType currentType = DimensionManager.getProviderType(this.dimension);
 			if (type != null) this.currentDimName = currentType.getName();
 		}
-		this.markDirty();
 	}
 
 	public int calcTimeToTravel() {
@@ -965,7 +970,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			TileEntityDoor door = (TileEntityDoor)ws.getTileEntity(this.getLocation().up());
 			if(door != null) {
 				EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
-				pos = door.getPos().down().offset(face, 2);
+				pos = door.getPos().down().offset(face, 1);
 				if(entity instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP)entity;
 					if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter((WorldServer)world));

@@ -24,12 +24,14 @@ public class TSounds {
 	public static SoundEvent door_open = register("door_open");
 	public static SoundEvent door_closed = register("door_closed");
 	public static SoundEvent interior_hum_80 = register("interior_hum_80");
+	public static SoundEvent interior_hum_copper = register("tardis_hum_copper");
+	public static SoundEvent interior_hum_coral = register("tardis_hum_coral");
+	public static SoundEvent interior_hum_toyota = register("tardis_hum_toyota");
 	public static SoundEvent cloister_bell = register("cloister_bell");
 	public static SoundEvent drum_beat = register("drum_beat");
 	public static SoundEvent engine_stutter = register("stutter");
 	public static SoundEvent phone = register("phone");
 	public static SoundEvent knocking = register("knocking");
-	public static SoundEvent snap = register("snap");
 	public static SoundEvent vmSound = register("vm_teleport");
 	public static SoundEvent flyLoop = register("fly_loop");
 	public static SoundEvent bessieHorn = register("bessie_horn");
@@ -43,6 +45,7 @@ public class TSounds {
 	public static SoundEvent FOOD_MACHINE = register("1963_food_machine");
 
 	public static SoundEvent tardis_land = register("tardis_land");
+
 
 	public static SoundEvent register(String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);

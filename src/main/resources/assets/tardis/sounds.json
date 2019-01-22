@@ -245,5 +245,32 @@
         "stream": false
       }
     ]
+  },
+  "tardis_hum_copper": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:tardis_hum_copper",
+        "stream": false
+      }
+    ]
+  },
+  "tardis_hum_coral": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:tardis_hum_coral",
+        "stream": false
+      }
+    ]
+  },
+  "tardis_hum_toyota": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:tardis_hum_toyota",
+        "stream": false
+      }
+    ]
   }
 }

@@ -213,7 +213,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 
 	@Override
 	public int getDimension() {
-		return this.getConsole() != null && this.getConsole().getWorld() != null ? this.getConsole().getWorld().provider.getDimension() : TDimensions.TARDIS_ID;
+		return this.getConsole() != null ? this.getConsole().dimension : 0;
 	}
 
 }
