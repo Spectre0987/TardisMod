@@ -11,6 +11,7 @@ import net.tardis.mod.common.recipes.RepairRecipes;
 import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
 
 public class ContainerCR extends Container {
+	
 	private final IInventory tileFurnace;
 
 	public ContainerCR(InventoryPlayer playerInventory, IInventory furnaceInventory) {

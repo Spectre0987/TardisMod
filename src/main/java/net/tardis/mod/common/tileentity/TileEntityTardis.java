@@ -963,7 +963,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			TileEntityDoor door = (TileEntityDoor)ws.getTileEntity(this.getLocation().up());
 			if(door != null) {
 				EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
-				pos = door.getPos().down().offset(face, 2);
+				pos = door.getPos().down().offset(face, 1);
 				if(entity instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP)entity;
 					if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter((WorldServer)world));
