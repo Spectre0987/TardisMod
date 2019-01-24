@@ -316,6 +316,9 @@ box.tt=TT Capsule
 
 tardis.hum.interior_hum_80=Bourdonnement de 1980
 tardis.hum.1963_interior_hum=Bourdonnement de 1963
+tardis.hum.tardis_hum_copper=Bourdonnement Copper
+tardis.hum.tardis_hum_coral=Bourdonnement Coral
+tardis.hum.tardis_hum_toyota=Bourdonnement Toyota
 tardis.hum.null=Bourdonnement désactivé
 
 tardis.keybinds.snap=Claquement de doigts
