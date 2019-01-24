@@ -1,13 +1,13 @@
 {
 	"credit": "Made with Blockbench by dhi_awesome",
 	"textures": {
-		"0": "tardis:item/classicsonics/pat/patsilvermain",
-		"1": "tardis:item/classicsonics/pat/patblue",
-		"2": "tardis:item/classicsonics/pat/patbluealt",
-		"3": "tardis:item/classicsonics/pat/patbluealttop",
-		"4": "tardis:item/classicsonics/pat/emittersides",
-		"5": "tardis:item/classicsonics/pat/emittertop",
-		"particle": "tardis:item/classicsonics/pat/patsilvermain"
+		"0": "tardis:items/classicsonics/pat/patsilvermain",
+		"1": "tardis:items/classicsonics/pat/patblue",
+		"2": "tardis:items/classicsonics/pat/patbluealt",
+		"3": "tardis:items/classicsonics/pat/patbluealttop",
+		"4": "tardis:items/classicsonics/pat/emittersides",
+		"5": "tardis:items/classicsonics/pat/emittertop",
+		"particle": "tardis:items/classicsonics/pat/patsilvermain"
 	},
 	"elements": [
 		{
