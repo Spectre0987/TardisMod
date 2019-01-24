@@ -60,7 +60,7 @@ public class GuiOptifineWarning extends GuiScreen {
 		
 		@SubscribeEvent
 		public static void onLoadMC(GuiScreenEvent.InitGuiEvent e) {
-			if (!opened && !FMLClientHandler.instance().hasOptifine() && e.getGui() instanceof GuiMainMenu) {
+			if (!opened && FMLClientHandler.instance().hasOptifine() && e.getGui() instanceof GuiMainMenu) {
 				lastGui = e.getGui();
 				Minecraft.getMinecraft().displayGuiScreen(new GuiOptifineWarning());
 				opened = true;
