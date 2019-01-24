@@ -6,7 +6,7 @@ item.tardis.pos_setter.name=Coordinate Logger
 item.tardis.circuts.name=Exotronic Circuitry
 item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 item.tardis.gunstick.name=Dalek Gunstick
-item.tardis.power_cell.name=Trionic Power Cell 
+item.tardis.power_cell.name=Trionic Power Cell
 item.tardis.ray_gun.name=Dalek Ray Gun
 item.tardis.void_specs.name=Void Spectacles
 item.tardis.fob_watch.name=Gallifreyan Fob Watch
@@ -124,6 +124,7 @@ tile.tardis.suitcase.name=Mysterious Suitcase
 tile.tardis.br_chair.name=Chair
 tile.tardis.am_sphere.name=Armillary Sphere
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
+tile.tardis.sonic_workbench.name=Sonics workbench
 
 tardis.locked.true=TARDIS locked!
 tardis.locked.false=TARDIS unlocked!
@@ -313,3 +314,10 @@ box.tardis.05=1980 - Yardley-Jones
 box.tardis.cc=Disguised
 box.master.clock=Master's Clock
 box.tt=TT Capsule
+
+tardis.hum.interior_hum_80=1980's interior hum
+tardis.hum.1963_interior_hum=1963's interior hum
+tardis.hum.tardis_hum_copper=Copper's hum
+tardis.hum.tardis_hum_coral=Coral's hum
+tardis.hum.tardis_hum_toyota=Toyota's hum
+tardis.hum.null=Hum disabled
