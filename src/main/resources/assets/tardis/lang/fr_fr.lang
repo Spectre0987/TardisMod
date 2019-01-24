@@ -243,7 +243,8 @@ entity.tardis_door_control.name=Interrupteur de porte
 entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 entity.tardis_phone.name=Communicateur
 entity.stabilizers.name=Stabilisateurs
- entity.monitor.name=Moniteur
+entity.monitor.name=Moniteur
+tile.tardis.sonic_workbench.name=Table de craft des Soniques
 
 tardis.stabilizers.true=Stabilisateurs ON
 tardis.stabilizers.false=Stabilisateurs OFF

@@ -124,6 +124,7 @@ tile.tardis.suitcase.name=Mysterious Suitcase
 tile.tardis.br_chair.name=Chair
 tile.tardis.am_sphere.name=Armillary Sphere
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
+tile.tardis.sonic_workbench.name=Sonics workbench
 
 tardis.locked.true=TARDIS locked!
 tardis.locked.false=TARDIS unlocked!
