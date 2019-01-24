@@ -124,6 +124,7 @@ tile.tardis.suitcase.name=Mysterious Suitcase
 tile.tardis.br_chair.name=Chair
 tile.tardis.am_sphere.name=Armillary Sphere
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
+tile.tardis.sonic_workbench.name=Sonics workbench
 
 tardis.locked.true=TARDIS locked!
 tardis.locked.false=TARDIS unlocked!
@@ -316,6 +317,7 @@ box.tt=TT Capsule
 
 tardis.hum.interior_hum_80=1980's interior hum
 tardis.hum.1963_interior_hum=1963's interior hum
+tardis.hum.tardis_hum_copper=Copper's hum
+tardis.hum.tardis_hum_coral=Coral's hum
+tardis.hum.tardis_hum_toyota=Toyota's hum
 tardis.hum.null=Hum disabled
-
-tardis.keybinds.snap=Fingers' snap
