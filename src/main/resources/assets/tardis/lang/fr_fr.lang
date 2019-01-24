@@ -124,7 +124,7 @@ tile.tardis.suitcase.name=Mystérieuse valise
 tile.tardis.br_chair.name=Fauteuil
 tile.tardis.am_sphere.name=Sphère armillaire
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
-
+tile.tardis.sonic_workbench.name=Table de craft des Soniques
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
@@ -244,7 +244,6 @@ entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 entity.tardis_phone.name=Communicateur
 entity.stabilizers.name=Stabilisateurs
 entity.monitor.name=Moniteur
-tile.tardis.sonic_workbench.name=Table de craft des Soniques
 
 tardis.stabilizers.true=Stabilisateurs ON
 tardis.stabilizers.false=Stabilisateurs OFF
