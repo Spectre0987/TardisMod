@@ -102,6 +102,9 @@ public class TItems {
 	public static Item sonic_lipstick = createItem(new ItemSonic(TSounds.sonic), "sonic_lipstick");
 	public static Item sonic_trowel = createItem(new ItemSonic(TSounds.sonic),"sonic_trowel");
 	public static Item sonic_pen = createItem(new ItemSonic(TSounds.sonic), "sonic_pen");
+	public static Item sonic_seven = createItem(new ItemSonic(TSounds.sonic), "sonic_seven");
+	public static Item sonic_war = createItem(new ItemSonic(TSounds.sonic), "sonic_war");
+
 
 	@SubscribeEvent
 	public static void regItems(RegistryEvent.Register<Item> event) {
