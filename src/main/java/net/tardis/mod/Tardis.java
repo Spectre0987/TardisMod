@@ -98,6 +98,7 @@ import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
+import net.tardis.mod.common.tileentity.TileEntityItemMaterializer;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityLight;
 import net.tardis.mod.common.tileentity.TileEntityMultiblock;
@@ -240,6 +241,7 @@ public class Tardis {
 		registerTileEntity(TileEntityTardis03.class, "console_3");
 		
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
+		registerTileEntity(TileEntityItemMaterializer.class, "item_materializer");
 
 		NetworkHandler.init();
 
