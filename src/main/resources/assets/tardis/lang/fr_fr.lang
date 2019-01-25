@@ -124,7 +124,7 @@ tile.tardis.suitcase.name=Mystérieuse valise
 tile.tardis.br_chair.name=Fauteuil
 tile.tardis.am_sphere.name=Sphère armillaire
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
-
+tile.tardis.sonic_workbench.name=Table de craft des Soniques
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
@@ -243,7 +243,7 @@ entity.tardis_door_control.name=Interrupteur de porte
 entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 entity.tardis_phone.name=Communicateur
 entity.stabilizers.name=Stabilisateurs
- entity.monitor.name=Moniteur
+entity.monitor.name=Moniteur
 
 tardis.stabilizers.true=Stabilisateurs ON
 tardis.stabilizers.false=Stabilisateurs OFF
@@ -316,6 +316,7 @@ box.tt=TT Capsule
 
 tardis.hum.interior_hum_80=Bourdonnement de 1980
 tardis.hum.1963_interior_hum=Bourdonnement de 1963
+tardis.hum.tardis_hum_copper=Bourdonnement Copper
+tardis.hum.tardis_hum_coral=Bourdonnement Coral
+tardis.hum.tardis_hum_toyota=Bourdonnement Toyota
 tardis.hum.null=Bourdonnement désactivé
-
-tardis.keybinds.snap=Claquement de doigts
