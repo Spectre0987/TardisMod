@@ -20,7 +20,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketCustomSound;
 import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -71,6 +70,8 @@ import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
+import net.tardis.mod.common.events.TardisLandEvent;
+import net.tardis.mod.common.events.TardisTakeOffEvent;
 import net.tardis.mod.common.misc.TardisControlFactory;
 import net.tardis.mod.common.sounds.InteriorHum;
 import net.tardis.mod.common.sounds.TSounds;
@@ -310,6 +311,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.markDirty();
 			DimensionType type = DimensionManager.getProviderType(dimension);
 			if (type != null) this.currentDimName = type.getName();
+			MinecraftForge.EVENT_BUS.post(new TardisLandEvent(this));
 			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
 			for(BaseSystem sys : this.systems) {
 				sys.wear();
@@ -567,11 +569,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public boolean startFlight() {
-		if (this.getDestination().equals(BlockPos.ORIGIN)) return false;
-		if (fuel <= 0.0F || !getCanFly()) {
+		TardisTakeOffEvent event = new TardisTakeOffEvent(this);
+		if (MinecraftForge.EVENT_BUS.post(event) || event.getFuel() <= 0.0F || event.getDestination() == null || !getCanFly()) {
 			world.playSound(null, this.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
 			return false;
 		}
+
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;
