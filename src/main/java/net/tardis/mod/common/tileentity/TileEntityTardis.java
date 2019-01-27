@@ -70,6 +70,7 @@ import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
+import net.tardis.mod.common.events.TardisCrashEvent;
 import net.tardis.mod.common.events.TardisLandEvent;
 import net.tardis.mod.common.events.TardisTakeOffEvent;
 import net.tardis.mod.common.misc.TardisControlFactory;
@@ -744,6 +745,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			BlockPos crashSite = this.getCurrentPosOnPath();
 			System.out.println("Land: " + this.getLocation() + "Crash: " + crashSite);
 			this.setDesination(crashSite, dimension);
+			MinecraftForge.EVENT_BUS.post(new TardisCrashEvent(this,crashSite,dimension));
 			if(explode) {
 				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
 				world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
