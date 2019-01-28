@@ -50,7 +50,7 @@ public class ItemRayGun extends ItemBase {
 				Vec3d v3 = playerIn.getLook(1);
 				EntityLaserRay ball = new EntityLaserRay(worldIn, playerIn, 2, TDamageSources.LASER, new Vec3d(0, 1, 0));
 				if (!worldIn.isRemote) {
-					ball.shoot(v3.x, v3.y, v3.z, 1.6F, (float) (14 - worldIn.getDifficulty().getId() * 4));
+					ball.shoot(v3.x, v3.y, v3.z, 1.6F, (float) 0));
 					worldIn.spawnEntity(ball);
 					setAmmo(gun, getAmmo(gun) - 1);
 				}
