@@ -33,6 +33,7 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
+import net.tardis.mod.util.GenerateJson;
 
 public class TBlocks {
 
@@ -158,13 +159,22 @@ public class TBlocks {
 	public static Block item_materializer = register(new BlockMaterializer(), "item_materializer");
 
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
+	
+	public static Block GALLIFREY_GRASS = register(new BlockBase(), "gallifrey_grass");
+	public static Block GALLIFREY_SAND = register(new BlockBase(), "gallifrey_sand");
+	public static Block GALLIFREY_DIRT = register(new BlockBase(), "gallifrey_dirt");
 
-
+	
+	
+	
 	public static Block register(Block block, String name) {
 		return register(block, name, true);
 	}
 
 	public static Block register(Block block, String name, boolean addToTab) {
+		GenerateJson.generateFacingBlockstate("gallifrey_dirt");
+		GenerateJson.generateFacingBlockstate("gallifrey_sand");
+		GenerateJson.generateFacingBlockstate("gallifrey_grass");
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
 		block.setTranslationKey("tardis." + name);
 		block.setRegistryName(rl);

@@ -74,7 +74,7 @@ public class GenerateJson {
 			jw.name("model").value("cube_all");
 			jw.name("textures");
 			jw.beginObject();
-			jw.name("all").value(Tardis.MODID + ":blocks/hellbent/" + name);
+			jw.name("all").value(Tardis.MODID + ":blocks/gallifrey/" + name);
 			jw.endObject();
 			jw.endObject();
 

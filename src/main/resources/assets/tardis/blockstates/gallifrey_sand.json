@@ -1,0 +1,30 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tardis:gallifrey_sand"
+  },
+  "variants": {
+    "facing=south": {
+      "model": "tardis:gallifrey_sand",
+      "y": 180.0
+    },
+    "facing=west": {
+      "model": "tardis:gallifrey_sand",
+      "y": 270.0
+    },
+    "facing=north": {
+      "model": "tardis:gallifrey_sand",
+      "y": 0.0
+    },
+    "facing=east": {
+      "model": "tardis:gallifrey_sand",
+      "y": 90.0
+    },
+    "inventory": {
+      "model": "tardis:gallifrey_sand"
+    },
+    "normal": {
+      "model": "tardis:gallifrey_sand"
+    }
+  }
+}

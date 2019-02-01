@@ -56,6 +56,7 @@ public class TardisConfig {
 		@Config.LangKey("config.tardis.oregen")
 		@Config.Comment("Should the TARDIS Mod generate ores?")
 		public boolean generateOres = true;
+		public int  gallifreyDim = 78;
 	}
 
 	public static class UseEntities {
