@@ -26,10 +26,10 @@ import java.util.Map;
 public class WorldShell implements IBlockAccess {
 
 	// Keeps stores a collection of BlockAcess's mapped to blockpos coords
-	public Map<BlockPos, BlockStorage> blockMap = new HashMap<>();
+	public Map<BlockPos, BlockStorage> blockMap;
 	@SideOnly(Side.CLIENT)
-	public BufferBuilder.State bufferstate;
-	public boolean updateRequired = false;
+	BufferBuilder.State bufferstate;
+	boolean updateRequired = false;
 	// Contains every TESR to speed up rendering
 	private List<TileEntity> tesrs;
 	//Entities to render

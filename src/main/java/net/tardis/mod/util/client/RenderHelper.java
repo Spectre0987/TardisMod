@@ -24,9 +24,9 @@ import java.nio.FloatBuffer;
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 
-	static Framebuffer fb;
-	static WorldBoti wBoti;
-	static FloatBuffer FOG_BUFFER = GLAllocation.createDirectFloatBuffer(16);
+	private static Framebuffer fb;
+	private static WorldBoti wBoti;
+	private static FloatBuffer FOG_BUFFER = GLAllocation.createDirectFloatBuffer(16);
 	private static float lastBrightnessX = OpenGlHelper.lastBrightnessX;
 	private static float lastBrightnessY = OpenGlHelper.lastBrightnessY;
 
@@ -73,6 +73,8 @@ public class RenderHelper {
 				GlStateManager.rotate(180, 0, 1, 0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
+				
+				//Handle Sky and fog
 				if (!wBoti.provider.isSkyColored()) {
 					GlStateManager.pushMatrix();
 					Vec3d color = wBoti.provider.getFogColor(0, 0);
@@ -90,15 +92,14 @@ public class RenderHelper {
 					GlStateManager.disableFog();
 					GlStateManager.popMatrix();
 				}
+				
 				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
 
 				RenderHelper.setRenderGlobalWorld(oldW);
-
 				old.bindFramebuffer(true);
-
 				fb.deleteFramebuffer();
 				Minecraft.getMinecraft().world = oldW;
 
