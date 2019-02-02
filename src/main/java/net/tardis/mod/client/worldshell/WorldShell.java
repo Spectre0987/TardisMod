@@ -1,5 +1,10 @@
 package net.tardis.mod.client.worldshell;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -18,18 +23,13 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class WorldShell implements IBlockAccess {
 
 	// Keeps stores a collection of BlockAcess's mapped to blockpos coords
-	public Map<BlockPos, BlockStorage> blockMap = new HashMap<>();
+	public Map<BlockPos, BlockStorage> blockMap;
 	@SideOnly(Side.CLIENT)
-	public BufferBuilder.State bufferstate;
-	public boolean updateRequired = false;
+	BufferBuilder.State bufferstate;
+	boolean updateRequired = false;
 	// Contains every TESR to speed up rendering
 	private List<TileEntity> tesrs;
 	//Entities to render
@@ -47,6 +47,7 @@ public class WorldShell implements IBlockAccess {
 		blockMap = new HashMap<>();
 		offset = bp;
 		tesrs = new ArrayList<>();
+		entities = new ArrayList<>();
 	}
 
 	public BlockPos getOffset() {
