@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -54,7 +55,7 @@ public class RenderWorldShell {
 		}
 		
 		//Render Tiles
-		if(!worldShell.getWorldShell().getTESRs().isEmpty()) {
+		if(worldShell.getWorldShell().getTESRs() != null && !worldShell.getWorldShell().getTESRs().isEmpty()) {
 			for (TileEntity tileEntity : worldShell.getWorldShell().getTESRs()) {
 				if (tileEntity != null) {
 					tileEntity.setWorld(worldBoti);
@@ -65,7 +66,7 @@ public class RenderWorldShell {
 		}
 		
 		
-		if (!worldShell.getWorldShell().getEntities().isEmpty()) {
+		if (worldShell.getWorldShell().getEntities() != null && !worldShell.getWorldShell().getEntities().isEmpty()) {
 			for (NBTTagCompound stor : worldShell.getWorldShell().getEntities()) {
 				Entity e = EntityList.createEntityFromNBT(stor, worldBoti);
 				if (e != null) {
@@ -77,7 +78,7 @@ public class RenderWorldShell {
 		}
 		
 		
-		if (!worldShell.getWorldShell().getPlayers().isEmpty()) {
+		if (worldShell.getWorldShell().getPlayers() != null && !worldShell.getWorldShell().getPlayers().isEmpty()) {
 			for (PlayerStorage stor : worldShell.getWorldShell().getPlayers()) {
 				GlStateManager.pushMatrix();
 				Minecraft.getMinecraft().getTextureManager().bindTexture(Minecraft.getMinecraft().getConnection().getPlayerInfo(stor.profile.getId()).getLocationSkin());
@@ -109,7 +110,10 @@ public class RenderWorldShell {
 		if(t == null) return;
 		GlStateManager.pushMatrix();
 		bindTexture(getBlockTextures());
-		TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(), t.getPos().getZ(), partialTicks);
+		TileEntitySpecialRenderer<TileEntity> renderer = TileEntityRendererDispatcher.instance.getRenderer(t);
+		if(renderer != null) {
+			TileEntityRendererDispatcher.instance.render(t, t.getPos().getX(), t.getPos().getY(), t.getPos().getZ(), partialTicks);
+		}
 		GlStateManager.popMatrix();
 	}
 	
