@@ -1,8 +1,18 @@
 package net.tardis.mod.util.client;
 
+import java.nio.FloatBuffer;
+
+import javax.annotation.Nullable;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -16,10 +26,6 @@ import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.proxy.ClientProxy;
-import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nullable;
-import java.nio.FloatBuffer;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
@@ -64,7 +70,6 @@ public class RenderHelper {
 				WorldClient oldW = Minecraft.getMinecraft().world;
 				wBoti.setWorldTime(te.getWorldShell().getTime());
 				RenderHelper.setRenderGlobalWorld(wBoti);
-				Minecraft.getMinecraft().world = wBoti;
 				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
 				int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
 				if (fb == null) fb = new Framebuffer(width, height, true);
@@ -93,7 +98,7 @@ public class RenderHelper {
 					GlStateManager.popMatrix();
 				}
 				
-				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
+				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, 1);
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
@@ -101,7 +106,6 @@ public class RenderHelper {
 				RenderHelper.setRenderGlobalWorld(oldW);
 				old.bindFramebuffer(true);
 				fb.deleteFramebuffer();
-				Minecraft.getMinecraft().world = oldW;
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -156,6 +160,7 @@ public class RenderHelper {
 	}
 
 	public static void setRenderGlobalWorld(WorldClient world) {
+		Minecraft.getMinecraft().renderGlobal.world = world;
 		Minecraft.getMinecraft().world = world;
 	}
 

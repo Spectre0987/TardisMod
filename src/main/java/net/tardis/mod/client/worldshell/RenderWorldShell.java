@@ -1,19 +1,27 @@
 package net.tardis.mod.client.worldshell;
 
+import java.util.Objects;
+
+import javax.annotation.Nullable;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.entity.RenderChicken;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -21,10 +29,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class RenderWorldShell {
 	
@@ -71,6 +75,7 @@ public class RenderWorldShell {
 				Entity e = EntityList.createEntityFromNBT(stor, worldBoti);
 				if (e != null) {
 					GlStateManager.pushMatrix();
+					GlStateManager.rotate(e.rotationYaw, 0, 1, 0);
 					Objects.requireNonNull(Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e)).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 					GlStateManager.popMatrix();
 				}
@@ -133,7 +138,7 @@ public class RenderWorldShell {
 		BufferBuilder vertexBuffer = tessellator.getBuffer();
 		vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 		BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-		if (blockState.getRenderType() == EnumBlockRenderType.MODEL && !blockState.getBlock().hasTileEntity(blockState)) {
+		if (blockState.getRenderType() != EnumBlockRenderType.INVISIBLE && !blockState.getBlock().hasTileEntity(blockState)) {
 			GlStateManager.pushMatrix();
 			IBakedModel bakedModel = blockRenderer.getBlockModelShapes().getModelForState(blockState);
 			blockRenderer.getBlockModelRenderer().renderModel(world, bakedModel, blockState, pos, vertexBuffer, true);
