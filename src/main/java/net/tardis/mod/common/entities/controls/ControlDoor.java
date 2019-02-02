@@ -33,7 +33,6 @@ import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -120,6 +119,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 		TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
 		if (te == null || !(te instanceof TileEntityTardis)) return;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
+		if(world.getMinecraftServer() == null) return;
 		if (!world.isRemote && this.isOpen()) {
 			WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox());
