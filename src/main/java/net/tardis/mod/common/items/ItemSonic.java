@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +31,8 @@ import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
+import static net.tardis.mod.util.common.helpers.Helper.getStackTag;
+
 public class ItemSonic extends Item {
 
 	public static final String MODE_KEY = "mode";
@@ -35,19 +40,42 @@ public class ItemSonic extends Item {
 	public static List<ItemStack> SONICS = new ArrayList<ItemStack>();
 	private SoundEvent sonicSound;
 
-	public ItemSonic(SoundEvent sonicSound) {
+	public ItemSonic(SoundEvent sonicSound){
+		this(sonicSound, false);
+	}
+	
+	public ItemSonic(SoundEvent sonicSound, boolean hasSpecial) {
 		this.setMaxStackSize(1);
 		this.sonicSound = sonicSound;
 		SONICS.add(new ItemStack(this));
+		
+		if(hasSpecial){
+			addPropertyOverride(new ResourceLocation("special"), (stack, worldIn, entityIn) -> {
+				if (getStackTag(stack) == null || !getStackTag(stack).hasKey("special")) {
+					return 0F; //Closed
+				}
+				return getStackTag(stack).getFloat("special");
+			});
+		}
+		
 	}
+	
+	public static int getOpen(ItemStack stack) {
+		return getStackTag(stack).getInteger("open");
+	}
+	
+	public static void setOpen(ItemStack stack, int amount) {
+		getStackTag(stack).setInteger("open", amount);
+	}
+	
 
 	public static int getCharge(ItemStack stack) {
 		//return 100;
-		return Helper.getStackTag(stack).getInteger("charge");
+		return getStackTag(stack).getInteger("charge");
 	}
 
 	public static void setCharge(ItemStack stack, int charge) {
-		Helper.getStackTag(stack).setInteger("charge", MathHelper.clamp(charge, 0, 100));
+		getStackTag(stack).setInteger("charge", MathHelper.clamp(charge, 0, 100));
 	}
 
 	// NBT Start
@@ -68,8 +96,10 @@ public class ItemSonic extends Item {
 
 	public static BlockPos getConsolePos(ItemStack stack) {
 		if (stack.hasTagCompound()) {
-			if (stack.getTagCompound().hasKey(CONSOLE_POS)) {
-				return BlockPos.fromLong(stack.getTagCompound().getLong(CONSOLE_POS));
+			if (getStackTag(stack).hasKey(CONSOLE_POS)) {
+				if (stack.getTagCompound() != null) {
+					return BlockPos.fromLong(stack.getTagCompound().getLong(CONSOLE_POS));
+				}
 			}
 		}
 		return BlockPos.ORIGIN;
@@ -79,14 +109,17 @@ public class ItemSonic extends Item {
 		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
 		}
-		NBTTagCompound tag = stack.getTagCompound();
-		tag.setLong(CONSOLE_POS, pos.toLong());
+		NBTTagCompound tag = Helper.getStackTag(stack);
+		if (tag != null) {
+			tag.setLong(CONSOLE_POS, pos.toLong());
+		}
 	}
 
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 		super.onCreated(stack, worldIn, playerIn);
 		setCharge(stack, 100);
+		setOpen(stack, 0);
 	}
 
 	/**
@@ -102,9 +135,8 @@ public class ItemSonic extends Item {
 
 		ItemStack held = player.getHeldItem(handIn);
 		IScrew sc = (ScrewdriverHandler.MODES.get(getMode(held)));
-
-		RayTraceResult lookPos = worldIn.rayTraceBlocks(player.getPositionVector().add(0, player.getEyeHeight(), 0), player.getLookVec().scale(6));
-
+		RayTraceResult lookPos = this.rayTrace(worldIn, player, true);
+		setOpen(held, 1);
 		if (lookPos != null && lookPos.getBlockPos() != null && player.isSneaking() && worldIn.getBlockState(lookPos.getBlockPos()).getBlock() != Blocks.DISPENSER) {
 			setMode(held, getMode(held) + 1);
 			if (!worldIn.isRemote) {
@@ -127,8 +159,8 @@ public class ItemSonic extends Item {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack held = player.getHeldItem(hand);
 		EnumActionResult result = EnumActionResult.FAIL;
-
-		Helper.getStackTag(held).setInteger("charge", getCharge(held));
+		setOpen(held, 1);
+		getStackTag(held).setInteger("charge", getCharge(held));
 
 		if (getMode(held) >= 0) {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
@@ -150,7 +182,7 @@ public class ItemSonic extends Item {
 
 		ItemStack held = player.getHeldItem(hand);
 		boolean flag = false;
-
+		setOpen(stack, 1);
 		if (getMode(held) >= 0) {
 
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
@@ -177,7 +209,17 @@ public class ItemSonic extends Item {
 	private void cooldown(Item stack, EntityPlayer player, int ticks) {
 		player.getCooldownTracker().setCooldown(stack, ticks);
 	}
-
+	
+	@Override
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+		if (getOpen(stack) == 1) {
+			if (entityIn.ticksExisted % 200 == 0) {
+				setOpen(stack, 0);
+			}
+		}
+	}
+	
 	@Override
 	public String getTranslationKey(ItemStack stack) {
 		return "item." + Tardis.MODID + ".sonic_screwdriver";
