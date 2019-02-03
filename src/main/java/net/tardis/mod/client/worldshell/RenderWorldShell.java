@@ -138,10 +138,14 @@ public class RenderWorldShell {
 		BufferBuilder vertexBuffer = tessellator.getBuffer();
 		vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 		BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-		if (blockState.getRenderType() != EnumBlockRenderType.INVISIBLE && !blockState.getBlock().hasTileEntity(blockState)) {
+		if (blockState.getRenderType() != EnumBlockRenderType.INVISIBLE && blockState.getRenderType() != EnumBlockRenderType.LIQUID && !blockState.getBlock().hasTileEntity(blockState)) {
 			GlStateManager.pushMatrix();
 			IBakedModel bakedModel = blockRenderer.getBlockModelShapes().getModelForState(blockState);
 			blockRenderer.getBlockModelRenderer().renderModel(world, bakedModel, blockState, pos, vertexBuffer, true);
+			GlStateManager.popMatrix();
+		} else if(blockState.getRenderType() == EnumBlockRenderType.LIQUID && !blockState.getBlock().hasTileEntity(blockState)) {
+			GlStateManager.pushMatrix();
+			Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer.renderFluid(world, blockState, pos, vertexBuffer);
 			GlStateManager.popMatrix();
 		}
 		tessellator.draw();
