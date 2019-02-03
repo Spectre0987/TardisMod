@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ScrewdriverHandler {
 
-	public static List<IScrew> MODES = new ArrayList<IScrew>();
+	public static List<IScrew> MODES = new ArrayList<>();
 
 	public static void register(IScrew screw) {
 		MODES.add(screw);
@@ -16,8 +16,6 @@ public class ScrewdriverHandler {
 
 	public static void init() {
 		register(new InteractionGeneral());
-		register(new InteractionHallwayGen());
-		register(new InteractionGRoom());
 		register(new InteractionEntity());
 		register(new ModeSignal());
 	}

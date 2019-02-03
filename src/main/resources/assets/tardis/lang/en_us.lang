@@ -245,6 +245,7 @@ entity.tardis_magnitude.name=Coordinate Increment Modifier
 entity.tardis_phone.name=Communicator
 entity.stabilizers.name=Stabilizers
 entity.monitor.name=Monitor
+entity.waypoint_select.name=Waypoint Selector
 
 tardis.stabilizers.true=Stabilizers On
 tardis.stabilizers.false=Stabilizers Off

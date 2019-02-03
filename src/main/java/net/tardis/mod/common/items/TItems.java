@@ -104,6 +104,7 @@ public class TItems {
 	public static Item sonic_pen = createItem(new ItemSonic(TSounds.sonic), "sonic_pen");
 	public static Item sonic_seven = createItem(new ItemSonic(TSounds.sonic), "sonic_seven");
 	public static Item sonic_war = createItem(new ItemSonic(TSounds.sonic), "sonic_war");
+	public static Item sonic_10 = createItem(new ItemSonic(TSounds.sonic, true), "sonic_10");
 
 
 	@SubscribeEvent

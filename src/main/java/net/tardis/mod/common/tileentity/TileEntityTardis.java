@@ -166,7 +166,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void update() {
 		if(world.isRemote) {
 			if (Minecraft.getMinecraft().player != null) {
-				System.out.println(Minecraft.getMinecraft().player.ticksExisted);
 				if (Minecraft.getMinecraft().player.ticksExisted == 20 || soundChanged) {
 					PlayerHelper.playHum(hum.getSound().getRegistryName().toString(), this);
 					soundChanged = false;
