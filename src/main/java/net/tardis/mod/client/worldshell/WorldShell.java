@@ -57,7 +57,7 @@ public class WorldShell implements IBlockAccess {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public TileEntity getTileEntity(BlockPos pos) {
-		if (pos == null || !blockMap.containsKey(pos)) return null;
+		if (blockMap == null || Minecraft.getMinecraft().world == null ||pos == null || !blockMap.containsKey(pos) || blockMap.get(pos) == null || blockMap.get(pos).tileentity == null) return null;
 		return TileEntity.create(Minecraft.getMinecraft().world, blockMap.get(pos).tileentity);
 	}
 
