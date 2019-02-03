@@ -571,7 +571,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	public boolean startFlight() {
 		TardisTakeOffEvent event = new TardisTakeOffEvent(this);
-		if (MinecraftForge.EVENT_BUS.post(event) || event.getFuel() <= 0.0F || event.getDestination() == null || !getCanFly()) {
+		if (MinecraftForge.EVENT_BUS.post(event) || event.getFuel() <= 0.0F || event.getDestination() == null || event.getDestination() == BlockPos.ORIGIN || !getCanFly()) {
 			world.playSound(null, this.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
 			return false;
 		}

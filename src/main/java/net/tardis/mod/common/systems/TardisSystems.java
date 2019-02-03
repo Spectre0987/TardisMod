@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -51,6 +52,7 @@ public class TardisSystems {
 
 		public void setHealth(float health) {
 			this.health = health > 1F ? 1F : (health < 0F ? 0F : health);
+			if(health <= 0F) MinecraftForge.EVENT_BUS.post(new TardisSubsystemBrokeEvent(this));
 		}
 
 		public abstract void onUpdate(World world, BlockPos consolePos);
