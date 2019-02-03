@@ -13,15 +13,12 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.entity.RenderChicken;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -143,7 +140,8 @@ public class RenderWorldShell {
 			IBakedModel bakedModel = blockRenderer.getBlockModelShapes().getModelForState(blockState);
 			blockRenderer.getBlockModelRenderer().renderModel(world, bakedModel, blockState, pos, vertexBuffer, true);
 			GlStateManager.popMatrix();
-		} else if(blockState.getRenderType() == EnumBlockRenderType.LIQUID && !blockState.getBlock().hasTileEntity(blockState)) {
+		}
+		else if(blockState.getRenderType() == EnumBlockRenderType.LIQUID && !blockState.getBlock().hasTileEntity(blockState)) {
 			GlStateManager.pushMatrix();
 			Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer.renderFluid(world, blockState, pos, vertexBuffer);
 			GlStateManager.popMatrix();

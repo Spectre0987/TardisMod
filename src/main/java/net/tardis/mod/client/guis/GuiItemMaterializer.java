@@ -24,13 +24,16 @@ public class GuiItemMaterializer extends GuiScreen {
 	public void initGui() {
 		super.initGui();
 		FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
-		x = new GuiTextField(0, fr, width / 2 - width / 6, ((height / 2 - 166 / 2) + 15) + fr.FONT_HEIGHT * 3, width / 3, fr.FONT_HEIGHT * 2);
-		y = new GuiTextField(1, fr, width / 2 - width / 6, ((height / 2 - 166 / 2) + 15) + fr.FONT_HEIGHT * 6, width / 3, fr.FONT_HEIGHT * 2);
-		z = new GuiTextField(2, fr, width / 2 - width / 6, ((height / 2 - 166 / 2) + 15) + fr.FONT_HEIGHT * 9, width / 3, fr.FONT_HEIGHT * 2);
-		dimension = new GuiTextField(2, fr, width / 2 - width / 6, ((height / 2 - 166 / 2) + 15) + fr.FONT_HEIGHT * 12, width / 3, fr.FONT_HEIGHT * 2);;
+		int text_width = fr.FONT_HEIGHT * 4;
+		int text_height = fr.FONT_HEIGHT * 2;
+		int sx = (width / 3 - text_width / 1) + 10, sy = (height / 2 - text_height / 2) - 40;
+		x = new GuiTextField(0, fr, sx, sy, text_width, text_height);
+		y = new GuiTextField(1, fr, (int)(sx + (text_width * 1.5)), sy, text_width, text_height);
+		z = new GuiTextField(2, fr, (int)(sx + text_width * 3), sy, text_width, text_height);
+		this.dimension = new GuiTextField(2, fr, (int)(sx + text_width * 4.5), sy, text_width, text_height);
 		x.setFocused(true);
 		String text = "Materialize!";
-		this.addButton(submit = new GuiButtonExt(3, 0, height / 2 + 40, text));
+		this.addButton(submit = new GuiButtonExt(4, 0, height / 2 + 40, text));
 		submit.x = width / 2 - submit.width / 2;
 		
 	}
