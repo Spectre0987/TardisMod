@@ -49,8 +49,8 @@ public class EntityItemMaterializer extends Entity{
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		this.setItem(new ItemStack(Items.APPLE));
-		//this.alpha += deltaAlpha;
+		this.setItem(new ItemStack(TItems.chameleon_circuit));
+		this.alpha += deltaAlpha;
 		if(!world.isRemote && alpha >= 1) {
 			EntityItem ei = new EntityItem(world, posX, posY, posZ, new ItemStack(this.dataManager.get(ITEM)));
 			world.spawnEntity(ei);
