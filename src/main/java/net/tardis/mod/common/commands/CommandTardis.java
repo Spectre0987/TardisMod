@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.server.permission.PermissionAPI;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.TardisSystems;
