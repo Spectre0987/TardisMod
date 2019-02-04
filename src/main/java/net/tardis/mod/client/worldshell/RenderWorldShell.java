@@ -29,8 +29,7 @@ import net.minecraft.world.World;
 
 public class RenderWorldShell {
 	
-	public RenderWorldShell() {
-	}
+	public RenderWorldShell() {}
 	
 	public void doRender(IContainsWorldShell worldShell, double x, double y, double z, float entityYaw, float partialTicks, @Nullable WorldBoti worldBoti) {
 		//Moving this will crash

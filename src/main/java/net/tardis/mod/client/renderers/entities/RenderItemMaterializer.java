@@ -38,16 +38,16 @@ public class RenderItemMaterializer extends Render<EntityItemMaterializer>{
 		BufferBuilder bb = Tessellator.getInstance().getBuffer();
 		bb.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		GlStateManager.color(1F, 1, 1, 0.1F);
+		int color = 0x4D2BAAFF;
 		for(EnumFacing face : EnumFacing.VALUES) {
 			for(BakedQuad quad : model.getQuads(null, face, 0)) {
 				bb.addVertexData(quad.getVertexData());
-				bb.putColor4(0x2BAAFF);
+				bb.putColor4(color);
 			}
 		}
 		for(BakedQuad quad : model.getQuads(null, null, 0)) {
 			bb.addVertexData(quad.getVertexData());
-			bb.putColor4(0x2BAAFF);
+			bb.putColor4(color);
 		}
 		Tessellator.getInstance().draw();
 		GlStateManager.disableAlpha();

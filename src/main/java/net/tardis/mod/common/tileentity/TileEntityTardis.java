@@ -711,9 +711,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void invalidate() {
 		ForgeChunkManager.releaseTicket(tardisTicket);
 		ForgeChunkManager.releaseTicket(tardisLocTicket);
-		for(EntityControl cont : controls) {
-			System.out.println("Killing: " + cont.getDisplayName().getFormattedText());
-			cont.setDead();
+		if(this.controls != null) {
+			for(EntityControl cont : controls) {
+				cont.setDead();
+			}
 		}
 		super.invalidate();
 	}
