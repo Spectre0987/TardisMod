@@ -12,7 +12,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.server.permission.PermissionAPI;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.TardisSystems;
@@ -86,12 +89,15 @@ public class CommandTardis extends CommandBase {
 				break;
 
 			case 2: //interior
-				if (PermissionAPI.hasPermission(player, TStrings.Permissions.TP_IN_TARDIS))
-					handleTeleport(player);
+				if (args.length > 1 && PermissionAPI.hasPermission(player,TStrings.Permissions.TP_IN_TARDIS_OTHER)){
+					handleTeleport(player,args[1]);
+				}
+				else if (PermissionAPI.hasPermission(player, TStrings.Permissions.TP_IN_TARDIS)){
+					handleTeleport(player, null);
+				}
 				else
 					throw new CommandException("You do not have permission to run this command.");
 				break;
-
 			case 3: //remove
 				if (args.length == 2) {
 					if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS))
@@ -191,10 +197,20 @@ public class CommandTardis extends CommandBase {
 	}
 
 	//Handles teleporting the user to their interior
-	private void handleTeleport(EntityPlayerMP player) {
+	private void handleTeleport(EntityPlayerMP player, @Nullable String tardisOwner) {
 		MinecraftServer server = player.getServer();
-		if (TardisHelper.hasTardis(player.getUniqueID())) {
-			BlockPos pos = TardisHelper.getTardis(player.getUniqueID());
+		UUID playerID;
+
+		if (tardisOwner == null){
+			playerID = player.getUniqueID();
+		}
+		else {
+			Map<UUID, String> playersMap = FileHelper.getPlayersFromServerFile();
+			playerID = Helper.getKeyByValue(playersMap, tardisOwner);
+		}
+
+		if (TardisHelper.hasTardis(playerID)) {
+			BlockPos pos = TardisHelper.getTardis(playerID);
 			player.dismountRidingEntity();
 			TileEntityTardis tileTardis = TardisHelper.getConsole(pos);
 			if (tileTardis != null) {
@@ -216,7 +232,7 @@ public class CommandTardis extends CommandBase {
 			return getListOfStringsMatchingLastWord(args, subcommands);
 		}
 
-		if (args[0].equals("remove")) {
+		if ((args[0].equals("interior") || args[0].equals("remove")) && FMLCommonHandler.instance().getSide() == Side.SERVER) {
 			return getListOfStringsMatchingLastWord(args, FileHelper.getPlayersFromServerFile().values());
 		}
 
