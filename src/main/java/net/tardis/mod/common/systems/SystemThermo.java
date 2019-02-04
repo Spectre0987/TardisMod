@@ -12,9 +12,9 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 public class SystemThermo extends BaseSystem {
 
 	boolean crashed = false;
+	boolean repaired = false;
 
-	public SystemThermo() {
-	}
+	public SystemThermo() {}
 
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
@@ -31,17 +31,24 @@ public class SystemThermo extends BaseSystem {
 		if (this.getHealth() > 0) {
 			this.crashed = false;
 		}
+		if(repaired) {
+			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(consolePos);
+			tardis.setDesination(tardis.returnLocation.getPos(), tardis.returnLocation.getDimension());
+			repaired = false;
+		}
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		this.crashed = tag.getBoolean("crash");
+		this.repaired = tag.getBoolean("repaired");
 	}
 
 	@Override
 	public NBTTagCompound writetoNBT(NBTTagCompound tag) {
 		tag.setBoolean("crash", crashed);
+		tag.setBoolean("repaired", repaired);
 		return super.writetoNBT(tag);
 	}
 
@@ -66,7 +73,6 @@ public class SystemThermo extends BaseSystem {
 	}
 
 	@Override
-	public void wear() {
-	}
+	public void wear() {}
 
 }

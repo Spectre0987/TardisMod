@@ -32,8 +32,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 	public int time = 0;
 	public UUID owner;
 
-	public TileEntityTardisCoral() {
-	}
+	public TileEntityTardisCoral() {}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -74,7 +73,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 				tardisWorld.setBlockState(pos, TBlocks.console_02.getDefaultState());
 				TileEntityTardis tardis = (TileEntityTardis) tardisWorld.getTileEntity(pos);
 				this.getWorld().setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-				tardis.setDesination(getPos(), this.getWorld().provider.getDimension());
+				tardis.setAbsoluteDesination(getPos(), this.getWorld().provider.getDimension());
 				tardis.startFlight();
 				tardis.travel();
 				ItemStack keyStack = new ItemStack(TItems.key);
