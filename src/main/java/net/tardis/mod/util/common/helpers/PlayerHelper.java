@@ -33,9 +33,4 @@ public class PlayerHelper {
 		return player.getSkinType().equals("slim");
 	}
 	
-	@SideOnly(Side.CLIENT)
-	public static void playHum(String soundName, TileEntityTardis tardis) {
-		Minecraft.getMinecraft().getSoundHandler().playSound(new SoundInteriorHum(new SoundEvent(new ResourceLocation(soundName)), tardis));
-	}
-	
 }

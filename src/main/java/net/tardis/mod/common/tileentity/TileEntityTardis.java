@@ -43,6 +43,7 @@ import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.events.tardis.TardisEnterEvent;
 import net.tardis.mod.api.events.tardis.TardisExitEvent;
@@ -79,6 +80,8 @@ import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.config.TardisConfig;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageStopHum;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
@@ -164,12 +167,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	@Override
 	public void update() {
-		if(world.isRemote) {
-			if (Minecraft.getMinecraft().player != null) {
-				if (Minecraft.getMinecraft().player.ticksExisted == 20 || soundChanged) {
-					PlayerHelper.playHum(hum.getSound().getRegistryName().toString(), this);
-					soundChanged = false;
-				}
+		if(hum != null) {
+			if ((soundChanged || world.getTotalWorldTime() % hum.getTicks() == 0) && !world.isRemote) {
+				world.playSound(null,getPos(),hum.getSoundEvent(),hum.getCategory(),hum.getVolume(),hum.getPitch());
+				soundChanged = false;
 			}
 		}
 		
@@ -418,6 +419,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.isLocked = tardisTag.getBoolean(NBT.IS_LOCKED);
 			this.hullHealth = tardisTag.getFloat(NBT.HEALTH);
 			this.waypointIndex = tardisTag.getInteger(NBT.WAYPOINT_INDEX);
+			this.hum = tardisTag.getInteger(NBT.HUM) != InteriorHum.hums.size() ? InteriorHum.hums.get(tardisTag.getInteger(NBT.HUM)) : null;
 		}
 	}
 
@@ -474,6 +476,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setBoolean(NBT.IS_LOCKED, this.isLocked);
 			tardisTag.setFloat(NBT.HEALTH, this.hullHealth);
 			tardisTag.setInteger(NBT.WAYPOINT_INDEX, this.waypointIndex);
+			tardisTag.setInteger(NBT.HUM,hum != null ? InteriorHum.hums.indexOf(hum) : InteriorHum.hums.size());
 		}
 		tag.setTag("tardis", tardisTag);
 
@@ -776,15 +779,23 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void toggleHum() {
 		if (hum != null){
 			int index = InteriorHum.hums.indexOf(hum);
+
+			List<EntityPlayerMP> players = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
+			for (EntityPlayerMP player : players){
+				if (player.dimension == TDimensions.TARDIS_ID && player.getPosition().getDistance(getPos().getX(), getPos().getY(),getPos().getZ()) <= 30)
+					NetworkHandler.NETWORK.sendTo(new MessageStopHum(index),player);
+			}
+
 			if (index + 1 < InteriorHum.hums.size())
 				hum = InteriorHum.hums.get(index + 1);
 			else
 				hum = null;
+
 		}
 		else{
 			hum = InteriorHum.hums.get(0);
 		}
-
+		soundChanged = true;
 	}
 
 	public InteriorHum getHum() {
@@ -816,6 +827,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		public static final String MAGNITUDE = "magnitude";
 		public static final String EXTERIOR = "exterior";
 		public static final String HEALTH = "health";
+		public static final String HUM = "hum";
 	}
 
 	public EnumFacing getFacing() {

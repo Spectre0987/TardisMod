@@ -2,24 +2,18 @@ package net.tardis.mod.client.handler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.client.event.sound.PlayStreamingSourceEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.api.events.tardis.TardisEnterEvent;
 import net.tardis.mod.common.blocks.INoBox;
-import net.tardis.mod.common.dimensions.WorldProviderTardis;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
-import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 @Mod.EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientHandler {
@@ -44,5 +38,4 @@ public class ClientHandler {
 			event.setCanceled(true);
 		}
 	}
-
 }
