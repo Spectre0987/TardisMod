@@ -5,23 +5,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.network.packets.MessageCompanion;
-import net.tardis.mod.network.packets.MessageDamageSystem;
-import net.tardis.mod.network.packets.MessageDemat;
-import net.tardis.mod.network.packets.MessageDoorOpen;
-import net.tardis.mod.network.packets.MessageExteriorChange;
-import net.tardis.mod.network.packets.MessageHandlerProtocol;
-import net.tardis.mod.network.packets.MessageHandlerTeleport;
-import net.tardis.mod.network.packets.MessageMissControl;
-import net.tardis.mod.network.packets.MessageProtocol;
-import net.tardis.mod.network.packets.MessageSonicWorkbench;
-import net.tardis.mod.network.packets.MessageSpawnItem;
-import net.tardis.mod.network.packets.MessageSyncTardises;
-import net.tardis.mod.network.packets.MessageTelepathicCircut;
-import net.tardis.mod.network.packets.MessageTeleport;
-import net.tardis.mod.network.packets.MessageUpdateBessie;
-import net.tardis.mod.network.packets.MessageWaypointLoad;
-import net.tardis.mod.network.packets.MessageWaypointSave;
+import net.tardis.mod.network.packets.*;
 
 public class NetworkHandler {
 
@@ -44,6 +28,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageWaypointSave.Handler.class, MessageWaypointSave.class, 14, Side.SERVER);
 		NETWORK.registerMessage(MessageWaypointLoad.Handler.class, MessageWaypointLoad.class, 15, Side.SERVER);
 		NETWORK.registerMessage(MessageSonicWorkbench.Handler.class, MessageSonicWorkbench.class, 16, Side.SERVER);
+		NETWORK.registerMessage(MessageStopHum.Handler.class,MessageStopHum.class,17,Side.CLIENT);
 	}
 
 
