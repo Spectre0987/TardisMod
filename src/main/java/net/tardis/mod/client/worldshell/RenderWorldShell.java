@@ -148,6 +148,4 @@ public class RenderWorldShell {
 		tessellator.draw();
 		GlStateManager.popMatrix();
 	}
-	
-	
 }
