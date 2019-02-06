@@ -42,6 +42,7 @@ public class ConsoleRoom {
 		for(Entity entity : world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(pos).grow(20))) {
 			if(!(entity instanceof EntityControl) || !(entity instanceof EntityLivingBase)) {
 				entity.setDead();
+				world.updateEntityWithOptionalForce(entity, true);
 			}
 		}
 		Template temp = world.getStructureTemplateManager().get(world.getMinecraftServer(), filePath);
