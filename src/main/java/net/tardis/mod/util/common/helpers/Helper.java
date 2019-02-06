@@ -211,7 +211,8 @@ public class Helper {
 	 * Stops those nasty null pointers
 	 **/
 	public static NBTTagCompound getStackTag(ItemStack stack) {
-		if (stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
+		if (stack.getTagCompound() == null)
+			stack.setTagCompound(new NBTTagCompound());
 		return stack.getTagCompound();
 	}
 

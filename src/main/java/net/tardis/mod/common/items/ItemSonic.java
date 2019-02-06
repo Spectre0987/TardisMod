@@ -1,8 +1,5 @@
 package net.tardis.mod.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,16 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -31,12 +21,12 @@ import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static net.tardis.mod.util.common.helpers.Helper.getStackTag;
 
 public class ItemSonic extends Item {
-
-	public static final String MODE_KEY = "mode";
-	public static final String CONSOLE_POS = "console_pos";
 	public static List<ItemStack> SONICS = new ArrayList<ItemStack>();
 	private SoundEvent sonicSound;
 
@@ -50,69 +40,68 @@ public class ItemSonic extends Item {
 		SONICS.add(new ItemStack(this));
 		
 		if(hasSpecial){
-			addPropertyOverride(new ResourceLocation("special"), (stack, worldIn, entityIn) -> {
-				if (getStackTag(stack) == null || !getStackTag(stack).hasKey("special")) {
+			addPropertyOverride(new ResourceLocation(NBT.SPECIAL), (stack, worldIn, entityIn) -> {
+				NBTTagCompound tag = getStackTag(stack);
+				if (tag == null || !tag.hasKey(NBT.SPECIAL)) {
 					return 0F; //Closed
 				}
-				return getStackTag(stack).getFloat("special");
+				return getStackTag(stack).getFloat(NBT.SPECIAL);
 			});
 		}
 		
 	}
 	
 	public static int getOpen(ItemStack stack) {
-		return getStackTag(stack).getInteger("open");
+		return getStackTag(stack).getInteger(NBT.OPEN);
 	}
 	
 	public static void setOpen(ItemStack stack, int amount) {
-		getStackTag(stack).setInteger("open", amount);
+		getStackTag(stack).setInteger(NBT.OPEN, amount);
 	}
 	
 
 	public static int getCharge(ItemStack stack) {
-		//return 100;
-		return getStackTag(stack).getInteger("charge");
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CHARGE_KEY))
+			return getStackTag(stack).getInteger(NBT.CHARGE_KEY);
+		setCharge(stack,0);
+		return getStackTag(stack).getInteger(NBT.CHARGE_KEY);
 	}
 
 	public static void setCharge(ItemStack stack, int charge) {
-		getStackTag(stack).setInteger("charge", MathHelper.clamp(charge, 0, 100));
+		getStackTag(stack).setInteger(NBT.CHARGE_KEY, MathHelper.clamp(charge, 0, 100));
 	}
 
 	// NBT Start
 	private static void setMode(ItemStack stack, int i) {
-		if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
-		NBTTagCompound tag = stack.getTagCompound();
-		int in = getMode(stack) + 1;
-		tag.setInteger(MODE_KEY, in >= ScrewdriverHandler.MODES.size() ? 0 : in);
+		NBTTagCompound tag = getStackTag(stack);
+		if (tag.hasKey(NBT.MODE_KEY)){
+			int newModeId = getMode(stack) + 1;
+			if (newModeId >= ScrewdriverHandler.MODES.size())
+				newModeId = 0;
+			tag.setInteger(NBT.MODE_KEY, newModeId);
+		}
+		else{
+			tag.setInteger(NBT.MODE_KEY, 0);
+		}
 	}
 
 	public static int getMode(ItemStack stack) {
-		if (stack.hasTagCompound()) {
-			return stack.getTagCompound().getInteger(MODE_KEY);
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.MODE_KEY)) {
+			return stack.getTagCompound().getInteger(NBT.MODE_KEY);
 		}
 		setMode(stack, 0);
 		return getMode(stack);
 	}
 
 	public static BlockPos getConsolePos(ItemStack stack) {
-		if (stack.hasTagCompound()) {
-			if (getStackTag(stack).hasKey(CONSOLE_POS)) {
-				if (stack.getTagCompound() != null) {
-					return BlockPos.fromLong(stack.getTagCompound().getLong(CONSOLE_POS));
-				}
-			}
-		}
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CONSOLE_POS))
+			return BlockPos.fromLong(stack.getTagCompound().getLong(NBT.CONSOLE_POS));
 		return BlockPos.ORIGIN;
 	}
 
 	public static void setConsolePos(ItemStack stack, BlockPos pos) {
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
 		NBTTagCompound tag = Helper.getStackTag(stack);
-		if (tag != null) {
-			tag.setLong(CONSOLE_POS, pos.toLong());
-		}
+		tag.setLong(NBT.CONSOLE_POS, pos.toLong());
 	}
 
 	@Override
@@ -223,5 +212,14 @@ public class ItemSonic extends Item {
 	@Override
 	public String getTranslationKey(ItemStack stack) {
 		return "item." + Tardis.MODID + ".sonic_screwdriver";
+	}
+
+	public static final class NBT{
+		public static final String MODE_KEY = "mode";
+		public static final String CHARGE_KEY = "charge";
+		public static final String CONSOLE_POS = "console_pos";
+		public static final String SPECIAL = "special";
+		public static final String OPEN = "open";
+
 	}
 }
