@@ -1,5 +1,11 @@
 package net.tardis.mod.client.guis;
 
+import java.awt.Color;
+import java.io.IOException;
+
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -15,17 +21,12 @@ import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.guis.elements.MonitorButton;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageExteriorChange;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class GuiCCircuit extends GuiScreen {
 
 	static final int GUI_WIDTH = 256;
 	static final int GUI_HEIGHT = 192;
-	private static final int BOX_NAME_COLOR = new Color((float) 111 / 255, (float) 111 / 255, (float) 111 / 255).getRGB();
+	public static final int BOX_NAME_COLOR = new Color((float) 111 / 255, (float) 111 / 255, (float) 111 / 255).getRGB();
 	private static final String title = "Chameleon Circuit";
 	public static EnumExterior[] exteriors = new EnumExterior[]{EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FIFTH, EnumExterior.FOURTH, EnumExterior.CLOCK, EnumExterior.TT, EnumExterior.WOOD_DOOR, EnumExterior.CC};
 	public BlockPos pos = BlockPos.ORIGIN;
@@ -123,7 +124,7 @@ public class GuiCCircuit extends GuiScreen {
 		return false;
 	}
 
-	public class ChameleonButton extends GuiButton {
+	public static class ChameleonButton extends GuiButton {
 
 		int colour = 0x00938F;
 		int BUTTON_WIDTH = 23;

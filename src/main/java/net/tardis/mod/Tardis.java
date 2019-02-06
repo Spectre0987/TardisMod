@@ -11,6 +11,7 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -28,6 +29,7 @@ import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
+import net.tardis.mod.common.ars.ConsoleRoom;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.CommandTardis;
@@ -69,6 +71,7 @@ import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
+import net.tardis.mod.common.protocols.ProtocolChangeInterior;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
@@ -260,6 +263,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolRepair());
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
+		TardisProtocol.register(new ProtocolChangeInterior());
 
 		if (TardisConfig.USE_ENTITIES.entities) {
 			// Register All Mobs Here.
@@ -296,6 +300,9 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.time_vector_generator, Items.ENDER_PEARL);
 		RepairRecipes.registerRecipe(TItems.chameleon_circuit, TItems.circuts);
 		RepairRecipes.registerRecipe(TItems.temporal_grace_circuits, Items.SHIELD);
+		
+		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_1.png"), new ResourceLocation(MODID, "interior_1"), new BlockPos(9, 2, 9)));
+		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_2.png"), new ResourceLocation(MODID, "console_room"), new BlockPos(10, 2, 9)));
 
 	}
 
@@ -311,7 +318,7 @@ public class Tardis {
 
 		//Permissions
 		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself in their TARDIS");
-		PermissionAPI.registerNode(TStrings.Permissions.SUMMON_TARDIS, DefaultPermissionLevel.OP, "Allows players to summon a TARDIS owned by someone");
+		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS_OTHER, DefaultPermissionLevel.OP, "Allows players to teleport themself in the TARDIS of a specified player");
 		PermissionAPI.registerNode(TStrings.Permissions.REMOVE_TARDIS, DefaultPermissionLevel.OP, "Allows players to delete a TARDIS");
 		PermissionAPI.registerNode(TStrings.Permissions.RESTORE_TARDIS, DefaultPermissionLevel.OP, "Allows players to restore their TARDIS Systems");
 

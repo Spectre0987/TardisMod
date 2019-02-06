@@ -40,6 +40,9 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.*;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
+import net.tardis.mod.common.events.TardisCrashEvent;
+import net.tardis.mod.common.events.TardisLandEvent;
+import net.tardis.mod.common.events.TardisTakeOffEvent;
 import net.tardis.mod.common.misc.TardisControlFactory;
 import net.tardis.mod.common.sounds.InteriorHum;
 import net.tardis.mod.common.sounds.TSounds;
@@ -281,6 +284,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.markDirty();
 			DimensionType type = DimensionManager.getProviderType(dimension);
 			if (type != null) this.currentDimName = type.getName();
+			MinecraftForge.EVENT_BUS.post(new TardisLandEvent(this));
 			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
 			for(BaseSystem sys : this.systems) {
 				sys.wear();
@@ -540,11 +544,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public boolean startFlight() {
-		if (this.getDestination().equals(BlockPos.ORIGIN)) return false;
-		if (fuel <= 0.0F || !getCanFly()) {
+		TardisTakeOffEvent event = new TardisTakeOffEvent(this);
+		if (MinecraftForge.EVENT_BUS.post(event) || event.getFuel() <= 0.0F || event.getDestination() == null || event.getDestination() == BlockPos.ORIGIN || !getCanFly()) {
 			world.playSound(null, this.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
 			return false;
 		}
+
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;
@@ -715,6 +720,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			BlockPos crashSite = this.getCurrentPosOnPath();
 			System.out.println("Land: " + this.getLocation() + "Crash: " + crashSite);
 			this.setDesination(crashSite, dimension);
+			MinecraftForge.EVENT_BUS.post(new TardisCrashEvent(this,crashSite,dimension));
 			if(explode) {
 				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
 				world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
@@ -956,19 +962,19 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				pos = door.getPos().down().offset(face, 1);
 				if(entity instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP)entity;
-					if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter((WorldServer)world));
+					if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
 					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get360FromFacing(face), 0);
 				}
 				else if(!(entity instanceof EntityPlayer)){
 					entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-					entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer)world));
+					entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
 				}
 			}
 		}
 		else {
 			if(entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP)entity;
-				if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter((WorldServer)world));
+				if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
 				player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
 			}
 		}
@@ -991,11 +997,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if(entity instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP)entity;
 			if(player.dimension != TDimensions.TARDIS_ID)
-				world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer)world));
+				world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.x, pos.y, pos.z)));
 			player.connection.setPlayerLocation(pos.x, pos.y, pos.z, Helper.get360FromFacing(face), 0);
 		}
 		else if(!(entity instanceof EntityPlayer)){
-			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer)world));
+			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.x, pos.y, pos.z)));
 			entity.setPosition(pos.x, pos.y, pos.z);
 		}
 	}

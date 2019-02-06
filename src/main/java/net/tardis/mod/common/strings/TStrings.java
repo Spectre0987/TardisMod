@@ -68,7 +68,7 @@ public class TStrings {
 
 	public static class Permissions {
 		public static final String TP_IN_TARDIS = "tardis.command.tardistp";
-		public static final String SUMMON_TARDIS = "tardis.command.summontardis";
+		public static final String TP_IN_TARDIS_OTHER = "tardis.command.tardistp.other";
 		public static final String REMOVE_TARDIS = "tardis.command.removetardis";
 		public static final String RESTORE_TARDIS = "tardis.command.restoretardis";
 	}

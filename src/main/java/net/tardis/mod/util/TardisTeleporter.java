@@ -1,36 +1,19 @@
 package net.tardis.mod.util;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.world.Teleporter;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.ITeleporter;
 
-public class TardisTeleporter extends Teleporter {
-
-	public TardisTeleporter(WorldServer world) {
-		super(world);
+public class TardisTeleporter implements ITeleporter {
+	private final BlockPos targetPos;
+	
+	public TardisTeleporter(BlockPos targetPos) {
+		this.targetPos = targetPos;
 	}
-
-	@Override
-	public void placeInPortal(Entity entityIn, float rotationYaw) {
-	}
-
-	@Override
-	public boolean placeInExistingPortal(Entity entityIn, float rotationYaw) {
-		return true;
-	}
-
-	@Override
-	public boolean makePortal(Entity entityIn) {
-		return true;
-	}
-
-	@Override
-	public void removeStalePortalLocations(long worldTime) {
-	}
-
+	
 	@Override
 	public void placeEntity(World world, Entity entity, float yaw) {
-		super.placeEntity(world, entity, yaw);
+		entity.moveToBlockPosAndAngles(targetPos, yaw, entity.rotationPitch);
 	}
 }
