@@ -40,6 +40,9 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.*;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
+import net.tardis.mod.common.events.TardisCrashEvent;
+import net.tardis.mod.common.events.TardisLandEvent;
+import net.tardis.mod.common.events.TardisTakeOffEvent;
 import net.tardis.mod.common.misc.TardisControlFactory;
 import net.tardis.mod.common.sounds.InteriorHum;
 import net.tardis.mod.common.sounds.TSounds;
@@ -281,6 +284,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.markDirty();
 			DimensionType type = DimensionManager.getProviderType(dimension);
 			if (type != null) this.currentDimName = type.getName();
+			MinecraftForge.EVENT_BUS.post(new TardisLandEvent(this));
 			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
 			for(BaseSystem sys : this.systems) {
 				sys.wear();
@@ -540,11 +544,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public boolean startFlight() {
-		if (this.getDestination().equals(BlockPos.ORIGIN)) return false;
-		if (fuel <= 0.0F || !getCanFly()) {
+		TardisTakeOffEvent event = new TardisTakeOffEvent(this);
+		if (MinecraftForge.EVENT_BUS.post(event) || event.getFuel() <= 0.0F || event.getDestination() == null || event.getDestination() == BlockPos.ORIGIN || !getCanFly()) {
 			world.playSound(null, this.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
 			return false;
 		}
+
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;
@@ -715,6 +720,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			BlockPos crashSite = this.getCurrentPosOnPath();
 			System.out.println("Land: " + this.getLocation() + "Crash: " + crashSite);
 			this.setDesination(crashSite, dimension);
+			MinecraftForge.EVENT_BUS.post(new TardisCrashEvent(this,crashSite,dimension));
 			if(explode) {
 				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
 				world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
