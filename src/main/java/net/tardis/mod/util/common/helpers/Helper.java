@@ -48,8 +48,7 @@ public class Helper {
 	}
 
 	public static void transferToWorld(EntityPlayerMP player, WorldServer world, BlockPos pos, int dim) {
-		world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dim, new TardisTeleporter(world));
-		player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+		world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dim, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
 	}
 
 	public static Vec3d convertToPixels(Vec3d vec) {
@@ -211,7 +210,8 @@ public class Helper {
 	 * Stops those nasty null pointers
 	 **/
 	public static NBTTagCompound getStackTag(ItemStack stack) {
-		if (stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
+		if (stack.getTagCompound() == null)
+			stack.setTagCompound(new NBTTagCompound());
 		return stack.getTagCompound();
 	}
 
