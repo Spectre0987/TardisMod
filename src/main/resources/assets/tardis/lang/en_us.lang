@@ -316,9 +316,9 @@ box.tardis.cc=Disguised
 box.master.clock=Master's Clock
 box.tt=TT Capsule
 
-tardis.hum.interior_hum_80=1980's interior hum
-tardis.hum.1963_interior_hum=1963's interior hum
-tardis.hum.tardis_hum_copper=Copper's hum
-tardis.hum.tardis_hum_coral=Coral's hum
-tardis.hum.tardis_hum_toyota=Toyota's hum
+tardis.hum.tardis:interior_hum_80=1980's interior hum
+tardis.hum.tardis:1963_interior_hum=1963's interior hum
+tardis.hum.tardis:tardis_hum_copper=Copper's hum
+tardis.hum.tardis:tardis_hum_coral=Coral's hum
+tardis.hum.tardis:tardis_hum_toyota=Toyota's hum
 tardis.hum.null=Hum disabled
