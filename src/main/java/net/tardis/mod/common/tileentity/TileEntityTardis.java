@@ -962,19 +962,19 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				pos = door.getPos().down().offset(face, 1);
 				if(entity instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP)entity;
-					if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter((WorldServer)world));
+					if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
 					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get360FromFacing(face), 0);
 				}
 				else if(!(entity instanceof EntityPlayer)){
 					entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-					entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer)world));
+					entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
 				}
 			}
 		}
 		else {
 			if(entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP)entity;
-				if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter((WorldServer)world));
+				if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
 				player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
 			}
 		}
@@ -997,11 +997,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if(entity instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP)entity;
 			if(player.dimension != TDimensions.TARDIS_ID)
-				world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer)world));
+				world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.x, pos.y, pos.z)));
 			player.connection.setPlayerLocation(pos.x, pos.y, pos.z, Helper.get360FromFacing(face), 0);
 		}
 		else if(!(entity instanceof EntityPlayer)){
-			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter((WorldServer)world));
+			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.x, pos.y, pos.z)));
 			entity.setPosition(pos.x, pos.y, pos.z);
 		}
 	}
