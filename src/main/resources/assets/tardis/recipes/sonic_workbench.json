@@ -1,0 +1,24 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        "  l",
+        "ppp",
+        "w w"
+    ],
+    "keys":{
+        "l":{
+            "item":"minecraft:redstone_lamp"
+        },
+        "p":{
+            "item":"minecraft:planks",
+            "data": 0
+        },
+        "w":{
+            "item":"minecraft:logs",
+            "data": 0
+        }
+    },
+    "result":{
+        "item":"tardis:sonic_workbench"
+    }
+}
