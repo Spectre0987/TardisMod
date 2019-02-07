@@ -143,7 +143,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void update() {
 		if(hum != null) {
 			if ((soundChanged || world.getTotalWorldTime() % hum.getTicks() == 0) && !world.isRemote) {
-				world.playSound(null,getPos(),hum.getSoundEvent(),hum.getCategory(),hum.getVolume(),hum.getPitch());
+				world.playSound(null,getPos(),hum.getSoundEvent(),SoundCategory.AMBIENT,1.5F,1F);
 				soundChanged = false;
 			}
 		}
