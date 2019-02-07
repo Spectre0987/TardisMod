@@ -39,16 +39,15 @@ public class RenderItemMaterializer extends Render<EntityItemMaterializer>{
 		bb.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		int color = 0x4D2BAAFF;
-		GlStateManager.color(0, 0, 1, 0.5F);
 		for(EnumFacing face : EnumFacing.VALUES) {
 			for(BakedQuad quad : model.getQuads(null, face, 0)) {
 				bb.addVertexData(quad.getVertexData());
-				bb.putColor4(color);
+				//bb.putColor4(color);
 			}
 		}
 		for(BakedQuad quad : model.getQuads(null, null, 0)) {
 			bb.addVertexData(quad.getVertexData());
-			bb.putColor4(color);
+			//bb.putColor4(color);
 		}
 		Tessellator.getInstance().draw();
 		GlStateManager.disableAlpha();

@@ -1,5 +1,9 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,8 +22,16 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
@@ -37,7 +49,25 @@ import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.controls.*;
+import net.tardis.mod.common.entities.controls.ControlDimChange;
+import net.tardis.mod.common.entities.controls.ControlDirection;
+import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.entities.controls.ControlDoorSwitch;
+import net.tardis.mod.common.entities.controls.ControlFastReturn;
+import net.tardis.mod.common.entities.controls.ControlFuel;
+import net.tardis.mod.common.entities.controls.ControlLandType;
+import net.tardis.mod.common.entities.controls.ControlLaunch;
+import net.tardis.mod.common.entities.controls.ControlMag;
+import net.tardis.mod.common.entities.controls.ControlPhone;
+import net.tardis.mod.common.entities.controls.ControlRandom;
+import net.tardis.mod.common.entities.controls.ControlSonicSlot;
+import net.tardis.mod.common.entities.controls.ControlStabilizers;
+import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
+import net.tardis.mod.common.entities.controls.ControlWaypoint;
+import net.tardis.mod.common.entities.controls.ControlX;
+import net.tardis.mod.common.entities.controls.ControlY;
+import net.tardis.mod.common.entities.controls.ControlZ;
+import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.enums.EnumEvent;
 import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.events.TardisCrashEvent;
@@ -57,10 +87,6 @@ import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 
@@ -114,6 +140,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public InteriorHum hum = InteriorHum.DEFAULT;
 	public boolean overrideStabilizers = false;
 	public boolean soundChanged = false;
+	private boolean playerFuckedUp = false;
 	
 	public TileEntityTardis() {
 		if(systems == null) {
@@ -615,6 +642,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setBoolean(NBT.IS_LOCKED, this.isLocked);
 		tag.setFloat(NBT.HEALTH, this.hullHealth);
 		tag.setInteger(NBT.WAYPOINT_INDEX, this.waypointIndex);
+		tag.setBoolean(NBT.FUCKED_UP, this.playerFuckedUp);
 		return tag;
 	}
 
@@ -655,6 +683,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.isLocked = tag.getBoolean(NBT.IS_LOCKED);
 			this.hullHealth = tag.getFloat(NBT.HEALTH);
 			this.waypointIndex = tag.getInteger(NBT.WAYPOINT_INDEX);
+			this.playerFuckedUp = tag.getBoolean(NBT.FUCKED_UP);
 		}
 	}
 
@@ -754,25 +783,25 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	//Hum
 	public void toggleHum() {
-		if (hum != null){
-			int index = InteriorHum.hums.indexOf(hum);
+		if(!world.isRemote) {
+			if (hum != null){
+				int index = InteriorHum.hums.indexOf(hum);
 
-			List<EntityPlayerMP> players = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
-			for (EntityPlayerMP player : players){
-				if (player.dimension == TDimensions.TARDIS_ID && player.getPosition().getDistance(getPos().getX(), getPos().getY(),getPos().getZ()) <= 30)
-					NetworkHandler.NETWORK.sendTo(new MessageStopHum(index),player);
+				List<EntityPlayerMP> players = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
+				for (EntityPlayerMP player : players){
+					if (player.dimension == TDimensions.TARDIS_ID && player.getPosition().getDistance(getPos().getX(), getPos().getY(),getPos().getZ()) <= 30)
+						NetworkHandler.NETWORK.sendTo(new MessageStopHum(index),player);
+				}
+				if (index + 1 < InteriorHum.hums.size())
+					hum = InteriorHum.hums.get(index + 1);
+				else
+					hum = null;
 			}
-
-			if (index + 1 < InteriorHum.hums.size())
-				hum = InteriorHum.hums.get(index + 1);
-			else
-				hum = null;
-
+			else{
+				hum = InteriorHum.hums.get(0);
+			}
+			soundChanged = true;
 		}
-		else{
-			hum = InteriorHum.hums.get(0);
-		}
-		soundChanged = true;
 	}
 
 	public InteriorHum getHum() {
@@ -805,6 +834,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		public static final String EXTERIOR = "exterior";
 		public static final String HEALTH = "health";
 		public static final String HUM = "hum";
+		public static final String FUCKED_UP = "fucked_up";
 	}
 
 	public EnumFacing getFacing() {
@@ -966,8 +996,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get360FromFacing(face), 0);
 				}
 				else if(!(entity instanceof EntityPlayer)){
-					entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 					entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
+					entity.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 				}
 			}
 		}
@@ -1088,6 +1118,15 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	public boolean getRepairing() {
 		return this.repairing;
+	}
+	
+	public boolean hasPlayerFuckedUp() {
+		return this.playerFuckedUp;
+	}
+	
+	public void setPlayerFuckedUp(boolean fuckedUp) {
+		this.playerFuckedUp = fuckedUp;
+		this.markDirty();
 	}
 
 	public enum EnumCourseCorrect {
