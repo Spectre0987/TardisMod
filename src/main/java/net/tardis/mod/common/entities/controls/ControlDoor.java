@@ -35,6 +35,7 @@ import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.util.common.helpers.Helper;
@@ -101,7 +102,9 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
 		if (tardis == null || tardis.isLocked()) return false;
 		if (!player.isSneaking()) {
-			this.setOpen(!this.isOpen());
+			boolean state = !this.isOpen();
+			this.setOpen(state);
+			this.setOtherDoors(state);
 			if (!world.isRemote) {
 				if (this.isOpen())
 					world.playSound(null, this.getPosition(), TSounds.door_open, SoundCategory.BLOCKS, 0.5F, 0.5F);
@@ -214,6 +217,19 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 	@Override
 	public int getDimension() {
 		return this.getConsole() != null ? this.getConsole().dimension : 0;
+	}
+	
+	public void setOtherDoors(boolean open) {
+		if(!world.isRemote) {
+			TileEntityTardis tardis = this.getConsole();
+			if(tardis != null) {
+				TileEntityDoor door = (TileEntityDoor)((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension).getTileEntity(tardis.getLocation().up());
+				if(door != null) {
+					door.setLocked(!open);
+					System.out.println("Changed! Door is " + (!open ? "closed" : "open"));
+				}
+			}
+		}
 	}
 
 }

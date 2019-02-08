@@ -1,5 +1,9 @@
 package net.tardis.mod.util.common.helpers;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -19,10 +23,6 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.handlers.TEventHandler;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageSyncTardises;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class TardisHelper {
 
@@ -106,7 +106,7 @@ public class TardisHelper {
 
 		@SubscribeEvent
 		public static void sync(LivingUpdateEvent event) {
-			if (event.getEntityLiving().world.getWorldTime() % 20 == 0 && !event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
+			if (event.getEntityLiving().world.getWorldTime() % 200 == 0 && !event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 				NetworkHandler.NETWORK.sendTo(new MessageSyncTardises(), (EntityPlayerMP) event.getEntityLiving());
 			}
 		}
