@@ -51,7 +51,8 @@ public class ConsoleRoom {
 		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(pos);
 		temp.addBlocksToWorld(world, pos.subtract(consolePos), ps);
 		world.setBlockState(pos, consoleState);
-		((TileEntityTardis)world.getTileEntity(pos)).readFromNBT(tardis.writeToNBT(new NBTTagCompound()));
+		if(tardis != null)
+			((TileEntityTardis)world.getTileEntity(pos)).readFromNBT(tardis.writeToNBT(new NBTTagCompound()));
 	}
 	
 	public BlockPos getConsolePos(){
