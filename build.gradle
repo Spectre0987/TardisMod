@@ -67,8 +67,10 @@ dependencies {
     //runtime "mezz.jei:jei_1.12.2:4.11.0.212"
 }
 
-manifest {
-    attributes 'FMLAT': 'tardis_at.cfg'
+jar{
+    manifest {
+        attributes 'FMLAT': 'tardis_at.cfg'
+    }
 }
 
 processResources {
@@ -88,6 +90,4 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
-    
-    rename '(.+_at.cfg)', 'META-INF/$1'
 }
