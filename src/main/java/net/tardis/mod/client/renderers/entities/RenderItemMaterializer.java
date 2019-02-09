@@ -1,26 +1,15 @@
 package net.tardis.mod.client.renderers.entities;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraft.world.World;
+import net.tardis.mod.client.renderers.CadibooClientUtil;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 
-public class RenderItemMaterializer extends Render<EntityItemMaterializer>{
+public class RenderItemMaterializer extends Render<EntityItemMaterializer> {
 
 	public RenderItemMaterializer(RenderManager renderManager) {
 		super(renderManager);
@@ -28,31 +17,60 @@ public class RenderItemMaterializer extends Render<EntityItemMaterializer>{
 
 	@Override
 	public void doRender(EntityItemMaterializer entity, double x, double y, double z, float entityYaw, float partialTicks) {
+
+		//disable this if you want the entity to not always be full-bright
+		CadibooClientUtil.enableMaxLighting();
+		GlStateManager.enableLighting();
+
 		GlStateManager.pushMatrix();
+
 		GlStateManager.translate(x, y, z);
-		GlStateManager.enableAlpha();
+
 		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-		IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(entity.getItem(), Minecraft.getMinecraft().world, null);
-		model = ForgeHooksClient.handleCameraTransforms(model, TransformType.GROUND, false);
-		BufferBuilder bb = Tessellator.getInstance().getBuffer();
-		bb.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		int color = 0x4D2BAAFF;
-		for(EnumFacing face : EnumFacing.VALUES) {
-			for(BakedQuad quad : model.getQuads(null, face, 0)) {
-				bb.addVertexData(quad.getVertexData());
-				//bb.putColor4(color);
-			}
+
+		GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+
+		final float alpha = entity.getAlpha();
+
+		final ItemStack stack = entity.getItem();
+		final World world = entity.world;
+
+		//wait 1/16th of the time before starting to render it
+		if (alpha > 0.0625F) {
+			renderEntityStackWithAlpha(stack, world, alpha, 0.0625F);
 		}
-		for(BakedQuad quad : model.getQuads(null, null, 0)) {
-			bb.addVertexData(quad.getVertexData());
-			//bb.putColor4(color);
+
+		//render it a 2nd time if time is half done to make it even more opaque
+		if (alpha > 0.5F) {
+			renderEntityStackWithAlpha(stack, world, alpha, 0.5F);
 		}
-		Tessellator.getInstance().draw();
-		GlStateManager.disableAlpha();
+
+		//render it a 3rd time if time is 3/4 done to make it even more opaque
+		if (alpha > 0.75F) {
+			renderEntityStackWithAlpha(stack, world, alpha, 0.75F);
+		}
+
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
+
+	}
+
+	private void renderEntityStackWithAlpha(final ItemStack stack, final World world, final float alpha, final float alphaInputStartCorrect) {
+
+		if (stack.isEmpty()) {
+			return;
+		}
+
+		final float alphaAdjusted = (float) CadibooClientUtil.map(alpha, alphaInputStartCorrect, 1F, 0F, 1F);
+
+		// Full color is 0x2B_AA_FF in RGB format or 0xFF_2B_AA_FF in ARGB format
+		final int color = CadibooClientUtil.colorf(
+				0x2B / 255F * alphaAdjusted,
+				0xAA / 255F * alphaAdjusted,
+				0xFF / 255F * alphaAdjusted
+		);
+
+		CadibooClientUtil.renderStackWithColor(stack, world, color);
 	}
 
 	@Override
