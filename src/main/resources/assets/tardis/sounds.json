@@ -263,5 +263,14 @@
         "stream": false
       }
     ]
-  }
+  },
+  "remote_accept": {
+  "category": "player",
+  "sounds": [
+    {
+      "name": "tardis:remote_accept",
+      "stream": false
+    }
+  ]
+}
 }

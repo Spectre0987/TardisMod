@@ -20,4 +20,12 @@ public class TardisTabs {
 			return new ItemStack(TBlocks.tardis_top);
 		}
 	};
+
+	public static CreativeTabs GALLIFREY_BLOCKS = new CreativeTabs("tardis_galliblocks") {
+		@Override
+		public ItemStack createIcon() {
+			return new ItemStack(TBlocks.gallifreyan_grass);
+		}
+	};
+
 }
