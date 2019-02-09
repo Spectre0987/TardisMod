@@ -1,5 +1,6 @@
 package net.tardis.mod.common.blocks;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -9,18 +10,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
+
+import javax.annotation.Nullable;
 
 public class BlockTardisCoral extends BlockTileBase {
 
 	public ItemBlock item = new ItemBlock(this);
 	public static final PropertyInteger GROW_STAGE = PropertyInteger.create("grow", 0, 3);
+
+	protected static final AxisAlignedBB CORAL_AABB = new AxisAlignedBB(0.25D, 0D, 0.25D, 0.75D, 0.75D, 0.75D);
 	
 	public BlockTardisCoral() {
 		super(Material.SPONGE, TileEntityTardisCoral::new);
 		this.setDefaultState(this.getDefaultState().withProperty(GROW_STAGE, 0));
+		this.setSoundType(SoundType.PLANT);
+
 	}
 
 	@Override
@@ -43,6 +52,13 @@ public class BlockTardisCoral extends BlockTileBase {
 	}
 
 	@Override
+	public boolean isFullCube(IBlockState state)
+	{
+		return false;
+	}
+
+
+	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, GROW_STAGE);
 	}
@@ -61,6 +77,20 @@ public class BlockTardisCoral extends BlockTileBase {
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
+
+	@Nullable
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
+	{
+		return NULL_AABB;
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
+		return CORAL_AABB;
+	}
+
+
 
 
 }

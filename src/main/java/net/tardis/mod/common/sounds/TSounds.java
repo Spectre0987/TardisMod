@@ -39,6 +39,8 @@ public class TSounds {
 	public static SoundEvent control_02 = register("control_02");
 	public static SoundEvent control_03 = register("control_03");
 
+	public static SoundEvent remote_accept = register("remote_accept");
+
 	//1963
 	public static SoundEvent INTERIOR_HUM_1963 = register("1963_interior_hum");
 	public static SoundEvent INTERIOR_DOOR_1963 = register("1963_int_door");

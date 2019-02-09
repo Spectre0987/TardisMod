@@ -1,6 +1,7 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -26,6 +27,7 @@ public class BlockChair extends BlockHorizontal implements INoBox {
 		this.setCreativeTab(TardisTabs.BLOCKS);
 		this.setLightOpacity(0);
 		this.setHarvestLevel("axe", 0);
+		this.setSoundType(SoundType.WOOD);
 	}
 
 	@Override
