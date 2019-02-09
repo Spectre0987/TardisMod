@@ -30,6 +30,8 @@ import java.util.Random;
 
 /**
  * Util that is only used on the client i.e. Rendering code
+ * This code (excluding any changes by people in the future) belongs to Cadiboo and was originally from his mod WIPTech.
+ * Use it for whatever you want, If you copy it to another project some credit would be nice, but not necessary.
  *
  * @author Cadiboo
  */
