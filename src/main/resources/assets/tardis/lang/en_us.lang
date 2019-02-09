@@ -1,5 +1,6 @@
 itemGroup.tardis_blocks=TARDIS Mod Blocks
 itemGroup.tardis_items=TARDIS Mod Items
+itemGroup.tardis_items=Strange Blocks
 
 item.tardis.key.name=TARDIS Key
 item.tardis.pos_setter.name=Coordinate Logger
@@ -125,6 +126,13 @@ tile.tardis.br_chair.name=Chair
 tile.tardis.am_sphere.name=Armillary Sphere
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
 tile.tardis.sonic_workbench.name=Sonics workbench
+
+tile.tardis.gallifreyan_grass.name=Strange Grass
+tile.tardis.gallifreyan_dirt.name=Strange Dirt
+tile.tardis.gallifreyan_stone.name=Strange Stone
+
+
+
 
 tardis.locked.true=TARDIS locked!
 tardis.locked.false=TARDIS unlocked!
