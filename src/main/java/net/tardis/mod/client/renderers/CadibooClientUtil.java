@@ -1,10 +1,5 @@
 package net.tardis.mod.client.renderers;
 
-import java.util.List;
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -28,6 +23,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Util that is only used on the client i.e. Rendering code
@@ -41,7 +40,6 @@ public final class CadibooClientUtil {
 	 * Rotation algorithm Taken off Max_the_Technomancer from <a href= "https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/2772267-tesr-getting-darker-and-lighter-as-it-rotates">here</a>
 	 *
 	 * @param face the {@link EnumFacing face} to rotate for
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void rotateForFace(final EnumFacing face) {
@@ -51,8 +49,6 @@ public final class CadibooClientUtil {
 
 	/**
 	 * All Light methods I can remember
-	 *
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	private static void allLightMethods() {
@@ -81,7 +77,6 @@ public final class CadibooClientUtil {
 	 * @param NumberOfBranches            The number of main (full length) branches
 	 * @param NumberOfPossibleSubBranches The number Sub branches for each main branch
 	 * @param scale                       How large/small it will render
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void renderLightning(final int number, final int NumberOfBranches, final int NumberOfPossibleSubBranches, final double scale) {
@@ -201,7 +196,6 @@ public final class CadibooClientUtil {
 	 * @param entity       The entity to calculate the position of
 	 * @param partialTicks The multiplier used to predict where the entity is/will be
 	 * @return The position of the entity as a Vec3d
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static Vec3d getEntityRenderPos(final Entity entity, final double partialTicks) {
@@ -254,7 +248,6 @@ public final class CadibooClientUtil {
 	 *
 	 * @param source      The position to rotate from (I think that I've messed up the maths, it currently only works with 0, 0, 0 i.e. the Origin)
 	 * @param destination The position to rotate towards
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void rotateXAxisTowardsPos(final Vec3d source, final Vec3d destination) {
@@ -267,7 +260,6 @@ public final class CadibooClientUtil {
 	 *
 	 * @param source      The position to rotate from (I think that I've messed up the maths, it currently only works with 0, 0, 0 i.e. the Origin)
 	 * @param destination The position to rotate towards
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void rotateYAxisTowardsPos(final Vec3d source, final Vec3d destination) {
@@ -280,7 +272,6 @@ public final class CadibooClientUtil {
 	 *
 	 * @param source      The position to rotate from (I think that I've messed up the maths, it currently only works with 0, 0, 0 i.e. the Origin)
 	 * @param destination The position to rotate towards
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void rotateZAxisTowardsPos(final Vec3d source, final Vec3d destination) {
@@ -306,7 +297,6 @@ public final class CadibooClientUtil {
 	 * @param number           The seed for the randoms that are used
 	 * @param NumberOfBranches The number of main (full length) branches
 	 * @param scale            How large/small/long it will be
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void renderElectricity(final int number, final int NumberOfBranches, final double scale) {
@@ -449,7 +439,6 @@ public final class CadibooClientUtil {
 	 * @param y_size The size of the cuboid on the Y plane
 	 * @param z_size The size of the cuboid on the Z plane
 	 * @param scale  How much to scale in {@link GlStateManager#scale(double, double, double) GLStateManager.scale}
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void drawCuboid(final float minU, final float maxU, final float minV, final float maxV, final double x_size, final double y_size, final double z_size, final double scale) {
@@ -517,7 +506,6 @@ public final class CadibooClientUtil {
 	 * @param y_size The size of the cuboid on the Y plane
 	 * @param z_size The size of the cuboid on the Z plane
 	 * @param scale  How much to scale in {@link GlStateManager#scale(double, double, double) GLStateManager.scale}
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void drawSeamlessCuboid(final float minU, final float maxU, final float minV, final float maxV, final double z_size, final double y_size, final double x_size, final double scale) {
@@ -601,7 +589,6 @@ public final class CadibooClientUtil {
 	 * @param x_size The size of the cuboid on the X plane
 	 * @param y_size The size of the cuboid on the Y plane
 	 * @param scale  How much to scale in {@link GlStateManager#scale(double, double, double) GLStateManager.scale}
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void drawQuad(final float minU, final float maxU, final float minV, final float maxV, final double x_size, final double y_size, final double scale) {
@@ -632,7 +619,6 @@ public final class CadibooClientUtil {
 	 *
 	 * @param stack stack the stack to render
 	 * @param world the world passed to {@link net.minecraft.client.renderer.RenderItem#getItemModelWithOverrides(ItemStack, World, net.minecraft.entity.EntityLivingBase), RenderItem.getItemModelWithOverrides(ItemStack, World, EntityLivingBase)}
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void renderStack(final ItemStack stack, final World world) {
@@ -648,7 +634,6 @@ public final class CadibooClientUtil {
 	 *
 	 * @param stack the stack to render
 	 * @param world the world passed to {@link net.minecraft.client.renderer.RenderItem#getItemModelWithOverrides(ItemStack, World, net.minecraft.entity.EntityLivingBase), RenderItem.getItemModelWithOverrides(ItemStack, World, EntityLivingBase)}
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void renderStackWithoutTransforms(final ItemStack stack, final World world) {
@@ -664,7 +649,6 @@ public final class CadibooClientUtil {
 	 *
 	 * @param stack the stack to render
 	 * @param color the color to render the stack with
-	 * @author Cadiboo
 	 * @see {@link CadibooClientUtil#color(int, int, int)}
 	 */
 	@SideOnly(Side.CLIENT)
@@ -745,7 +729,6 @@ public final class CadibooClientUtil {
 	 * @param stack
 	 * @param world
 	 * @return The stack's model
-	 * @author Cadiboo
 	 */
 	@SideOnly(Side.CLIENT)
 	public static IBakedModel getModelFromStack(final ItemStack stack, final World world) {
@@ -843,7 +826,6 @@ public final class CadibooClientUtil {
 	 * @param green the red value of the color, between 0x00 (decimal 0) and 0xFF (decimal 255)
 	 * @param blue  the red value of the color, between 0x00 (decimal 0) and 0xFF (decimal 255)
 	 * @return the color in ARGB format
-	 * @author Cadiboo
 	 */
 	public static int color(int red, int green, int blue) {
 
@@ -870,6 +852,23 @@ public final class CadibooClientUtil {
 		final int greenInt = Math.max(0, Math.min(255, Math.round(green * 255)));
 		final int blueInt = Math.max(0, Math.min(255, Math.round(blue * 255)));
 		return color(redInt, greenInt, blueInt);
+	}
+
+	/**
+	 * Maps a value from one range to another range. Taken from https://stackoverflow.com/a/5732117
+	 *
+	 * @param input       the input
+	 * @param inputStart  the start of the input's range
+	 * @param inputEnd    the end of the input's range
+	 * @param outputStart the start of the output's range
+	 * @param outputEnd   the end of the output's range
+	 * @return the newly mapped value
+	 */
+	public static double map(final double input, final double inputStart, final double inputEnd, final double outputStart, final double outputEnd) {
+		final double input_range = inputEnd - inputStart;
+		final double output_range = outputEnd - outputStart;
+
+		return (((input - inputStart) * output_range) / input_range) + outputStart;
 	}
 
 	// TODO
