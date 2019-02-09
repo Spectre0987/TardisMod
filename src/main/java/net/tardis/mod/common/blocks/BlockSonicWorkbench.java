@@ -1,6 +1,7 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +18,7 @@ import net.tardis.mod.handlers.GuiHandlerTardis;
 public class BlockSonicWorkbench extends BlockBase {
 
 	public BlockSonicWorkbench() {
-		
+		this.setSoundType(SoundType.WOOD);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package net.tardis.mod.common.blocks;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +21,7 @@ public class BlockComponentRepair extends BlockTileBase {
 	public BlockComponentRepair(Material materialIn, Supplier<TileEntity> tileEntity) {
 		super(materialIn, tileEntity);
 		this.setLightOpacity(0);
+		this.setSoundType(SoundType.ANVIL);
 
 	}
 

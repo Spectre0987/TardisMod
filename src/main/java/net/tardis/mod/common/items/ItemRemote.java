@@ -9,11 +9,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -74,9 +76,14 @@ public class ItemRemote extends ItemBase {
 				tardis.setDesination(pos.up(1), player.dimension);
 				tardis.setFacing(player.getHorizontalFacing().getOpposite());
 				tardis.startFlight();
+
+				worldIn.playSound(null, pos, TSounds.remote_accept, SoundCategory.PLAYERS, 1.0F, 1.0F);
+
 			}
 		}
+
 		return EnumActionResult.SUCCESS;
+
 	}
 
 	@Override

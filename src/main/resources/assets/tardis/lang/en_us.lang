@@ -1,6 +1,6 @@
 itemGroup.tardis_blocks=TARDIS Mod Blocks
 itemGroup.tardis_items=TARDIS Mod Items
-itemGroup.tardis_items=Strange Blocks
+itemGroup.tardis_galliblocks=Strange Blocks
 
 item.tardis.key.name=TARDIS Key
 item.tardis.pos_setter.name=Coordinate Logger
