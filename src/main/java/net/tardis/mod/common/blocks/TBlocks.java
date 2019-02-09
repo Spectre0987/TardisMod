@@ -132,7 +132,7 @@ public class TBlocks {
 	// Gallifrey
 	public static Block gallifreyan_grass = register(new BlockGallifreyDirt(true), "gallifreyan_grass", false);
 	public static Block gallifreyan_dirt = register(new BlockGallifreyDirt(false), "gallifreyan_dirt", false);
-
+	public static Block gallifreyan_sand = register(new BlockGallifreySand(0.5F, 30F), "gallifreyan_sand", false);
 	public static Block gallifreyan_stone = register(new BlockGallifreyStone(1.5F, 30F), "gallifreyan_stone", false);
 
 

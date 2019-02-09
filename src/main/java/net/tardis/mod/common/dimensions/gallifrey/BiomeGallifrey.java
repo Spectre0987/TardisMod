@@ -16,7 +16,7 @@ import java.util.Random;
 public class BiomeGallifrey extends Biome {
 	
 	public BiomeGallifrey() {
-		super(new BiomeProperties("gallifrey").setBaseHeight(0.0F).setHeightVariation(1F).setTemperature(6.0F).setRainDisabled());
+		super(new BiomeProperties("gallifrey").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled());
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
