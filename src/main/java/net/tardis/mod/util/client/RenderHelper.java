@@ -4,6 +4,8 @@ import java.nio.FloatBuffer;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -160,7 +162,8 @@ public class RenderHelper {
 	}
 
 	public static void setRenderGlobalWorld(WorldClient world) {
-		Minecraft.getMinecraft().renderGlobal.world = world;
+		RenderGlobal global = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), 23);
+		global.world = world;
 		Minecraft.getMinecraft().world = world;
 	}
 
