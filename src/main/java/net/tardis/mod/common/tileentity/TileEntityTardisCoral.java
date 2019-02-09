@@ -66,11 +66,11 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 				++time;
 				this.markDirty();
 			}
-			/*if(world.getWorldTime() % 600 == 0) {
+			if(world.getWorldTime() % 600 == 0) {
 				++this.growStage;
 				if(growStage > 3) growStage = 3;
 				world.setBlockState(this.getPos(), TBlocks.tardis_coral.getDefaultState().withProperty(BlockTardisCoral.GROW_STAGE, this.growStage));
-			}*/
+			}
 		}
 	}
 
