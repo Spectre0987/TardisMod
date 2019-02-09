@@ -997,7 +997,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				}
 				else if(!(entity instanceof EntityPlayer)){
 					entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
-					entity.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+					//entity.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 				}
 			}
 		}

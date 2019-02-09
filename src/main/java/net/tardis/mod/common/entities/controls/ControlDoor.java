@@ -226,7 +226,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				TileEntityDoor door = (TileEntityDoor)((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension).getTileEntity(tardis.getLocation().up());
 				if(door != null) {
 					door.setLocked(!open);
-					System.out.println("Changed! Door is " + (!open ? "closed" : "open"));
 				}
 			}
 		}
