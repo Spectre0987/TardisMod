@@ -130,10 +130,10 @@ public class TBlocks {
 	public static Block moon_dirt = register(new BlockBase(), "moon_dirt");
 
 	// Gallifrey
-	public static Block gallifreyan_grass = register(new BlockGallifreyDirt(true), "gallifreyan_grass", false);
-	public static Block gallifreyan_dirt = register(new BlockGallifreyDirt(false), "gallifreyan_dirt", false);
+	public static Block gallifreyan_grass = register(new BlockGrassBase(), "gallifreyan_grass", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block gallifreyan_dirt = register(new BlockGallifreyDirt(false), "gallifreyan_dirt", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
 
-	public static Block gallifreyan_stone = register(new BlockGallifreyStone(1.5F, 30F), "gallifreyan_stone", false);
+	public static Block gallifreyan_stone = register(new BlockGallifreyStone(1.5F, 30F), "gallifreyan_stone", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
 
 
 	public static Block suitcase = register(new BlockSuitcase(), "suitcase");
