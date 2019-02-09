@@ -37,7 +37,7 @@ public class BlockTileBase extends Block {
 
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-		if (!world.isRemote) {
+		if (!world.isRemote && !player.capabilities.isCreativeMode) {
 			EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(this));
 			world.spawnEntity(item);
 		}
@@ -48,4 +48,5 @@ public class BlockTileBase extends Block {
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		drops.clear();
 	}
+
 }
