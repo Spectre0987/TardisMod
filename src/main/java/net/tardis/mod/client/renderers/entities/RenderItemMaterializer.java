@@ -1,26 +1,14 @@
 package net.tardis.mod.client.renderers.entities;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.tardis.mod.client.renderers.CadibooClientUtil;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 
-public class RenderItemMaterializer extends Render<EntityItemMaterializer>{
+public class RenderItemMaterializer extends Render<EntityItemMaterializer> {
 
 	public RenderItemMaterializer(RenderManager renderManager) {
 		super(renderManager);
@@ -28,31 +16,26 @@ public class RenderItemMaterializer extends Render<EntityItemMaterializer>{
 
 	@Override
 	public void doRender(EntityItemMaterializer entity, double x, double y, double z, float entityYaw, float partialTicks) {
+		CadibooClientUtil.enableMaxLighting();
+		GlStateManager.enableLighting();
+
 		GlStateManager.pushMatrix();
+
 		GlStateManager.translate(x, y, z);
-		GlStateManager.enableAlpha();
+
 		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-		IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(entity.getItem(), Minecraft.getMinecraft().world, null);
-		model = ForgeHooksClient.handleCameraTransforms(model, TransformType.GROUND, false);
-		BufferBuilder bb = Tessellator.getInstance().getBuffer();
-		bb.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		int color = 0x4D2BAAFF;
-		for(EnumFacing face : EnumFacing.VALUES) {
-			for(BakedQuad quad : model.getQuads(null, face, 0)) {
-				bb.addVertexData(quad.getVertexData());
-				//bb.putColor4(color);
-			}
+
+		GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+
+		final int color = CadibooClientUtil.color(0, 0, 0xFF /*- (int) (entity.world.getTotalWorldTime() % 0xFF)*/);
+		final ItemStack stack = entity.getItem();
+		if (!stack.isEmpty()) {
+			CadibooClientUtil.renderStackWithColor(stack, entity.world, color);
 		}
-		for(BakedQuad quad : model.getQuads(null, null, 0)) {
-			bb.addVertexData(quad.getVertexData());
-			//bb.putColor4(color);
-		}
-		Tessellator.getInstance().draw();
-		GlStateManager.disableAlpha();
+
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
+
 	}
 
 	@Override
