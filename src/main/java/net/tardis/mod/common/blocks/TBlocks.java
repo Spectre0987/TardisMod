@@ -56,8 +56,11 @@ public class TBlocks {
 	public static Block toyota_hexalight_off2 = register(new BlockToyota(true), "toyota_hexalight_off2");
 	public static Block toyota_hexalight_off3 = register(new BlockToyota(false), "toyota_hexalight_off3");
 	public static Block toyota_light_emergency = register(new BlockToyota(true), "toyota_light_emergency");
-	public static Block toyota_light_off = register(new BlockToyota(false), "toyota_light_off");
-	public static Block toyota_light_on = register(new BlockToyota(true), "toyota_light_on");
+
+	public static Block toyota_light_off = register(new BlockToyotaLight(false), "toyota_light_off");
+	public static Block toyota_light_on = register(new BlockToyotaLight(true), "toyota_light_on", false);
+
+
 	public static Block toyota_upper_divider = register(new BlockToyota(false), "toyota_upper_divider");
 	public static Block toyota_platform = register(new BlockToyota(false), "toyota_platform");
 	public static Block toyota_platform_top = register(new BlockToyota(false), "toyota_platform_top");
