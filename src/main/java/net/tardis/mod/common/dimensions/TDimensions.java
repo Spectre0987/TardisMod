@@ -9,6 +9,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.dimensions.gallifrey.BiomeGallifrey;
+import net.tardis.mod.common.dimensions.gallifrey.WorldProviderGallifrey;
 import net.tardis.mod.common.dimensions.moon.BiomeMoon;
 import net.tardis.mod.common.dimensions.moon.MoonProvider;
 import net.tardis.mod.common.dimensions.space.SpaceProvider;
@@ -31,10 +33,15 @@ public class TDimensions {
 	public static DimensionType telosType;
 	public static Biome telosBiome = new BiomeTelos(true);
 	public static Biome telosBiomeOrange = new BiomeTelos(false);
+	public static Biome gallifreyBiome = new BiomeGallifrey();
 
 	public static int MOON_ID;
 	public static DimensionType MOON_TYPE;
 	public static Biome moonBiome = new BiomeMoon();
+	
+	public static int GALLIFREY_ID;
+	public static DimensionType GALLIFREY_TYPE;
+	
 
 	public static void register() {
 
@@ -63,6 +70,12 @@ public class TDimensions {
 		else MOON_ID = DimensionManager.getNextFreeDimId();
 		MOON_TYPE = DimensionType.register("moon", "_moon", MOON_ID, MoonProvider.class, false);
 		DimensionManager.registerDimension(MOON_ID, MOON_TYPE);
+		
+		//TODO Clean this up
+		
+		GALLIFREY_ID = 678;
+		GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
+		DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
 	}
 
 	@EventBusSubscriber(modid = Tardis.MODID)
@@ -84,6 +97,7 @@ public class TDimensions {
 			registerBiome(TDimensions.telosBiome, "telos", BiomeDictionary.Type.SNOWY);
 			registerBiome(TDimensions.telosBiomeOrange, "telos_orange", BiomeDictionary.Type.SNOWY);
 			registerBiome(TDimensions.moonBiome, "moon", BiomeDictionary.Type.COLD);
+			registerBiome(TDimensions.gallifreyBiome, "gallifrey", BiomeDictionary.Type.DENSE);
 		}
 	}
 }
