@@ -23,7 +23,7 @@ public class BlockGallifreyStone extends Block {
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        if (!world.isRemote && !player.capabilities.isCreativeMode) {
+        if (!world.isRemote && !player.isCreative()) {
             EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(this));
             world.spawnEntity(item);
         }
