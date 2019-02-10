@@ -69,9 +69,10 @@ public class BlockMultiblock extends BlockContainer {
 		TileEntityMultiblockMaster master = (TileEntityMultiblockMaster) worldIn.getTileEntity(mBlock.getMasterPos());
 		if (master != null && master.getChildren() != null) {
 			for (BlockPos child : master.getChildren()) {
-				if (child == null) continue;
-				IBlockState childState = worldIn.getBlockState(child);
-				childState.getBlock().onBlockActivated(worldIn, child, childState, playerIn, hand, facing, hitX, hitY, hitZ);
+				if (child == null) {
+					IBlockState childState = worldIn.getBlockState(child);
+					childState.getBlock().onBlockActivated(worldIn, child, childState, playerIn, hand, facing, hitX, hitY, hitZ);
+				}
 			}
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
