@@ -114,7 +114,7 @@ public class RenderHelper {
 				// Cadiboo fix bug with hand not rendering
 				// (makes rendering go horribly wrong when multiple tardises are close together tho)
 				{
-			    	oldFrameBuffer.bindFramebuffer(true);
+					oldFrameBuffer.bindFramebuffer(true);
 //			    	framebuffer.deleteFramebuffer();
 				}
 
@@ -174,12 +174,12 @@ public class RenderHelper {
 	}
 
 	public static void setRenderGlobalWorld(WorldClient world) {
-    //Fril did a thing
+		//Fril did a thing
 		{
 			// renderGlobal -> "field_71438_f"
 			RenderGlobal global = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), 23);
 			global.world = world;
-    }
+		}
 // 		Minecraft.getMinecraft().renderGlobal.world = world;
 		Minecraft.getMinecraft().world = world;
 	}
