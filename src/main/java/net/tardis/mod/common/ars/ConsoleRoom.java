@@ -6,7 +6,9 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -39,17 +41,21 @@ public class ConsoleRoom {
 	}
 	
 	public void generate(WorldServer world, BlockPos pos) {
+		IBlockState consoleState = world.getBlockState(pos);
+		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(pos);
 		for(Entity entity : world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(pos).grow(20))) {
 			if(!(entity instanceof EntityControl) || !(entity instanceof EntityLivingBase)) {
 				entity.setDead();
 				world.updateEntities(); 
 				world.updateEntityWithOptionalForce(entity, true);
 			}
+			if(entity instanceof EntityLivingBase)
+				tardis.transferPlayer(entity, false);
 		}
 		Template temp = world.getStructureTemplateManager().get(world.getMinecraftServer(), filePath);
 		PlacementSettings ps = new PlacementSettings();
-		IBlockState consoleState = world.getBlockState(pos);
-		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(pos);
+		//IBlockState consoleState = world.getBlockState(pos);
+		//TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(pos);
 		temp.addBlocksToWorld(world, pos.subtract(consolePos), ps);
 		world.setBlockState(pos, consoleState);
 		if(tardis != null)
