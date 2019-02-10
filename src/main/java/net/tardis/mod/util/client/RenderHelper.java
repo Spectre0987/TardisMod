@@ -30,7 +30,7 @@ import java.nio.FloatBuffer;
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 
-	private static Framebuffer fb;
+	private static Framebuffer framebuffer;
 	private static WorldBoti wBoti;
 	private static FloatBuffer FOG_BUFFER = GLAllocation.createDirectFloatBuffer(16);
 	private static float lastBrightnessX = OpenGlHelper.lastBrightnessX;
@@ -69,12 +69,14 @@ public class RenderHelper {
 			try {
 				if (wBoti == null || wBoti.dimension != te.getDimension())
 					wBoti = new WorldBoti(te.getDimension(), Minecraft.getMinecraft().world, te.getWorldShell());
-				WorldClient oldW = Minecraft.getMinecraft().world;
+				WorldClient oldWorld = Minecraft.getMinecraft().world;
 				wBoti.setWorldTime(te.getWorldShell().getTime());
 				RenderHelper.setRenderGlobalWorld(wBoti);
 				Framebuffer oldFrameBuffer = Minecraft.getMinecraft().getFramebuffer();
 				int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
-				if (fb == null) fb = new Framebuffer(width, height, true);
+				if (framebuffer == null) {
+					framebuffer = new Framebuffer(width, height, true);
+				}
 				GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
 				GlStateManager.pushMatrix();
 				{
@@ -89,12 +91,10 @@ public class RenderHelper {
 							Vec3d color = wBoti.provider.getFogColor(0, 0);
 							GlStateManager.enableFog();
 							GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
-							if (color != null) {
-								FOG_BUFFER.clear();
-								FOG_BUFFER.put((float) color.x).put((float) color.y).put((float) color.z).put(1F);
-								FOG_BUFFER.flip();
-								GlStateManager.glFog(2918, FOG_BUFFER);
-							}
+							FOG_BUFFER.clear();
+							FOG_BUFFER.put((float) color.x).put((float) color.y).put((float) color.z).put(1F);
+							FOG_BUFFER.flip();
+							GlStateManager.glFog(2918, FOG_BUFFER);
 							GlStateManager.setFogDensity(0.01F);
 							GlStateManager.setFogStart(10F);
 							GlStateManager.setFogEnd(20F);
@@ -109,16 +109,13 @@ public class RenderHelper {
 				}
 				GlStateManager.popMatrix();
 
-				RenderHelper.setRenderGlobalWorld(oldW);
+				RenderHelper.setRenderGlobalWorld(oldWorld);
 
-				//Cadiboo reverse order to fix bug with hand not rendering
+				// Cadiboo fix bug with hand not rendering
+				// (makes rendering go horribly wrong when multiple tardises are close together tho)
 				{
-//			    	oldFrameBuffer.bindFramebuffer(true);
-//			    	fb.deleteFramebuffer();
-
-					fb.deleteFramebuffer();
-					oldFrameBuffer.bindFramebuffer(false);
-					GlStateManager.depthMask(false);
+			    	oldFrameBuffer.bindFramebuffer(true);
+//			    	framebuffer.deleteFramebuffer();
 				}
 
 			} catch (Exception e) {
