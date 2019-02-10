@@ -5,7 +5,7 @@
         "ppp",
         "w w"
     ],
-    "keys":{
+    "key":{
         "l":{
             "item":"minecraft:redstone_lamp"
         },
