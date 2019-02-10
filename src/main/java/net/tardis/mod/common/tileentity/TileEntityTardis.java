@@ -8,6 +8,7 @@ import java.util.UUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -774,11 +775,18 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 	public void startHADS() {
 		if(!world.isRemote && this.hadsEnabled) {
-			this.setDesination(this.getLocation().add(rand.nextInt(20) - 10, 0, rand.nextInt(20) - 10), dimension);
-			this.startFlight();
-			WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-			ws.setBlockState(this.getLocation(), Blocks.AIR.getDefaultState());
-			ws.setBlockState(this.getLocation().up(), Blocks.AIR.getDefaultState());
+			if (this.getCanFly() && !this.isInFlight()) {
+				this.setDesination(this.getLocation().add(rand.nextInt(20) - 10, 0, rand.nextInt(20) - 10), dimension);
+				this.startFlight();
+				WorldServer ws = world.getMinecraftServer().getWorld(dimension);
+				ws.setBlockState(this.getLocation(), Blocks.AIR.getDefaultState());
+				ws.setBlockState(this.getLocation().up(), Blocks.AIR.getDefaultState());
+			}else{
+				WorldServer ws = world.getMinecraftServer().getWorld(dimension);
+				ws.playSound(null, this.getLocation(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
+				ws.playSound(null, this.getLocation(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
+				this.setHADS(false);
+			}
 		}
 	}
 
