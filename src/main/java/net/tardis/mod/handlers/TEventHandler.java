@@ -13,11 +13,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.InventoryHelper;
@@ -27,6 +27,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -68,8 +69,6 @@ import net.tardis.mod.common.systems.SystemTemporalGrace;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
-import net.tardis.mod.network.NetworkHandler;
-import net.tardis.mod.network.packets.MessageSyncTardises;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
@@ -88,6 +87,10 @@ public class TEventHandler {
 				event.getEntityLiving().fallDistance *= 0.01D;
 			}
 		}
+		//Honor the config option
+		ResourceLocation key = EntityList.getKey(event.getEntityLiving());
+		if(!TardisConfig.USE_ENTITIES.entities && key != null && key.getNamespace().equals(Tardis.MODID))
+			event.getEntityLiving().setDead();
 	}
 
 

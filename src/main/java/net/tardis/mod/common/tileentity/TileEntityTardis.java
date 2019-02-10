@@ -183,7 +183,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 
 			if(this.ticksToTravel == 200){
 				for(EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16))) {
-					player.connection.sendPacket(new SPacketSoundEffect(TSounds.takeoff, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
+					player.connection.sendPacket(new SPacketSoundEffect(TSounds.tardis_land, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
 				}
 			}
 

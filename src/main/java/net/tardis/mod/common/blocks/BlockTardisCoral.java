@@ -83,8 +83,8 @@ public class BlockTardisCoral extends BlockTileBase {
 	{
 		return NULL_AABB;
 	}
-
-
+	
+	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	{
 		return CORAL_AABB;

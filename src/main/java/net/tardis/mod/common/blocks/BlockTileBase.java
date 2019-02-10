@@ -50,4 +50,5 @@ public class BlockTileBase extends Block {
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		drops.clear();
 	}
+
 }
