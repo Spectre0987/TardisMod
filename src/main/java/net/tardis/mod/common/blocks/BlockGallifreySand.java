@@ -1,6 +1,7 @@
 package net.tardis.mod.common.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,25 +14,14 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.client.creativetabs.TardisTabs;
 
-public class BlockGallifreyDirt extends Block {
+public class BlockGallifreySand extends BlockFalling {
 
-    public BlockGallifreyDirt(Boolean isTop) {
-
-        super(Material.GROUND);
-        this.setHardness(1F);
-        this.setResistance(1F);
+    public BlockGallifreySand(float hardness, float resistance) {
+        super(Material.SAND);
+        this.setHardness(hardness);
+        this.setResistance(resistance);
         setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
-
-
-        if (isTop) {
-
-            this.setSoundType(SoundType.PLANT);
-        }
-        else{
-
-            this.setSoundType(SoundType.GROUND);
-        }
-
+        this.setSoundType(SoundType.SAND);
     }
 
     @Override

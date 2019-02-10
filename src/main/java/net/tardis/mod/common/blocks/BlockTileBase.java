@@ -37,9 +37,11 @@ public class BlockTileBase extends Block {
 
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-		if (!world.isRemote && !player.capabilities.isCreativeMode) {
-			EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(this));
-			world.spawnEntity(item);
+		if (!world.isRemote) {
+			if(!player.isCreative()){
+				EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(this));
+				world.spawnEntity(item);
+			}
 		}
 		return super.removedByPlayer(state, world, pos, player, willHarvest);
 	}
