@@ -136,7 +136,7 @@ public class CommandTardis extends CommandBase {
 			if (system != null)
 				systemBases.add(system);
 			else
-				player.sendMessage(new TextComponentString(s + ": " + new TextComponentTranslation(TStrings.Commands.NO_SYSTEM)));
+				player.sendMessage(new TextComponentString(s + ": " + new TextComponentTranslation(TStrings.Commands.NO_SYSTEM).getFormattedText()));
 		}
 
 		if (TardisHelper.hasTardis(owner)) {

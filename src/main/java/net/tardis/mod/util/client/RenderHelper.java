@@ -174,9 +174,13 @@ public class RenderHelper {
 	}
 
 	public static void setRenderGlobalWorld(WorldClient world) {
-		// renderGlobal -> "field_71438_f"
-		RenderGlobal global = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), 23);
-		global.world = world;
+    //Fril did a thing
+		{
+			// renderGlobal -> "field_71438_f"
+			RenderGlobal global = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), 23);
+			global.world = world;
+    }
+// 		Minecraft.getMinecraft().renderGlobal.world = world;
 		Minecraft.getMinecraft().world = world;
 	}
 

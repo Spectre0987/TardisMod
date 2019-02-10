@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
@@ -20,6 +21,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -84,6 +86,10 @@ public class TEventHandler {
 				event.getEntityLiving().fallDistance *= 0.01D;
 			}
 		}
+		//Honor the config option
+		ResourceLocation key = EntityList.getKey(event.getEntityLiving());
+		if(!TardisConfig.USE_ENTITIES.entities && key != null && key.getNamespace().equals(Tardis.MODID))
+			event.getEntityLiving().setDead();
 	}
 
 	@SubscribeEvent

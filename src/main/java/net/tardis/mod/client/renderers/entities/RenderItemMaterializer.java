@@ -1,6 +1,8 @@
 package net.tardis.mod.client.renderers.entities;
 
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.item.ItemStack;
@@ -17,39 +19,14 @@ public class RenderItemMaterializer extends Render<EntityItemMaterializer> {
 
 	@Override
 	public void doRender(EntityItemMaterializer entity, double x, double y, double z, float entityYaw, float partialTicks) {
-
-		//disable this if you want the entity to not always be full-bright
-		CadibooClientUtil.enableMaxLighting();
-		GlStateManager.enableLighting();
-
 		GlStateManager.pushMatrix();
 
-		GlStateManager.translate(x, y, z);
+		GlStateManager.translate(x + 0.5, y, z + 0.5);
 
 		GlStateManager.enableBlend();
 
-		GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
-
-		final float alpha = entity.getAlpha();
-
-		final ItemStack stack = entity.getItem();
-		final World world = entity.world;
-
-		//wait 1/16th of the time before starting to render it
-		if (alpha > 0.0625F) {
-			renderEntityStackWithAlpha(stack, world, alpha, 0.0625F);
-		}
-
-		//render it a 2nd time if time is half done to make it even more opaque
-		if (alpha > 0.5F) {
-			renderEntityStackWithAlpha(stack, world, alpha, 0.5F);
-		}
-
-		//render it a 3rd time if time is 3/4 done to make it even more opaque
-		if (alpha > 0.75F) {
-			renderEntityStackWithAlpha(stack, world, alpha, 0.75F);
-		}
-
+		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.DST_COLOR);
+		renderEntityStackWithAlpha(entity.getItem(), entity.world, entity.getAlpha(), 0.0625F);
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 
