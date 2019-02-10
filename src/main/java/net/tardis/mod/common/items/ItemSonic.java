@@ -135,7 +135,7 @@ public class ItemSonic extends Item {
 
 		if (getCharge(held) >= sc.energyRequired()) {
 			EnumActionResult result = sc.performAction(worldIn, player, handIn);
-			if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
+			if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS) && !player.isSneaking()) {
 				cooldown(held.getItem(), player, sc.getCoolDownAmount());
 				worldIn.playSound(null, player.getPosition(), sonicSound, SoundCategory.PLAYERS, 0.25F, 1F);
 				setCharge(held, getCharge(held) - sc.energyRequired());
