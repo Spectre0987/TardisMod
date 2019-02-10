@@ -1,5 +1,10 @@
 package net.tardis.mod.client.renderers;
 
+import java.util.List;
+import java.util.Random;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -10,6 +15,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -23,10 +29,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
-
-import java.util.List;
-import java.util.Random;
 
 /**
  * Util that is only used on the client i.e. Rendering code
@@ -655,7 +657,7 @@ public final class CadibooClientUtil {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void renderStackWithColor(final ItemStack stack, final World world, final int color) {
-		final IBakedModel model = getModelFromStack(stack, world);
+		final IBakedModel model = ForgeHooksClient.handleCameraTransforms(getModelFromStack(stack, world), TransformType.GROUND, false);
 		renderModelWithColor(model, color);
 
 	}
