@@ -166,6 +166,7 @@ public class TBlocks {
 	public static Block multiblock_master = register(new BlockMultiblockMaster(Material.WOOD), "multiblock_master", false);
 	
 	public static Block sonic_workbench = register(new BlockSonicWorkbench(), "sonic_workbench");
+	public static Block kerblam_box = register(new BlockKerblamBox(), "keblam_box");
 	//public static Block item_materializer = register(new BlockMaterializer(), "item_materializer");
 
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;

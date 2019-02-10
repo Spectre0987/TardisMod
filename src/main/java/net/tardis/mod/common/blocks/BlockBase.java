@@ -27,7 +27,6 @@ public class BlockBase extends Block {
 			EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(this));
 			world.spawnEntity(item);
 			}
-		}
 		return super.removedByPlayer(state, world, pos, player, willHarvest);
 	}
 

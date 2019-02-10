@@ -1,5 +1,6 @@
 package net.tardis.mod;
 
+import net.tardis.mod.common.tileentity.TileEntityKerblam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -248,6 +249,7 @@ public class Tardis {
 		
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
 		registerTileEntity(TileEntityItemMaterializer.class, "item_materializer");
+		registerTileEntity(TileEntityKerblam.class, "kerblam_box");
 
 		NetworkHandler.init();
 
