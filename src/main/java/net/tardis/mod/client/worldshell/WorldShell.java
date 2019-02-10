@@ -1,10 +1,5 @@
 package net.tardis.mod.client.worldshell;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -23,10 +18,18 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class WorldShell implements IBlockAccess {
+
+	public final BufferBuilder blocksBuffer = new BufferBuilder(2);
 
 	// Keeps stores a collection of BlockAcess's mapped to blockpos coords
 	public Map<BlockPos, BlockStorage> blockMap;
+
 	@SideOnly(Side.CLIENT)
 	BufferBuilder.State bufferstate;
 	boolean updateRequired = false;
@@ -42,6 +45,7 @@ public class WorldShell implements IBlockAccess {
 	private long time = 0L;
 	private float rotation = 0F;
 	private Biome shellBiome = Biome.getBiome(0);
+	private int blockMapHash = 0;
 
 	public WorldShell(BlockPos bp) {
 		blockMap = new HashMap<>();
@@ -57,7 +61,8 @@ public class WorldShell implements IBlockAccess {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public TileEntity getTileEntity(BlockPos pos) {
-		if (blockMap == null || Minecraft.getMinecraft().world == null ||pos == null || !blockMap.containsKey(pos) || blockMap.get(pos) == null || blockMap.get(pos).tileentity == null) return null;
+		if (blockMap == null || Minecraft.getMinecraft().world == null || pos == null || !blockMap.containsKey(pos) || blockMap.get(pos) == null || blockMap.get(pos).tileentity == null)
+			return null;
 		return TileEntity.create(Minecraft.getMinecraft().world, blockMap.get(pos).tileentity);
 	}
 
@@ -70,7 +75,6 @@ public class WorldShell implements IBlockAccess {
 	public int getLightSet(EnumSkyBlock type, BlockPos pos) {
 		return 15;
 	}
-
 
 	public void setShellBiome(Biome shellBiome) {
 		this.shellBiome = shellBiome;
@@ -166,4 +170,12 @@ public class WorldShell implements IBlockAccess {
 	public void setRotation(float rot) {
 		this.rotation = rot;
 	}
+
+	public boolean isBlockUpdateRequired() {
+		final int oldHash = this.blockMapHash;
+		final int newHash = blockMap.hashCode();
+		this.blockMapHash = newHash;
+		return oldHash != newHash;
+	}
+
 }
