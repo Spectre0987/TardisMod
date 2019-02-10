@@ -996,10 +996,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					if(player.dimension != dimension) world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
 					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get360FromFacing(face), 0);
 				}
-				else if(!(entity instanceof EntityPlayer)) {
-
-						entity.changeDimension(dimension, new TardisTeleporter(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ() + 1)));
-					}
+				else if(!(entity instanceof EntityPlayer)){
+					entity.changeDimension(dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
+				}
 			}
 		}
 		else {
