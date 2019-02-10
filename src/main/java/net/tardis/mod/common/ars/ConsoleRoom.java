@@ -54,8 +54,6 @@ public class ConsoleRoom {
 		}
 		Template temp = world.getStructureTemplateManager().get(world.getMinecraftServer(), filePath);
 		PlacementSettings ps = new PlacementSettings();
-		//IBlockState consoleState = world.getBlockState(pos);
-		//TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(pos);
 		temp.addBlocksToWorld(world, pos.subtract(consolePos), ps);
 		world.setBlockState(pos, consoleState);
 		if(tardis != null)
