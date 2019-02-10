@@ -15,10 +15,16 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import java.util.function.Supplier;
 
 public class PlayerHelper {
-
+	
 	public static void sendMessage(EntityPlayer player, String message, boolean hotBar) {
 		if (!player.world.isRemote) {
 			player.sendStatusMessage(new TextComponentTranslation(message), hotBar);
+		}
+	}
+	
+	public static void sendMessage(EntityPlayer player, TextComponentTranslation message, boolean hotBar) {
+		if (!player.world.isRemote) {
+			player.sendStatusMessage(message, hotBar);
 		}
 	}
 
