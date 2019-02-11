@@ -29,6 +29,12 @@ public class BlockVerticalSlab extends BlockBase {
 	}
 
 	@Override
+	public boolean isFullCube(IBlockState state)
+	{
+		return false;
+	}
+
+	@Override
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(FACING).getIndex();
 	}

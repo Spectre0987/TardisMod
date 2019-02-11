@@ -2,21 +2,22 @@ package net.tardis.mod.common.entities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.sounds.TSounds;
 
 public class EntityItemMaterializer extends Entity{
-	
-	public static float deltaAlpha = 0.01F;
-	public float alpha = 0F;
-	
+
+	public static final float DELTA_ALPHA = 0.01F;
+	private float alpha = 0F;
+
 	public EntityItemMaterializer(World worldIn) {
 		super(worldIn);
 	}
@@ -25,7 +26,7 @@ public class EntityItemMaterializer extends Entity{
 
 	@Override
 	protected void entityInit() {
-		this.dataManager.register(ITEM, new ItemStack(TItems.demat_circut).serializeNBT());
+		this.dataManager.register(ITEM, new ItemStack(Items.APPLE).serializeNBT());
 	}
 
 	@Override
@@ -37,25 +38,33 @@ public class EntityItemMaterializer extends Entity{
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setTag("item", this.dataManager.get(ITEM));
 	}
-	
+
 	public void setItem(ItemStack stack) {
-		this.dataManager.set(ITEM, stack.serializeNBT()); 
+		this.dataManager.set(ITEM, stack.serializeNBT());
 	}
 
 	public ItemStack getItem() {
 		return new ItemStack(this.dataManager.get(ITEM));
 	}
-	
+
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		this.setItem(new ItemStack(TItems.chameleon_circuit));
-		this.alpha += deltaAlpha;
-		if(!world.isRemote && alpha >= 1) {
+		this.alpha += DELTA_ALPHA;
+		this.setItem(new ItemStack(TItems.demat_circut));
+		if(!world.isRemote && alpha >= 1.0F) {
 			EntityItem ei = new EntityItem(world, posX, posY, posZ, new ItemStack(this.dataManager.get(ITEM)));
 			world.spawnEntity(ei);
 			this.setDead();
 		}
+		if(!world.isRemote && this.ticksExisted == 1){
+			world.playSound(null, this.getPosition(), TSounds.tardis_land, SoundCategory.NEUTRAL, 1F, 1F);
+		}
+			
+	}
+
+	public float getAlpha() {
+		return alpha;
 	}
 
 }

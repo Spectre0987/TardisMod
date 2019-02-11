@@ -263,5 +263,23 @@
         "stream": false
       }
     ]
-  }
+  },
+  "tardis_hum_70": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:tardis_hum_70",
+        "stream": false
+      }
+    ]
+  },
+  "remote_accept": {
+  "category": "player",
+  "sounds": [
+    {
+      "name": "tardis:remote_accept",
+      "stream": false
+    }
+  ]
+}
 }

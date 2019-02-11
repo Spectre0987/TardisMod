@@ -42,6 +42,8 @@ public class ConsoleRoom {
 		for(Entity entity : world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(pos).grow(20))) {
 			if(!(entity instanceof EntityControl) || !(entity instanceof EntityLivingBase)) {
 				entity.setDead();
+				world.updateEntities(); 
+				world.updateEntityWithOptionalForce(entity, true);
 			}
 		}
 		Template temp = world.getStructureTemplateManager().get(world.getMinecraftServer(), filePath);
@@ -50,7 +52,8 @@ public class ConsoleRoom {
 		TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(pos);
 		temp.addBlocksToWorld(world, pos.subtract(consolePos), ps);
 		world.setBlockState(pos, consoleState);
-		((TileEntityTardis)world.getTileEntity(pos)).readFromNBT(tardis.writeToNBT(new NBTTagCompound()));
+		if(tardis != null)
+			((TileEntityTardis)world.getTileEntity(pos)).readFromNBT(tardis.writeToNBT(new NBTTagCompound()));
 	}
 	
 	public BlockPos getConsolePos(){

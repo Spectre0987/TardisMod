@@ -135,7 +135,7 @@ public class ItemSonic extends Item {
 
 		if (getCharge(held) >= sc.energyRequired()) {
 			EnumActionResult result = sc.performAction(worldIn, player, handIn);
-			if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS)) {
+			if (sc.causesCoolDown() && result.equals(EnumActionResult.SUCCESS) && !player.isSneaking()) {
 				cooldown(held.getItem(), player, sc.getCoolDownAmount());
 				worldIn.playSound(null, player.getPosition(), sonicSound, SoundCategory.PLAYERS, 0.25F, 1F);
 				setCharge(held, getCharge(held) - sc.energyRequired());
@@ -155,7 +155,7 @@ public class ItemSonic extends Item {
 			IScrew sc = ScrewdriverHandler.MODES.get(getMode(held));
 			if (getCharge(held) >= sc.energyRequired()) {
 				result = sc.blockInteraction(worldIn, pos, worldIn.getBlockState(pos), player);
-				if (sc.causesCoolDown() && EnumActionResult.SUCCESS.equals(result)) {
+				if (sc.causesCoolDown() && EnumActionResult.SUCCESS.equals(result) && !player.isSneaking()) {
 					cooldown(held.getItem(), player, sc.getCoolDownAmount());
 					worldIn.playSound(null, player.getPosition(), sonicSound, SoundCategory.PLAYERS, 0.5F, 1F);
 					setCharge(held, getCharge(held) - sc.energyRequired());
@@ -178,7 +178,7 @@ public class ItemSonic extends Item {
 
 			if (getCharge(held) >= sc.energyRequired()) {
 				flag = sc.entityInteraction(stack, player, target, hand);
-				if (sc.causesCoolDown() && flag) {
+				if (sc.causesCoolDown() && flag && !player.isSneaking()) {
 					cooldown(stack.getItem(), player, sc.getCoolDownAmount());
 					player.world.playSound(null, player.getPosition(), sonicSound, SoundCategory.PLAYERS, 0.5F, 1F);
 					setCharge(held, getCharge(held) - sc.energyRequired());

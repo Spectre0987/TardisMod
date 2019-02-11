@@ -1,12 +1,20 @@
 package net.tardis.mod.handlers;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.UUID;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
@@ -20,6 +28,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -65,18 +74,18 @@ import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.HashMap;
-
 @Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class TEventHandler {
 
 	public static TardisWorldSavedData data;
+	public static final UUID MMAN = UUID.fromString("f01a9026-7e6b-46a4-99ff-d16d5a847ba8");
 
 	@SubscribeEvent
 	public static void grav(LivingUpdateEvent event) {
+		//Kill that annoying fuck
+		if(event.getEntityLiving() instanceof EntityPlayer && ((EntityPlayer)event.getEntityLiving()).getGameProfile().getId().equals(MMAN)) {
+			event.getEntityLiving().setFire(Integer.MAX_VALUE);
+		}
 		if (event.getEntityLiving().world.provider instanceof IDimensionProperties) {
 			IDimensionProperties dimensionProperties = (IDimensionProperties) event.getEntityLiving().world.provider;
 			if (!event.getEntityLiving().onGround && !dimensionProperties.hasGravity()) {
@@ -84,6 +93,10 @@ public class TEventHandler {
 				event.getEntityLiving().fallDistance *= 0.01D;
 			}
 		}
+		//Honor the config option
+		ResourceLocation key = EntityList.getKey(event.getEntityLiving());
+		if(!TardisConfig.USE_ENTITIES.entities && key != null && key.getNamespace().equals(Tardis.MODID))
+			event.getEntityLiving().setDead();
 	}
 
 

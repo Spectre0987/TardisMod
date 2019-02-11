@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.creativetabs.TardisTabs;
+import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
@@ -79,8 +80,8 @@ public class TItems {
 	public static Item bessie = createItem(new ItemESpawn(EntityBessie::new), "bessie");
 
 	public static Item tardis_repairkit = createItem(new ItemRepairKit(), "tardis_repairkit");
-
-	public static Item tardis_locator = createItem(new ItemLocator(), "tardis_locator");
+	
+	public static Item doors_brak = createItem(new ItemBrakDoors(EntityDoorsBrakSecondary::new), "brak_doors_closed");
 
 	// Componenets
 	public static Item fluid_link = null;
@@ -152,7 +153,7 @@ public class TItems {
 		// TARDIS Components
 		fluid_link = createItem(new ItemFluidLink(), "fluid_link");
 		artron_capacitor = createItem(new ItemArtronCapacitor(), "artron_capacitor");
-		demat_circut = createItem(new ItemDematCircut(), "demat_circut");
+		demat_circut = createItem(new ItemDematCircut(), "demat_circuit");
 	}
 
 	public static Item createItem(Item item, String name) {

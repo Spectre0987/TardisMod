@@ -52,6 +52,7 @@ import net.tardis.mod.client.renderers.entities.RenderDalekCaseing;
 import net.tardis.mod.client.renderers.entities.RenderDalekScaro;
 import net.tardis.mod.client.renderers.entities.RenderItemMaterializer;
 import net.tardis.mod.client.renderers.entities.RenderQuark;
+import net.tardis.mod.client.renderers.entities.decoration.RenderBrakDoors;
 import net.tardis.mod.client.renderers.entities.projectiles.RenderLaserRay;
 import net.tardis.mod.client.renderers.entities.vehicles.RenderBessie;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
@@ -94,6 +95,7 @@ import net.tardis.mod.common.entities.EntityDalekSkaro;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
+import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -251,6 +253,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanTomb.class, RenderCybermanTomb::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaserRay.class, new RenderLaserRay(Minecraft.getMinecraft().getRenderManager()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemMaterializer.class, RenderItemMaterializer::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityDoorsBrakSecondary.class, RenderBrakDoors::new);
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, RenderDalek::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);

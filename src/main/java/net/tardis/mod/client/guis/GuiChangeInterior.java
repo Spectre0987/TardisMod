@@ -81,5 +81,10 @@ public class GuiChangeInterior extends GuiScreen {
 		if(button == this.select) {
 			NetworkHandler.NETWORK.sendToServer(new MessageChangeInterior(this.index, tardis.getPos()));
 		}
+		if(button == this.prev) {
+			if(index > 0)
+				--index;
+			else index = ConsoleRoom.CONSOLE_ROOMS.size() - 1;
+		}
 	}
 }

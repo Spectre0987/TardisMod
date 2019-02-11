@@ -56,8 +56,11 @@ public class TBlocks {
 	public static Block toyota_hexalight_off2 = register(new BlockToyota(true), "toyota_hexalight_off2");
 	public static Block toyota_hexalight_off3 = register(new BlockToyota(false), "toyota_hexalight_off3");
 	public static Block toyota_light_emergency = register(new BlockToyota(true), "toyota_light_emergency");
-	public static Block toyota_light_off = register(new BlockToyota(false), "toyota_light_off");
-	public static Block toyota_light_on = register(new BlockToyota(true), "toyota_light_on");
+
+	public static Block toyota_light_off = register(new BlockToyotaLight(false), "toyota_light_off");
+	public static Block toyota_light_on = register(new BlockToyotaLight(true), "toyota_light_on", false);
+
+
 	public static Block toyota_upper_divider = register(new BlockToyota(false), "toyota_upper_divider");
 	public static Block toyota_platform = register(new BlockToyota(false), "toyota_platform");
 	public static Block toyota_platform_top = register(new BlockToyota(false), "toyota_platform_top");
@@ -126,6 +129,14 @@ public class TBlocks {
 	public static Block telos_sand = register(new BlockBaseSand(), "telos_sand");
 	public static Block moon_dirt = register(new BlockBase(), "moon_dirt");
 
+	// Gallifrey
+	public static Block gallifreyan_sand = register(new BlockGallifreySand(0.5F, 30F), "gallifreyan_sand", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block gallifreyan_grass = register(new BlockGrassBase(), "gallifreyan_grass", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block gallifreyan_dirt = register(new BlockGallifreyDirt(false), "gallifreyan_dirt", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+
+	public static Block gallifreyan_stone = register(new BlockGallifreyStone(1.5F, 30F), "gallifreyan_stone", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+
+
 	public static Block suitcase = register(new BlockSuitcase(), "suitcase");
 	public static Block br_chair = register(new BlockChair(Material.WOOD), "br_chair");
 	public static Block am_sphere = register(new BlockFacingDecoration(TileEntityAmSphere::new), "am_sphere").setCreativeTab(TardisTabs.BLOCKS);
@@ -155,7 +166,8 @@ public class TBlocks {
 	public static Block multiblock_master = register(new BlockMultiblockMaster(Material.WOOD), "multiblock_master", false);
 	
 	public static Block sonic_workbench = register(new BlockSonicWorkbench(), "sonic_workbench");
-	public static Block item_materializer = register(new BlockMaterializer(), "item_materializer");
+	public static Block kerblam_box = register(new BlockKerblamBox(), "keblam_box", false);
+	//public static Block item_materializer = register(new BlockMaterializer(), "item_materializer");
 
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
 

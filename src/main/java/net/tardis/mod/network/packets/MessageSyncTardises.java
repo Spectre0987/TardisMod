@@ -16,8 +16,7 @@ public class MessageSyncTardises implements IMessage {
 
 	public Map<String, BlockPos> map = new HashMap<String, BlockPos>();
 
-	public MessageSyncTardises() {
-	}
+	public MessageSyncTardises() {}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {

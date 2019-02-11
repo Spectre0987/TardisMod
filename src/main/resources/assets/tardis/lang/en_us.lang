@@ -1,5 +1,6 @@
 itemGroup.tardis_blocks=TARDIS Mod Blocks
 itemGroup.tardis_items=TARDIS Mod Items
+itemGroup.tardis_galliblocks=Strange Blocks
 
 item.tardis.key.name=TARDIS Key
 item.tardis.pos_setter.name=Coordinate Logger
@@ -18,7 +19,7 @@ item.tardis.sonic_blaster.name=Sonic Blaster
 item.tardis.sonic_cane.name=Sonic Cane
 item.tardis.vortex_manip.name=Vortex Manipulator
 item.tardis.fluid_link.name=Fluid Links
-item.tardis.demat_circut.name=Dematerialization Circuit
+item.tardis.demat_circuit.name=Dematerialization Circuit
 item.tardis.artron_capacitor.name=Artron Capacitor
 item.tardis.sonic_pen.name=Sonic Torch Pen
 item.tardis.tardis_manual.name=TARDIS Manual
@@ -126,6 +127,13 @@ tile.tardis.am_sphere.name=Armillary Sphere
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
 tile.tardis.sonic_workbench.name=Sonics workbench
 
+tile.tardis.gallifreyan_grass.name=Strange Grass
+tile.tardis.gallifreyan_dirt.name=Strange Dirt
+tile.tardis.gallifreyan_stone.name=Strange Stone
+
+
+
+
 tardis.locked.true=TARDIS locked!
 tardis.locked.false=TARDIS unlocked!
 
@@ -186,6 +194,7 @@ protocol.tardis.lock=Double Lock Doors
 protocol.tardis.destroy.rift=Consume Dimensional Rift
 protocol.tardis.repair=Repair the TARDIS
 protocol.tardis.waypoint.load=Waypoints
+protocol.tardis.interior=Change Interior
 
 tardis.repair.false=TARDIS is no longer repairing
 tardis.repair.true=TARDIS is repairing
@@ -264,6 +273,8 @@ tardis.damage.demat=The Dematerialization Circuit has been fried!
 
 tardis.message.refuelling=Tardis now fueling...
 tardis.message.no_longer_refuelling=Tardis no longer fueling.
+tardis.message.tc_notfound=Could not find %s on this plane of existence
+tardis.message.relocation=Relocating you to capsules shell!
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS flying
@@ -316,9 +327,10 @@ box.tardis.cc=Disguised
 box.master.clock=Master's Clock
 box.tt=TT Capsule
 
-tardis.hum.interior_hum_80=1980's interior hum
-tardis.hum.1963_interior_hum=1963's interior hum
-tardis.hum.tardis_hum_copper=Copper's hum
-tardis.hum.tardis_hum_coral=Coral's hum
-tardis.hum.tardis_hum_toyota=Toyota's hum
+tardis.hum.tardis:interior_hum_80=1980's interior hum
+tardis.hum.tardis:1963_interior_hum=1963's interior hum
+tardis.hum.tardis:tardis_hum_copper=Copper's hum
+tardis.hum.tardis:tardis_hum_coral=Coral's hum
+tardis.hum.tardis:tardis_hum_toyota=Toyota's hum
+tardis.hum.tardis:tardis_hum_70=1970's hum
 tardis.hum.null=Hum disabled

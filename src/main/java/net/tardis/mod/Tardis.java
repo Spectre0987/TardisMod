@@ -40,13 +40,13 @@ import net.tardis.mod.common.entities.EntityChair;
 import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
-import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekSkaro;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
+import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -75,7 +75,6 @@ import net.tardis.mod.common.protocols.ProtocolChangeInterior;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
-import net.tardis.mod.common.protocols.ProtocolRegenRoom;
 import net.tardis.mod.common.protocols.ProtocolRepair;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.ProtocolToggleHum;
@@ -104,6 +103,7 @@ import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityItemMaterializer;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
+import net.tardis.mod.common.tileentity.TileEntityKerblam;
 import net.tardis.mod.common.tileentity.TileEntityLight;
 import net.tardis.mod.common.tileentity.TileEntityMultiblock;
 import net.tardis.mod.common.tileentity.TileEntityMultiblockMaster;
@@ -144,7 +144,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
-	public static final String VERSION = "0.0.8A";
+	public static final String VERSION = "0.0.9A";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = true;
 	public static Logger LOG = LogManager.getLogger(NAME);
@@ -203,6 +203,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityDalekSkaro.class, "dalek_scaro");
 		EntityHelper.registerStatic(EntityChair.class, "chair");
 		EntityHelper.registerStatic(EntityItemMaterializer.class, "item_materializer");
+		EntityHelper.registerStatic(EntityDoorsBrakSecondary.class, "doors_brak_second");
 
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
@@ -247,6 +248,7 @@ public class Tardis {
 		
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
 		registerTileEntity(TileEntityItemMaterializer.class, "item_materializer");
+		registerTileEntity(TileEntityKerblam.class, "kerblam_box");
 
 		NetworkHandler.init();
 
@@ -258,21 +260,19 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
 		TardisProtocol.register(new ProtocolConsole());
-		TardisProtocol.register(new ProtocolRegenRoom());
-		if (Loader.isModLoaded(TStrings.ModIds.DIM_DOORS)) TardisProtocol.register(new ProtocolFindDimDRfit());
+		if (Loader.isModLoaded(TStrings.ModIds.DIM_DOORS))
+			TardisProtocol.register(new ProtocolFindDimDRfit());
 		TardisProtocol.register(new ProtocolRepair());
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
 
-		if (TardisConfig.USE_ENTITIES.entities) {
-			// Register All Mobs Here.
-			EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
-			EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
-			EntityHelper.registerMobEgg(EntityQuark.class, "quark", 5, 5, 2);
-			EntityHelper.registerNoSpawnEgg(EntityCybermanTomb.class, "cyberman_tomb", 5, 5);
-			EntityHelper.registerMobEgg(EntityAdipose.class, "adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance, 5, 3);
-		}
+		// Register All Mobs Here.
+		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
+		EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
+		EntityHelper.registerMobEgg(EntityQuark.class, "quark", 5, 5, 2);
+		//EntityHelper.registerNoSpawnEgg(EntityCybermanTomb.class, "cyberman_tomb", 5, 5);
+		EntityHelper.registerMobEgg(EntityAdipose.class, "adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance, 5, 3);
 
 		proxy.preInit();
 
@@ -303,6 +303,7 @@ public class Tardis {
 		
 		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_1.png"), new ResourceLocation(MODID, "interior_1"), new BlockPos(9, 2, 9)));
 		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_2.png"), new ResourceLocation(MODID, "console_room"), new BlockPos(10, 2, 9)));
+		
 
 	}
 
