@@ -51,14 +51,15 @@ public class EntityItemMaterializer extends Entity{
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		this.alpha += DELTA_ALPHA;
-		this.setItem(new ItemStack(Items.APPLE));
-		if(!world.isRemote && alpha >= 1) {
+		this.setItem(new ItemStack(Items.ARROW));
+		if(!world.isRemote && alpha >= 1.0F) {
 			EntityItem ei = new EntityItem(world, posX, posY, posZ, new ItemStack(this.dataManager.get(ITEM)));
 			world.spawnEntity(ei);
 			this.setDead();
 		}
-		if(!world.isRemote && this.ticksExisted == 1)
+		if(!world.isRemote && this.ticksExisted == 1){
 			world.playSound(null, this.getPosition(), TSounds.tardis_land, SoundCategory.NEUTRAL, 1F, 1F);
+		}
 			
 	}
 

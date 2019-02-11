@@ -110,13 +110,9 @@ public class RenderHelper {
 				GlStateManager.popMatrix();
 
 				RenderHelper.setRenderGlobalWorld(oldWorld);
-
-				// Cadiboo fix bug with hand not rendering
-				// (makes rendering go horribly wrong when multiple tardises are close together tho)
-				{
-					oldFrameBuffer.bindFramebuffer(true);
-//			    	framebuffer.deleteFramebuffer();
-				}
+				
+		    	framebuffer.deleteFramebuffer();
+		    	oldFrameBuffer.bindFramebuffer(true);
 
 			} catch (Exception e) {
 				e.printStackTrace();

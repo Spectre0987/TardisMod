@@ -24,10 +24,12 @@ public class RenderItemMaterializer extends Render<EntityItemMaterializer> {
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
 
 		GlStateManager.enableBlend();
+		GlStateManager.enableAlpha();
 
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.DST_COLOR);
 		renderEntityStackWithAlpha(entity.getItem(), entity.world, entity.getAlpha(), 0.0625F);
 		GlStateManager.disableBlend();
+		GlStateManager.disableAlpha();
 		GlStateManager.popMatrix();
 
 	}
