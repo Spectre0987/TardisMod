@@ -124,7 +124,7 @@ public class CommandTardis extends CommandBase {
 					} else
 						throw new CommandException("You do not have permission to run this command.");
 				} else
-					throw new CommandException("/tardis restoresys <username> <system...s>");
+					throw new CommandException("/tardis restoresys <username> <system1> [system2] [system3]...");
 				break;
 		}
 	}
