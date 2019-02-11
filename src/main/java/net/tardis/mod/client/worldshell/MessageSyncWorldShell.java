@@ -1,5 +1,9 @@
 package net.tardis.mod.client.worldshell;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -12,16 +16,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
 public class MessageSyncWorldShell implements IMessage {
 	//Sync the world shell from client to server
 
 	public WorldShell worldShell;
 	public BlockPos tilePos = BlockPos.ORIGIN;
-	public int id;
+	public int id = -1;
 
 	public MessageSyncWorldShell(WorldShell ws, int id) {
 		this.id = id;
@@ -34,8 +34,7 @@ public class MessageSyncWorldShell implements IMessage {
 		this.id = -1;
 	}
 
-	public MessageSyncWorldShell() {
-	}
+	public MessageSyncWorldShell() {}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
@@ -121,6 +120,13 @@ public class MessageSyncWorldShell implements IMessage {
 			return null;
 		}
 
+	}
+	
+	public static enum EnumType{
+		BLOCKS,
+		TILES,
+		ENTITITES,
+		PLAYERS
 	}
 
 }
