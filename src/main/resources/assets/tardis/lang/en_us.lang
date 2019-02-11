@@ -79,7 +79,7 @@ tile.tardis.alembic.name=Alembic
 tile.tardis.food_machine.name=Food Machine
 tile.tardis.electric_panel.name=Electric Interface Panel
 tile.tardis.megalos.name=Meglos
-tile.tardis.console.name=Console
+tile.tardis.console.name=TARDIS Console
 tile.tardis.toyota_hexagon_1.name=Toyota Block
 tile.tardis.ruby_ore.name=Ruby Ore
 tile.tardis.holoprojector.name=Holoprojector
@@ -193,11 +193,11 @@ protocol.tardis.regenroom=Regenerate Console Room
 protocol.tardis.lock=Double Lock Doors
 protocol.tardis.destroy.rift=Consume Dimensional Rift
 protocol.tardis.repair=Repair the TARDIS
-protocol.tardis.waypoint.load=Waypoints
+protocol.tardis.waypoint.load=Waypoint
 protocol.tardis.interior=Change Interior
 
 tardis.repair.false=TARDIS hull is no longer repairing
-tardis.repair.true=TARDIS hull now is repairing
+tardis.repair.true=TARDIS hull is now repairing
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
@@ -206,7 +206,7 @@ systems.tardis.antenna=Interstitial Antenna
 system.tardis.ccircuit=Chameleon Circuit
 system.tardis.temporal_grace=Temporal Grace Circuits
 system.tardis.stabilizers=Stabilizers
-system.tardis.thermo=Thermo- Couplings
+system.tardis.thermo=Thermo-Couplings
 
 tardis.dimension=Nav-Com Dimension is:
 
@@ -285,7 +285,6 @@ tardis.subtitle.force_field=Force Field
 tardis.subtitle.locked=Locked
 tardis.subtitle.door_open=Door Opens
 tardis.subtitle.door_closed=Door Closes
-tardis.subtitle.interior_hum_80=80's Interior hum
 tardis.subtitle.cloister_bell=Cloister bell
 tardis.subtitle.drum_beat=Drum beat
 tardis.subtitle.stutter= TARDIS stutters
