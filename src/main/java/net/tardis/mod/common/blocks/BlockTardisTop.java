@@ -1,7 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -12,11 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -31,8 +25,10 @@ import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class BlockTardisTop extends BlockTileBase implements INoBox{
-	
+import java.util.function.Supplier;
+
+public class BlockTardisTop extends BlockTileBase implements INoBox {
+
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public ItemBlock item = new ItemBlockTardis(this);
@@ -58,14 +54,14 @@ public class BlockTardisTop extends BlockTileBase implements INoBox{
 			if (te != null && te instanceof TileEntityTardis) {
 				ItemStack held = playerIn.getHeldItem(hand);
 				SystemDimension dim = null;
-				if(held.getItem() == TItems.time_vector_generator) {
-					for(BaseSystem s : ((TileEntityTardis)te).systems) {
-						if(s.getClass() == SystemDimension.class) {
-							dim = (SystemDimension)s;
+				if (held.getItem() == TItems.time_vector_generator) {
+					for (BaseSystem s : ((TileEntityTardis) te).systems) {
+						if (s.getClass() == SystemDimension.class) {
+							dim = (SystemDimension) s;
 						}
 					}
 				}
-				if(dim != null) {
+				if (dim != null) {
 					dim.repair(held);
 					held.shrink(1);
 				}
@@ -73,75 +69,76 @@ public class BlockTardisTop extends BlockTileBase implements INoBox{
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
-	
+
 	@Override
 	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
-		if(!worldIn.isRemote) {
+		if (!worldIn.isRemote) {
 			WorldServer tWorld = worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-			TileEntityTardis tardis = (TileEntityTardis)tWorld.getTileEntity(((TileEntityDoor)worldIn.getTileEntity(pos)).getConsolePos());
-			if(tardis != null) {
+			TileEntityTardis tardis = (TileEntityTardis) tWorld.getTileEntity(((TileEntityDoor) worldIn.getTileEntity(pos)).getConsolePos());
+			if (tardis != null) {
 				tWorld.playSound(null, tardis.getPos(), TSounds.knocking, SoundCategory.BLOCKS, 1F, 1F);
 				worldIn.playSound(null, tardis.getPos(), TSounds.knocking, SoundCategory.BLOCKS, 1F, 1F);
 			}
 		}
 		super.onBlockClicked(worldIn, pos, playerIn);
 	}
-	
+
 	@Override
 	public boolean canCollideCheck(IBlockState state, boolean hitIfLiquid) {
 		return true;
 	}
-	
+
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.INVISIBLE;
 	}
-	
+
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return new AxisAlignedBB(0,0,0,1,1,1);
+		return new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 	}
-	
+
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		super.onBlockAdded(worldIn, pos, state);
 		try {
 			if (!worldIn.isRemote) {
-				worldIn.playSound(null, pos, TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
+				worldIn.playSound(null, pos, TSounds.tardis_land, SoundCategory.BLOCKS, 1F, 1F);
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
 	}
-	
+
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(FACING).getHorizontalIndex();
 	}
-	
+
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
-	
+
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, FACING);
 	}
-	
+
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
 		return false;
@@ -156,8 +153,18 @@ public class BlockTardisTop extends BlockTileBase implements INoBox{
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 		return false;
 	}
-	
-	public static class ItemBlockTardis extends ItemBlock{
+
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntityDoor door = (TileEntityDoor) world.getTileEntity(pos);
+		if (door != null && !door.isLocked()) {
+			return door.getLightLevel();
+		}
+		return super.getLightValue(state, world, pos);
+	}
+
+
+	public static class ItemBlockTardis extends ItemBlock {
 
 		public ItemBlockTardis(Block block) {
 			super(block);
@@ -167,16 +174,7 @@ public class BlockTardisTop extends BlockTileBase implements INoBox{
 		public String getItemStackDisplayName(ItemStack stack) {
 			return new TextComponentTranslation(TBlocks.tardis_top.getTranslationKey() + ".name").getFormattedText();
 		}
-		
+
 	}
 
-	@Override
-	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TileEntityDoor door  = (TileEntityDoor)world.getTileEntity(pos);
-		if(door != null && !door.isLocked()) {
-			return door.getLightLevel();
-		}
-		return super.getLightValue(state, world, pos);
-	}
-	
 }

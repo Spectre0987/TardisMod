@@ -12,18 +12,19 @@ import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class MessageDamageSystem implements IMessage{
+public class MessageDamageSystem implements IMessage {
 
 	private BlockPos pos = BlockPos.ORIGIN;
 	private String system = "";
-	
-	public MessageDamageSystem() {}
-	
+
+	public MessageDamageSystem() {
+	}
+
 	public MessageDamageSystem(BlockPos pos, String id) {
 		this.pos = pos;
 		this.system = id;
 	}
-	
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		pos = BlockPos.fromLong(buf.readLong());
@@ -35,8 +36,8 @@ public class MessageDamageSystem implements IMessage{
 		buf.writeLong(pos.toLong());
 		ByteBufUtils.writeUTF8String(buf, system);
 	}
-	
-	public static class Helper implements IMessageHandler<MessageDamageSystem, IMessage>{
+
+	public static class Helper implements IMessageHandler<MessageDamageSystem, IMessage> {
 		@Override
 		public IMessage onMessage(MessageDamageSystem message, MessageContext ctx) {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
@@ -46,7 +47,7 @@ public class MessageDamageSystem implements IMessage{
 					TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(message.pos);
 					if (tardis != null) {
 						BaseSystem sys = tardis.getSystem(TardisSystems.createFromName(message.system).getClass());
-						if(sys != null) {
+						if (sys != null) {
 							sys.setHealth(0F);
 							System.out.println(message.pos);
 						}
@@ -55,7 +56,7 @@ public class MessageDamageSystem implements IMessage{
 			});
 			return null;
 		}
-		
+
 	}
 
 }

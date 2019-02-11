@@ -11,11 +11,11 @@ public class ProtocolSystemReadout implements ITardisProtocol {
 
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
-		if(world.isRemote) {
+		if (world.isRemote) {
 			openGui(tardis);
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void openGui(TileEntityTardis tardis) {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiSystem(tardis));

@@ -16,21 +16,44 @@ import net.tardis.mod.common.sounds.TSounds;
 import java.util.List;
 
 public class ItemRayGun extends ItemBase {
-	
+
 	public static final String AMMO_KEY = "ammo";
-	
+
 	public ItemRayGun() {
 		this.setMaxStackSize(1);
 	}
-	
+
+	public static void setAmmo(ItemStack stack, int ammo) {
+		if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+		stack.getTagCompound().setInteger(AMMO_KEY, ammo);
+	}
+
+	public static int getAmmo(ItemStack stack) {
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(AMMO_KEY))
+			return stack.getTagCompound().getInteger(AMMO_KEY);
+		return 0;
+	}
+
+	public static ItemStack getAmmoInInventory(NonNullList<ItemStack> stacks, Item item) {
+		for (ItemStack stack : stacks) {
+			if (stack.getItem() == item) return stack;
+		}
+		return ItemStack.EMPTY;
+	}
+
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack gun = playerIn.getHeldItem(handIn);
+
 		if (!playerIn.isSneaking()) {
 			if (getAmmo(gun) > 0) {
+				Vec3d v3 = playerIn.getLook(1);
 				EntityLaserRay ball = new EntityLaserRay(worldIn, playerIn, 2, TDamageSources.LASER, new Vec3d(0, 1, 0));
-				if (!worldIn.isRemote) worldIn.spawnEntity(ball);
-				setAmmo(gun, getAmmo(gun) - 1);
+				if (!worldIn.isRemote) {
+					ball.shoot(v3.x, v3.y, v3.z, 1.6F, (float) (14 - worldIn.getDifficulty().getId() * 4));
+					worldIn.spawnEntity(ball);
+					setAmmo(gun, getAmmo(gun) - 1);
+				}
 				worldIn.playSound(null, playerIn.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);
 				return ActionResult.newResult(EnumActionResult.SUCCESS, gun);
 			}
@@ -43,29 +66,12 @@ public class ItemRayGun extends ItemBase {
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
-	
+
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		return false;
 	}
-	
-	public static void setAmmo(ItemStack stack, int ammo) {
-		if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
-		stack.getTagCompound().setInteger(AMMO_KEY, ammo);
-	}
-	
-	public static int getAmmo(ItemStack stack) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(AMMO_KEY)) return stack.getTagCompound().getInteger(AMMO_KEY);
-		return 0;
-	}
-	
-	public static ItemStack getAmmoInInventory(NonNullList<ItemStack> stacks, Item item) {
-		for (ItemStack stack : stacks) {
-			if (stack.getItem() == item) return stack;
-		}
-		return ItemStack.EMPTY;
-	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (getAmmo(stack) > 0)
@@ -74,5 +80,5 @@ public class ItemRayGun extends ItemBase {
 			tooltip.add(new TextComponentTranslation("raygun.ammo.none").getFormattedText());
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-	
+
 }

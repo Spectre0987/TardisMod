@@ -13,12 +13,12 @@ public class RenderDalekCaseing extends Render<EntityDalekCasing> {
 	public static final ResourceLocation TEXTURE = ModelDalek.TEXTURE;
 	public ModelDalek model = new ModelDalek();
 	Minecraft mc;
-	
+
 	public RenderDalekCaseing(RenderManager manager) {
 		super(manager);
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void doRender(EntityDalekCasing entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();

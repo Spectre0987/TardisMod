@@ -1,123 +1,123 @@
 {
-    "forge_marker":1,
-    "defaults":{
-         "model":"cube_all"
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all"
+  },
+  "variants": {
+    "inventory": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_blank"
+      }
     },
-    "variants":{
-        "inventory":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_blank"
-            }
-        },
-        "type=0":{
-            "model":"cube_bottom_top",
-            "textures":{
-                "side":"tardis:blocks/meglos/meglos_blank_top",
-                "top":"tardis:blocks/meglos/meglos_blank",
-                "bottom":"tardis:blocks/meglos/meglos_blank"
-            }
-        },
-        "type=1":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_floor"
-            }
-        },
-        "type=2":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_roundel_1"
-            }
-        },
-         "type=3":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_roundel_2"
-            }
-        },
-         "type=4":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_roundel_3"
-            }
-        },
-         "type=5":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_roundel_4"
-            }
-        },
-         "type=6":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_roundel_5"
-            }
-        },
-         "type=7":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_pillar_1"
-            }
-        },
-         "type=8":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_door_1"
-            }
-        },
-         "type=9":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_door_2"
-            }
-        },
-         "type=10":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_door_3"
-            }
-        },
-         "type=11":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_door_4"
-            }
-        },
-        "type=12":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_pillar_2"
-            }
-        },
-        "type=13":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_blankwall"
-            }
-        },
-        "type=14":{
-            "model":"half_slab",
-            "textures":{
-                "side":"tardis:blocks/meglos/meglos_blankwall",
-                "bottom":"tardis:blocks/meglos/meglos_blankwall",
-                "top":"tardis:blocks/meglos/meglos_blankwall"
-            }
-        },
-        "type=15":{
-            "model":"half_slab",
-            "textures":{
-                "side":"tardis:blocks/meglos/meglos_blankwall",
-                "bottom":"tardis:blocks/meglos/meglos_blankwall",
-                "top":"tardis:blocks/meglos/meglos_blankwall"
-            },
-            "x": 180
-        },
-        "normal":{
-            "model":"cube_all",
-            "textures":{
-                "all":"tardis:blocks/meglos/meglos_blank"
-            }
-        }
+    "type=0": {
+      "model": "cube_bottom_top",
+      "textures": {
+        "side": "tardis:blocks/meglos/meglos_blank_top",
+        "top": "tardis:blocks/meglos/meglos_blank",
+        "bottom": "tardis:blocks/meglos/meglos_blank"
+      }
+    },
+    "type=1": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_floor"
+      }
+    },
+    "type=2": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_roundel_1"
+      }
+    },
+    "type=3": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_roundel_2"
+      }
+    },
+    "type=4": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_roundel_3"
+      }
+    },
+    "type=5": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_roundel_4"
+      }
+    },
+    "type=6": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_roundel_5"
+      }
+    },
+    "type=7": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_pillar_1"
+      }
+    },
+    "type=8": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_door_1"
+      }
+    },
+    "type=9": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_door_2"
+      }
+    },
+    "type=10": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_door_3"
+      }
+    },
+    "type=11": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_door_4"
+      }
+    },
+    "type=12": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_pillar_2"
+      }
+    },
+    "type=13": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_blankwall"
+      }
+    },
+    "type=14": {
+      "model": "half_slab",
+      "textures": {
+        "side": "tardis:blocks/meglos/meglos_blankwall",
+        "bottom": "tardis:blocks/meglos/meglos_blankwall",
+        "top": "tardis:blocks/meglos/meglos_blankwall"
+      }
+    },
+    "type=15": {
+      "model": "half_slab",
+      "textures": {
+        "side": "tardis:blocks/meglos/meglos_blankwall",
+        "bottom": "tardis:blocks/meglos/meglos_blankwall",
+        "top": "tardis:blocks/meglos/meglos_blankwall"
+      },
+      "x": 180
+    },
+    "normal": {
+      "model": "cube_all",
+      "textures": {
+        "all": "tardis:blocks/meglos/meglos_blank"
+      }
     }
+  }
 }

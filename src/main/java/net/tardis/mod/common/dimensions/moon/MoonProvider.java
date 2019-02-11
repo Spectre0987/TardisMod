@@ -1,8 +1,7 @@
 package net.tardis.mod.common.dimensions.moon;
 
-import java.util.Random;
-
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -21,17 +20,20 @@ import net.tardis.mod.common.dimensions.IPopulatable;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.dimensions.telos.ChunkGeneratorTelos;
 
+import java.util.Random;
+
 public class MoonProvider extends WorldProvider implements IDimensionProperties {
 
 	private static BiomeProviderSingle biomeP = new BiomeProviderSingle(TDimensions.moonBiome);
-	
-	public MoonProvider() {}
-	
+
+	public MoonProvider() {
+	}
+
 	@Override
 	public DimensionType getDimensionType() {
 		return TDimensions.MOON_TYPE;
 	}
-	
+
 	@Override
 	public BiomeProvider getBiomeProvider() {
 		return biomeP;
@@ -42,15 +44,16 @@ public class MoonProvider extends WorldProvider implements IDimensionProperties 
 		return new ChunkGeneratorTelos(this.world, this.getSeed(), new IPopulatable() {
 
 			GenCrater gen = new GenCrater();
-			
+
 			@Override
 			public void gen(World world, Random rand, int x, int z) {
-				if(rand.nextInt(100) <= 5) {
+				if (rand.nextInt(100) <= 5) {
 					int size = 5 + rand.nextInt(10);
 					BlockPos pos = world.getTopSolidOrLiquidBlock(new BlockPos(x * 16, 0, z * 16)).add(16, size / 2, 16);
 					gen.genCrater(world, pos, size);
 				}
-			}});
+			}
+		});
 	}
 
 	@Override
@@ -81,7 +84,7 @@ public class MoonProvider extends WorldProvider implements IDimensionProperties 
 
 	@Override
 	public float[] calcSunriseSunsetColors(float celestialAngle, float partialTicks) {
-		return new float[] {0, 0, 0, 0};
+		return new float[]{0, 0, 0, 0};
 	}
 
 	@Override
@@ -109,6 +112,11 @@ public class MoonProvider extends WorldProvider implements IDimensionProperties 
 	@Override
 	public int getRadiationLevels() {
 		return 0;
+	}
+
+	@Override
+	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
+		return WorldSleepResult.ALLOW;
 	}
 
 }

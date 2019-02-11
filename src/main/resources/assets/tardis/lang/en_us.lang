@@ -1,14 +1,15 @@
 itemGroup.tardis_blocks=TARDIS Mod Blocks
 itemGroup.tardis_items=TARDIS Mod Items
+itemGroup.tardis_galliblocks=Strange Blocks
 
 item.tardis.key.name=TARDIS Key
-item.tardis.pos_setter.name=Coordnate Logger
+item.tardis.pos_setter.name=Coordinate Logger
 item.tardis.circuts.name=Exotronic Circuitry
 item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 item.tardis.gunstick.name=Dalek Gunstick
-item.tardis.power_cell.name=Trionic Power Cell 
+item.tardis.power_cell.name=Trionic Power Cell
 item.tardis.ray_gun.name=Dalek Ray Gun
-item.tardis.void_specs.name=Void Specs
+item.tardis.void_specs.name=Void Spectacles
 item.tardis.fob_watch.name=Gallifreyan Fob Watch
 item.tardis.fez.name=Fez
 item.tardis.bowtie.name=Bowtie
@@ -18,7 +19,7 @@ item.tardis.sonic_blaster.name=Sonic Blaster
 item.tardis.sonic_cane.name=Sonic Cane
 item.tardis.vortex_manip.name=Vortex Manipulator
 item.tardis.fluid_link.name=Fluid Links
-item.tardis.demat_circut.name=Dematerialization Circuit
+item.tardis.demat_circuit.name=Dematerialization Circuit
 item.tardis.artron_capacitor.name=Artron Capacitor
 item.tardis.sonic_pen.name=Sonic Torch Pen
 item.tardis.tardis_manual.name=TARDIS Manual
@@ -48,9 +49,12 @@ item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Temporal Grace Circuits
 item.tardis.tardis_repairkit.name=TARDIS Toolkit
 item.tardis.stabilizers.name=Stabilizer circuits
+item.tardis.thermo.name=Thermo- Couplings
+item.tardis.sonic_third.name=Third Doctor's Sonic
+item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 
 tooltip.remote=Remote bound to TARDIS at:
-tooltip.remote.time=TARDIS Arriving in
+tooltip.remote.time=TARDIS arriving in
 tooltip.remote.fuel=Artron Banks
 tooltip.remote.exteriorpos=TARDIS Exterior:
 tooltip.remote.bind=To bind, right click on a console.
@@ -101,22 +105,42 @@ tile.tardis.hellbent_light.name=Hellbent Fault Locator Lights
 tile.tardis.hellbent_monitor.name=Hellbent Monitor
 tile.tardis.hellbent_pole.name=Hellbent Pole
 tile.tardis.hellbent_roof.name=Hellbent Ceiling Thing
+tile.tardis.s13roundellit1.name=S13 Roundel
+tile.tardis.s13roundellit2.name=S13 Roundel
+tile.tardis.s13roundellit3.name=S13 Roundel
+tile.tardis.s13blankroundel1.name=S13 Roundel
+tile.tardis.s13blankroundel2.name=S13 Roundel
+tile.tardis.s13blankroundel3.name=S13 Roundel
+tile.tardis.s13floor.name=S13 Floor
+tile.tardis.s13flooralt.name=S13 Floor
+tile.tardis.brachackitable.name=Brachacki Table
 tile.tardis.json_test.name=Json Tester
 tile.tardis.telos_sand.name=Telos Sand
 tile.tardis.moon_dirt.name=Moon Dirt
-tile.tardis.circuit_repair.name=Steady State Micro-Welding
+tile.tardis.circuit_repair.name=Steady State Micro-Welding Station
 tile.tardis.zero_room.name=Zero Room
 tile.tardis.zero_room_slab.name=Zero Room Slab
 tile.tardis.zero_room_stairs.name=Zero Room Stairs
 tile.tardis.suitcase.name=Mysterious Suitcase
+tile.tardis.br_chair.name=Chair
+tile.tardis.am_sphere.name=Armillary Sphere
+tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
+tile.tardis.sonic_workbench.name=Sonics workbench
 
-tardis.locked.true=TARDIS Locked!
+tile.tardis.gallifreyan_grass.name=Strange Grass
+tile.tardis.gallifreyan_dirt.name=Strange Dirt
+tile.tardis.gallifreyan_stone.name=Strange Stone
+
+
+
+
+tardis.locked.true=TARDIS locked!
 tardis.locked.false=TARDIS unlocked!
 
-door.tardis.locked.true=This TARDIS is double locked!
+door.tardis.locked.true=This TARDIS is now double locked!
 door.tardis.locked.false=Double lock lifted.
 
-death.attack.dalek=Killed by a Dalek Ray gun
+death.attack.dalek=killed by a Dalek Ray Gun!
 death.cyberman.ray=was deleted.
 
 damage.dalek=was exterminated
@@ -133,7 +157,7 @@ screw.tardis.signal=Signal TARDIS
 screw.entity=Entity Interact
 
 screw.fail.itswood=It doesn't work on wood!
-screw.fail.bottom-door=To open the door, you must sonic the bottom!
+screw.fail.bottom-door=To open the door, you must sonic the bottom of the door!
 
 raygun.ammo=Ammo Left
 raygun.ammo.none=No Ammo!
@@ -146,10 +170,10 @@ tardis.flying=TARDIS in flight!
 tardis.console.land.true=TARDIS will search upwards for a landing spot
 tardis.console.land.false=TARDIS will search downwards for a landing spot
 
-tardis.direction.north=TARDIS is facing north
-tardis.direction.east=TARDIS is facing east
-tardis.direction.south=TARDIS is facing south
-tardis.direction.west=TARDIS is facing west
+tardis.direction.north=TARDIS is now facing north
+tardis.direction.east=TARDIS is now facing east
+tardis.direction.south=TARDIS is now facing south
+tardis.direction.west=TARDIS is now facing west
 
 tardis.missing=The outer plasmic shell cannot be found! Please land again.
 
@@ -160,17 +184,20 @@ tardis.hads.enabled.false=H.A.D.S has been disabled
 
 protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
-protocol.tardis.find_rift=Find nearest rift
+protocol.hum=Toggle hum
+protocol.tardis.find_rift=Find nearest Rift
 protocol.tardis.systemreadout=Sub-System readout
 protocol.tardis.change.console=Change Console
 protocol.tardis.ars=Architectural Reconfiguration System
 protocol.tardis.regenroom=Regenerate Console Room
-protocol.tardis.lock=Double Lock
+protocol.tardis.lock=Double Lock Doors
 protocol.tardis.destroy.rift=Consume Dimensional Rift
 protocol.tardis.repair=Repair the TARDIS
+protocol.tardis.waypoint.load=Waypoints
+protocol.tardis.interior=Change Interior
 
-tardis.repair.false=TARDIS is repairing
-tardis.repair.true=TARDIS is not repairing
+tardis.repair.false=TARDIS is no longer repairing
+tardis.repair.true=TARDIS is repairing
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
@@ -178,9 +205,10 @@ system.tardis.fluidlinks=Fluid Links
 systems.tardis.antenna=Interstitial Antenna
 system.tardis.ccircuit=Chameleon Circuit
 system.tardis.temporal_grace=Temporal Grace Circuits
-system.tardis.stabilizers=Stablilzers
+system.tardis.stabilizers=Stabilizers
+system.tardis.thermo=Thermo- Couplings
 
-tardis.dimension=Nav-com Dimension is:
+tardis.dimension=Nav-Com Dimension is:
 
 tardis.event.dalek=Dalek Invasion at:
 
@@ -189,7 +217,7 @@ config.dims=Dimension List
 config.setdim=Set Dimension IDs for this mod?
 config.tDim=TARDIS Dimension
 config.bhDim=Space Dimension
-config.dim.usewhitelist=Should the Dimensions in the List be used as a whitelist?
+config.dim.usewhitelist=Should the dimensions in the below list be used as a whitelist?
 config.telosDim=Telos Dimension ID
 
 config.entity=Entities
@@ -198,9 +226,9 @@ config.entity.cybermen.spawnchance=Chance That A Cyberman Will Spawn (Per Chunk)
 config.entity.adipose.spawnchance=Chance That An Adipose Will Spawn (Per Chunk)
 
 config.misc=Misc
-config.misc.givekey=Should give Player A TARDIS key when they join the world?
-config.misc.maxrand=Maxium number of block the TARDIS should travel when using the randomizer
-config.misc.shake=Should the camera shake when taking off / landing?
+config.misc.givekey=Give player a TARDIS key when they join the world?
+config.misc.maxrand=Maximum number of blocks the TARDIS should travel when using the randomizer
+config.misc.shake=Should the camera shake when taking off/landing?
 
 config.boti=Enable BOTI?
 
@@ -210,39 +238,43 @@ entity.y_valve.name=Space Control - Y
 entity.z_valve.name=Space Control - Z
 entity.dim_change.name=Dimensional Control
 entity.screen.name=Screen
-entity.rand_control.name=Control Randomizer
+entity.rand_control.name=Coordinate Randomizer
 entity.tardis_door.name=Door
-entity.stc_load.name=Waypoint Setter
-entity.stc_button.name=Waypoint Selector
-entity.control_flight.name=Real - World Flight Interface
-entity.fuel.name=Refueler
+entity.stc_load.name=Waypoint Input
+entity.stc_button.name=Waypoint Slot
+entity.control_flight.name=Real-World Flight Interface
+entity.fuel.name=Refueller
 entity.land_type.name=Landing Type Selector
 entity.direction_control.name=Directional Control
 entity.tardis.name=TARDIS
 entity.tardis_fast_return.name=Fast Return
 entity.telepathic_circuts.name=Telepathic Circuits
 entity.tardis_door_control.name=Door Switch
-entity.tardis_magnitude.name=Coordinate Magnitude Adjuster
+entity.tardis_magnitude.name=Coordinate Increment Modifier
 entity.tardis_phone.name=Communicator
 entity.stabilizers.name=Stabilizers
+entity.monitor.name=Monitor
+entity.waypoint_select.name=Waypoint Selector
 
-tardis.stabilizers.true=Stabilizers on
-tardis.stabilizers.false=Stabilizers off
+tardis.stabilizers.true=Stabilizers On
+tardis.stabilizers.false=Stabilizers Off
 
 entity.dalek.name=Dalek
 entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Invasion Cyberman
 
-death.cyberman.generic=was converted
+death.cyberman.generic=was converted!
 
 key.console.location=Interior Pos:
 
-manual.help=Mouse over controls to learn about them.
+manual.help=Mouse over console controls to learn about them.
 
 tardis.damage.demat=The Dematerialization Circuit has been fried!
 
-tardis.message.refuelling=Tardis now fueling..
-tardis.message.no_longer_refuelling=Tardis no longer fueling
+tardis.message.refuelling=Tardis now fueling...
+tardis.message.no_longer_refuelling=Tardis no longer fueling.
+tardis.message.tc_notfound=Could not find %s on this plane of existence
+tardis.message.relocation=Relocating you to capsules shell!
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS flying
@@ -283,7 +315,7 @@ course.tardis.direction.x=Coordinate Slip - X!
 course.tardis.direction.y=Coordinate Slip - Y!
 course.tardis.direction.z=Coordinate Slip - Z!
 course.tardis.dimension=Dimensional Drift!
-course.tardis.artron_leak=Fuel Over pressurized!
+course.tardis.artron_leak=Fuel overpressurized!
 course.tardis.spin=Angular Momentum Overload!
 
 box.tardis.01=1963 - Brachacki
@@ -294,3 +326,11 @@ box.tardis.05=1980 - Yardley-Jones
 box.tardis.cc=Disguised
 box.master.clock=Master's Clock
 box.tt=TT Capsule
+
+tardis.hum.tardis:interior_hum_80=1980's interior hum
+tardis.hum.tardis:1963_interior_hum=1963's interior hum
+tardis.hum.tardis:tardis_hum_copper=Copper's hum
+tardis.hum.tardis:tardis_hum_coral=Coral's hum
+tardis.hum.tardis:tardis_hum_toyota=Toyota's hum
+tardis.hum.tardis:tardis_hum_70=1970's hum
+tardis.hum.null=Hum disabled

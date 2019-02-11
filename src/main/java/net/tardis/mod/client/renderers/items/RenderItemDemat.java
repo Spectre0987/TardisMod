@@ -9,15 +9,15 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.items.ModelDemat;
 
 public class RenderItemDemat extends TileEntityItemStackRenderer {
-	
+
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/items/demat.png");
 	Minecraft mc;
 	ModelDemat model = new ModelDemat();
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/items/demat.png");
 
-    public RenderItemDemat() {
+	public RenderItemDemat() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void renderByItem(ItemStack p_192838_1_, float partialTicks) {
 		GlStateManager.pushMatrix();
@@ -27,5 +27,5 @@ public class RenderItemDemat extends TileEntityItemStackRenderer {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
-	
+
 }

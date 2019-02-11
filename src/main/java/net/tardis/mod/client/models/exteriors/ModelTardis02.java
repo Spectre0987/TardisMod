@@ -125,8 +125,10 @@ public class ModelTardis02 extends ModelBase implements IExteriorModel {
 	ModelRenderer Gen110;
 	ModelRenderer LampGlow;
 	ModelRenderer Gen111;
+	ModelBase rd = new ModelRightDoor01();
+	ModelBase ld = new ModelLeftDoor01();
 
-	public ModelTardis02() { 
+	public ModelTardis02() {
 
 		textureWidth = 256;
 		textureHeight = 256;
@@ -944,11 +946,12 @@ public class ModelTardis02 extends ModelBase implements IExteriorModel {
 		Gen111.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		renderGlow(scale, false);
 	}
-	
+
 	public void renderGlow(float scale, boolean shouldGlow) {
 		Shape1.render(scale);
 		Gen0.render(scale);
@@ -1063,34 +1066,30 @@ public class ModelTardis02 extends ModelBase implements IExteriorModel {
 		Gen109.render(scale);
 		Gen110.render(scale);
 		Gen111.render(scale);
-		if(shouldGlow) {
+		if (shouldGlow) {
 			Minecraft.getMinecraft().entityRenderer.disableLightmap();
 			SignGlow1.render(scale);
 			SignGlow2.render(scale);
 			LampGlow.render(scale);
 			Minecraft.getMinecraft().entityRenderer.enableLightmap();
-		}
-		else {
+		} else {
 			SignGlow1.render(scale);
 			SignGlow2.render(scale);
 			LampGlow.render(scale);
 		}
 	}
-	
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
-	
-	ModelBase rd = new ModelRightDoor01();
-	ModelBase ld = new ModelLeftDoor01();
-	
+
 	@Override
 	public void renderClosed(float scale) {
 		GlStateManager.pushMatrix();
@@ -1105,6 +1104,7 @@ public class ModelTardis02 extends ModelBase implements IExteriorModel {
 		GlStateManager.popMatrix();
 		GlStateManager.popMatrix();
 	}
+
 	@Override
 	public void renderOpen(float scale) {
 		render(null, 0, 0, 0, 0, 0, 0.0625F);

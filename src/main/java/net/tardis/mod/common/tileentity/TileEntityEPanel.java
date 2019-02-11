@@ -18,39 +18,40 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 import javax.annotation.Nullable;
 
 public class TileEntityEPanel extends TileEntity implements ITickable, IInventory {
-	
+
 	private int stateID = Block.getStateId(TBlocks.electric_panel.getDefaultState());
-	
-	public TileEntityEPanel() {}
-	
+
+	public TileEntityEPanel() {
+	}
+
 	@Override
 	public void update() {
-		if(!world.isRemote && world.getWorldTime() % 120 == 0) {
-			for(EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(getPos()).grow(64))) {
+		if (!world.isRemote && world.getWorldTime() % 120 == 0) {
+			for (EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(getPos()).grow(64))) {
 				player.connection.sendPacket(this.getUpdatePacket());
 			}
 		}
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.stateID = compound.getInteger("stateID");
 	}
-	
+
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("stateID", stateID);
 		return super.writeToNBT(compound);
 	}
-	
+
 	@Nullable
 	public BlockPos getConsolePos() {
 		return TardisHelper.getTardisForPosition(this.getPos());
 	}
-	
+
 	public IInventory getConsole() {
-		IInventory inv = (TileEntityTardis)this.world.getTileEntity(getConsolePos());
+		IInventory inv = (TileEntityTardis) this.world.getTileEntity(getConsolePos());
 		return inv != null ? inv : DummyTardis.INSTANCE;
 	}
 
@@ -105,10 +106,12 @@ public class TileEntityEPanel extends TileEntity implements ITickable, IInventor
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {}
+	public void openInventory(EntityPlayer player) {
+	}
 
 	@Override
-	public void closeInventory(EntityPlayer player) {}
+	public void closeInventory(EntityPlayer player) {
+	}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -121,7 +124,8 @@ public class TileEntityEPanel extends TileEntity implements ITickable, IInventor
 	}
 
 	@Override
-	public void setField(int id, int value) {}
+	public void setField(int id, int value) {
+	}
 
 	@Override
 	public int getFieldCount() {
@@ -135,8 +139,8 @@ public class TileEntityEPanel extends TileEntity implements ITickable, IInventor
 
 	public TileEntityTardis getConsoleP() {
 		BlockPos pos = this.getConsolePos();
-		if(!pos.equals(BlockPos.ORIGIN)) {
-			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(getConsolePos());
+		if (!pos.equals(BlockPos.ORIGIN)) {
+			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(getConsolePos());
 			return tardis;
 		}
 		return null;
@@ -159,7 +163,7 @@ public class TileEntityEPanel extends TileEntity implements ITickable, IInventor
 		this.stateID = pkt.getNbtCompound().getInteger("id");
 		super.onDataPacket(net, pkt);
 	}
-	
+
 	public int getID() {
 		return this.stateID;
 	}

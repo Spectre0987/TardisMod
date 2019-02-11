@@ -7,39 +7,44 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.client.renderers.sky.RenderVoid;
 
 public class WorldProviderTardis extends WorldProvider {
 
 	public WorldProviderTardis() {
 	}
-	
+
 	@Override
 	public IChunkGenerator createChunkGenerator() {
 		return new TardisChunkGenerator(this.world, this.world.getSeed());
 	}
-	
+
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks) {
 		return 0.5F;
 	}
-	
+
 	@Override
 	public float[] calcSunriseSunsetColors(float celestialAngle, float partialTicks) {
 		return super.calcSunriseSunsetColors(celestialAngle, partialTicks);
 	}
-	
+
 	@Override
 	public int getDimension() {
 		return super.getDimension();
 	}
-	
+
 	@Override
 	public Biome getBiomeForCoords(BlockPos pos) {
 		return Biomes.DESERT;
 	}
-	
+
 	@Override
-	public void calculateInitialWeather() {}
+	public void calculateInitialWeather() {
+	}
 
 	@Override
 	protected void generateLightBrightnessTable() {
@@ -60,13 +65,14 @@ public class WorldProviderTardis extends WorldProvider {
 	}
 
 	@Override
-	public void updateWeather() {}
-	
+	public void updateWeather() {
+	}
+
 	@Override
 	public DimensionType getDimensionType() {
 		return TDimensions.tardisType;
 	}
-	
+
 	@Override
 	public boolean canRespawnHere() {
 		return false;
@@ -76,5 +82,16 @@ public class WorldProviderTardis extends WorldProvider {
 	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
 		return WorldSleepResult.ALLOW;
 	}
-	
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IRenderHandler getCloudRenderer() {
+		return new RenderVoid();
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IRenderHandler getSkyRenderer() {
+		return new RenderVoid();
+	}
 }

@@ -7,7 +7,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
-public class ModelTardis01 extends ModelBase implements IExteriorModel{
+public class ModelTardis01 extends ModelBase implements IExteriorModel {
 
 	ModelRenderer Shape1;
 	ModelRenderer Gen0;
@@ -123,8 +123,10 @@ public class ModelTardis01 extends ModelBase implements IExteriorModel{
 	ModelRenderer Gen109;
 	ModelRenderer Gen110;
 	ModelRenderer Gen111;
+	ModelRightDoor01 rd = new ModelRightDoor01();
+	ModelLeftDoor01 ld = new ModelLeftDoor01();
 
-	public ModelTardis01() { 
+	public ModelTardis01() {
 
 		textureWidth = 256;
 		textureHeight = 256;
@@ -928,10 +930,12 @@ public class ModelTardis01 extends ModelBase implements IExteriorModel{
 		Gen111.mirror = false;
 
 	}
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.renderGlow(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, false);
 	}
+
 	public void renderGlow(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, boolean shouldGlow) {
 		Shape1.render(scale);
 		Gen0.render(scale);
@@ -1020,12 +1024,11 @@ public class ModelTardis01 extends ModelBase implements IExteriorModel{
 		Gen83.render(scale);
 		Gen84.render(scale);
 		Gen85.render(scale);
-		if(shouldGlow) {
+		if (shouldGlow) {
 			Minecraft.getMinecraft().entityRenderer.disableLightmap();
 			LampGlow.render(scale);
 			Minecraft.getMinecraft().entityRenderer.enableLightmap();
-		}
-		else LampGlow.render(scale);
+		} else LampGlow.render(scale);
 		Gen86.render(scale);
 		Gen87.render(scale);
 		Gen88.render(scale);
@@ -1053,34 +1056,33 @@ public class ModelTardis01 extends ModelBase implements IExteriorModel{
 		Gen110.render(scale);
 		Gen111.render(scale);
 	}
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entity) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entity);
 	}
 
-	ModelRightDoor01 rd = new ModelRightDoor01();
-	ModelLeftDoor01 ld = new ModelLeftDoor01();
-	
 	@Override
 	public void renderClosed(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, scale);
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(-0.46875F, 0, -0.53125F);
 		rd.render(null, 0, 0, 0, 0, 0, scale);
 		GlStateManager.popMatrix();
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.46875, 0, -0.53125F);
 		ld.render(null, 0, 0, 0, 0, 0, scale);
 		GlStateManager.popMatrix();
 	}
+
 	@Override
 	public void renderOpen(float scale) {
 		this.render(null, 0, 0, 0, 0, 0, scale);
@@ -1089,12 +1091,12 @@ public class ModelTardis01 extends ModelBase implements IExteriorModel{
 		GlStateManager.rotate(-80, 0, 1, 0);
 		rd.render(null, 0, 0, 0, 0, 0, scale);
 		GlStateManager.popMatrix();
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.46875, 0, -0.53125F);
 		GlStateManager.rotate(80, 0, 1, 0);
 		ld.render(null, 0, 0, 0, 0, 0, scale);
 		GlStateManager.popMatrix();
 	}
-	
+
 }

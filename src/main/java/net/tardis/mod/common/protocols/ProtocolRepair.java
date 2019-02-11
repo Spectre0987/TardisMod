@@ -11,9 +11,9 @@ public class ProtocolRepair implements ITardisProtocol {
 
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 			tardis.setRepairing(!tardis.getRepairing());
-			for(EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(tardis.getPos()).grow(20))) {
+			for (EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(tardis.getPos()).grow(20))) {
 				player.sendStatusMessage(new TextComponentTranslation(TStrings.REPAIR + tardis.getRepairing()), true);
 			}
 		}

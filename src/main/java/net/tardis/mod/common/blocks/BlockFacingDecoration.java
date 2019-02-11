@@ -17,9 +17,10 @@ import java.util.function.Supplier;
 public class BlockFacingDecoration extends BlockTileBase {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	
+
 	public BlockFacingDecoration(Supplier<TileEntity> tileEntity) {
 		super(Material.IRON, tileEntity);
+		this.setHardness(5F);
 
 	}
 

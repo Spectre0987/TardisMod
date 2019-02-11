@@ -1,7 +1,7 @@
 {
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "tardis:blocks/toyota/toyota_wall",
-        "side": "tardis:blocks/toyota/toyota_wallroundel_2"
-    }
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "tardis:blocks/toyota/toyota_wall",
+    "side": "tardis:blocks/toyota/toyota_wallroundel_2"
+  }
 }

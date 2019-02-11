@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "inventory":{
-            "model":"tardis:telos_sand"
-        },
-        "normal":{
-            "model":"tardis:telos_sand"
-        }
+  "variants": {
+    "inventory": {
+      "model": "tardis:telos_sand"
+    },
+    "normal": {
+      "model": "tardis:telos_sand"
     }
+  }
 }

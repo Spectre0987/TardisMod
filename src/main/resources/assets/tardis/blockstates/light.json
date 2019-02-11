@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:light"
-        },
-        "inventory":{
-             "model":"tardis:light"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:light"
+    },
+    "inventory": {
+      "model": "tardis:light"
     }
+  }
 }

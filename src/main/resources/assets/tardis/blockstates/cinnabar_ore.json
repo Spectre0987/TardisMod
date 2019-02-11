@@ -1,13 +1,17 @@
 {
-    "forge_marker": 1,
-    "defaults":{
-        "model":"cube_all",
-        "textures":{
-            "all":"tardis:blocks/cinnabar_ore"
-        }
-    },
-    "variants":{
-        "normal":[{}],
-        "inventory":[{}]
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "textures": {
+      "all": "tardis:blocks/cinnabar_ore"
     }
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ]
+  }
 }

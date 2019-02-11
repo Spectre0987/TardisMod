@@ -12,16 +12,16 @@ import net.tardis.mod.util.client.RenderHelper;
 
 public class RenderTileDoorTT extends RenderExterior {
 
-	public static RenderWorldShell renderShell = new RenderWorldShell();
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/exteriors/tt.png");
+	public static RenderWorldShell renderShell = new RenderWorldShell();
 	public static ModelTardisTT model = new ModelTardisTT();
-	
+
 	@Override
 	public void renderExterior(TileEntityDoor te) {
 		GlStateManager.pushMatrix();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.translate(0, -0.5, 0);
-		if(te.isLocked())model.renderClosed(0.0625F);
+		if (te.isLocked()) model.renderClosed(0.0625F);
 		else model.renderOpen(0.0625F);
 		GlStateManager.popMatrix();
 	}
@@ -31,7 +31,7 @@ public class RenderTileDoorTT extends RenderExterior {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5, 0.75, 0);
 		GlStateManager.rotate(180, 0, 0, 1);
-		RenderHelper.renderPortal(renderShell, te, partialTicks, 90, RenderTileDoor.POSITION, null, false);
+		RenderHelper.renderPortal(renderShell, te, partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, null, false);
 		GlStateManager.popMatrix();
 	}
 

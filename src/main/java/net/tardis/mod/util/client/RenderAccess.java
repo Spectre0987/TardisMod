@@ -11,14 +11,14 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 
-public class RenderAccess implements IBlockAccess{
+public class RenderAccess implements IBlockAccess {
 
 	IBlockState state = Blocks.AIR.getDefaultState();
-	
-	public RenderAccess(IBlockState state){
+
+	public RenderAccess(IBlockState state) {
 		this.state = state;
 	}
-	
+
 	@Override
 	public TileEntity getTileEntity(BlockPos pos) {
 		return null;

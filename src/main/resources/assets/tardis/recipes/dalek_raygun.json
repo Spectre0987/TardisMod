@@ -9,17 +9,17 @@
     "G": {
       "item": "tardis:gunstick"
     },
-    "C":{
-        "item":"tardis:circuts"
+    "C": {
+      "item": "tardis:circuts"
     },
-    "R":{
-        "item":"tardis:power_cell"
+    "R": {
+      "item": "tardis:power_cell"
     },
-    "I":{
-        "item":"minecraft:iron_ingot"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
-    "B":{
-        "item":"minecraft:wooden_button"
+    "B": {
+      "item": "minecraft:wooden_button"
     }
   },
   "result": {

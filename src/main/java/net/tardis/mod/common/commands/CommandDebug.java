@@ -6,8 +6,9 @@ import net.minecraft.server.MinecraftServer;
 
 public class CommandDebug extends CommandBase {
 
-	public CommandDebug() {}
-	
+	public CommandDebug() {
+	}
+
 	@Override
 	public String getName() {
 		return "tdebug";
@@ -19,8 +20,8 @@ public class CommandDebug extends CommandBase {
 	}
 
 	@Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-		
+	public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
+
 	}
 
 }

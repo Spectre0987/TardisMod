@@ -13,21 +13,21 @@ import javax.annotation.Nullable;
 
 public class RenderDalek extends RenderLiving<EntityDalek> {
 
-    private ModelDalek dalek = new ModelDalek();
-    private Sphere spehere = new Sphere();
+	private ModelDalek dalek = new ModelDalek();
+	private Sphere spehere = new Sphere();
 
-    public RenderDalek(RenderManager manager) {
-        super(manager, new ModelDalek(), 1.0F);
-    }
+	public RenderDalek(RenderManager manager) {
+		super(manager, new ModelDalek(), 1.0F);
+	}
 
-    @Override
-    protected void renderModel(EntityDalek entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
-        GlStateManager.pushMatrix();
+	@Override
+	protected void renderModel(EntityDalek entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+		GlStateManager.pushMatrix();
 
-        if (entity.world.isAirBlock(entity.getPosition().down())) {
-            float offset = MathHelper.cos(entity.ticksExisted * 0.1F) * -0.05F;
-            GlStateManager.translate(0, -offset, 0);
-        }
+		if (entity.world.isAirBlock(entity.getPosition().down())) {
+			float offset = MathHelper.cos(entity.ticksExisted * 0.1F) * -0.05F;
+			GlStateManager.translate(0, -offset, 0);
+		}
 
         /*GlStateManager.pushMatrix();
         GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
@@ -38,22 +38,21 @@ public class RenderDalek extends RenderLiving<EntityDalek> {
         GlStateManager.popMatrix();
 
         GlStateManager.color(1F, 1F, 1F, 1F);*/
-        dalek.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
-        GlStateManager.popMatrix();
+		dalek.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
+		GlStateManager.popMatrix();
 
 
-    }
+	}
 
 
-
-    /**
-     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
-     *
-     * @param entity
-     */
-    @Nullable
-    @Override
-    protected ResourceLocation getEntityTexture(EntityDalek entity) {
-        return null;
-    }
+	/**
+	 * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
+	 *
+	 * @param entity
+	 */
+	@Nullable
+	@Override
+	protected ResourceLocation getEntityTexture(EntityDalek entity) {
+		return null;
+	}
 }

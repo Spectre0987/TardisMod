@@ -18,7 +18,7 @@ item.tardis.sonic_blaster.name=Dynamiteur sonique
 item.tardis.sonic_cane.name=Canne sonique
 item.tardis.vortex_manip.name=Manipulateur de Vortex
 item.tardis.fluid_link.name=Branchement de liquide
-item.tardis.demat_circut.name=Circuit de dématérialisation
+item.tardis.demat_circuit.name=Circuit de dématérialisation
 item.tardis.artron_capacitor.name=Batterie d'Artron
 item.tardis.sonic_pen.name=Stylo torche sonique
 item.tardis.tardis_manual.name=Manuel de TARDIS
@@ -48,10 +48,13 @@ item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Circuits de grâce temporel
 item.tardis.tardis_repairkit.name=Boîte à outils pour TARDIS
 item.tardis.stabilizers.name=Circuits stabilisateurs
+item.tardis.thermo.name=Raccords thermiques
+item.tardis.sonic_third.name=Troisième sonique du docteur
+item.tardis.sonic_screwdriver.name=Tournevis sonique
 
 tooltip.remote=Télécommande reliée au TARDIS à :
-tooltip.remote.time=Le TARDIS arrive dans 
-tooltip.remote.fuel=Batterie Artron 
+tooltip.remote.time=Le TARDIS arrive dans
+tooltip.remote.fuel=Batterie Artron
 tooltip.remote.exteriorpos=Extérieur du TARDIS:
 tooltip.remote.bind=Pour lier, clic droit sur la console
 tooltip.tardis.toolkit=Clic droit sur la console pour réparer tous les systèmes non détruits de 15
@@ -101,6 +104,15 @@ tile.tardis.hellbent_light.name=Feux de localisation de défauts de la montée e
 tile.tardis.hellbent_monitor.name=Moniteur de la montée en enfer
 tile.tardis.hellbent_pole.name=Poteau de la montée en enfer
 tile.tardis.hellbent_roof.name=Chose au plafond de la montée en enfer
+tile.tardis.s13roundellit1.name=S13 Rondelle
+tile.tardis.s13roundellit2.name=S13 Rondelle
+tile.tardis.s13roundellit3.name=S13 Rondelle
+tile.tardis.s13blankroundel1.name=S13 Rondelle
+tile.tardis.s13blankroundel2.name=S13 Rondelle
+tile.tardis.s13blankroundel3.name=S13 Rondelle
+tile.tardis.s13floor.name=S13 Sol
+tile.tardis.s13flooralt.name=S13 Sol
+tile.tardis.brachackitable.name=Table de Brachacki
 tile.tardis.json_test.name=Testeur JSON
 tile.tardis.telos_sand.name=Sable de Telos
 tile.tardis.moon_dirt.name=Terre lunaire
@@ -109,6 +121,10 @@ tile.tardis.zero_room.name=Chambre Zéro
 tile.tardis.zero_room_slab.name=Dalle de pièce zéro
 tile.tardis.zero_room_stairs.name=Escalier de pièce zéro
 tile.tardis.suitcase.name=Mystérieuse valise
+tile.tardis.br_chair.name=Fauteuil
+tile.tardis.am_sphere.name=Sphère armillaire
+tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
+tile.tardis.sonic_workbench.name=Table de craft des Soniques
 
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
@@ -132,7 +148,7 @@ screw.entities=Interactions avec les Entités
 screw.tardis.signal=Signal TARDIS
 screw.entity=Interaction avec une Entité
 
-screw.fail.itswood=Ca ne marche pas sur du bois!
+screw.fail.itswood=Ca ne fonctionne pas sur du bois!
 screw.fail.bottom-door=Pour ouvrir cette porte, vous devez le pointer vers le bas.
 
 raygun.ammo=Munitions restantes
@@ -160,6 +176,7 @@ tardis.hads.enabled.false=H.A.D.S a été désactivé
 
 protocol.ccircut=Circuit caméléon
 protocol.hads=Basculer le H.A.D.S
+protocol.hum=Basculer le bourdonnement
 protocol.tardis.find_rift=Trouver la faille la plus proche
 protocol.tardis.systemreadout=Relevé du sous-système
 protocol.tardis.change.console=Changer de Console
@@ -167,6 +184,11 @@ protocol.tardis.ars=Système de Reconfiguration Architecturale
 protocol.tardis.regenroom=Regénérer la salle de contrôle
 protocol.tardis.lock=Double serrure
 protocol.tardis.destroy.rift=Consommer la Faille Dimensionnel
+protocol.tardis.repair=Réparer le TARDIS
+protocol.tardis.waypoint.load=Marqueurs
+
+tardis.repair.false=TARDIS se répare
+tardis.repair.true=TARDIS ne se répare plus
 
 systems.tardis.flight=Système de vol
 systems.protocol.dimensions=Systèmes dimensionnel
@@ -221,6 +243,7 @@ entity.tardis_door_control.name=Interrupteur de porte
 entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 entity.tardis_phone.name=Communicateur
 entity.stabilizers.name=Stabilisateurs
+entity.monitor.name=Moniteur
 
 tardis.stabilizers.true=Stabilisateurs ON
 tardis.stabilizers.false=Stabilisateurs OFF
@@ -229,9 +252,9 @@ entity.dalek.name=Dalek
 entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Cyberman d'Invasion
 
-death.cyberman.generic=a été converti
+death.cyberman.generic=a été converti!
 
-key.console.location=Console à: 
+key.console.location=Position de la console: 
 
 manual.help=Passez la souris sur un contrôle pour en savoir plus.
 
@@ -290,3 +313,10 @@ box.tardis.05=1980 - Yardley-Jones
 box.tardis.cc=Camouflé
 box.master.clock=Horloge du Maitre
 box.tt=TT Capsule
+
+tardis.hum.tardis:interior_hum_80=Bourdonnement de 1980
+tardis.hum.tardis:1963_interior_hum=Bourdonnement de 1963
+tardis.hum.tardis:tardis_hum_copper=Bourdonnement Copper
+tardis.hum.tardis:tardis_hum_coral=Bourdonnement Coral
+tardis.hum.tardis:tardis_hum_toyota=Bourdonnement Toyota
+tardis.hum.null=Bourdonnement désactivé

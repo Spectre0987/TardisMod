@@ -18,30 +18,30 @@ import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
 
 public class BlockAlembic extends BlockTileBase {
-	
-	public ItemBlock item = new ItemBlock(this);
+
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	
+	public ItemBlock item = new ItemBlock(this);
+
 	public BlockAlembic() {
-        super(Material.GLASS, TileEntityAlembic::new);
+		super(Material.GLASS, TileEntityAlembic::new);
 
 	}
 
-    @Override
+	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.INVISIBLE;
 	}
-	
+
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
@@ -69,24 +69,21 @@ public class BlockAlembic extends BlockTileBase {
 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!worldIn.isRemote) {
+		if (!worldIn.isRemote) {
 			ItemStack held = playerIn.getHeldItem(hand);
-			TileEntityAlembic te = (TileEntityAlembic)worldIn.getTileEntity(pos);
-			if(!held.isEmpty() && AlembicRecipe.getItemResult(held.getItem()) != null) {
-				if(te.getStack().isEmpty()) {
+			TileEntityAlembic te = (TileEntityAlembic) worldIn.getTileEntity(pos);
+			if (!held.isEmpty() && AlembicRecipe.getItemResult(held.getItem()) != null) {
+				if (te.getStack().isEmpty()) {
 					te.setStack(held.copy());
 					playerIn.setHeldItem(hand, ItemStack.EMPTY);
-				}
-				else if(te.getStack().isItemEqual(held) && te.getStack().getCount() + held.getCount() <= te.getStack().getMaxStackSize()) {
+				} else if (te.getStack().isItemEqual(held) && te.getStack().getCount() + held.getCount() <= te.getStack().getMaxStackSize()) {
 					te.getStack().setCount(te.getStack().getCount() + held.getCount());
 				}
-			}
-			else {
-				if(!te.getResult().isEmpty()) {
+			} else {
+				if (!te.getResult().isEmpty()) {
 					playerIn.inventory.addItemStackToInventory(te.getResult());
 					te.setResult(ItemStack.EMPTY);
-				}
-				else if(!te.getStack().isEmpty() && playerIn.isSneaking()) {
+				} else if (!te.getStack().isEmpty() && playerIn.isSneaking()) {
 					playerIn.inventory.addItemStackToInventory(te.getStack());
 					te.setStack(ItemStack.EMPTY);
 				}

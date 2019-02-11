@@ -8,30 +8,33 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDirection extends EntityControl {
-	
+
 	public ControlDirection(TileEntityTardis tardis) {
 		super(tardis);
-		if(tardis.getClass() == TileEntityTardis01.class) {
+		if (tardis.getClass() == TileEntityTardis01.class) {
 			this.setSize(0.0625F, 0.0625F);
 		}
 	}
-	
+
 	public ControlDirection(World world) {
 		super(world);
 		this.setSize(0.125F, 0.125F);
 	}
-	
+
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis instanceof TileEntityTardis01 || tardis.getClass() == TileEntityTardis02.class) {
+		if (tardis instanceof TileEntityTardis01 || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(3, -2.5, -13);
 		}
+		if (tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(-16, 1, -3);
 		return Helper.convertToPixels(9.5, -3.5, 10);
 	}
-	
+
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
@@ -40,5 +43,13 @@ public class ControlDirection extends EntityControl {
 			player.sendStatusMessage(new TextComponentTranslation(TStrings.TARDIS_FACING + tardis.getFacing().getName()), true);
 		}
 	}
-	
+
+	@Override
+	public void init(TileEntityTardis tardis) {
+		if (tardis != null) {
+			if (tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(1F));
+		}
+	}
+
 }

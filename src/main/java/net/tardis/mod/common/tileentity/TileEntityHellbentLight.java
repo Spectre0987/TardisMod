@@ -2,7 +2,7 @@ package net.tardis.mod.common.tileentity;
 
 import net.minecraft.util.math.AxisAlignedBB;
 
-public class TileEntityHellbentLight extends TileEntityLight{
+public class TileEntityHellbentLight extends TileEntityLight {
 
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {

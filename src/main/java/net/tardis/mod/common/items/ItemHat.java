@@ -18,7 +18,7 @@ public class ItemHat extends ItemArmor {
 	public ItemHat(EnumClothes clothType) {
 		super(ItemSpaceSuit.material, 0, EntityEquipmentSlot.HEAD);
 
-        this.clothType = clothType;
+		this.clothType = clothType;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -29,7 +29,7 @@ public class ItemHat extends ItemArmor {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot,ModelBiped _default) {
+	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
 		if (clothType.getModel() != null) {
 			return clothType.getModel();
 		}

@@ -2,8 +2,6 @@ package net.tardis.mod.client.renderers.tiles;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
@@ -12,9 +10,10 @@ import net.tardis.mod.util.common.helpers.Helper;
 public class RenderTileHolo extends TileEntitySpecialRenderer<TileEntityHoloprojector> {
 
 	RenderWorldShell renderShell = new RenderWorldShell();
-	
-	public RenderTileHolo() {}
-	
+
+	public RenderTileHolo() {
+	}
+
 	@Override
 	public void render(TileEntityHoloprojector te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		Minecraft mc = Minecraft.getMinecraft();
@@ -23,12 +22,11 @@ public class RenderTileHolo extends TileEntitySpecialRenderer<TileEntityHoloproj
 		GlStateManager.scale(0.06, 0.06, 0.06);
 		try {
 			mc.entityRenderer.disableLightmap();
-			GlStateManager.blendFunc(SourceFactor.SRC_COLOR, DestFactor.DST_COLOR);
-			GlStateManager.color(0, 0, 1F);
 			renderShell.doRender(te, 0, 0, 0, 0, 0, null);
 			mc.entityRenderer.enableLightmap();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		catch(Exception e) {}
 		GlStateManager.popMatrix();
 	}
 

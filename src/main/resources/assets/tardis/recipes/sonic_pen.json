@@ -6,11 +6,11 @@
     "I  "
   ],
   "key": {
-    "I":{
-        "item":"minecraft:iron_ingot"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
-    "S":{
-        "item":"tardis:sonic_screwdriver"
+    "S": {
+      "item": "tardis:sonic_screwdriver"
     }
   },
   "result": {

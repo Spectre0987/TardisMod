@@ -16,15 +16,15 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 	private int ticks = 0;
 
 	public TileEntityFoodMachine() {
-		
+
 	}
-	
+
 	public void makeFood() {
-		if(!world.isRemote) {
-			for(TileEntity te : world.getChunk(getPos()).getTileEntityMap().values()) {
-				if(te != null && te instanceof TileEntityTardis) {
-					TileEntityTardis tardis = (TileEntityTardis)te;
-					if(tardis.fuel >= 0.01) {
+		if (!world.isRemote) {
+			for (TileEntity te : world.getChunk(getPos()).getTileEntityMap().values()) {
+				if (te != null && te instanceof TileEntityTardis) {
+					TileEntityTardis tardis = (TileEntityTardis) te;
+					if (tardis.fuel >= 0.01) {
 						tardis.fuel -= 0.01;
 						tardis.markDirty();
 						active = true;

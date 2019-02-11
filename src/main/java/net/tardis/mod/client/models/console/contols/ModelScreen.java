@@ -17,11 +17,11 @@ public class ModelScreen extends ModelBase {
 	ModelRenderer frameside0;
 	ModelRenderer frameside1;
 	ModelRenderer Shape1;
-	
+
 	public ModelScreen() {
 		textureWidth = 64;
 		textureHeight = 32;
-		
+
 		frametop = new ModelRenderer(this, 0, 0);
 		frametop.addBox(0F, 0F, 0F, 16, 1, 1);
 		frametop.setRotationPoint(-8F, 15F, 0F);
@@ -53,7 +53,7 @@ public class ModelScreen extends ModelBase {
 		Shape1.mirror = true;
 		setRotation(Shape1, 0F, 0F, 0F);
 	}
-	
+
 	public void render(Entity entity, float f5) {
 		super.render(entity, 0, 0, 0, 0, 0, f5);
 		setRotationAngles(0, 0, 0, 0, 0, f5, entity);
@@ -63,15 +63,15 @@ public class ModelScreen extends ModelBase {
 		frameside1.render(f5);
 		Shape1.render(f5);
 	}
-	
+
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
-	
+
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 	}
-	
+
 }

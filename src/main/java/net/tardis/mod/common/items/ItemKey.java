@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class ItemKey extends Item {
-	
+
 	public static final ResourceLocation CONSOLE_ROOM = new ResourceLocation(Tardis.MODID, "console_room");
-	
+
 	public ItemKey() {
 
-        this.setMaxStackSize(1);
+		this.setMaxStackSize(1);
 	}
-	
+
 	public static void setPos(ItemStack stack, BlockPos pos) {
 		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
@@ -38,35 +38,35 @@ public class ItemKey extends Item {
 		NBTTagCompound tag = stack.getTagCompound();
 		tag.setLong("pos", pos.toLong());
 	}
-	
+
 	public static BlockPos getPos(ItemStack stack) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) {
 			return BlockPos.fromLong(stack.getTagCompound().getLong("pos"));
 		}
 		return null;
 	}
-	
+
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        UUID id = playerIn.getGameProfile().getId();
-		if(getPos(playerIn.getHeldItem(handIn)) == null && TardisHelper.hasTardis(id)) {
+		UUID id = playerIn.getGameProfile().getId();
+		if (getPos(playerIn.getHeldItem(handIn)) == null && TardisHelper.hasTardis(id)) {
 			setPos(playerIn.getHeldItem(handIn), TardisHelper.getTardis(id));
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("pos")) {
-			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText() + " " +Helper.formatBlockPos(getPos(stack)));
+			tooltip.add(new TextComponentTranslation(TStrings.KEY_CONSOLE_LOCATION).getFormattedText() + " " + Helper.formatBlockPos(getPos(stack)));
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-	
+
 	@Override
 	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
 	}
-	
+
 }
