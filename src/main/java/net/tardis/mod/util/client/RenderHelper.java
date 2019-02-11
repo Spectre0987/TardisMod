@@ -104,10 +104,16 @@ public class RenderHelper {
 				GlStateManager.popMatrix();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				RenderHelper.setRenderGlobalWorld(oldWorld);
 				
 		    	framebuffer.deleteFramebuffer();
 		    	oldFrameBuffer.bindFramebuffer(true);
+=======
+				RenderHelper.setRenderGlobalWorld(oldW);
+				old.bindFramebuffer(true);
+				fb.deleteFramebuffer();
+>>>>>>> parent of 05bb7968... Merge pull request #192 from Cadiboo/master
 =======
 				RenderHelper.setRenderGlobalWorld(oldW);
 				old.bindFramebuffer(true);
