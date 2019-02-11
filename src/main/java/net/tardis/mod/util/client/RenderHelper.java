@@ -102,23 +102,12 @@ public class RenderHelper {
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-				RenderHelper.setRenderGlobalWorld(oldWorld);
 				
-		    	framebuffer.deleteFramebuffer();
-		    	oldFrameBuffer.bindFramebuffer(true);
-=======
+				RenderHelper.setRenderGlobalWorld(oldW);
+				
 				RenderHelper.setRenderGlobalWorld(oldW);
 				old.bindFramebuffer(true);
 				fb.deleteFramebuffer();
->>>>>>> parent of 05bb7968... Merge pull request #192 from Cadiboo/master
-=======
-				RenderHelper.setRenderGlobalWorld(oldW);
-				old.bindFramebuffer(true);
-				fb.deleteFramebuffer();
->>>>>>> parent of 05bb7968... Merge pull request #192 from Cadiboo/master
 
 			} catch (Exception e) {
 				e.printStackTrace();
