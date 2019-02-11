@@ -1,8 +1,14 @@
 package net.tardis.mod.handlers;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -67,11 +73,6 @@ import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.HashMap;
-
 @Mod.EventBusSubscriber(modid = Tardis.MODID)
 public class TEventHandler {
 
@@ -92,6 +93,7 @@ public class TEventHandler {
 			event.getEntityLiving().setDead();
 	}
 
+
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {
 		// Blocks
@@ -109,6 +111,7 @@ public class TEventHandler {
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 	}
+
 
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -162,6 +165,7 @@ public class TEventHandler {
 			}
 		}
 	}
+
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
@@ -230,9 +234,7 @@ public class TEventHandler {
 					EntityPlayer player = event.getEntityPlayer();
 					int slot = Helper.getSlotForItem(player, Items.BOOK);
 					if (slot != -1) {
-						if (!player.capabilities.isCreativeMode) {
-							player.inventory.getStackInSlot(slot).shrink(1);
-						}
+						player.inventory.getStackInSlot(slot).shrink(1);
 						EntityItem ei = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.manual));
 						world.spawnEntity(ei);
 					}
@@ -311,5 +313,4 @@ public class TEventHandler {
 	public static void loadChunkData(ChunkDataEvent.Load event) {
 		RiftHelper.readRiftStatus(event.getChunk(), event.getWorld(), event.getData());
 	}
-
 }

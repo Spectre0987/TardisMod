@@ -7,8 +7,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
-import java.util.Objects;
-
 public class BlockStorage {
 
 	//Stores individual blocks in a worldShell
@@ -40,20 +38,4 @@ public class BlockStorage {
 			tileentity = tag;
 		}
 	}
-
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		final BlockStorage that = (BlockStorage) o;
-		return light == that.light &&
-				blockstate.equals(that.blockstate) &&
-				Objects.equals(tileentity, that.tileentity);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(blockstate, tileentity, light);
-	}
-
 }
