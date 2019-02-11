@@ -1,28 +1,44 @@
 package net.tardis.mod.common.dimensions.gallifrey;
 
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockSand;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeTaiga;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.tardis.mod.common.blocks.TBlocks;
+
+
 
 import java.util.Random;
 
 public class BiomeGallifrey extends Biome {
-	
+
+
 	public BiomeGallifrey() {
-		super(new BiomeProperties("gallifrey").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled());
+		super(new BiomeProperties("gallifrey").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled().setWaterColor(0xFFFFFF));
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
 		this.spawnableWaterCreatureList.clear();
+
 	}
-	
+
+	@Override
+	public int getGrassColorAtPos(BlockPos pos)
+	{
+		return getModdedBiomeGrassColor(0xE74C3C);
+	}
+
+	@Override
+	public int getFoliageColorAtPos(BlockPos pos)
+	{
+		return getModdedBiomeFoliageColor(0xEAEDED);
+	}
+
+
 	@Override
 	public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int x, int z, double stoneNoiseVal)
 	{
@@ -39,7 +55,7 @@ public class BiomeGallifrey extends Biome {
 		
 		int localX = x & 15;
 		int localZ = z & 15;
-		
+
 		// start at the top and move downwards
 		for (int y = 255; y >= 0; --y)
 		{
@@ -99,4 +115,8 @@ public class BiomeGallifrey extends Biome {
 			}
 		}
 	}
+
+
+
+
 }
