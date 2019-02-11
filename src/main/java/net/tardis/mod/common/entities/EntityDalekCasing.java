@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 
-public class EntityDalekCasing extends EntityLiving{
+public class EntityDalekCasing extends EntityLiving {
 
 	public EntityDalekCasing(World worldIn) {
 		super(worldIn);
@@ -29,22 +29,23 @@ public class EntityDalekCasing extends EntityLiving{
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if(this.getControllingPassenger() != null) {
+		if (this.getControllingPassenger() != null) {
 			Entity e = this.getControllingPassenger();
-			if(e != null && e instanceof EntityLivingBase){
-				if(((EntityLivingBase)e).moveForward > 0) {
+			if (e != null && e instanceof EntityLivingBase) {
+				if (((EntityLivingBase) e).moveForward > 0) {
 					Vec3d look = e.getLookVec().normalize().scale(0.15);
 					this.motionX = look.x;
 					this.motionZ = look.z;
 				}
 				this.prevRotationYaw = this.rotationYaw;
-				this.rotationYaw = ((EntityLivingBase)e).rotationYawHead;
+				this.rotationYaw = ((EntityLivingBase) e).rotationYawHead;
 			}
 		}
 	}
 
 	@Override
-	protected void despawnEntity() {}
+	protected void despawnEntity() {
+	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
@@ -53,7 +54,7 @@ public class EntityDalekCasing extends EntityLiving{
 
 	@Override
 	public void dismountEntity(Entity entityIn) {
-		if(world.isRemote && entityIn instanceof EntityPlayer) {
+		if (world.isRemote && entityIn instanceof EntityPlayer) {
 			this.setCamera(0);
 		}
 		super.dismountEntity(entityIn);
@@ -104,7 +105,7 @@ public class EntityDalekCasing extends EntityLiving{
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		player.startRiding(this);
-		if(world.isRemote) {
+		if (world.isRemote) {
 			this.setCamera(1);
 		}
 		return super.applyPlayerInteraction(player, vec, hand);
@@ -114,18 +115,18 @@ public class EntityDalekCasing extends EntityLiving{
 	public Entity getControllingPassenger() {
 		return this.getPassengers().size() >= 1 ? this.getPassengers().get(0) : null;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-	@EventBusSubscriber(modid =  Tardis.MODID, value = Side.CLIENT)
-	public static class ClientEvent{
-		
+	@EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
+	public static class ClientEvent {
+
 		@SubscribeEvent
 		public static void stopArmRender(RenderHandEvent event) {
-			if(isRiding()) {
+			if (isRiding()) {
 				event.setCanceled(true);
 			}
 		}
-		
+
 		public static boolean isRiding() {
 			return Minecraft.getMinecraft().player.getRidingEntity() != null && Minecraft.getMinecraft().player.getRidingEntity() instanceof EntityDalekCasing;
 		}

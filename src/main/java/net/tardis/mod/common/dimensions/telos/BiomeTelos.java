@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class BiomeTelos extends BiomeDesert {
 
-    private int grassColor = new Color(175 / 255F, 143 / 255F, 82F / 255F).getRGB();
-	
+	private int grassColor = new Color(175 / 255F, 143 / 255F, 82F / 255F).getRGB();
+
 	public BiomeTelos(boolean snow) {
 		super(new BiomeProperties("Telos").setTemperature(snow ? 0F : 0.3F).setBaseBiome("desert"));
 		this.decorator = new TelosDecorator();
@@ -29,13 +29,14 @@ public class BiomeTelos extends BiomeDesert {
 	}
 
 	@Override
-	public void decorate(World worldIn, Random rand, BlockPos pos) {}
+	public void decorate(World worldIn, Random rand, BlockPos pos) {
+	}
 
 	@Override
 	public boolean canRain() {
 		return false;
 	}
-	
+
 	@Override
 	public int getGrassColorAtPos(BlockPos pos) {
 		return grassColor;
@@ -45,16 +46,19 @@ public class BiomeTelos extends BiomeDesert {
 	public int getFoliageColorAtPos(BlockPos pos) {
 		return grassColor;
 	}
-	
+
 	public static class TelosDecorator extends BiomeDecorator {
-		
-		public TelosDecorator() {}
+
+		public TelosDecorator() {
+		}
 
 		@Override
-		public void decorate(World worldIn, Random random, Biome biome, BlockPos pos) {}
+		public void decorate(World worldIn, Random random, Biome biome, BlockPos pos) {
+		}
 
 		@Override
-		protected void genDecorations(Biome biomeIn, World worldIn, Random random) {}
+		protected void genDecorations(Biome biomeIn, World worldIn, Random random) {
+		}
 	}
-	
+
 }

@@ -9,13 +9,25 @@
       }
     ]
   },
+
+  "tardis_land": {
+    "category": "block",
+    "subtitle": "tardis.subtitle.vworp",
+    "sounds": [
+      {
+        "name": "tardis:tardis_land",
+        "stream": true
+      }
+    ]
+  },
+
   "loop": {
     "category": "block",
     "subtitle": "tardis.subtitle.flying",
     "sounds": [
       {
         "name": "tardis:loop",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -25,7 +37,7 @@
     "sounds": [
       {
         "name": "tardis:sonic",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -35,7 +47,7 @@
     "sounds": [
       {
         "name": "tardis:dalek_ray",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -45,7 +57,7 @@
     "sounds": [
       {
         "name": "tardis:dalek",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -55,7 +67,7 @@
     "sounds": [
       {
         "name": "tardis:force_field",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -65,7 +77,7 @@
     "sounds": [
       {
         "name": "tardis:locked",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -75,7 +87,7 @@
     "sounds": [
       {
         "name": "tardis:door_open",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -85,7 +97,7 @@
     "sounds": [
       {
         "name": "tardis:door_close",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -95,7 +107,7 @@
     "sounds": [
       {
         "name": "tardis:interior_hum_80",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -104,7 +116,7 @@
     "sounds": [
       {
         "name": "tardis:cloister_bell",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -113,7 +125,7 @@
     "sounds": [
       {
         "name": "tardis:drum_beat",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -122,7 +134,7 @@
     "sounds": [
       {
         "name": "tardis:bessie_horn",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -131,7 +143,7 @@
     "sounds": [
       {
         "name": "tardis:stutter",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -140,7 +152,7 @@
     "sounds": [
       {
         "name": "tardis:phone",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -149,7 +161,7 @@
     "sounds": [
       {
         "name": "tardis:knocking",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -158,7 +170,7 @@
     "sounds": [
       {
         "name": "tardis:fly_loop",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -167,7 +179,7 @@
     "sounds": [
       {
         "name": "tardis:1963/food_machine",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -176,7 +188,7 @@
     "sounds": [
       {
         "name": "tardis:1963/int_door",
-        "stream": true
+        "stream": false
       }
     ]
   },
@@ -185,30 +197,89 @@
     "sounds": [
       {
         "name": "tardis:1963/interior_hum",
-        "stream": true
+        "stream": false
       }
     ]
   },
-  "control_01":{
-    "category":"blocks",
-    "sounds":[{
-        "name":"tardis:control_01",
-        "stream" : true
-    }]
+  "control_01": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:control_01",
+        "stream": false
+      }
+    ]
   },
-  "control_02":{
-    "category":"blocks",
-    "sounds":[{
-        "name":"tardis:control_02",
-        "stream" : true
-    }]
+  "control_02": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:control_02",
+        "stream": false
+      }
+    ]
   },
-  "control_03":{
-    "category":"blocks",
-    "sounds":[{
-        "name":"tardis:control_03",
-        "stream" : true
-    }]
-  }
-
+  "control_03": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "tardis:control_03",
+        "stream": false
+      }
+    ]
+  },
+  "vm_teleport": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:vm_teleport",
+        "stream": false
+      }
+    ]
+  },
+  "tardis_hum_copper": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:tardis_hum_copper",
+        "stream": false
+      }
+    ]
+  },
+  "tardis_hum_coral": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:tardis_hum_coral",
+        "stream": false
+      }
+    ]
+  },
+  "tardis_hum_toyota": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:tardis_hum_toyota",
+        "stream": false
+      }
+    ]
+  },
+  "tardis_hum_70": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "tardis:tardis_hum_70",
+        "stream": false
+      }
+    ]
+  },
+  "remote_accept": {
+  "category": "player",
+  "sounds": [
+    {
+      "name": "tardis:remote_accept",
+      "stream": false
+    }
+  ]
+}
 }

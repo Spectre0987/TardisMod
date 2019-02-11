@@ -30,19 +30,19 @@ public class InteractionHallwayGen implements IScrew {
 
 		if (world.isRemote) return EnumActionResult.FAIL;
 
-			if (state.getBlock() == TBlocks.panel && state.getValue(BlockPanel.TYPE) == 1) {
-				if (state.getBlock() == TBlocks.panel) {
-					WorldServer ws = (WorldServer) world;
-					MinecraftServer server = ws.getMinecraftServer();
+		if (state.getBlock() == TBlocks.panel && state.getValue(BlockPanel.TYPE) == 1) {
+			if (state.getBlock() == TBlocks.panel) {
+				WorldServer ws = (WorldServer) world;
+				MinecraftServer server = ws.getMinecraftServer();
 
-					Template temp = ws.getStructureTemplateManager().get(server, Structures.HALLWAY);
-					EnumFacing facing = player.getHorizontalFacing();
-					Rotation rot = this.getRotationFromFacing(facing);
-					PlacementSettings sett = new PlacementSettings().setRotation(this.getRotationFromFacing(facing));
-					temp.addBlocksToWorld(ws, pos.add(this.getOffsetFromFacing(facing)), sett);
-					return EnumActionResult.SUCCESS;
-				}
+				Template temp = ws.getStructureTemplateManager().get(server, Structures.HALLWAY);
+				EnumFacing facing = player.getHorizontalFacing();
+				Rotation rot = this.getRotationFromFacing(facing);
+				PlacementSettings sett = new PlacementSettings().setRotation(this.getRotationFromFacing(facing));
+				temp.addBlocksToWorld(ws, pos.add(this.getOffsetFromFacing(facing)), sett);
+				return EnumActionResult.SUCCESS;
 			}
+		}
 
 		return EnumActionResult.FAIL;
 	}
@@ -87,7 +87,7 @@ public class InteractionHallwayGen implements IScrew {
 				return new BlockPos(0, 0, 0);
 		}
 	}
-	
+
 	public Rotation getRotationFromFacing(EnumFacing facing) {
 		switch (facing) {
 			case EAST:
@@ -101,5 +101,5 @@ public class InteractionHallwayGen implements IScrew {
 				return Rotation.COUNTERCLOCKWISE_90;
 		}
 	}
-	
+
 }

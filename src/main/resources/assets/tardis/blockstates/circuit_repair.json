@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:circuit_repair"
-        },
-        "inventory":{
-            "model":"tardis:circuit_repair"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:circuit_repair"
+    },
+    "inventory": {
+      "model": "tardis:circuit_repair"
     }
+  }
 }

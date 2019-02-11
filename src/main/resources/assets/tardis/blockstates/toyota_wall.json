@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:toyota_wall"
-        },
-        "inventory":{
-             "model":"tardis:toyota_wall"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:toyota_wall"
+    },
+    "inventory": {
+      "model": "tardis:toyota_wall"
     }
+  }
 }

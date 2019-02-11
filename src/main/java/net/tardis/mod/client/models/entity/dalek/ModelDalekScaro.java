@@ -1,7 +1,6 @@
 package net.tardis.mod.client.models.entity.dalek;
 
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.ResourceLocation;
 
@@ -67,7 +66,7 @@ public class ModelDalekScaro extends ModelDalekBase {
 	ModelRenderer Base10;
 	ModelRenderer Base11;
 
-	public ModelDalekScaro() { 
+	public ModelDalekScaro() {
 
 		textureWidth = 128;
 		textureHeight = 128;
@@ -486,13 +485,13 @@ public class ModelDalekScaro extends ModelDalekBase {
 		Base11.mirror = false;
 
 	}
-	
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
-	
+
 	@Override
 	public void renderHead() {
 		Dome1.render(0.0625F);
@@ -505,14 +504,14 @@ public class ModelDalekScaro extends ModelDalekBase {
 		EarGlow2.render(0.0625F);
 		Grille.render(0.0625F);
 	}
-	
+
 	@Override
 	public void renderEyestalk() {
 		Eyestalk.render(0.0625F);
 		EyeRings.render(0.0625F);
 		Eye.render(0.0625F);
 	}
-	
+
 	@Override
 	public void renderRightAttachment() {
 		PlungerStick.render(0.0625F);
@@ -521,7 +520,7 @@ public class ModelDalekScaro extends ModelDalekBase {
 		Plunger3.render(0.0625F);
 		Plunger4.render(0.0625F);
 	}
-	
+
 	@Override
 	public void renderLeftAttachment() {
 		GunBoxLeft.render(0.0625F);
@@ -534,7 +533,7 @@ public class ModelDalekScaro extends ModelDalekBase {
 		GunBoxSecondaryLeft.render(0.0625F);
 		GunBoxSecondaryRight.render(0.0625F);
 	}
-	
+
 	@Override
 	public void renderBody() {
 		Skirt1.render(0.0625F);
@@ -571,7 +570,7 @@ public class ModelDalekScaro extends ModelDalekBase {
 		Division13.render(0.0625F);
 		Division14.render(0.0625F);
 	}
-	
+
 	@Override
 	public ResourceLocation getTexture() {
 		return super.getTexture();

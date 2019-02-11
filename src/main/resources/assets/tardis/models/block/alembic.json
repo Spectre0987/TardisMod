@@ -1,9 +1,17 @@
 {
-    "parent":"builtin/entity",
-    "display":{
-        "gui":{
-            "translation":[10, 12, 0],
-            "rotation":[180, 22.5, 0]
-        }
+  "parent": "builtin/entity",
+  "display": {
+    "gui": {
+      "translation": [
+        -4,
+        2,
+        0
+      ],
+      "rotation": [
+        180,
+        22.5,
+        0
+      ]
     }
+  }
 }

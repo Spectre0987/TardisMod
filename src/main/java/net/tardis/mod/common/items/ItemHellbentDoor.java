@@ -10,14 +10,14 @@ import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ItemHellbentDoor extends ItemBase {
-	
+
 	public ItemHellbentDoor() {
-		
+
 	}
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!worldIn.isRemote) {
+		if (!worldIn.isRemote) {
 			EntityHellbentDoor door = new EntityHellbentDoor(worldIn);
 			door.setPositionAndRotation(pos.getX(), pos.getY() + 1, pos.getZ(), Helper.get360FromFacing(player.getHorizontalFacing()), 0);
 			worldIn.spawnEntity(door);

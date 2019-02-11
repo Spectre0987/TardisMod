@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "tardis:blocks/s13/s13blankroundel3"
+  }
+}

@@ -1,8 +1,8 @@
 {
-    "parent":"block/stairs",
-    "textures":{
-        "side" : "tardis:blocks/zero_room",
-        "top" : "tardis:blocks/zero_room",
-        "bottom" : "tardis:blocks/zero_room"
-    }
+  "parent": "block/stairs",
+  "textures": {
+    "side": "tardis:blocks/zero_room",
+    "top": "tardis:blocks/zero_room",
+    "bottom": "tardis:blocks/zero_room"
+  }
 }

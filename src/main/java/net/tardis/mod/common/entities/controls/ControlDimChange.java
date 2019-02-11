@@ -10,27 +10,30 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDimChange extends EntityControl {
-	
+
 	public ControlDimChange(TileEntityTardis tardis) {
 		super(tardis);
 	}
-	
+
 	public ControlDimChange(World world) {
 		super(world);
 		this.setSize(0.125F, 0.0625F);
 	}
-	
+
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis instanceof TileEntityTardis01 || tardis.getClass() == TileEntityTardis02.class) {
+		if (tardis instanceof TileEntityTardis01 || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(2, -2.5, 13.5);
 		}
+		if (tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(-12, 0, -7);
 		return Helper.convertToPixels(-1.5, -2, -12);
 	}
-	
+
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
@@ -40,9 +43,9 @@ public class ControlDimChange extends EntityControl {
 				++tardis.dimIndex;
 			else
 				--tardis.dimIndex;
-			
+
 			if (tardis.dimIndex >= ids.length || tardis.dimIndex < 0) tardis.dimIndex = 0;
-			
+
 			int dim = ids[tardis.dimIndex];
 			if (Helper.isDimensionBlocked(dim)) this.preformAction(player);
 			tardis.setTargetDimension(ids[tardis.dimIndex]);
@@ -50,7 +53,7 @@ public class ControlDimChange extends EntityControl {
 		} else
 			this.ticks = 20;
 	}
-	
+
 	public int nextDI(int index, int size) {
 		index += 1;
 		if (index < 0 || index > size) {
@@ -58,4 +61,13 @@ public class ControlDimChange extends EntityControl {
 		}
 		return index;
 	}
+
+	@Override
+	public void init(TileEntityTardis tardis) {
+		if (tardis != null) {
+			if (tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(6F), Helper.precentToPixels(6F));
+		}
+	}
+
 }

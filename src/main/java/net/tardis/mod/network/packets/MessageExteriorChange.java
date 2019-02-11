@@ -22,14 +22,15 @@ public class MessageExteriorChange implements IMessage {
 
 	public BlockPos pos = BlockPos.ORIGIN;
 	public IBlockState state = Blocks.AIR.getDefaultState();
-	
-	public MessageExteriorChange() {}
-	
-	public MessageExteriorChange(BlockPos pos, IBlockState state){
+
+	public MessageExteriorChange() {
+	}
+
+	public MessageExteriorChange(BlockPos pos, IBlockState state) {
 		this.pos = pos;
 		this.state = state;
 	}
-	
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.pos = BlockPos.fromLong(buf.readLong());
@@ -41,33 +42,34 @@ public class MessageExteriorChange implements IMessage {
 		buf.writeLong(pos.toLong());
 		buf.writeInt(Block.getStateId(state));
 	}
-	
-	public static class Handler implements IMessageHandler<MessageExteriorChange, IMessage>{
 
-		public Handler() {}
-		
+	public static class Handler implements IMessageHandler<MessageExteriorChange, IMessage> {
+
+		public Handler() {
+		}
+
 		@Override
 		public IMessage onMessage(MessageExteriorChange mes, MessageContext ctx) {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
-                if(mes.state.getBlock() instanceof BlockTardisTop) {
-                    WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
-                    TileEntity te = ws.getTileEntity(mes.pos);
-                    if(te != null && te instanceof TileEntityTardis) {
-                    	TileEntityTardis tardis = (TileEntityTardis)te;
-                        if (tardis.getSystem(SystemCCircuit.class) != null && tardis.getSystem(SystemCCircuit.class).getHealth() > 0.0F) {
-                    	   tardis.setExterior(mes.state);
-                           WorldServer world = ws.getMinecraftServer().getWorld(tardis.dimension);
-                           TileEntity door = world.getTileEntity(tardis.getLocation().up());
-                           EnumFacing face = world.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
-                           NBTTagCompound tag = door.writeToNBT(new NBTTagCompound());
-                           world.setBlockState(door.getPos(), mes.state.withProperty(BlockTardisTop.FACING, face));
-                            world.getTileEntity(door.getPos()).readFromNBT(tag);
-                       }
-                    }
-                }
-            });
+				if (mes.state.getBlock() instanceof BlockTardisTop) {
+					WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
+					TileEntity te = ws.getTileEntity(mes.pos);
+					if (te != null && te instanceof TileEntityTardis) {
+						TileEntityTardis tardis = (TileEntityTardis) te;
+						if (tardis.getSystem(SystemCCircuit.class) != null && tardis.getSystem(SystemCCircuit.class).getHealth() > 0.0F) {
+							tardis.setExterior(mes.state);
+							WorldServer world = ws.getMinecraftServer().getWorld(tardis.dimension);
+							TileEntity door = world.getTileEntity(tardis.getLocation().up());
+							EnumFacing face = world.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
+							NBTTagCompound tag = door.writeToNBT(new NBTTagCompound());
+							world.setBlockState(door.getPos(), mes.state.withProperty(BlockTardisTop.FACING, face));
+							world.getTileEntity(door.getPos()).readFromNBT(tag);
+						}
+					}
+				}
+			});
 			return null;
-        }
-    }
+		}
+	}
 
 }

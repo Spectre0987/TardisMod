@@ -6,21 +6,21 @@
     " C "
   ],
   "key": {
-    "G":{
-        "item":"minecraft:golden_apple",
-        "data": 0
+    "G": {
+      "item": "minecraft:golden_apple",
+      "data": 0
     },
-    "M":{
-        "item":"minecraft:speckled_melon"
+    "M": {
+      "item": "minecraft:speckled_melon"
     },
-    "W":{
-        "item":"minecraft:nether_wart"
+    "W": {
+      "item": "minecraft:nether_wart"
     },
-    "E":{
-        "item":"minecraft:ender_eye"
+    "E": {
+      "item": "minecraft:ender_eye"
     },
-    "C":{
-        "item":"minecraft:golden_carrot"
+    "C": {
+      "item": "minecraft:golden_carrot"
     }
   },
   "result": {

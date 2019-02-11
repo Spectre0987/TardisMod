@@ -8,11 +8,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 
 public class RenderUmbrellaStand extends TileEntitySpecialRenderer {
-	
+
 	public RenderUmbrellaStand() {
-		
+
 	}
-	
+
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
@@ -21,5 +21,5 @@ public class RenderUmbrellaStand extends TileEntitySpecialRenderer {
 		Minecraft.getMinecraft().getRenderItem().renderItem(((TileEntityUmbrellaStand) te).getUmbrella(), TransformType.FIRST_PERSON_RIGHT_HAND);
 		GlStateManager.popMatrix();
 	}
-	
+
 }

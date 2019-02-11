@@ -8,10 +8,11 @@ import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 
 import java.util.function.Supplier;
 
-public class BlockDecoration extends BlockTileBase implements IRenderBox{
+public class BlockDecoration extends BlockTileBase implements IRenderBox {
 
 	public BlockDecoration(Supplier<TileEntity> te) {
 		super(Material.IRON, te);
+		this.setLightOpacity(0);
 
 	}
 

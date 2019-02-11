@@ -22,38 +22,39 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityHoloprojector extends TileEntity implements ITickable, IContainsWorldShell{
-	
+public class TileEntityHoloprojector extends TileEntity implements ITickable, IContainsWorldShell {
+
 	public WorldShell worldShell = new WorldShell(BlockPos.ORIGIN);
-	
-	public TileEntityHoloprojector() {}
+
+	public TileEntityHoloprojector() {
+	}
 
 	@Override
 	public void update() {
-		if(!world.isRemote && world.getTotalWorldTime() % 5 == 0) {
-			TileEntityTardis tardis = (TileEntityTardis)world.getTileEntity(TardisHelper.getTardisForPosition(this.getPos()));
-			if(tardis != null) {
+		if (!world.isRemote && world.getTotalWorldTime() % 5 == 0) {
+			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPos()));
+			if (tardis != null) {
 				worldShell = new WorldShell(tardis.getLocation());
 				Vec3i vec = new Vec3i(7, 5, 7);
 				WorldServer ws = DimensionManager.getWorld(tardis.dimension);
-				if(ws != null) {
-					for(BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(vec), worldShell.getOffset().add(vec))) {
+				if (ws != null) {
+					for (BlockPos pos : BlockPos.getAllInBox(worldShell.getOffset().subtract(vec), worldShell.getOffset().add(vec))) {
 						IBlockState state = ws.getBlockState(pos);
-						if(state.getMaterial() != Material.AIR) {
+						if (state.getMaterial() != Material.AIR) {
 							worldShell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
 						}
 					}
 					List<NBTTagCompound> lists = new ArrayList<>();
 					List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-					for(Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 7))) {
-						if(EntityList.getKey(e) != null) {
+					for (Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation(), 7))) {
+						if (EntityList.getKey(e) != null) {
 							NBTTagCompound tag = new NBTTagCompound();
 							e.writeToNBT(tag);
 							tag.setString("id", EntityList.getKey(e).toString());
 							lists.add(tag);
 						}
-						if(e instanceof EntityPlayerMP) {
-							players.add(new PlayerStorage((EntityPlayerMP)e));
+						if (e instanceof EntityPlayerMP) {
+							players.add(new PlayerStorage((EntityPlayerMP) e));
 						}
 					}
 					worldShell.setPlayers(players);
@@ -76,11 +77,11 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 	}
 
 	@Override
-	public int getDimnesion() {
+	public int getDimension() {
 		TileEntityTardis tardis = null;
-		for(TileEntity te : world.getChunk(getPos()).getTileEntityMap().values()) {
-			if(te != null && te instanceof TileEntityTardis) {
-				tardis = (TileEntityTardis)te;
+		for (TileEntity te : world.getChunk(getPos()).getTileEntityMap().values()) {
+			if (te != null && te instanceof TileEntityTardis) {
+				tardis = (TileEntityTardis) te;
 				break;
 			}
 		}

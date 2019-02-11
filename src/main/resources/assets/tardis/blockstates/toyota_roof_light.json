@@ -1,10 +1,10 @@
 {
-    "variants":{
-        "normal":{
-            "model":"tardis:toyota_roof_light"
-        },
-        "inventory":{
-             "model":"tardis:toyota_roof_light"
-        }
+  "variants": {
+    "normal": {
+      "model": "tardis:toyota_roof_light"
+    },
+    "inventory": {
+      "model": "tardis:toyota_roof_light"
     }
+  }
 }

@@ -12,12 +12,12 @@ public class RenderItemSpaceHelm extends TileEntityItemStackRenderer {
 
 	public static ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/clothing/space_suit.png");
 	public ModelSpaceHelm model = new ModelSpaceHelm();
-	
+
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
-		GlStateManager.rotate(180, 0,0,1);
+		GlStateManager.rotate(180, 0, 0, 1);
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}

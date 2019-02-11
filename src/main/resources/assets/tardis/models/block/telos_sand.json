@@ -1,10 +1,10 @@
 {
-    "parent":"block/grass",
-    "textures":{
-        "overlay":"tardis:blocks/telos_sand",
-        "side":"tardis:blocks/telos_sand",
-        "bottom":"tardis:blocks/telos_sand",
-        "top":"tardis:blocks/telos_sand",
-        "particle":"tardis:blocks/telos_sand"
-    }
+  "parent": "block/grass",
+  "textures": {
+    "overlay": "tardis:blocks/telos_sand",
+    "side": "tardis:blocks/telos_sand",
+    "bottom": "tardis:blocks/telos_sand",
+    "top": "tardis:blocks/telos_sand",
+    "particle": "tardis:blocks/telos_sand"
+  }
 }

@@ -1,7 +1,5 @@
 package net.tardis.mod.common.sounds;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -9,9 +7,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 
+import java.util.ArrayList;
+
 @Mod.EventBusSubscriber
 public class TSounds {
-	
+
+	private static ArrayList<SoundEvent> sounds = new ArrayList<SoundEvent>();
+
 	public static SoundEvent takeoff = register("takeoff");
 	public static SoundEvent loop = register("loop");
 	public static SoundEvent sonic = register("sonic");
@@ -22,6 +24,10 @@ public class TSounds {
 	public static SoundEvent door_open = register("door_open");
 	public static SoundEvent door_closed = register("door_closed");
 	public static SoundEvent interior_hum_80 = register("interior_hum_80");
+	public static SoundEvent interior_hum_copper = register("tardis_hum_copper");
+	public static SoundEvent interior_hum_coral = register("tardis_hum_coral");
+	public static SoundEvent interior_hum_toyota = register("tardis_hum_toyota");
+	public static SoundEvent interior_hum_70 = register("tardis_hum_70");
 	public static SoundEvent cloister_bell = register("cloister_bell");
 	public static SoundEvent drum_beat = register("drum_beat");
 	public static SoundEvent engine_stutter = register("stutter");
@@ -34,29 +40,29 @@ public class TSounds {
 	public static SoundEvent control_02 = register("control_02");
 	public static SoundEvent control_03 = register("control_03");
 
+	public static SoundEvent remote_accept = register("remote_accept");
+
 	//1963
 	public static SoundEvent INTERIOR_HUM_1963 = register("1963_interior_hum");
 	public static SoundEvent INTERIOR_DOOR_1963 = register("1963_int_door");
 	public static SoundEvent FOOD_MACHINE = register("1963_food_machine");
 
-    public static SoundEvent register(String name) {
+	public static SoundEvent tardis_land = register("tardis_land");
+
+
+	public static SoundEvent register(String name) {
 		ResourceLocation rl = new ResourceLocation(Tardis.MODID, name);
 		SoundEvent event = new SoundEvent(rl);
 		event.setRegistryName(rl);
+		sounds.add(event);
 		return event;
 	}
-	
+
 	@SubscribeEvent
 	public static void regSounds(RegistryEvent.Register<SoundEvent> e) {
-		for (Field field : TSounds.class.getDeclaredFields()) {
-			SoundEvent sound = null;
-			try {
-				sound = (SoundEvent) field.get(null);
-			} catch (IllegalAccessException e1) {
-				// No log spam
-			}
+		for (SoundEvent sound : sounds) {
 			e.getRegistry().register(sound);
 		}
 	}
-	
+
 }

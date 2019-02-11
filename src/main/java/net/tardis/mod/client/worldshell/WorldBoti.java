@@ -10,14 +10,16 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
 import net.minecraftforge.common.DimensionManager;
 
+import java.util.Objects;
+
 public class WorldBoti extends WorldClient {
 
-	private WorldShell shell;
-	public int dimension = 0;
+	public int dimension;
 	public WorldProvider provider;
-	
+	private WorldShell shell;
+
 	public WorldBoti(int dimension, WorldClient wc, WorldShell ws) {
-		super(Minecraft.getMinecraft().getConnection(), new WorldSettings(wc.getWorldInfo()), dimension, wc.getDifficulty(), wc.profiler);
+		super(Objects.requireNonNull(Minecraft.getMinecraft().getConnection()), new WorldSettings(wc.getWorldInfo()), dimension, wc.getDifficulty(), wc.profiler);
 		shell = ws;
 		this.dimension = dimension;
 		this.provider = DimensionManager.createProviderFor(dimension);
@@ -35,7 +37,7 @@ public class WorldBoti extends WorldClient {
 
 	@Override
 	public TileEntity getTileEntity(BlockPos pos) {
-		return shell.getTileEntity(pos); 
+		return shell.getTileEntity(pos);
 	}
 
 	@Override

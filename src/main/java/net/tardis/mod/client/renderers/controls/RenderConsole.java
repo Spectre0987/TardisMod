@@ -11,18 +11,17 @@ import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class RenderConsole extends TileEntitySpecialRenderer {
-	
+
+	public static final ResourceLocation CONTROL_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/control_sheet.png");
+	public static final ResourceLocation CONSOLE_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/console.png");
 	Minecraft mc;
 	ModelAllControls controlModel = new ModelAllControls();
 	ModelConsole consoleModel = new ModelConsole();
-	
-	public static final ResourceLocation CONTROL_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/control_sheet.png");
-	public static final ResourceLocation CONSOLE_TEXTURE = new ResourceLocation(Tardis.MODID, "textures/controls/console.png");
-	
+
 	public RenderConsole() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
@@ -34,5 +33,5 @@ public class RenderConsole extends TileEntitySpecialRenderer {
 		consoleModel.render(null, ((TileEntityTardis) te).frame, partialTicks, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
-	
+
 }

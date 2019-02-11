@@ -7,19 +7,19 @@
   ],
   "key": {
     "I": {
-      "item":"minecraft:iron_ingot"
+      "item": "minecraft:iron_ingot"
     },
-    "W":{
-        "item":"minecraft:wool",
-        "data": 15
+    "W": {
+      "item": "minecraft:wool",
+      "data": 15
     },
-    "Y":{
-        "item":"minecraft:concrete",
-        "data" : 4
+    "Y": {
+      "item": "minecraft:concrete",
+      "data": 4
     },
-    "B":{
-        "item":"minecraft:concrete",
-        "data" : 15
+    "B": {
+      "item": "minecraft:concrete",
+      "data": 15
     }
   },
   "result": {

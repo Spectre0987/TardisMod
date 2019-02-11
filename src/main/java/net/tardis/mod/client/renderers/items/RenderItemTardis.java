@@ -10,16 +10,16 @@ import net.tardis.mod.client.models.exteriors.ModelTardis01;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 
 public class RenderItemTardis extends TileEntityItemStackRenderer {
-	
+
 	Minecraft mc;
 	ModelTardis01 model = new ModelTardis01();
 	ModelRightDoor01 door_r = new ModelRightDoor01();
 	ModelLeftDoor01 door_l = new ModelLeftDoor01();
 
-    public RenderItemTardis() {
+	public RenderItemTardis() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();

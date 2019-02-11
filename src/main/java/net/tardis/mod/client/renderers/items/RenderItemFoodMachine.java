@@ -9,15 +9,15 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelFoodMachine;
 
 public class RenderItemFoodMachine extends TileEntityItemStackRenderer {
-	
-	Minecraft mc;
-	public ModelFoodMachine model = new ModelFoodMachine();
+
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/blocks/food_machine.png");
-	
+	public ModelFoodMachine model = new ModelFoodMachine();
+	Minecraft mc;
+
 	public RenderItemFoodMachine() {
 		mc = Minecraft.getMinecraft();
 	}
-	
+
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GlStateManager.pushMatrix();
@@ -27,5 +27,5 @@ public class RenderItemFoodMachine extends TileEntityItemStackRenderer {
 		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
-	
+
 }

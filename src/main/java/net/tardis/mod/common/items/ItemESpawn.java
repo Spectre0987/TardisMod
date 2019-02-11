@@ -13,7 +13,7 @@ import net.tardis.mod.common.interfaces.IEntityFactory;
 public class ItemESpawn extends ItemBase {
 
 	IEntityFactory entity;
-	
+
 	public ItemESpawn(IEntityFactory e) {
 		this.setMaxStackSize(1);
 		this.entity = e;
@@ -21,7 +21,7 @@ public class ItemESpawn extends ItemBase {
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!worldIn.isRemote) {
+		if (!worldIn.isRemote) {
 			Entity e = entity.createEntity(worldIn);
 			e.setWorld(worldIn);
 			e.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);

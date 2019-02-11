@@ -8,27 +8,30 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlLaunch extends EntityControl {
-	
+
 	public ControlLaunch(TileEntityTardis tardis) {
 		super(tardis);
 	}
-	
+
 	public ControlLaunch(World world) {
 		super(world);
 		this.setSize(0.125F, 0.125F);
 	}
-	
+
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
-		if(tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
+		if (tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class) {
 			return Helper.convertToPixels(-5, -2.5, 12.5);
 		}
+		if (tardis instanceof TileEntityTardis03)
+			return Helper.convertToPixels(5.5, 2.5, 14);
 		return Helper.convertToPixels(-7, 0, 7.5);
 	}
-	
+
 	@Override
 	public void preformAction(EntityPlayer player) {
 		if (!world.isRemote) {
@@ -37,15 +40,14 @@ public class ControlLaunch extends EntityControl {
 				TileEntityTardis tardis = (TileEntityTardis) te;
 				if (!tardis.isInFlight()) {
 					tardis.startFlight();
-				}
-				else {
+				} else {
 					tardis.crash(false);
 				}
 			}
 		} else
 			ticks = 30;
 	}
-	
+
 	public void setSize(float x, float y, float z) {
 		float sx = x / 2;
 		float sy = y / 2;

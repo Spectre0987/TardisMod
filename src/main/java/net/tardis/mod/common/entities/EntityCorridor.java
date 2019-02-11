@@ -12,10 +12,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class EntityCorridor extends Entity{
+public class EntityCorridor extends Entity {
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(EntityCorridor.class, DataSerializers.BOOLEAN);
-	
+
 	public EntityCorridor(World worldIn) {
 		super(worldIn);
 	}
@@ -24,13 +24,13 @@ public class EntityCorridor extends Entity{
 	protected void entityInit() {
 		this.dataManager.register(IS_OPEN, false);
 	}
-	
-	public void setOpen(boolean open) {
-		this.dataManager.set(IS_OPEN, open);
-	}
-	
+
 	public boolean isOpen() {
 		return this.dataManager.get(IS_OPEN);
+	}
+
+	public void setOpen(boolean open) {
+		this.dataManager.set(IS_OPEN, open);
 	}
 
 	@Override
@@ -65,24 +65,24 @@ public class EntityCorridor extends Entity{
 
 	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-		this.setOpen(this.isOpen() ? false : true);
+		this.setOpen(!this.isOpen());
 		return true;
 	}
 
 	@Override
 	public AxisAlignedBB getCollisionBox(Entity entityIn) {
-		return new AxisAlignedBB(0,0,0, 2, 2, 2);
+		return new AxisAlignedBB(0, 0, 0, 2, 2, 2);
 	}
 
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
-		if(!this.isOpen()) {
+		if (!this.isOpen()) {
 			entityIn.motionX = 0;
 			entityIn.motionY = 0;
 			entityIn.motionZ = 0;
 			entityIn.applyEntityCollision(this);
-			if(entityIn instanceof EntityPlayerMP) {
-				((EntityPlayerMP)entityIn).connection.sendPacket(new SPacketEntityVelocity(entityIn));
+			if (entityIn instanceof EntityPlayerMP) {
+				((EntityPlayerMP) entityIn).connection.sendPacket(new SPacketEntityVelocity(entityIn));
 			}
 		}
 	}

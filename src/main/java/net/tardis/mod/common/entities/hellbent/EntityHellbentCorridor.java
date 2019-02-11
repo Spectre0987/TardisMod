@@ -16,11 +16,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
 
-public class EntityHellbentCorridor extends Entity{
+public class EntityHellbentCorridor extends Entity {
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(EntityHellbentCorridor.class, DataSerializers.BOOLEAN);
 	public AxisAlignedBB BB = new AxisAlignedBB(-2.5, 0, -2.5, 2.5, 10, 2.5);
-	
+
 	public EntityHellbentCorridor(World worldIn) {
 		super(worldIn);
 		this.setSize(2, 5);
@@ -41,26 +41,25 @@ public class EntityHellbentCorridor extends Entity{
 		compound.setBoolean("open", this.dataManager.get(IS_OPEN));
 	}
 
-	public void setOpen(boolean b) {
-		this.getDataManager().set(IS_OPEN, b);
-	}
-	
 	public boolean getOpen() {
 		return this.getDataManager().get(IS_OPEN);
 	}
 
-	
+	public void setOpen(boolean b) {
+		this.getDataManager().set(IS_OPEN, b);
+	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		this.setDead();
-		if(!world.isRemote)InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(TItems.hellbent_corridor));
+		if (!world.isRemote)
+			InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(TItems.hellbent_corridor));
 		return true;
 	}
 
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-		if(!world.isRemote)this.setOpen(this.getOpen() ? false : true);
+		if (!world.isRemote) this.setOpen(!this.getOpen());
 		return EnumActionResult.SUCCESS;
 	}
 

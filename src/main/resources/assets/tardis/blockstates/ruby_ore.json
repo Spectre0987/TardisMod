@@ -1,10 +1,14 @@
 {
-    "forge_marker":1,
-    "defaults":{
-        "model":"tardis:ruby_ore"
-    },
-    "variants":{
-        "normal":[{}],
-        "inventory":[{}]
-    }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tardis:ruby_ore"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ]
+  }
 }

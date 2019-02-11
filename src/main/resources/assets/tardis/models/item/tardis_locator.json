@@ -1,17 +1,17 @@
 {
-    "parent":"item/generated",
-    "textures":{
-        "layer0":"tardis:items/locator/compass.png"
-    },
-    "overrides":[
-        {
-            "predicate":{
-                "tardis:direction": 0
-            },
-            "model":"tardis:tardis_locator",
-            "textures":{
-                "layer0":"tardis:items/locator/compass_north.png"
-            }
-        }
-    ]
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tardis:items/locator/compass"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "tardis:direction": 0
+      },
+      "model": "tardis:tardis_locator",
+      "textures": {
+        "layer0": "tardis:items/locator/compass_north"
+      }
+    }
+  ]
 }

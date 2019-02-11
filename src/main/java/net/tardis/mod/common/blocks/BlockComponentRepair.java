@@ -1,5 +1,6 @@
 package net.tardis.mod.common.blocks;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,14 +15,15 @@ import net.tardis.mod.handlers.GuiHandlerTardis;
 
 import java.util.function.Supplier;
 
-public class BlockComponentRepair extends BlockTileBase{
+public class BlockComponentRepair extends BlockTileBase {
 
-	
+
 	public BlockComponentRepair(Material materialIn, Supplier<TileEntity> tileEntity) {
 		super(materialIn, tileEntity);
 		this.setLightOpacity(0);
+		this.setSoundType(SoundType.ANVIL);
 
-    }
+	}
 
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
@@ -39,8 +41,8 @@ public class BlockComponentRepair extends BlockTileBase{
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!playerIn.isSneaking()) {
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (!playerIn.isSneaking()) {
 			playerIn.openGui(Tardis.instance, GuiHandlerTardis.REPAIR_GUI, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
