@@ -71,6 +71,7 @@ public class TStrings {
 		public static final String TP_IN_TARDIS_OTHER = "tardis.command.tardistp.other";
 		public static final String REMOVE_TARDIS = "tardis.command.removetardis";
 		public static final String RESTORE_TARDIS = "tardis.command.restoretardis";
+		public static final String GROW = "tardis.command.grow";
 	}
 
 	public static class Companions {
