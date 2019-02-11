@@ -1,8 +1,11 @@
 package net.tardis.mod.client.handler;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
@@ -43,7 +46,7 @@ public class ClientHandler {
 	@SubscribeEvent
 	public static void fixLight(ModelBakeEvent event) {
 		for(ModelResourceLocation loc : event.getModelRegistry().getKeys()) {
-			System.out.println(loc.getPath());
+			
 		}
 	}
 }
