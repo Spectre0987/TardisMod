@@ -51,7 +51,7 @@ public class EntityItemMaterializer extends Entity{
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		this.alpha += DELTA_ALPHA;
-		this.setItem(new ItemStack(Items.ARROW));
+		this.setItem(new ItemStack(TItems.demat_circut));
 		if(!world.isRemote && alpha >= 1.0F) {
 			EntityItem ei = new EntityItem(world, posX, posY, posZ, new ItemStack(this.dataManager.get(ITEM)));
 			world.spawnEntity(ei);
