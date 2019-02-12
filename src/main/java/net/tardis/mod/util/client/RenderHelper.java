@@ -107,9 +107,9 @@ public class RenderHelper {
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
 				
-				RenderHelper.setRenderGlobalWorld(oldW);
 				fb.deleteFramebuffer();
 				old.bindFramebuffer(true);
+				RenderHelper.setRenderGlobalWorld(oldW);
 
 			} catch (Exception e) {
 				e.printStackTrace();

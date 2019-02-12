@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonWriter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -92,7 +93,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 
 				EntityPlayerMP entityPlayer = world.getMinecraftServer().getPlayerList().getPlayerByUUID(owner);
 				if (entityPlayer != null) {
-					entityPlayer.addItemStackToInventory(keyStack);
+					InventoryHelper.spawnItemStack(entityPlayer.world, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, keyStack);
 				} else {
 					try {
 						File f = new File(world.getMinecraftServer().getDataDirectory() + "/pending_keys.json");
