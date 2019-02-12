@@ -1,4 +1,4 @@
-package net.tardis.mod.common.dimensions.gallifrey;
+package net.tardis.mod.common.dimensions.gallifrey.biomes;
 
 
 import net.minecraft.block.material.Material;
@@ -7,22 +7,32 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.feature.*;
 import net.tardis.mod.common.blocks.TBlocks;
 
 
 
 import java.util.Random;
 
-public class BiomeGallifrey extends Biome {
+public class BiomeGallifrey extends Biome{
 
+	protected static final WorldGenAbstractTree TREE = new WorldGenBirchTree(false, false);
 
 	public BiomeGallifrey() {
-		super(new BiomeProperties("gallifrey").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled().setWaterColor(0xFFFFFF));
+		super(new BiomeProperties("gallifrey").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled().setWaterColor(16745874));
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
 		this.spawnableWaterCreatureList.clear();
+
+
+
+		this.decorator.treesPerChunk = 30;
+		this.decorator.extraTreeChance = 0.05F;
+		this.decorator.flowersPerChunk = 4;
+		this.decorator.grassPerChunk = 10;
 
 	}
 
@@ -112,11 +122,23 @@ public class BiomeGallifrey extends Biome {
 					primer.setBlockState(localZ, y, localX, fillerBlock);
 					--dirtBlocksToFill;
 				}
+
+
 			}
 		}
 	}
 
+	@Override
+	public WorldGenAbstractTree getRandomTreeFeature(Random random){
 
+		return TREE;
+	}
+
+	@Override
+	public void decorate(World worldIn, Random rand, BlockPos pos)
+	{
+		super.decorate(worldIn, rand, pos);
+	}
 
 
 }

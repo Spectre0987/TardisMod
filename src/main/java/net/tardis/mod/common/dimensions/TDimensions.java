@@ -9,7 +9,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.dimensions.gallifrey.BiomeGallifrey;
+import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeGallifrey;
 import net.tardis.mod.common.dimensions.gallifrey.WorldProviderGallifrey;
 import net.tardis.mod.common.dimensions.moon.BiomeMoon;
 import net.tardis.mod.common.dimensions.moon.MoonProvider;
@@ -97,7 +97,7 @@ public class TDimensions {
 			registerBiome(TDimensions.telosBiome, "telos", BiomeDictionary.Type.SNOWY);
 			registerBiome(TDimensions.telosBiomeOrange, "telos_orange", BiomeDictionary.Type.SNOWY);
 			registerBiome(TDimensions.moonBiome, "moon", BiomeDictionary.Type.COLD);
-			registerBiome(TDimensions.gallifreyBiome, "gallifrey", BiomeDictionary.Type.DENSE);
+			registerBiome(TDimensions.gallifreyBiome, "gallifrey", BiomeDictionary.Type.PLAINS);
 		}
 	}
 }
