@@ -1,13 +1,17 @@
 package net.tardis.mod.client.worldshell;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -47,6 +51,22 @@ public class MessageSyncWorldShell implements IMessage {
 				this.worldShell.blockMap.put(BlockPos.fromLong(buf.readLong()), new BlockStorage(buf));
 			}
 		}
+		if(type == EnumType.ENTITITES) {
+			int size = buf.readInt();
+			List<NBTTagCompound> entities = new ArrayList<>();
+			for(int i = 0; i < size; ++i) {
+				entities.add(ByteBufUtils.readTag(buf));
+			}
+			this.worldShell.setEntities(entities);
+		}
+		if(type == EnumType.PLAYERS) {
+			int size = buf.readInt();
+			List<PlayerStorage> players = new ArrayList<>();
+			for(int i = 0; i < size; ++i) {
+				players.add(PlayerStorage.fromBytes(buf));
+			}
+			this.worldShell.setPlayers(players);
+		}
 		
 	}
 
@@ -62,6 +82,18 @@ public class MessageSyncWorldShell implements IMessage {
 				buf.writeLong(stor.getKey().toLong());
 				stor.getValue().toBuf(buf);
 				
+			}
+		}
+		if(type == EnumType.ENTITITES) {
+			buf.writeInt(this.worldShell.getEntities().size());
+			for(NBTTagCompound e : this.worldShell.getEntities()) {
+				ByteBufUtils.writeTag(buf, e);
+			}
+		}
+		if(type == EnumType.PLAYERS) {
+			buf.writeInt(this.worldShell.getPlayers().size());
+			for(PlayerStorage ps : this.worldShell.getPlayers()) {
+				ps.toBytes(buf);
 			}
 		}
 	}
@@ -86,6 +118,7 @@ public class MessageSyncWorldShell implements IMessage {
 							else{
 								if(mes.type == EnumType.BLOCKS) {
 									cont.getWorldShell().blockMap.putAll(mes.worldShell.blockMap);
+									cont.getWorldShell().setTESRs();
 								}
 							}
 						}
@@ -99,6 +132,7 @@ public class MessageSyncWorldShell implements IMessage {
 							else {
 								if(mes.type == EnumType.BLOCKS) {
 									cont.getWorldShell().blockMap.putAll(mes.worldShell.blockMap);
+									cont.getWorldShell().setTESRs();
 								}
 							}
 						}

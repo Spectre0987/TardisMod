@@ -32,8 +32,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
+import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.TDamageSources;
 import net.tardis.mod.common.blocks.BlockTardisTop;
@@ -208,7 +208,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				this.updateTicks = 0;
 			}
 			//World Shell
-			if (world.getWorldTime() % 5 == 0) {
 				if (!this.isLocked()) {
 					if (tardis.getDoor() == null) return;
 					EnumFacing face = tardis.getDoor().getHorizontalFacing();
@@ -231,21 +230,26 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						doorPos = doorPos.add(0, 0, 0);
 					}
 					if(worldShell == null || !worldShell.getOffset().equals(doorPos)) worldShell = new WorldShell(doorPos);
-					for(BlockPos pos : this.getBlocksInAABB(BB.offset(doorPos))) {
-						worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
-					}
-					List<NBTTagCompound> bEnt = new ArrayList<NBTTagCompound>();
-					for(Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, BB.offset(doorPos))) {
-						if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
-							NBTTagCompound tag = new NBTTagCompound();
-							e.writeToNBT(tag);
-							tag.setString("id", EntityList.getKey(e).toString());
-							bEnt.add(tag);
+					
+					if(world.getWorldTime() % 5 == 1) {
+						for(BlockPos pos : this.getBlocksInAABB(BB.offset(doorPos))) {
+							worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
 						}
+						this.sendBOTI(EnumType.BLOCKS);
 					}
-					worldShell.setEntities(bEnt);
-					NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos(), EnumType.BLOCKS), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
-				}
+					if(world.getWorldTime() % 5 == 0) {
+						List<NBTTagCompound> bEnt = new ArrayList<NBTTagCompound>();
+						for(Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, BB.offset(doorPos))) {
+							if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
+								NBTTagCompound tag = new NBTTagCompound();
+								e.writeToNBT(tag);
+								tag.setString("id", EntityList.getKey(e).toString());
+								bEnt.add(tag);
+							}
+						}
+						worldShell.setEntities(bEnt);
+						this.sendBOTI(EnumType.ENTITITES);
+					}
 			}
 		}
 		if (openingTicks > 0) {
@@ -297,6 +301,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		return this.isLocked;
 	}
 
+	public void sendBOTI(EnumType type) {
+		NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(this.worldShell, this.getPos(), type), new TargetPoint(world.provider.getDimension(), (double)this.getPos().getX(), (double)this.getPos().getY(), (double)this.getPos().getZ(), 40));
+	}
+	
 	public void setLocked(boolean b) {
 		this.isLocked = b;
 		this.markDirty();
