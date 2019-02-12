@@ -33,6 +33,7 @@ import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.TDamageSources;
 import net.tardis.mod.common.blocks.BlockTardisTop;
@@ -243,7 +244,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						}
 					}
 					worldShell.setEntities(bEnt);
-					NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
+					NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos(), EnumType.BLOCKS), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
 				}
 			}
 		}

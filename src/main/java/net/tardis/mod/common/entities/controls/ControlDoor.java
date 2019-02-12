@@ -29,6 +29,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
 import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
@@ -160,7 +161,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				shell.setTime(world.getWorldTime());
 				shell.setPlayers(players);
 				shell.setEntities(list);
-				NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId()), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
+				NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId(), EnumType.BLOCKS), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
 			}
 			if (world.isRemote) this.shell.setTime(shell.getTime() + 1);
 		}
