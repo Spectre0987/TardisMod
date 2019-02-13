@@ -33,6 +33,7 @@ import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
+import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.TDamageSources;
@@ -239,6 +240,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					}
 					if(world.getWorldTime() % 5 == 0) {
 						List<NBTTagCompound> bEnt = new ArrayList<NBTTagCompound>();
+						List<PlayerStorage> players = new ArrayList<>();
 						for(Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, BB.offset(doorPos))) {
 							if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
 								NBTTagCompound tag = new NBTTagCompound();
@@ -246,9 +248,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 								tag.setString("id", EntityList.getKey(e).toString());
 								bEnt.add(tag);
 							}
+							else if(e instanceof EntityPlayer) {
+								players.add(new PlayerStorage((EntityPlayer)e));
+							}
 						}
 						worldShell.setEntities(bEnt);
+						worldShell.setPlayers(players);
 						this.sendBOTI(EnumType.ENTITITES);
+						this.sendBOTI(EnumType.PLAYERS);
 					}
 			}
 		}

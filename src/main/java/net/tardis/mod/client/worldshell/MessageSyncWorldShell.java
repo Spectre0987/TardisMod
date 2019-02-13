@@ -120,6 +120,9 @@ public class MessageSyncWorldShell implements IMessage {
 									cont.getWorldShell().blockMap.putAll(mes.worldShell.blockMap);
 									cont.getWorldShell().setTESRs();
 								}
+								else if(mes.type == EnumType.ENTITITES) {
+									cont.getWorldShell().setEntities(mes.worldShell.getEntities());
+								}
 							}
 						}
 					} else {
@@ -133,6 +136,9 @@ public class MessageSyncWorldShell implements IMessage {
 								if(mes.type == EnumType.BLOCKS) {
 									cont.getWorldShell().blockMap.putAll(mes.worldShell.blockMap);
 									cont.getWorldShell().setTESRs();
+								}
+								else if(mes.type == EnumType.ENTITITES) {
+									cont.getWorldShell().setEntities(mes.worldShell.getEntities());
 								}
 							}
 						}

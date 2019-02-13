@@ -153,6 +153,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 						NBTTagCompound tag = new NBTTagCompound();
 						e.writeToNBT(tag);
 						tag.setString("id", EntityList.getKey(e).toString());
+						tag.setFloat("rot", e.rotationYaw);
 						list.add(tag);
 					} else if (e instanceof EntityPlayer) {
 						players.add(new PlayerStorage((EntityPlayer) e));
@@ -161,28 +162,31 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				shell.setTime(world.getWorldTime());
 				shell.setPlayers(players);
 				shell.setEntities(list);
-				NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(shell, this.getEntityId(), EnumType.BLOCKS), new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 16D));
+				this.sendBOTI(EnumType.BLOCKS);
+				this.sendBOTI(EnumType.ENTITITES);
+				this.sendBOTI(EnumType.PLAYERS);
 			}
 			if (world.isRemote) this.shell.setTime(shell.getTime() + 1);
 		}
-		try {
-			if (tardis.isInFlight() && this.isOpen()) {
-				AxisAlignedBB voidBB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10).offset(this.getPosition());
+		if (tardis.isInFlight() && this.isOpen()) {
+			AxisAlignedBB voidBB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10).offset(this.getPosition());
 
-				for (Entity entity : world.getEntitiesWithinAABB(Entity.class, voidBB)) {
-					if (!entity.isDead) {
-						Vec3d dir = entity.getPositionVector().subtract(this.getPositionVector()).normalize().scale(-1).scale(0.12);
-						entity.motionX += dir.x;
-						entity.motionY += dir.y;
-						entity.motionZ += dir.z;
-						if (entity instanceof EntityPlayer && entity.getPositionVector().distanceTo(this.getPositionVector()) <= 1) {
-							if (!world.isRemote) tardis.transferPlayer(entity, false);
-						}
+			for (Entity entity : world.getEntitiesWithinAABB(Entity.class, voidBB)) {
+				if (!entity.isDead) {
+					Vec3d dir = entity.getPositionVector().subtract(this.getPositionVector()).normalize().scale(-1).scale(0.12);
+					entity.motionX += dir.x;
+					entity.motionY += dir.y;
+					entity.motionZ += dir.z;
+					if (entity instanceof EntityPlayer && entity.getPositionVector().distanceTo(this.getPositionVector()) <= 1) {
+						if (!world.isRemote) tardis.transferPlayer(entity, false);
 					}
 				}
 			}
-		} catch (Exception e) {
 		}
+	}
+	
+	public void sendBOTI(EnumType type) {
+		NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(this.getWorldShell(), this.getEntityId(), type), new TargetPoint(this.dimension, posX, posY, posZ, 40D));
 	}
 
 	@Override
