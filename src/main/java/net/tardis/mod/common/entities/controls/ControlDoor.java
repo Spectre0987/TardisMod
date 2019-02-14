@@ -164,7 +164,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				shell.setEntities(list);
 				this.sendBOTI(EnumType.BLOCKS);
 				this.sendBOTI(EnumType.ENTITITES);
-				this.sendBOTI(EnumType.PLAYERS);
 			}
 			if (world.isRemote) this.shell.setTime(shell.getTime() + 1);
 		}
