@@ -20,14 +20,14 @@ public class RenderItemMaterializer extends Render<EntityItemMaterializer> {
 	@Override
 	public void doRender(EntityItemMaterializer entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-
-		GlStateManager.translate(x + 0.5, y, z + 0.5);
-
+		GlStateManager.translate(x, y + 0.5, z);
 		GlStateManager.enableBlend();
+		GlStateManager.enableAlpha();
 
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.DST_COLOR);
 		renderEntityStackWithAlpha(entity.getItem(), entity.world, entity.getAlpha(), 0.0625F);
 		GlStateManager.disableBlend();
+		GlStateManager.disableAlpha();
 		GlStateManager.popMatrix();
 
 	}

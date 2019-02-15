@@ -142,7 +142,7 @@ public class RenderWorldShell {
 		}
 		else if(blockState.getRenderType() == EnumBlockRenderType.LIQUID && !blockState.getBlock().hasTileEntity(blockState)) {
 			GlStateManager.pushMatrix();
-			//Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer.renderFluid(world, blockState, pos, vertexBuffer);
+			Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer.renderFluid(world, blockState, pos, vertexBuffer);
 			GlStateManager.popMatrix();
 		}
 		tessellator.draw();

@@ -1,5 +1,6 @@
 package net.tardis.mod.common.dimensions.gallifrey;
 
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProviderSurface;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
@@ -30,6 +31,11 @@ public class WorldProviderGallifrey extends WorldProviderSurface {
 	@SideOnly(Side.CLIENT)
 	public IRenderHandler getSkyRenderer() {
 		return RenderGallifreySky.getInstance();
+	}
+
+	@Override
+	public DimensionType getDimensionType() {
+		return TDimensions.GALLIFREY_TYPE;
 	}
 	
 }

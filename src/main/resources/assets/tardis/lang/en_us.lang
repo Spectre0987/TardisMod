@@ -19,7 +19,7 @@ item.tardis.sonic_blaster.name=Sonic Blaster
 item.tardis.sonic_cane.name=Sonic Cane
 item.tardis.vortex_manip.name=Vortex Manipulator
 item.tardis.fluid_link.name=Fluid Links
-item.tardis.demat_circut.name=Dematerialization Circuit
+item.tardis.demat_circuit.name=Dematerialization Circuit
 item.tardis.artron_capacitor.name=Artron Capacitor
 item.tardis.sonic_pen.name=Sonic Torch Pen
 item.tardis.tardis_manual.name=TARDIS Manual
@@ -49,7 +49,7 @@ item.tardis.bessie.name=Bessie
 item.tardis.temporal_grace_circuits.name=Temporal Grace Circuits
 item.tardis.tardis_repairkit.name=TARDIS Toolkit
 item.tardis.stabilizers.name=Stabilizer circuits
-item.tardis.thermo.name=Thermo- Couplings
+item.tardis.thermo.name=Thermo-Couplings
 item.tardis.sonic_third.name=Third Doctor's Sonic
 item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 
@@ -79,7 +79,7 @@ tile.tardis.alembic.name=Alembic
 tile.tardis.food_machine.name=Food Machine
 tile.tardis.electric_panel.name=Electric Interface Panel
 tile.tardis.megalos.name=Meglos
-tile.tardis.console.name=Console
+tile.tardis.console.name=TARDIS Console
 tile.tardis.toyota_hexagon_1.name=Toyota Block
 tile.tardis.ruby_ore.name=Ruby Ore
 tile.tardis.holoprojector.name=Holoprojector
@@ -125,7 +125,7 @@ tile.tardis.suitcase.name=Mysterious Suitcase
 tile.tardis.br_chair.name=Chair
 tile.tardis.am_sphere.name=Armillary Sphere
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
-tile.tardis.sonic_workbench.name=Sonics workbench
+tile.tardis.sonic_workbench.name=Sonic Workbench
 
 tile.tardis.gallifreyan_grass.name=Strange Grass
 tile.tardis.gallifreyan_dirt.name=Strange Dirt
@@ -193,11 +193,11 @@ protocol.tardis.regenroom=Regenerate Console Room
 protocol.tardis.lock=Double Lock Doors
 protocol.tardis.destroy.rift=Consume Dimensional Rift
 protocol.tardis.repair=Repair the TARDIS
-protocol.tardis.waypoint.load=Waypoints
+protocol.tardis.waypoint.load=Waypoint
 protocol.tardis.interior=Change Interior
 
-tardis.repair.false=TARDIS is no longer repairing
-tardis.repair.true=TARDIS is repairing
+tardis.repair.false=TARDIS hull is no longer repairing
+tardis.repair.true=TARDIS hull is now repairing
 
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
@@ -206,7 +206,7 @@ systems.tardis.antenna=Interstitial Antenna
 system.tardis.ccircuit=Chameleon Circuit
 system.tardis.temporal_grace=Temporal Grace Circuits
 system.tardis.stabilizers=Stabilizers
-system.tardis.thermo=Thermo- Couplings
+system.tardis.thermo=Thermo-Couplings
 
 tardis.dimension=Nav-Com Dimension is:
 
@@ -273,31 +273,33 @@ tardis.damage.demat=The Dematerialization Circuit has been fried!
 
 tardis.message.refuelling=Tardis now fueling...
 tardis.message.no_longer_refuelling=Tardis no longer fueling.
+tardis.message.tc_notfound=Could not find %s on this plane of existence
+tardis.message.relocation=Relocating you to this capsule's outer plasmic shell!
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS flying
-tardis.subtitle.sonic=Sonic
-tardis.subtitle.dalek_ray=Dalek Ray
+tardis.subtitle.sonic=Sonic Screwdriver buzzes
+tardis.subtitle.dalek_ray=Dalek ray fired
 tardis.subtitle.dalek=Dalek
 tardis.subtitle.force_field=Force Field
 tardis.subtitle.locked=Locked
 tardis.subtitle.door_open=Door Opens
 tardis.subtitle.door_closed=Door Closes
-tardis.subtitle.interior_hum_80=80's Interior hum
 tardis.subtitle.cloister_bell=Cloister bell
 tardis.subtitle.drum_beat=Drum beat
-tardis.subtitle.stutter=Stutter
-tardis.subtitle.vm_teleport=Vortex Manipulator
+tardis.subtitle.stutter= TARDIS stutters
+tardis.subtitle.vm_teleport=Vortex Manipulator teleportation
 
 command.no_tardis_owned=No TARDIS found
 command.no_player_found=No player found with this username
-command.tardis_travel=The TARDIS is coming
+command.tardis_travel=The selected TARDIS is being summoned to you.
 command.tardis_deleted=TARDIS deleted
 
-commands.tardis.teleportin.usage=/tardis interior
+commands.tardis.teleportin.usage=/tardis interior [player]
 commands.tardis.grow.usage=/tardis grow
 commands.tardis.summon.usage=/summon tardis <player>
-command.tardis.remove.usage=/tardis remove <player>
+commands.tardis.remove.usage=/tardis remove <player>
+commands.tardis.restoresys.usage=/tardis restoresys <player> <system1> [system2] [system3]...
 
 gui.tardis.travel=Travel
 
@@ -324,10 +326,12 @@ box.tardis.05=1980 - Yardley-Jones
 box.tardis.cc=Disguised
 box.master.clock=Master's Clock
 box.tt=TT Capsule
+box.door=Wooden Door
 
 tardis.hum.tardis:interior_hum_80=1980's interior hum
-tardis.hum.tardis:1963_interior_hum=1963's interior hum
-tardis.hum.tardis:tardis_hum_copper=Copper's hum
-tardis.hum.tardis:tardis_hum_coral=Coral's hum
-tardis.hum.tardis:tardis_hum_toyota=Toyota's hum
+tardis.hum.tardis:1963_interior_hum=1963 interior hum
+tardis.hum.tardis:tardis_hum_copper=Copper interior hum
+tardis.hum.tardis:tardis_hum_coral=Coral interior hum
+tardis.hum.tardis:tardis_hum_toyota=Toyota interior hum
+tardis.hum.tardis:tardis_hum_70=1970's interior hum
 tardis.hum.null=Hum disabled

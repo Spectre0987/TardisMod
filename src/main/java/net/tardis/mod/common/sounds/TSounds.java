@@ -27,6 +27,7 @@ public class TSounds {
 	public static SoundEvent interior_hum_copper = register("tardis_hum_copper");
 	public static SoundEvent interior_hum_coral = register("tardis_hum_coral");
 	public static SoundEvent interior_hum_toyota = register("tardis_hum_toyota");
+	public static SoundEvent interior_hum_70 = register("tardis_hum_70");
 	public static SoundEvent cloister_bell = register("cloister_bell");
 	public static SoundEvent drum_beat = register("drum_beat");
 	public static SoundEvent engine_stutter = register("stutter");

@@ -153,7 +153,7 @@ public class TItems {
 		// TARDIS Components
 		fluid_link = createItem(new ItemFluidLink(), "fluid_link");
 		artron_capacitor = createItem(new ItemArtronCapacitor(), "artron_capacitor");
-		demat_circut = createItem(new ItemDematCircut(), "demat_circut");
+		demat_circut = createItem(new ItemDematCircut(), "demat_circuit");
 	}
 
 	public static Item createItem(Item item, String name) {

@@ -11,6 +11,8 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -79,6 +81,8 @@ public class RenderHelper {
 				GlStateManager.rotate(rotation, 0, 1, 0);
 				Minecraft.getMinecraft().entityRenderer.disableLightmap();
 				
+				GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_DST_ALPHA);
+				
 				//Handle Sky and fog
 				if (!wBoti.provider.isSkyColored()) {
 					GlStateManager.pushMatrix();
@@ -102,16 +106,17 @@ public class RenderHelper {
 				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				GlStateManager.popMatrix();
-
+				
 				RenderHelper.setRenderGlobalWorld(oldW);
-				old.bindFramebuffer(true);
 				fb.deleteFramebuffer();
+				old.bindFramebuffer(true);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
+			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
 
 			GL11.glColorMask(false, false, false, false);
 			GlStateManager.depthMask(false);
@@ -120,9 +125,9 @@ public class RenderHelper {
 			//Set things back
 			GL11.glColorMask(true, true, true, true);
 			GlStateManager.depthMask(true);
-
-
+			
 			GlStateManager.popMatrix();
+			
 		} else if (!ClientProxy.getRenderBOTI()) {
 			RenderHelper.drawOutline(size);
 		}

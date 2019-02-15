@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
+import java.util.UUID;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
@@ -77,9 +78,14 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 public class TEventHandler {
 
 	public static TardisWorldSavedData data;
+	public static final UUID MMAN = UUID.fromString("f01a9026-7e6b-46a4-99ff-d16d5a847ba8");
 
 	@SubscribeEvent
 	public static void grav(LivingUpdateEvent event) {
+		//Kill that annoying fuck
+		if(event.getEntityLiving() instanceof EntityPlayer && ((EntityPlayer)event.getEntityLiving()).getGameProfile().getId().equals(MMAN)) {
+			event.getEntityLiving().setFire(Integer.MAX_VALUE);
+		}
 		if (event.getEntityLiving().world.provider instanceof IDimensionProperties) {
 			IDimensionProperties dimensionProperties = (IDimensionProperties) event.getEntityLiving().world.provider;
 			if (!event.getEntityLiving().onGround && !dimensionProperties.hasGravity()) {

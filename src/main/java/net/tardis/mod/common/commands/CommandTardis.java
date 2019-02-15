@@ -77,7 +77,10 @@ public class CommandTardis extends CommandBase {
 
 		switch (subcommands.indexOf(args[0])) {
 			case 0: //grow
-				handleGrow(player);
+				if (PermissionAPI.hasPermission(player,TStrings.Permissions.GROW))
+					handleGrow(player);
+				else
+					throw new CommandException("You do not have permission to run this command.");
 				break;
 
 			case 1: //transfer
@@ -95,7 +98,7 @@ public class CommandTardis extends CommandBase {
 					handleTeleport(player, null);
 				}
 				else
-					throw new CommandException("You do not have permission to run this command.");
+					throw new CommandException("You do not have permission to run this command or you do it wrong.");
 				break;
 			case 3: //remove
 				if (args.length == 2) {
@@ -121,7 +124,7 @@ public class CommandTardis extends CommandBase {
 					} else
 						throw new CommandException("You do not have permission to run this command.");
 				} else
-					throw new CommandException("/tardis restoresys <username> <system...s>");
+					throw new CommandException("/tardis restoresys <username> <system1> [system2] [system3]...");
 				break;
 		}
 	}
