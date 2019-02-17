@@ -7,7 +7,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 
 public class GenLayerGallifreyBiomes extends GenLayer {
 
-    protected Biome commonBiomes[] = (new Biome[]{
+    protected Biome gallifreyBiomes[] = (new Biome[]{
             TDimensions.gallifreyRedlands,
             TDimensions.gallifreyFarmlands
     });
@@ -22,7 +22,7 @@ public class GenLayerGallifreyBiomes extends GenLayer {
         for (int dz = 0; dz < depth; dz++) {
             for (int dx = 0; dx < width; dx++) {
                 initChunkSeed(dx + x, dz + z);
-                dest[dx + dz * width] = Biome.getIdForBiome(commonBiomes[nextInt(commonBiomes.length)]);
+                dest[dx + dz * width] = Biome.getIdForBiome(gallifreyBiomes[nextInt(gallifreyBiomes.length)]);
 //                if (nextInt(RARE_BIOME_CHANCE) == 0) {
 //                    // make rare biome
 //                    dest[dx + dz * width] = Biome.getIdForBiome(rareBiomes[nextInt(rareBiomes.length)]);

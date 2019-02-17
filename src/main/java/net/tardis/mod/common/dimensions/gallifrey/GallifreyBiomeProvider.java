@@ -25,12 +25,14 @@ public class GallifreyBiomeProvider extends BiomeProvider {
 
 
     private void makeLayers(long seed) {
+
+
         GenLayer biomes = new GenLayerGallifreyBiomes(1L);
 
-        biomes = new GenLayerZoom(1000, biomes);
-        biomes = new GenLayerZoom(1001, biomes);
+        //biomes = new GenLayerZoom(1000, biomes);
+        //biomes = new GenLayerZoom(1001, biomes);
 
-        biomes.initWorldGenSeed(seed);
+        //biomes.initWorldGenSeed(seed);
 
         genBiomes = biomes;
 
