@@ -1,34 +1,58 @@
 package net.tardis.mod.common.dimensions.gallifrey.biomes;
 
 
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockFlower;
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.structure.template.PlacementSettings;
+import net.minecraft.world.gen.structure.template.Template;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
 
 
 
 import java.util.Random;
 
-public class BiomeGallifrey extends Biome{
+public class BiomeRedlands extends Biome {
 
-	protected static final WorldGenAbstractTree TREE = new WorldGenBirchTree(false, false);
+	protected static final IBlockState GRASS = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
 
-	public BiomeGallifrey() {
-		super(new BiomeProperties("gallifrey").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled().setWaterColor(16745874));
+	// Tree Generation
+	protected static final ResourceLocation [] TreeList = {
+			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_tree_large"),
+			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_tree_tall"),
+			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_tree_normal"),
+			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_tree_small"),
+			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_tree_small_skinny"),
+			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_shrub")
+	};
+
+
+
+
+
+	public BiomeRedlands() {
+		super(new BiomeProperties("Redlands").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled().setWaterColor(0xF78F00));
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
 		this.spawnableWaterCreatureList.clear();
 
 
-
+		this.decorator = new BiomeDecoratorGallifrey();
 		this.decorator.treesPerChunk = 30;
 		this.decorator.extraTreeChance = 0.05F;
 		this.decorator.flowersPerChunk = 4;
@@ -69,7 +93,7 @@ public class BiomeGallifrey extends Biome{
 		// start at the top and move downwards
 		for (int y = 255; y >= 0; --y)
 		{
-			
+
 			IBlockState state = primer.getBlockState(localZ, y, localX);
 			
 			// bedrock at the bottom
@@ -123,21 +147,84 @@ public class BiomeGallifrey extends Biome{
 					--dirtBlocksToFill;
 				}
 
-
 			}
 		}
+
+
 	}
+
 
 	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random random){
 
-		return TREE;
+		return null;
 	}
 
 	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos)
 	{
-		super.decorate(worldIn, rand, pos);
+
+		int maxTrees = rand.nextInt(8);
+		for (int trees = 0; trees < maxTrees; ++trees) {
+
+			int x = rand.nextInt(15);
+			int z = rand.nextInt(15);
+
+
+			BlockPos treePos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14), 0, rand.nextInt(14)));
+			if (worldIn.getBlockState(treePos.down()).getBlock() == TBlocks.gallifreyan_grass) {
+
+				generateGallifreyTrees(worldIn, worldIn.getTopSolidOrLiquidBlock(treePos), TreeList[rand.nextInt(TreeList.length)]);
+			}
+
+		}
+
+
+		int maxGrass = 16;
+		for (int grass = 0; grass < maxGrass; ++grass) {
+
+			BlockPos grassPos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14), 0, rand.nextInt(14)));
+
+
+			if (worldIn.getBlockState(grassPos.down()).getBlock() == TBlocks.gallifreyan_grass){
+
+				worldIn.setBlockState(grassPos, GRASS);
+
+			}
+
+		}
+
+	}
+
+	public static void generateGallifreyTrees(World world, BlockPos pos, ResourceLocation location) {
+
+		if(!world.isRemote) {
+
+			Template treeTemp = ((WorldServer)world).getStructureTemplateManager().get(world.getMinecraftServer(), location);
+			BlockPos treePos = pos.add(-treeTemp.getSize().getX()/2, 0,-treeTemp.getSize().getZ()/2);
+			if(world.getBlockState(treePos).isSideSolid(world, treePos, EnumFacing.UP)) treeTemp.addBlocksToWorld(world, treePos, new PlacementSettings());
+		}
+
+	}
+
+
+	public static class BiomeDecoratorGallifrey extends BiomeDecorator {
+
+		public BiomeDecoratorGallifrey() {
+		}
+
+		@Override
+		public void decorate(World worldIn, Random random, Biome biome, BlockPos pos) {
+
+
+		}
+
+		@Override
+		protected void genDecorations(Biome biomeIn, World worldIn, Random random) {
+
+
+		}
+
 	}
 
 
