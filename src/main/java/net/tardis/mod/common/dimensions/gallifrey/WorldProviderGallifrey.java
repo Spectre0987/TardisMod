@@ -12,6 +12,7 @@ import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.renderers.sky.RenderVoid;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.dimensions.moon.RenderGallifreySky;
 import sun.reflect.generics.tree.Tree;
@@ -32,13 +33,21 @@ public class WorldProviderGallifrey extends WorldProviderSurface {
 		return new ChunkGeneratorGallifrey(world, world.getSeed());
 	}
 	
+	public static RenderGallifreySky SKY = new RenderGallifreySky();
+	
 	@Nullable
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IRenderHandler getSkyRenderer() {
-		return RenderGallifreySky.getInstance();
+		return SKY;
 	}
-
+	
+	@Nullable
+	@Override
+	public IRenderHandler getCloudRenderer() {
+		return new RenderVoid();
+	}
+	
 	@Override
 	public DimensionType getDimensionType() {
 		return TDimensions.GALLIFREY_TYPE;
