@@ -29,13 +29,17 @@ public class RenderGallifreySky extends IRenderHandler {
 	
 	private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
 	
-	private static final ResourceLocation SUN_TEXTURES = new ResourceLocation("textures/environment/sun.png");
-	private static final ResourceLocation SUN_BOX = new ResourceLocation(Tardis.MODID, "textures/environment/gallifrey_sky.png");
+	private static final ResourceLocation SUN = new ResourceLocation(Tardis.MODID,"textures/environment/sun.png");
+	private static final ResourceLocation DAY = new ResourceLocation(Tardis.MODID, "textures/environment/gallifrey_sky_day.png");
+	private static final ResourceLocation NIGHT = new ResourceLocation(Tardis.MODID, "textures/environment/gallifrey_sky_night.png");
 	
 	public static Sphere sky = new Sphere();
 	
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
+		
+		boolean isDay = Minecraft.getMinecraft().world.getWorldTime() <= 13000;
+		
 		GlStateManager.pushMatrix();
 		GlStateManager.disableDepth();
 		GlStateManager.disableFog();
@@ -43,19 +47,15 @@ public class RenderGallifreySky extends IRenderHandler {
 	// ========================== Sky box start =========================
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(SUN_BOX);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(isDay ? DAY : NIGHT);
 		sky.setTextureFlag(true);
 		GlStateManager.rotate(90, 1, 0, 0);
-		sky.draw(64, 25, 25);
+		sky.draw(1214, 25, 25);
 		GlStateManager.rotate(-90, 1, 0, 0);
-		
 		GlStateManager.disableBlend();
-		
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		GlStateManager.color(1, 1, 1, 0.6f);
 		GlStateManager.rotate(world.getTotalWorldTime() / 64.0f, 0, 1, 0);
 		GlStateManager.rotate(90, 1, 0, 0);
-		sky.draw(64, 25, 25);
+		sky.draw(64, 32, 32);
 		GlStateManager.rotate(-world.getTotalWorldTime() / 64.0f, 0, 1, 0);
 		GlStateManager.rotate(-90, 0, 1, 0);
 		GlStateManager.color(1, 1, 1, 1);
@@ -66,7 +66,7 @@ public class RenderGallifreySky extends IRenderHandler {
 		GlStateManager.translate(-50, 60, 120);
 		GlStateManager.rotate(-50, 1, 0, 0);
 		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(SUN_TEXTURES);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(SUN);
 		GlStateManager.scale(0.5f, 0.5f, 0.5f);
 		Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, 128, 128, 128, 128);
 		GlStateManager.translate(0, 80, 100);
