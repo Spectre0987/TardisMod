@@ -1,18 +1,23 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.api.blocks.IBlock;
 import net.tardis.mod.client.creativetabs.TardisTabs;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class BlockTardis extends Block implements IBlock {
 
@@ -23,6 +28,20 @@ public class BlockTardis extends Block implements IBlock {
 		this.setBlockUnbreakable();
 		this.setResistance(999);
 		item.setCreativeTab(TardisTabs.BLOCKS);
+		this.setTickRandomly(true);
+	}
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(worldIn.getTileEntity(pos.up()) == null || !(worldIn.getTileEntity(pos.up()) instanceof TileEntityTardis)) {
+			worldIn.setBlockToAir(pos);
+		}
+		super.updateTick(worldIn, pos, state, rand);
+	}
+
+	@Override
+	public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
+		return false;
 	}
 
 	@Override
@@ -58,5 +77,10 @@ public class BlockTardis extends Block implements IBlock {
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 		return false;
+	}
+	
+	@Override
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+		return BlockFaceShape.UNDEFINED;
 	}
 }

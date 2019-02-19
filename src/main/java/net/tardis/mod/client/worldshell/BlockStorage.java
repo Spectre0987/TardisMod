@@ -23,6 +23,10 @@ public class BlockStorage {
 		if (t != null) tileentity = t.serializeNBT();
 		light = l;
 	}
+	
+	public BlockStorage(ByteBuf buf) {
+		this.fromBuf(buf);
+	}
 
 	public void toBuf(ByteBuf buf) {
 		buf.writeInt(Block.getStateId(blockstate));
