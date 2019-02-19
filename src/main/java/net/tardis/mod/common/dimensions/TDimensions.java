@@ -9,7 +9,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeFarmlands;
+import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeWastelands;
 import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeRedlands;
 import net.tardis.mod.common.dimensions.gallifrey.WorldProviderGallifrey;
 import net.tardis.mod.common.dimensions.moon.BiomeMoon;
@@ -37,7 +37,7 @@ public class TDimensions {
 
 	//Gallifrey
 	public static Biome gallifreyRedlands = new BiomeRedlands();
-	public static Biome gallifreyFarmlands = new BiomeFarmlands();
+	public static Biome gallifreyFarmlands = new BiomeWastelands();
 
 	public static int MOON_ID;
 	public static DimensionType MOON_TYPE;

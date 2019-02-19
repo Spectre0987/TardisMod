@@ -41,8 +41,6 @@ public class GallifreyBiomeProvider extends BiomeProvider {
         layer = new GenLayerZoom(1000, layer);
         layer = new GenLayerZoom(1000, layer);
         layer = new GenLayerZoom(1000, layer);
-        layer = new GenLayerZoom(1000, layer);
-        layer = new GenLayerZoom(1000, layer);
         layer = new GenLayerFuzzyZoom(1000, layer);
 
 

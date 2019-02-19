@@ -45,7 +45,7 @@ public class BiomeRedlands extends Biome {
 
 
 	public BiomeRedlands() {
-		super(new BiomeProperties("Redlands").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled().setWaterColor(0xF78F00));
+		super(new BiomeProperties("Redlands").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled().setWaterColor(0xEB623D));
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
