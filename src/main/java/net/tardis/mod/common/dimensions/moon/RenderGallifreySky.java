@@ -12,17 +12,22 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.common.dimensions.TDimensions;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
 
+@Mod.EventBusSubscriber(Side.CLIENT)
 public class RenderGallifreySky extends IRenderHandler {
 	
 	private static RenderGallifreySky INSTANCE;
 	private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
 	private static final ResourceLocation SUN_TEXTURES = new ResourceLocation("textures/environment/sun.png");
-	private static final ResourceLocation DOUBLE_SUN_TEXTURES = new ResourceLocation(Tardis.MODID, "textures/environment/double_sun.png");
 	private final TextureManager renderEngine;
 	private boolean vboEnabled;
 	private VertexBuffer starVBO;
@@ -438,7 +443,29 @@ public class RenderGallifreySky extends IRenderHandler {
 		GlStateManager.popMatrix();
 		GlStateManager.enableTexture2D();
 		GlStateManager.depthMask(true);
-		
+	}
+	
+	@SubscribeEvent
+	public static void onColorFog(EntityViewRenderEvent.RenderFogEvent.FogColors event){
+		if(Minecraft.getMinecraft().player.dimension == TDimensions.GALLIFREY_ID) {
+			
+			boolean isDay = Minecraft.getMinecraft().world.getWorldTime() <= 13000;
+			
+			float red, green, blue;
+			if (isDay) {
+				red = 0.92F;
+				green = 0.47F;
+				blue = 0.05F;
+			} else {
+				red = 0f;
+				green = 0f;
+				blue = 0f;
+			}
+			
+			event.setRed(red);
+			event.setGreen(green);
+			event.setBlue(blue);
+		}
 	}
 	
 }
