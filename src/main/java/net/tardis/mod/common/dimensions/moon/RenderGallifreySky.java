@@ -65,14 +65,16 @@ public class RenderGallifreySky extends IRenderHandler {
 		//===================Sun start================
 		GlStateManager.translate(-50, 60, 120);
 		GlStateManager.rotate(-50, 1, 0, 0);
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(SUN);
-		GlStateManager.scale(0.5f, 0.5f, 0.5f);
-		Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, 128, 128, 128, 128);
-		GlStateManager.translate(0, 80, 100);
-		GlStateManager.rotate(25, 0, 1, 0);
-		GlStateManager.scale(2, 2, 2);
-		Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, 128, 128, 128, 128);
+		if(isDay) {
+			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(SUN);
+			GlStateManager.scale(0.5f, 0.5f, 0.5f);
+			Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, 70, 70, 70, 70);
+			GlStateManager.translate(0, 80, 100);
+			GlStateManager.rotate(25, 0, 1, 0);
+			GlStateManager.scale(2, 2, 2);
+			Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, 70, 70, 70, 70);
+		}
 		GlStateManager.disableBlend();
 		GlStateManager.enableCull();
 		GlStateManager.enableDepth();
