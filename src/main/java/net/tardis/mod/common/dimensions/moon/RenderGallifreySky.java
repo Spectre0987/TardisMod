@@ -3,15 +3,8 @@ package net.tardis.mod.common.dimensions.moon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexBuffer;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.renderer.vertex.VertexFormatElement;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,17 +12,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.TDimensions;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Sphere;
-
-import java.util.Random;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class RenderGallifreySky extends IRenderHandler {
 	
 	private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
 	
-	private static final ResourceLocation SUN = new ResourceLocation(Tardis.MODID,"textures/environment/sun.png");
+	private static final ResourceLocation SUN = new ResourceLocation(Tardis.MODID, "textures/environment/sun.png");
 	private static final ResourceLocation DAY = new ResourceLocation(Tardis.MODID, "textures/environment/gallifrey_sky_day.png");
 	private static final ResourceLocation NIGHT = new ResourceLocation(Tardis.MODID, "textures/environment/gallifrey_sky_night.png");
 	private static final ResourceLocation DOG = new ResourceLocation(Tardis.MODID, "textures/environment/dog.png");
@@ -44,8 +34,8 @@ public class RenderGallifreySky extends IRenderHandler {
 		GlStateManager.pushMatrix();
 		GlStateManager.disableDepth();
 		GlStateManager.disableFog();
-	
-	// ========================== Sky box start =========================
+		
+		// ========================== Sky box start =========================
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(isDay ? DAY : NIGHT);
@@ -64,9 +54,9 @@ public class RenderGallifreySky extends IRenderHandler {
 		// ========================== Sky box stop =========================
 		
 		//===================Sun start================
-		GlStateManager.translate(-50, 60, 120);
-		GlStateManager.rotate(-50, 1, 0, 0);
-		if(isDay) {
+		if (isDay) {
+			GlStateManager.translate(-50, 60, 120);
+			GlStateManager.rotate(-50, 1, 0, 0);
 			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 			Minecraft.getMinecraft().getTextureManager().bindTexture(SUN);
 			GlStateManager.scale(0.5f, 0.5f, 0.5f);
@@ -85,8 +75,8 @@ public class RenderGallifreySky extends IRenderHandler {
 	}
 	
 	@SubscribeEvent
-	public static void onColorFog(EntityViewRenderEvent.RenderFogEvent.FogColors event){
-		if(Minecraft.getMinecraft().player.dimension == TDimensions.GALLIFREY_ID) {
+	public static void onColorFog(EntityViewRenderEvent.RenderFogEvent.FogColors event) {
+		if (Minecraft.getMinecraft().player.dimension == TDimensions.GALLIFREY_ID) {
 			
 			boolean isDay = Minecraft.getMinecraft().world.getWorldTime() <= 13000;
 			
