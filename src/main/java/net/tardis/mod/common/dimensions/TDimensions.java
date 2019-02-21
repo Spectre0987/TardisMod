@@ -12,9 +12,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeWastelands;
 import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeRedlands;
-import net.tardis.mod.common.dimensions.gallifrey.WorldProviderGallifrey;
+import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeWastelands;
 import net.tardis.mod.common.dimensions.moon.BiomeMoon;
 import net.tardis.mod.common.dimensions.moon.MoonProvider;
 import net.tardis.mod.common.dimensions.space.SpaceProvider;
@@ -77,9 +76,9 @@ public class TDimensions {
 		
 		//TODO Clean this up
 		
-		GALLIFREY_ID = 678;
-		GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
-		DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
+		//GALLIFREY_ID = 678;
+		//GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
+		//DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
 	}
 
 	@EventBusSubscriber(modid = Tardis.MODID)

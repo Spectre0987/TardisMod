@@ -19,7 +19,6 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 	@Override
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
-		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(getTexture());
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
@@ -34,7 +33,6 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		}
 		if (!te.isLocked())
 			renderPortal(te, partialTicks);
-		GlStateManager.disableAlpha();
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 
