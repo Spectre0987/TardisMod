@@ -3,7 +3,6 @@ package net.tardis.mod.common.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -175,7 +174,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				soundChanged = false;
 			}
 		}
-		
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
 			this.setFuel(fuel - this.calcFuelUse());

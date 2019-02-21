@@ -23,7 +23,7 @@ public class PlayerStorage {
 		posY = player.posY;
 		posZ = player.posZ;
 		rotationYaw = player.rotationYawHead;
-		player.writeToNBT(tag);
+		//player.writeToNBT(tag);
 		tag.setBoolean("sneak", player.isSneaking());
 		tag.setBoolean("riding", player.isRiding());
 		tag.setFloat("limbSwing", player.limbSwing);

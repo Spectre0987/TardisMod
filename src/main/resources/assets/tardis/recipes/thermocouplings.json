@@ -1,0 +1,19 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        "i i",
+        "ici",
+        "i i"
+    ],
+    "key":{
+        "i":{
+            "item":"minecraft:iron_ingot"
+        },
+        "c":{
+            "item":"tardis:circuts"
+        }
+    },
+    "result":{
+        "item":"tardis:thermo"
+    }
+}

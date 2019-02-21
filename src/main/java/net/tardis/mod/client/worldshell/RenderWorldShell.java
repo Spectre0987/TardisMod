@@ -71,7 +71,7 @@ public class RenderWorldShell {
 				Entity e = EntityList.createEntityFromNBT(stor, worldBoti);
 				if (e != null) {
 					GlStateManager.pushMatrix();
-					GlStateManager.rotate(e.rotationYaw, 0, 1, 0);
+					GlStateManager.rotate(stor.getFloat("rot"), 0, 1, 0);
 					Objects.requireNonNull(Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e)).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 					GlStateManager.popMatrix();
 				}
@@ -85,7 +85,6 @@ public class RenderWorldShell {
 				Minecraft.getMinecraft().getTextureManager().bindTexture(Minecraft.getMinecraft().getConnection().getPlayerInfo(stor.profile.getId()).getLocationSkin());
 				FakeClientPlayer player = new FakeClientPlayer(worldBoti, stor.profile);
 				if (stor.tag != null) {
-					player.readFromNBT(stor.tag);
 					player.setSneaking(stor.tag.getBoolean("sneak"));
 					player.ticksExisted = stor.tag.getInteger("ageInTicks");
 					player.limbSwing = stor.tag.getFloat("limbSwing");
@@ -96,8 +95,8 @@ public class RenderWorldShell {
 					player.isRiding = stor.tag.getBoolean("riding");
 				}
 				GlStateManager.translate(stor.posX, stor.posY, stor.posZ);
-				GlStateManager.rotate(-player.rotationYawHead, 0, 1, 0);
-				Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(player).doRender(player, 0, 0, 0, 0, 0);
+				GlStateManager.rotate(-player.rotationYaw, 0, 1, 0);
+				Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(player).doRender(player, 0, 0, 0, player.rotationYawHead, 0);
 				GlStateManager.popMatrix();
 			}
 		}

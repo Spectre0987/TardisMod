@@ -26,7 +26,7 @@ public enum EnumExterior {
 	FIFTH(new ModelTardis05(), new ModelInteriorDoor01(), RenderTileDoor05.TEXTURE, TBlocks.tardis_top_04, "box.tardis.05"),
 	CLOCK(new ModelTardisClock(), new ModelInteriorDoor01(), RenderTileDoorClock.TEXTURE, TBlocks.tardis_top_clock, "box.master.clock"),
 	TT(new ModelTardisTT(), new ModelInteriorDoor01(), RenderTileDoorTT.TEXTURE, TBlocks.tardis_top_tt, "box.tt"),
-	WOOD_DOOR(new ModelTardisWoodDoor(), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE, TBlocks.tardis_top_wood_door, "");
+	WOOD_DOOR(new ModelTardisWoodDoor(), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE, TBlocks.tardis_top_wood_door, "box.door");
 
 	public IExteriorModel model;
 	public IInteriorModel interiorModel;

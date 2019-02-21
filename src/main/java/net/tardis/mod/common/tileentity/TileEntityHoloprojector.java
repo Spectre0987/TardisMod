@@ -15,6 +15,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.tardis.mod.client.worldshell.*;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
@@ -59,7 +60,7 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 					}
 					worldShell.setPlayers(players);
 					worldShell.setEntities(lists);
-					NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos()), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
+					NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(worldShell, this.getPos(), EnumType.BLOCKS), new TargetPoint(world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 16D));
 				}
 				return;
 			}

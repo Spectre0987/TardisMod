@@ -36,7 +36,7 @@ public class BlockSuitcase extends BlockBase {
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		ItemStack[] stacks = clothes.get(rand.nextInt(clothes.size()));
 		for (ItemStack stack : stacks) {
-			drops.add(stack);
+			drops.add(stack.copy());
 		}
 	}
 

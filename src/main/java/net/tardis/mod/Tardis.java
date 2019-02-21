@@ -100,7 +100,6 @@ import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
-import net.tardis.mod.common.tileentity.TileEntityInteriorDoor;
 import net.tardis.mod.common.tileentity.TileEntityItemMaterializer;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityKerblam;
@@ -144,7 +143,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
-	public static final String VERSION = "0.0.9A";
+	public static final String VERSION = "0.0.9B";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = true;
 	public static Logger LOG = LogManager.getLogger(NAME);
@@ -227,8 +226,6 @@ public class Tardis {
 		registerTileEntity(TileEntityMultiblockMaster.class, "multi_master");
 		registerTileEntity(TileEntityMultiblock.class, "multi");
 
-		registerTileEntity(TileEntityInteriorDoor.class, "TileEntityInteriorDoor");
-
 		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
 
 		//Exteriors
@@ -303,6 +300,7 @@ public class Tardis {
 		
 		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_1.png"), new ResourceLocation(MODID, "interior_1"), new BlockPos(9, 2, 9)));
 		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_2.png"), new ResourceLocation(MODID, "console_room"), new BlockPos(10, 2, 9)));
+		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_builder.png"), new ResourceLocation(MODID, "interior_builder"), new BlockPos(9, 1, 9)));
 		
 
 	}
@@ -322,6 +320,7 @@ public class Tardis {
 		PermissionAPI.registerNode(TStrings.Permissions.TP_IN_TARDIS_OTHER, DefaultPermissionLevel.OP, "Allows players to teleport themself in the TARDIS of a specified player");
 		PermissionAPI.registerNode(TStrings.Permissions.REMOVE_TARDIS, DefaultPermissionLevel.OP, "Allows players to delete a TARDIS");
 		PermissionAPI.registerNode(TStrings.Permissions.RESTORE_TARDIS, DefaultPermissionLevel.OP, "Allows players to restore their TARDIS Systems");
+		PermissionAPI.registerNode(TStrings.Permissions.GROW, DefaultPermissionLevel.OP, "Allows players to grow their TARDIS Coral faster");
 
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
