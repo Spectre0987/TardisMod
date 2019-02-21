@@ -2,6 +2,7 @@
 	"__comment": "Designed by Moose with Cubik Studio - https://cubik.studio",
 	"parent": "block/cube_all",
 	"textures": {
+		"particle": "tardis:blocks/gallifrey/gallifreyan_grass_top",
 		"bottom": "tardis:blocks/gallifrey/gallifreyan_dirt",
 		"side": "tardis:blocks/gallifrey/gallifreyan_grass_side",
 		"top": "tardis:blocks/gallifrey/gallifreyan_grass_top"

@@ -29,7 +29,9 @@ public class ChunkGeneratorGallifrey extends ChunkGeneratorOverworld {
 	public void populate(int x, int z) {
 		if (pop != null) {
 			pop.gen(world, rand, x, z);
+
 		}
+		super.populate(x, z);
 	}
 	
 }
