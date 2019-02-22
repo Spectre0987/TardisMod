@@ -100,11 +100,11 @@ public class RenderHelper {
 				}
 				
 				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, 1);
-				renderShell.renderWorldShell(te, offset.x, offset.y, offset.z);
+				renderShell.renderWorldShell(te, wBoti, offset.x, offset.y, offset.z);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
-				GlStateManager.popMatrix();
 				
 				fb.deleteFramebuffer();
+				GlStateManager.popMatrix();
 				old.bindFramebuffer(true);
 				RenderHelper.setRenderGlobalWorld(oldW);
 

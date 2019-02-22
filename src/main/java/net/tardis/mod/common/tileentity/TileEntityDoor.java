@@ -19,6 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -234,7 +235,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					
 					if(world.getWorldTime() % 5 == 1) {
 						for(BlockPos pos : this.getBlocksInAABB(BB.offset(doorPos))) {
-							worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
+							IBlockState state = tardis.getWorld().getBlockState(pos);
+							if(state.getRenderType() != EnumBlockRenderType.INVISIBLE || state.getBlock() instanceof BlockTardisTop)
+								worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
 						}
 						this.sendBOTI(EnumType.BLOCKS);
 					}
