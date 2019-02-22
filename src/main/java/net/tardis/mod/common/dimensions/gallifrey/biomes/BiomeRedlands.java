@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
@@ -122,8 +123,6 @@ public class BiomeRedlands extends Biome {
 				
 			}
 		}
-		
-		
 	}
 	
 	
@@ -137,14 +136,14 @@ public class BiomeRedlands extends Biome {
 		
 		int maxTrees = rand.nextInt(8);
 		for (int trees = 0; trees < maxTrees; ++trees) {
-			BlockPos treePos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14), 0, rand.nextInt(14)));
+			BlockPos treePos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14) + 8, 0, rand.nextInt(14)+ 8));
 			if (worldIn.getBlockState(treePos.down()).getBlock() == TBlocks.gallifreyan_grass) {
 				generateGallifreyTrees(worldIn, worldIn.getTopSolidOrLiquidBlock(treePos), treeList[rand.nextInt(treeList.length)]);
 			}
 		}
 		int maxGrass = 16;
 		for (int grass = 0; grass < maxGrass; ++grass) {
-			BlockPos grassPos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14), 0, rand.nextInt(14)));
+			BlockPos grassPos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14) + 8, 0, rand.nextInt(14) + 8));
 			if (worldIn.getBlockState(grassPos.down()).getBlock() == TBlocks.gallifreyan_grass) {
 				worldIn.setBlockState(grassPos, GRASS);
 			}
