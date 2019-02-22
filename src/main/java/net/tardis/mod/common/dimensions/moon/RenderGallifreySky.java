@@ -3,7 +3,9 @@ package net.tardis.mod.common.dimensions.moon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.ResourceLocation;
@@ -15,6 +17,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import org.lwjgl.util.glu.Sphere;
+
+import java.util.Random;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class RenderGallifreySky extends IRenderHandler {
@@ -39,16 +43,14 @@ public class RenderGallifreySky extends IRenderHandler {
 		
 		// ========================== Sky box start =========================
 		GlStateManager.pushMatrix();
+		GlStateManager.scale(3,3,3);
 		GlStateManager.disableCull();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(isDay ? DAY : NIGHT);
 		sky.setTextureFlag(true);
-		GlStateManager.rotate(90, 1, 0, 0);
 		GlStateManager.rotate(-90, 1, 0, 0);
 		GlStateManager.disableBlend();
 		GlStateManager.rotate(world.getTotalWorldTime() / 40F, 0, 1, 0);
-		GlStateManager.rotate(90, 1, 0, 0);
 		sky.draw(64, 32, 32);
-		
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.popMatrix();
 		// ========================== Sky box stop =========================
@@ -73,5 +75,6 @@ public class RenderGallifreySky extends IRenderHandler {
 		GlStateManager.popMatrix();
 		//===================Sun stop================
 	}
+	
 	
 }

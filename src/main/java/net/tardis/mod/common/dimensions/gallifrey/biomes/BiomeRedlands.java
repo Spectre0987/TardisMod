@@ -126,6 +126,7 @@ public class BiomeRedlands extends Biome {
 	}
 	
 	
+	
 	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random random) {
 		return null;
@@ -153,34 +154,24 @@ public class BiomeRedlands extends Biome {
 	}
 	
 	public static void generateGallifreyTrees(World world, BlockPos pos, ResourceLocation location) {
-		
 		if (!world.isRemote) {
-			
 			Template treeTemp = ((WorldServer) world).getStructureTemplateManager().get(world.getMinecraftServer(), location);
 			BlockPos treePos = pos.add(-treeTemp.getSize().getX() / 2, 0, -treeTemp.getSize().getZ() / 2);
 			if (world.getBlockState(treePos).isSideSolid(world, treePos, EnumFacing.UP))
 				treeTemp.addBlocksToWorld(world, treePos, new PlacementSettings());
 		}
-		
 	}
 	
 	
 	public static class BiomeDecoratorGallifrey extends BiomeDecorator {
 		
-		public BiomeDecoratorGallifrey() {
-		}
+		public BiomeDecoratorGallifrey() {}
 		
 		@Override
-		public void decorate(World worldIn, Random random, Biome biome, BlockPos pos) {
-		
-		
-		}
+		public void decorate(World worldIn, Random random, Biome biome, BlockPos pos) { }
 		
 		@Override
-		protected void genDecorations(Biome biomeIn, World worldIn, Random random) {
-		
-		
-		}
+		protected void genDecorations(Biome biomeIn, World worldIn, Random random) {}
 		
 	}
 	
