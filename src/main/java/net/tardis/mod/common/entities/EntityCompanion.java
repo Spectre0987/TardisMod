@@ -311,7 +311,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		float[] size = {0.95F, 1.75F};
 
 		EnumCompanionType(String name, String formatName) {
-			skin = new ResourceLocation(Tardis.MODID, "textures/entity/" + name + ".png");
+			skin = new ResourceLocation(Tardis.MODID, "textures/entity/companion/" + name + ".png");
 			formattedName = formatName;
 		}
 

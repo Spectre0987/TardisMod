@@ -1,5 +1,6 @@
 package net.tardis.mod;
 
+import net.tardis.mod.common.entities.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,17 +36,6 @@ import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.CommandTardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.dimensions.TDimensions.BiomeReg;
-import net.tardis.mod.common.entities.EntityAdipose;
-import net.tardis.mod.common.entities.EntityChair;
-import net.tardis.mod.common.entities.EntityCompanion;
-import net.tardis.mod.common.entities.EntityCorridor;
-import net.tardis.mod.common.entities.EntityCybermanInvasion;
-import net.tardis.mod.common.entities.EntityDalek;
-import net.tardis.mod.common.entities.EntityDalekCasing;
-import net.tardis.mod.common.entities.EntityDalekSkaro;
-import net.tardis.mod.common.entities.EntityItemMaterializer;
-import net.tardis.mod.common.entities.EntityLaserRay;
-import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -268,6 +258,7 @@ public class Tardis {
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
 		EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
 		EntityHelper.registerMobEgg(EntityQuark.class, "quark", 5, 5, 2);
+		EntityHelper.registerMobEgg(EntityRaider.class, "raider", 5, 5, 2);
 		//EntityHelper.registerNoSpawnEgg(EntityCybermanTomb.class, "cyberman_tomb", 5, 5);
 		EntityHelper.registerMobEgg(EntityAdipose.class, "adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance, 5, 3);
 

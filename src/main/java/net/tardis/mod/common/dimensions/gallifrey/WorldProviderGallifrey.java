@@ -42,11 +42,11 @@ public class WorldProviderGallifrey extends WorldProviderSurface {
 		return SKY;
 	}
 	
-	@Nullable
-	@Override
-	public IRenderHandler getCloudRenderer() {
-		return new RenderVoid();
-	}
+	//@Nullable
+	//Override
+	//public IRenderHandler getCloudRenderer() {
+	//	return new RenderVoid();
+	//}
 	
 	@Override
 	public DimensionType getDimensionType() {

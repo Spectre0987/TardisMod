@@ -2,6 +2,7 @@ package net.tardis.mod.common.dimensions.gallifrey.biomes;
 
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -23,6 +24,9 @@ import net.tardis.mod.common.dimensions.TDimensions;
 
 import java.util.Random;
 
+import static net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeRedlands.TreeList;
+import static net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeRedlands.generateGallifreyTrees;
+
 public class BiomeWastelands extends Biome {
 
 	protected static final IBlockState GRASS = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
@@ -30,7 +34,11 @@ public class BiomeWastelands extends Biome {
 	protected static final IBlockState SKULL = Blocks.SKULL.getDefaultState();
 	protected static final IBlockState DIRT = TBlocks.gallifreyan_dirt.getDefaultState();
 
+	protected static final ResourceLocation [] BARNS = {
 
+			new ResourceLocation(Tardis.MODID, "gallifrey/barn_one")
+
+	};
 
 
 
@@ -145,13 +153,16 @@ public class BiomeWastelands extends Biome {
 		int maxSandStone = 100;
 		for (int sandstone = 0; sandstone < maxSandStone; ++sandstone) {
 			BlockPos sstonePos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(16), 0, rand.nextInt(16)));
-			worldIn.setBlockState(sstonePos.down(), SANDSTONE);
+			if (worldIn.getBlockState(sstonePos.down()).getBlock() == TBlocks.gallifreyan_sand){
+			worldIn.setBlockState(sstonePos.down(), SANDSTONE);}
 		}
 
 		int maxDirt = 25;
 		for (int dirt = 0; dirt < maxDirt; ++dirt) {
 			BlockPos dirtPos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(16), 0, rand.nextInt(16)));
-			worldIn.setBlockState(dirtPos.down(), DIRT);
+			if (worldIn.getBlockState(dirtPos.down()).getBlock() == TBlocks.gallifreyan_sand) {
+				worldIn.setBlockState(dirtPos.down(), DIRT);
+			}
 		}
 
 		int maxGrass = 16;
@@ -172,13 +183,47 @@ public class BiomeWastelands extends Biome {
 			if (percentageSpawn == 1) {
 
 				BlockPos skullPos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(16), 0, rand.nextInt(16)));
-				worldIn.setBlockState(skullPos, SKULL);
+				worldIn.setBlockState(skullPos, Blocks.SKULL.getDefaultState().withProperty(BlockSkull.FACING, randomEnum(EnumFacing.class, rand)));
 			}
 		}
 
 
+
+
+		int maxBarns = rand.nextInt(2);
+		for (int barns = 0; barns < maxBarns; ++barns) {
+
+			int x = rand.nextInt(15);
+			int z = rand.nextInt(15);
+
+
+			BlockPos barnPos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14), 0, rand.nextInt(14)));
+
+			int barnChance = rand.nextInt(1000);
+			if (barnChance == 1) {
+
+				generateGallifreySheds(worldIn, worldIn.getTopSolidOrLiquidBlock(barnPos), BARNS[rand.nextInt(BARNS.length)]);
+			}
+
+		}
+
+	}
+
+	public static void generateGallifreySheds(World world, BlockPos pos, ResourceLocation location) {
+
+		if(!world.isRemote) {
+
+			Template shedTemp = ((WorldServer)world).getStructureTemplateManager().get(world.getMinecraftServer(), location);
+			BlockPos shedPos = pos.add(-shedTemp.getSize().getX()/2, -1,-shedTemp.getSize().getZ()/2);
+			if(world.getBlockState(shedPos).isSideSolid(world, shedPos, EnumFacing.UP)) shedTemp.addBlocksToWorld(world, shedPos, new PlacementSettings());
+		}
+
 	}
 
 
+	public static <T extends Enum<?>> T randomEnum(Class<T> clazz, Random random) {
+		int x = random.nextInt(clazz.getEnumConstants().length);
+		return clazz.getEnumConstants()[x];
+	}
 
 }
