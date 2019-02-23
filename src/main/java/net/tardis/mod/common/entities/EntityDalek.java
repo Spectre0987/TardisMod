@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackRanged;
+import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
@@ -12,6 +13,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
@@ -72,28 +74,6 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
 	}
 	
-	
-	/**
-	 * Attack the specified entity using a ranged attack.
-	 */
-	@Override
-	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
-		EntityLaserRay laser = new EntityLaserRay(world, this, 7, TDamageSources.DALEK, new Vec3d(0, 1, 0));
-		double d0 = target.posX - this.posX;
-		double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
-		double d2 = target.posZ - this.posZ;
-		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-		laser.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float) (14 - this.world.getDifficulty().getId() * 4));
-		this.playSound(TSounds.dalek_ray, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-		EntityHelper.lookAt(target.posX, target.posY, target.posZ, this);
-		this.world.spawnEntity(laser);
-	}
-	
-	
-	@Override
-	public void setSwingingArms(boolean swingingArms) {
-	}
-	
 	@Override
 	protected void jump() {
 		super.jump();
@@ -132,7 +112,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 		--this.heightOffsetUpdateTime;
 		
 		if (this.heightOffsetUpdateTime <= 0) {
-			this.heightOffsetUpdateTime = 100;
+			this.heightOffsetUpdateTime = 1200;
 			this.heightOffset = 0.5F + (float) this.rand.nextGaussian() * 3.0F;
 		}
 		
@@ -152,5 +132,26 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	@Override
 	public float getEyeHeight() {
 		return 1F;
+	}
+	
+	/**
+	 * Attack the specified entity using a ranged attack.
+	 */
+	@Override
+	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
+		EntityLaserRay laser = new EntityLaserRay(world, this, 7, TDamageSources.DALEK, new Vec3d(0, 1, 0));
+		double d0 = target.posX - this.posX;
+		double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
+		double d2 = target.posZ - this.posZ;
+		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
+		laser.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float) (14 - this.world.getDifficulty().getId() * 4));
+		this.playSound(TSounds.dalek_ray, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+		EntityHelper.lookAt(target.posX, target.posY, target.posZ, this);
+		this.world.spawnEntity(laser);
+	}
+	
+	@Override
+	public void setSwingingArms(boolean swingingArms) {
+	
 	}
 }
