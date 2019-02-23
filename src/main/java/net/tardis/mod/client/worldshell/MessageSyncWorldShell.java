@@ -116,13 +116,7 @@ public class MessageSyncWorldShell implements IMessage {
 							if(!cont.getWorldShell().getOffset().equals(mes.worldShell.getOffset()))
 								cont.setWorldShell(mes.worldShell);
 							else{
-								if(mes.type == EnumType.BLOCKS) {
-									cont.getWorldShell().blockMap.putAll(mes.worldShell.blockMap);
-									cont.getWorldShell().setTESRs();
-								}
-								else if(mes.type == EnumType.ENTITITES) {
-									cont.getWorldShell().setEntities(mes.worldShell.getEntities());
-								}
+								combineWorldShell(cont, mes.worldShell, mes.type);
 							}
 						}
 					} else {
@@ -133,19 +127,27 @@ public class MessageSyncWorldShell implements IMessage {
 								cont.setWorldShell(mes.worldShell);
 							}
 							else {
-								if(mes.type == EnumType.BLOCKS) {
-									cont.getWorldShell().blockMap.putAll(mes.worldShell.blockMap);
-									cont.getWorldShell().setTESRs();
-								}
-								else if(mes.type == EnumType.ENTITITES) {
-									cont.getWorldShell().setEntities(mes.worldShell.getEntities());
-								}
+								combineWorldShell(cont, mes.worldShell, mes.type);
 							}
 						}
 					}
 				}
+				
 			});
 			return null;
+		}
+
+		public static void combineWorldShell(IContainsWorldShell cont, WorldShell shell, EnumType type) {
+			if(type == EnumType.BLOCKS) {
+				cont.getWorldShell().blockMap.putAll(shell.blockMap);
+				cont.getWorldShell().setTESRs();
+			}
+			else if(type == EnumType.ENTITITES) {
+				cont.getWorldShell().setEntities(shell.getEntities());
+			}
+			else if(type == EnumType.PLAYERS) {
+				cont.getWorldShell().setPlayers(shell.getPlayers());
+			}
 		}
 
 	}

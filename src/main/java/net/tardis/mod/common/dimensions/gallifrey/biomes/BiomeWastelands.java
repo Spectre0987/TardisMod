@@ -1,7 +1,5 @@
 package net.tardis.mod.common.dimensions.gallifrey.biomes;
 
-
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
@@ -13,33 +11,24 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.dimensions.TDimensions;
 
 import java.util.Random;
 
-import static net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeRedlands.TreeList;
-import static net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeRedlands.generateGallifreyTrees;
 
 public class BiomeWastelands extends Biome {
 
 	protected static final IBlockState GRASS = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
 	protected static final IBlockState SANDSTONE = Blocks.RED_SANDSTONE.getDefaultState();
-	protected static final IBlockState SKULL = Blocks.SKULL.getDefaultState();
 	protected static final IBlockState DIRT = TBlocks.gallifreyan_dirt.getDefaultState();
 
-	protected static final ResourceLocation [] BARNS = {
-
+	protected static final ResourceLocation[] BARNS = {
 			new ResourceLocation(Tardis.MODID, "gallifrey/barn_one")
-
 	};
-
 
 
 	public BiomeWastelands() {
@@ -52,88 +41,69 @@ public class BiomeWastelands extends Biome {
 	}
 
 	@Override
-	public int getGrassColorAtPos(BlockPos pos)
-	{
+	public int getGrassColorAtPos(BlockPos pos) {
 		return getModdedBiomeGrassColor(0xAFA469);
 	}
 
 	@Override
-	public int getFoliageColorAtPos(BlockPos pos)
-	{
+	public int getFoliageColorAtPos(BlockPos pos) {
 		return getModdedBiomeFoliageColor(0xEAEDED);
 	}
 
 
 	@Override
-	public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int x, int z, double stoneNoiseVal)
-	{
+	public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int x, int z, double stoneNoiseVal) {
 		IBlockState topBlock = TBlocks.gallifreyan_sand.getDefaultState();
 		IBlockState fillerBlock = TBlocks.gallifreyan_dirt.getDefaultState();
 		IBlockState seaFloorBlock = TBlocks.gallifreyan_stone.getDefaultState();
-		
+
 		boolean hitFloorYet = false;
 		int topBlocksToFill = 0;
 		int dirtBlocksToFill = 0;
 		int seaFloorBlocksToFill = 0;
-		int dirtDepth = Math.max(0, (int)(stoneNoiseVal / 3.0D + 3 + rand.nextDouble() * 0.25D));
+		int dirtDepth = Math.max(0, (int) (stoneNoiseVal / 3.0D + 3 + rand.nextDouble() * 0.25D));
 		int seaFloorDepth = 1 + rand.nextInt(2);
-		
+
 		int localX = x & 15;
 		int localZ = z & 15;
 
 		// start at the top and move downwards
-		for (int y = 255; y >= 0; --y)
-		{
+		for (int y = 255; y >= 0; --y) {
 
 			IBlockState state = primer.getBlockState(localZ, y, localX);
-			
+
 			// bedrock at the bottom
-			if (y <= rand.nextInt(5))
-			{
+			if (y <= rand.nextInt(5)) {
 				primer.setBlockState(localZ, y, localX, Blocks.BEDROCK.getDefaultState());
 				continue;
 			}
-			
-			if (state.getMaterial() == Material.AIR)
-			{
+
+			if (state.getMaterial() == Material.AIR) {
 				// topBlocks and dirtBlocks can occur after any pocket of air
 				topBlocksToFill = (topBlock == null ? 0 : 1);
 				dirtBlocksToFill = dirtDepth;
 				continue;
-			}
-			else if (!hitFloorYet && state.getMaterial() == Material.WATER)
-			{
+			} else if (!hitFloorYet && state.getMaterial() == Material.WATER) {
 				// seaFloorBlocks can occur after surface water
 				seaFloorBlocksToFill = seaFloorDepth;
 			}
-			
-			if (state.getBlock() == Blocks.STONE)
-			{
+
+			if (state.getBlock() == Blocks.STONE) {
 				hitFloorYet = true;
-				if (topBlocksToFill > 0)
-				{
-					if (y >= 62)
-					{
+				if (topBlocksToFill > 0) {
+					if (y >= 62) {
 						primer.setBlockState(localZ, y, localX, topBlock);
-					}
-					else if (y >= 56 - dirtDepth)
-					{
+					} else if (y >= 56 - dirtDepth) {
 						primer.setBlockState(localZ, y, localX, fillerBlock);
-					}
-					else
-					{
+					} else {
 						primer.setBlockState(localZ, y, localX, Blocks.GRAVEL.getDefaultState());
 						dirtBlocksToFill = 0;
 					}
 					topBlocksToFill--;
-				}
-				else if (seaFloorBlocksToFill > 0)
-				{
+				} else if (seaFloorBlocksToFill > 0) {
 					primer.setBlockState(localZ, y, localX, seaFloorBlock);
 					--seaFloorBlocksToFill;
-				}
-				else if (dirtBlocksToFill > 0)
-				{
+				} else if (dirtBlocksToFill > 0) {
 					primer.setBlockState(localZ, y, localX, fillerBlock);
 					--dirtBlocksToFill;
 				}
@@ -146,15 +116,15 @@ public class BiomeWastelands extends Biome {
 
 
 	@Override
-	public void decorate(World worldIn, Random rand, BlockPos pos)
-	{
+	public void decorate(World worldIn, Random rand, BlockPos pos) {
 
 
 		int maxSandStone = 100;
 		for (int sandstone = 0; sandstone < maxSandStone; ++sandstone) {
 			BlockPos sstonePos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(16), 0, rand.nextInt(16)));
-			if (worldIn.getBlockState(sstonePos.down()).getBlock() == TBlocks.gallifreyan_sand){
-			worldIn.setBlockState(sstonePos.down(), SANDSTONE);}
+			if (worldIn.getBlockState(sstonePos.down()).getBlock() == TBlocks.gallifreyan_sand) {
+				worldIn.setBlockState(sstonePos.down(), SANDSTONE);
+			}
 		}
 
 		int maxDirt = 25;
@@ -168,11 +138,10 @@ public class BiomeWastelands extends Biome {
 		int maxGrass = 16;
 		for (int grass = 0; grass < maxGrass; ++grass) {
 			BlockPos grassPos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14), 0, rand.nextInt(14)));
-			if (worldIn.getBlockState(grassPos.down()).getBlock() == TBlocks.gallifreyan_dirt){
+			if (worldIn.getBlockState(grassPos.down()).getBlock() == TBlocks.gallifreyan_dirt) {
 				worldIn.setBlockState(grassPos, GRASS);
 			}
 		}
-
 
 
 		int maxSkull = 1;
@@ -186,8 +155,6 @@ public class BiomeWastelands extends Biome {
 				worldIn.setBlockState(skullPos, Blocks.SKULL.getDefaultState().withProperty(BlockSkull.FACING, randomEnum(EnumFacing.class, rand)));
 			}
 		}
-
-
 
 
 		int maxBarns = rand.nextInt(2);
@@ -211,11 +178,12 @@ public class BiomeWastelands extends Biome {
 
 	public static void generateGallifreySheds(World world, BlockPos pos, ResourceLocation location) {
 
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 
-			Template shedTemp = ((WorldServer)world).getStructureTemplateManager().get(world.getMinecraftServer(), location);
-			BlockPos shedPos = pos.add(-shedTemp.getSize().getX()/2, -1,-shedTemp.getSize().getZ()/2);
-			if(world.getBlockState(shedPos).isSideSolid(world, shedPos, EnumFacing.UP)) shedTemp.addBlocksToWorld(world, shedPos, new PlacementSettings());
+			Template shedTemp = ((WorldServer) world).getStructureTemplateManager().get(world.getMinecraftServer(), location);
+			BlockPos shedPos = pos.add(-shedTemp.getSize().getX() / 2, -1, -shedTemp.getSize().getZ() / 2);
+			if (world.getBlockState(shedPos).isSideSolid(world, shedPos, EnumFacing.UP))
+				shedTemp.addBlocksToWorld(world, shedPos, new PlacementSettings());
 		}
 
 	}
@@ -225,5 +193,4 @@ public class BiomeWastelands extends Biome {
 		int x = random.nextInt(clazz.getEnumConstants().length);
 		return clazz.getEnumConstants()[x];
 	}
-
 }

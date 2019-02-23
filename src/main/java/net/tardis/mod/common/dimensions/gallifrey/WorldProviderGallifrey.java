@@ -1,23 +1,16 @@
 package net.tardis.mod.common.dimensions.gallifrey;
 
-import net.minecraft.util.ResourceLocation;
+import javax.annotation.Nullable;
+
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProviderSurface;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeProvider;
-import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.client.renderers.sky.RenderVoid;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.dimensions.moon.RenderGallifreySky;
-import sun.reflect.generics.tree.Tree;
-
-import javax.annotation.Nullable;
 
 public class WorldProviderGallifrey extends WorldProviderSurface {
 

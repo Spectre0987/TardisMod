@@ -52,7 +52,7 @@ public class EntityLaserRay extends EntityThrowable implements IEntityAdditional
 
 		if (result.typeOfHit == Type.ENTITY) {
 			if (result.entityHit == this.thrower) return;
-			result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), damage);
+			result.entityHit.attackEntityFrom(source, damage);
 		} else if (result.typeOfHit == Type.BLOCK) {
 
 			IBlockState block = world.getBlockState(result.getBlockPos());
