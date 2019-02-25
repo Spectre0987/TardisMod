@@ -294,11 +294,19 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				((WorldServer)dWorld).getChunkProvider().loadChunk(nPos.getX() * 16, nPos.getZ() * 16);
 				dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
-				TileEntity door = dWorld.getTileEntity(nPos.up());
-				if (door instanceof TileEntityDoor) {
-					((TileEntityDoor) door).setConsolePos(this.getPos());
-					((TileEntityDoor) dWorld.getTileEntity(nPos.up())).setRemat();
-				}
+				BlockPos consolePos = this.getPos();
+				BlockPos landPos = nPos;
+				((WorldServer)dWorld).addScheduledTask(new Runnable() {
+					@Override
+					public void run() {
+						WorldServer dWorld = world.getMinecraftServer().getWorld(destDim);
+						TileEntity door = dWorld.getTileEntity(landPos.up());
+						if (door instanceof TileEntityDoor) {
+							((TileEntityDoor) door).setConsolePos(consolePos);
+							((TileEntityDoor) dWorld.getTileEntity(landPos.up())).setRemat();
+						}
+					}
+				});
 				this.setLocation(nPos);
 				this.dimension = this.destDim;
 				this.setDesination(nPos, dimension);
