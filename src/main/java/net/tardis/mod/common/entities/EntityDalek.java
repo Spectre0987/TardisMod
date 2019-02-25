@@ -15,12 +15,16 @@ import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -29,6 +33,8 @@ import net.tardis.mod.common.TDamageSources;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.common.helpers.EntityHelper;
+
+import javax.annotation.Nullable;
 
 public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFlying, IDontSufficate {
 	
@@ -141,17 +147,23 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 		EntityLaserRay laser = new EntityLaserRay(world, this, 7, TDamageSources.DALEK, new Vec3d(0, 1, 0));
 		double d0 = target.posX - this.posX;
-		double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
+		double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - laser.posY;
 		double d2 = target.posZ - this.posZ;
-		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-		laser.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float) (14 - this.world.getDifficulty().getId() * 4));
+		double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
+		laser.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, 1);
 		this.playSound(TSounds.dalek_ray, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-		EntityHelper.lookAt(target.posX, target.posY, target.posZ, this);
 		this.world.spawnEntity(laser);
 	}
 	
 	@Override
 	public void setSwingingArms(boolean swingingArms) {
 	
+	}
+	
+	
+	@Nullable
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return TSounds.dalek;
 	}
 }

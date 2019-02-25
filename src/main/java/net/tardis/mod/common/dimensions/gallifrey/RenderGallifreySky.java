@@ -1,4 +1,4 @@
-package net.tardis.mod.common.dimensions.moon;
+package net.tardis.mod.common.dimensions.gallifrey;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
