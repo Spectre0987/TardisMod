@@ -19,8 +19,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -29,6 +31,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -37,6 +40,8 @@ import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -59,6 +64,7 @@ import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.data.TimeLord;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
@@ -172,6 +178,15 @@ public class TEventHandler {
 		}
 	}
 
+	@SubscribeEvent
+	public static void onDalekShot(LivingAttackEvent e){
+		if(e.getEntity() instanceof EntityDalek && e.getSource().getImmediateSource() instanceof EntityArrow) {
+			if(!e.getEntity().world.isRemote){
+				e.getEntity().world.playSound(null, e.getEntity().getPosition(), SoundEvents.ENTITY_IRONGOLEM_HURT, SoundCategory.HOSTILE, 1, 1);
+			}
+			e.setCanceled(true);
+		}
+	}
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

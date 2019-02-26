@@ -10,7 +10,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.renderers.sky.RenderVoid;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.dimensions.moon.RenderGallifreySky;
 
 public class WorldProviderGallifrey extends WorldProviderSurface {
 
