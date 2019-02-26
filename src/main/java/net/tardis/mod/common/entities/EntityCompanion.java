@@ -52,8 +52,8 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	public static final DataParameter<Float> TARDIS_XP = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.FLOAT);
 	public BlockPos tardisPos = BlockPos.ORIGIN;
 	public boolean flyTardis = false;
-	UUID player;
-	private NonNullList<ItemStack> inv = NonNullList.withSize(27, ItemStack.EMPTY);
+	private UUID player;
+	private NonNullList<ItemStack> INVENTORY = NonNullList.withSize(27, ItemStack.EMPTY);
 
 	public EntityCompanion(World worldIn) {
 		super(worldIn);
@@ -81,7 +81,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	protected void entityInit() {
 		super.entityInit();
 		this.getDataManager().register(SITTING, false);
-		this.getDataManager().register(TYPE, EnumCompanionType.values()[rand.nextInt(EnumCompanionType.values().length - 1)].name());
+		this.getDataManager().register(TYPE, Helper.randomEnum(EnumCompanionType.class, world.rand).name());
 		this.getDataManager().register(TARDIS_XP, 0F);
 	}
 
@@ -120,17 +120,17 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 
 	@Override
 	public int getSizeInventory() {
-		return inv.size();
+		return INVENTORY.size();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return inv.isEmpty();
+		return INVENTORY.isEmpty();
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		return index < inv.size() ? inv.get(index) : ItemStack.EMPTY;
+		return index < INVENTORY.size() ? INVENTORY.get(index) : ItemStack.EMPTY;
 	}
 
 	@Override
@@ -147,8 +147,8 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		if (index < inv.size()) {
-			inv.set(index, stack);
+		if (index < INVENTORY.size()) {
+			INVENTORY.set(index, stack);
 		}
 	}
 
@@ -195,7 +195,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 
 	@Override
 	public void clear() {
-		inv.clear();
+		INVENTORY.clear();
 	}
 
 	public EntityPlayer getOwner() {
@@ -222,10 +222,10 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		NBTTagList list = new NBTTagList();
-		for (ItemStack stack : inv) {
+		for (ItemStack stack : INVENTORY) {
 			list.appendTag(stack.writeToNBT(new NBTTagCompound()));
 		}
-		compound.setTag("inv", list);
+		compound.setTag("INVENTORY", list);
 		compound.setString("owner", player != null ? player.toString() : "");
 		compound.setString("type", this.getType().name());
 		compound.setFloat("xp", this.getXP());
@@ -236,9 +236,9 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		int id = 0;
-		NBTTagList list = compound.getTagList("inv", NBT.TAG_COMPOUND);
+		NBTTagList list = compound.getTagList("INVENTORY", NBT.TAG_COMPOUND);
 		for (NBTBase base : list) {
-			inv.set(id, new ItemStack((NBTTagCompound) base));
+			INVENTORY.set(id, new ItemStack((NBTTagCompound) base));
 			++id;
 		}
 		if (!compound.getString("owner").isEmpty()) player = UUID.fromString(compound.getString("owner"));
@@ -301,9 +301,8 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		ALEXA("alexa", "Alexa"),
 		PETER("peter", "Peter"),
 		VANDHAM("vandham", "Vandham"),
-		WOLSEY("black", "Wolsey", new float[]{0.75F, 1F}),
-		NONE("", "");
-
+		WOLSEY("black", "Wolsey", new float[]{0.75F, 1F});
+		
 		@SideOnly(Side.CLIENT)
 		public ModelBase model;
 		ResourceLocation skin;

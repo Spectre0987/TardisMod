@@ -15,6 +15,8 @@ import net.tardis.mod.common.blocks.TBlocks;
 
 import java.util.Random;
 
+import static net.tardis.mod.util.common.helpers.Helper.randomEnum;
+
 public class BiomeWastelands extends Biome {
 	
 	protected static final IBlockState GRASS = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
@@ -144,9 +146,5 @@ public class BiomeWastelands extends Biome {
 		}
 	}
 	
-	public static <T extends Enum<?>> T randomEnum(Class<T> clazz, Random random) {
-		int x = random.nextInt(clazz.getEnumConstants().length);
-		return clazz.getEnumConstants()[x];
-	}
 	
 }

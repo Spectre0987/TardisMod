@@ -37,7 +37,12 @@ import java.util.Random;
 public class Helper {
 
 	public static Random rand = new Random();
-
+	
+	public static <T extends Enum<?>> T randomEnum(Class<T> clazz, Random random) {
+		int x = random.nextInt(clazz.getEnumConstants().length);
+		return clazz.getEnumConstants()[x];
+	}
+	
 	public static void transferToOwnedTardis(EntityPlayerMP player, WorldServer world, BlockPos pos) {
 
 	}
