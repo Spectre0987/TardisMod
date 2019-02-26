@@ -11,6 +11,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +20,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
@@ -42,6 +45,7 @@ public class WorldShell implements IBlockAccess {
 	private long time = 0L;
 	private float rotation = 0F;
 	private Biome shellBiome = Biome.getBiome(0);
+	private List<Entity> renderEntities = new ArrayList<Entity>();
 
 	public WorldShell(BlockPos bp) {
 		blockMap = new HashMap<>();
@@ -165,5 +169,17 @@ public class WorldShell implements IBlockAccess {
 
 	public void setRotation(float rot) {
 		this.rotation = rot;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public List<Entity> getEntityiesForRender(){
+		return this.renderEntities;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void setEntities(World world) {
+		for(NBTTagCompound tag : this.entities) {
+			this.renderEntities.add(EntityList.createEntityFromNBT(tag, world));
+		}
 	}
 }

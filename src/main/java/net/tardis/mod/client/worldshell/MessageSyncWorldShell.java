@@ -15,6 +15,8 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MessageSyncWorldShell implements IMessage {
 	//Sync the world shell from client to server
@@ -137,6 +139,7 @@ public class MessageSyncWorldShell implements IMessage {
 			return null;
 		}
 
+		@SideOnly(Side.CLIENT)
 		public static void combineWorldShell(IContainsWorldShell cont, WorldShell shell, EnumType type) {
 			if(type == EnumType.BLOCKS) {
 				cont.getWorldShell().blockMap.putAll(shell.blockMap);
@@ -144,6 +147,7 @@ public class MessageSyncWorldShell implements IMessage {
 			}
 			else if(type == EnumType.ENTITITES) {
 				cont.getWorldShell().setEntities(shell.getEntities());
+				cont.getWorldShell().setEntities(Minecraft.getMinecraft().world);
 			}
 			else if(type == EnumType.PLAYERS) {
 				cont.getWorldShell().setPlayers(shell.getPlayers());
