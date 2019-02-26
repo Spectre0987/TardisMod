@@ -1,9 +1,13 @@
-package net.tardis.mod.common.dimensions.moon;
+package net.tardis.mod.common.dimensions.gallifrey;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -13,6 +17,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import org.lwjgl.util.glu.Sphere;
+
+import java.util.Random;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class RenderGallifreySky extends IRenderHandler {
@@ -37,18 +43,14 @@ public class RenderGallifreySky extends IRenderHandler {
 		
 		// ========================== Sky box start =========================
 		GlStateManager.pushMatrix();
+		GlStateManager.scale(3,3,3);
 		GlStateManager.disableCull();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(isDay ? DAY : NIGHT);
 		sky.setTextureFlag(true);
-		GlStateManager.rotate(90, 1, 0, 0);
-		sky.draw(1214, 25, 25);
 		GlStateManager.rotate(-90, 1, 0, 0);
 		GlStateManager.disableBlend();
-		GlStateManager.rotate(world.getTotalWorldTime() / 64.0f, 0, 1, 0);
-		GlStateManager.rotate(90, 1, 0, 0);
+		GlStateManager.rotate(world.getTotalWorldTime() / 40F, 0, 1, 0);
 		sky.draw(64, 32, 32);
-		GlStateManager.rotate(-world.getTotalWorldTime() / 64.0f, 0, 1, 0);
-		GlStateManager.rotate(-90, 0, 1, 0);
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.popMatrix();
 		// ========================== Sky box stop =========================
@@ -74,27 +76,5 @@ public class RenderGallifreySky extends IRenderHandler {
 		//===================Sun stop================
 	}
 	
-	@SubscribeEvent
-	public static void onColorFog(EntityViewRenderEvent.RenderFogEvent.FogColors event) {
-		if (Minecraft.getMinecraft().player.dimension == TDimensions.GALLIFREY_ID) {
-			
-			boolean isDay = Minecraft.getMinecraft().world.getWorldTime() <= 13000;
-			
-			float red, green, blue;
-			if (isDay) {
-				red = 0.92F;
-				green = 0.47F;
-				blue = 0.05F;
-			} else {
-				red = 0f;
-				green = 0f;
-				blue = 0f;
-			}
-			
-			event.setRed(red);
-			event.setGreen(green);
-			event.setBlue(blue);
-		}
-	}
 	
 }

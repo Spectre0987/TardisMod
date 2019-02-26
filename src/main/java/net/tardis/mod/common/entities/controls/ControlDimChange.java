@@ -44,7 +44,10 @@ public class ControlDimChange extends EntityControl {
 			else
 				--tardis.dimIndex;
 
-			if (tardis.dimIndex >= ids.length || tardis.dimIndex < 0) tardis.dimIndex = 0;
+			if (tardis.dimIndex >= ids.length)
+				tardis.dimIndex = 0;
+			else if(tardis.dimIndex < 0)
+				tardis.dimIndex = ids.length - 1;
 
 			int dim = ids[tardis.dimIndex];
 			if (Helper.isDimensionBlocked(dim)) this.preformAction(player);

@@ -112,7 +112,7 @@ public class CommandTardis extends CommandBase {
 
 			case 4: //restoresys
 				if (args.length > 1) {
-					if (PermissionAPI.hasPermission(player, TStrings.Permissions.REMOVE_TARDIS)) {
+					if (PermissionAPI.hasPermission(player, TStrings.Permissions.RESTORE_TARDIS)) {
 						if (Arrays.asList(server.getOnlinePlayerNames()).contains(args[2]))
 							player = server.getPlayerList().getPlayerByUsername(args[2]);
 
