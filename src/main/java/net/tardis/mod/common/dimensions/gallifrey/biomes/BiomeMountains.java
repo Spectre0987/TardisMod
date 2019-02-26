@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
-import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -26,15 +25,14 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.dimensions.gallifrey.WorldProviderGallifrey;
 
 import java.util.Random;
 
-public class BiomeRedlands extends Biome {
-	
+public class BiomeMountains extends Biome {
+
 	private static final IBlockState GRASS = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
 
-	
+
 	// Tree Generation
 	private static final ResourceLocation[] treeList = {
 			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_tree_large"),
@@ -44,20 +42,20 @@ public class BiomeRedlands extends Biome {
 			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_tree_small_skinny"),
 			new ResourceLocation(Tardis.MODID, "gallifrey/trees/gal_shrub")
 	};
-	
-	
-	public BiomeRedlands() {
-		super(new BiomeProperties("Redlands").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setWaterColor(0xEB623D));
+
+
+	public BiomeMountains() {
+		super(new BiomeProperties("Red Mountains").setBaseHeight(0.4F).setHeightVariation(0.6F).setTemperature(0F).setWaterColor(0xEB623D).setSnowEnabled());
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
 		this.spawnableWaterCreatureList.clear();
 
-		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 20, 2, 3));
-		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySheep.class, 20, 2, 3));
-		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityPig.class, 20, 2, 3));
+		this.spawnableCreatureList.add(new SpawnListEntry(EntityRabbit.class, 20, 2, 3));
+		this.spawnableCreatureList.add(new SpawnListEntry(EntitySheep.class, 20, 2, 3));
+		this.spawnableCreatureList.add(new SpawnListEntry(EntityPig.class, 20, 2, 3));
 
-		this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySkeleton.class, 25, 1, 4));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntitySkeleton.class, 25, 1, 4));
 
 		this.decorator = new BiomeDecoratorGallifrey();
 		this.decorator.treesPerChunk = 30;
@@ -80,7 +78,7 @@ public class BiomeRedlands extends Biome {
 	
 	@Override
 	public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int x, int z, double stoneNoiseVal) {
-		IBlockState topBlock = TBlocks.gallifreyan_grass.getDefaultState();
+		IBlockState topBlock = TBlocks.gallifreyan_grass_snow.getDefaultState();
 		IBlockState fillerBlock = TBlocks.gallifreyan_dirt.getDefaultState();
 		IBlockState seaFloorBlock = TBlocks.gallifreyan_stone.getDefaultState();
 		
@@ -149,22 +147,13 @@ public class BiomeRedlands extends Biome {
 	@Override
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
 		
-		int maxTrees = rand.nextInt(8);
+		int maxTrees = rand.nextInt(3);
 		for (int trees = 0; trees < maxTrees; ++trees) {
 			BlockPos treePos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14) + 8, 0, rand.nextInt(14)+ 8));
-			if (worldIn.getBlockState(treePos.down()).getBlock() == TBlocks.gallifreyan_grass) {
+			if (worldIn.getBlockState(treePos.down()).getBlock() == TBlocks.gallifreyan_grass_snow) {
 				generateGallifreyTrees(worldIn, worldIn.getTopSolidOrLiquidBlock(treePos), treeList[rand.nextInt(treeList.length)]);
 			}
 		}
-		int maxGrass = 16;
-		for (int grass = 0; grass < maxGrass; ++grass) {
-			BlockPos grassPos = worldIn.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(14) + 8, 0, rand.nextInt(14) + 8));
-			if (worldIn.getBlockState(grassPos.down()).getBlock() == TBlocks.gallifreyan_grass) {
-				worldIn.setBlockState(grassPos, GRASS);
-			}
-			
-		}
-
 
 	}
 	

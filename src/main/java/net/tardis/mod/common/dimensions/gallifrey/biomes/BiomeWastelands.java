@@ -4,6 +4,9 @@ import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -16,6 +19,7 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.entities.EntityRaider;
 
 import java.util.Random;
 
@@ -35,8 +39,16 @@ public class BiomeWastelands extends Biome {
 		super(new BiomeProperties("Wastelands").setBaseHeight(0.0F).setHeightVariation(0.0F).setTemperature(6.0F).setRainDisabled().setWaterColor(0xF78F00));
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
+
 		this.spawnableMonsterList.clear();
 		this.spawnableWaterCreatureList.clear();
+
+		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
+
+
+		this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityRaider.class, 50, 4, 4));
+		this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySkeleton.class, 25, 1, 4));
+
 
 	}
 

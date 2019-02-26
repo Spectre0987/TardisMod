@@ -22,23 +22,27 @@ import java.util.Random;
 
 public class BlockGallifreyDirt extends Block implements IGrowable {
 
-    public BlockGallifreyDirt(Boolean isTop) {
+    public BlockGallifreyDirt(Boolean isTop, Boolean hasSnow) {
 
 
         super(Material.GROUND);
         this.setHardness(1F);
         this.setResistance(1F);
-        setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
 
 
         if (isTop) {
 
             this.setSoundType(SoundType.PLANT);
         }
-        else{
+        else {
 
-            this.setSoundType(SoundType.GROUND);
+            if (hasSnow) {
+                this.setSoundType(SoundType.SNOW);
+            }else{this.setSoundType(SoundType.GROUND);}
+
         }
+
+
 
     }
 

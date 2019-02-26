@@ -10,10 +10,7 @@ import net.minecraft.entity.ai.*;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.item.EntityTNTPrimed;
-import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -86,6 +83,10 @@ public class EntityRaider extends EntityMob {
         this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] {EntityPigZombie.class}));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityCompanion.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityZombie.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntitySkeleton.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
     }
 
 
@@ -103,7 +104,7 @@ public class EntityRaider extends EntityMob {
     protected void entityInit() {
         super.entityInit();
         this.getDataManager().register(SITTING, false);
-        this.getDataManager().register(TYPE, EntityRaider.EnumRaiderType.values()[rand.nextInt(EntityRaider.EnumRaiderType.values().length - 1)].name());
+        this.getDataManager().register(TYPE, EntityRaider.EnumRaiderType.values()[rand.nextInt(EntityRaider.EnumRaiderType.values().length)].name());
     }
 
     @Override
@@ -125,7 +126,7 @@ public class EntityRaider extends EntityMob {
 
     @Override
     protected boolean canDespawn() {
-        return false;
+        return true;
     }
 
     public EntityRaider.EnumRaiderType getType() {

@@ -5,11 +5,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityOwnable;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -69,6 +68,14 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityPlayer.class, 30));
 		this.tasks.addTask(1, new EntityAIEnterTardis(this, 1.0D));
 		this.tasks.addTask(0, new EntityAISwimming(this));
+
+
+		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityTNTPrimed.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityDalek.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityRaider.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(2, new EntityAIAvoidEntity(this, EntityArrow.class, 6.0F, 1.0D, 1.2D));
+
+
 	}
 
 

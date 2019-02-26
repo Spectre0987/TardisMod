@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GallifreyBiomeProvider extends BiomeProvider {
 
-    public static final List<Biome> BIOMES_TO_SPAWN_IN = Lists.newArrayList(TDimensions.gallifreyFarmlands,TDimensions.gallifreyRedlands);
+    public static final List<Biome> BIOMES_TO_SPAWN_IN = Lists.newArrayList(TDimensions.gallifreyRedlands,TDimensions.gallifreyMountains);
 
 
     public GallifreyBiomeProvider(World world){
