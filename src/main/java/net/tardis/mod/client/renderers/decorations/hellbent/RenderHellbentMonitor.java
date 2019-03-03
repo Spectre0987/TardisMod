@@ -57,7 +57,7 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer<TileEntityH
 
 		mc.fontRenderer.drawString("Location: " + Helper.formatBlockPos(tardis.getLocation()), 0, mc.fontRenderer.FONT_HEIGHT * 0, Color.WHITE.getRGB());
 		
-		//TODO Turn this into a Util method so it doesn't make the code look disgusting 
+		//TODO Turn this into a Util method so it doesn't make the code look disgusting
 		WorldProvider dim = DimensionManager.createProviderFor(tardis.dimension);
 		String name = "UNKNOWN!";
 		if(dim != null){
