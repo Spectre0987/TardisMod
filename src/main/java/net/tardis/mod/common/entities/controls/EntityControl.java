@@ -23,7 +23,7 @@ public abstract class EntityControl extends Entity implements IControl {
 
 	public static final DataParameter<BlockPos> CONSOLE_POS = EntityDataManager.createKey(EntityControl.class, DataSerializers.BLOCK_POS);
 	public static final DataParameter<Boolean> IS_GLOWING = EntityDataManager.createKey(EntityControl.class, DataSerializers.BOOLEAN);
-	public static SoundEvent[] rand_sounds = {TSounds.control_01, TSounds.control_03};
+	public static SoundEvent[] rand_sounds = {TSounds.control_generic_01};
 	public int ticks = 0;
 	public int direction = 1;
 	public AxisAlignedBB box = null;

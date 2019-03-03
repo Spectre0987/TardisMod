@@ -1,11 +1,13 @@
 package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
@@ -71,6 +73,11 @@ public class ControlDimChange extends EntityControl {
 			if (tardis instanceof TileEntityTardis03)
 				this.setSize(Helper.precentToPixels(6F), Helper.precentToPixels(6F));
 		}
+	}
+
+	@Override
+	public SoundEvent getUseSound() {
+		return TSounds.control_dimension;
 	}
 
 }

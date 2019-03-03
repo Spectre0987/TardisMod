@@ -2,11 +2,13 @@ package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiTelepathicCircuts;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
@@ -56,6 +58,11 @@ public class ControlTelepathicCircuts extends EntityControl {
 			if (tardis.getClass() == TileEntityTardis.class)
 				this.setSize(Helper.precentToPixels(4F), Helper.precentToPixels(2F));
 		}
+	}
+
+	@Override
+	public SoundEvent getUseSound() {
+		return TSounds.control_telepathic_circuit;
 	}
 
 }

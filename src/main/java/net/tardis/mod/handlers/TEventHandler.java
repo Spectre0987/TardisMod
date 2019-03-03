@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -175,16 +176,6 @@ public class TEventHandler {
 					event.setCanceled(true);
 				}
 			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onDalekShot(LivingAttackEvent e){
-		if(e.getEntity() instanceof EntityDalek && e.getSource().getImmediateSource() instanceof EntityArrow) {
-			if(!e.getEntity().world.isRemote){
-				e.getEntity().world.playSound(null, e.getEntity().getPosition(), SoundEvents.ENTITY_IRONGOLEM_HURT, SoundCategory.HOSTILE, 1, 1);
-			}
-			e.setCanceled(true);
 		}
 	}
 

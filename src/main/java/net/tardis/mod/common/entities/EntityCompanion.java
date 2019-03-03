@@ -68,6 +68,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityPlayer.class, 30));
 		this.tasks.addTask(1, new EntityAIEnterTardis(this, 1.0D));
 		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(0, new EntityAIMoveTowardsRestriction(this, 1.0D));
 
 
 		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityTNTPrimed.class, 6.0F, 1.0D, 1.2D));
