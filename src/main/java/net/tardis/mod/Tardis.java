@@ -290,9 +290,9 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.temporal_grace_circuits, Items.SHIELD);
 		RepairRecipes.registerRecipe(TItems.thermo, Items.IRON_INGOT);
 		
-		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_1.png"), new ResourceLocation(MODID, "interior_1"), new BlockPos(9, 2, 9)));
-		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_2.png"), new ResourceLocation(MODID, "console_room"), new BlockPos(10, 2, 9)));
-		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_builder.png"), new ResourceLocation(MODID, "interior_builder"), new BlockPos(9, 1, 9)));
+		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_sammy.png"), new ResourceLocation(MODID, "interior/interior_sammy"), new BlockPos(9, 2, 9)));
+		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_hellbent.png"), new ResourceLocation(MODID, "interior/interior_hellbent"), new BlockPos(10, 2, 9)));
+		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_builder.png"), new ResourceLocation(MODID, "interior/interior_builder"), new BlockPos(9, 1, 9)));
 		
 
 	}
