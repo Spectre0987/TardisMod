@@ -30,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -179,8 +180,23 @@ public class TEventHandler {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
+
 	@SubscribeEvent
+	public static void onDalekShot(LivingAttackEvent e){
+		DamageSource source = e.getSource();
+		Entity attacked = e.getEntity();
+		if(source != null && attacked != null && source.getImmediateSource() != null){
+			if(attacked instanceof EntityDalek && source.getImmediateSource() instanceof EntityArrow){
+				if(!attacked.world.isRemote){
+					attacked.world.playSound(null, e.getEntity().getPosition(), SoundEvents.ENTITY_IRONGOLEM_HURT, SoundCategory.HOSTILE, 1, 1);
+					e.setCanceled(true);
+				}
+			}
+		}
+	}
+
+
+	@SideOnly(Side.CLIENT)
 	public static void cancelBBRender(DrawBlockHighlightEvent event) {
 		World world = event.getPlayer().world;
 		BlockPos pos = event.getTarget().getBlockPos();

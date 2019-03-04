@@ -23,8 +23,6 @@ import java.util.Random;
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class RenderGallifreySky extends IRenderHandler {
 	
-	private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
-	
 	private static final ResourceLocation SUN = new ResourceLocation(Tardis.MODID, "textures/environment/sun.png");
 	private static final ResourceLocation DAY = new ResourceLocation(Tardis.MODID, "textures/environment/gallifrey_sky_day.png");
 	private static final ResourceLocation NIGHT = new ResourceLocation(Tardis.MODID, "textures/environment/gallifrey_sky_night.png");

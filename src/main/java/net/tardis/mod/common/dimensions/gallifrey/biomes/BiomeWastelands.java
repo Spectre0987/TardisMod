@@ -23,6 +23,8 @@ import net.tardis.mod.common.entities.EntityRaider;
 
 import java.util.Random;
 
+import static net.tardis.mod.util.common.helpers.Helper.randomEnum;
+
 
 public class BiomeWastelands extends Biome {
 
@@ -206,3 +208,5 @@ public class BiomeWastelands extends Biome {
 		return clazz.getEnumConstants()[x];
 	}
 }
+
+

@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.decoration.ModelHellbentMonitor;
@@ -55,9 +56,23 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer<TileEntityH
 	private void drawInfo(TileEntityTardis tardis) {
 
 		mc.fontRenderer.drawString("Location: " + Helper.formatBlockPos(tardis.getLocation()), 0, mc.fontRenderer.FONT_HEIGHT * 0, Color.WHITE.getRGB());
-		mc.fontRenderer.drawString("Dimension: " + Helper.formatDimensionName(DimensionManager.createProviderFor(tardis.dimension).getDimensionType().getName()), 0, mc.fontRenderer.FONT_HEIGHT * 1, Color.WHITE.getRGB());
+		
+		//TODO Turn this into a Util method so it doesn't make the code look disgusting 
+		WorldProvider dim = DimensionManager.createProviderFor(tardis.dimension);
+		String name = "UNKNOWN!";
+		if(dim != null){
+			name = Helper.formatDimensionName(dim.getDimensionType().getName());
+		}
+		
+		WorldProvider targetDim = DimensionManager.createProviderFor(tardis.getTargetDim());
+		String targetDimName  = "UNKNOWN!";
+		if(dim != null){
+			targetDimName  = Helper.formatDimensionName(targetDim.getDimensionType().getName());
+		}
+		
+		mc.fontRenderer.drawString("Dimension: " + name, 0, mc.fontRenderer.FONT_HEIGHT * 1, Color.WHITE.getRGB());
 		mc.fontRenderer.drawString("Destination: " + Helper.formatBlockPos(tardis.getDestination()), 0, mc.fontRenderer.FONT_HEIGHT * 2, Color.WHITE.getRGB());
-		mc.fontRenderer.drawString("Target Dim: " + Helper.formatDimensionName(DimensionManager.createProviderFor(tardis.getTargetDim()).getDimensionType().getName()), 0, mc.fontRenderer.FONT_HEIGHT * 3, Color.WHITE.getRGB());
+		mc.fontRenderer.drawString("Target Dim: " + targetDimName, 0, mc.fontRenderer.FONT_HEIGHT * 3, Color.WHITE.getRGB());
 		mc.fontRenderer.drawString("Artron Banks: " + Math.round(tardis.fuel * 100) + "%", 0, mc.fontRenderer.FONT_HEIGHT * 4, Color.white.getRGB());
 		if (tardis.isInFlight())
 			mc.fontRenderer.drawString("Time Left " + tardis.getTimeLeft() / 20, 0, mc.fontRenderer.FONT_HEIGHT * 5, Color.WHITE.getRGB());

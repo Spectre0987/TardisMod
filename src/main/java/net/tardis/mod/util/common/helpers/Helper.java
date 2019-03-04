@@ -37,7 +37,12 @@ import java.util.Random;
 public class Helper {
 
 	public static Random rand = new Random();
-
+	
+	public static <T extends Enum<?>> T randomEnum(Class<T> clazz, Random random) {
+		int x = random.nextInt(clazz.getEnumConstants().length);
+		return clazz.getEnumConstants()[x];
+	}
+	
 	public static void transferToOwnedTardis(EntityPlayerMP player, WorldServer world, BlockPos pos) {
 
 	}
@@ -194,6 +199,7 @@ public class Helper {
 	}
 
 	public static String formatDimensionName(String name) {
+		if(name == null) return "UNKNOWN!";
 		name = name.replace("_", " ");
 		char[] nameChars = name.toCharArray();
 		for (int index = 0; index < nameChars.length; ++index) {

@@ -16,6 +16,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.ItemKey;
@@ -92,6 +94,7 @@ public class TardisHelper {
 	}
 
 	//If you use this on the client, I WILL come to your house with a baseball bat :) ~Fril
+	@SideOnly(Side.SERVER)
 	public static TileEntityTardis getConsole(BlockPos pos) {
 		WorldServer worldServer = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(TDimensions.TARDIS_ID);
 
