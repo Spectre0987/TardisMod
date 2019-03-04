@@ -55,22 +55,24 @@ repositories {
     }
 }
 
+
+jar{
+    manifest {
+        attributes 'FMLAT': 'tardis_at.cfg'
+    }
+}
+
 dependencies {
     //use deobfProvided for optional dependencies, deobfCompile for required ones!
 
     //ic2-ex
     compileOnly "net.industrial-craft:industrialcraft-2:${project.ic2ex_version}:api"
     runtime "net.industrial-craft:industrialcraft-2:${project.ic2ex_version}"
-    
+
+
     //JEI
     compileOnly "mezz.jei:jei_1.12.2:4.14.4.267:api"
     runtime "mezz.jei:jei_1.12.2:4.14.4.267"
-}
-
-jar{
-    manifest {
-        attributes 'FMLAT': 'tardis_at.cfg'
-    }
 }
 
 processResources {

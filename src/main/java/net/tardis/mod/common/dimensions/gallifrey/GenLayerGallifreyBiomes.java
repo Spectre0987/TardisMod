@@ -9,7 +9,8 @@ public class GenLayerGallifreyBiomes extends GenLayer {
 
     protected Biome gallifreyBiomes[] = (new Biome[]{
             TDimensions.gallifreyRedlands,
-            TDimensions.gallifreyFarmlands
+            TDimensions.gallifreyFarmlands,
+            TDimensions.gallifreyMountains
     });
 
     public GenLayerGallifreyBiomes(long l) {

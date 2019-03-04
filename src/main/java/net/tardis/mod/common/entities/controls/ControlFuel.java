@@ -1,8 +1,10 @@
 package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
@@ -11,6 +13,8 @@ import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 public class ControlFuel extends EntityControl {
+
+	public static SoundEvent controlSound;
 
 	public ControlFuel(TileEntityTardis tardis) {
 		super(tardis);
@@ -48,4 +52,12 @@ public class ControlFuel extends EntityControl {
 				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(1F));
 		}
 	}
+
+	@Override
+	public SoundEvent getUseSound() {
+		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
+		return tardis.isFueling() ? TSounds.control_refuel_start : TSounds.control_refuel_stop;
+	}
+
+
 }
