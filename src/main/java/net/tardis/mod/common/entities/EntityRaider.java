@@ -105,7 +105,7 @@ public class EntityRaider extends EntityMob {
     protected void entityInit() {
         super.entityInit();
         this.getDataManager().register(SITTING, false);
-        this.getDataManager().register(TYPE, Helper.randomEnum(EntityCompanion.EnumRaiderType.class, world.rand).name());
+        this.getDataManager().register(TYPE, Helper.randomEnum(EntityRaider.EnumRaiderType.class, world.rand).name());
     }
 
     @Override
