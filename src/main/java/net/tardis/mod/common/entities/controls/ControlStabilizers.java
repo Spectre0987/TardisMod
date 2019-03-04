@@ -70,12 +70,7 @@ public class ControlStabilizers extends EntityControl {
 	@Override
 	public SoundEvent getUseSound() {
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
-		SystemStabilizers stab = tardis.getSystem(SystemStabilizers.class);
-		if(stab.isOn() == true) { controlSound = TSounds.control_stabilizers_on; }
-		else controlSound = TSounds.control_stabilizers_off;
-
-
-		return controlSound;
+		return tardis.isFueling() ? TSounds.control_stabilizers_on : TSounds.control_stabilizers_off;
 	}
 
 }

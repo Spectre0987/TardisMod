@@ -33,13 +33,7 @@ public class WorldProviderGallifrey extends WorldProviderSurface {
 	public IRenderHandler getSkyRenderer() {
 		return SKY;
 	}
-	
-	//@Nullable
-	//Override
-	//public IRenderHandler getCloudRenderer() {
-	//	return new RenderVoid();
-	//}
-	
+
 	@Override
 	public DimensionType getDimensionType() {
 		return TDimensions.GALLIFREY_TYPE;

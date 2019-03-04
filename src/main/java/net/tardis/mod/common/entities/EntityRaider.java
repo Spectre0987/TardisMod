@@ -40,8 +40,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.renderers.entities.RenderRaider;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.entities.ai.EntityAIRaiderAttack;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.common.helpers.Helper;
+
 import java.util.UUID;
 
 public class EntityRaider extends EntityMob {
@@ -104,7 +105,7 @@ public class EntityRaider extends EntityMob {
     protected void entityInit() {
         super.entityInit();
         this.getDataManager().register(SITTING, false);
-        this.getDataManager().register(TYPE, EntityRaider.EnumRaiderType.values()[rand.nextInt(EntityRaider.EnumRaiderType.values().length)].name());
+        this.getDataManager().register(TYPE, Helper.randomEnum(EntityCompanion.EnumCompanionType.class, world.rand).name());
     }
 
     @Override

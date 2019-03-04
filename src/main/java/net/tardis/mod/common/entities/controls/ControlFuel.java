@@ -56,9 +56,7 @@ public class ControlFuel extends EntityControl {
 	@Override
 	public SoundEvent getUseSound() {
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
-		if(tardis.isFueling()){controlSound = TSounds.control_refuel_start;}
-		else controlSound = TSounds.control_refuel_stop;
-		return controlSound;
+		return tardis.isFueling() ? TSounds.control_refuel_start : TSounds.control_refuel_stop;
 	}
 
 
