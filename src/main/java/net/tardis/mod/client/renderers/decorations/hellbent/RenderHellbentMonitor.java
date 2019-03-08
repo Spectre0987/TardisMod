@@ -60,13 +60,13 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer<TileEntityH
 		//TODO Turn this into a Util method so it doesn't make the code look disgusting
 		WorldProvider dim = DimensionManager.createProviderFor(tardis.dimension);
 		String name = "UNKNOWN!";
-		if(dim != null){
+		if(dim != null && dim.getDimensionType() != null){
 			name = Helper.formatDimensionName(dim.getDimensionType().getName());
 		}
 		
 		WorldProvider targetDim = DimensionManager.createProviderFor(tardis.getTargetDim());
 		String targetDimName  = "UNKNOWN!";
-		if(dim != null){
+		if(dim != null && targetDim.getDimensionType() != null){
 			targetDimName  = Helper.formatDimensionName(targetDim.getDimensionType().getName());
 		}
 		
