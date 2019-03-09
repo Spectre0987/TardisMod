@@ -35,8 +35,7 @@ public class RenderHelper {
 	private static WorldBoti wBoti;
 	private static FloatBuffer FOG_BUFFER = GLAllocation.createDirectFloatBuffer(16);
 
-	public RenderHelper() {
-	}
+	public RenderHelper() {}
 
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size, boolean renderFog) {
 		if (ClientProxy.getRenderBOTI() && MinecraftForgeClient.getRenderPass() == 1) {
@@ -61,9 +60,7 @@ public class RenderHelper {
 			GL11.glStencilMask(0x00);
 			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
 
-			// Draw scene from portal view
-
-			try {
+				// Draw scene from portal view
 				if (wBoti == null || wBoti.dimension != te.getDimension())
 					wBoti = new WorldBoti(te.getDimension(), Minecraft.getMinecraft().world, te.getWorldShell());
 				WorldClient oldW = Minecraft.getMinecraft().world;
@@ -107,10 +104,7 @@ public class RenderHelper {
 				GlStateManager.popMatrix();
 				old.bindFramebuffer(true);
 				RenderHelper.setRenderGlobalWorld(oldW);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
 
@@ -123,6 +117,7 @@ public class RenderHelper {
 			GlStateManager.depthMask(true);
 			
 			GlStateManager.popMatrix();
+			
 		} else if (!ClientProxy.getRenderBOTI()) {
 			RenderHelper.drawOutline(size);
 		}

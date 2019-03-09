@@ -11,6 +11,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
@@ -42,6 +46,8 @@ public class WorldShell implements IBlockAccess {
 	private long time = 0L;
 	private float rotation = 0F;
 	private Biome shellBiome = Biome.getBiome(0);
+	private List<Entity> renderEntities = new ArrayList<Entity>();
+	private List<EntityPlayer> playersForRender = new ArrayList<EntityPlayer>();
 
 	public WorldShell(BlockPos bp) {
 		blockMap = new HashMap<>();
@@ -132,6 +138,20 @@ public class WorldShell implements IBlockAccess {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void setEntities(World world) {
+		for(NBTTagCompound tag : this.entities) {
+			Entity e = EntityList.createEntityFromNBT(tag, world);
+			if(e != null)
+				this.renderEntities.add(e);
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public List<Entity> getEntitiesForRender(){
+		return this.renderEntities;
+	}
+	
 	public List<NBTTagCompound> getEntities() {
 		return this.entities;
 	}
@@ -165,5 +185,18 @@ public class WorldShell implements IBlockAccess {
 
 	public void setRotation(float rot) {
 		this.rotation = rot;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public List<EntityPlayer> getPlayersForRender(){
+		return this.playersForRender;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void setPlayers(World world) {
+		this.playersForRender.clear();
+		for(PlayerStorage stor : this.players) {
+			this.playersForRender.add(stor.getPlayer(world));
+		}
 	}
 }

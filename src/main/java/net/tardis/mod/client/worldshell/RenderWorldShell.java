@@ -11,10 +11,12 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
@@ -42,12 +44,23 @@ public class RenderWorldShell {
 			}
 		}
 		//Tile Entites
+		GlStateManager.color(1F, 1, 1, 1);
 		for(TileEntity entity : cont.getWorldShell().getTESRs()) {
 			if(entity != null) {
 				entity.setWorld(world);
 				TileEntitySpecialRenderer render = TileEntityRendererDispatcher.instance.getRenderer(entity);
 				if(render != null)
 					render.render(entity, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), 0, 0, 1);
+			}
+		}
+		
+		//Entities
+		GlStateManager.color(1F, 1, 1, 1);
+		for(Entity entity : cont.getWorldShell().getEntitiesForRender()) {
+			Render render = Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(entity);
+			if(render != null) {
+				GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
+				render.doRender(entity, entity.posX, entity.posY, entity.posZ, entity.rotationYaw, 0);
 			}
 		}
 		GlStateManager.popMatrix();
