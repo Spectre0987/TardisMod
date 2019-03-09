@@ -53,15 +53,9 @@ public class RenderWorldShell {
 					render.render(entity, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), 0, 0, 1);
 			}
 		}
-		
 		//Entities
-		GlStateManager.color(1F, 1, 1, 1);
-		for(Entity entity : cont.getWorldShell().getEntitiesForRender()) {
-			Render render = Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(entity);
-			if(render != null) {
-				GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
-				render.doRender(entity, entity.posX, entity.posY, entity.posZ, entity.rotationYaw, 0);
-			}
+		for(Entity e : cont.getWorldShell().getEntityiesForRender()) {
+			Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 		}
 		GlStateManager.popMatrix();
 	}

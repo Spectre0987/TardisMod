@@ -237,7 +237,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					if(world.getWorldTime() % 5 == 1) {
 						for(BlockPos pos : this.getBlocksInAABB(BB.offset(doorPos))) {
 							IBlockState state = tardis.getWorld().getBlockState(pos);
-							if((state.getBlock().hasTileEntity(state) || state.getRenderType() != EnumBlockRenderType.INVISIBLE))
+							if((state.getBlock().hasTileEntity() || state.getRenderType() != EnumBlockRenderType.INVISIBLE) || state.getBlock() instanceof BlockTardisTop)
 								worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
 						}
 						this.sendBOTI(EnumType.BLOCKS);

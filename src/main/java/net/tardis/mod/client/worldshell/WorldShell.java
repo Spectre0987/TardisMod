@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -47,7 +46,6 @@ public class WorldShell implements IBlockAccess {
 	private float rotation = 0F;
 	private Biome shellBiome = Biome.getBiome(0);
 	private List<Entity> renderEntities = new ArrayList<Entity>();
-	private List<EntityPlayer> playersForRender = new ArrayList<EntityPlayer>();
 
 	public WorldShell(BlockPos bp) {
 		blockMap = new HashMap<>();
@@ -188,15 +186,9 @@ public class WorldShell implements IBlockAccess {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public List<EntityPlayer> getPlayersForRender(){
-		return this.playersForRender;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public void setPlayers(World world) {
-		this.playersForRender.clear();
-		for(PlayerStorage stor : this.players) {
-			this.playersForRender.add(stor.getPlayer(world));
+	public void setEntities(World world) {
+		for(NBTTagCompound tag : this.entities) {
+			this.renderEntities.add(EntityList.createEntityFromNBT(tag, world));
 		}
 	}
 }
