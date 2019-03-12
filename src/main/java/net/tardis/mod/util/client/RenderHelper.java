@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
@@ -35,11 +34,8 @@ public class RenderHelper {
 	private static Framebuffer fb;
 	private static WorldBoti wBoti;
 	private static FloatBuffer FOG_BUFFER = GLAllocation.createDirectFloatBuffer(16);
-	private static float lastBrightnessX = OpenGlHelper.lastBrightnessX;
-	private static float lastBrightnessY = OpenGlHelper.lastBrightnessY;
 
-	public RenderHelper() {
-	}
+	public RenderHelper() {}
 
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size, boolean renderFog) {
 		if (ClientProxy.getRenderBOTI() && MinecraftForgeClient.getRenderPass() == 1) {
@@ -64,9 +60,7 @@ public class RenderHelper {
 			GL11.glStencilMask(0x00);
 			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
 
-			// Draw scene from portal view
-
-			try {
+				// Draw scene from portal view
 				if (wBoti == null || wBoti.dimension != te.getDimension())
 					wBoti = new WorldBoti(te.getDimension(), Minecraft.getMinecraft().world, te.getWorldShell());
 				WorldClient oldW = Minecraft.getMinecraft().world;
@@ -103,18 +97,14 @@ public class RenderHelper {
 				}
 				
 				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, 1);
-				renderShell.doRender(te, offset.x, offset.y, offset.z, 0, partialTicks, wBoti);
+				renderShell.renderWorldShell(te, wBoti, offset.x, offset.y, offset.z);
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
-				GlStateManager.popMatrix();
 				
 				fb.deleteFramebuffer();
+				GlStateManager.popMatrix();
 				old.bindFramebuffer(true);
 				RenderHelper.setRenderGlobalWorld(oldW);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
+				
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
 
@@ -184,36 +174,6 @@ public class RenderHelper {
 		bb.pos(0, 0, 1).color(0F, 1, 0, 1F).endVertex();
 		Tessellator.getInstance().draw();
 		GlStateManager.enableTexture2D();
-		GlStateManager.popMatrix();
-	}
-
-	public static void setLightmapTextureCoords(float x, float y) {
-		lastBrightnessX = OpenGlHelper.lastBrightnessX;
-		lastBrightnessY = OpenGlHelper.lastBrightnessY;
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, x, y);
-	}
-
-	public static void restoreLightmapTextureCoords() {
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastBrightnessX, lastBrightnessY);
-	}
-
-	public static void setupRenderLightning() {
-		GlStateManager.pushMatrix();
-		GlStateManager.disableTexture2D();
-		GlStateManager.disableLighting();
-		GlStateManager.disableCull();
-		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_CONSTANT_ALPHA);
-		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.003921569F);
-		setLightmapTextureCoords(240, 240);
-	}
-
-	public static void finishRenderLightning() {
-		restoreLightmapTextureCoords();
-		GlStateManager.enableLighting();
-		GlStateManager.enableTexture2D();
-		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
-		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 	}
 

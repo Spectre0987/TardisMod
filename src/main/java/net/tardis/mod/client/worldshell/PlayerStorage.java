@@ -1,12 +1,16 @@
 package net.tardis.mod.client.worldshell;
 
+import java.util.UUID;
+
 import com.mojang.authlib.GameProfile;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
-
-import java.util.UUID;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PlayerStorage {
 
@@ -49,5 +53,19 @@ public class PlayerStorage {
 		buf.writeDouble(posY);
 		buf.writeDouble(posZ);
 		ByteBufUtils.writeTag(buf, tag);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public FakeClientPlayer getPlayer(World world) {
+		FakeClientPlayer player = new FakeClientPlayer(world, this.profile);
+		player.setPosition(posX, posY, posZ);
+		player.setSneaking(tag.getBoolean("sneak"));
+		player.isRiding = tag.getBoolean("riding");
+		player.limbSwing = tag.getFloat("limbSwing");
+		player.limbSwingAmount = tag.getFloat("limbSwingAmount");
+		player.ticksExisted = tag.getInteger("ageInTicks");
+		player.rotationYaw = tag.getFloat("rotationYaw");
+		player.rotationYawHead = tag.getFloat("rotationYawHead");
+		return player;
 	}
 }

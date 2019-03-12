@@ -63,7 +63,7 @@ public class MessageDoorOpen implements IMessage {
 					TileEntity te = mc.world.getTileEntity(mes.pos);
 					if (te instanceof TileEntityDoor) {
 						TileEntityDoor door = ((TileEntityDoor) te);
-						door.isLocked = !mes.isOpen;
+						door.setLocked(!mes.isOpen);
 						door.isDemat = mes.isDemat;
 						door.isRemat = mes.isRemat;
 						door.setLightLevel(mes.lightLevel);
