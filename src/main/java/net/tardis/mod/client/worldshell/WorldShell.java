@@ -184,11 +184,4 @@ public class WorldShell implements IBlockAccess {
 	public void setRotation(float rot) {
 		this.rotation = rot;
 	}
-	
-	@SideOnly(Side.CLIENT)
-	public void setEntities(World world) {
-		for(NBTTagCompound tag : this.entities) {
-			this.renderEntities.add(EntityList.createEntityFromNBT(tag, world));
-		}
-	}
 }

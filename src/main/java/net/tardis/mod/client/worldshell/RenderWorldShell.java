@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -54,7 +53,7 @@ public class RenderWorldShell {
 			}
 		}
 		//Entities
-		for(Entity e : cont.getWorldShell().getEntityiesForRender()) {
+		for(Entity e : cont.getWorldShell().getEntitiesForRender()) {
 			Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 		}
 		GlStateManager.popMatrix();
