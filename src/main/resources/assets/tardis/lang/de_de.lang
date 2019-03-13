@@ -1,0 +1,337 @@
+itemGroup.tardis_blocks=TARDIS Mod Blocks
+itemGroup.tardis_items=TARDIS Mod Gegenstände
+itemGroup.tardis_galliblocks=Merkwürdige Blocks
+
+item.tardis.key.name=TARDIS Schlüssel
+item.tardis.pos_setter.name=Koordinaten Logger
+item.tardis.circuts.name=Exotronischer Schaltkreis
+item.tardis.sonic_screwdriver.name=Schallschraubenzieher
+item.tardis.gunstick.name=Dalek Gewehrschaft
+item.tardis.power_cell.name=Trionische Energiezelle
+item.tardis.ray_gun.name=Dalek-Gewehr
+item.tardis.void_specs.name=3D-Brille
+item.tardis.fob_watch.name=Gallifreyische Taschenuhr
+item.tardis.fez.name=Fez
+item.tardis.bowtie.name=Fliege
+item.tardis.umbrella_open.name=Schallschirm
+item.tardis.umbrella_closed.name=Schallschirm
+item.tardis.sonic_blaster.name=Sonic Blaster
+item.tardis.sonic_cane.name=Schallgehstock
+item.tardis.vortex_manip.name=Vortex Manipulator
+item.tardis.fluid_link.name=Fluid Links
+item.tardis.demat_circuit.name=Dematerialisationsschaltkreis
+item.tardis.artron_capacitor.name=Artron Kondensator
+item.tardis.sonic_pen.name=Schallstift
+item.tardis.tardis_manual.name=TARDIS-Gebrauchsanleitung
+item.tardis.space_helm.name=Raumanzugshelm
+item.tardis.space_chest.name=Raumanzug
+item.tardis.space_legs.name=Raumanzugshose
+item.tardis.first_cane.name=Erster Doktors Gehstock
+item.tardis.fourth_hat.name=Vierter Doktors Hut
+item.tardis.symbiotic_nuclei.name=Symbiotische Nuklei
+item.tardis.stattenheim_remote.name=Stattenheim Fernbedienung
+item.tardis.ruby.name=Rubin
+item.tardis.thirteen_coat.name=Dreizehns Jacke
+item.tardis.sonic_shades.name=Schallsonnenbrille
+item.tardis.time_vector_generator.name=Time Vektor Generator
+item.tardis.biodampener.name=Biodämpfer
+item.tardis.mercury_bottle.name=Quecksilberflasche
+item.tardis.cinnabar.name=Zinnoberstaub
+item.tardis.antenna.name=Interstitielle Antenne
+item.tardis.hellbent_door.name=Hellbent Rundeltür
+item.tardis.hellbent_corridor.name=Hellbent Korridor Eingang
+item.tardis.key_01.name=TARDIS Schlüssel
+item.tardis.marker.name=Marker
+item.tardis.interiordoor.name=Interne Tür
+item.tardis.sonic_screwdriver_13.name=Dreizehns Schallschraubenzieher
+item.tardis.chameleon_circuit.name=Chamäleon-Schaltkreis
+item.tardis.bessie.name=Bessie
+item.tardis.temporal_grace_circuits.name=Temporal Grace Circuits
+item.tardis.tardis_repairkit.name=TARDIS Werkezug
+item.tardis.stabilizers.name=Stabilisierungsschaltkreis
+item.tardis.thermo.name=Thermalkupplung
+item.tardis.sonic_third.name=Dritter Doktors Schallschraubenzieher
+item.tardis.sonic_screwdriver.name=Schallschraubenzieher
+
+tooltip.remote=Verbindung mit TARDIS bei:
+tooltip.remote.time=TARDIS kommt an in
+tooltip.remote.fuel=Artron Level
+tooltip.remote.exteriorpos=TARDIS Äußere:
+tooltip.remote.bind=Rechtsklick auf die Konsole zum Verbinden.
+tooltip.tardis.toolkit=Rechtsklick auf die Konsole um alle nicht kaputten System um 15% zu reparieren
+
+tooltip.manual.sn=Im Herz einer Supernova gefunden.
+
+general.time.seconds=Sekunden
+
+tile.tardis.tardis.name=TARDIS
+tile.tardis.time_rotor.name=Konsole
+tile.tardis.panel.name=Rundel
+tile.tardis.door.name=TARDIS Tür
+tile.tardis.tardis_top.name=TARDIS
+tile.tardis.light.name=Lampe
+tile.tardis.homing_beacon.name=Peilsender
+tile.tardis.chronodine_generator.name=Chronodyne-Generator
+tile.tardis.grate.name=Gitter
+tile.tardis.temporal_lab.name=Temporales Labor
+tile.tardis.umbrella_stand.name=Regenschirmhalter
+tile.tardis.alembic.name=Destillationsgefäß
+tile.tardis.food_machine.name=Essens-Machine
+tile.tardis.electric_panel.name=Elektronische Schnittstelle
+tile.tardis.megalos.name=Meglos
+tile.tardis.console.name=TARDIS Konsole
+tile.tardis.toyota_hexagon_1.name=Toyota Block
+tile.tardis.ruby_ore.name=Rubinerz
+tile.tardis.holoprojector.name=Holoprojektor
+tile.tardis.tardis_coral.name=TARDIS Koralle
+tile.tardis.cinnabar_ore.name=Zinnobererz
+tile.tardis.hellbent_floor.name=Hellbent Boden
+tile.tardis.hellbent_glass01.name=Hellbent Glas
+tile.tardis.hellbent_glass02.name=Hellbent Glas
+tile.tardis.hellbent_glass03.name=Hellbent Glas
+tile.tardis.hellbent_glass04.name=Hellbent Glas
+tile.tardis.hellbent_glass05.name=Hellbent Glas
+tile.tardis.hellbent_glass06.name=Hellbent Glas
+tile.tardis.hellbent_glass07.name=Hellbent Glas
+tile.tardis.hellbent_glass08.name=Hellbent Glas
+tile.tardis.hellbent_roundel01.name=Hellbent Rundel
+tile.tardis.hellbent_roundel02.name=Hellbent Rundel
+tile.tardis.hellbent_roundel03.name=Hellbent Rundel
+tile.tardis.hellbent_roundel04.name=Hellbent Rundel
+tile.tardis.hellbent_silverwall.name=Hellbent Wand Silber
+tile.tardis.hellbent_wall.name=Hellbent Wand
+tile.tardis.hellbent_vents.name=Hellbent Lüftung
+tile.tardis.hellbent_light.name=Hellbent Fehlersuchlampen
+tile.tardis.hellbent_monitor.name=Hellbent Monitor
+tile.tardis.hellbent_pole.name=Hellbent Stange
+tile.tardis.hellbent_roof.name=Hellbent Deckenteil
+tile.tardis.s13roundellit1.name=S13 Rundel
+tile.tardis.s13roundellit2.name=S13 Rundel
+tile.tardis.s13roundellit3.name=S13 Rundel
+tile.tardis.s13blankroundel1.name=S13 Rundel
+tile.tardis.s13blankroundel2.name=S13 Rundel
+tile.tardis.s13blankroundel3.name=S13 Rundel
+tile.tardis.s13floor.name=S13 Boden
+tile.tardis.s13flooralt.name=S13 Boden
+tile.tardis.brachackitable.name=Brachacki Tisch
+tile.tardis.json_test.name=Json Tester
+tile.tardis.telos_sand.name=Telos Sand
+tile.tardis.moon_dirt.name=Monderde
+tile.tardis.circuit_repair.name=Stationäre Mikroschweißstation
+tile.tardis.zero_room.name=Null Raum
+tile.tardis.zero_room_slab.name=Null Raum Stufe
+tile.tardis.zero_room_stairs.name=Null Raum Treppe
+tile.tardis.suitcase.name=Mysteriöser Koffer
+tile.tardis.br_chair.name=Stuhl
+tile.tardis.am_sphere.name=Armillarsphäre
+tile.tardis.toyota_spin.name=Toyota Drehdingstabums
+tile.tardis.sonic_workbench.name=Schallwerkbank
+
+tile.tardis.gallifreyan_grass.name=Merkwürdiges Glas
+tile.tardis.gallifreyan_dirt.name=Merkwürdige Erde
+tile.tardis.gallifreyan_stone.name=Merkwürdiger Stein
+
+
+
+
+tardis.locked.true=TARDIS abgeschlossen!
+tardis.locked.false=TARDIS aufgeschlossen!
+
+door.tardis.locked.true=Diese TARDIS ist nun zweifach abgeschlossen!
+door.tardis.locked.false=Doppel Schloss gelüftet.
+
+death.attack.dalek=wurde von einem Dalek-Gewehr erschossen!
+death.cyberman.ray=wurde gelöscht.
+
+damage.dalek=wurde exterminiert!
+
+screw.recall=Zurückruf-Modus
+screw.lamp=Bastelmodus
+screwdriver.hallway=Raum Gen - Flur
+screw.generic_room=Raum Gen - Kleiner Raum
+screw.electric=Roundel Panel demontieren
+screwdriver.hads=Rückkehr von H.A.D.S
+screw.general=Block interaktionen
+screw.entities=Wesen interaktionen
+screw.tardis.signal=Signal TARDIS
+screw.entity=Wesen Interaktion
+
+screw.fail.itswood=Es funktioniert nicht auf Holz!
+screw.fail.bottom-door=Um die Tür zu öffnen, muss der Boden anvisiert werden!
+
+raygun.ammo=Ammo übrig
+raygun.ammo.none=Keine Ammo!
+
+mods.tardis.compat.optifine=Bei dir läuft Optifine. Das ist ok, wir verstehen es. Jedoch nehmen wir kein bug reports von Optifine benutzner! 
+
+tardis.none=Du besitzt keine TARIDS
+tardis.flying=TARDIS fliegt!
+
+tardis.console.land.true=Die TARDIS sucht weiter oben nach einem Landeflecken
+tardis.console.land.false=Die TARDIS sucht weiter unten nach einem Landeflecken
+
+tardis.direction.north=Die TARDIS schaut nach Norden
+tardis.direction.east=Die TARDIS schaut nach Osten
+tardis.direction.south=Die TARDIS schaut nach Süden
+tardis.direction.west=Die TARDIS schaut nach Westen
+
+tardis.missing=Die äußer plasmatische Hülle konnte nicht gefunden werden. Bitte erneut landen!
+
+tardis.magnitude=TARDIS Koordinatenmodifikator ist
+
+tardis.hads.enabled.true=H.A.D.S ist aktiviert
+tardis.hads.enabled.false=H.A.D.S ist deaktiviert
+
+protocol.ccircut=Chamäleon-Schaltkreis
+protocol.hads=H.A.D.S umschalten
+protocol.hum=Summen umschalten
+protocol.tardis.find_rift=Nächsten Riss finden
+protocol.tardis.systemreadout=Sub-System auslese
+protocol.tardis.change.console=Konsole ändern
+protocol.tardis.ars=Architektonisches Rekonfigurationssystem
+protocol.tardis.regenroom=Konsolenraum regenerieren
+protocol.tardis.lock=Doppelverschluss Türen
+protocol.tardis.destroy.rift=Dimensionaler Riss konsumieren
+protocol.tardis.repair=TARDIS reparieren
+protocol.tardis.waypoint.load=Wegpunkt
+protocol.tardis.interior=Innenraum ändern
+
+tardis.repair.false=TARDIS-Hülle repariert nicht mehr
+tardis.repair.true=TARDIS-Hülle repariert sich
+
+systems.tardis.flight=Flug System
+systems.protocol.dimensions=Dimensionsdämme
+system.tardis.fluidlinks=Fluid Links
+systems.tardis.antenna=Interstitielle Antenne
+system.tardis.ccircuit=Chamäleon-Schaltkreis
+system.tardis.temporal_grace=Temporal Grace Circuits
+system.tardis.stabilizers=Stabilisierungsschaltkreis
+system.tardis.thermo=Thermalkupplung
+
+tardis.dimension=Nav-Com Dimension ist:
+
+tardis.event.dalek=Dalek Invasion bei:
+
+config.category.dims=Dimensionen
+config.dims=Dimensionsliste
+config.setdim=Set Dimension IDs für diese Mod?
+config.tDim=TARDIS Dimension
+config.bhDim=Weltraum Dimension
+config.dim.usewhitelist=Sollen die Dimensionen in der nachstehenden Liste als Whitelist verwendet werden?
+config.telosDim=Telos Dimension ID
+
+config.entity=Wesen
+config.entity.allowed=Soll diese Mod Mobs hinzufügen?
+config.entity.cybermen.spawnchance=Chance das Cyberman spawnen (Per Chunk)
+config.entity.adipose.spawnchance=Chance das Adipose spawnen (Per Chunk)
+
+config.misc=Sonnstiges
+config.misc.givekey=Dem Spieler ein TARDIS-Schlüssel geben wenn er die Welt betritt?
+config.misc.maxrand=Maximal Anzahl der Blöcke die die TARDIS beim zufallsgenerator Reisen darf?
+config.misc.shake=Soll die Kamera beim Starten/Landen wackeln?
+
+config.boti=BOTI aktivieren?
+
+entity.launch_lever.name=Zeitrotorhandbremse
+entity.x_valve.name=Raumkontrolle - X
+entity.y_valve.name=Raumkontrolle - Y
+entity.z_valve.name=Raumkontrolle - Z
+entity.dim_change.name=Dimensionskontrole
+entity.screen.name=Bildschirm
+entity.rand_control.name=Koordinatenzufallsgenerator
+entity.tardis_door.name=Tür
+entity.stc_load.name=Wegpunkteingabe
+entity.stc_button.name=Wegpunktslot
+entity.control_flight.name=Echtfluginterface
+entity.fuel.name=Tanken
+entity.land_type.name=Lande-Typ-Selector
+entity.direction_control.name=Richtungskontrolle
+entity.tardis.name=TARDIS
+entity.tardis_fast_return.name=Schnellumkehr
+entity.telepathic_circuts.name=Telepathatischerschaltkreis
+entity.tardis_door_control.name=Türknopf
+entity.tardis_magnitude.name=Koordinatenzunahmekontrolle
+entity.tardis_phone.name=Kommunikator
+entity.stabilizers.name=Stabilisatoren
+entity.monitor.name=Monitor
+entity.waypoint_select.name=Wegpunktauswahl
+
+tardis.stabilizers.true=Stabilisatoren an
+tardis.stabilizers.false=Stabilisatoren aus
+
+entity.dalek.name=Dalek
+entity.adipose.name=Adipose
+entity.invasion_cyberman.name=Invasion Cyberman
+
+death.cyberman.generic=wurde konvertiert!
+
+key.console.location=Innenraumposition:
+
+manual.help=Über die Konsole gucken um Kontrollen zu lernen
+
+tardis.damage.demat=Der Dematerialisierungskreislauf wurde gerösstet!
+
+tardis.message.refuelling=Tardis tankt...
+tardis.message.no_longer_refuelling=Tardis tankt nicht mehr.
+tardis.message.tc_notfound=%s konnte auf dieser Ebene nicht gefunden werden
+tardis.message.relocation=Relokalisiere dich zu äußeren plamatischen Hülle!
+
+tardis.subtitle.vworp=Vworp
+tardis.subtitle.flying=TARDIS fliegt
+tardis.subtitle.sonic=Schallschraubenzieher summt
+tardis.subtitle.dalek_ray=Dalek-Gewehr schießt
+tardis.subtitle.dalek=Dalek
+tardis.subtitle.force_field=Kraftfeld
+tardis.subtitle.locked=Abgeschlossen
+tardis.subtitle.door_open=Tür offnet sich
+tardis.subtitle.door_closed=Tür schließt sich
+tardis.subtitle.cloister_bell=Cloister Glocke
+tardis.subtitle.drum_beat=Trommelschlag
+tardis.subtitle.stutter= TARDIS stottert
+tardis.subtitle.vm_teleport=Vortex Manipulator teleportation
+
+command.no_tardis_owned=Kein TARDIS gefunden
+command.no_player_found=Kein Spieler mit diesem Benutzernamen gefunden
+command.tardis_travel=Die ausgewählte TARDIS wird zu dir gebracht
+command.tardis_deleted=TARDIS gelöscht
+
+commands.tardis.teleportin.usage=/tardis interior [player]
+commands.tardis.grow.usage=/tardis grow
+commands.tardis.summon.usage=/summon tardis <player>
+commands.tardis.remove.usage=/tardis remove <player>
+commands.tardis.restoresys.usage=/tardis restoresys <player> <system1> [system2] [system3]...
+
+gui.tardis.travel=Reise
+
+companion.tardis.follow.true=Bitte folge mir.
+companion.tardis.follow.false=Warte hier.
+companion.tardis.tardis=Geh zurück zur TARDIS und warte.
+companion.tardis.fetch=Du musst zur TARDIS zurück.
+companion.tardis.saved.dalek=Gute Arbeit mit den Darleks!
+
+jei.tardis.book.description=Erhalten wenn man die Konsole mit einem Buch rechtsklickt.
+
+course.tardis.direction.x=Koordinaten Rutscher - X!
+course.tardis.direction.y=Koordinaten Rutscher - Y!
+course.tardis.direction.z=Koordinaten Rutscher - Z!
+course.tardis.dimension=Dimensions Abdrift!
+course.tardis.artron_leak=Kraftstoff unter überdruck!
+course.tardis.spin=Drehimpuls überladung!
+
+box.tardis.01=1963 - Brachacki
+box.tardis.02=1966 - Veränderte Brachacki
+box.tardis.03=1976 - Newbery
+box.tardis.04=1996 - Hudolin
+box.tardis.05=1980 - Yardley-Jones
+box.tardis.cc=Verkleidet
+box.master.clock=Master's Uhr
+box.tt=TT Kapsel
+box.door=Hölznere Tür
+
+tardis.hum.tardis:interior_hum_80=1980's Innenraumsummen
+tardis.hum.tardis:1963_interior_hum=1963 Innenraumsummen
+tardis.hum.tardis:tardis_hum_copper=Copper Innenraumsummen
+tardis.hum.tardis:tardis_hum_coral=Coral Innenraumsummen
+tardis.hum.tardis:tardis_hum_toyota=Toyota Innenraumsummen
+tardis.hum.tardis:tardis_hum_70=1970's Innenraumsummen
+tardis.hum.null=Summen deaktiviert

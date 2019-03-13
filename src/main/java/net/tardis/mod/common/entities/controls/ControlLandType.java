@@ -1,10 +1,13 @@
 package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
@@ -12,6 +15,8 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlLandType extends EntityControl {
+
+	public static SoundEvent controlSound;
 
 	public ControlLandType(TileEntityTardis tardis) {
 		super(tardis);
@@ -48,4 +53,13 @@ public class ControlLandType extends EntityControl {
 				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
 		}
 	}
+
+	@Override
+	public SoundEvent getUseSound() {
+		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
+		return tardis.isFueling() ? TSounds.control_landing_type_up : TSounds.control_landing_type_down;
+
+	}
+
+
 }

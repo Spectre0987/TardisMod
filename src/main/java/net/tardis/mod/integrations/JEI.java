@@ -1,5 +1,9 @@
 package net.tardis.mod.integrations;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
@@ -11,10 +15,6 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.recipes.RepairRecipes;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.integrations.jei.JEIRepairCategory;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
 @JEIPlugin
 public class JEI implements IModPlugin {

@@ -36,9 +36,24 @@ public class TSounds {
 	public static SoundEvent vmSound = register("vm_teleport");
 	public static SoundEvent flyLoop = register("fly_loop");
 	public static SoundEvent bessieHorn = register("bessie_horn");
-	public static SoundEvent control_01 = register("control_01");
-	public static SoundEvent control_02 = register("control_02");
-	public static SoundEvent control_03 = register("control_03");
+
+	public static SoundEvent control_generic_01 = register("control_generic_01");
+	public static SoundEvent control_generic_02 = register("control_generic_02");
+	public static SoundEvent control_generic_03 = register("control_generic_03");
+
+	public static SoundEvent control_stabilizers_on = register("control_stabilizers_on");
+	public static SoundEvent control_stabilizers_off = register("control_stabilizers_off");
+	public static SoundEvent control_dimension = register("control_dimension");
+	public static SoundEvent control_fast_return = register("control_fast_return");
+	public static SoundEvent control_landing_type_up = register("control_landing_type_up");
+	public static SoundEvent control_landing_type_down = register("control_landing_type_down");
+	public static SoundEvent control_refuel_start = register("control_refuel_start");
+	public static SoundEvent control_refuel_stop = register("control_refuel_stop");
+	public static SoundEvent control_telepathic_circuit = register("control_telepathic_circuit");
+	public static SoundEvent control_direction = register("control_direction");
+
+
+
 
 	public static SoundEvent remote_accept = register("remote_accept");
 

@@ -23,7 +23,8 @@ public class RendererTileDoor01 extends RenderExterior {
 	public void renderExterior(TileEntityDoor te) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, -0.5, 0);
-		if (te.isLocked()) model.renderClosed(0.0625F);
+		if (te.isLocked())
+			model.renderClosed(0.0625F);
 		else model.renderOpen(0.0625F);
 		GlStateManager.popMatrix();
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -131,8 +132,9 @@ public class TBlocks {
 
 	// Gallifrey
 	public static Block gallifreyan_sand = register(new BlockGallifreySand(0.5F, 30F), "gallifreyan_sand", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
-	public static Block gallifreyan_grass = register(new BlockGallifreyDirt(true), "gallifreyan_grass", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
-	public static Block gallifreyan_dirt = register(new BlockGallifreyDirt(false), "gallifreyan_dirt", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block gallifreyan_grass = register(new BlockGallifreyDirt(true, false), "gallifreyan_grass", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block gallifreyan_dirt = register(new BlockGallifreyDirt(false,false), "gallifreyan_dirt", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block gallifreyan_grass_snow = register(new BlockGallifreyDirt(false,true), "gallifreyan_grass_snow", false);
 
 	public static Block gallifreyan_stone = register(new BlockGallifreyStone(1.5F, 30F), "gallifreyan_stone", false).setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
 

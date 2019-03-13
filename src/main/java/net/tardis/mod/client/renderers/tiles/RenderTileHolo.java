@@ -22,7 +22,7 @@ public class RenderTileHolo extends TileEntitySpecialRenderer<TileEntityHoloproj
 		GlStateManager.scale(0.06, 0.06, 0.06);
 		try {
 			mc.entityRenderer.disableLightmap();
-			renderShell.doRender(te, 0, 0, 0, 0, 0, null);
+			//renderShell.doRender(te, 0, 0, 0, 0, 0, null);
 			mc.entityRenderer.enableLightmap();
 		} catch (Exception e) {
 			e.printStackTrace();

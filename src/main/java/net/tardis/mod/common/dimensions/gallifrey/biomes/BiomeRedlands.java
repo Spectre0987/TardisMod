@@ -4,6 +4,10 @@ package net.tardis.mod.common.dimensions.gallifrey.biomes;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -14,17 +18,22 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.dimensions.gallifrey.WorldProviderGallifrey;
 
 import java.util.Random;
 
 public class BiomeRedlands extends Biome {
 	
 	private static final IBlockState GRASS = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
+
 	
 	// Tree Generation
 	private static final ResourceLocation[] treeList = {
@@ -38,13 +47,18 @@ public class BiomeRedlands extends Biome {
 	
 	
 	public BiomeRedlands() {
-		super(new BiomeProperties("Redlands").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setRainDisabled().setWaterColor(0xEB623D));
+		super(new BiomeProperties("Redlands").setBaseHeight(0.0F).setHeightVariation(0.1F).setTemperature(6.0F).setWaterColor(0xEB623D));
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
 		this.spawnableWaterCreatureList.clear();
-		
-		
+
+		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 20, 2, 3));
+		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySheep.class, 20, 2, 3));
+		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityPig.class, 20, 2, 3));
+
+		this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySkeleton.class, 25, 1, 4));
+
 		this.decorator = new BiomeDecoratorGallifrey();
 		this.decorator.treesPerChunk = 30;
 		this.decorator.extraTreeChance = 0.05F;
@@ -150,7 +164,8 @@ public class BiomeRedlands extends Biome {
 			}
 			
 		}
-		
+
+
 	}
 	
 	public static void generateGallifreyTrees(World world, BlockPos pos, ResourceLocation location) {
@@ -164,16 +179,41 @@ public class BiomeRedlands extends Biome {
 	
 	
 	public static class BiomeDecoratorGallifrey extends BiomeDecorator {
-		
+
+
+		public ChunkGeneratorSettings chunkProviderSettings;
+
+		public WorldGenerator coalGen;
+		public WorldGenerator ironGen;
+		public WorldGenerator lapisGen;
+		/** Field that holds gold WorldGenMinable */
+		public WorldGenerator goldGen;
+		public WorldGenerator redstoneGen;
+		public WorldGenerator diamondGen;
+
+
 		public BiomeDecoratorGallifrey() {}
 		
 		@Override
-		public void decorate(World worldIn, Random random, Biome biome, BlockPos pos) { }
+		public void decorate(World worldIn, Random random, Biome biome, BlockPos pos) {
+
+			this.coalGen = new WorldGenMinable(Blocks.COAL_ORE.getDefaultState(), this.chunkProviderSettings.coalSize);
+			this.ironGen = new WorldGenMinable(Blocks.IRON_ORE.getDefaultState(), this.chunkProviderSettings.ironSize);
+			this.goldGen = new WorldGenMinable(Blocks.GOLD_ORE.getDefaultState(), this.chunkProviderSettings.goldSize);
+			this.redstoneGen = new WorldGenMinable(Blocks.REDSTONE_ORE.getDefaultState(), this.chunkProviderSettings.redstoneSize);
+			this.diamondGen = new WorldGenMinable(Blocks.DIAMOND_ORE.getDefaultState(), this.chunkProviderSettings.diamondSize);
+			this.lapisGen = new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), this.chunkProviderSettings.lapisSize);
+
+
+		}
 		
 		@Override
 		protected void genDecorations(Biome biomeIn, World worldIn, Random random) {}
 		
 	}
-	
+
+
+
+
 	
 }

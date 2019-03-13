@@ -1,10 +1,12 @@
 package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -14,6 +16,9 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlStabilizers extends EntityControl {
+
+	public static SoundEvent controlSound;
+
 
 	public ControlStabilizers(TileEntityTardis tardis) {
 		super(tardis);
@@ -44,7 +49,11 @@ public class ControlStabilizers extends EntityControl {
 			if (stab.getHealth() > 0) {
 				stab.setOn(!stab.isOn());
 				player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.STABILIZERS_ON + stab.isOn()).getFormattedText()), true);
-			} else stab.setOn(false);
+
+			} else {
+				stab.setOn(false);
+
+			}
 		}
 	}
 
@@ -56,6 +65,12 @@ public class ControlStabilizers extends EntityControl {
 			if (tardis instanceof TileEntityTardis03)
 				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
 		}
+	}
+
+	@Override
+	public SoundEvent getUseSound() {
+		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(this.getConsolePos());
+		return tardis.isFueling() ? TSounds.control_stabilizers_on : TSounds.control_stabilizers_off;
 	}
 
 }

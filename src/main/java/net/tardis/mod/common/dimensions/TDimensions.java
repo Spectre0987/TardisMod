@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.gallifrey.WorldProviderGallifrey;
+import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeMountains;
 import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeRedlands;
 import net.tardis.mod.common.dimensions.gallifrey.biomes.BiomeWastelands;
 import net.tardis.mod.common.dimensions.moon.BiomeMoon;
@@ -38,6 +39,7 @@ public class TDimensions {
 	//Gallifrey
 	public static Biome gallifreyRedlands = new BiomeRedlands();
 	public static Biome gallifreyFarmlands = new BiomeWastelands();
+	public static Biome gallifreyMountains = new BiomeMountains();
 
 	public static int MOON_ID;
 	public static DimensionType MOON_TYPE;
@@ -77,9 +79,9 @@ public class TDimensions {
 		
 		//TODO Clean this up
 		
-		GALLIFREY_ID = 678;
-		GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
-		DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
+		//GALLIFREY_ID = 678;
+		//GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
+		//DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
 	}
 
 	@EventBusSubscriber(modid = Tardis.MODID)
@@ -104,6 +106,7 @@ public class TDimensions {
 
 			registerBiome(TDimensions.gallifreyRedlands, "redlands", BiomeDictionary.Type.PLAINS);
 			registerBiome(TDimensions.gallifreyFarmlands, "farmlands", BiomeDictionary.Type.PLAINS);
+			registerBiome(TDimensions.gallifreyMountains, "mountains", BiomeDictionary.Type.SNOWY);
 		}
 	}
 }

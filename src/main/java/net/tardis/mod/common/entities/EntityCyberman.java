@@ -36,8 +36,11 @@ public class EntityCyberman extends EntityMob implements IDontSufficate {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getTrueSource() instanceof EntityPlayer && ((EntityPlayer) source.getTrueSource()).getHeldItemMainhand().getItem() == Items.GOLDEN_SWORD) {
-			amount *= 2;
+		if (source.getTrueSource() instanceof EntityPlayer && !source.isProjectile()){
+			EntityPlayer player = ((EntityPlayer) source.getTrueSource());
+			if(player.getHeldItemMainhand().getItem() == Items.GOLDEN_SWORD) {
+				amount *= 2;
+			}
 		}
 		return super.attackEntityFrom(source, amount);
 	}

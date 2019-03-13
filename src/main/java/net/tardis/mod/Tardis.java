@@ -46,6 +46,7 @@ import net.tardis.mod.common.entities.EntityDalekSkaro;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
+import net.tardis.mod.common.entities.EntityRaider;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -268,6 +269,7 @@ public class Tardis {
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
 		EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
 		EntityHelper.registerMobEgg(EntityQuark.class, "quark", 5, 5, 2);
+		EntityHelper.registerMobEgg(EntityRaider.class, "raider", 5, 5, 2);
 		//EntityHelper.registerNoSpawnEgg(EntityCybermanTomb.class, "cyberman_tomb", 5, 5);
 		EntityHelper.registerMobEgg(EntityAdipose.class, "adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance, 5, 3);
 
@@ -299,10 +301,9 @@ public class Tardis {
 		RepairRecipes.registerRecipe(TItems.temporal_grace_circuits, Items.SHIELD);
 		RepairRecipes.registerRecipe(TItems.thermo, Items.IRON_INGOT);
 		
-		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_1.png"), new ResourceLocation(MODID, "interior_1"), new BlockPos(9, 2, 9)));
-		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_2.png"), new ResourceLocation(MODID, "console_room"), new BlockPos(10, 2, 9)));
-		ConsoleRoom.CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(MODID, "textures/gui/previews/preview_builder.png"), new ResourceLocation(MODID, "interior_builder"), new BlockPos(9, 1, 9)));
-		
+		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_0.png", "interior/interior_0", new BlockPos(10, 2, 9));
+		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_1.png", "interior/interior_1", new BlockPos(9, 2, 9));
+		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_builder.png", "interior/interior_builder", new BlockPos(9, 1, 9));
 
 	}
 

@@ -23,9 +23,9 @@ import net.tardis.mod.network.packets.MessageChangeInterior;
 
 public class GuiChangeInterior extends GuiScreen {
 
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/monitor_ui.png");
 	TileEntityTardis tardis;
 	FontRenderer fr;
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/monitor_ui.png");
 	GuiButton select;
 	GuiButton next;
 	GuiButton prev;
@@ -51,7 +51,7 @@ public class GuiChangeInterior extends GuiScreen {
 			this.drawDefaultBackground();
 			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 			this.drawTexturedModalRect(width / 2 - 255 / 2, height / 2 - 192 / 2, 0, 0, 255, 192);
-			fr.drawStringWithShadow("Interiors", width / 2 - fr.getStringWidth("Interiors") / 2, height / 2 - 80, GuiCCircuit.BOX_NAME_COLOR);
+			fr.drawStringWithShadow("Interiors", width / 2 - fr.getStringWidth("Interiors") / 2, height / 2 - 85, GuiCCircuit.BOX_NAME_COLOR);
 			GlStateManager.color(1, 1, 1);
 			super.drawScreen(mouseX, mouseY, partialTicks);
 			GlStateManager.color(1, 1, 1);
@@ -59,7 +59,7 @@ public class GuiChangeInterior extends GuiScreen {
 				Minecraft.getMinecraft().getTextureManager().bindTexture(ConsoleRoom.CONSOLE_ROOMS.get(index).getPreview());
 				BufferBuilder bb = Tessellator.getInstance().getBuffer();
 				bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-				double minX = width / 2 - 75, maxX = minX + 150, minY = height / 2 - 65, maxY = minY + 100;
+				double minX = width / 2 - 100, maxX = minX + 200, minY = height / 2 - 70, maxY = minY + 117;
 				bb.pos(minX, minY, 0).tex(0, 0).endVertex();
 				bb.pos(minX, maxY, 0).tex(0, 1).endVertex();
 				bb.pos(maxX, maxY, 0).tex(1, 1).endVertex();
