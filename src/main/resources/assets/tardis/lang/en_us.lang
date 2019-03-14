@@ -294,6 +294,8 @@ command.no_tardis_owned=No TARDIS found
 command.no_player_found=No player found with this username
 command.tardis_travel=The selected TARDIS is being summoned to you.
 command.tardis_deleted=TARDIS deleted
+command.tardis.nosystem=No system found
+commands.tardis.system_restored=System restored
 
 commands.tardis.teleportin.usage=/tardis interior [player]
 commands.tardis.grow.usage=/tardis grow
