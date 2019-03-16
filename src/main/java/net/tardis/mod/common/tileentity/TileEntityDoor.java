@@ -19,6 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -230,17 +231,19 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						BB = new AxisAlignedBB(-radius, -radius, -radius, 0, radius, radius);
 						doorPos = doorPos.add(0, 0, 0);
 					}
-					if(worldShell == null || !worldShell.getOffset().equals(doorPos)) worldShell = new WorldShell(doorPos);
+					if(worldShell == null || !worldShell.getOffset().equals(doorPos))
+						worldShell = new WorldShell(doorPos);
 					
 					if(world.getWorldTime() % 5 == 1) {
 						for(BlockPos pos : this.getBlocksInAABB(BB.offset(doorPos))) {
-							worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
+							IBlockState state = tardis.getWorld().getBlockState(pos);
+							if((state.getBlock().hasTileEntity() || state.getRenderType() != EnumBlockRenderType.INVISIBLE) || state.getBlock() instanceof BlockTardisTop)
+								worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
 						}
 						this.sendBOTI(EnumType.BLOCKS);
 					}
 					if(world.getWorldTime() % 5 == 0) {
 						List<NBTTagCompound> bEnt = new ArrayList<NBTTagCompound>();
-						List<PlayerStorage> players = new ArrayList<>();
 						for(Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, BB.offset(doorPos))) {
 							if(EntityList.getKey(e) != null && !(e instanceof ControlDoor)) {
 								NBTTagCompound tag = new NBTTagCompound();
@@ -248,14 +251,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 								tag.setString("id", EntityList.getKey(e).toString());
 								bEnt.add(tag);
 							}
-							else if(e instanceof EntityPlayer) {
-								players.add(new PlayerStorage((EntityPlayer)e));
-							}
 						}
 						worldShell.setEntities(bEnt);
-						worldShell.setPlayers(players);
 						this.sendBOTI(EnumType.ENTITITES);
-						this.sendBOTI(EnumType.PLAYERS);
 					}
 			}
 		}

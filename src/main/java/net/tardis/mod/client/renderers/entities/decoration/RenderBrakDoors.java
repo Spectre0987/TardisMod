@@ -26,6 +26,8 @@ public class RenderBrakDoors extends Render<EntityDoorsBrakSecondary>{
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y + 1, z);
 		GlStateManager.scale(2, 2, 2);
+		if(entity.hurtTime > 0)
+			GlStateManager.translate(0, 0, -Math.cos(entity.hurtTime) * 0.01);
 		Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(TItems.doors_brak), TransformType.NONE);
 		GlStateManager.popMatrix();
 	}

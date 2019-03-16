@@ -31,8 +31,9 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		if (MinecraftForgeClient.getRenderPass() == 0) {
 			renderExterior(te);
 		}
-		if (!te.isLocked())
+		if (!te.isLocked()) {
 			renderPortal(te, partialTicks);
+		}
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 

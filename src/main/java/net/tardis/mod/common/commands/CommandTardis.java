@@ -113,18 +113,19 @@ public class CommandTardis extends CommandBase {
 			case 4: //restoresys
 				if (args.length > 1) {
 					if (PermissionAPI.hasPermission(player, TStrings.Permissions.RESTORE_TARDIS)) {
-						if (Arrays.asList(server.getOnlinePlayerNames()).contains(args[1]))
-							player = server.getPlayerList().getPlayerByUsername(args[1]);
+						int j = 1;
+						if (Arrays.asList(server.getOnlinePlayerNames()).contains(args[j]))
+							player = server.getPlayerList().getPlayerByUsername(args[j++]);
 
 						List<String> systemNames = new ArrayList<>();
-						for (int i = 1; i < args.length; i++)
+						for (int i = j; i < args.length; i++)
 							systemNames.add(args[i]);
 
 						this.restoreSystem(player, player.getUniqueID(), systemNames.toArray(new String[]{}));
 					} else
 						throw new CommandException("You do not have permission to run this command.");
 				} else
-					throw new CommandException("/tardis restoresys <username> <system1> [system2] [system3]...");
+					throw new CommandException("/tardis restoresys <username> <system...s>");
 				break;
 		}
 	}

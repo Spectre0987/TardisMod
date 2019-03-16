@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
@@ -58,5 +59,9 @@ public class ConsoleRoom {
 	
 	public BlockPos getConsolePos(){
 		return this.consolePos;
+	}
+	
+	public static void registerConsoleRoom(String previewPath, String interiorName, BlockPos pos) {
+		CONSOLE_ROOMS.add(new ConsoleRoom(new ResourceLocation(Tardis.MODID, previewPath), new ResourceLocation(Tardis.MODID, interiorName), pos));
 	}
 }
