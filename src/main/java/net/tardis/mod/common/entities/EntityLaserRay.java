@@ -51,7 +51,7 @@ public class EntityLaserRay extends EntityThrowable implements IEntityAdditional
 			return;
 
 		if (result.typeOfHit == Type.ENTITY) {
-			if (result.entityHit == this.thrower) return;
+			if (result.entityHit == this.thrower || result.entityHit == null) return;
 			result.entityHit.attackEntityFrom(source, damage);
 		} else if (result.typeOfHit == Type.BLOCK) {
 
@@ -61,7 +61,7 @@ public class EntityLaserRay extends EntityThrowable implements IEntityAdditional
 				BlockPos pos = result.getBlockPos();
 				EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(world, (double)((float)pos.getX() + 0.5F), (double)pos.getY(), (double)((float)pos.getZ() + 0.5F), getThrower());
 				world.spawnEntity(entitytntprimed);
-				world.playSound((EntityPlayer)null, entitytntprimed.posX, entitytntprimed.posY, entitytntprimed.posZ, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+				world.playSound(null, entitytntprimed.posX, entitytntprimed.posY, entitytntprimed.posZ, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 		}
 
