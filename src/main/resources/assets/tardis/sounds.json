@@ -146,12 +146,22 @@
       }
     ]
   },
-  "sonic": {
+  "sonic_generic": {
     "category": "players",
     "subtitle": "tardis.subtitle.sonic",
     "sounds": [
       {
-        "name": "tardis:sonic",
+        "name": "tardis:sonics/sonic_generic",
+        "stream": false
+      }
+    ]
+  },
+    "sonic_silver": {
+    "category": "players",
+    "subtitle": "tardis.subtitle.sonic",
+    "sounds": [
+      {
+        "name": "tardis:sonics/sonic_silver",
         "stream": false
       }
     ]

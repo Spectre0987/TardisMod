@@ -94,18 +94,19 @@ public class TItems {
 	public static Item thermo = createItem(new ItemComponent(), "thermo");
 	
 	//Sonic screwdrivers
-	public static Item sonic_third = createItem(new ItemSonic(TSounds.sonic), "sonic_third");
-	public static Item sonic_second = createItem(new ItemSonic(TSounds.sonic), "sonic_second");
-	public static Item sonic_fourth = createItem(new ItemSonic(TSounds.sonic), "sonic_fourth");
-	public static Item sonic_fifth = createItem(new ItemSonic(TSounds.sonic), "sonic_fifth");
-	public static Item sonic_romana = createItem(new ItemSonic(TSounds.sonic), "sonic_romana");
-	public static Item sonic_lance = createItem(new ItemSonic(TSounds.sonic), "sonic_lance");
-	public static Item sonic_lipstick = createItem(new ItemSonic(TSounds.sonic), "sonic_lipstick");
-	public static Item sonic_trowel = createItem(new ItemSonic(TSounds.sonic),"sonic_trowel");
-	public static Item sonic_pen = createItem(new ItemSonic(TSounds.sonic), "sonic_pen");
-	public static Item sonic_seven = createItem(new ItemSonic(TSounds.sonic), "sonic_seven");
-	public static Item sonic_war = createItem(new ItemSonic(TSounds.sonic), "sonic_war");
-	public static Item sonic_10 = createItem(new ItemSonic(TSounds.sonic, true), "sonic_10");
+	public static Item sonic_second = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_second");
+	public static Item sonic_third = createItem(new ItemSonic(TSounds.sonic_silver), "sonic_third");
+	public static Item sonic_fourth = createItem(new ItemSonic(TSounds.sonic_silver), "sonic_fourth");
+	public static Item sonic_fifth = createItem(new ItemSonic(TSounds.sonic_silver), "sonic_fifth");
+	public static Item sonic_seven = createItem(new ItemSonic(TSounds.sonic_silver), "sonic_seven");
+	public static Item sonic_war = createItem(new ItemSonic(TSounds.sonic_silver), "sonic_war");
+	public static Item sonic_10 = createItem(new ItemSonic(TSounds.sonic_generic, true), "sonic_10");
+
+	public static Item sonic_romana = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_romana");
+	public static Item sonic_lance = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_lance");
+	public static Item sonic_lipstick = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_lipstick");
+	public static Item sonic_trowel = createItem(new ItemSonic(TSounds.sonic_generic),"sonic_trowel");
+	public static Item sonic_pen = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_pen");
 
 
 	@SubscribeEvent
@@ -123,9 +124,9 @@ public class TItems {
 		void_specs = createItem(new ItemHat(EnumClothes.HAT_VOID_SPECS), "void_specs");
 		fez = createItem(new ItemFez(), "fez");
 		bowtie = createItem(new ItemBowTie(), "bowtie");
-		sonic_cane = createItem(new ItemSonic(TSounds.sonic), "sonic_cane");
+		sonic_cane = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_cane");
 		vortex_manip = createItem(new ItemVortexManipulator(), "vortex_manip");
-		sonic_screwdriver = createItem(new ItemSonic(TSounds.sonic), "sonic_screwdriver");
+		sonic_screwdriver = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_screwdriver");
 		space_helm = createItem(new ItemSpaceSuit(0, EntityEquipmentSlot.HEAD), "space_helm");
 		space_chest = createItem(new ItemSpaceSuit(1, EntityEquipmentSlot.CHEST), "space_chest");
 		space_legs = createItem(new ItemSpaceSuit(2, EntityEquipmentSlot.LEGS), "space_legs");
@@ -147,7 +148,7 @@ public class TItems {
 
 		interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
 		marker = createItem(new ItemMarker(), "marker");
-		sonic13th = createItem(new ItemSonic(TSounds.sonic), "sonic_screwdriver_13");
+		sonic13th = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_screwdriver_13");
 	
 
 		// TARDIS Components

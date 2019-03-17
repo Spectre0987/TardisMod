@@ -16,7 +16,7 @@ public class TSounds {
 
 	public static SoundEvent takeoff = register("takeoff");
 	public static SoundEvent loop = register("loop");
-	public static SoundEvent sonic = register("sonic");
+
 	public static SoundEvent dalek_ray = register("dalek_ray");
 	public static SoundEvent dalek = register("dalek");
 	public static SoundEvent force_field = register("force_field");
@@ -53,7 +53,8 @@ public class TSounds {
 	public static SoundEvent control_direction = register("control_direction");
 
 
-
+	public static SoundEvent sonic_generic = register("sonic_generic");
+	public static SoundEvent sonic_silver = register("sonic_silver");
 
 	public static SoundEvent remote_accept = register("remote_accept");
 

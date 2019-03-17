@@ -1,0 +1,18 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tardis:corridor_generator"
+  },
+  "variants": {
+    "inventory": [
+      {}
+    ],
+	"facing=north":[ { "model": "tardis:corridor_generator" }],
+        "facing=south": [{ "model": "tardis:corridor_generator", "y": 180 }],
+        "facing=west":  [{ "model": "tardis:corridor_generator", "y": 270 }],
+        "facing=east":  [{ "model": "tardis:corridor_generator", "y": 90 }],
+    "normal": [
+      {}
+    ]
+  }
+}
