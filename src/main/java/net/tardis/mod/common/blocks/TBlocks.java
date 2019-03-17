@@ -173,7 +173,6 @@ public class TBlocks {
 
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
 
-
 	public static Block register(Block block, String name) {
 		return register(block, name, true);
 	}
