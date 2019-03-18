@@ -159,6 +159,7 @@ public class TBlocks {
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01", false);
 	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02", false);
 	public static Block console_03 = register(new BlockConsole(TileEntityTardis03::new), "console_03", false);
+	
 
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block", false);
 
