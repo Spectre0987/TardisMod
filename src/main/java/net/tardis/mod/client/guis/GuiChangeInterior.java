@@ -99,6 +99,7 @@ public class GuiChangeInterior extends GuiScreen {
 		Minecraft.getMinecraft().displayGuiScreen(new GUIConfirm((result, id) -> {
 			if (result) {
 				NetworkHandler.NETWORK.sendToServer(new MessageChangeInterior(this.index, tardis.getPos()));
+				Minecraft.getMinecraft().displayGuiScreen(null);
 			} else {
 				Minecraft.getMinecraft().displayGuiScreen(this);
 			}
