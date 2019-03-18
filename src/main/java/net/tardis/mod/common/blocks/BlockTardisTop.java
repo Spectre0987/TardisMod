@@ -25,6 +25,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
@@ -33,7 +34,7 @@ import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class BlockTardisTop extends BlockTileBase {
+public class BlockTardisTop extends BlockTileBase implements IRenderBox {
 
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -208,8 +209,13 @@ public class BlockTardisTop extends BlockTileBase {
 		}
 		return super.getLightValue(state, world, pos);
 	}
-
-
+	
+	@Override
+	public boolean shouldRenderBox() {
+		return false;
+	}
+	
+	
 	public static class ItemBlockTardis extends ItemBlock {
 
 		public ItemBlockTardis(Block block) {

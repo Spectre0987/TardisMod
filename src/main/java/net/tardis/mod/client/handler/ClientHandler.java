@@ -41,6 +41,7 @@ public class ClientHandler {
 	}
 	
 	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
 	public static void cancelBBRender(DrawBlockHighlightEvent event) {
 		World world = event.getPlayer().world;
 		BlockPos pos = event.getTarget().getBlockPos();

@@ -16,6 +16,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class GuiTelepathicCircuts extends GuiScreen {
@@ -125,10 +126,7 @@ public class GuiTelepathicCircuts extends GuiScreen {
 		newStrings = new ArrayList<>();
 
 		String[] locations = new String[]{"Stronghold", "Monument", "Village", "Mansion", "EndCity", "Fortress", "Temple", "Mineshaft"};
-
-		for (String loc : locations) {
-			newStrings.add(loc);
-		}
+		newStrings.addAll(Arrays.asList(locations));
 
 		Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getConnection().getPlayerInfoMap();
 		players.forEach((loadedPlayer) -> {

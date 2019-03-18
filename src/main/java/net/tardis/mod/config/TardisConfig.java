@@ -48,10 +48,14 @@ public class TardisConfig {
 		@Config.LangKey("config.telosDim")
 		@Config.Comment("Telos Dimension ID")
 		public int telosDimension = 23;
-
+		
 		@Config.LangKey("config.moonDim")
 		@Config.Comment("Moon Dimension ID")
 		public int moonDimension = 24;
+		
+		@Config.LangKey("config.gallifreyDim")
+		@Config.Comment("Gallifrey Dimension ID")
+		public int gallifreyDimension = 24;
 
 		@Config.LangKey("config.tardis.oregen")
 		@Config.Comment("Should the TARDIS Mod generate ores?")
