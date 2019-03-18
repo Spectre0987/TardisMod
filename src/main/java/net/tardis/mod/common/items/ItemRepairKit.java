@@ -28,7 +28,7 @@ public class ItemRepairKit extends ItemBase {
 					sys.setHealth(sys.getHealth() + 0.15F);
 				}
 			}
-			tardis.setHealth(tardis.getHealth() - 0.15F);
+			tardis.setHealth(tardis.getHealth() + 0.15F);
 		}
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}

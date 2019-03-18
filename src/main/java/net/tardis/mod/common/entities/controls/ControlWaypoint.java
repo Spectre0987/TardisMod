@@ -5,9 +5,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlWaypoint extends EntityControl {
@@ -27,6 +25,10 @@ public class ControlWaypoint extends EntityControl {
 			return Helper.convertToPixels(-9, 2, 6.5);
 		if (tardis.getClass() == TileEntityTardis01.class || tardis.getClass() == TileEntityTardis02.class)
 			return Helper.convertToPixels(-9.75, -2.5, 9);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-9.5, -1, -5.5);
+		if(tardis instanceof TileEntityTardis05)
+			return Helper.convertToPixels(-12, -2, 4);
 		return Helper.convertToPixels(1.25, -2.5, -12);
 	}
 
@@ -47,10 +49,11 @@ public class ControlWaypoint extends EntityControl {
 	@Override
 	public void init(TileEntityTardis tardis) {
 		if (tardis != null) {
-			if (tardis instanceof TileEntityTardis03) {
-				this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
-			}
 			this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
+			if (tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
+			if(tardis instanceof TileEntityTardis04)
+				this.setSize(0.0625F, 0.0625F);
 		}
 	}
 

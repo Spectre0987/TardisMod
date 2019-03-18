@@ -10,9 +10,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDimChange extends EntityControl {
@@ -33,6 +31,10 @@ public class ControlDimChange extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(-12, 0, -7);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-2, -1.5, 12);
+		if(tardis instanceof TileEntityTardis05)
+			return Helper.convertToPixels(5.5, -2.5, -14.5);
 		return Helper.convertToPixels(-1.5, -2, -12);
 	}
 
