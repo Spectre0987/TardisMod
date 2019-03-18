@@ -13,6 +13,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlTelepathicCircuts extends EntityControl {
@@ -34,7 +35,8 @@ public class ControlTelepathicCircuts extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(8.5, 2, 5.5);
-
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(0, -1, -8);
 		return Helper.convertToPixels(10, -2, -6);
 	}
 
@@ -57,6 +59,8 @@ public class ControlTelepathicCircuts extends EntityControl {
 				setSize(Helper.precentToPixels(8F), Helper.precentToPixels(4F));
 			if (tardis.getClass() == TileEntityTardis.class)
 				this.setSize(Helper.precentToPixels(4F), Helper.precentToPixels(2F));
+			if(tardis instanceof TileEntityTardis04)
+				this.setSize(Helper.precentToPixels(6F), Helper.precentToPixels(2F));
 		}
 	}
 

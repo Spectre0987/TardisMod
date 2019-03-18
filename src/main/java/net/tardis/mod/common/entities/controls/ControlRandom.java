@@ -10,6 +10,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.common.helpers.Helper;
 import scala.util.Random;
@@ -35,6 +36,8 @@ public class ControlRandom extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(-13, 0, 5);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-8, -1, -4.5);
 		return Helper.convertToPixels(0, -1, 9);
 	}
 

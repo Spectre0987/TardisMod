@@ -11,6 +11,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDirection extends EntityControl {
@@ -34,6 +35,8 @@ public class ControlDirection extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(-16, 1, -3);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-9, -3, -11);
 		return Helper.convertToPixels(9.5, -3.5, 10);
 	}
 

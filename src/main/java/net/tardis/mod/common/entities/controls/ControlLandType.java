@@ -7,11 +7,11 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
-import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlLandType extends EntityControl {
@@ -34,6 +34,8 @@ public class ControlLandType extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(-10, 2, 3.5);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(10.5, -2, -9.25);
 		return Helper.convertToPixels(11.5, -2, 4);
 	}
 

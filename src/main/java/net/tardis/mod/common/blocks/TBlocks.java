@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -22,6 +21,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHellbentMonitor;
@@ -159,6 +159,7 @@ public class TBlocks {
 	public static Block console_01 = register(new BlockConsole(TileEntityTardis01::new), "console_01", false);
 	public static Block console_02 = register(new BlockConsole(TileEntityTardis02::new), "console_02", false);
 	public static Block console_03 = register(new BlockConsole(TileEntityTardis03::new), "console_03", false);
+	public static Block console_04 = register(new BlockConsole(TileEntityTardis04::new), "console_04", false);
 
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block", false);
 

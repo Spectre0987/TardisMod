@@ -7,6 +7,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlZ extends EntityControl {
@@ -27,6 +28,8 @@ public class ControlZ extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(1.5, 3, 9);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-12, -1.5, -3.5);
 		return Helper.convertToPixels(-7, -0.5, 5.5);
 	}
 

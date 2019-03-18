@@ -18,6 +18,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.common.helpers.Helper;
 
@@ -39,6 +40,8 @@ public class ControlPhone extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(-11.5, 1, 9.5);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-12, -3, -7);
 		return Helper.convertToPixels(0, -1, -8);
 	}
 
@@ -103,6 +106,8 @@ public class ControlPhone extends EntityControl {
 	public void init(TileEntityTardis tardis) {
 		if (tardis != null) {
 			this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
+			if(tardis instanceof TileEntityTardis04)
+				this.setSize(Helper.precentToPixels(2F), Helper.precentToPixels(2F));
 		}
 	}
 

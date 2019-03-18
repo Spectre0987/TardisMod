@@ -9,6 +9,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
@@ -32,6 +33,8 @@ public class ControlFuel extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(0, 1, -13.75);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(10.5, -3, 7.5);
 		return Helper.convertToPixels(-12, -4, 10);
 	}
 
