@@ -1,9 +1,12 @@
 package net.tardis.mod.client.models.consoles;
 
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class ModelConsole03 extends ModelBase {
 
@@ -33,16 +36,39 @@ public class ModelConsole03 extends ModelBase {
 	ModelRenderer Gen20;
 	ModelRenderer Gen21;
 	ModelRenderer Gen22;
-	ModelRenderer Shape4;
+	ModelRenderer Rotor14;
+	ModelRenderer Rotor22;
+	ModelRenderer Rotor20;
+	ModelRenderer Glow4;
+	ModelRenderer Rotor8;
+	ModelRenderer Glow2;
+	ModelRenderer Glow6;
+	ModelRenderer Rotor3;
+	ModelRenderer Rotor6;
+	ModelRenderer Rotor2;
+	ModelRenderer Rotor10;
+	ModelRenderer Rotor4;
+	ModelRenderer Rotor1;
+	ModelRenderer Glow1;
+	ModelRenderer Glow3;
+	ModelRenderer Rotor21;
+	ModelRenderer Rotor12;
+	ModelRenderer Rotor16;
+	ModelRenderer Rotor9;
+	ModelRenderer Rotor5;
+	ModelRenderer Rotor7;
 	ModelRenderer Gen23;
+	ModelRenderer Glow5;
 	ModelRenderer Gen24;
-	ModelRenderer Shape7;
 	ModelRenderer Gen25;
 	ModelRenderer Gen26;
 	ModelRenderer Gen27;
 	ModelRenderer Gen28;
 	ModelRenderer Gen29;
 	ModelRenderer Gen30;
+	ModelRenderer Rotor13;
+	ModelRenderer Rotor11;
+	ModelRenderer Rotor15;
 	ModelRenderer Gen31;
 	ModelRenderer Gen32;
 	ModelRenderer Gen33;
@@ -81,30 +107,6 @@ public class ModelConsole03 extends ModelBase {
 	ModelRenderer Gen66;
 	ModelRenderer Gen67;
 	ModelRenderer Gen68;
-	ModelRenderer Gen69;
-	ModelRenderer Gen70;
-	ModelRenderer Gen71;
-	ModelRenderer Gen72;
-	ModelRenderer Gen73;
-	ModelRenderer Gen74;
-	ModelRenderer Gen75;
-	ModelRenderer Gen76;
-	ModelRenderer Gen77;
-	ModelRenderer Gen78;
-	ModelRenderer Gen79;
-	ModelRenderer Gen80;
-	ModelRenderer Gen81;
-	ModelRenderer Gen82;
-	ModelRenderer Gen83;
-	ModelRenderer Gen84;
-	ModelRenderer Gen85;
-	ModelRenderer Gen86;
-	ModelRenderer Gen87;
-	ModelRenderer Gen88;
-	ModelRenderer Gen89;
-	ModelRenderer Gen90;
-	ModelRenderer Gen91;
-	ModelRenderer Gen92;
 
 	public ModelConsole03() { 
 
@@ -293,509 +295,502 @@ public class ModelConsole03 extends ModelBase {
 		setRotation(Gen22, 0.8726646259971648F, 3.141592653589793F, 0.0F);
 		Gen22.mirror = false;
 
-		Shape4 = new ModelRenderer(this, 0, 54);
-		Shape4.addBox(-0.5F, 5.0F, -4.5F, 1, 2, 9);
-		Shape4.setTextureSize(textureWidth, textureHeight);
-		Shape4.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Shape4, 0.0F, -0.5235987755982988F, 0.0F);
-		Shape4.mirror = false;
+		Rotor14 = new ModelRenderer(this, 0, 54);
+		Rotor14.addBox(-0.5F, 5.0F, -4.5F, 1, 2, 9);
+		Rotor14.setTextureSize(textureWidth, textureHeight);
+		Rotor14.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor14, 0.0F, -0.5235987755982988F, 0.0F);
+		Rotor14.mirror = false;
 
-		Gen23 = new ModelRenderer(this, 0, 22);
-		Gen23.addBox(-3.0F, 6.5F, -5.0F, 6, 1, 10);
+		Rotor22 = new ModelRenderer(this, 0, 22);
+		Rotor22.addBox(-3.0F, 6.5F, -5.0F, 6, 1, 10);
+		Rotor22.setTextureSize(textureWidth, textureHeight);
+		Rotor22.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor22, 0.0F, 2.0943951023931953F, 0.0F);
+		Rotor22.mirror = false;
+
+		Rotor20 = new ModelRenderer(this, 0, 22);
+		Rotor20.addBox(-3.0F, 6.5F, -5.0F, 6, 1, 10);
+		Rotor20.setTextureSize(textureWidth, textureHeight);
+		Rotor20.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor20, 0.0F, 1.0471975511965976F, 0.0F);
+		Rotor20.mirror = false;
+
+		Glow4 = new ModelRenderer(this, 108, 0);
+		Glow4.addBox(-0.5F, -3.0F, -2.5F, 1, 0, 2);
+		Glow4.setTextureSize(textureWidth, textureHeight);
+		Glow4.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Glow4, 0.0F, 3.141592653589793F, 0.0F);
+		Glow4.mirror = false;
+
+		Rotor8 = new ModelRenderer(this, 96, 0);
+		Rotor8.addBox(-2.0F, 3.5F, -2.0F, 4, 1, 0);
+		Rotor8.setTextureSize(textureWidth, textureHeight);
+		Rotor8.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor8, 0.0F, -2.0943951023931953F, 0.0F);
+		Rotor8.mirror = false;
+
+		Glow2 = new ModelRenderer(this, 108, 0);
+		Glow2.addBox(-0.5F, -3.0F, -2.5F, 1, 0, 2);
+		Glow2.setTextureSize(textureWidth, textureHeight);
+		Glow2.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Glow2, 0.0F, -1.0471975511965976F, 0.0F);
+		Glow2.mirror = false;
+
+		Glow6 = new ModelRenderer(this, 108, 0);
+		Glow6.addBox(-0.5F, -3.0F, -2.5F, 1, 0, 2);
+		Glow6.setTextureSize(textureWidth, textureHeight);
+		Glow6.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Glow6, 0.0F, 1.0471975511965976F, 0.0F);
+		Glow6.mirror = false;
+
+		Rotor3 = new ModelRenderer(this, 104, 0);
+		Rotor3.addBox(-1.0F, -3.0F, -1.5F, 2, 9, 0);
+		Rotor3.setTextureSize(textureWidth, textureHeight);
+		Rotor3.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor3, 0.0F, -2.0943951023931953F, 0.0F);
+		Rotor3.mirror = false;
+
+		Rotor6 = new ModelRenderer(this, 96, 0);
+		Rotor6.addBox(-2.0F, 3.5F, -2.0F, 4, 1, 0);
+		Rotor6.setTextureSize(textureWidth, textureHeight);
+		Rotor6.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor6, 0.0F, 0.0F, 0.0F);
+		Rotor6.mirror = false;
+
+		Rotor2 = new ModelRenderer(this, 104, 0);
+		Rotor2.addBox(-1.0F, -3.0F, -1.5F, 2, 9, 0);
+		Rotor2.setTextureSize(textureWidth, textureHeight);
+		Rotor2.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor2, 0.0F, 0.0F, 0.0F);
+		Rotor2.mirror = false;
+
+		Rotor10 = new ModelRenderer(this, 96, 0);
+		Rotor10.addBox(-2.0F, 3.5F, -2.0F, 4, 1, 0);
+		Rotor10.setTextureSize(textureWidth, textureHeight);
+		Rotor10.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor10, 0.0F, 2.0943951023931953F, 0.0F);
+		Rotor10.mirror = false;
+
+		Rotor4 = new ModelRenderer(this, 104, 0);
+		Rotor4.addBox(-1.0F, -3.0F, -1.5F, 2, 9, 0);
+		Rotor4.setTextureSize(textureWidth, textureHeight);
+		Rotor4.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor4, 0.0F, 2.0943951023931953F, 0.0F);
+		Rotor4.mirror = false;
+
+		Rotor1 = new ModelRenderer(this, 72, 3);
+		Rotor1.addBox(-0.5F, -2.9F, -0.5F, 1, 8, 1);
+		Rotor1.setTextureSize(textureWidth, textureHeight);
+		Rotor1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor1, 0.0F, 0.7853981633974483F, 0.0F);
+		Rotor1.mirror = false;
+
+		Glow1 = new ModelRenderer(this, 68, 3);
+		Glow1.addBox(-0.5F, -3.0F, -2.5F, 1, 8, 1);
+		Glow1.setTextureSize(textureWidth, textureHeight);
+		Glow1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Glow1, 0.0F, -1.0471975511965976F, 0.0F);
+		Glow1.mirror = false;
+
+		Glow3 = new ModelRenderer(this, 68, 3);
+		Glow3.addBox(-0.5F, -3.0F, -2.5F, 1, 8, 1);
+		Glow3.setTextureSize(textureWidth, textureHeight);
+		Glow3.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Glow3, 0.0F, 3.141592653589793F, 0.0F);
+		Glow3.mirror = false;
+
+		Rotor21 = new ModelRenderer(this, 0, 22);
+		Rotor21.addBox(-3.0F, 6.5F, -5.0F, 6, 1, 10);
+		Rotor21.setTextureSize(textureWidth, textureHeight);
+		Rotor21.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor21, 0.0F, 0.0F, 0.0F);
+		Rotor21.mirror = false;
+
+		Rotor12 = new ModelRenderer(this, 0, 54);
+		Rotor12.addBox(-0.5F, 5.0F, -4.5F, 1, 2, 9);
+		Rotor12.setTextureSize(textureWidth, textureHeight);
+		Rotor12.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor12, 0.0F, 0.5235987755982988F, 0.0F);
+		Rotor12.mirror = false;
+
+		Rotor16 = new ModelRenderer(this, 0, 54);
+		Rotor16.addBox(-0.5F, 5.0F, -4.5F, 1, 2, 9);
+		Rotor16.setTextureSize(textureWidth, textureHeight);
+		Rotor16.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor16, 0.0F, 1.5707963267948966F, 0.0F);
+		Rotor16.mirror = false;
+
+		Rotor9 = new ModelRenderer(this, 96, 0);
+		Rotor9.addBox(-2.0F, -2.5F, -2.0F, 4, 1, 0);
+		Rotor9.setTextureSize(textureWidth, textureHeight);
+		Rotor9.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor9, 0.0F, 2.0943951023931953F, 0.0F);
+		Rotor9.mirror = false;
+
+		Rotor5 = new ModelRenderer(this, 96, 0);
+		Rotor5.addBox(-2.0F, -2.5F, -2.0F, 4, 1, 0);
+		Rotor5.setTextureSize(textureWidth, textureHeight);
+		Rotor5.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor5, 0.0F, 0.0F, 0.0F);
+		Rotor5.mirror = false;
+
+		Rotor7 = new ModelRenderer(this, 96, 0);
+		Rotor7.addBox(-2.0F, -2.5F, -2.0F, 4, 1, 0);
+		Rotor7.setTextureSize(textureWidth, textureHeight);
+		Rotor7.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor7, 0.0F, -2.0943951023931953F, 0.0F);
+		Rotor7.mirror = false;
+
+		Gen23 = new ModelRenderer(this, 0, 0);
+		Gen23.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
 		Gen23.setTextureSize(textureWidth, textureHeight);
-		Gen23.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen23, 0.0F, 2.0943951023931953F, 0.0F);
+		Gen23.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen23, -1.1344640137963142F, -1.0471975511965976F, 0.0F);
 		Gen23.mirror = false;
 
-		Gen24 = new ModelRenderer(this, 0, 22);
-		Gen24.addBox(-3.0F, 6.5F, -5.0F, 6, 1, 10);
+		Glow5 = new ModelRenderer(this, 68, 3);
+		Glow5.addBox(-0.5F, -3.0F, -2.5F, 1, 8, 1);
+		Glow5.setTextureSize(textureWidth, textureHeight);
+		Glow5.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Glow5, 0.0F, 1.0471975511965976F, 0.0F);
+		Glow5.mirror = false;
+
+		Gen24 = new ModelRenderer(this, 68, 46);
+		Gen24.addBox(-0.5F, 6.0F, -7.0F, 1, 1, 1);
 		Gen24.setTextureSize(textureWidth, textureHeight);
 		Gen24.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen24, 0.0F, 1.0471975511965976F, 0.0F);
+		setRotation(Gen24, 0.0F, 0.5235987755982988F, 0.0F);
 		Gen24.mirror = false;
 
-		Shape7 = new ModelRenderer(this, 108, 0);
-		Shape7.addBox(-0.5F, -3.0F, -2.5F, 1, 0, 2);
-		Shape7.setTextureSize(textureWidth, textureHeight);
-		Shape7.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Shape7, 0.0F, 3.141592653589793F, 0.0F);
-		Shape7.mirror = false;
-
-		Gen25 = new ModelRenderer(this, 96, 0);
-		Gen25.addBox(-2.0F, 3.5F, -2.0F, 4, 1, 0);
+		Gen25 = new ModelRenderer(this, 68, 46);
+		Gen25.addBox(-0.5F, 6.0F, -7.0F, 1, 1, 1);
 		Gen25.setTextureSize(textureWidth, textureHeight);
 		Gen25.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen25, 0.0F, -2.0943951023931953F, 0.0F);
+		setRotation(Gen25, 0.0F, 2.6179938779914944F, 0.0F);
 		Gen25.mirror = false;
 
-		Gen26 = new ModelRenderer(this, 108, 0);
-		Gen26.addBox(-0.5F, -3.0F, -2.5F, 1, 0, 2);
+		Gen26 = new ModelRenderer(this, 68, 46);
+		Gen26.addBox(-0.5F, 6.0F, -7.0F, 1, 1, 1);
 		Gen26.setTextureSize(textureWidth, textureHeight);
 		Gen26.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen26, 0.0F, -1.0471975511965976F, 0.0F);
+		setRotation(Gen26, 0.0F, -2.6179938779914944F, 0.0F);
 		Gen26.mirror = false;
 
-		Gen27 = new ModelRenderer(this, 108, 0);
-		Gen27.addBox(-0.5F, -3.0F, -2.5F, 1, 0, 2);
+		Gen27 = new ModelRenderer(this, 68, 28);
+		Gen27.addBox(-3.5F, 6.0F, -6.0F, 7, 17, 1);
 		Gen27.setTextureSize(textureWidth, textureHeight);
 		Gen27.setRotationPoint(0.0F, 0.0F, 0.0F);
 		setRotation(Gen27, 0.0F, 1.0471975511965976F, 0.0F);
 		Gen27.mirror = false;
 
-		Gen28 = new ModelRenderer(this, 104, 0);
-		Gen28.addBox(-1.0F, -3.0F, -1.5F, 2, 9, 0);
+		Gen28 = new ModelRenderer(this, 68, 28);
+		Gen28.addBox(-3.5F, 6.0F, -6.0F, 7, 17, 1);
 		Gen28.setTextureSize(textureWidth, textureHeight);
 		Gen28.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen28, 0.0F, -2.0943951023931953F, 0.0F);
+		setRotation(Gen28, 0.0F, 2.0943951023931953F, 0.0F);
 		Gen28.mirror = false;
 
-		Gen29 = new ModelRenderer(this, 96, 0);
-		Gen29.addBox(-2.0F, 3.5F, -2.0F, 4, 1, 0);
+		Gen29 = new ModelRenderer(this, 68, 28);
+		Gen29.addBox(-3.5F, 6.0F, -6.0F, 7, 17, 1);
 		Gen29.setTextureSize(textureWidth, textureHeight);
 		Gen29.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen29, 0.0F, 0.0F, 0.0F);
+		setRotation(Gen29, 0.0F, 3.141592653589793F, 0.0F);
 		Gen29.mirror = false;
 
-		Gen30 = new ModelRenderer(this, 104, 0);
-		Gen30.addBox(-1.0F, -3.0F, -1.5F, 2, 9, 0);
+		Gen30 = new ModelRenderer(this, 0, 33);
+		Gen30.addBox(-0.5F, 11.0F, -18.5F, 1, 1, 37);
 		Gen30.setTextureSize(textureWidth, textureHeight);
 		Gen30.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen30, 0.0F, 0.0F, 0.0F);
+		setRotation(Gen30, 0.0F, 0.5235987755982988F, 0.0F);
 		Gen30.mirror = false;
 
-		Gen31 = new ModelRenderer(this, 96, 0);
-		Gen31.addBox(-2.0F, 3.5F, -2.0F, 4, 1, 0);
+		Rotor13 = new ModelRenderer(this, 0, 44);
+		Rotor13.addBox(-2.0F, 5.0F, -4.0F, 4, 2, 8);
+		Rotor13.setTextureSize(textureWidth, textureHeight);
+		Rotor13.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor13, 0.0F, 0.0F, 0.0F);
+		Rotor13.mirror = false;
+
+		Rotor11 = new ModelRenderer(this, 0, 44);
+		Rotor11.addBox(-2.0F, 5.0F, -4.0F, 4, 2, 8);
+		Rotor11.setTextureSize(textureWidth, textureHeight);
+		Rotor11.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor11, 0.0F, 1.0471975511965976F, 0.0F);
+		Rotor11.mirror = false;
+
+		Rotor15 = new ModelRenderer(this, 0, 44);
+		Rotor15.addBox(-2.0F, 5.0F, -4.0F, 4, 2, 8);
+		Rotor15.setTextureSize(textureWidth, textureHeight);
+		Rotor15.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Rotor15, 0.0F, 2.0943951023931953F, 0.0F);
+		Rotor15.mirror = false;
+
+		Gen31 = new ModelRenderer(this, 68, 25);
+		Gen31.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
 		Gen31.setTextureSize(textureWidth, textureHeight);
 		Gen31.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen31, 0.0F, 2.0943951023931953F, 0.0F);
+		setRotation(Gen31, -0.4363323129985824F, -1.0471975511965976F, 0.0F);
 		Gen31.mirror = false;
 
-		Gen32 = new ModelRenderer(this, 104, 0);
-		Gen32.addBox(-1.0F, -3.0F, -1.5F, 2, 9, 0);
+		Gen32 = new ModelRenderer(this, 68, 48);
+		Gen32.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
 		Gen32.setTextureSize(textureWidth, textureHeight);
 		Gen32.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen32, 0.0F, 2.0943951023931953F, 0.0F);
+		setRotation(Gen32, 0.0F, 0.0F, 0.0F);
 		Gen32.mirror = false;
 
-		Gen33 = new ModelRenderer(this, 72, 3);
-		Gen33.addBox(-0.5F, -2.9F, -0.5F, 1, 8, 1);
+		Gen33 = new ModelRenderer(this, 68, 48);
+		Gen33.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
 		Gen33.setTextureSize(textureWidth, textureHeight);
 		Gen33.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen33, 0.0F, 0.7853981633974483F, 0.0F);
+		setRotation(Gen33, 0.0F, 1.0471975511965976F, 0.0F);
 		Gen33.mirror = false;
 
-		Gen34 = new ModelRenderer(this, 68, 3);
-		Gen34.addBox(-0.5F, -3.0F, -2.5F, 1, 8, 1);
+		Gen34 = new ModelRenderer(this, 68, 48);
+		Gen34.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
 		Gen34.setTextureSize(textureWidth, textureHeight);
 		Gen34.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen34, 0.0F, -1.0471975511965976F, 0.0F);
+		setRotation(Gen34, 0.0F, 2.0943951023931953F, 0.0F);
 		Gen34.mirror = false;
 
-		Gen35 = new ModelRenderer(this, 68, 3);
-		Gen35.addBox(-0.5F, -3.0F, -2.5F, 1, 8, 1);
+		Gen35 = new ModelRenderer(this, 68, 48);
+		Gen35.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
 		Gen35.setTextureSize(textureWidth, textureHeight);
 		Gen35.setRotationPoint(0.0F, 0.0F, 0.0F);
 		setRotation(Gen35, 0.0F, 3.141592653589793F, 0.0F);
 		Gen35.mirror = false;
 
-		Gen36 = new ModelRenderer(this, 0, 22);
-		Gen36.addBox(-3.0F, 6.5F, -5.0F, 6, 1, 10);
+		Gen36 = new ModelRenderer(this, 68, 48);
+		Gen36.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
 		Gen36.setTextureSize(textureWidth, textureHeight);
 		Gen36.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen36, 0.0F, 0.0F, 0.0F);
+		setRotation(Gen36, 0.0F, -2.0943951023931953F, 0.0F);
 		Gen36.mirror = false;
 
-		Gen37 = new ModelRenderer(this, 0, 54);
-		Gen37.addBox(-0.5F, 5.0F, -4.5F, 1, 2, 9);
+		Gen37 = new ModelRenderer(this, 0, 0);
+		Gen37.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
 		Gen37.setTextureSize(textureWidth, textureHeight);
-		Gen37.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen37, 0.0F, 0.5235987755982988F, 0.0F);
+		Gen37.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen37, -1.1344640137963142F, 0.0F, 0.0F);
 		Gen37.mirror = false;
 
-		Gen38 = new ModelRenderer(this, 0, 54);
-		Gen38.addBox(-0.5F, 5.0F, -4.5F, 1, 2, 9);
+		Gen38 = new ModelRenderer(this, 0, 0);
+		Gen38.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
 		Gen38.setTextureSize(textureWidth, textureHeight);
-		Gen38.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen38, 0.0F, 1.5707963267948966F, 0.0F);
+		Gen38.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen38, -1.1344640137963142F, 1.0471975511965976F, 0.0F);
 		Gen38.mirror = false;
 
-		Gen39 = new ModelRenderer(this, 96, 0);
-		Gen39.addBox(-2.0F, -2.5F, -2.0F, 4, 1, 0);
+		Gen39 = new ModelRenderer(this, 0, 0);
+		Gen39.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
 		Gen39.setTextureSize(textureWidth, textureHeight);
-		Gen39.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen39, 0.0F, 2.0943951023931953F, 0.0F);
+		Gen39.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen39, -1.1344640137963142F, 2.0943951023931953F, 0.0F);
 		Gen39.mirror = false;
 
-		Gen40 = new ModelRenderer(this, 96, 0);
-		Gen40.addBox(-2.0F, -2.5F, -2.0F, 4, 1, 0);
+		Gen40 = new ModelRenderer(this, 0, 0);
+		Gen40.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
 		Gen40.setTextureSize(textureWidth, textureHeight);
-		Gen40.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen40, 0.0F, 0.0F, 0.0F);
+		Gen40.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen40, -1.1344640137963142F, 3.141592653589793F, 0.0F);
 		Gen40.mirror = false;
 
-		Gen41 = new ModelRenderer(this, 96, 0);
-		Gen41.addBox(-2.0F, -2.5F, -2.0F, 4, 1, 0);
+		Gen41 = new ModelRenderer(this, 0, 0);
+		Gen41.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
 		Gen41.setTextureSize(textureWidth, textureHeight);
-		Gen41.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen41, 0.0F, -2.0943951023931953F, 0.0F);
+		Gen41.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen41, -1.1344640137963142F, -2.0943951023931953F, 0.0F);
 		Gen41.mirror = false;
 
-		Gen42 = new ModelRenderer(this, 0, 0);
-		Gen42.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
+		Gen42 = new ModelRenderer(this, 68, 25);
+		Gen42.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
 		Gen42.setTextureSize(textureWidth, textureHeight);
-		Gen42.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen42, -1.1344640137963142F, -1.0471975511965976F, 0.0F);
+		Gen42.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotation(Gen42, -0.4363323129985824F, 0.0F, 0.0F);
 		Gen42.mirror = false;
 
-		Gen43 = new ModelRenderer(this, 68, 3);
-		Gen43.addBox(-0.5F, -3.0F, -2.5F, 1, 8, 1);
+		Gen43 = new ModelRenderer(this, 68, 25);
+		Gen43.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
 		Gen43.setTextureSize(textureWidth, textureHeight);
 		Gen43.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen43, 0.0F, 1.0471975511965976F, 0.0F);
+		setRotation(Gen43, -0.4363323129985824F, 1.0471975511965976F, 0.0F);
 		Gen43.mirror = false;
 
-		Gen44 = new ModelRenderer(this, 68, 46);
-		Gen44.addBox(-0.5F, 6.0F, -7.0F, 1, 1, 1);
+		Gen44 = new ModelRenderer(this, 68, 25);
+		Gen44.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
 		Gen44.setTextureSize(textureWidth, textureHeight);
 		Gen44.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen44, 0.0F, 0.5235987755982988F, 0.0F);
+		setRotation(Gen44, -0.4363323129985824F, 2.0943951023931953F, 0.0F);
 		Gen44.mirror = false;
 
-		Gen45 = new ModelRenderer(this, 68, 46);
-		Gen45.addBox(-0.5F, 6.0F, -7.0F, 1, 1, 1);
+		Gen45 = new ModelRenderer(this, 68, 25);
+		Gen45.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
 		Gen45.setTextureSize(textureWidth, textureHeight);
 		Gen45.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen45, 0.0F, 2.6179938779914944F, 0.0F);
+		setRotation(Gen45, -0.4363323129985824F, 3.141592653589793F, 0.0F);
 		Gen45.mirror = false;
 
-		Gen46 = new ModelRenderer(this, 68, 46);
-		Gen46.addBox(-0.5F, 6.0F, -7.0F, 1, 1, 1);
+		Gen46 = new ModelRenderer(this, 68, 25);
+		Gen46.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
 		Gen46.setTextureSize(textureWidth, textureHeight);
 		Gen46.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen46, 0.0F, -2.6179938779914944F, 0.0F);
+		setRotation(Gen46, -0.4363323129985824F, -2.0943951023931953F, 0.0F);
 		Gen46.mirror = false;
 
 		Gen47 = new ModelRenderer(this, 68, 28);
 		Gen47.addBox(-3.5F, 6.0F, -6.0F, 7, 17, 1);
 		Gen47.setTextureSize(textureWidth, textureHeight);
 		Gen47.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen47, 0.0F, 1.0471975511965976F, 0.0F);
+		setRotation(Gen47, 0.0F, 0.0F, 0.0F);
 		Gen47.mirror = false;
 
-		Gen48 = new ModelRenderer(this, 68, 28);
-		Gen48.addBox(-3.5F, 6.0F, -6.0F, 7, 17, 1);
+		Gen48 = new ModelRenderer(this, 82, 14);
+		Gen48.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
 		Gen48.setTextureSize(textureWidth, textureHeight);
 		Gen48.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen48, 0.0F, 2.0943951023931953F, 0.0F);
+		setRotation(Gen48, 0.0F, 0.0F, 0.0F);
 		Gen48.mirror = false;
 
-		Gen49 = new ModelRenderer(this, 68, 28);
-		Gen49.addBox(-3.5F, 6.0F, -6.0F, 7, 17, 1);
+		Gen49 = new ModelRenderer(this, 82, 14);
+		Gen49.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
 		Gen49.setTextureSize(textureWidth, textureHeight);
 		Gen49.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen49, 0.0F, 3.141592653589793F, 0.0F);
+		setRotation(Gen49, 0.0F, 0.5235987755982988F, 0.0F);
 		Gen49.mirror = false;
 
-		Gen50 = new ModelRenderer(this, 0, 33);
-		Gen50.addBox(-0.5F, 11.0F, -18.5F, 1, 1, 37);
+		Gen50 = new ModelRenderer(this, 82, 14);
+		Gen50.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
 		Gen50.setTextureSize(textureWidth, textureHeight);
 		Gen50.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen50, 0.0F, 0.5235987755982988F, 0.0F);
+		setRotation(Gen50, 0.0F, 1.0471975511965976F, 0.0F);
 		Gen50.mirror = false;
 
-		Gen51 = new ModelRenderer(this, 0, 44);
-		Gen51.addBox(-2.0F, 5.0F, -4.0F, 4, 2, 8);
+		Gen51 = new ModelRenderer(this, 82, 14);
+		Gen51.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
 		Gen51.setTextureSize(textureWidth, textureHeight);
 		Gen51.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen51, 0.0F, 0.0F, 0.0F);
+		setRotation(Gen51, 0.0F, 2.6179938779914944F, 0.0F);
 		Gen51.mirror = false;
 
-		Gen52 = new ModelRenderer(this, 0, 44);
-		Gen52.addBox(-2.0F, 5.0F, -4.0F, 4, 2, 8);
+		Gen52 = new ModelRenderer(this, 82, 14);
+		Gen52.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
 		Gen52.setTextureSize(textureWidth, textureHeight);
 		Gen52.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen52, 0.0F, 1.0471975511965976F, 0.0F);
+		setRotation(Gen52, 0.0F, 1.5707963267948966F, 0.0F);
 		Gen52.mirror = false;
 
-		Gen53 = new ModelRenderer(this, 0, 44);
-		Gen53.addBox(-2.0F, 5.0F, -4.0F, 4, 2, 8);
+		Gen53 = new ModelRenderer(this, 82, 14);
+		Gen53.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
 		Gen53.setTextureSize(textureWidth, textureHeight);
 		Gen53.setRotationPoint(0.0F, 0.0F, 0.0F);
 		setRotation(Gen53, 0.0F, 2.0943951023931953F, 0.0F);
 		Gen53.mirror = false;
 
-		Gen54 = new ModelRenderer(this, 68, 25);
-		Gen54.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
+		Gen54 = new ModelRenderer(this, 0, 33);
+		Gen54.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
 		Gen54.setTextureSize(textureWidth, textureHeight);
-		Gen54.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen54, -0.4363323129985824F, -1.0471975511965976F, 0.0F);
+		Gen54.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen54, 1.3613568165555772F, -0.5235987755982988F, 0.0F);
 		Gen54.mirror = false;
 
-		Gen55 = new ModelRenderer(this, 68, 48);
-		Gen55.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
+		Gen55 = new ModelRenderer(this, 0, 33);
+		Gen55.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
 		Gen55.setTextureSize(textureWidth, textureHeight);
-		Gen55.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen55, 0.0F, 0.0F, 0.0F);
+		Gen55.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen55, 1.3613568165555772F, -0.5235987755982988F, 0.0F);
 		Gen55.mirror = false;
 
-		Gen56 = new ModelRenderer(this, 68, 48);
-		Gen56.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
+		Gen56 = new ModelRenderer(this, 0, 33);
+		Gen56.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
 		Gen56.setTextureSize(textureWidth, textureHeight);
-		Gen56.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen56, 0.0F, 1.0471975511965976F, 0.0F);
+		Gen56.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen56, 1.3613568165555772F, 0.5235987755982988F, 0.0F);
 		Gen56.mirror = false;
 
-		Gen57 = new ModelRenderer(this, 68, 48);
-		Gen57.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
+		Gen57 = new ModelRenderer(this, 0, 33);
+		Gen57.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
 		Gen57.setTextureSize(textureWidth, textureHeight);
-		Gen57.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen57, 0.0F, 2.0943951023931953F, 0.0F);
+		Gen57.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen57, 1.3613568165555772F, 0.5235987755982988F, 0.0F);
 		Gen57.mirror = false;
 
-		Gen58 = new ModelRenderer(this, 68, 48);
-		Gen58.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
+		Gen58 = new ModelRenderer(this, 0, 33);
+		Gen58.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
 		Gen58.setTextureSize(textureWidth, textureHeight);
-		Gen58.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen58, 0.0F, 3.141592653589793F, 0.0F);
+		Gen58.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen58, 1.3613568165555772F, 1.5707963267948966F, 0.0F);
 		Gen58.mirror = false;
 
-		Gen59 = new ModelRenderer(this, 68, 48);
-		Gen59.addBox(-1.0F, 13.0F, -6.5F, 2, 1, 1);
+		Gen59 = new ModelRenderer(this, 0, 33);
+		Gen59.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
 		Gen59.setTextureSize(textureWidth, textureHeight);
-		Gen59.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen59, 0.0F, -2.0943951023931953F, 0.0F);
+		Gen59.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen59, 1.3613568165555772F, 1.5707963267948966F, 0.0F);
 		Gen59.mirror = false;
 
-		Gen60 = new ModelRenderer(this, 0, 0);
-		Gen60.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
+		Gen60 = new ModelRenderer(this, 0, 33);
+		Gen60.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
 		Gen60.setTextureSize(textureWidth, textureHeight);
-		Gen60.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen60, -1.1344640137963142F, 0.0F, 0.0F);
+		Gen60.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen60, 1.3613568165555772F, 2.6179938779914944F, 0.0F);
 		Gen60.mirror = false;
 
-		Gen61 = new ModelRenderer(this, 0, 0);
-		Gen61.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
+		Gen61 = new ModelRenderer(this, 0, 33);
+		Gen61.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
 		Gen61.setTextureSize(textureWidth, textureHeight);
-		Gen61.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen61, -1.1344640137963142F, 1.0471975511965976F, 0.0F);
+		Gen61.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen61, 1.3613568165555772F, 2.6179938779914944F, 0.0F);
 		Gen61.mirror = false;
 
-		Gen62 = new ModelRenderer(this, 0, 0);
-		Gen62.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
+		Gen62 = new ModelRenderer(this, 0, 33);
+		Gen62.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
 		Gen62.setTextureSize(textureWidth, textureHeight);
-		Gen62.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen62, -1.1344640137963142F, 2.0943951023931953F, 0.0F);
+		Gen62.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen62, 1.3613568165555772F, -2.6179938779914944F, 0.0F);
 		Gen62.mirror = false;
 
-		Gen63 = new ModelRenderer(this, 0, 0);
-		Gen63.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
+		Gen63 = new ModelRenderer(this, 0, 33);
+		Gen63.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
 		Gen63.setTextureSize(textureWidth, textureHeight);
-		Gen63.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen63, -1.1344640137963142F, 3.141592653589793F, 0.0F);
+		Gen63.setRotationPoint(0.0F, 12.0F, 0.0F);
+		setRotation(Gen63, 1.3613568165555772F, -2.6179938779914944F, 0.0F);
 		Gen63.mirror = false;
 
-		Gen64 = new ModelRenderer(this, 0, 0);
-		Gen64.addBox(-8.5F, 3.0F, -6.5F, 17, 11, 0);
+		Gen64 = new ModelRenderer(this, 92, 0);
+		Gen64.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
 		Gen64.setTextureSize(textureWidth, textureHeight);
 		Gen64.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen64, -1.1344640137963142F, -2.0943951023931953F, 0.0F);
+		setRotation(Gen64, -1.1519173063162573F, -0.5235987755982988F, 0.0F);
 		Gen64.mirror = false;
 
-		Gen65 = new ModelRenderer(this, 68, 25);
-		Gen65.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
+		Gen65 = new ModelRenderer(this, 92, 0);
+		Gen65.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
 		Gen65.setTextureSize(textureWidth, textureHeight);
-		Gen65.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen65, -0.4363323129985824F, 0.0F, 0.0F);
+		Gen65.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen65, -1.1519173063162573F, 0.5235987755982988F, 0.0F);
 		Gen65.mirror = false;
 
-		Gen66 = new ModelRenderer(this, 68, 25);
-		Gen66.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
+		Gen66 = new ModelRenderer(this, 92, 0);
+		Gen66.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
 		Gen66.setTextureSize(textureWidth, textureHeight);
-		Gen66.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen66, -0.4363323129985824F, 1.0471975511965976F, 0.0F);
+		Gen66.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen66, -1.1519173063162573F, 1.5707963267948966F, 0.0F);
 		Gen66.mirror = false;
 
-		Gen67 = new ModelRenderer(this, 68, 25);
-		Gen67.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
+		Gen67 = new ModelRenderer(this, 92, 0);
+		Gen67.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
 		Gen67.setTextureSize(textureWidth, textureHeight);
-		Gen67.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen67, -0.4363323129985824F, 2.0943951023931953F, 0.0F);
+		Gen67.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen67, -1.1519173063162573F, 2.6179938779914944F, 0.0F);
 		Gen67.mirror = false;
 
-		Gen68 = new ModelRenderer(this, 68, 25);
-		Gen68.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
+		Gen68 = new ModelRenderer(this, 92, 0);
+		Gen68.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
 		Gen68.setTextureSize(textureWidth, textureHeight);
-		Gen68.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen68, -0.4363323129985824F, 3.141592653589793F, 0.0F);
+		Gen68.setRotationPoint(0.0F, 11.0F, 0.0F);
+		setRotation(Gen68, -1.1519173063162573F, -2.6179938779914944F, 0.0F);
 		Gen68.mirror = false;
-
-		Gen69 = new ModelRenderer(this, 68, 25);
-		Gen69.addBox(-3.5F, 8.0F, -2.9F, 7, 2, 1);
-		Gen69.setTextureSize(textureWidth, textureHeight);
-		Gen69.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen69, -0.4363323129985824F, -2.0943951023931953F, 0.0F);
-		Gen69.mirror = false;
-
-		Gen70 = new ModelRenderer(this, 68, 28);
-		Gen70.addBox(-3.5F, 6.0F, -6.0F, 7, 17, 1);
-		Gen70.setTextureSize(textureWidth, textureHeight);
-		Gen70.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen70, 0.0F, 0.0F, 0.0F);
-		Gen70.mirror = false;
-
-		Gen71 = new ModelRenderer(this, 82, 14);
-		Gen71.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
-		Gen71.setTextureSize(textureWidth, textureHeight);
-		Gen71.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen71, 0.0F, 0.0F, 0.0F);
-		Gen71.mirror = false;
-
-		Gen72 = new ModelRenderer(this, 82, 14);
-		Gen72.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
-		Gen72.setTextureSize(textureWidth, textureHeight);
-		Gen72.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen72, 0.0F, 0.5235987755982988F, 0.0F);
-		Gen72.mirror = false;
-
-		Gen73 = new ModelRenderer(this, 82, 14);
-		Gen73.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
-		Gen73.setTextureSize(textureWidth, textureHeight);
-		Gen73.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen73, 0.0F, 1.0471975511965976F, 0.0F);
-		Gen73.mirror = false;
-
-		Gen74 = new ModelRenderer(this, 82, 14);
-		Gen74.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
-		Gen74.setTextureSize(textureWidth, textureHeight);
-		Gen74.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen74, 0.0F, 2.6179938779914944F, 0.0F);
-		Gen74.mirror = false;
-
-		Gen75 = new ModelRenderer(this, 0, 22);
-		Gen75.addBox(-3.0F, 6.5F, -5.0F, 6, 1, 10);
-		Gen75.setTextureSize(textureWidth, textureHeight);
-		Gen75.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen75, 0.0F, 2.0943951023931953F, 0.0F);
-		Gen75.mirror = false;
-
-		Gen76 = new ModelRenderer(this, 82, 14);
-		Gen76.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
-		Gen76.setTextureSize(textureWidth, textureHeight);
-		Gen76.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen76, 0.0F, 1.5707963267948966F, 0.0F);
-		Gen76.mirror = false;
-
-		Gen77 = new ModelRenderer(this, 82, 14);
-		Gen77.addBox(-2.0F, 6.0F, -6.0F, 4, 0, 12);
-		Gen77.setTextureSize(textureWidth, textureHeight);
-		Gen77.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotation(Gen77, 0.0F, 2.0943951023931953F, 0.0F);
-		Gen77.mirror = false;
-
-		Gen78 = new ModelRenderer(this, 0, 33);
-		Gen78.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
-		Gen78.setTextureSize(textureWidth, textureHeight);
-		Gen78.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen78, 1.3613568165555772F, -0.5235987755982988F, 0.0F);
-		Gen78.mirror = false;
-
-		Gen79 = new ModelRenderer(this, 0, 33);
-		Gen79.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
-		Gen79.setTextureSize(textureWidth, textureHeight);
-		Gen79.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen79, 1.3613568165555772F, -0.5235987755982988F, 0.0F);
-		Gen79.mirror = false;
-
-		Gen80 = new ModelRenderer(this, 0, 33);
-		Gen80.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
-		Gen80.setTextureSize(textureWidth, textureHeight);
-		Gen80.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen80, 1.3613568165555772F, 0.5235987755982988F, 0.0F);
-		Gen80.mirror = false;
-
-		Gen81 = new ModelRenderer(this, 0, 33);
-		Gen81.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
-		Gen81.setTextureSize(textureWidth, textureHeight);
-		Gen81.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen81, 1.3613568165555772F, 0.5235987755982988F, 0.0F);
-		Gen81.mirror = false;
-
-		Gen82 = new ModelRenderer(this, 0, 33);
-		Gen82.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
-		Gen82.setTextureSize(textureWidth, textureHeight);
-		Gen82.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen82, 1.3613568165555772F, 1.5707963267948966F, 0.0F);
-		Gen82.mirror = false;
-
-		Gen83 = new ModelRenderer(this, 0, 33);
-		Gen83.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
-		Gen83.setTextureSize(textureWidth, textureHeight);
-		Gen83.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen83, 1.3613568165555772F, 1.5707963267948966F, 0.0F);
-		Gen83.mirror = false;
-
-		Gen84 = new ModelRenderer(this, 0, 33);
-		Gen84.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
-		Gen84.setTextureSize(textureWidth, textureHeight);
-		Gen84.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen84, 1.3613568165555772F, 2.6179938779914944F, 0.0F);
-		Gen84.mirror = false;
-
-		Gen85 = new ModelRenderer(this, 0, 33);
-		Gen85.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
-		Gen85.setTextureSize(textureWidth, textureHeight);
-		Gen85.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen85, 1.3613568165555772F, 2.6179938779914944F, 0.0F);
-		Gen85.mirror = false;
-
-		Gen86 = new ModelRenderer(this, 0, 33);
-		Gen86.addBox(-0.5F, -16.0F, -3.0F, 1, 7, 1);
-		Gen86.setTextureSize(textureWidth, textureHeight);
-		Gen86.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen86, 1.3613568165555772F, -2.6179938779914944F, 0.0F);
-		Gen86.mirror = false;
-
-		Gen87 = new ModelRenderer(this, 0, 33);
-		Gen87.addBox(-0.5F, -18.0F, -4.0F, 1, 10, 1);
-		Gen87.setTextureSize(textureWidth, textureHeight);
-		Gen87.setRotationPoint(0.0F, 12.0F, 0.0F);
-		setRotation(Gen87, 1.3613568165555772F, -2.6179938779914944F, 0.0F);
-		Gen87.mirror = false;
-
-		Gen88 = new ModelRenderer(this, 92, 0);
-		Gen88.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
-		Gen88.setTextureSize(textureWidth, textureHeight);
-		Gen88.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen88, -1.1519173063162573F, -0.5235987755982988F, 0.0F);
-		Gen88.mirror = false;
-
-		Gen89 = new ModelRenderer(this, 92, 0);
-		Gen89.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
-		Gen89.setTextureSize(textureWidth, textureHeight);
-		Gen89.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen89, -1.1519173063162573F, 0.5235987755982988F, 0.0F);
-		Gen89.mirror = false;
-
-		Gen90 = new ModelRenderer(this, 92, 0);
-		Gen90.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
-		Gen90.setTextureSize(textureWidth, textureHeight);
-		Gen90.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen90, -1.1519173063162573F, 1.5707963267948966F, 0.0F);
-		Gen90.mirror = false;
-
-		Gen91 = new ModelRenderer(this, 92, 0);
-		Gen91.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
-		Gen91.setTextureSize(textureWidth, textureHeight);
-		Gen91.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen91, -1.1519173063162573F, 2.6179938779914944F, 0.0F);
-		Gen91.mirror = false;
-
-		Gen92 = new ModelRenderer(this, 92, 0);
-		Gen92.addBox(-0.5F, 4.3F, -7.4F, 1, 13, 1);
-		Gen92.setTextureSize(textureWidth, textureHeight);
-		Gen92.setRotationPoint(0.0F, 11.0F, 0.0F);
-		setRotation(Gen92, -1.1519173063162573F, -2.6179938779914944F, 0.0F);
-		Gen92.mirror = false;
 
 	}
 	@Override
@@ -826,10 +821,8 @@ public class ModelConsole03 extends ModelBase {
 		Gen20.render(scale);
 		Gen21.render(scale);
 		Gen22.render(scale);
-		Shape4.render(scale);
 		Gen23.render(scale);
 		Gen24.render(scale);
-		Shape7.render(scale);
 		Gen25.render(scale);
 		Gen26.render(scale);
 		Gen27.render(scale);
@@ -874,30 +867,41 @@ public class ModelConsole03 extends ModelBase {
 		Gen66.render(scale);
 		Gen67.render(scale);
 		Gen68.render(scale);
-		Gen69.render(scale);
-		Gen70.render(scale);
-		Gen71.render(scale);
-		Gen72.render(scale);
-		Gen73.render(scale);
-		Gen74.render(scale);
-		Gen75.render(scale);
-		Gen76.render(scale);
-		Gen77.render(scale);
-		Gen78.render(scale);
-		Gen79.render(scale);
-		Gen80.render(scale);
-		Gen81.render(scale);
-		Gen82.render(scale);
-		Gen83.render(scale);
-		Gen84.render(scale);
-		Gen85.render(scale);
-		Gen86.render(scale);
-		Gen87.render(scale);
-		Gen88.render(scale);
-		Gen89.render(scale);
-		Gen90.render(scale);
-		Gen91.render(scale);
-		Gen92.render(scale);
+		
+		GlStateManager.pushMatrix();
+		float time = (float) ageInTicks % 60;
+		float percent = (time % 30) / 30;
+		GlStateManager.translate(0, ((float)Helper.precentToPixels(4) * (time < 30 ? (percent) : (1F - percent))), 0);
+		Rotor14.render(scale);
+		Rotor22.render(scale);
+		Rotor20.render(scale);
+		Rotor8.render(scale);
+		Rotor3.render(scale);
+		Rotor6.render(scale);
+		Rotor2.render(scale);
+		Rotor10.render(scale);
+		Rotor4.render(scale);
+		Rotor1.render(scale);
+		Rotor21.render(scale);
+		Rotor12.render(scale);
+		Rotor16.render(scale);
+		Rotor9.render(scale);
+		Rotor5.render(scale);
+		Rotor7.render(scale);
+		Rotor13.render(scale);
+		Rotor11.render(scale);
+		Rotor15.render(scale);
+		
+		Minecraft.getMinecraft().entityRenderer.disableLightmap();
+		Glow4.render(scale);
+		Glow2.render(scale);
+		Glow6.render(scale);
+		Glow1.render(scale);
+		Glow3.render(scale);
+		Glow5.render(scale);
+		Minecraft.getMinecraft().entityRenderer.enableLightmap();
+		
+		GlStateManager.popMatrix();
 	}
 	private void setRotation(ModelRenderer model, float x, float y, float z){
 		model.rotateAngleX = x;

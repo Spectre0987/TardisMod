@@ -22,10 +22,10 @@ public class RenderConsole04 extends TileEntitySpecialRenderer<TileEntityTardis0
 		GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
 		GlStateManager.rotate(180, 0, 0, 1);
 		this.bindTexture(TEXTURE);
-		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		model.render(null, 0, 0, te.getTimeLeft(), 0, 0, 0.0625F);
 		this.bindTexture(CONTROL_TEXTURE);
 		GlStateManager.translate(0, -1, 0);
-		controlModel.render(null, 0, 0, 0, 0, 00, 0.0625F);
+		controlModel.render(null, 0, 0, 0, 0, 0, 0.0625F);
 		GlStateManager.popMatrix();
 	}
 
