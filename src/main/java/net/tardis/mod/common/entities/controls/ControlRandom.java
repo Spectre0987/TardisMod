@@ -7,9 +7,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.common.helpers.Helper;
 import scala.util.Random;
@@ -35,6 +33,10 @@ public class ControlRandom extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(-13, 0, 5);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-8, -1, -4.5);
+		if(tardis instanceof TileEntityTardis05)
+			return Helper.convertToPixels(-9.5, -0.5, 5.5);
 		return Helper.convertToPixels(0, -1, 9);
 	}
 
@@ -64,6 +66,8 @@ public class ControlRandom extends EntityControl {
 		if (tardis != null) {
 			if (tardis instanceof TileEntityTardis03)
 				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(2F));
+			if (tardis instanceof TileEntityTardis05)
+				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(1F));
 		}
 	}
 }

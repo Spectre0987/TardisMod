@@ -4,9 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlY extends EntityControl {
@@ -27,6 +25,11 @@ public class ControlY extends EntityControl {
 		}
 		if (tardis instanceof TileEntityTardis03)
 			return Helper.convertToPixels(0, 3, 9);
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-11, -1.5, -5);
+		if (tardis instanceof TileEntityTardis05) {
+			return Helper.convertToPixels(12.5, -2.5, -5);
+		}
 		return Helper.convertToPixels(-7.5, -0.5, 4.5);
 	}
 
@@ -45,7 +48,7 @@ public class ControlY extends EntityControl {
 	public void init(TileEntityTardis tardis) {
 		if (tardis != null) {
 			if (tardis instanceof TileEntityTardis03)
-				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(2F));
+				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(1F));
 		}
 	}
 }

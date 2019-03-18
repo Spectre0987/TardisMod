@@ -54,7 +54,7 @@ public class SystemThermo extends BaseSystem {
 
 	@Override
 	public void damage() {
-		this.setHealth(this.getHealth() - 0.5F);
+		this.setHealth(this.getHealth() - 0.2F);
 	}
 
 	@Override

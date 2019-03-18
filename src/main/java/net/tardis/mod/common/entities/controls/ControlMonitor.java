@@ -8,6 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiMonitor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlMonitor extends EntityControl {
@@ -23,6 +24,8 @@ public class ControlMonitor extends EntityControl {
 
 	@Override
 	public Vec3d getOffset(TileEntityTardis tardis) {
+		if(tardis instanceof TileEntityTardis04)
+			return Helper.convertToPixels(-10, -2, 6);
 		return Helper.convertToPixels(11, 2, -7);
 	}
 

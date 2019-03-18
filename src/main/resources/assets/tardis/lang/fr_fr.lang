@@ -282,6 +282,8 @@ command.no_tardis_owned=Aucun TARDIS trouvé
 command.no_player_found=Pas de joueur trouvé avec ce pseudonyme
 command.tardis_travel=Le TARDIS arrive
 command.tardis_deleted=TARDIS supprimé
+command.tardis.nosystem=Aucun système trouvé
+commands.tardis.system_restored=Système restauré
 
 commands.tardis.teleportin.usage=/tardis interior
 commands.tardis.grow.usage=/tardis grow

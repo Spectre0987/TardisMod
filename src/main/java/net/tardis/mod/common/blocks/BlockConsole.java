@@ -96,7 +96,7 @@ public class BlockConsole extends BlockTileBase implements IRenderBox, IBlock {
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 		return false;
 	}
-
+	
 	/**
 	 * This interface determines whether
 	 * the bounding box the player sees when their mouse is over a block

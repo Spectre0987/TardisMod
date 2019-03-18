@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -988,6 +989,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public void transferPlayer(Entity entity, boolean checkDoors) {
+		if(entity instanceof EntityDragon) return;
 		WorldServer ws = world.getMinecraftServer().getWorld(dimension);
 		if(ws == null)return;
 		MinecraftForge.EVENT_BUS.post(new TardisExitEvent(entity, this.getPos()));
@@ -1018,6 +1020,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public void enterTARDIS(Entity entity) {
+		if(entity instanceof EntityDragon) return;
 		if(this.getTardisState() != EnumTardisState.NORMAL) return;
 		MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, this.getPos()));
 		ControlDoor door = this.getDoor();

@@ -2,6 +2,12 @@ package net.tardis.mod.client.guis;
 
 import java.io.IOException;
 
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.tardis.mod.common.systems.TardisSystems;
+import net.tardis.mod.network.packets.MessageDamageSystem;
+import net.tardis.mod.network.packets.MessageSpawnItem;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -78,13 +84,26 @@ public class GuiChangeInterior extends GuiScreen {
 			}
 			else index = 0;
 		}
+		
 		if(button == this.select) {
-			NetworkHandler.NETWORK.sendToServer(new MessageChangeInterior(this.index, tardis.getPos()));
+			ask();
 		}
 		if(button == this.prev) {
 			if(index > 0)
 				--index;
 			else index = ConsoleRoom.CONSOLE_ROOMS.size() - 1;
 		}
+	}
+	
+	public void ask(){
+		Minecraft.getMinecraft().displayGuiScreen(new GUIConfirm((result, id) -> {
+			if (result) {
+				NetworkHandler.NETWORK.sendToServer(new MessageChangeInterior(this.index, tardis.getPos()));
+				Minecraft.getMinecraft().displayGuiScreen(null);
+			} else {
+				Minecraft.getMinecraft().displayGuiScreen(this);
+			}
+			
+		}, I18n.format("Are you sure you want to Generate this interior??"), "This can be very damaging if you are not prepared!", I18n.format("Yes!"), I18n.format("gui.cancel"), 0));
 	}
 }

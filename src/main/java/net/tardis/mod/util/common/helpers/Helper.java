@@ -11,6 +11,7 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -21,6 +22,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.tardis.mod.api.dimensions.IBlockedDimension;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
@@ -33,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 
 public class Helper {
 
@@ -150,22 +154,11 @@ public class Helper {
 	}
 
 	public static Biome findBiomeByName(String string) {
-		List<Biome> biomes = EntityHelper.biomes;
-		try {
-			Field field;
-			if ((Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
-				field = Biome.class.getDeclaredField("biomeName");
-			} else {
-				field = Biome.class.getDeclaredField("field_76791_y");
+		List<Biome> biomes= ForgeRegistries.BIOMES.getValues();
+		for (Biome biome : biomes) {
+			if(biome.biomeName.trim().toLowerCase().equals(string)){
+				return biome;
 			}
-			field.setAccessible(true);
-			for (Biome b : biomes) {
-				Object obj = field.get(b);
-				if (((String) obj).trim().toLowerCase().equals(string)) {
-					return b;
-				}
-			}
-		} catch (Exception e) {
 		}
 		return null;
 	}

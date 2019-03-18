@@ -17,12 +17,13 @@ import net.minecraft.world.storage.MapData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiMonitor;
+import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 import java.util.function.Supplier;
 
-public class BlockMonitor extends BlockFacingDecoration {
+public class BlockMonitor extends BlockFacingDecoration implements IRenderBox {
 
 	public BlockMonitor(Supplier<TileEntity> tileEntity) {
 		super(tileEntity);
@@ -58,5 +59,9 @@ public class BlockMonitor extends BlockFacingDecoration {
 		drops.add(new ItemStack(this));
 		super.getDrops(drops, world, pos, state, fortune);
 	}
-
+	
+	@Override
+	public boolean shouldRenderBox() {
+		return false;
+	}
 }
