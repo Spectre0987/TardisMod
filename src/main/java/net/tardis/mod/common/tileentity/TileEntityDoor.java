@@ -242,6 +242,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 						}
 						this.sendBOTI(EnumType.BLOCKS);
 					}
+					if(world.getWorldTime() % 5 == 2) {
+						for(BlockPos pos : this.getBlocksInAABB(BB.offset(doorPos.north(20)))) {
+							IBlockState state = tardis.getWorld().getBlockState(pos);
+							if((state.getBlock().hasTileEntity() || state.getRenderType() != EnumBlockRenderType.INVISIBLE) || state.getBlock() instanceof BlockTardisTop)
+								worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
+						}
+						this.sendBOTI(EnumType.BLOCKS);
+					}
 					if(world.getWorldTime() % 5 == 0) {
 						List<NBTTagCompound> bEnt = new ArrayList<NBTTagCompound>();
 						for(Entity e : tardis.getWorld().getEntitiesWithinAABB(Entity.class, BB.offset(doorPos))) {
