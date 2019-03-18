@@ -10,10 +10,7 @@ import net.minecraft.world.WorldServer;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDoorSwitch extends EntityControl {
@@ -38,6 +35,8 @@ public class ControlDoorSwitch extends EntityControl {
 			return Helper.convertToPixels(-4, 2, -16);
 		if(tardis instanceof TileEntityTardis04)
 			return Helper.convertToPixels(12, -2, -6);
+		if(tardis instanceof TileEntityTardis05)
+			return Helper.convertToPixels(14, -3, 3.5);
 		return Helper.convertToPixels(0, -2, 11);
 	}
 

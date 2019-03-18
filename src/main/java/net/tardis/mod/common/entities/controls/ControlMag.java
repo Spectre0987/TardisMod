@@ -7,10 +7,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlMag extends EntityControl {
@@ -36,7 +33,9 @@ public class ControlMag extends EntityControl {
 			return Helper.convertToPixels(-14.5, 0, 2.5);
 		if(tardis instanceof TileEntityTardis04)
 			return Helper.convertToPixels(-14.25, -2, -2.5);
-		return Helper.convertToPixels(-9, -2, 6.5);
+        if(tardis instanceof TileEntityTardis05)
+            return Helper.convertToPixels(12, -2, 6);
+		return Helper.convertToPixels(-7, -2, 6.5);
 	}
 
 	@Override

@@ -10,10 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.guis.GuiTelepathicCircuts;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlTelepathicCircuts extends EntityControl {
@@ -37,6 +34,8 @@ public class ControlTelepathicCircuts extends EntityControl {
 			return Helper.convertToPixels(8.5, 2, 5.5);
 		if(tardis instanceof TileEntityTardis04)
 			return Helper.convertToPixels(0, -1, -8);
+		if(tardis instanceof TileEntityTardis05)
+			return Helper.convertToPixels(0, -2, 10.5);
 		return Helper.convertToPixels(10, -2, -6);
 	}
 
@@ -61,6 +60,8 @@ public class ControlTelepathicCircuts extends EntityControl {
 				this.setSize(Helper.precentToPixels(4F), Helper.precentToPixels(2F));
 			if(tardis instanceof TileEntityTardis04)
 				this.setSize(Helper.precentToPixels(6F), Helper.precentToPixels(2F));
+			if(tardis instanceof TileEntityTardis05)
+				this.setSize(Helper.precentToPixels(3F), Helper.precentToPixels(3F));
 		}
 	}
 

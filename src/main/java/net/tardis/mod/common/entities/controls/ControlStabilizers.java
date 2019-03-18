@@ -10,10 +10,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlStabilizers extends EntityControl {
@@ -41,6 +38,8 @@ public class ControlStabilizers extends EntityControl {
 			return Helper.convertToPixels(-14, -4, 6);
 		if(tardis instanceof TileEntityTardis04)
 			return Helper.convertToPixels(2.25, -2, 12);
+		if(tardis instanceof TileEntityTardis05)
+			return Helper.convertToPixels(-9.5, -2, 8.5);
 		return new Vec3d(0, 0, 0);
 	}
 

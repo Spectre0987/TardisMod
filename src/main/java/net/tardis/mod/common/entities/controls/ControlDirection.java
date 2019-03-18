@@ -8,10 +8,7 @@ import net.minecraft.world.World;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlDirection extends EntityControl {
@@ -37,6 +34,8 @@ public class ControlDirection extends EntityControl {
 			return Helper.convertToPixels(-16, 1, -3);
 		if(tardis instanceof TileEntityTardis04)
 			return Helper.convertToPixels(-9, -3, -11);
+		if(tardis instanceof TileEntityTardis05)
+			return Helper.convertToPixels(-12.25, -2.5, 7.25);
 		return Helper.convertToPixels(9.5, -3.5, 10);
 	}
 
@@ -53,6 +52,8 @@ public class ControlDirection extends EntityControl {
 	public void init(TileEntityTardis tardis) {
 		if (tardis != null) {
 			if (tardis instanceof TileEntityTardis03)
+				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(1F));
+			if (tardis instanceof TileEntityTardis05)
 				this.setSize(Helper.precentToPixels(1F), Helper.precentToPixels(1F));
 		}
 	}

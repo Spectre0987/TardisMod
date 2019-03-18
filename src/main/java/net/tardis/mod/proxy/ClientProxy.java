@@ -28,10 +28,7 @@ import net.tardis.mod.client.models.items.ModelKey01;
 import net.tardis.mod.client.models.items.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
 import net.tardis.mod.client.renderers.RenderInvis;
-import net.tardis.mod.client.renderers.consoles.RenderConsole01;
-import net.tardis.mod.client.renderers.consoles.RenderConsole02;
-import net.tardis.mod.client.renderers.consoles.RenderConsole03;
-import net.tardis.mod.client.renderers.consoles.RenderConsole04;
+import net.tardis.mod.client.renderers.consoles.*;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.renderers.controls.RenderSonicSlot;
@@ -131,10 +128,7 @@ import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
 import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
@@ -208,6 +202,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis02.class, new RenderConsole02());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis03.class, new RenderConsole03());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis04.class, new RenderConsole04());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis05.class, new RenderConsole05());
 
 		//Exteriors
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor01.class, new RendererTileDoor01());

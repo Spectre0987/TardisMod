@@ -6,10 +6,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
-import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
+import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlLaunch extends EntityControl {
@@ -32,6 +29,9 @@ public class ControlLaunch extends EntityControl {
 			return Helper.convertToPixels(5.5, 2.5, 14);
 		if(tardis instanceof TileEntityTardis04)
 			return Helper.convertToPixels(0, -2, 12);
+		if(tardis instanceof TileEntityTardis05)
+			return Helper.convertToPixels(-11, -2, -6.5);
+
 		return Helper.convertToPixels(-7, 0, 7.5);
 	}
 
