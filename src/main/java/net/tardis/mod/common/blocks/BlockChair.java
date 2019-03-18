@@ -17,10 +17,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.client.creativetabs.TardisTabs;
+import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.entities.EntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 
-public class BlockChair extends BlockHorizontal implements INoBox {
+public class BlockChair extends BlockHorizontal implements IRenderBox {
 
 	public BlockChair(Material materialIn) {
 		super(materialIn);
@@ -96,5 +97,9 @@ public class BlockChair extends BlockHorizontal implements INoBox {
 	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
 		return false;
 	}
-
+	
+	@Override
+	public boolean shouldRenderBox() {
+		return false;
+	}
 }

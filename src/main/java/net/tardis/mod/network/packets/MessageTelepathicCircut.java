@@ -66,6 +66,8 @@ public class MessageTelepathicCircut implements IMessage {
 				WorldServer ws = DimensionManager.getWorld(TDimensions.TARDIS_ID);
 				EntityPlayer player = server.getPlayerList().getPlayerByUsername(message.name.trim().toLowerCase());
 				TileEntity te = ws.getTileEntity(message.pos);
+				
+				//==================== LANDING ON PEOPLE ====================
 				if (te != null && te instanceof TileEntityTardis) {
 					TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(message.pos);
 					WorldServer locationWorld = DimensionManager.getWorld(tardis.getTargetDim());
@@ -74,6 +76,8 @@ public class MessageTelepathicCircut implements IMessage {
 						tardis.startFlight();
 						managed = true;
 					} else {
+						
+						//==================== BIOMES ====================
 						Biome b = Helper.findBiomeByName(message.name.toLowerCase().trim());
 						if (b != null) {
 							ArrayList<Biome> biomes = new ArrayList<>();
@@ -86,6 +90,7 @@ public class MessageTelepathicCircut implements IMessage {
 								managed = true;
 							}
 						} else {
+							//==================== STRUCTURES ====================
 							Random rand = ctx.getServerHandler().player.world.rand;
 							BlockPos structurePos = locationWorld.findNearestStructure(message.name.trim(), tardis.getLocation(), true);
 							if (structurePos != null && !BlockPos.ORIGIN.equals(structurePos)) {
@@ -96,6 +101,7 @@ public class MessageTelepathicCircut implements IMessage {
 						}
 					}
 					
+					//==================== FAILURE ====================
 					if (!managed) {
 						PlayerHelper.sendMessage(ctx.getServerHandler().player, new TextComponentTranslation("tardis.message.tc_notfound", message.name.trim()), true);
 						tardis.getWorld().playSound(null, tardis.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1, 1);

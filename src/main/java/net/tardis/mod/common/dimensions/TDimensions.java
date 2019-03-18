@@ -77,9 +77,9 @@ public class TDimensions {
 		MOON_TYPE = DimensionType.register("moon", "_moon", MOON_ID, MoonProvider.class, false);
 		DimensionManager.registerDimension(MOON_ID, MOON_TYPE);
 		
-		//TODO Clean this up
-		
-		GALLIFREY_ID = 678;
+		if (setDim)
+			GALLIFREY_ID = TardisConfig.Dimensions.gallifreyDimension;
+		else GALLIFREY_ID = DimensionManager.getNextFreeDimId();
 		GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
 		DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
 	}

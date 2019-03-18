@@ -19,19 +19,19 @@ import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
 import javax.annotation.Nullable;
 
 public class BlockTardisCoral extends BlockTileBase {
-
+	
 	public ItemBlock item = new ItemBlock(this);
 	public static final PropertyInteger GROW_STAGE = PropertyInteger.create("grow", 0, 3);
-
+	
 	protected static final AxisAlignedBB CORAL_AABB = new AxisAlignedBB(0.25D, 0D, 0.25D, 0.75D, 0.75D, 0.75D);
 	
 	public BlockTardisCoral() {
 		super(Material.SPONGE, TileEntityTardisCoral::new);
 		this.setDefaultState(this.getDefaultState().withProperty(GROW_STAGE, 0));
 		this.setSoundType(SoundType.PLANT);
-
+		
 	}
-
+	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		if (!worldIn.isRemote && placer instanceof EntityPlayer) {
@@ -40,57 +40,52 @@ public class BlockTardisCoral extends BlockTileBase {
 		}
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
-
+	
 	@Override
 	public boolean isNormalCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
-	public boolean isFullCube(IBlockState state)
-	{
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
-
-
+	
+	
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, GROW_STAGE);
 	}
-
+	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(GROW_STAGE, meta);
 	}
-
+	
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(GROW_STAGE);
 	}
-
+	
 	@Override
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
-
+	
 	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-	{
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return NULL_AABB;
 	}
 	
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return CORAL_AABB;
 	}
-
-
-
-
+	
+	
 }

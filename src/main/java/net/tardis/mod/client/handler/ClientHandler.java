@@ -1,21 +1,25 @@
 package net.tardis.mod.client.handler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.blocks.INoBox;
+import net.tardis.mod.client.guis.GuiVortexM;
+import net.tardis.mod.common.blocks.interfaces.IRenderBox;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
+import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 
@@ -35,11 +39,25 @@ public class ClientHandler {
 			}
 		}
 	}
-
+	
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public static void cancelBB(DrawBlockHighlightEvent event) {
-		if (event.getTarget() != null && event.getTarget().getBlockPos() != null && !BlockPos.ORIGIN.equals(event.getTarget().getBlockPos()) && event.getPlayer().world.getBlockState(event.getTarget().getBlockPos()).getBlock() instanceof INoBox) {
-			event.setCanceled(true);
+	public static void cancelBBRender(DrawBlockHighlightEvent event) {
+		World world = event.getPlayer().world;
+		BlockPos pos = event.getTarget().getBlockPos();
+		if (pos != null && !pos.equals(BlockPos.ORIGIN)) {
+			if (world.getBlockState(pos).getBlock() instanceof IRenderBox) {
+				IRenderBox block = (IRenderBox) world.getBlockState(pos).getBlock();
+				event.setCanceled(!block.shouldRenderBox());
+			}
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
+		if (e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().dimension != TDimensions.TARDIS_ID && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
+			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
 		}
 	}
 	

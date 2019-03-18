@@ -194,20 +194,7 @@ public class TEventHandler {
 			}
 		}
 	}
-
-
-	@SideOnly(Side.CLIENT)
-	public static void cancelBBRender(DrawBlockHighlightEvent event) {
-		World world = event.getPlayer().world;
-		BlockPos pos = event.getTarget().getBlockPos();
-		if (pos != null && !pos.equals(BlockPos.ORIGIN)) {
-			if (world.getBlockState(pos).getBlock() instanceof IRenderBox) {
-				IRenderBox block = (IRenderBox) world.getBlockState(pos).getBlock();
-				event.setCanceled(!block.shouldRenderBox());
-			}
-		}
-	}
-
+	
 	@SubscribeEvent
 	public static void givePlayerKey(PlayerLoggedInEvent event) {
 		if (TardisConfig.MISC.givePlayerKey) {
@@ -270,15 +257,7 @@ public class TEventHandler {
 			}
 		}
 	}
-
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
-		if (e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().dimension != TDimensions.TARDIS_ID && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
-		}
-	}
-
+	
 	@SubscribeEvent
 	public static void stopDrown(LivingUpdateEvent event) {
 		EntityLivingBase base = event.getEntityLiving();
