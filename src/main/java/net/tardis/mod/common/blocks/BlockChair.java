@@ -20,7 +20,7 @@ import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.entities.EntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 
-public class BlockChair extends BlockHorizontal implements INoBox {
+public class BlockChair extends BlockHorizontal {
 
 	public BlockChair(Material materialIn) {
 		super(materialIn);
