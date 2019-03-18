@@ -118,8 +118,13 @@ public class CommandTardis extends CommandBase {
 							player = server.getPlayerList().getPlayerByUsername(args[j++]);
 
 						List<String> systemNames = new ArrayList<>();
-						for (int i = j; i < args.length; i++)
-							systemNames.add(args[i]);
+						if (args[j].equals("*")){
+							systemNames = TardisSystems.getSystemsnames();
+						}
+						else{
+							for (int i = j; i < args.length; i++)
+								systemNames.add(args[i]);
+						}
 
 						this.restoreSystem(player, player.getUniqueID(), systemNames.toArray(new String[]{}));
 					} else
@@ -244,15 +249,12 @@ public class CommandTardis extends CommandBase {
 		}
 
 		if (args[0].equals("restoresys")) {
-			List<String> systemNames = new ArrayList<String>();
-
-			for (Map.Entry<String, Class<? extends BaseSystem>> entry : TardisSystems.SYSTEMS.entrySet()) {
-				systemNames.add(entry.getKey());
-			}
+			List<String> systemNames = TardisSystems.getSystemsnames();
 
 			if (args.length == 2) {
 				systemNames.addAll(Arrays.asList(server.getOnlinePlayerNames()));
 			}
+			systemNames.add("*");
 			return getListOfStringsMatchingLastWord(args, systemNames);
 		}
 		return Collections.emptyList();
