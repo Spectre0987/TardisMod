@@ -34,6 +34,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -254,6 +255,15 @@ public class TEventHandler {
 						world.spawnEntity(ei);
 					}
 				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onMissingMappingSound(RegistryEvent.MissingMappings<SoundEvent> e) {
+		for (RegistryEvent.MissingMappings.Mapping<SoundEvent> map : e.getAllMappings()) {
+			if (map.key.toString().equals("tardis:sonic")) {
+				map.ignore();
 			}
 		}
 	}
