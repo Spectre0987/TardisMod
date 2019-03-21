@@ -71,7 +71,6 @@ dependencies {
 
     //JEI
     compileOnly "mezz.jei:jei_1.12.2:4.14.4.267:api"
-    runtime "mezz.jei:jei_1.12.2:4.14.4.267"
 }
 
 processResources {

@@ -278,7 +278,7 @@ public class ClientProxy extends ServerProxy {
 	@Override
 	public void openGui(int id, GuiContext context) {
 		if(id == 0)
-			Minecraft.getMinecraft().currentScreen = new GuiToggleHum(context.pos, context.dimension);
+			Minecraft.getMinecraft().displayGuiScreen(new GuiToggleHum(context.pos, context.dimension));
 	}
 
 	@Override
