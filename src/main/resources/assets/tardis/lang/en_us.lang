@@ -337,3 +337,10 @@ tardis.hum.tardis:tardis_hum_coral=Coral interior hum
 tardis.hum.tardis:tardis_hum_toyota=Toyota interior hum
 tardis.hum.tardis:tardis_hum_70=1970's interior hum
 tardis.hum.null=Hum disabled
+
+hum.tardis.toyota=Toyota
+hum.tardis.coral=Coral
+hum.tardis.copper=Copper
+hum.tardis.70=Sharp
+hum.tardis.1963=Brachacki
+hum.tardis.default=Kelt
