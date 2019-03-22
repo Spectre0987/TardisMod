@@ -19,6 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
+import net.tardis.mod.client.guis.GuiToggleHum;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.client.models.decoration.ModelBChair;
@@ -28,7 +29,11 @@ import net.tardis.mod.client.models.items.ModelKey01;
 import net.tardis.mod.client.models.items.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
 import net.tardis.mod.client.renderers.RenderInvis;
-import net.tardis.mod.client.renderers.consoles.*;
+import net.tardis.mod.client.renderers.consoles.RenderConsole01;
+import net.tardis.mod.client.renderers.consoles.RenderConsole02;
+import net.tardis.mod.client.renderers.consoles.RenderConsole03;
+import net.tardis.mod.client.renderers.consoles.RenderConsole04;
+import net.tardis.mod.client.renderers.consoles.RenderConsole05;
 import net.tardis.mod.client.renderers.controls.RenderConsole;
 import net.tardis.mod.client.renderers.controls.RenderDoor;
 import net.tardis.mod.client.renderers.controls.RenderSonicSlot;
@@ -128,7 +133,11 @@ import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
-import net.tardis.mod.common.tileentity.consoles.*;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
+import net.tardis.mod.common.tileentity.consoles.TileEntityTardis05;
 import net.tardis.mod.common.tileentity.decoration.TileEntityAmSphere;
 import net.tardis.mod.common.tileentity.decoration.TileEntityChair;
 import net.tardis.mod.common.tileentity.decoration.TileEntityHelbentRoof;
@@ -264,6 +273,12 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityQuark.class, RenderQuark::new);
 
 
+	}
+
+	@Override
+	public void openGui(int id, GuiContext context) {
+		if(id == 0)
+			Minecraft.getMinecraft().displayGuiScreen(new GuiToggleHum(context.pos, context.dimension));
 	}
 
 	@Override

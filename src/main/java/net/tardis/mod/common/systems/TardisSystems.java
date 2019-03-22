@@ -8,8 +8,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class TardisSystems {
 
@@ -39,6 +38,14 @@ public class TardisSystems {
 			}
 		}
 		return null;
+	}
+
+	public static ArrayList<String> getSystemsnames(){
+		ArrayList<String> systemNames = new ArrayList<String>();
+		for (Map.Entry<String, Class<? extends BaseSystem>> entry : TardisSystems.SYSTEMS.entrySet()) {
+			systemNames.add(entry.getKey());
+		}
+		return systemNames;
 	}
 
 	public static abstract class BaseSystem {

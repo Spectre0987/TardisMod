@@ -79,6 +79,8 @@ public class ModelConsole05 extends ModelBase {
 	ModelRenderer Gen66;
 	ModelRenderer Gen67;
 	ModelRenderer Gen68;
+	
+	ModelRotor_01 rotor = new ModelRotor_01();
 
 	public ModelConsole05() {
 
@@ -664,6 +666,9 @@ public class ModelConsole05 extends ModelBase {
 		Gen66.render(scale);
 		Gen67.render(scale);
 		Gen68.render(scale);
+		
+		//RenderHelper.renderTransformAxis();
+		rotor.render(null, 0, 0, ageInTicks, 0, 0, 0.0625F);
 	}
 	private void setRotation(ModelRenderer model, float x, float y, float z){
 		model.rotateAngleX = x;

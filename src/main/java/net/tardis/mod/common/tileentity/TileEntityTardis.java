@@ -42,7 +42,6 @@ import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.events.tardis.TardisEnterEvent;
 import net.tardis.mod.api.events.tardis.TardisExitEvent;
@@ -82,8 +81,6 @@ import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.config.TardisConfig;
-import net.tardis.mod.network.NetworkHandler;
-import net.tardis.mod.network.packets.MessageStopHum;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
@@ -171,7 +168,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void update() {
 		if(hum != null) {
 			if ((soundChanged || world.getTotalWorldTime() % hum.getTicks() == 0) && !world.isRemote) {
-				world.playSound(null,getPos(),hum.getSoundEvent(),SoundCategory.AMBIENT,1.5F,1F);
+				world.playSound(null, getPos(), hum.getSoundEvent(), SoundCategory.AMBIENT,1.5F,1F);
 				soundChanged = false;
 			}
 		}
@@ -788,30 +785,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			ws.setBlockState(this.getLocation().up(), Blocks.AIR.getDefaultState());
 		}
 	}
-
-	//Hum
-	public void toggleHum() {
-		if(!world.isRemote) {
-			if (hum != null){
-				int index = InteriorHum.hums.indexOf(hum);
-
-				List<EntityPlayerMP> players = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
-				for (EntityPlayerMP player : players){
-					if (player.dimension == TDimensions.TARDIS_ID && player.getPosition().getDistance(getPos().getX(), getPos().getY(),getPos().getZ()) <= 30)
-						NetworkHandler.NETWORK.sendTo(new MessageStopHum(index),player);
-				}
-				if (index + 1 < InteriorHum.hums.size())
-					hum = InteriorHum.hums.get(index + 1);
-				else
-					hum = null;
-			}
-			else{
-				hum = InteriorHum.hums.get(0);
-			}
-			soundChanged = true;
-		}
-	}
-
+	
 	public InteriorHum getHum() {
 		return hum;
 	}
