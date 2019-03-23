@@ -13,6 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
+import net.tardis.mod.client.worldshell.FakeWorldBoti;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -69,7 +70,7 @@ public class RenderDoor extends Render<ControlDoor> {
 				ext.interiorModel.renderOpen();
 				mc.renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
 				if (!tardis.isInFlight())
-					RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2, 0), true);
+					RenderHelper.renderPortal(FakeWorldBoti.getFakeWorld(entity.world.provider.getDimension()), partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2, 0), true);
 				else RenderHelper.drawOutline(new Vec3d(1, 2, 0));
 
 			} catch (Exception e) {

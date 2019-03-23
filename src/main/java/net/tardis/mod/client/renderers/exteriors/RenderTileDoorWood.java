@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.client.models.exteriors.ModelTardisWoodDoor;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
+import net.tardis.mod.client.worldshell.FakeWorldBoti;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.client.RenderHelper;
@@ -29,7 +30,7 @@ public class RenderTileDoorWood extends RenderExterior {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5, 1, 0.5);
 		GlStateManager.rotate(180, 0, 0, 1);
-		RenderHelper.renderPortal(renderShell, te, partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, null, false);
+		RenderHelper.renderPortal(FakeWorldBoti.getFakeWorld(getWorld().provider.getDimension()), partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, null, false);
 		GlStateManager.popMatrix();
 	}
 

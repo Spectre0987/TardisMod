@@ -6,6 +6,7 @@ import net.minecraft.util.math.Vec3d;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.exteriors.ModelTardisClock;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
+import net.tardis.mod.client.worldshell.FakeWorldBoti;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.client.RenderHelper;
@@ -31,7 +32,7 @@ public class RenderTileDoorClock extends RenderExterior {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.25, 0.6, -0.171875);
 		GlStateManager.rotate(180, 0, 0, 1);
-		RenderHelper.renderPortal(renderShell, te, partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, SIZE, false);
+		RenderHelper.renderPortal(FakeWorldBoti.getFakeWorld(getWorld().provider.getDimension()), partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, null, false);
 		GlStateManager.popMatrix();
 	}
 

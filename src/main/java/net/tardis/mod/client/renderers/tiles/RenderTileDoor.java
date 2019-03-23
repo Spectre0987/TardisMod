@@ -8,6 +8,7 @@ import net.tardis.mod.client.models.exteriors.ModelLeftDoor01;
 import net.tardis.mod.client.models.exteriors.ModelRightDoor01;
 import net.tardis.mod.client.models.exteriors.ModelTardis01;
 import net.tardis.mod.client.renderers.exteriors.RenderExterior;
+import net.tardis.mod.client.worldshell.FakeWorldBoti;
 import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.util.client.RenderHelper;
@@ -35,7 +36,7 @@ public class RenderTileDoor extends RenderExterior {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5, 1, 0);
 		GlStateManager.rotate(180, 0, 0, 1);
-		RenderHelper.renderPortal(renderShell, te, partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, null, false);
+		RenderHelper.renderPortal(FakeWorldBoti.getFakeWorld(getWorld().provider.getDimension()), partialTicks, te.getDoorAngle() - 180, RenderTileDoor.POSITION, null, false);
 		GlStateManager.popMatrix();
 	}
 

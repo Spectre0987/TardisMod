@@ -4,7 +4,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.MessageChunkData;
+import net.tardis.mod.client.worldshell.MessageRequestChunks;
 import net.tardis.mod.network.packets.MessageChangeInterior;
 import net.tardis.mod.network.packets.MessageCompanion;
 import net.tardis.mod.network.packets.MessageDamageSystem;
@@ -34,7 +35,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 2, Side.SERVER);
 		NETWORK.registerMessage(MessageDoorOpen.Handler.class, MessageDoorOpen.class, 3, Side.CLIENT);
 		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 4, Side.SERVER);
-		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 5, Side.CLIENT);
+		NETWORK.registerMessage(MessageChunkData.Handler.class, MessageChunkData.class, 5, Side.CLIENT);
 		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
 		NETWORK.registerMessage(MessageDemat.Handler.class, MessageDemat.class, 7, Side.CLIENT);
 		NETWORK.registerMessage(MessageSpawnItem.Handler.class, MessageSpawnItem.class, 8, Side.SERVER);
@@ -48,6 +49,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageSonicWorkbench.Handler.class, MessageSonicWorkbench.class, 16, Side.SERVER);
 		NETWORK.registerMessage(MessageStopHum.Handler.class,MessageStopHum.class,17,Side.CLIENT);
 		NETWORK.registerMessage(MessageChangeInterior.Handler.class, MessageChangeInterior.class, 18, Side.SERVER);
+		NETWORK.registerMessage(MessageRequestChunks.Handler.class, MessageRequestChunks.class, 19, Side.SERVER);
 	}
 
 

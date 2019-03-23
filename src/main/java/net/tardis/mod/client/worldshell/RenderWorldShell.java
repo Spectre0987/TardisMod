@@ -1,60 +1,32 @@
 package net.tardis.mod.client.worldshell;
 
-import java.util.Map.Entry;
-
-import org.lwjgl.opengl.GL11;
-
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 
 public class RenderWorldShell {
 	
-	public static void renderWorldShell(IContainsWorldShell cont, WorldClient world, double x, double y, double z) {
+	public static void renderWorldShell(WorldClient world, BlockPos origin, int radius) {
 		GlStateManager.pushMatrix();
-		BlockPos offset = cont.getWorldShell().getOffset();
-		GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());
-		BufferBuilder bb = Tessellator.getInstance().getBuffer();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		for(Entry<BlockPos, BlockStorage> entry : cont.getWorldShell().blockMap.entrySet()) {
-			IBlockState state = entry.getValue().blockstate;
-			IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
-			if(state.getRenderType() == EnumBlockRenderType.MODEL && model != null) {
-				bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-				Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(cont.getWorldShell(), model, state, entry.getKey(), bb, true);
-				Tessellator.getInstance().draw();
+		
+		BlockRendererDispatcher dispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
+		Tessellator tess = Tessellator.getInstance();
+		BufferBuilder buffer = tess.getBuffer();
+		
+		for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(origin, origin.add(radius, radius, radius))) {
+			IBlockState state = world.getBlockState(pos);
+			Block block = state.getBlock();
+			
+			if (block.getDefaultState().getRenderType() != EnumBlockRenderType.INVISIBLE) {
+				dispatcher.renderBlock(state, pos, world, buffer);
 			}
-			else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
-				bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-				Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer.renderFluid(world, state, entry.getKey(), bb);
-				Tessellator.getInstance().draw();
-			}
-		}
-		//Tile Entites
-		GlStateManager.color(1F, 1, 1, 1);
-		for(TileEntity entity : cont.getWorldShell().getTESRs()) {
-			if(entity != null) {
-				entity.setWorld(world);
-				TileEntitySpecialRenderer render = TileEntityRendererDispatcher.instance.getRenderer(entity);
-				if(render != null)
-					render.render(entity, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), 0, 0, 1);
-			}
-		}
-		//Entities
-		for(Entity e : cont.getWorldShell().getEntitiesForRender()) {
-			Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 		}
 		GlStateManager.popMatrix();
 	}

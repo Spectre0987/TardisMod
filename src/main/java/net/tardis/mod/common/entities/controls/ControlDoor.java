@@ -1,13 +1,9 @@
 package net.tardis.mod.common.entities.controls;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,34 +16,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.tardis.mod.client.worldshell.BlockStorage;
-import net.tardis.mod.client.worldshell.IContainsWorldShell;
-import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
-import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
-import net.tardis.mod.client.worldshell.PlayerStorage;
-import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
-import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.network.NetworkHandler;
-import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
+public class ControlDoor extends Entity implements IDoor {
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<EnumFacing> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FACING);
 	public int antiSpamTicks = 0;
-	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 
 	public ControlDoor(World world) {
 		super(world);
@@ -131,41 +114,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				if (e == this || e instanceof IControl || e instanceof IDoor) continue;
 				if (!e.isSneaking()) tardis.transferPlayer(e, true);
 			}
-			if (this.ticksExisted % 10 == 0) {
-				this.shell = new WorldShell(tardis.getLocation().up().offset(this.getFacing(), 11));
-				Vec3i r = new Vec3i(10, 10, 10);
-				IBlockState doorState = ws.getBlockState(tardis.getLocation().up());
-				EnumFacing facing = EnumFacing.NORTH;
-				if (doorState != null && doorState.getBlock() instanceof BlockTardisTop) {
-					facing = doorState.getValue(BlockTardisTop.FACING);
-				}
-				for (BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(r), shell.getOffset().add(r))) {
-					IBlockState state = ws.getBlockState(pos);
-					if (state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
-						this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
-					}
-				}
-				this.setFacing(facing);
-				List<NBTTagCompound> list = new ArrayList<>();
-				List<PlayerStorage> players = new ArrayList<PlayerStorage>();
-				for (Entity e : ws.getEntitiesWithinAABB(Entity.class, Helper.createBB(tardis.getLocation().offset(facing, 10), 10))) {
-					if (EntityList.getKey(e) != null) {
-						NBTTagCompound tag = new NBTTagCompound();
-						e.writeToNBT(tag);
-						tag.setString("id", EntityList.getKey(e).toString());
-						tag.setFloat("rot", e.rotationYaw);
-						list.add(tag);
-					} else if (e instanceof EntityPlayer) {
-						players.add(new PlayerStorage((EntityPlayer) e));
-					}
-				}
-				shell.setTime(world.getWorldTime());
-				shell.setPlayers(players);
-				shell.setEntities(list);
-				this.sendBOTI(EnumType.BLOCKS);
-				this.sendBOTI(EnumType.ENTITITES);
-			}
-			if (world.isRemote) this.shell.setTime(shell.getTime() + 1);
 		}
 		if (tardis.isInFlight() && this.isOpen()) {
 			AxisAlignedBB voidBB = new AxisAlignedBB(-10, -10, -10, 10, 10, 10).offset(this.getPosition());
@@ -184,25 +132,12 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 		}
 	}
 	
-	public void sendBOTI(EnumType type) {
-		NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(this.getWorldShell(), this.getEntityId(), type), new TargetPoint(this.dimension, posX, posY, posZ, 40D));
-	}
 
 	@Override
 	public boolean canBeCollidedWith() {
 		return true;
 	}
-
-	@Override
-	public WorldShell getWorldShell() {
-		return this.shell;
-	}
-
-	@Override
-	public void setWorldShell(WorldShell worldShell) {
-		this.shell = worldShell;
-	}
-
+	
 	@Override
 	public boolean shouldRenderInPass(int pass) {
 		return true;
@@ -216,11 +151,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setBoolean("open", this.dataManager.get(IS_OPEN));
-	}
-
-	@Override
-	public int getDimension() {
-		return this.getConsole() != null ? this.getConsole().dimension : 0;
 	}
 	
 	public void setOtherDoors(boolean open) {
