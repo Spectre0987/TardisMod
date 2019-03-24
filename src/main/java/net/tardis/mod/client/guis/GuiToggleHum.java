@@ -1,7 +1,5 @@
 package net.tardis.mod.client.guis;
 
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -11,6 +9,10 @@ import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.elements.ButtonMonitor;
 import net.tardis.mod.common.sounds.InteriorHum;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageSwitchHum;
+
+import java.io.IOException;
 
 public class GuiToggleHum extends GuiScreen {
 
@@ -25,8 +27,9 @@ public class GuiToggleHum extends GuiScreen {
 	}
 	
 	@Override
-	protected void actionPerformed(GuiButton p_actionPerformed_1_) throws IOException {
-		super.actionPerformed(p_actionPerformed_1_);
+	protected void actionPerformed(GuiButton button) throws IOException {
+		NetworkHandler.NETWORK.sendToServer(new MessageSwitchHum(button.id));
+		super.actionPerformed(button);
 	}
 
 	@Override
@@ -50,9 +53,9 @@ public class GuiToggleHum extends GuiScreen {
 	@Override
 	public void initGui() {
 		this.buttonList.clear();
-		int index = 1;
+		int index = 0;
 		for(InteriorHum hum : InteriorHum.hums) {
-			this.addButton(new ButtonMonitor(index, width / 2 - 110, (height / 2 + 50) - Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * index, "> " + hum.getTranslatedName()));
+			this.addButton(new ButtonMonitor(index, width / 2 - 110, (height / 2 + 50) - Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * index  + index * - 3, "> " + hum.getTranslatedName()));
 			++index;
 		}
 	}
