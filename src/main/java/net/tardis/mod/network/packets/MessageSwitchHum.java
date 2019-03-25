@@ -14,33 +14,39 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class MessageSwitchHum implements IMessage {
     private int humID;
+    private long blockpos;
 
     public MessageSwitchHum() {
     }
 
-    public MessageSwitchHum(int soundID) {
+    public MessageSwitchHum(int soundID, long blockpos) {
         this.humID = soundID;
+        this.blockpos = blockpos;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
         PacketBuffer packetBuffer = new PacketBuffer(buf);
         humID = packetBuffer.readInt();
+        blockpos = packetBuffer.readLong();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         PacketBuffer packetBuffer = new PacketBuffer(buf);
         packetBuffer.writeInt(humID);
+        packetBuffer.writeLong(blockpos);
     }
 
         public static class Handler implements IMessageHandler<MessageSwitchHum,IMessage> {
             @Override
             public IMessage onMessage(MessageSwitchHum message, MessageContext ctx) {
                 FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
-                    BlockPos consolePos = TardisHelper.getTardis(ctx.getServerHandler().player.getUniqueID());
+                    BlockPos consolePos = BlockPos.fromLong(message.blockpos);
                     TileEntityTardis tardis = (TileEntityTardis) FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(TDimensions.TARDIS_ID).getTileEntity(consolePos);
-                    tardis.toggleHum(InteriorHum.hums.get(message.humID));
+                    if (tardis != null) {
+                        tardis.toggleHum(InteriorHum.hums.get(message.humID));
+                    }
                 });
 
                 return null;

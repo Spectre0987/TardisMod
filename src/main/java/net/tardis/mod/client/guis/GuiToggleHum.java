@@ -16,8 +16,8 @@ import java.io.IOException;
 
 public class GuiToggleHum extends GuiScreen {
 
-	BlockPos pos;
-	int dimID = 0;
+	private BlockPos pos;
+	private int dimID; // Useless right ?
 	
 	public static ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/monitor.png");
 	
@@ -28,7 +28,7 @@ public class GuiToggleHum extends GuiScreen {
 	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		NetworkHandler.NETWORK.sendToServer(new MessageSwitchHum(button.id));
+		NetworkHandler.NETWORK.sendToServer(new MessageSwitchHum(button.id, pos.toLong()));
 		super.actionPerformed(button);
 	}
 
@@ -46,6 +46,7 @@ public class GuiToggleHum extends GuiScreen {
 		int titleWidth = fr.getStringWidth("Hum Selection");
 		fr.drawString("Hum Selection", width / 2 - titleWidth / 2, height / 2 - 50, 0xFFFFFF);
 		for(GuiButton button : this.buttonList) {
+			button.height = Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT;
 			button.drawButton(Minecraft.getMinecraft(), mouseX, mouseY, partialTicks);
 		}
 	}
