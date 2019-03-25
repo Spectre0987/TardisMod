@@ -13,6 +13,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -28,6 +29,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
+import net.tardis.mod.capability.CapabilityTardis;
+import net.tardis.mod.capability.ITardisCap;
+import net.tardis.mod.capability.TardisCapStorage;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.common.ars.ConsoleRoom;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -318,6 +322,7 @@ public class Tardis {
 
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_builder.png", "interior/interior_builder", new BlockPos(9, 1, 9));
 
+		CapabilityManager.INSTANCE.register(ITardisCap.class, new TardisCapStorage(), CapabilityTardis::new);
 	}
 
 	@EventHandler
