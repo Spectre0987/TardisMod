@@ -316,9 +316,10 @@ box.tardis.cc=Camouflé
 box.master.clock=Horloge du Maitre
 box.tt=TT Capsule
 
-tardis.hum.tardis:interior_hum_80=Bourdonnement de 1980
-tardis.hum.tardis:1963_interior_hum=Bourdonnement de 1963
-tardis.hum.tardis:tardis_hum_copper=Bourdonnement Copper
-tardis.hum.tardis:tardis_hum_coral=Bourdonnement Coral
-tardis.hum.tardis:tardis_hum_toyota=Bourdonnement Toyota
-tardis.hum.null=Bourdonnement désactivé
+hum.tardis.toyota=Toyota
+hum.tardis.coral=Coral
+hum.tardis.copper=Copper
+hum.tardis.70=Sharp
+hum.tardis.1963=Brachacki
+hum.tardis.default=Kelt
+hum.tardis.disabled=Désactivé
