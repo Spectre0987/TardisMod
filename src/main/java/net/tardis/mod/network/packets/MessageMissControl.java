@@ -34,7 +34,7 @@ public class MessageMissControl implements IMessage {
 
 		@Override
 		public IMessage onMessage(MessageMissControl message, MessageContext ctx) {
-			//Sub please don't
+
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				@Override
 				public void run() {

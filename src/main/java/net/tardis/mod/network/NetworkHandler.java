@@ -19,7 +19,7 @@ import net.tardis.mod.network.packets.MessageSonicWorkbench;
 import net.tardis.mod.network.packets.MessageSpawnItem;
 import net.tardis.mod.network.packets.MessageStopHum;
 import net.tardis.mod.network.packets.MessageSyncTardises;
-import net.tardis.mod.network.packets.MessageTelepathicCircut;
+import net.tardis.mod.network.packets.MessageTelepathicCircuit;
 import net.tardis.mod.network.packets.MessageTeleport;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 import net.tardis.mod.network.packets.MessageWaypointLoad;
@@ -33,7 +33,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageHandlerProtocol.class, MessageProtocol.class, 1, Side.SERVER);
 		NETWORK.registerMessage(MessageHandlerTeleport.class, MessageTeleport.class, 2, Side.SERVER);
 		NETWORK.registerMessage(MessageDoorOpen.Handler.class, MessageDoorOpen.class, 3, Side.CLIENT);
-		NETWORK.registerMessage(MessageTelepathicCircut.Handler.class, MessageTelepathicCircut.class, 4, Side.SERVER);
+		NETWORK.registerMessage(MessageTelepathicCircuit.Handler.class, MessageTelepathicCircuit.class, 4, Side.SERVER);
 		NETWORK.registerMessage(MessageSyncWorldShell.Handler.class, MessageSyncWorldShell.class, 5, Side.CLIENT);
 		NETWORK.registerMessage(MessageExteriorChange.Handler.class, MessageExteriorChange.class, 6, Side.SERVER);
 		NETWORK.registerMessage(MessageDemat.Handler.class, MessageDemat.class, 7, Side.CLIENT);

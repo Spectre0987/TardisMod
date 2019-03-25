@@ -273,7 +273,7 @@ tardis.damage.demat=The Dematerialization Circuit has been fried!
 
 tardis.message.refuelling=Tardis now fueling...
 tardis.message.no_longer_refuelling=Tardis no longer fueling.
-tardis.message.tc_notfound=Could not find %s on this plane of existence
+tardis.message.tc_notfound=Could not find %s on planet %s!
 tardis.message.relocation=Relocating you to this capsule's outer plasmic shell!
 
 tardis.subtitle.vworp=Vworp
