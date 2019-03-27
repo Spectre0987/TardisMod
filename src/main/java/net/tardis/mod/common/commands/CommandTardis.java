@@ -276,7 +276,7 @@ public class CommandTardis extends CommandBase {
 			return getListOfStringsMatchingLastWord(args, subcommands);
 		}
 
-		if ((args[0].equals("interior") || args[0].equals("remove")) || args[0].equals("exterior") && FMLCommonHandler.instance().getSide() == Side.SERVER) {
+		if (((args[0].equals("interior") || args[0].equals("remove")) || args[0].equals("exterior")) && FMLCommonHandler.instance().getSide() == Side.SERVER) {
 			return getListOfStringsMatchingLastWord(args, FileHelper.getPlayersFromServerFile().values());
 		}
 
