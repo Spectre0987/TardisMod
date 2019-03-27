@@ -241,7 +241,7 @@ public class CommandTardis extends CommandBase {
 		}
 	}
 
-	public static void handleExterior(EntityPlayerMP player, @Nullable String tardisOwner){
+	private void handleExterior(EntityPlayerMP player, @Nullable String tardisOwner){
 		MinecraftServer server = player.getServer();
 		UUID playerID;
 
