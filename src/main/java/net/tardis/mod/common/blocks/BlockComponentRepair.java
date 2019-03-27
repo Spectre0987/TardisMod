@@ -23,7 +23,7 @@ public class BlockComponentRepair extends BlockTileBase {
 		this.setLightOpacity(0);
 		this.setSoundType(SoundType.ANVIL);
 		this.setHardness(1F);
-		this.setHarvestLevel("pickaxe", 0); //TODO : Check if it'sb really "pickaxe"
+		this.setHarvestLevel("pickaxe", 0);
 	}
 
 	@Override
