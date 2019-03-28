@@ -60,9 +60,8 @@ public class CapabilityTardis implements ITardisCap{
 		@SubscribeEvent
 		public static void update(LivingUpdateEvent event) {
 			CapabilityTardis cap = event.getEntityLiving().getCapability(TardisCapStorage.CAP, null);
-			if(cap != null) {
+			if(cap != null)
 				cap.update();
-			}
 		}
 	}
 }

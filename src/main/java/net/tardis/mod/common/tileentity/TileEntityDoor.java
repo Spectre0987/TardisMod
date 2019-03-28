@@ -34,7 +34,6 @@ import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
-import net.tardis.mod.client.worldshell.PlayerStorage;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.TDamageSources;
@@ -47,6 +46,7 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
+import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
@@ -240,7 +240,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 							if((state.getBlock().hasTileEntity() || state.getRenderType() != EnumBlockRenderType.INVISIBLE) || state.getBlock() instanceof BlockTardisTop)
 								worldShell.blockMap.put(pos, new BlockStorage(tardis.getWorld().getBlockState(pos), tardis.getWorld().getTileEntity(pos), tardis.getWorld().getLight(pos, true)));
 						}
-						this.sendBOTI(EnumType.BLOCKS);
 					}
 					if(world.getWorldTime() % 5 == 0) {
 						List<NBTTagCompound> bEnt = new ArrayList<NBTTagCompound>();
@@ -253,7 +252,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 							}
 						}
 						worldShell.setEntities(bEnt);
-						this.sendBOTI(EnumType.ENTITITES);
 					}
 			}
 		}
@@ -291,6 +289,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			}
 		}
 		if (!this.isRemat && !this.isDemat) this.alpha = 1.0F;
+		
+		if(world.isRemote && (this.worldShell == null || this.worldShell.getOffset().equals(BlockPos.ORIGIN))) {
+			NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI(this.getPos()));
+		}
 	}
 
 	public boolean canOpen() {
