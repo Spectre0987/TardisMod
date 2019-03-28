@@ -42,6 +42,7 @@ import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
+import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
@@ -167,6 +168,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			if (this.updateTicks > 20) {
 				NetworkHandler.NETWORK.sendToAllAround(new MessageDoorOpen(this.getPos(), this), new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64D));
 				this.updateTicks = 0;
+		if (openingTicks > 0) {
+			--openingTicks;
 		}
 		if (isRemat) {
 			if (alpha < 1.0F) {
@@ -193,8 +196,11 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (!this.isRemat && !this.isDemat)
 			this.alpha = 1.0F;
 		}
-		if(world.isRemote && !this.worldShell.getOffset().equals(BlockPos.ORIGIN)) {
-			NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI());
+		if (!this.isRemat && !this.isDemat) this.alpha = 1.0F;
+		
+		if(world.isRemote && (this.worldShell == null || this.worldShell.getOffset().equals(BlockPos.ORIGIN))) {
+			NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI(this.getPos()));
+		}
 		}
 	}
 

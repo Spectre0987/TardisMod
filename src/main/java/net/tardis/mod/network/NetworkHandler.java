@@ -15,9 +15,11 @@ import net.tardis.mod.network.packets.MessageHandlerProtocol;
 import net.tardis.mod.network.packets.MessageHandlerTeleport;
 import net.tardis.mod.network.packets.MessageMissControl;
 import net.tardis.mod.network.packets.MessageProtocol;
+import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.network.packets.MessageSonicWorkbench;
 import net.tardis.mod.network.packets.MessageSpawnItem;
 import net.tardis.mod.network.packets.MessageStopHum;
+import net.tardis.mod.network.packets.MessageSwitchHum;
 import net.tardis.mod.network.packets.MessageSyncTardises;
 import net.tardis.mod.network.packets.MessageTelepathicCircut;
 import net.tardis.mod.network.packets.MessageTeleport;
@@ -48,6 +50,8 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageSonicWorkbench.Handler.class, MessageSonicWorkbench.class, 16, Side.SERVER);
 		NETWORK.registerMessage(MessageStopHum.Handler.class,MessageStopHum.class,17,Side.CLIENT);
 		NETWORK.registerMessage(MessageChangeInterior.Handler.class, MessageChangeInterior.class, 18, Side.SERVER);
+		NETWORK.registerMessage(MessageSwitchHum.Handler.class,MessageSwitchHum.class,19,Side.SERVER);
+		NETWORK.registerMessage(MessageRequestBOTI.Handler.class, MessageRequestBOTI.class, 20, Side.SERVER);
 	}
 
 
