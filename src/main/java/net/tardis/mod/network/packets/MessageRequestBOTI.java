@@ -54,19 +54,20 @@ public class MessageRequestBOTI implements IMessage{
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					System.out.println(message.entityID);
 					if(message.entityID != -1) {
 						Entity entity = ctx.getServerHandler().player.getServerWorld().getEntityByID(message.entityID);
 						if(entity != null && entity instanceof IContainsWorldShell) {
 							IContainsWorldShell cont = (IContainsWorldShell)entity;
-							NetworkHandler.NETWORK.sendTo(new MessageSyncWorldShell(cont.getWorldShell(), message.entityID, message.type), ctx.getServerHandler().player);
+							NetworkHandler.NETWORK.sendTo(new MessageSyncWorldShell(cont.getWorldShell(), message.entityID, EnumType.BLOCKS), ctx.getServerHandler().player);
+							NetworkHandler.NETWORK.sendTo(new MessageSyncWorldShell(cont.getWorldShell(), message.entityID, EnumType.ENTITITES), ctx.getServerHandler().player);
 						}
 					}
 					else {
 						TileEntity te = ctx.getServerHandler().player.getServerWorld().getTileEntity(message.pos);
 						if(te != null && te instanceof IContainsWorldShell) {
 							IContainsWorldShell shell = (IContainsWorldShell)te;
-							NetworkHandler.NETWORK.sendTo(new MessageSyncWorldShell(shell.getWorldShell(), message.pos, message.type), ctx.getServerHandler().player);
+							NetworkHandler.NETWORK.sendTo(new MessageSyncWorldShell(shell.getWorldShell(), message.pos, EnumType.BLOCKS), ctx.getServerHandler().player);
+							NetworkHandler.NETWORK.sendTo(new MessageSyncWorldShell(shell.getWorldShell(), message.pos, EnumType.ENTITITES), ctx.getServerHandler().player);
 						}
 					}
 				}
