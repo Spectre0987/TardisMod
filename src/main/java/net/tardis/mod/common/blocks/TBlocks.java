@@ -112,6 +112,11 @@ public class TBlocks {
 	public static Block s13blankroundel3 = register(new BlockBase(), "s13blankroundel3");
 	public static Block s13floor = register(new BlockBase(), "s13floor");
 	public static Block s13flooralt = register(new BlockBase(), "s13flooralt");
+
+
+	// Custom Roundels (Moose's Custom Blocks)
+	//public static Block roundel_dark = register(new BlockLight(),"roundel_dark");
+	//public static Block roundel_dark_half = register(new BlockLight(),"roundel_dark_half");
 	
 	public static Block brachackitable = register(new BlockTable(), "table_brachacki");
 	
@@ -158,6 +163,7 @@ public class TBlocks {
 	public static Block console_03 = register(new BlockConsole(TileEntityTardis03::new), "console_03", false);
 	public static Block console_04 = register(new BlockConsole(TileEntityTardis04::new), "console_04", false);
 	public static Block console_05 = register(new BlockConsole(TileEntityTardis05::new), "console_05", false);
+
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block", false);
 	
 	public static Block circuit_repair = register(new BlockComponentRepair(Material.IRON, TileEntityComponentRepair::new), "circuit_repair");
