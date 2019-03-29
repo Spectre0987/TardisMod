@@ -23,7 +23,7 @@ public class EntityLaserRay extends EntityThrowable implements IEntityAdditional
 
 	public float damage;
 	public Vec3d color;
-	private DamageSource source;
+	private DamageSource source = DamageSource.GENERIC;
 
 	public EntityLaserRay(World worldIn) {
 		super(worldIn);

@@ -21,6 +21,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -65,6 +66,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	//The rotation to render the interior as
 	private float renderAngle = 90;
 	private boolean requiresUpdate = true;
+	//Only use this client side - This should be a WorldBOTI
+	public World world;
 	
 	public static final AxisAlignedBB NORTH = new AxisAlignedBB(0, 0, -0.1, 1, 2, 0);
 	public static final AxisAlignedBB EAST = new AxisAlignedBB(1, 0, 0, 1.1, 2, 1);
@@ -123,6 +126,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 							}
 						}
 					}
+					IBlockState state = world.getBlockState(this.getPos());
+					world.notifyBlockUpdate(getPos(), state, state, 2);
 				} else if (tardis.isLocked()) {
 					player.sendStatusMessage(new TextComponentTranslation(TStrings.DOUBLE_LOCKED + true), false);
 				}
@@ -208,11 +213,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		
 		if(this.isLocked() && !this.worldShell.getOffset().equals(BlockPos.ORIGIN))
 			this.worldShell = new WorldShell(BlockPos.ORIGIN);
-		
-		if(world.isRemote)
-			this.worldShell.getEntities().forEach((NBTTagCompound tag) -> {
-				System.out.println(tag);
-			});
 	}
 	
 	public void handleEnter() {
@@ -221,7 +221,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
 			if(tardis == null) return;
 			AxisAlignedBB bb;
-			EnumFacing face = tardis.getFacing();
+			EnumFacing face = this.getFacing();
 			if(face == EnumFacing.NORTH)
 				bb = NORTH;
 			else if(face == EnumFacing.EAST)
@@ -465,6 +465,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		tag.setBoolean("demat", this.isDemat);
 		tag.setBoolean("remat", this.isRemat);
 		tag.setBoolean("locked", this.isLocked);
+		tag.setInteger("light", this.lightLevel);
 		return tag;
 	}
 
@@ -475,6 +476,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.isDemat = pkt.getNbtCompound().getBoolean("demat");
 		this.isRemat = pkt.getNbtCompound().getBoolean("remat");
 		this.isLocked = pkt.getNbtCompound().getBoolean("locked");
+		this.lightLevel = pkt.getNbtCompound().getInteger("light");
 		this.requiresUpdate = true;
 	}
 
@@ -493,7 +495,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		ControlDoor door = tardis.getDoor();
 		AxisAlignedBB BOTI = Block.FULL_BLOCK_AABB.grow(20);
 		if(door != null) {
-			BOTI = BOTI.offset(door.getPosition().offset(door.getHorizontalFacing(), ((int)BOTI.maxX / 2) + 10));
+			BOTI = BOTI.offset(door.getPosition().offset(door.getHorizontalFacing(), ((int)BOTI.maxX) - 1));
 		}
 		else BOTI = BOTI.offset(this.getConsolePos());
 		for(BlockPos pos : this.getBlocksInAABB(BOTI)) {
@@ -501,10 +503,13 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				this.worldShell.blockMap.put(pos, new BlockStorage(ws.getBlockState(pos), ws.getTileEntity(pos), 15));
 		}
 		List<NBTTagCompound> entities = new ArrayList<NBTTagCompound>();
-		for(Entity e : world.getEntitiesWithinAABB(Entity.class, BOTI)) {
-			NBTTagCompound tag = new NBTTagCompound();
-			tag.setString("id", EntityList.getKey(e).toString());
-			entities.add(e.writeToNBT(tag));
+		for(Entity e : ws.getEntitiesWithinAABB(Entity.class, BOTI)) {
+			ResourceLocation key = EntityList.getKey(e);
+			if(key != null && !(e instanceof ControlDoor)) {
+				NBTTagCompound tag = new NBTTagCompound();
+				tag.setString("id", key.toString());
+				entities.add(e.writeToNBT(tag));
+			}
 		}
 		this.worldShell.setEntities(entities);
 		this.renderAngle = tardis.getDoor() == null ? 90 : tardis.getDoor().rotationYaw;

@@ -2,12 +2,6 @@ package net.tardis.mod.client.guis;
 
 import java.io.IOException;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.tardis.mod.common.systems.TardisSystems;
-import net.tardis.mod.network.packets.MessageDamageSystem;
-import net.tardis.mod.network.packets.MessageSpawnItem;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -18,6 +12,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiCCircuit.ChameleonButton;
@@ -86,7 +81,9 @@ public class GuiChangeInterior extends GuiScreen {
 		}
 		
 		if(button == this.select) {
-			ask();
+			//ask();
+			NetworkHandler.NETWORK.sendToServer(new MessageChangeInterior(this.index, tardis.getPos()));
+			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 		if(button == this.prev) {
 			if(index > 0)
