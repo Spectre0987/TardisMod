@@ -230,7 +230,7 @@ public class CommandTardis extends CommandBase {
 		if (TardisHelper.hasTardis(playerID)) {
 			BlockPos pos = TardisHelper.getTardis(playerID);
 			player.dismountRidingEntity();
-			TileEntityTardis tileTardis = TardisHelper.getConsole(pos);
+			TileEntityTardis tileTardis = (TileEntityTardis)FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(TDimensions.TARDIS_ID).getTileEntity(pos);
 			if (tileTardis != null) {
 				tileTardis.enterTARDIS(player);
 			} else {
@@ -256,7 +256,7 @@ public class CommandTardis extends CommandBase {
 		if (TardisHelper.hasTardis(playerID)) {
 			BlockPos pos = TardisHelper.getTardis(playerID);
 			player.dismountRidingEntity();
-			TileEntityTardis tileTardis = TardisHelper.getConsole(pos);
+			TileEntityTardis tileTardis = (TileEntityTardis)FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(TDimensions.TARDIS_ID).getTileEntity(pos);
 			if (tileTardis != null) {
 				tileTardis.transferPlayer(player, true);
 			} else {
@@ -276,7 +276,7 @@ public class CommandTardis extends CommandBase {
 			return getListOfStringsMatchingLastWord(args, subcommands);
 		}
 
-		if (((args[0].equals("interior") || args[0].equals("remove")) || args[0].equals("exterior")) && FMLCommonHandler.instance().getSide() == Side.SERVER) {
+		if (args[0].equals("interior") || args[0].equals("remove") || args[0].equals("exterior")) {
 			return getListOfStringsMatchingLastWord(args, FileHelper.getPlayersFromServerFile().values());
 		}
 
