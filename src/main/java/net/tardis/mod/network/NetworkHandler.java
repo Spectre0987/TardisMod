@@ -24,6 +24,7 @@ import net.tardis.mod.network.packets.MessageTeleport;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 import net.tardis.mod.network.packets.MessageWaypointLoad;
 import net.tardis.mod.network.packets.MessageWaypointSave;
+import net.tardis.mod.network.packets.*;
 
 public class NetworkHandler {
 
@@ -48,6 +49,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageSonicWorkbench.Handler.class, MessageSonicWorkbench.class, 16, Side.SERVER);
 		NETWORK.registerMessage(MessageStopHum.Handler.class,MessageStopHum.class,17,Side.CLIENT);
 		NETWORK.registerMessage(MessageChangeInterior.Handler.class, MessageChangeInterior.class, 18, Side.SERVER);
+		NETWORK.registerMessage(MessageSwitchHum.Handler.class,MessageSwitchHum.class,19,Side.SERVER);
 	}
 
 

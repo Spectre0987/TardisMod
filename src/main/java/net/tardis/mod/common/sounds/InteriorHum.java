@@ -9,6 +9,7 @@ import net.tardis.mod.Tardis;
 
 public class InteriorHum {
 
+	public static InteriorHum DISABLED = new InteriorHum(null, 20, "disabled");
 	public static InteriorHum DEFAULT = new InteriorHum(TSounds.interior_hum_80, 20, "default");
 	public static InteriorHum INTERIOR_HUM_1963 = new InteriorHum(TSounds.INTERIOR_HUM_1963, 50, "1963");
 	public static InteriorHum INTERIOR_HUM_70 = new InteriorHum(TSounds.interior_hum_70, 620, "70");
@@ -16,11 +17,11 @@ public class InteriorHum {
 	public static InteriorHum CORAL = new InteriorHum(TSounds.interior_hum_coral,1060, "coral");
 	public static InteriorHum TOYOTA = new InteriorHum(TSounds.interior_hum_toyota,580, "toyota");
 
-	public static List<InteriorHum> hums = Arrays.asList(DEFAULT, INTERIOR_HUM_1963, INTERIOR_HUM_70,COPPER, CORAL, TOYOTA);
+	public static List<InteriorHum> hums = Arrays.asList(DISABLED, DEFAULT, INTERIOR_HUM_1963, INTERIOR_HUM_70,COPPER, CORAL, TOYOTA);
 
 	private SoundEvent event;
 	private int ticks;
-	private String name = "";
+	private String name;
 
 	public InteriorHum(SoundEvent event, int ticks, String name) {
 		this.event = event;
