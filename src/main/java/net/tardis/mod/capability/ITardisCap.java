@@ -18,6 +18,7 @@ public interface ITardisCap extends INBTSerializable<NBTTagCompound> {
 	void update();
 	
 	void setExterior(IBlockState exterior);
+	
 	IBlockState getExterior();
 	
 	void sync();

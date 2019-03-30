@@ -7,6 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.client.guis.GuiTelepathicCircuts;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -41,8 +42,12 @@ public class ControlTelepathicCircuts extends EntityControl {
 
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if (world.isRemote) {
-			openGui();
+		if(player.isSneaking()){
+			CapabilityTardis.setupFlight(player);
+		} else {
+			if (world.isRemote) {
+				openGui();
+			}
 		}
 	}
 

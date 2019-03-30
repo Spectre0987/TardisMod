@@ -269,7 +269,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (!world.isRemote) {
 			Random rand = new Random();
 			this.ticksToTravel = 0;
-			World dWorld = world.getMinecraftServer().getWorld(destDim);
+			WorldServer dWorld = world.getMinecraftServer().getWorld(destDim);
 			World oWorld = world.getMinecraftServer().getWorld(dimension);
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld, getDestination());
 			if (nPos != null) {
@@ -292,20 +292,17 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 						otherTardis.startHADS();
 					}
 				}
-				((WorldServer)dWorld).getChunkProvider().loadChunk(nPos.getX() * 16, nPos.getZ() * 16);
+				dWorld.getChunkProvider().loadChunk(nPos.getX() * 16, nPos.getZ() * 16);
 				dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				BlockPos consolePos = this.getPos();
 				BlockPos landPos = nPos;
-				((WorldServer)dWorld).addScheduledTask(new Runnable() {
-					@Override
-					public void run() {
-						WorldServer dWorld = world.getMinecraftServer().getWorld(destDim);
-						TileEntity door = dWorld.getTileEntity(landPos.up());
-						if (door instanceof TileEntityDoor) {
-							((TileEntityDoor) door).setConsolePos(consolePos);
-							((TileEntityDoor) dWorld.getTileEntity(landPos.up())).setRemat();
-						}
+				dWorld.addScheduledTask(() -> {
+					WorldServer dWorld1 = world.getMinecraftServer().getWorld(destDim);
+					TileEntity door = dWorld1.getTileEntity(landPos.up());
+					if (door instanceof TileEntityDoor) {
+						((TileEntityDoor) door).setConsolePos(consolePos);
+						((TileEntityDoor) dWorld1.getTileEntity(landPos.up())).setRemat();
 					}
 				});
 				this.setLocation(nPos);

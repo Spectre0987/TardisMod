@@ -104,7 +104,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	}
 
 	public void toggleLocked(EntityPlayer player) {
-		if (!world.isRemote) {
+		if (world != null && !world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
 			if (tardis != null && tardis.getTardisState() == EnumTardisState.NORMAL) {
 				if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0 && alpha >= 1.0F && !tardis.isLocked()) {
