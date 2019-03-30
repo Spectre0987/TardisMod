@@ -186,7 +186,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			if (alpha < 1.0F) {
 				alpha += 0.005F;
 				if (!world.isRemote) {
-					for(Entity e : world.getEntitiesWithinAABB(Entity.class, this.aabb.offset(this.getPos().down()))) {
+					for(Entity e : world.getEntitiesWithinAABB(Entity.class, aabb.offset(this.getPos().down()))) {
 						try {
 						((TileEntityTardis)world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos())).enterTARDIS(e);
 						}
@@ -228,7 +228,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	}
 	
 	public void handleEnter() {
-		if(!world.isRemote) {
+		if(world != null && !world.isRemote) {
 			if(this.isLocked()) return;
 			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
 			if(tardis == null) return;
@@ -254,8 +254,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	}
 
 	public void sendDematPacket(boolean demat) {
-		if (!world.isRemote)
+		if (world != null && !world.isRemote) {
 			NetworkHandler.NETWORK.sendToAllAround(new MessageDemat(this.getPos(), demat), new TargetPoint(this.world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 64));
+		}
 	}
 
 	public boolean isLocked() {
@@ -469,6 +470,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
+		
 		return new SPacketUpdateTileEntity(this.getPos(), -1, this.getUpdateTag());
 	}
 

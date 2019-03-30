@@ -81,9 +81,7 @@ public class GuiChangeInterior extends GuiScreen {
 		}
 		
 		if(button == this.select) {
-			//ask();
-			NetworkHandler.NETWORK.sendToServer(new MessageChangeInterior(this.index, tardis.getPos()));
-			Minecraft.getMinecraft().displayGuiScreen(null);
+			ask();
 		}
 		if(button == this.prev) {
 			if(index > 0)
