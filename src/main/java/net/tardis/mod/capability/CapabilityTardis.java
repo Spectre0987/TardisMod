@@ -203,9 +203,8 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.allowEdit = true;
 			player.capabilities.disableDamage = false;
 			cap.sync();
-			WorldServer world = DimensionManager.getWorld(console.dimension);
-			world.setBlockState(player.getPosition(), TBlocks.tardis.getDefaultState());
-			world.setBlockState(player.getPosition(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
+			player.world.setBlockState(player.getPosition(), TBlocks.tardis.getDefaultState());
+			player.world.setBlockState(player.getPosition(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
 			console.setLocation(player.getPosition());
 			console.enterTARDIS(player);
 		}
