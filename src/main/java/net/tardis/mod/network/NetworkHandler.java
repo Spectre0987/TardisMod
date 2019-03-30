@@ -20,11 +20,16 @@ import net.tardis.mod.network.packets.MessageSpawnItem;
 import net.tardis.mod.network.packets.MessageStopHum;
 import net.tardis.mod.network.packets.MessageSyncTardises;
 import net.tardis.mod.network.packets.MessageTelepathicCircuit;
+import net.tardis.mod.network.packets.MessageRequestBOTI;
+import net.tardis.mod.network.packets.MessageSonicWorkbench;
+import net.tardis.mod.network.packets.MessageSpawnItem;
+import net.tardis.mod.network.packets.MessageStopHum;
+import net.tardis.mod.network.packets.MessageSwitchHum;
+import net.tardis.mod.network.packets.MessageSyncTardises;
 import net.tardis.mod.network.packets.MessageTeleport;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 import net.tardis.mod.network.packets.MessageWaypointLoad;
 import net.tardis.mod.network.packets.MessageWaypointSave;
-import net.tardis.mod.network.packets.*;
 
 public class NetworkHandler {
 
@@ -50,6 +55,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageStopHum.Handler.class,MessageStopHum.class,17,Side.CLIENT);
 		NETWORK.registerMessage(MessageChangeInterior.Handler.class, MessageChangeInterior.class, 18, Side.SERVER);
 		NETWORK.registerMessage(MessageSwitchHum.Handler.class,MessageSwitchHum.class,19,Side.SERVER);
+		NETWORK.registerMessage(MessageRequestBOTI.Handler.class, MessageRequestBOTI.class, 20, Side.SERVER);
 	}
 
 

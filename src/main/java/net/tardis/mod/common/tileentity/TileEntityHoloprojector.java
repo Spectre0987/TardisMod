@@ -88,5 +88,15 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 		}
 		return tardis == null ? 0 : tardis.dimension;
 	}
-
+	
+	@Override
+	public boolean requiresUpdate() {
+		return false;
+	}
+	
+	@Override
+	public void setRequiresUpdate(boolean bool) {
+	
+	}
+	
 }

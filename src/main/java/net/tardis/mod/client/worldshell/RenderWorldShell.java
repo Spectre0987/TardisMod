@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -28,13 +29,16 @@ public class RenderWorldShell {
 		GlStateManager.translate(x - offset.getX(), y - offset.getY(), z - offset.getZ());
 		BufferBuilder bb = Tessellator.getInstance().getBuffer();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		GlStateManager.color(1F, 1, 1, 1f);
+		RenderHelper.enableStandardItemLighting();
 		for(Entry<BlockPos, BlockStorage> entry : cont.getWorldShell().blockMap.entrySet()) {
 			IBlockState state = entry.getValue().blockstate;
 			IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
 			if(state.getRenderType() == EnumBlockRenderType.MODEL && model != null) {
-				bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-				Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(cont.getWorldShell(), model, state, entry.getKey(), bb, true);
-				Tessellator.getInstance().draw();
+				GlStateManager.pushMatrix();
+				GlStateManager.translate(entry.getKey().getX(), entry.getKey().getY(), entry.getKey().getZ());
+				Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightness(model, state, entry.getValue().light / 15, true);
+				GlStateManager.popMatrix();
 			}
 			else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
 				bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
@@ -43,7 +47,6 @@ public class RenderWorldShell {
 			}
 		}
 		//Tile Entites
-		GlStateManager.color(1F, 1, 1, 1);
 		for(TileEntity entity : cont.getWorldShell().getTESRs()) {
 			if(entity != null) {
 				entity.setWorld(world);
@@ -53,6 +56,7 @@ public class RenderWorldShell {
 			}
 		}
 		//Entities
+		GlStateManager.color(1F, 1F, 1F, 1F);
 		for(Entity e : cont.getWorldShell().getEntitiesForRender()) {
 			Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 		}

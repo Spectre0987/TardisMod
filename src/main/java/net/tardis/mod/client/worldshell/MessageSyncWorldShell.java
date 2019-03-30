@@ -146,6 +146,7 @@ public class MessageSyncWorldShell implements IMessage {
 				cont.getWorldShell().setTESRs();
 			}
 			else if(type == EnumType.ENTITITES) {
+				cont.getWorldShell().getEntitiesForRender().clear();
 				cont.getWorldShell().setEntities(shell.getEntities());
 				cont.getWorldShell().setEntities(Minecraft.getMinecraft().world);
 			}
