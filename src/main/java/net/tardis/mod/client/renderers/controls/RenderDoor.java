@@ -67,13 +67,14 @@ public class RenderDoor extends Render<ControlDoor> {
 				mc.getTextureManager().bindTexture(BLACK);
 				GlStateManager.translate(-0.25, 0, 0.5);
 				ext.interiorModel.renderOpen();
-				mc.renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
-				if (!tardis.isInFlight())
+				//mc.renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
+				if (!tardis.isInFlight()) {
 					RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2, 0), true);
+				}
 				else RenderHelper.drawOutline(new Vec3d(1, 2, 0));
 
-			} catch (Exception e) {
 			}
+			catch (Exception e) {}
 		} else {
 			GlStateManager.translate(0, 0, 0.5);
 			ext.interiorModel.renderClosed();

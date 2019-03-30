@@ -12,5 +12,8 @@ public interface IContainsWorldShell {
 	 * Gets the dimension for the sky renderers
 	 */
 	int getDimension();
+	
+	boolean requiresUpdate();
+	void setRequiresUpdate(boolean bool);
 
 }

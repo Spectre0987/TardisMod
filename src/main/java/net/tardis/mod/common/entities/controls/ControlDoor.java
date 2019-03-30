@@ -39,6 +39,7 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
@@ -123,8 +124,8 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 		TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
 		if (te == null || !(te instanceof TileEntityTardis)) return;
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
-		if(world.getMinecraftServer() == null) return;
 		if (!world.isRemote && this.isOpen()) {
+			if(world.getMinecraftServer() == null) return;
 			WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox());
 			for (Entity e : entities) {
@@ -142,7 +143,8 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				for (BlockPos pos : BlockPos.getAllInBox(shell.getOffset().subtract(r), shell.getOffset().add(r))) {
 					IBlockState state = ws.getBlockState(pos);
 					if (state.getBlock() != Blocks.AIR && !(state.getBlock() instanceof BlockTardisTop)) {
-						this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), ws.getLight(pos)));
+						int light = 15;
+						this.shell.blockMap.put(pos, new BlockStorage(state, ws.getTileEntity(pos), light));
 					}
 				}
 				this.setFacing(facing);
@@ -162,8 +164,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				shell.setTime(world.getWorldTime());
 				shell.setPlayers(players);
 				shell.setEntities(list);
-				this.sendBOTI(EnumType.BLOCKS);
-				this.sendBOTI(EnumType.ENTITITES);
 			}
 			if (world.isRemote) this.shell.setTime(shell.getTime() + 1);
 		}
@@ -182,6 +182,11 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				}
 			}
 		}
+		if(world.isRemote && this.shell.getOffset().equals(BlockPos.ORIGIN)) {
+			NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI(this.getEntityId()));
+		}
+		if(world.isRemote && world.getTotalWorldTime() % 200 == 0)
+			NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI(this.getEntityId()));
 	}
 	
 	public void sendBOTI(EnumType type) {
@@ -233,6 +238,18 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean requiresUpdate() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setRequiresUpdate(boolean bool) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -12,6 +12,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.server.permission.PermissionAPI;
@@ -230,7 +231,8 @@ public class CommandTardis extends CommandBase {
 		if (TardisHelper.hasTardis(playerID)) {
 			BlockPos pos = TardisHelper.getTardis(playerID);
 			player.dismountRidingEntity();
-			TileEntityTardis tileTardis = (TileEntityTardis)FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(TDimensions.TARDIS_ID).getTileEntity(pos);
+			WorldServer worldServer = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(TDimensions.TARDIS_ID);
+			TileEntityTardis tileTardis = (TileEntityTardis) worldServer.getTileEntity(pos);
 			if (tileTardis != null) {
 				tileTardis.enterTARDIS(player);
 			} else {

@@ -42,6 +42,7 @@ import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.events.tardis.TardisEnterEvent;
 import net.tardis.mod.api.events.tardis.TardisExitEvent;
@@ -81,6 +82,8 @@ import net.tardis.mod.common.systems.SystemStabilizers;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.config.TardisConfig;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageStopHum;
 import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
@@ -790,6 +793,32 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return hum;
 	}
 
+	//Hum
+	public void toggleHum(InteriorHum newHum) {
+		if(!world.isRemote) {
+			if (hum != null){
+				//Stop the old hum
+				int oldHumID = InteriorHum.hums.indexOf(hum);
+
+				List<EntityPlayerMP> players = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
+				for (EntityPlayerMP player : players){
+					if (player.dimension == TDimensions.TARDIS_ID && player.getPosition().getDistance(getPos().getX(), getPos().getY(),getPos().getZ()) <= 30)
+						NetworkHandler.NETWORK.sendTo(new MessageStopHum(oldHumID),player);
+				}
+			}
+
+			//Update hum
+			if (newHum.equals(InteriorHum.DISABLED)){
+				hum = null;
+			}
+			else {
+				hum = newHum;
+			}
+
+			soundChanged = true;
+		}
+	}
+
 	//Forcefield
 	public boolean isForceFieldEnabled() {
 		return forceFields;
@@ -1054,6 +1083,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public ControlDoor getDoor() {
+		if(!this.getWorld().isRemote) {
+			ChunkPos pos = this.getWorld().getChunk(this.getPos()).getPos();
+			for(int x = -1; x < 3; ++x) {
+				for(int z = -1; z < 3; ++z) {
+					((WorldServer)world).getChunkProvider().loadChunk(pos.x + x, pos.z + z);
+				}
+			}
+		}
 		for(ControlDoor door : world.getEntitiesWithinAABB(ControlDoor.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(40))) {
 			return door;
 		}
