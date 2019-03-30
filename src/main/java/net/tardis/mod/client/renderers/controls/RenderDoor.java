@@ -18,7 +18,6 @@ import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.client.RenderHelper;
 import net.tardis.mod.util.common.helpers.Helper;
-import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class RenderDoor extends Render<ControlDoor> {
 
@@ -42,42 +41,34 @@ public class RenderDoor extends Render<ControlDoor> {
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
+		GlStateManager.rotate(Helper.get360FromFacing(entity.getHorizontalFacing()), 0, 1, 0);
+		GlStateManager.rotate(entity.getHorizontalFacing() == EnumFacing.NORTH || entity.getHorizontalFacing() == EnumFacing.SOUTH ? -180 : 0, 0, 1, 0);
+		GlStateManager.translate(-0.5, 0, 0.5);
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
-		TileEntityTardis tardis = (TileEntityTardis) mc.world.getTileEntity(TardisHelper.getTardisForPosition(entity.getPosition()));
-		EnumExterior ext = tardis != null ? (tardis.getTopBlock() != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()) : EnumExterior.FIRST) : EnumExterior.FIRST;
-		GlStateManager.rotate(Helper.get360FromFacing(entity.getHorizontalFacing()), 0, 1, 0);
-		if (entity.getHorizontalFacing() == EnumFacing.NORTH || entity.getHorizontalFacing() == EnumFacing.SOUTH) {
-			GlStateManager.rotate(180, 0, 1, 0);
-		}
-		GlStateManager.translate(-0.25, 0, -0.01);
-		if (open) {
-			try {
-				Vec3d offset = null;
-				EnumFacing facing = entity.getFacing();
-				if (facing == EnumFacing.NORTH) {
-					offset = new Vec3d(-1, 1, -11);
-				} else if (facing == EnumFacing.EAST) {
-					offset = new Vec3d(10, 1, -1);
-				} else if (facing == EnumFacing.SOUTH) {
-					offset = new Vec3d(0, 1, 10);
-				} else if (facing == EnumFacing.WEST) {
-					offset = new Vec3d(-11, 1, 0);
-				}
-				mc.getTextureManager().bindTexture(BLACK);
-				GlStateManager.translate(-0.25, 0, 0.5);
-				ext.interiorModel.renderOpen();
-				//mc.renderGlobal.renderSky(partialTicks, MinecraftForgeClient.getRenderPass());
-				if (!tardis.isInFlight()) {
-					RenderHelper.renderPortal(shellRender, entity, partialTicks, Helper.getAngleFromFacing(facing), offset, new Vec3d(1, 2, 0), true);
-				}
-				else RenderHelper.drawOutline(new Vec3d(1, 2, 0));
-
+		TileEntityTardis tardis = entity.getTardis();
+		if(tardis != null) {
+			EnumExterior ext = EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock());
+			GlStateManager.translate(open ? 0 : 0.25, 0, 0);
+			EnumFacing face = tardis.getFacing();
+			Vec3d vec = new Vec3d(0, 1, 0);
+			float angle = 0;
+			if(face == EnumFacing.NORTH)
+				vec = new Vec3d(-1, 1, -9);
+			else if(face == EnumFacing.EAST) {
+				vec = new Vec3d(0, 1, 0);
+				angle = 0;
 			}
-			catch (Exception e) {}
-		} else {
-			GlStateManager.translate(0, 0, 0.5);
-			ext.interiorModel.renderClosed();
+			if(MinecraftForgeClient.getRenderPass() == 0) {
+				if(open)
+					ext.interiorModel.renderOpen();
+				else {
+					ext.interiorModel.renderClosed();
+				}
+			}
+			else if(open) {
+				RenderHelper.renderPortal(shellRender, entity, partialTicks, angle, vec);
+			}
 		}
 		GlStateManager.popMatrix();
 	}

@@ -44,7 +44,6 @@ public class TBlocks {
 	public static Block panel = register(new BlockBase(), "panel", false);
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
-	public static Block holoprojector = register(new BlockHoloprojector(), "holoprojector");
 	
 	public static Block toyota_hexagon_1 = register(new BlockToyota(false), "toyota_hexagon_1");
 	public static Block toyota_hexagon_2 = register(new BlockToyota(false), "toyota_hexagon_2");

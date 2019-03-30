@@ -1,5 +1,9 @@
 package net.tardis.mod.client.worldshell;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.world.World;
+
 public interface IContainsWorldShell {
 
 	//implement in entity's that contain world shells to allow them to be rendered using RenderWorldShell
@@ -15,5 +19,9 @@ public interface IContainsWorldShell {
 	
 	boolean requiresUpdate();
 	void setRequiresUpdate(boolean bool);
+	
+	/**Incase you're thicker than some, this should NOT be called on the server.**/
+	@Nullable
+	World getRenderWorld();
 
 }

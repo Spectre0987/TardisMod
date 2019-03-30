@@ -143,12 +143,12 @@ public class MessageSyncWorldShell implements IMessage {
 		public static void combineWorldShell(IContainsWorldShell cont, WorldShell shell, EnumType type) {
 			if(type == EnumType.BLOCKS) {
 				cont.getWorldShell().blockMap.putAll(shell.blockMap);
-				cont.getWorldShell().setTESRs();
+				cont.getWorldShell().setTESRs(cont.getRenderWorld() != null ? cont.getRenderWorld() : Minecraft.getMinecraft().world);
 			}
 			else if(type == EnumType.ENTITITES) {
 				cont.getWorldShell().getEntitiesForRender().clear();
 				cont.getWorldShell().setEntities(shell.getEntities());
-				cont.getWorldShell().setEntities(Minecraft.getMinecraft().world);
+				cont.getWorldShell().setEntities(cont.getRenderWorld() != null ? cont.getRenderWorld() : Minecraft.getMinecraft().world);
 			}
 		}
 

@@ -171,7 +171,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void update() {
 		if(hum != null) {
 			if ((soundChanged || world.getTotalWorldTime() % hum.getTicks() == 0) && !world.isRemote) {
-				world.playSound(null, getPos(), hum.getSoundEvent(), SoundCategory.AMBIENT,1.5F,1F);
+				world.playSound(null, getPos(), hum.getSoundEvent(), SoundCategory.AMBIENT, 1.5F,1F);
 				soundChanged = false;
 			}
 		}
@@ -992,7 +992,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 
 	public void transferPlayer(Entity entity, boolean checkDoors) {
-		if(entity instanceof EntityDragon) return;
+		if(entity instanceof EntityDragon || entity instanceof EntityControl || entity instanceof ControlDoor) return;
 		WorldServer ws = world.getMinecraftServer().getWorld(dimension);
 		if(ws == null)return;
 		MinecraftForge.EVENT_BUS.post(new TardisExitEvent(entity, this.getPos()));
