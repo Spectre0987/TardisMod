@@ -1150,6 +1150,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.markDirty();
 	}
 
+	
+	
 	public enum EnumCourseCorrect {
 		NONE(null, ""),
 		DIRECTION_X(ControlX.class, "course.tardis.direction.x"),

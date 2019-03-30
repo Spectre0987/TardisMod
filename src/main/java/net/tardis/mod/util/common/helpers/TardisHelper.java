@@ -92,9 +92,7 @@ public class TardisHelper {
 		}
 		return BlockPos.ORIGIN;
 	}
-
-	//If you use this on the client, I WILL come to your house with a baseball bat :) ~Fril
-	@SideOnly(Side.SERVER)
+	
 	public static TileEntityTardis getConsole(BlockPos pos) {
 		WorldServer worldServer = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(TDimensions.TARDIS_ID);
 
