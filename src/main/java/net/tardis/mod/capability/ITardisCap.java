@@ -23,4 +23,12 @@ public interface ITardisCap extends INBTSerializable<NBTTagCompound> {
 	
 	void sync();
 	
+	void setHasFuel(boolean b);
+	boolean hasFuel();
+	
+	int timeOnGround();
+	void setTimeOnGround(int time);
+	
+	void setDoorsOpen(boolean open);
+	boolean isOpen();
 }

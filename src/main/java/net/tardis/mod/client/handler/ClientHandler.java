@@ -5,9 +5,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -93,27 +95,38 @@ public class ClientHandler {
 	}
 	
 	@SubscribeEvent
-	public static void flyRender(RenderPlayerEvent.Pre event) {
-		EntityPlayer player = event.getEntityPlayer();
+	public static void flyRender(RenderPlayerEvent.Pre e) {
+		EntityPlayer player = e.getEntityPlayer();
 		ITardisCap data = CapabilityTardis.get(player);
 		BlockPos pos = player.getPosition();
 		
 		if (data.isInFlight()) {
 			IBlockState exteriorState = data.getExterior();
 			EnumExterior exterior = EnumExterior.getExteriorFromBlock(exteriorState.getBlock());
-			
-			event.setCanceled(true);
+			if (player.world.isRemote) {
+				if (player.collidedHorizontally || !data.hasFuel()) {
+					for (int x = 0; x <= 13; x++) {
+						player.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, player.posX + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, player.posY + player.world.rand.nextDouble() * (double) player.height, player.posZ + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, 0.0D, 0.0D, 0.0D);
+						player.world.spawnParticle(EnumParticleTypes.FLAME, player.posX + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, player.posY + player.world.rand.nextDouble() * (double) player.height, player.posZ + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, 0.0D, 0.0D, 0.0D);
+					}
+				}
+			}
+			e.setCanceled(true);
 			//Render
 			GlStateManager.pushMatrix();
+			double x2 = ((player.prevPosX + (player.posX - player.prevPosX) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerX);
+			double y2 = ((player.prevPosY + (player.posY - player.prevPosY) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerY);
+			double z2 = ((player.prevPosZ + (player.posZ - player.prevPosZ) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerZ);
+			GlStateManager.translate(x2, y2, z2);
 			GlStateManager.rotate(-180, 1, 0, 0);
 			GlStateManager.translate(0, -1.5, 0);
 			if (!player.onGround) {
 				GlStateManager.rotate((float) (player.ticksExisted * 3.0f * Math.PI), 0, 1, 0);
-				GlStateManager.rotate(player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * event.getPartialRenderTick(), 0, 1, 0);
+				GlStateManager.rotate(player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.getPartialRenderTick(), 0, 1, 0);
 				float offset = 0;
 				if (player.world.isAirBlock(player.getPosition().down())) {
 					if (!player.capabilities.isFlying) {
-						float f = (float) (player.ticksExisted * 3.0f * Math.PI) + event.getPartialRenderTick();
+						float f = (float) (player.ticksExisted * 3.0f * Math.PI) + e.getPartialRenderTick();
 						float f1 = MathHelper.clamp(f * f / 100.0F, 0.0F, 1.0F);
 						GlStateManager.rotate(-f1 * (-90.0F - player.rotationPitch), 1.0F, 0.0F, 0.0F);
 					}
@@ -123,7 +136,11 @@ public class ClientHandler {
 				GlStateManager.translate(0, -offset, 0);
 			}
 			Minecraft.getMinecraft().getTextureManager().bindTexture(exterior.tex);
-			EXTERIOR_CACHE.get(exterior).renderClosed(0.0625F);
+			if (!data.isOpen()) {
+				EXTERIOR_CACHE.get(exterior).renderClosed(0.0625F);
+			} else {
+				EXTERIOR_CACHE.get(exterior).renderOpen(0.0625F);
+			}
 			GlStateManager.popMatrix();
 		}
 	}
@@ -138,8 +155,10 @@ public class ClientHandler {
 			moveType.leftKeyDown = false;
 			moveType.backKeyDown = false;
 			moveType.moveForward = 0.0F;
-			moveType.sneak = false;
 			moveType.moveStrafe = 0.0F;
+			if (!CapabilityTardis.get(player).hasFuel()) {
+				moveType.jump = false;
+			}
 		}
 	}
 }
