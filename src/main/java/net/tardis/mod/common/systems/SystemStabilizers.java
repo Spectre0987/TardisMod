@@ -20,15 +20,15 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageMissControl;
 
 public class SystemStabilizers extends BaseSystem {
-
+	
 	private boolean isStabilized = false;
 	private int controlsMissed = 0;
 	private Random rand = new Random();
-
+	
 	public SystemStabilizers() {
-
+	
 	}
-
+	
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
 		if (!world.isRemote) {
@@ -64,10 +64,10 @@ public class SystemStabilizers extends BaseSystem {
 				if (this.getHealth() <= 0)
 					this.isStabilized = false;
 			}
-
+			
 		}
 	}
-
+	
 	public void explode(World world, BlockPos pos) {
 		if (!world.isRemote) {
 			world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
@@ -76,58 +76,58 @@ public class SystemStabilizers extends BaseSystem {
 			tardis.setDesination(tardis.getDestination().add(rand.nextInt(20) - 10, rand.nextInt(20) - 10, rand.nextInt(20) - 10), tardis.getTargetDim());
 		}
 	}
-
+	
 	@Override
 	public void damage() {
 	}
-
+	
 	@Override
 	public Item getRepairItem() {
 		return TItems.stabilizers;
 	}
-
+	
 	@Override
 	public String getNameKey() {
 		return "system.tardis.stabilizers";
 	}
-
+	
 	@Override
 	public String getUsage() {
 		return "Without this system, you will not be able to pilot your TARDIS without console dancing";
 	}
-
+	
 	@Override
 	public void wear() {
 		if (this.isOn()) {
 			this.setHealth(this.getHealth() - 0.01F);
 		}
 	}
-
+	
 	@Override
 	public boolean shouldStopFlight() {
 		return false;
 	}
-
+	
 	public boolean isOn() {
 		return this.isStabilized;
 	}
-
+	
 	public void setOn(boolean on) {
 		this.isStabilized = on;
 	}
-
+	
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		this.isStabilized = tag.getBoolean("stab");
 		this.controlsMissed = tag.getInteger("cont");
 	}
-
+	
 	@Override
 	public NBTTagCompound writetoNBT(NBTTagCompound tag) {
 		tag.setBoolean("stab", this.isStabilized);
 		tag.setInteger("cont", this.controlsMissed);
 		return super.writetoNBT(tag);
 	}
-
+	
 }

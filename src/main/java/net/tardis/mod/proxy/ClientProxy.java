@@ -20,6 +20,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.guis.GuiToggleHum;
+import net.tardis.mod.client.handler.ClientHandler;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.client.models.decoration.ModelBChair;
@@ -319,5 +320,11 @@ public class ClientProxy extends ServerProxy {
 		EnumCompanionType.VANDHAM.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.VASSILIS.setModel(new ModelPlayer(0.0625F, false));
 		EnumCompanionType.WOLSEY.setModel(new ModelOcelot());
+	}
+	
+	@Override
+	public void postInit() {
+		super.postInit();
+		ClientHandler.cacheFlightModels();
 	}
 }

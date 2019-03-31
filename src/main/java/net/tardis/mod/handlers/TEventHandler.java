@@ -61,6 +61,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.dimensions.IDimensionProperties;
+import net.tardis.mod.capability.CapabilityTardis;
+import net.tardis.mod.capability.ITardisCap;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -301,7 +303,13 @@ public class TEventHandler {
 			}
 		}
 	}
-
+	
+	@SubscribeEvent
+	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent e) {
+		CapabilityTardis.endFlight(e.player);
+	}
+	
+	
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {
 		EntityPlayer player = e.player;

@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
@@ -20,6 +21,7 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +99,12 @@ public class TileEntityHoloprojector extends TileEntity implements ITickable, IC
 	@Override
 	public void setRequiresUpdate(boolean bool) {
 	
+	}
+	
+	@Nullable
+	@Override
+	public World getRenderWorld() {
+		return null;
 	}
 	
 }
