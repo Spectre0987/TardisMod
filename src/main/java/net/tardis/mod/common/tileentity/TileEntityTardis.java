@@ -187,7 +187,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisLocation = getFlightPilot().getPosition();
 			
 			if (getFlightPilot().ticksExisted % 40 == 0) {
-				if (fuel > 0) {
+				if (fuel > 0 && getFlightPilot().isAirBorne) {
 					this.setFuel(fuel - this.calcFuelUse());
 				}
 			}
