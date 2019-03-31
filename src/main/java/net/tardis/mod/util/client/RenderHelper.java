@@ -44,7 +44,7 @@ public class RenderHelper {
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1, 1, 1);
 
-			GL11.glEnable(GL11.GL_STENCIL_TEST);
+			//GL11.glEnable(GL11.GL_STENCIL_TEST);
 
 			// Always write to stencil buffer
 			GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xFF);
@@ -63,7 +63,9 @@ public class RenderHelper {
 			Minecraft.getMinecraft().entityRenderer.disableLightmap();
 
 				// Draw scene from portal view
-				if (wBoti == null || wBoti.dimension != te.getDimension())
+				if(te.getRenderWorld() != null)
+					wBoti = (WorldBoti)te.getRenderWorld();
+				else if (wBoti == null || wBoti.dimension != te.getDimension())
 					wBoti = new WorldBoti(te.getDimension(), Minecraft.getMinecraft().world, te.getWorldShell());
 				WorldClient oldW = Minecraft.getMinecraft().world;
 				wBoti.setWorldTime(te.getWorldShell().getTime());

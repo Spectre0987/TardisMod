@@ -123,10 +123,10 @@ public class WorldShell implements IBlockAccess {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void setTESRs() {
+	public void setTESRs(World world) {
 		for (BlockStorage bs : blockMap.values()) {
 			if (bs.tileentity != null) {
-				TileEntity te = TileEntity.create(Minecraft.getMinecraft().world, bs.tileentity);
+				TileEntity te = TileEntity.create(world, bs.tileentity);
 				if (te != null) {
 					TileEntitySpecialRenderer renderer = TileEntityRendererDispatcher.instance.renderers.get(te.getClass());
 					if (renderer != null)

@@ -278,7 +278,9 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.isFlying = true;
 			player.capabilities.allowEdit = false;
 			player.capabilities.disableDamage = true;
+			player.addVelocity(0,1,0);
 			player.velocityChanged = true;
+			player.setEntityInvulnerable(true);
 			cap.sync();
 			console.transferPlayer(player, false);
 			WorldServer world = DimensionManager.getWorld(console.dimension);
@@ -300,6 +302,7 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.allowEdit = true;
 			player.capabilities.disableDamage = false;
 			player.velocityChanged = true;
+			player.setEntityInvulnerable(false);
 			cap.sync();
 			player.world.setBlockState(player.getPosition(), TBlocks.tardis.getDefaultState());
 			player.world.setBlockState(player.getPosition().up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
@@ -308,6 +311,7 @@ public class CapabilityTardis implements ITardisCap {
 				TileEntityDoor door = (TileEntityDoor) player.world.getTileEntity(player.getPosition().up());
 				if (door != null) {
 					door.setConsolePos(console.getLocation());
+					door.setRemat();
 				}
 			}
 			

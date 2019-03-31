@@ -13,6 +13,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
@@ -30,12 +31,16 @@ import net.tardis.mod.capability.ITardisCap;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
+import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
+import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
+import net.tardis.mod.util.client.RenderHelper;
+import net.tardis.mod.util.common.helpers.Helper;
 
 import java.util.HashMap;
 
@@ -87,13 +92,11 @@ public class ClientHandler {
 	//This is horrible, I know it is, just bare with me
 	
 	public static HashMap<EnumExterior, IExteriorModel> EXTERIOR_CACHE = new HashMap<>();
-	
 	public static void cacheFlightModels() {
 		for (EnumExterior value : EnumExterior.values()) {
 			EXTERIOR_CACHE.put(value, value.model);
 		}
 	}
-	
 	@SubscribeEvent
 	public static void flyRender(RenderPlayerEvent.Pre e) {
 		EntityPlayer player = e.getEntityPlayer();

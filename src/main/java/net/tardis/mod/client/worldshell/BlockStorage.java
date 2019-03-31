@@ -42,4 +42,16 @@ public class BlockStorage {
 			tileentity = tag;
 		}
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if(this == other)
+			return true;
+		if(!(other instanceof BlockStorage))
+			return false;
+		BlockStorage stor = (BlockStorage)other;
+		if(blockstate.equals(stor.blockstate) && light == stor.light && ((this.tileentity == null && stor.tileentity == null) || this.tileentity.equals(stor.tileentity)))
+			return true;
+		return super.equals(other);
+	}
 }

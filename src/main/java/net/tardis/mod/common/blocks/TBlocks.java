@@ -44,7 +44,6 @@ public class TBlocks {
 	public static Block panel = register(new BlockBase(), "panel", false);
 	public static Block food_machine = register(new BlockFoodMachine(), "food_machine");
 	public static Block megalos = register(new BlockMegalos(), "megalos");
-	public static Block holoprojector = register(new BlockHoloprojector(), "holoprojector");
 	
 	public static Block toyota_hexagon_1 = register(new BlockToyota(false), "toyota_hexagon_1");
 	public static Block toyota_hexagon_2 = register(new BlockToyota(false), "toyota_hexagon_2");
@@ -116,7 +115,42 @@ public class TBlocks {
 	public static Block s13blankroundel3 = register(new BlockBase(), "s13blankroundel3");
 	public static Block s13floor = register(new BlockBase(), "s13floor");
 	public static Block s13flooralt = register(new BlockBase(), "s13flooralt");
-	
+
+
+	// Custom Roundels (Moose's Custom Blocks)
+	public static Block roundel_orange = register(new BlockLight(),"roundel_orange").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_orange_half = register(new BlockLight(),"roundel_orange_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_magenta = register(new BlockLight(),"roundel_magenta").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_magenta_half = register(new BlockLight(),"roundel_magenta_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_light_blue = register(new BlockLight(),"roundel_light_blue").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_light_blue_half = register(new BlockLight(),"roundel_light_blue_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_yellow = register(new BlockLight(),"roundel_yellow").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_yellow_half = register(new BlockLight(),"roundel_yellow_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_lime = register(new BlockLight(),"roundel_lime").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_lime_half = register(new BlockLight(),"roundel_lime_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_pink = register(new BlockLight(),"roundel_pink").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_pink_half = register(new BlockLight(),"roundel_pink_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_light_gray = register(new BlockLight(),"roundel_light_gray").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_light_gray_half = register(new BlockLight(),"roundel_light_gray_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_cyan = register(new BlockLight(),"roundel_cyan").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_cyan_half = register(new BlockLight(),"roundel_cyan_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_purple = register(new BlockLight(),"roundel_purple").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_purple_half = register(new BlockLight(),"roundel_purple_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_blue = register(new BlockLight(),"roundel_blue").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_blue_half = register(new BlockLight(),"roundel_blue_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_brown = register(new BlockLight(),"roundel_brown").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_brown_half = register(new BlockLight(),"roundel_brown_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_red = register(new BlockLight(),"roundel_red").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_red_half = register(new BlockLight(),"roundel_red_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_green = register(new BlockLight(),"roundel_green").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_green_half = register(new BlockLight(),"roundel_green_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_dark = register(new BlockLight(),"roundel_dark").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_dark_half = register(new BlockLight(),"roundel_dark_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+
+	public static Block roundel_oak = register(new BlockLight(),"roundel_oak").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_oak_half = register(new BlockLight(),"roundel_oak_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+
+
 	public static Block brachackitable = register(new BlockTable(), "table_brachacki");
 	
 	public static Block zero_room_glow = register(new BlockVerticalSlab(), "zero_room_slab");
@@ -162,6 +196,7 @@ public class TBlocks {
 	public static Block console_03 = register(new BlockConsole(TileEntityTardis03::new), "console_03", false);
 	public static Block console_04 = register(new BlockConsole(TileEntityTardis04::new), "console_04", false);
 	public static Block console_05 = register(new BlockConsole(TileEntityTardis05::new), "console_05", false);
+
 	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block", false);
 	
 	public static Block circuit_repair = register(new BlockComponentRepair(Material.IRON, TileEntityComponentRepair::new), "circuit_repair");

@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.IProjectile;
@@ -31,8 +32,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
+import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.TDamageSources;
@@ -67,7 +71,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	private float renderAngle = 90;
 	private boolean requiresUpdate = true;
 	//Only use this client side - This should be a WorldBOTI
-	public World world;
+	public World clientWorld;
 	
 	public static final AxisAlignedBB NORTH = new AxisAlignedBB(0, 0, -0.1, 1, 2, 0);
 	public static final AxisAlignedBB EAST = new AxisAlignedBB(1, 0, 0, 1.1, 2, 1);
@@ -207,13 +211,20 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (!this.isRemat && !this.isDemat)
 			this.alpha = 1.0F;
 		
-		if(world.isRemote && this.worldShell.getOffset().equals(BlockPos.ORIGIN) || this.requiresUpdate) {
+		if(world.isRemote && (this.worldShell.getOffset().equals(BlockPos.ORIGIN) || this.requiresUpdate)) {
 			NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI(this.getPos()));
+			this.setupClientWorld();
 			this.requiresUpdate = false;
 		}
 		
-		if(this.isLocked() && !this.worldShell.getOffset().equals(BlockPos.ORIGIN))
+		if(this.isLocked() && !this.worldShell.getOffset().equals(BlockPos.ORIGIN)) {
 			this.worldShell = new WorldShell(BlockPos.ORIGIN);
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void setupClientWorld() {
+		this.clientWorld = new WorldBoti(this.world.provider.getDimension(), (WorldClient)world, this.worldShell);
 	}
 	
 	public void handleEnter() {
@@ -255,6 +266,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void setLocked(boolean b) {
 		this.isLocked = b;
 		this.markDirty();
+		if(!world.isRemote)
+			world.notifyBlockUpdate(this.getPos(), world.getBlockState(this.getPos()), world.getBlockState(this.getPos()), 2);
 	}
 
 	@Override
@@ -543,5 +556,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public void setRequiresUpdate(boolean bool) {
 		this.requiresUpdate = bool;
+	}
+
+	@Override
+	public World getRenderWorld() {
+		return this.clientWorld;
 	}
 }

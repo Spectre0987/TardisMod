@@ -32,7 +32,9 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 			renderExterior(te);
 		}
 		if (!te.isLocked()) {
+			this.setLightmapDisabled(true);
 			renderPortal(te, partialTicks);
+			this.setLightmapDisabled(false);
 		}
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
