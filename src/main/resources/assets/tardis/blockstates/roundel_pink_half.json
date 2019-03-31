@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "normal": {
+      "model": "tardis:roundel_pink_half"
+    },
+    "inventory": {
+      "model": "tardis:roundel_pink_half"
+    }
+  }
+}

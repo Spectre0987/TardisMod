@@ -6,9 +6,12 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.guis.elements.ButtonText;
+import net.tardis.mod.common.strings.TStrings;
 
 public class GuiManual extends GuiScreen {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/manual.png");
@@ -16,6 +19,7 @@ public class GuiManual extends GuiScreen {
 	private static ScaledResolution res;
 	public int gui_width = 281, gui_height = 208;
 	Minecraft mc;
+	int id = 0;
 
 	public GuiManual() {
 		mc = Minecraft.getMinecraft();
@@ -38,6 +42,7 @@ public class GuiManual extends GuiScreen {
 
 		buttonList.add(new NextPageButton(1, (this.width - gui_width) / 2 + 235, res.getScaledHeight() / 2 + gui_height / 4, true));
 		buttonList.add(new NextPageButton(2, (this.width - gui_width) / 2 + 25, res.getScaledHeight() / 2 + gui_height / 4, false));
+
 		super.initGui();
 	}
 
@@ -73,5 +78,6 @@ public class GuiManual extends GuiScreen {
 			}
 		}
 	}
+
 
 }

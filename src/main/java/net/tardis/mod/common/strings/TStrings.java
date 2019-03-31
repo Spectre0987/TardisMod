@@ -46,6 +46,10 @@ public class TStrings {
 		public static final String DALEK_INVASION = "tardis.event.dalek";
 	}
 
+	public static class ManualPages {
+		public static final String MANUAL_DEMAT = "tardis.manual.demat";
+	}
+
 	public static class ToolTips {
 		public static final String REMOTE = "tooltip.remote";
 		public static final String REMOTE_FUEL = "tooltip.remote.fuel";

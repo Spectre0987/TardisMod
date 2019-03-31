@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "normal": {
+      "model": "tardis:roundel_light_gray"
+    },
+    "inventory": {
+      "model": "tardis:roundel_light_gray"
+    }
+  }
+}
