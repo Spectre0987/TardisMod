@@ -95,11 +95,13 @@ public class ClientHandler {
 	//This is horrible, I know it is, just bare with me
 	
 	public static HashMap<EnumExterior, IExteriorModel> EXTERIOR_CACHE = new HashMap<>();
+	
 	public static void cacheFlightModels() {
 		for (EnumExterior value : EnumExterior.values()) {
 			EXTERIOR_CACHE.put(value, value.model);
 		}
 	}
+	
 	@SubscribeEvent
 	public static void flyRender(RenderPlayerEvent.Pre e) {
 		EntityPlayer player = e.getEntityPlayer();

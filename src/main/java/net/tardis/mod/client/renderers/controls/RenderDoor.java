@@ -49,15 +49,6 @@ public class RenderDoor extends Render<ControlDoor> {
 		TileEntityTardis tardis = entity.getTardis();
 		EnumExterior ext = tardis != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()) : EnumExterior.TT;
 		GlStateManager.translate(open ? 0 : 0.25, 0, 0);
-		EnumFacing face = tardis != null ? tardis.getFacing() : EnumFacing.NORTH;
-		Vec3d vec = new Vec3d(0, 1, 0);
-		float angle = 0;
-		if(face == EnumFacing.NORTH)
-			vec = new Vec3d(-1, 1, -9);
-		else if(face == EnumFacing.EAST) {
-			vec = new Vec3d(0, 1, 0);
-			angle = 0;
-		}
 		if(MinecraftForgeClient.getRenderPass() == 0) {
 			if(open)
 				ext.interiorModel.renderOpen();
@@ -66,6 +57,15 @@ public class RenderDoor extends Render<ControlDoor> {
 			}
 		}
 		else if(open && tardis != null) {
+			EnumFacing face = tardis.getFacing();
+			Vec3d vec = new Vec3d(0, 1, 0);
+			float angle = 0;
+			if(face == EnumFacing.NORTH)
+				vec = new Vec3d(-1, 1, -9);
+			else if(face == EnumFacing.EAST) {
+				vec = new Vec3d(0, 1, 0);
+				angle = 0;
+			}
 			GlStateManager.translate(0, 0, -0.001);
 			RenderHelper.renderPortal(shellRender, entity, partialTicks, angle, vec);
 		}

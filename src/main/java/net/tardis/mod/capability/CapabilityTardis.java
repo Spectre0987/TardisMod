@@ -14,12 +14,14 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
@@ -59,8 +61,15 @@ public class CapabilityTardis implements ITardisCap {
 	private int timeOnGround = 0;
 	private boolean isOpen = false;
 	private static AttributeModifier mod = new AttributeModifier(UUID.fromString("ad4ab5e6-6904-4429-9883-15ac8aeef97d"), "Flight mode", 0.12F, 0);
+	private Vec3d prevPos = new Vec3d(0, 0, 0);
+	private Vec2d prevRot = new Vec2d(0, 0);
+	
+	static {
+		mod.setSaved(false);
+	}
 	
 	public CapabilityTardis() {
+		
 	}
 	
 	public CapabilityTardis(EntityPlayer player) {
@@ -110,15 +119,7 @@ public class CapabilityTardis implements ITardisCap {
 				if (isInFlight()) {
 					
 					if (isOpen()) {
-						//	for (Entity entity : player.world.getEntitiesInAABBexcluding(player, player.getCollisionBoundingBox().grow(4), ENTITY)) {
-						//		if (entity != null && !entity.isDead) {
-						//			ITardisCap cap = get(player);
-						//			TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
-						//			if (console != null) {
-						//				console.enterTARDIS(entity);
-						//			}
-						//		}
-						//	}
+						//TODO: Teleport entities that were collided with
 					}
 					
 					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
@@ -158,8 +159,8 @@ public class CapabilityTardis implements ITardisCap {
 			}
 		}
 		if(player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
-			if(player.getPosition().distanceSq(this.getTardis()) > 16384)
-				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 2, this.getTardis().getZ());
+			if(player.getPosition().distanceSq(this.getTardis()) > 16384) {}
+				//player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 2, this.getTardis().getZ());
 		}
 	}
 	
@@ -314,6 +315,8 @@ public class CapabilityTardis implements ITardisCap {
 		setSpeeds(player, false);
 		ITardisCap cap = get(player);
 		cap.setTimeOnGround(0);
+		cap.setPrevPos(player.getPositionVector());
+		cap.setPrevRot(new Vec2d((double)player.rotationYaw, (double)player.rotationPitch));
 		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
 		if (console != null && !console.hasPilot() && console.fuel > 0) {
 			console.setFlightPilot(player);
@@ -375,7 +378,28 @@ public class CapabilityTardis implements ITardisCap {
 			console.setLocation(bPos);
 			console.setFlightPilot(null);
 			cap.setTimeOnGround(0);
+			((EntityPlayerMP)player).connection.setPlayerLocation(cap.getPrevPos().x, cap.getPrevPos().y, cap.getPrevPos().z, (float)cap.getPrevRot().x, (float)cap.getPrevRot().y);
 		}
+	}
+
+	@Override
+	public void setPrevPos(Vec3d positionVector) {
+		this.prevPos = positionVector;
+	}
+
+	@Override
+	public Vec3d getPrevPos() {
+		return this.prevPos;
+	}
+
+	@Override
+	public void setPrevRot(Vec2d vec) {
+		this.prevRot = vec;
+	}
+
+	@Override
+	public Vec2d getPrevRot() {
+		return prevRot;
 	}
 	
 }
