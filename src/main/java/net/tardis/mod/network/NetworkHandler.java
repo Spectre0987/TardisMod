@@ -15,6 +15,7 @@ import net.tardis.mod.network.packets.MessageExteriorChange;
 import net.tardis.mod.network.packets.MessageHandlerProtocol;
 import net.tardis.mod.network.packets.MessageHandlerTeleport;
 import net.tardis.mod.network.packets.MessageMissControl;
+import net.tardis.mod.network.packets.MessagePlayFlySound;
 import net.tardis.mod.network.packets.MessageProtocol;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.network.packets.MessageSonicWorkbench;
@@ -57,6 +58,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageRequestBOTI.Handler.class, MessageRequestBOTI.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageSyncCap.Handler.class, MessageSyncCap.class, id++, Side.CLIENT);
 		NETWORK.registerMessage(MessageCapabilityDoorOpen.Handler.class, MessageCapabilityDoorOpen.class, id++, Side.SERVER);
+		NETWORK.registerMessage(MessagePlayFlySound.Handler.class, MessagePlayFlySound.class, id++, Side.CLIENT);
 	}
 	
 	

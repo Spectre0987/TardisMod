@@ -6,6 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -22,9 +23,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.capability.TardisCapStorage.TardisCapProvider;
 import net.tardis.mod.common.blocks.BlockTardisTop;
@@ -36,6 +36,7 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageCapabilityDoorOpen;
+import net.tardis.mod.network.packets.MessagePlayFlySound;
 import net.tardis.mod.network.packets.MessageSyncCap;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
@@ -84,6 +85,10 @@ public class CapabilityTardis implements ITardisCap {
 	
 	@Override
 	public void update() {
+		if (!isInFlight && player.capabilities.getFlySpeed() == 0.75F) {
+			setSpeeds(player, true);
+		}
+		
 		//Set the players Tardis position when they are in the Tardis Dimension
 		if (getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
 			setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
@@ -131,15 +136,11 @@ public class CapabilityTardis implements ITardisCap {
 						player.capabilities.allowFlying = true;
 						setSpeeds(player, false);
 						player.velocityChanged = true;
-						if (player.ticksExisted % 40 == 0) {
-							if (!player.onGround) {
-								player.world.playSound(null, player.getPosition(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
-							}
-						}
 					} else {
 						if (player.ticksExisted % 100 == 0) {
 							player.world.playSound(null, player.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 0.5F, 1F);
 						}
+						setSpeeds(player, true);
 						player.capabilities.isFlying = false;
 						player.capabilities.allowFlying = false;
 						player.velocityChanged = true;
@@ -165,14 +166,11 @@ public class CapabilityTardis implements ITardisCap {
 		}
 	}
 	
-	@SideOnly(Side.CLIENT)
 	public static void setSpeeds(EntityPlayer player, boolean reset) {
 		if (reset) {
-			player.capabilities.setFlySpeed(0.05F);
-			player.sendPlayerAbilities();
+			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, player.capabilities, 0.05F, 5);
 		} else {
-			player.capabilities.setFlySpeed(0.05F * 3);
-			player.sendPlayerAbilities();
+			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, player.capabilities, 0.75F, 5);
 		}
 	}
 	
@@ -298,16 +296,14 @@ public class CapabilityTardis implements ITardisCap {
 	}
 	
 	public static void setupFlight(EntityPlayer player) {
-		if (player.world.isRemote) {
-			setSpeeds(player, false);
-		}
-		if (player.world.isRemote) return;
+		setSpeeds(player, false);
 		ITardisCap cap = CapabilityTardis.get(player);
 		cap.setTimeOnGround(0);
 		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
 		if (console != null && !console.hasPilot() && console.fuel > 0) {
 			console.setFlightPilot(player);
 			console.transferPlayer(player, false);
+			NetworkHandler.NETWORK.sendToDimension(new MessagePlayFlySound(TSounds.loop, player.getUniqueID().toString()), player.dimension);
 			cap.setInFlight(true);
 			cap.setExterior(console.getTopBlock());
 			cap.setHasFuel(true);
@@ -330,28 +326,25 @@ public class CapabilityTardis implements ITardisCap {
 	}
 	
 	public static void endFlight(EntityPlayer player) {
-		if (player.world.isRemote) {
-			player.capabilities.setFlySpeed(0.05F);
-		}
-		if (player.world.isRemote) return;
+		setSpeeds(player, true);
 		ITardisCap cap = CapabilityTardis.get(player);
 		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
 		BlockPos bPos = player.getPosition();
 		if (console != null) {
 			cap.setInFlight(false);
+			console.enterTARDIS(player);
 			player.capabilities.allowFlying = player.isCreative();
 			player.capabilities.isFlying = player.isCreative();
 			player.capabilities.allowEdit = true;
 			player.capabilities.disableDamage = false;
 			player.velocityChanged = true;
-			player.setEntityInvulnerable(false);
+			player.setEntityInvulnerable(player.isCreative());
 			cap.sync();
 			player.eyeHeight = player.getDefaultEyeHeight();
 			player.sendPlayerAbilities();
-			WorldServer exteriorWorld = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(console.dimension);
-			exteriorWorld.setBlockState(bPos, TBlocks.tardis.getDefaultState());
-			exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
 			
+			if (player.world.isRemote) return;
+			WorldServer exteriorWorld = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(console.dimension);
 			
 			exteriorWorld.getChunkProvider().loadChunk(bPos.getX() * 16, bPos.getZ() * 16);
 			exteriorWorld.setBlockState(bPos, TBlocks.tardis.getDefaultState());
@@ -364,17 +357,7 @@ public class CapabilityTardis implements ITardisCap {
 					((TileEntityDoor) Objects.requireNonNull(exteriorWorld.getTileEntity(bPos.up()))).forceVisible();
 				}
 			});
-			
-			
-			if (exteriorWorld.getTileEntity(bPos.up()) instanceof TileEntityDoor) {
-				TileEntityDoor door = (TileEntityDoor) exteriorWorld.getTileEntity(bPos.up());
-				if (door != null) {
-					door.setConsolePos(console.getLocation());
-				}
-			}
-			
 			console.setLocation(bPos);
-			console.enterTARDIS(player);
 			console.setFlightPilot(null);
 			cap.setTimeOnGround(0);
 		}
