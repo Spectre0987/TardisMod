@@ -5,6 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,6 +22,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.capability.TardisCapStorage.TardisCapProvider;
 import net.tardis.mod.common.blocks.BlockTardisTop;
@@ -36,6 +40,7 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.UUID;
 
 public class CapabilityTardis implements ITardisCap {
 	
@@ -107,7 +112,6 @@ public class CapabilityTardis implements ITardisCap {
 					
 					
 					if (player.collidedHorizontally) {
-						System.out.println("DAMAGING");
 						for (TardisSystems.BaseSystem s : Objects.requireNonNull(TardisHelper.getConsole(getTardis())).systems) {
 							s.damage();
 						}
@@ -124,8 +128,12 @@ public class CapabilityTardis implements ITardisCap {
 					}
 					
 					if (hasFuel) {
-						player.capabilities.isFlying = true;
 						player.capabilities.allowFlying = true;
+						
+						if(player.world.isRemote){
+							setSpeeds(player, true);
+						}
+						
 						player.velocityChanged = true;
 						if (player.ticksExisted % 40 == 0) {
 							if (!player.onGround) {
@@ -158,6 +166,19 @@ public class CapabilityTardis implements ITardisCap {
 				player.setPositionAndUpdate(getTardis().getX(), getTardis().getY(), getTardis().getZ());
 			}
 			
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void setSpeeds(EntityPlayer player, boolean reset){
+		if(reset){
+			player.capabilities.setFlySpeed(0.05F);
+		} else {
+			if (!player.isSprinting()) {
+				player.capabilities.setFlySpeed(5);
+			} else {
+				player.capabilities.setFlySpeed(11);
+			}
 		}
 	}
 	
@@ -273,6 +294,9 @@ public class CapabilityTardis implements ITardisCap {
 		throw new IllegalStateException("Missing Tardis capability: " + player + ", please report this to the issue tracker");
 	}
 	
+	private static final UUID SPEED_ID = UUID.fromString("a22a9515-90d7-479d-9153-07268f2a1714");
+	private static final AttributeModifier SPEED_MODIFIER = new AttributeModifier(SPEED_ID, "SANIC_FAST", 0.95, 1);
+	
 	public static void setupFlight(EntityPlayer player) {
 		if (player.world.isRemote) return;
 		ITardisCap cap = CapabilityTardis.get(player);
@@ -280,6 +304,7 @@ public class CapabilityTardis implements ITardisCap {
 		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
 		if (console != null && !console.hasPilot() && console.fuel > 0) {
 			console.setFlightPilot(player);
+			console.transferPlayer(player, false);
 			cap.setInFlight(true);
 			cap.setExterior(console.getTopBlock());
 			cap.setHasFuel(true);
@@ -287,11 +312,18 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.isFlying = true;
 			player.capabilities.allowEdit = false;
 			player.capabilities.disableDamage = true;
-			player.addVelocity(0, 1, 0);
+			player.motionY += 8;
 			player.velocityChanged = true;
+			player.eyeHeight = 2;
+			if(player.world.isRemote){
+				setSpeeds(player, true);
+			}
+			player.sendPlayerAbilities();
 			player.setEntityInvulnerable(true);
+			if (!player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER)) {
+				player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(SPEED_MODIFIER);
+			}
 			cap.sync();
-			console.transferPlayer(player, false);
 			WorldServer world = DimensionManager.getWorld(console.dimension);
 			world.setBlockState(console.getLocation(), Blocks.AIR.getDefaultState());
 			world.setBlockState(console.getLocation().up(), Blocks.AIR.getDefaultState());
@@ -313,8 +345,15 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.disableDamage = false;
 			player.velocityChanged = true;
 			player.setEntityInvulnerable(false);
+			if(player.world.isRemote){
+				setSpeeds(player, true);
+			}
+			if (player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER)) {
+				player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER);
+			}
 			cap.sync();
-			
+			player.eyeHeight = player.getDefaultEyeHeight();
+			player.sendPlayerAbilities();
 			WorldServer exteriorWorld = DimensionManager.getWorld(console.dimension);
 			exteriorWorld.setBlockState(bPos, TBlocks.tardis.getDefaultState());
 			exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
