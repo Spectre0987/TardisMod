@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "tardis:blocks/roundels/roundel_yellow_half"
+  }
+}
