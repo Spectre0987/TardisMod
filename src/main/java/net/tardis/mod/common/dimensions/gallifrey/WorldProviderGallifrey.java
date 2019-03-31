@@ -25,13 +25,12 @@ public class WorldProviderGallifrey extends WorldProviderSurface {
 		return new ChunkGeneratorGallifrey(world, world.getSeed());
 	}
 	
-	public static RenderGallifreySky SKY = new RenderGallifreySky();
 	
 	@Nullable
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IRenderHandler getSkyRenderer() {
-		return SKY;
+		return RenderGallifreySky.getInstance();
 	}
 
 	@Override

@@ -110,7 +110,7 @@ public class EntityRaider extends EntityMob {
 	protected void entityInit() {
 		super.entityInit();
 		this.getDataManager().register(SITTING, false);
-		this.getDataManager().register(TYPE, Helper.randomEnum(EntityRaider.EnumRaiderType.class, world.rand).name());
+		this.getDataManager().register(TYPE, EntityRaider.EnumRaiderType.values()[rand.nextInt(EntityRaider.EnumRaiderType.values().length)].name());
 	}
 	
 	@Override
@@ -201,26 +201,26 @@ public class EntityRaider extends EntityMob {
 	}
 	
 	public enum EnumRaiderType {
-		RICHARD("richard", "a Raider", RenderRaider.ALEX),
-		MATT("matt", "a Raider", RenderRaider.STEVE),
-		STEVEN("steven", "a Raider", RenderRaider.STEVE),
-		JESSIE("jessie", "a Raider", RenderRaider.ALEX);
+		RICHARD("richard", "a Raider"),
+		MATT("matt", "a Raider"),
+		STEVEN("steven", "a Raider"),
+		JESSIE("jessie", "a Raider");
 		
 		@SideOnly(Side.CLIENT)
 		public ModelBase model;
+		
 		ResourceLocation skin;
 		String formattedName = "";
 		float[] size = {0.95F, 1.75F};
 		
 		
-		EnumRaiderType(String name, String formatName, ModelPlayer characterBody) {
+		EnumRaiderType(String name, String formatName) {
 			skin = new ResourceLocation(Tardis.MODID, "textures/entity/raider/" + name + ".png");
 			formattedName = formatName;
-			model = characterBody;
 		}
 		
-		EnumRaiderType(String name, String formattedName, ModelPlayer characterBody, float[] size) {
-			this(name, formattedName, characterBody);
+		EnumRaiderType(String name, String formattedName, float[] size) {
+			this(name, formattedName);
 			this.size = size;
 		}
 		

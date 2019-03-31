@@ -320,6 +320,11 @@ public class ClientProxy extends ServerProxy {
 		EnumCompanionType.VANDHAM.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.VASSILIS.setModel(new ModelPlayer(0.0625F, false));
 		EnumCompanionType.WOLSEY.setModel(new ModelOcelot());
+		
+		EntityRaider.EnumRaiderType.JESSIE.setModel(RenderRaider.ALEX);
+		EntityRaider.EnumRaiderType.MATT.setModel(RenderRaider.STEVE);
+		EntityRaider.EnumRaiderType.RICHARD.setModel(RenderRaider.ALEX);
+		EntityRaider.EnumRaiderType.STEVEN.setModel(RenderRaider.STEVE);
 	}
 	
 	@Override
