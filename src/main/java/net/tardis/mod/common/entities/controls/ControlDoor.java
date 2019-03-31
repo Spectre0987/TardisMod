@@ -90,7 +90,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				}
 			}
 		}
-		return EnumFacing.NORTH;
+		return this.dataManager.get(FACING);
 	}
 	
 	public TileEntityTardis getTardis() {
@@ -113,6 +113,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 			if(!this.shell.getOffset().equals(offset))
 				this.shell = new WorldShell(offset);
 			this.shell.blockMap = this.getBlockStoreInAABB(bb, offset, ws);
+			this.dataManager.set(FACING, this.getFacing());
 		}
 	}
 	

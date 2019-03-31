@@ -57,14 +57,24 @@ public class RenderDoor extends Render<ControlDoor> {
 			}
 		}
 		else if(open && tardis != null) {
-			EnumFacing face = tardis.getFacing();
+			EnumFacing face = entity.getFacing();
 			Vec3d vec = new Vec3d(0, 1, 0);
 			float angle = 0;
-			if(face == EnumFacing.NORTH)
+			if(face == EnumFacing.NORTH) {
 				vec = new Vec3d(-1, 1, -9);
-			else if(face == EnumFacing.EAST) {
-				vec = new Vec3d(0, 1, 0);
 				angle = 0;
+			}
+			else if(face == EnumFacing.EAST) {
+				vec = new Vec3d(9, 1, 0);
+				angle = 90;
+			}
+			else if(face == EnumFacing.WEST) {
+				angle = 270;
+				vec = new Vec3d(-10, 1, 1);
+			}
+			else if(face == EnumFacing.SOUTH) {
+				angle = 180;
+				vec = new Vec3d(0, 1, 10);
 			}
 			GlStateManager.translate(0, 0, -0.001);
 			RenderHelper.renderPortal(shellRender, entity, partialTicks, angle, vec);
