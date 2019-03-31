@@ -59,9 +59,13 @@ public class RenderHelper {
 			// Only pass stencil test if equal to 1(So only if rendered before)
 			GL11.glStencilMask(0x00);
 			GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
+			
+			Minecraft.getMinecraft().entityRenderer.disableLightmap();
 
 				// Draw scene from portal view
-				if (wBoti == null || wBoti.dimension != te.getDimension())
+				if(te.getRenderWorld() != null)
+					wBoti = (WorldBoti)te.getRenderWorld();
+				else if (wBoti == null || wBoti.dimension != te.getDimension())
 					wBoti = new WorldBoti(te.getDimension(), Minecraft.getMinecraft().world, te.getWorldShell());
 				WorldClient oldW = Minecraft.getMinecraft().world;
 				wBoti.setWorldTime(te.getWorldShell().getTime());
@@ -73,7 +77,6 @@ public class RenderHelper {
 				GlStateManager.pushMatrix();
 				GlStateManager.rotate(180, 0, 1, 0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
-				Minecraft.getMinecraft().entityRenderer.disableLightmap();
 				
 				GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_DST_ALPHA);
 				
@@ -96,14 +99,15 @@ public class RenderHelper {
 					GlStateManager.popMatrix();
 				}
 				
-				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, 1);
+				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, 2);
 				renderShell.renderWorldShell(te, wBoti, offset.x, offset.y, offset.z);
-				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				
 				fb.deleteFramebuffer();
 				GlStateManager.popMatrix();
 				old.bindFramebuffer(true);
 				RenderHelper.setRenderGlobalWorld(oldW);
+				
+				Minecraft.getMinecraft().entityRenderer.enableLightmap();
 				
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 			GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);

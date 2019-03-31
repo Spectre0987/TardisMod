@@ -46,6 +46,10 @@ public class TStrings {
 		public static final String DALEK_INVASION = "tardis.event.dalek";
 	}
 
+	public static class ManualPages {
+		public static final String MANUAL_DEMAT = "tardis.manual.demat";
+	}
+
 	public static class ToolTips {
 		public static final String REMOTE = "tooltip.remote";
 		public static final String REMOTE_FUEL = "tooltip.remote.fuel";
@@ -69,6 +73,8 @@ public class TStrings {
 	public static class Permissions {
 		public static final String TP_IN_TARDIS = "tardis.command.tardistp";
 		public static final String TP_IN_TARDIS_OTHER = "tardis.command.tardistp.other";
+		public static final String TP_OUT_TARDIS = "tardis.command.exterior";
+		public static final String TP_OUT_TARDIS_OTHER = "tardis.command.exterior.other";
 		public static final String REMOVE_TARDIS = "tardis.command.removetardis";
 		public static final String RESTORE_TARDIS = "tardis.command.restoretardis";
 		public static final String GROW = "tardis.command.grow";

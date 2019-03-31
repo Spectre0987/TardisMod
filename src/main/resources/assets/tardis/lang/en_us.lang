@@ -273,8 +273,9 @@ tardis.damage.demat=The Dematerialization Circuit has been fried!
 
 tardis.message.refuelling=Tardis now fueling...
 tardis.message.no_longer_refuelling=Tardis no longer fueling.
-tardis.message.tc_notfound=Could not find %s on this plane of existence
+tardis.message.tc_notfound=Could not find %s on planet %s!
 tardis.message.relocation=Relocating you to this capsule's outer plasmic shell!
+tardis.message.has_pilot=You cannot currently do that
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS flying
@@ -330,17 +331,11 @@ box.master.clock=Master's Clock
 box.tt=TT Capsule
 box.door=Wooden Door
 
-tardis.hum.tardis:interior_hum_80=1980's interior hum
-tardis.hum.tardis:1963_interior_hum=1963 interior hum
-tardis.hum.tardis:tardis_hum_copper=Copper interior hum
-tardis.hum.tardis:tardis_hum_coral=Coral interior hum
-tardis.hum.tardis:tardis_hum_toyota=Toyota interior hum
-tardis.hum.tardis:tardis_hum_70=1970's interior hum
-tardis.hum.null=Hum disabled
-
 hum.tardis.toyota=Toyota
 hum.tardis.coral=Coral
 hum.tardis.copper=Copper
 hum.tardis.70=Sharp
 hum.tardis.1963=Brachacki
 hum.tardis.default=Kelt
+hum.tardis.disabled=Disabled
+

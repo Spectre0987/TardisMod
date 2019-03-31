@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
@@ -19,23 +20,22 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.TSource;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MessageTelepathicCircut implements IMessage {
+public class MessageTelepathicCircuit implements IMessage {
 	
 	public BlockPos pos = BlockPos.ORIGIN;
 	public String name = "";
 	
-	public MessageTelepathicCircut() {
+	public MessageTelepathicCircuit() {
 	
 	}
 	
-	public MessageTelepathicCircut(BlockPos tardisPos, String name) {
+	public MessageTelepathicCircuit(BlockPos tardisPos, String name) {
 		pos = tardisPos.toImmutable();
 		if (name != null) {
 			this.name = name;
@@ -54,10 +54,10 @@ public class MessageTelepathicCircut implements IMessage {
 		buf.writeLong(pos.toLong());
 	}
 	
-	public static class Handler implements IMessageHandler<MessageTelepathicCircut, IMessage> {
+	public static class Handler implements IMessageHandler<MessageTelepathicCircuit, IMessage> {
 		
 		@Override
-		public IMessage onMessage(MessageTelepathicCircut message, MessageContext ctx) {
+		public IMessage onMessage(MessageTelepathicCircuit message, MessageContext ctx) {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
 				
 				boolean managed = false;
@@ -103,7 +103,7 @@ public class MessageTelepathicCircut implements IMessage {
 					
 					//==================== FAILURE ====================
 					if (!managed) {
-						PlayerHelper.sendMessage(ctx.getServerHandler().player, new TextComponentTranslation("tardis.message.tc_notfound", message.name.trim()), true);
+						PlayerHelper.sendMessage(ctx.getServerHandler().player, new TextComponentTranslation("tardis.message.tc_notfound", TextFormatting.GOLD + TextFormatting.BOLD.toString() + message.name.trim(), TextFormatting.GOLD + TextFormatting.BOLD.toString() + Helper.formatDimensionName(DimensionManager.createProviderFor(tardis.dimension).getDimensionType().getName())), true);
 						tardis.getWorld().playSound(null, tardis.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1, 1);
 					}
 					

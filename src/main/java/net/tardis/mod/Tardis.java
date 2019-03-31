@@ -1,5 +1,6 @@
 package net.tardis.mod;
 
+import net.tardis.mod.common.protocols.ProtocolForceField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +14,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -28,6 +30,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
+import net.tardis.mod.capability.CapabilityTardis;
+import net.tardis.mod.capability.ITardisCap;
+import net.tardis.mod.capability.TardisCapStorage;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.common.ars.ConsoleRoom;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -47,6 +52,7 @@ import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.EntityRaider;
+import net.tardis.mod.common.entities.EntityShip;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -100,7 +106,6 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
-import net.tardis.mod.common.tileentity.TileEntityHoloprojector;
 import net.tardis.mod.common.tileentity.TileEntityItemMaterializer;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityKerblam;
@@ -203,6 +208,7 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityBessie.class, "bessie");
 		EntityHelper.registerNoSpawn(EntityCompanion.class, "companion");
 		EntityHelper.registerNoSpawn(EntityDalekSkaro.class, "dalek_scaro");
+		EntityHelper.registerNoSpawn(EntityShip.class, "ship");
 		EntityHelper.registerStatic(EntityChair.class, "chair");
 		EntityHelper.registerStatic(EntityItemMaterializer.class, "item_materializer");
 		EntityHelper.registerStatic(EntityDoorsBrakSecondary.class, "doors_brak_second");
@@ -213,7 +219,6 @@ public class Tardis {
 		registerTileEntity(TileEntityAlembic.class, "TileEntityAlembic");
 		registerTileEntity(TileEntityFoodMachine.class, "TileEntityFoodMachine");
 		registerTileEntity(TileEntityEPanel.class, "TileEntityEPanel");
-		registerTileEntity(TileEntityHoloprojector.class, "TileEntityHoloprojector");
 		registerTileEntity(TileEntityTardisCoral.class, "TileEntityTardisCoral");
 		registerTileEntity(TileEntityLight.class, "TileEntityLight");
 		registerTileEntity(TileEntityHellbentLight.class, "TileEntityHellbentLight");
@@ -268,6 +273,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
+		//TardisProtocol.register(new ProtocolForceField());
 
 		// Register All Mobs Here.
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
@@ -318,6 +324,7 @@ public class Tardis {
 
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_builder.png", "interior/interior_builder", new BlockPos(9, 1, 9));
 
+		CapabilityManager.INSTANCE.register(ITardisCap.class, new TardisCapStorage(), CapabilityTardis::new);
 	}
 
 	@EventHandler
@@ -336,6 +343,8 @@ public class Tardis {
 		PermissionAPI.registerNode(TStrings.Permissions.REMOVE_TARDIS, DefaultPermissionLevel.OP, "Allows players to delete a TARDIS");
 		PermissionAPI.registerNode(TStrings.Permissions.RESTORE_TARDIS, DefaultPermissionLevel.OP, "Allows players to restore their TARDIS Systems");
 		PermissionAPI.registerNode(TStrings.Permissions.GROW, DefaultPermissionLevel.OP, "Allows players to grow their TARDIS Coral faster");
+		PermissionAPI.registerNode(TStrings.Permissions.TP_OUT_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself out of their TARDIS");
+		PermissionAPI.registerNode(TStrings.Permissions.TP_OUT_TARDIS_OTHER, DefaultPermissionLevel.OP, "Allows players to teleport themself out of TARDIS of a specified player");
 
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();

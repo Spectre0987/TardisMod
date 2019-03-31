@@ -15,7 +15,7 @@ import net.tardis.mod.util.client.RenderHelper;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntityDoor> {
-
+	
 	@Override
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
@@ -32,28 +32,30 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 			renderExterior(te);
 		}
 		if (!te.isLocked()) {
+			this.setLightmapDisabled(true);
 			renderPortal(te, partialTicks);
+			this.setLightmapDisabled(false);
 		}
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
-
-
+		
+		
 		renderForceField(te, x, y, z, partialTicks);
 	}
-
+	
 	public abstract void renderExterior(TileEntityDoor te);
-
+	
 	public abstract void renderPortal(TileEntityDoor te, float partialTicks);
-
+	
 	public abstract ResourceLocation getTexture();
-
+	
 	public void renderForceField(TileEntityDoor tileEntityDoor, double x, double y, double z, float partialTicks) {
 		if (!tileEntityDoor.forceField) return;
 		GlStateManager.pushMatrix();
 		if (tileEntityDoor.getWorld().rand.nextInt(3) == 1) {
 			GlStateManager.translate(0, tileEntityDoor.getWorld().rand.nextInt(2) / 100.0f, 0);
 		}
-
+		
 		AxisAlignedBB forceFieldAABB = tileEntityDoor.getRenderBoundingBox();
 		Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
 		double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks;
@@ -62,6 +64,6 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		RenderHelper.renderOffsetAABB(forceFieldAABB, -d0, -d1, -d2);
 		GlStateManager.popMatrix();
 	}
-
-
+	
+	
 }

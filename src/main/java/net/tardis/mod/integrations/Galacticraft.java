@@ -1,10 +1,13 @@
 package net.tardis.mod.integrations;
 
 import micdoodle8.mods.galacticraft.api.event.oxygen.GCCoreOxygenSuffocationEvent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.api.entities.IDontSufficate;
+import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 
 public class Galacticraft {
@@ -31,6 +34,11 @@ public class Galacticraft {
 
 			if (event.getEntityLiving() instanceof IDontSufficate) {
 				event.setCanceled(true);
+			}
+			
+			if(event.getEntityLiving() instanceof EntityPlayer){
+				EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+				event.setCanceled(CapabilityTardis.get(player).isInFlight());
 			}
 		}
 	}
