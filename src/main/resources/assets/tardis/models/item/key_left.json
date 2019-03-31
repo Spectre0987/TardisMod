@@ -1424,22 +1424,22 @@
 		}
 	],
 	"display": {
-		"thirdperson_righthand": {
+		"thirdperson_lefthand": {
 			"rotation": [180, -90, 0],
 			"translation": [0, 1.5, 1],
 			"scale": [0.175, 0.175, 0.175]
 		},
-		"thirdperson_lefthand": {
+		"thirdperson_righthand": {
 			"rotation": [0, 180, 0],
 			"translation": [0, 1, 1],
 			"scale": [0.175, 0.175, 0.175]
 		},
-		"firstperson_righthand": {
+		"firstperson_lefthand": {
 			"rotation": [148, -90, 0],
 			"translation": [0, 2.25, 1],
 			"scale": [0.3, 0.3, 0.3]
 		},
-		"firstperson_lefthand": {
+		"firstperson_righthand": {
 			"rotation": [-12, 167, 0],
 			"translation": [0, 2.5, 1],
 			"scale": [0.3, 0.3, 0.3]
@@ -1475,14 +1475,6 @@
 		{
 			"name": "cutout",
 			"children": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110]
-		}
-	],
-	"overrides": [
-		{
-			"predicate": {
-				"lefthanded": 1
-			},
-			"model": "item/key_left"
 		}
 	]
 }

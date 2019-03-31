@@ -8,12 +8,11 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.client.renderers.sky.RenderVoid;
 import net.tardis.mod.common.dimensions.TDimensions;
 
 public class WorldProviderGallifrey extends WorldProviderSurface {
 
-
+	
 	@Override
 	protected void init() {
 		super.init();
@@ -25,13 +24,11 @@ public class WorldProviderGallifrey extends WorldProviderSurface {
 		return new ChunkGeneratorGallifrey(world, world.getSeed());
 	}
 	
-	public static RenderGallifreySky SKY = new RenderGallifreySky();
-	
 	@Nullable
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IRenderHandler getSkyRenderer() {
-		return SKY;
+		return new RenderGallifreySky();
 	}
 
 	@Override

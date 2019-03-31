@@ -44,7 +44,7 @@ public class CapabilityTardis implements ITardisCap{
 		}
 		if(player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
 			if(player.getPosition().distanceSq(this.getTardis()) > 16384)
-				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY(), this.getTardis().getZ());
+				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 2, this.getTardis().getZ());
 		}
 	}
 

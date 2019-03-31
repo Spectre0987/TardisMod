@@ -83,7 +83,7 @@ public abstract class EntityControl extends Entity implements IControl {
 
 	@Override
 	public boolean canBeAttackedWithItem() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -153,7 +153,9 @@ public abstract class EntityControl extends Entity implements IControl {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		return false;
+		if(source.getTrueSource() instanceof EntityPlayer)
+			this.processInitialInteract((EntityPlayer)source.getTrueSource(), EnumHand.MAIN_HAND);
+		return true;
 	}
 
 	@Override

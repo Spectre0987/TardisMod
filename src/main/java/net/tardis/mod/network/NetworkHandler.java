@@ -54,7 +54,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageSonicWorkbench.Handler.class, MessageSonicWorkbench.class, 16, Side.SERVER);
 		NETWORK.registerMessage(MessageStopHum.Handler.class,MessageStopHum.class,17,Side.CLIENT);
 		NETWORK.registerMessage(MessageChangeInterior.Handler.class, MessageChangeInterior.class, 18, Side.SERVER);
-		NETWORK.registerMessage(MessageSwitchHum.Handler.class,MessageSwitchHum.class,19,Side.SERVER);
+		NETWORK.registerMessage(MessageSwitchHum.Handler.class,MessageSwitchHum.class, 19, Side.SERVER);
 		NETWORK.registerMessage(MessageRequestBOTI.Handler.class, MessageRequestBOTI.class, 20, Side.SERVER);
 	}
 
