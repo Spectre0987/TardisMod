@@ -296,10 +296,7 @@ public class ClientProxy extends ServerProxy {
 	public void init() {
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
 		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
-		TItems.key_01.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelKey01(), ModelKey01.TEXTURE));
 		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
-		TItems.demat_circut.setTileEntityItemStackRenderer(new RenderItemDemat());
-		TItems.key.setTileEntityItemStackRenderer(new RendererKey());
 		TItems.sonic13th.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelSonic13()));
 
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RenderItemTardis());

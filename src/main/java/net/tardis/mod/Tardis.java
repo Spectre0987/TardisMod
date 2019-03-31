@@ -1,6 +1,7 @@
 package net.tardis.mod;
 
-import net.tardis.mod.common.protocols.ProtocolForceField;
+import java.util.UUID;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

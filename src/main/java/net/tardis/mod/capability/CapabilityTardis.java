@@ -1,12 +1,19 @@
 package net.tardis.mod.capability;
 
+import java.util.Objects;
+import java.util.UUID;
+
+import javax.annotation.Nonnull;
+
 import com.google.common.base.Predicate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -25,7 +32,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.capability.TardisCapStorage.TardisCapProvider;
@@ -43,9 +49,6 @@ import net.tardis.mod.network.packets.MessageSyncCap;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-import javax.annotation.Nonnull;
-import java.util.Objects;
-
 public class CapabilityTardis implements ITardisCap {
 	
 	private EntityPlayer player;
@@ -55,6 +58,7 @@ public class CapabilityTardis implements ITardisCap {
 	private boolean hasFuel = true;
 	private int timeOnGround = 0;
 	private boolean isOpen = false;
+	private static AttributeModifier mod = new AttributeModifier(UUID.fromString("ad4ab5e6-6904-4429-9883-15ac8aeef97d"), "Flight mode", 0.12F, 0);
 	
 	public CapabilityTardis() {
 	}
@@ -119,7 +123,8 @@ public class CapabilityTardis implements ITardisCap {
 					
 					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
 						timeOnGround++;
-					} else {
+					}
+					else {
 						timeOnGround = 0;
 					}
 					
@@ -159,11 +164,9 @@ public class CapabilityTardis implements ITardisCap {
 	}
 	
 	public static void setSpeeds(EntityPlayer player, boolean reset) {
-		if (reset) {
-			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, player.capabilities, 0.05F, 5);
-		} else {
-			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, player.capabilities, 0.12F, 5);
-		}
+		if(reset || player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(mod))
+			player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(mod.getID());
+		else player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(mod);
 	}
 	
 	@Override
@@ -267,7 +270,7 @@ public class CapabilityTardis implements ITardisCap {
 		}
 		
 		@SubscribeEvent
-		public static void onPunch(PlayerInteractEvent empty) {
+		public static void onPunch(PlayerInteractEvent.RightClickEmpty empty) {
 			EntityPlayer pilot = empty.getEntityPlayer();
 			ITardisCap data = get(pilot);
 			if (data.isInFlight()) {
