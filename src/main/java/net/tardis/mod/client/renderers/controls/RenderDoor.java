@@ -20,23 +20,23 @@ import net.tardis.mod.util.client.RenderHelper;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderDoor extends Render<ControlDoor> {
-
+	
 	public static final ResourceLocation BLACK = new ResourceLocation(Tardis.MODID, "textures/blocks/black.png");
-
+	
 	RenderWorldShell shellRender;
 	Minecraft mc;
-
+	
 	public RenderDoor(RenderManager manager) {
 		super(manager);
 		mc = Minecraft.getMinecraft();
 		shellRender = new RenderWorldShell();
 	}
-
+	
 	@Override
 	protected ResourceLocation getEntityTexture(ControlDoor entity) {
 		return null;
 	}
-
+	
 	@Override
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
@@ -72,19 +72,19 @@ public class RenderDoor extends Render<ControlDoor> {
 		}
 		GlStateManager.popMatrix();
 	}
-
+	
 	public void drawDoorShape() {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, -1);
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = tes.getBuffer();
 		buf.begin(7, DefaultVertexFormats.POSITION_TEX);
-
+		
 		buf.pos(0, 0, 0).tex(0, 0).endVertex();
 		buf.pos(0, 2, 0).tex(0, 1).endVertex();
 		buf.pos(1, 2, 0).tex(1, 1).endVertex();
 		buf.pos(1, 0, 0).tex(1, 0).endVertex();
-
+		
 		tes.draw();
 		GlStateManager.popMatrix();
 	}

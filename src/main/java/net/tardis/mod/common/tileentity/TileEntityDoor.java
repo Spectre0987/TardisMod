@@ -441,6 +441,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.sendDematPacket(true);
 	}
 
+	public void forceVisible(){
+		this.alpha = 1;
+		isDemat = false;
+		isRemat = false;
+	}
+	
 	@Override
 	public boolean shouldRenderInPass(int pass) {
 		return true;

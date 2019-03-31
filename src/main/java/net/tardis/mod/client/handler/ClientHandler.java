@@ -107,6 +107,7 @@ public class ClientHandler {
 			IBlockState exteriorState = data.getExterior();
 			EnumExterior exterior = EnumExterior.getExteriorFromBlock(exteriorState.getBlock());
 			if (player.world.isRemote) {
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 				if (player.collidedHorizontally || !data.hasFuel()) {
 					for (int x = 0; x <= 13; x++) {
 						player.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, player.posX + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, player.posY + player.world.rand.nextDouble() * (double) player.height, player.posZ + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, 0.0D, 0.0D, 0.0D);
