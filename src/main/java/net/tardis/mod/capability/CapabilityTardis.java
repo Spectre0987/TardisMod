@@ -26,6 +26,7 @@ import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
@@ -34,6 +35,7 @@ import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class CapabilityTardis implements ITardisCap {
 	
@@ -92,17 +94,24 @@ public class CapabilityTardis implements ITardisCap {
 				if (isInFlight()) {
 					
 					if (isOpen()) {
-					//	for (Entity entity : player.world.getEntitiesInAABBexcluding(player, player.getCollisionBoundingBox().grow(4), ENTITY)) {
-					//		if (entity != null && !entity.isDead) {
-					//			ITardisCap cap = CapabilityTardis.get(player);
-					//			TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
-					//			if (console != null) {
-					//				console.enterTARDIS(entity);
-					//			}
-					//		}
-					//	}
+						//	for (Entity entity : player.world.getEntitiesInAABBexcluding(player, player.getCollisionBoundingBox().grow(4), ENTITY)) {
+						//		if (entity != null && !entity.isDead) {
+						//			ITardisCap cap = CapabilityTardis.get(player);
+						//			TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
+						//			if (console != null) {
+						//				console.enterTARDIS(entity);
+						//			}
+						//		}
+						//	}
 					}
 					
+					
+					if (player.collidedHorizontally) {
+						System.out.println("DAMAGING");
+						for (TardisSystems.BaseSystem s : Objects.requireNonNull(TardisHelper.getConsole(getTardis())).systems) {
+							s.damage();
+						}
+					}
 					
 					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
 						timeOnGround++;
@@ -115,12 +124,12 @@ public class CapabilityTardis implements ITardisCap {
 					}
 					
 					if (hasFuel) {
+						player.capabilities.isFlying = true;
+						player.capabilities.allowFlying = true;
+						player.velocityChanged = true;
 						if (player.ticksExisted % 40 == 0) {
 							if (!player.onGround) {
 								player.world.playSound(null, player.getPosition(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
-								player.capabilities.isFlying = true;
-								player.capabilities.allowFlying = true;
-								player.velocityChanged = true;
 							}
 						}
 					} else {
@@ -278,7 +287,7 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.isFlying = true;
 			player.capabilities.allowEdit = false;
 			player.capabilities.disableDamage = true;
-			player.addVelocity(0,1,0);
+			player.addVelocity(0, 1, 0);
 			player.velocityChanged = true;
 			player.setEntityInvulnerable(true);
 			cap.sync();
@@ -295,6 +304,7 @@ public class CapabilityTardis implements ITardisCap {
 		if (player.world.isRemote) return;
 		ITardisCap cap = CapabilityTardis.get(player);
 		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
+		BlockPos bPos = player.getPosition();
 		if (console != null) {
 			cap.setInFlight(false);
 			player.capabilities.allowFlying = player.isCreative();
@@ -304,18 +314,20 @@ public class CapabilityTardis implements ITardisCap {
 			player.velocityChanged = true;
 			player.setEntityInvulnerable(false);
 			cap.sync();
-			player.world.setBlockState(player.getPosition(), TBlocks.tardis.getDefaultState());
-			player.world.setBlockState(player.getPosition().up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
 			
-			if (player.world.getTileEntity(player.getPosition().up()) instanceof TileEntityDoor) {
-				TileEntityDoor door = (TileEntityDoor) player.world.getTileEntity(player.getPosition().up());
+			WorldServer exteriorWorld = DimensionManager.getWorld(console.dimension);
+			exteriorWorld.setBlockState(bPos, TBlocks.tardis.getDefaultState());
+			exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
+			
+			if (exteriorWorld.getTileEntity(bPos.up()) instanceof TileEntityDoor) {
+				TileEntityDoor door = (TileEntityDoor) exteriorWorld.getTileEntity(bPos.up());
 				if (door != null) {
 					door.setConsolePos(console.getLocation());
 					door.setRemat();
 				}
 			}
 			
-			console.setLocation(player.getPosition());
+			console.setLocation(bPos);
 			console.enterTARDIS(player);
 			console.setFlightPilot(null);
 			cap.setTimeOnGround(0);

@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovementInput;
@@ -26,6 +27,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.api.entities.IDontSufficate;
 import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.capability.ITardisCap;
 import net.tardis.mod.client.EnumExterior;
@@ -101,8 +103,6 @@ public class ClientHandler {
 	public static void flyRender(RenderPlayerEvent.Pre e) {
 		EntityPlayer player = e.getEntityPlayer();
 		ITardisCap data = CapabilityTardis.get(player);
-		BlockPos pos = player.getPosition();
-		
 		if (data.isInFlight()) {
 			IBlockState exteriorState = data.getExterior();
 			EnumExterior exterior = EnumExterior.getExteriorFromBlock(exteriorState.getBlock());
