@@ -99,7 +99,7 @@ public class CommandTardis extends CommandBase {
 					handleTeleport(player, null);
 				}
 				else
-					throw new CommandException("You do not have permission to run this command or you do it wrong.");
+					throw new CommandException("You do not have permission to run this command or you have executed it incorrectly");
 				break;
 			case 3: //remove
 				if (args.length == 2) {
@@ -141,7 +141,7 @@ public class CommandTardis extends CommandBase {
 					handleExterior(player, null);
 				}
 				else
-					throw new CommandException("You do not have permission to run this command or you do it wrong.");
+					throw new CommandException("You do not have permission to run this command or you have executed it incorrectly.");
 				break;
 		}
 	}
