@@ -11,7 +11,7 @@ import net.tardis.mod.util.common.helpers.Helper;
 
 public class SystemCCircuit extends BaseSystem {
 
-	boolean checkActive = false;
+	private boolean checkActive = false;
 
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {

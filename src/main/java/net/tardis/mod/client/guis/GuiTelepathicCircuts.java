@@ -11,7 +11,7 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.tardis.mod.network.NetworkHandler;
-import net.tardis.mod.network.packets.MessageTelepathicCircut;
+import net.tardis.mod.network.packets.MessageTelepathicCircuit;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class GuiTelepathicCircuts extends GuiScreen {
 		}
 
 		if (button.id == 1) {
-			NetworkHandler.NETWORK.sendToServer(new MessageTelepathicCircut(this.pos, name.getText()));
+			NetworkHandler.NETWORK.sendToServer(new MessageTelepathicCircuit(this.pos, name.getText()));
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 
@@ -116,7 +116,7 @@ public class GuiTelepathicCircuts extends GuiScreen {
 		if (keyCode != 28) {
 			name.textboxKeyTyped(typedChar, keyCode);
 		} else {
-			NetworkHandler.NETWORK.sendToServer(new MessageTelepathicCircut(this.pos, name.getText()));
+			NetworkHandler.NETWORK.sendToServer(new MessageTelepathicCircuit(this.pos, name.getText()));
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 	}
