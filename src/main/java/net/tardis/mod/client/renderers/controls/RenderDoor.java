@@ -47,28 +47,27 @@ public class RenderDoor extends Render<ControlDoor> {
 		mc.getTextureManager().bindTexture(BLACK);
 		boolean open = entity.isOpen();
 		TileEntityTardis tardis = entity.getTardis();
-		if(tardis != null) {
-			EnumExterior ext = EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock());
-			GlStateManager.translate(open ? 0 : 0.25, 0, 0);
-			EnumFacing face = tardis.getFacing();
-			Vec3d vec = new Vec3d(0, 1, 0);
-			float angle = 0;
-			if(face == EnumFacing.NORTH)
-				vec = new Vec3d(-1, 1, -9);
-			else if(face == EnumFacing.EAST) {
-				vec = new Vec3d(0, 1, 0);
-				angle = 0;
+		EnumExterior ext = tardis != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()) : EnumExterior.TT;
+		GlStateManager.translate(open ? 0 : 0.25, 0, 0);
+		EnumFacing face = tardis != null ? tardis.getFacing() : EnumFacing.NORTH;
+		Vec3d vec = new Vec3d(0, 1, 0);
+		float angle = 0;
+		if(face == EnumFacing.NORTH)
+			vec = new Vec3d(-1, 1, -9);
+		else if(face == EnumFacing.EAST) {
+			vec = new Vec3d(0, 1, 0);
+			angle = 0;
+		}
+		if(MinecraftForgeClient.getRenderPass() == 0) {
+			if(open)
+				ext.interiorModel.renderOpen();
+			else {
+				ext.interiorModel.renderClosed();
 			}
-			if(MinecraftForgeClient.getRenderPass() == 0) {
-				if(open)
-					ext.interiorModel.renderOpen();
-				else {
-					ext.interiorModel.renderClosed();
-				}
-			}
-			else if(open) {
-				RenderHelper.renderPortal(shellRender, entity, partialTicks, angle, vec);
-			}
+		}
+		else if(open && tardis != null) {
+			GlStateManager.translate(0, 0, -0.001);
+			RenderHelper.renderPortal(shellRender, entity, partialTicks, angle, vec);
 		}
 		GlStateManager.popMatrix();
 	}
