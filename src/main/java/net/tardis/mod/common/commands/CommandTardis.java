@@ -33,7 +33,7 @@ import java.util.*;
 
 public class CommandTardis extends CommandBase {
 
-	public static final List<String> subcommands = Arrays.asList("grow", "transfer", "interior", "remove", "restoresys");
+	public static final List<String> subcommands = Arrays.asList("grow", "transfer", "interior", "remove", "restoresys", "exterior");
 
 	/**
 	 * Gets the name of the command
@@ -99,7 +99,7 @@ public class CommandTardis extends CommandBase {
 					handleTeleport(player, null);
 				}
 				else
-					throw new CommandException("You do not have permission to run this command or you do it wrong.");
+					throw new CommandException("You do not have permission to run this command or you have executed it incorrectly");
 				break;
 			case 3: //remove
 				if (args.length == 2) {
@@ -132,6 +132,16 @@ public class CommandTardis extends CommandBase {
 						throw new CommandException("You do not have permission to run this command.");
 				} else
 					throw new CommandException("/tardis restoresys <username> <system...s>");
+				break;
+			case 5: //exterior
+				if (args.length > 1 && PermissionAPI.hasPermission(player,TStrings.Permissions.TP_OUT_TARDIS_OTHER)){
+					handleExterior(player,args[1]);
+				}
+				else if (PermissionAPI.hasPermission(player, TStrings.Permissions.TP_OUT_TARDIS)){
+					handleExterior(player, null);
+				}
+				else
+					throw new CommandException("You do not have permission to run this command or you have executed it incorrectly.");
 				break;
 		}
 	}
@@ -233,6 +243,32 @@ public class CommandTardis extends CommandBase {
 		}
 	}
 
+	private void handleExterior(EntityPlayerMP player, @Nullable String tardisOwner){
+		MinecraftServer server = player.getServer();
+		UUID playerID;
+
+		if (tardisOwner == null){
+			playerID = player.getUniqueID();
+		}
+		else {
+			Map<UUID, String> playersMap = FileHelper.getPlayersFromServerFile();
+			playerID = Helper.getKeyByValue(playersMap, tardisOwner);
+		}
+
+		if (TardisHelper.hasTardis(playerID)) {
+			BlockPos pos = TardisHelper.getTardis(playerID);
+			player.dismountRidingEntity();
+			TileEntityTardis tileTardis = (TileEntityTardis)FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(TDimensions.TARDIS_ID).getTileEntity(pos);
+			if (tileTardis != null) {
+				tileTardis.transferPlayer(player, true);
+			} else {
+				player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED + " but most likely a issue has arisen somewhere..."));
+			}
+		} else {
+			player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED));
+		}
+	}
+
 	/**
 	 * Get a list of options for when the user presses the TAB key
 	 */
@@ -242,7 +278,7 @@ public class CommandTardis extends CommandBase {
 			return getListOfStringsMatchingLastWord(args, subcommands);
 		}
 
-		if ((args[0].equals("interior") || args[0].equals("remove")) && FMLCommonHandler.instance().getSide() == Side.SERVER) {
+		if (args[0].equals("interior") || args[0].equals("remove") || args[0].equals("exterior")) {
 			return getListOfStringsMatchingLastWord(args, FileHelper.getPlayersFromServerFile().values());
 		}
 

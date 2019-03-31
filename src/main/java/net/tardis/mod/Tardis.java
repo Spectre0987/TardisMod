@@ -341,6 +341,8 @@ public class Tardis {
 		PermissionAPI.registerNode(TStrings.Permissions.REMOVE_TARDIS, DefaultPermissionLevel.OP, "Allows players to delete a TARDIS");
 		PermissionAPI.registerNode(TStrings.Permissions.RESTORE_TARDIS, DefaultPermissionLevel.OP, "Allows players to restore their TARDIS Systems");
 		PermissionAPI.registerNode(TStrings.Permissions.GROW, DefaultPermissionLevel.OP, "Allows players to grow their TARDIS Coral faster");
+		PermissionAPI.registerNode(TStrings.Permissions.TP_OUT_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself out of their TARDIS");
+		PermissionAPI.registerNode(TStrings.Permissions.TP_OUT_TARDIS_OTHER, DefaultPermissionLevel.OP, "Allows players to teleport themself out of TARDIS of a specified player");
 
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
