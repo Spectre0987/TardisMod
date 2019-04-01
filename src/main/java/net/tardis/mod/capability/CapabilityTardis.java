@@ -53,7 +53,7 @@ import java.util.UUID;
 public class CapabilityTardis implements ITardisCap {
 	
 	private EntityPlayer player;
-	private BlockPos pos = BlockPos.ORIGIN;
+	private BlockPos posFly = BlockPos.ORIGIN;
 	private boolean isInFlight;
 	private int exterior = Block.getStateId(TBlocks.tardis_top.getDefaultState());
 	private boolean hasFuel = true;
@@ -67,6 +67,8 @@ public class CapabilityTardis implements ITardisCap {
 		mod.setSaved(false);
 	}
 	
+	private BlockPos intPos = BlockPos.ORIGIN;
+	
 	public CapabilityTardis() {
 		
 	}
@@ -76,13 +78,23 @@ public class CapabilityTardis implements ITardisCap {
 	}
 	
 	@Override
+	public void setFlightTardis(BlockPos pos) {
+		this.posFly = pos;
+	}
+	
+	@Override
+	public BlockPos getFlightTardis() {
+		return posFly;
+	}
+	
+	@Override
 	public void setTardis(BlockPos pos) {
-		this.pos = pos;
+		this.intPos = pos;
 	}
 	
 	@Override
 	public BlockPos getTardis() {
-		return pos;
+		return intPos;
 	}
 	
 	@Override
@@ -97,11 +109,27 @@ public class CapabilityTardis implements ITardisCap {
 	
 	@Override
 	public void update() {
+		
+		//Interior Handling
+		if(this.getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
+			this.setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
+		}
+		else if(!this.getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID) {
+			this.setTardis(BlockPos.ORIGIN);
+		}
+		if(player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
+			if (player.getPosition().distanceSq(this.getTardis()) > 16384) {
+				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY(), this.getTardis().getZ());
+				PlayerHelper.sendMessage(player, new TextComponentTranslation("message.tardis.confines"), true);
+			}
+		}
+		
+		//Flight
 		if (!isInFlight) {
 			setSpeeds(player, true);
 		}
 		if (player.dimension != TDimensions.TARDIS_ID) {
-			if (!getTardis().equals(BlockPos.ORIGIN)) {
+			if (!getFlightTardis().equals(BlockPos.ORIGIN)) {
 				if (isInFlight()) {
 					
 					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
@@ -131,12 +159,13 @@ public class CapabilityTardis implements ITardisCap {
 					}
 				} else {
 					endFlight(player);
-					setTardis(BlockPos.ORIGIN);
+					setFlightTardis(BlockPos.ORIGIN);
 				}
 			}
 		} else {
 			if (isInFlight()) {
 				endFlight(player);
+				
 			}
 		}
 	}
@@ -271,7 +300,7 @@ public class CapabilityTardis implements ITardisCap {
 				ITardisCap data = get(victim);
 				if (!data.isInFlight()) return;
 				event.setAmount(0.0F);
-				TileEntityTardis tardis = TardisHelper.getConsole(data.getTardis());
+				TileEntityTardis tardis = TardisHelper.getConsole(data.getFlightTardis());
 				if (tardis == null) return;
 				for (TardisSystems.BaseSystem s : tardis.systems) {
 					s.wear();
@@ -291,14 +320,13 @@ public class CapabilityTardis implements ITardisCap {
 		throw new IllegalStateException("Missing Tardis capability: " + player + ", please report this to the issue tracker");
 	}
 	
-	public static void setupFlight(EntityPlayer player) {
+	public static void setupFlight(EntityPlayer player, TileEntityTardis console) {
 		if (player.world.isRemote) return;
 		setSpeeds(player, false);
 		ITardisCap cap = get(player);
 		cap.setTimeOnGround(0);
 		cap.setPrevPos(player.getPositionVector());
 		cap.setPrevRot(new Vec2d((double) player.rotationYaw, (double) player.rotationPitch));
-		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
 		if (console != null && !console.hasPilot() && console.fuel > 0) {
 			console.setFlightPilot(player);
 			console.transferPlayer(player, false);
@@ -326,7 +354,7 @@ public class CapabilityTardis implements ITardisCap {
 		if (player.world.isRemote) return;
 		setSpeeds(player, true);
 		ITardisCap cap = get(player);
-		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
+		TileEntityTardis console = TardisHelper.getConsole(cap.getFlightTardis());
 		BlockPos bPos = player.getPosition();
 		if(!cap.isInFlight()) return;
 		if (console != null) {
@@ -346,7 +374,7 @@ public class CapabilityTardis implements ITardisCap {
 			exteriorWorld.getChunkProvider().loadChunk(bPos.getX() * 16, bPos.getZ() * 16);
 			exteriorWorld.setBlockState(bPos, TBlocks.tardis.getDefaultState());
 			exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
-			BlockPos consolePos = cap.getTardis();
+			BlockPos consolePos = cap.getFlightTardis();
 			exteriorWorld.addScheduledTask(() -> {
 				TileEntity door = exteriorWorld.getTileEntity(bPos.up());
 				if (door instanceof TileEntityDoor) {

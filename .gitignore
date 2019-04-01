@@ -24,6 +24,7 @@ run
 formatter/
 classes/
 build/
+server/
 
 *.jks
 
