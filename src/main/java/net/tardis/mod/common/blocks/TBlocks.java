@@ -208,8 +208,6 @@ public class TBlocks {
 	public static Block kerblam_box = register(new BlockKerblamBox(), "keblam_box", false);
 	//public static Block item_materializer = register(new BlockMaterializer(), "item_materializer");
 	
-	public static Block helm = register(new BlockHelm(), "helm");
-	
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
 	
 	public static Block register(Block block, String name) {
