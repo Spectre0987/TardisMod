@@ -8,6 +8,10 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ITardisCap extends INBTSerializable<NBTTagCompound> {
 	
+	void setFlightTardis(BlockPos pos);
+	
+	BlockPos getFlightTardis();
+	
 	void setTardis(BlockPos pos);
 	
 	BlockPos getTardis();

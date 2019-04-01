@@ -500,11 +500,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.requiresUpdate = true;
 	}
 	
-	@Override
-	public boolean requiresUpdate() {
-		return this.requiresUpdate;
-	}
-	
 	public void updateWorldShell() {
 		if (worldShell == null || !worldShell.getOffset().equals(this.getConsolePos()))
 			this.worldShell = new WorldShell(this.getOffset());
@@ -557,10 +552,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		return oldState.getBlock() != newState.getBlock();
 	}
 	
-	@Override
-	public void setRequiresUpdate(boolean bool) {
-		this.requiresUpdate = bool;
-	}
 	
 	@Override
 	public World getRenderWorld() {

@@ -276,6 +276,7 @@ tardis.message.no_longer_refuelling=Tardis no longer fueling.
 tardis.message.tc_notfound=Could not find %s on planet %s!
 tardis.message.relocation=Relocating you to this capsule's outer plasmic shell!
 tardis.message.has_pilot=You cannot currently do that
+message.tardis.confines=Please remain in the confines of your own capsule
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS flying

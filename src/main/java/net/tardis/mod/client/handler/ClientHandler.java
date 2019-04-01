@@ -9,13 +9,11 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
@@ -28,22 +26,17 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.api.entities.IDontSufficate;
 import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.capability.ITardisCap;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
-import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
-import net.tardis.mod.client.worldshell.RenderWorldShell;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
-import net.tardis.mod.util.client.RenderHelper;
-import net.tardis.mod.util.common.helpers.Helper;
 
 import java.util.HashMap;
 
@@ -52,11 +45,13 @@ public class ClientHandler {
 	
 	@SubscribeEvent
 	public static void honkMyHorn(TickEvent.ClientTickEvent e) {
+		if (e.phase != TickEvent.Phase.START) return;
 		if (Minecraft.getMinecraft().player == null) return;
+		
 		if (Minecraft.getMinecraft().player.getRidingEntity() instanceof EntityBessie) {
 			EntityBessie bessie = (EntityBessie) Minecraft.getMinecraft().player.getRidingEntity();
 			Entity driver = bessie.getControllingPassenger();
-			if (driver.getEntityId() == Minecraft.getMinecraft().player.getEntityId()) {
+			if (driver != null && driver.getEntityId() == Minecraft.getMinecraft().player.getEntityId()) {
 				if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
 					NetworkHandler.NETWORK.sendToServer(new MessageUpdateBessie(bessie.getEntityId()));
 				}
@@ -169,4 +164,5 @@ public class ClientHandler {
 			}
 		}
 	}
+	
 }
