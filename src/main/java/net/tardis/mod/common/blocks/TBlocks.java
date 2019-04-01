@@ -146,8 +146,8 @@ public class TBlocks {
 	public static Block roundel_dark = register(new BlockLight(),"roundel_dark").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
 	public static Block roundel_dark_half = register(new BlockLight(),"roundel_dark_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
 
-	//public static Block roundel_oak = register(new BlockLight(),"roundel_oak").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
-	//public static Block roundel_oak_half = register(new BlockLight(),"roundel_oak_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_oak = register(new BlockLight(),"roundel_oak").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
+	public static Block roundel_oak_half = register(new BlockLight(),"roundel_oak_half").setCreativeTab(TardisTabs.GALLIFREY_BLOCKS);
 
 
 	public static Block brachackitable = register(new BlockTable(), "table_brachacki");
