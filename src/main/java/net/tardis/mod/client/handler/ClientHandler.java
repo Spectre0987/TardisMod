@@ -36,7 +36,6 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
-import net.tardis.mod.network.packets.MessageCapabilityDoorOpen;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 
 import java.util.HashMap;
@@ -46,7 +45,7 @@ public class ClientHandler {
 	
 	@SubscribeEvent
 	public static void honkMyHorn(TickEvent.ClientTickEvent e) {
-		if(e.phase != TickEvent.Phase.START) return;
+		if (e.phase != TickEvent.Phase.START) return;
 		if (Minecraft.getMinecraft().player == null) return;
 		
 		if (Minecraft.getMinecraft().player.getRidingEntity() instanceof EntityBessie) {
@@ -57,8 +56,6 @@ public class ClientHandler {
 					NetworkHandler.NETWORK.sendToServer(new MessageUpdateBessie(bessie.getEntityId()));
 				}
 			}
-			
-			
 		}
 	}
 	
