@@ -107,13 +107,7 @@ public class CapabilityTardis implements ITardisCap {
 		//Set the players Tardis position when they are in the Tardis Dimension
 		if (getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
 			setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
-		} else {
-			
-			if (!getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID && !isInFlight) {
-				setTardis(BlockPos.ORIGIN);
-			}
 		}
-		
 		if (player.dimension != TDimensions.TARDIS_ID) {
 			if (!getTardis().equals(BlockPos.ORIGIN)) {
 				if (isInFlight()) {
@@ -292,13 +286,15 @@ public class CapabilityTardis implements ITardisCap {
 				EntityPlayer victim = (EntityPlayer) event.getEntity();
 				ITardisCap data = get(victim);
 				event.setAmount(0.0F);
-				for (TardisSystems.BaseSystem s : Objects.requireNonNull(TardisHelper.getConsole(data.getTardis())).systems) {
-					s.damage();
+				if(!data.isInFlight())return;
+				TileEntityTardis tardis = TardisHelper.getConsole(data.getTardis());
+				if(tardis == null) return;
+				for (TardisSystems.BaseSystem s : tardis.systems) {
+					s.wear();
 				}
 				victim.world.playSound(null, victim.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 0.5F, 1F);
 			}
 		}
-		
 	}
 	
 	//===== HELPERS =====
@@ -336,9 +332,11 @@ public class CapabilityTardis implements ITardisCap {
 			player.setEntityInvulnerable(true);
 			cap.sync();
 			WorldServer world = DimensionManager.getWorld(console.dimension);
+			player.setPositionAndUpdate(console.getLocation().getX() + 0.5, console.getLocation().getY() + 1, console.getLocation().getZ() + 0.5);
 			world.setBlockState(console.getLocation(), Blocks.AIR.getDefaultState());
 			world.setBlockState(console.getLocation().up(), Blocks.AIR.getDefaultState());
-		} else {
+		}
+		else {
 			PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.has_pilot"), true);
 		}
 	}

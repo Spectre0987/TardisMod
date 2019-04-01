@@ -8,6 +8,7 @@ import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.network.packets.MessageCapabilityDoorOpen;
 import net.tardis.mod.network.packets.MessageChangeInterior;
 import net.tardis.mod.network.packets.MessageCompanion;
+import net.tardis.mod.network.packets.MessageConsoleChange;
 import net.tardis.mod.network.packets.MessageDamageSystem;
 import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
@@ -59,6 +60,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageSyncCap.Handler.class, MessageSyncCap.class, id++, Side.CLIENT);
 		NETWORK.registerMessage(MessageCapabilityDoorOpen.Handler.class, MessageCapabilityDoorOpen.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessagePlayFlySound.Handler.class, MessagePlayFlySound.class, id++, Side.CLIENT);
+		NETWORK.registerMessage(MessageConsoleChange.Handler.class, MessageConsoleChange.class, id++, Side.SERVER);
 	}
 	
 	

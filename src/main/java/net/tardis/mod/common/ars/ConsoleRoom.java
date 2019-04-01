@@ -3,15 +3,16 @@ package net.tardis.mod.common.ars;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.IDoor;
+import net.tardis.mod.common.entities.controls.ControlDoor;
 
 public class ConsoleRoom {
 	
@@ -35,7 +36,13 @@ public class ConsoleRoom {
 		return this.filePath;
 	}
 	
+	AxisAlignedBB BB = new AxisAlignedBB(-20, -20, -20, 20, 20, 20);
+	
 	public void generate(WorldServer world, BlockPos pos) {
+		for(Entity ent : world.getEntitiesWithinAABB(Entity.class, BB)) {
+			if(ent instanceof IDoor || ent instanceof ControlDoor)
+				ent.setDead();
+		}
 		Template temp = world.getStructureTemplateManager().get(world.getMinecraftServer(), filePath);
 		PlacementSettings ps = new PlacementSettings();
 		temp.addBlocksToWorld(world, pos.subtract(consolePos), ps);

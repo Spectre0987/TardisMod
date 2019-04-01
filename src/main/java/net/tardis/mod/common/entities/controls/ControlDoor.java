@@ -21,6 +21,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -74,7 +75,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 			WorldServer ws = this.world.getMinecraftServer().getWorld(tardis.dimension);
 			TileEntityDoor door = (TileEntityDoor)ws.getTileEntity(tardis.getLocation().up());
 			if(door != null) {
-				door.setLocked(open);
+				door.setLocked(!open);
 			}
 		}
 	}
@@ -125,7 +126,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 					BlockPos bp = new BlockPos(x, y, z).add(pos);
 					IBlockState state = ws.getBlockState(bp);
 					if(!(state.getBlock() instanceof BlockTardisTop) && state.getMaterial() != Material.AIR){
-						int light = ws.getLightFromNeighbors(bp) + (ws.isDaytime() ? ws.getLightFor(EnumSkyBlock.SKY, bp) + 1 : 1);
+						int light = MathHelper.clamp(ws.getLightFromNeighbors(bp) + (ws.isDaytime() ? ws.getLightFromNeighborsFor(EnumSkyBlock.SKY, bp) + 1 : 1), 0, 15);
 						map.put(bp, new BlockStorage(state, ws.getTileEntity(bp), light));
 					}
 				}

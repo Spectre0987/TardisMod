@@ -2,6 +2,7 @@ package net.tardis.mod.proxy;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelOcelot;
 import net.minecraft.client.model.ModelPlayer;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
+import net.tardis.mod.client.guis.GuiConsoleChange;
 import net.tardis.mod.client.guis.GuiToggleHum;
 import net.tardis.mod.client.handler.ClientHandler;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
@@ -82,6 +84,7 @@ import net.tardis.mod.client.renderers.tiles.RenderFoodMachine;
 import net.tardis.mod.client.renderers.tiles.RenderJsonHelper;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
+import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityAdipose;
 import net.tardis.mod.common.entities.EntityChair;
@@ -283,6 +286,12 @@ public class ClientProxy extends ServerProxy {
 		OverlayHandler.init();
 		if (!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
+		}
+		for(Block block : TBlocks.BLOCKS) {
+			if(block instanceof BlockConsole) {
+				GuiConsoleChange.TARDISes.put(block.getDefaultState(), 
+						(TileEntityTardis)block.createTileEntity(Minecraft.getMinecraft().world, block.getDefaultState()));
+			}
 		}
 	}
 
