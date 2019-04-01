@@ -25,6 +25,7 @@ public class RenderLaserRay extends Render<EntityLaserRay> {
 	public void doRender(EntityLaserRay entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
+		RenderHelper.setupRenderLightning();
 
 		Vec3d vec1 = new Vec3d(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ);
 		Vec3d vec2 = new Vec3d(entity.posX, entity.posY, entity.posZ);
@@ -42,6 +43,7 @@ public class RenderLaserRay extends Render<EntityLaserRay> {
 		GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
 
 		RenderHelper.drawGlowingLine(Vec3d.ZERO, new Vec3d(0, 0, 1), 0.5F, entity.color);
+		RenderHelper.finishRenderLightning();
 		GlStateManager.popMatrix();
 	}
 

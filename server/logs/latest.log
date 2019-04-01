@@ -1,0 +1,193 @@
+[22:06:33] [main/INFO] [GradleStart]: Extra: []
+[22:06:34] [main/INFO] [GradleStart]: Running with arguments: [--tweakClass, net.minecraftforge.fml.common.launcher.FMLServerTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[22:06:34] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[22:06:34] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[22:06:34] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[22:06:34] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[22:06:36] [main/INFO] [FML]: Forge Mod Loader version 14.23.4.2739 for Minecraft 1.12.2 loading
+[22:06:36] [main/INFO] [FML]: Java is Java HotSpot(TM) 64-Bit Server VM, version 1.8.0_191, running on Windows 10:amd64:10.0, installed at C:\Program Files\Java\jdk1.8.0_191\jre
+[22:06:36] [main/ERROR] [FML]: Apache Maven library folder was not in the format expected. Using default libraries directory.
+[22:06:36] [main/ERROR] [FML]: Full: C:\Users\Craig\.gradle\caches\modules-2\files-2.1\org.apache.maven\maven-artifact\3.5.3\7dc72b6d6d8a6dced3d294ed54c2cc3515ade9f4\maven-artifact-3.5.3.jar
+[22:06:36] [main/ERROR] [FML]: Trimmed: c:/users/craig/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/3.5.3/
+[22:06:37] [main/INFO] [FML]: Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation
+[22:06:37] [main/INFO] [FML]: Ignoring missing certificate for coremod FMLCorePlugin (net.minecraftforge.fml.relauncher.FMLCorePlugin), we are in deobf and it's a forge core plugin
+[22:06:37] [main/INFO] [FML]: Ignoring missing certificate for coremod FMLForgePlugin (net.minecraftforge.classloading.FMLForgePlugin), we are in deobf and it's a forge core plugin
+[22:06:37] [main/INFO] [FML]: Searching C:\Users\Craig\Documents\Code\Minecraft\Forge\TardisMod\server\.\mods for mods
+[22:06:37] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.gradle.tweakers.CoremodTweaker
+[22:06:37] [main/INFO] [GradleStart]: Injecting location in coremod net.minecraftforge.fml.relauncher.FMLCorePlugin
+[22:06:37] [main/INFO] [GradleStart]: Injecting location in coremod net.minecraftforge.classloading.FMLForgePlugin
+[22:06:37] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[22:06:37] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[22:06:37] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[22:06:37] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[22:06:37] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[22:06:37] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[22:06:44] [main/ERROR] [FML]: FML appears to be missing any signature data. This is not a good thing
+[22:06:44] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[22:06:44] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[22:06:47] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[22:06:47] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.TerminalTweaker
+[22:06:47] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.TerminalTweaker
+[22:06:49] [main/INFO] [LaunchWrapper]: Launching wrapped minecraft {net.minecraft.server.MinecraftServer}
+[22:07:07] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Starting minecraft server version 1.12.2
+[22:07:07] [Server thread/INFO] [FML]: MinecraftForge v14.23.4.2739 Initialized
+[22:07:07] [Server thread/INFO] [FML]: Starts to replace vanilla recipe ingredients with ore ingredients.
+[22:07:07] [Server thread/INFO] [FML]: Replaced 1036 ore ingredients
+[22:07:09] [Server thread/INFO] [FML]: Searching C:\Users\Craig\Documents\Code\Minecraft\Forge\TardisMod\server\.\mods for mods
+[22:07:16] [Server thread/INFO] [FML]: Forge Mod Loader has identified 6 mods to load
+[22:07:16] [Server thread/WARN] [FML]: Missing English translation for FML: assets/fml/lang/en_us.lang
+[22:07:16] [Server thread/WARN] [FML]: Missing English translation for ic2: assets/ic2/lang/en_us.lang
+[22:07:18] [Server thread/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge, tardis, ic2] at CLIENT
+[22:07:18] [Server thread/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge, tardis, ic2] at SERVER
+[22:07:25] [Server thread/INFO] [FML]: Processing ObjectHolder annotations
+[22:07:25] [Server thread/INFO] [FML]: Found 1168 ObjectHolder annotations
+[22:07:25] [Server thread/INFO] [FML]: Identifying ItemStackHolder annotations
+[22:07:25] [Server thread/INFO] [FML]: Found 0 ItemStackHolder annotations
+[22:07:26] [Server thread/INFO] [FML]: Configured a dormant chunk cache size of 0
+[22:07:26] [Forge Version Check/INFO] [forge.VersionCheck]: [tardis] Starting version check at https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json
+[22:07:28] [Server thread/INFO] [Tardis Mod]: Registered Sonic interaction: screw.general
+[22:07:28] [Server thread/INFO] [Tardis Mod]: Registered Sonic interaction: screw.entity
+[22:07:28] [Server thread/INFO] [Tardis Mod]: Registered Sonic interaction: screw.tardis.signal
+[22:07:28] [Forge Version Check/INFO] [forge.VersionCheck]: [tardis] Found status: AHEAD Target: null
+[22:07:28] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Starting version check at http://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:desert
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:desert_hills
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:mutated_desert
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:plains
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:mutated_plains
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:forest
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:forest_hills
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:birch_forest
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:birch_forest_hills
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:roofed_forest
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:mutated_forest
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:mutated_birch_forest
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:mutated_birch_forest_hills
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:mutated_roofed_forest
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:mushroom_island
+[22:07:28] [Server thread/INFO] [Tardis Mod]: DisguiseRegistry has registered minecraft:mushroom_island_shore
+[22:07:29] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Found status: OUTDATED Target: 14.23.5.2768
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 328 out of 328 recipes for shaped recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 73 out of 73 recipes for shapeless recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 41 out of 41 recipes for solid uu recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 27 out of 27 recipes for furnace recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 5 out of 5 recipes for blast furnace recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 14 out of 14 recipes for block cutter recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 50 out of 50 recipes for compressor recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 12 out of 12 recipes for extractor recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 74 out of 74 recipes for macerator recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 5 out of 5 recipes for metal former cutting recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 9 out of 9 recipes for metal former extruding recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 14 out of 14 recipes for metal former rolling recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 8 out of 8 recipes for ore washing recipes
+[22:07:49] [Server thread/INFO] [ic2.Recipe]: Successfully loaded 26 out of 26 recipes for thermal centrifuge recipes
+[22:07:53] [Server thread/INFO] [FML]: Applying holder lookups
+[22:07:53] [Server thread/INFO] [FML]: Holder lookups applied
+[22:07:53] [Server thread/INFO] [FML]: Applying holder lookups
+[22:07:53] [Server thread/INFO] [FML]: Holder lookups applied
+[22:07:53] [Server thread/INFO] [FML]: Applying holder lookups
+[22:07:53] [Server thread/INFO] [FML]: Holder lookups applied
+[22:07:53] [Server thread/INFO] [FML]: Applying holder lookups
+[22:07:53] [Server thread/INFO] [FML]: Holder lookups applied
+[22:07:53] [Server thread/INFO] [FML]: Injecting itemstacks
+[22:07:53] [Server thread/INFO] [FML]: Itemstack injection complete
+[22:07:53] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Loading properties
+[22:07:53] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Default game type: SURVIVAL
+[22:07:53] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Generating keypair
+[22:07:54] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Starting Minecraft server on *:25565
+[22:07:54] [Server thread/INFO] [net.minecraft.network.NetworkSystem]: Using default channel type
+[22:07:57] [Server thread/INFO] [FML]: Applying holder lookups
+[22:07:57] [Server thread/INFO] [FML]: Holder lookups applied
+[22:08:00] [Server thread/INFO] [FML]: Injecting itemstacks
+[22:08:01] [Server thread/INFO] [FML]: Itemstack injection complete
+[22:08:01] [Server thread/WARN] [FML]: No types have been added to Biome tardis:telos, types have been assigned on a best-effort guess: [COLD, PLAINS]
+[22:08:01] [Server thread/WARN] [FML]: No types have been added to Biome tardis:telos_orange, types have been assigned on a best-effort guess: [PLAINS]
+[22:08:01] [Server thread/WARN] [FML]: No types have been added to Biome tardis:moon, types have been assigned on a best-effort guess: [PLAINS]
+[22:08:01] [Server thread/WARN] [FML]: No types have been added to Biome tardis:redlands, types have been assigned on a best-effort guess: [FOREST, HOT, DENSE]
+[22:08:01] [Server thread/WARN] [FML]: No types have been added to Biome tardis:farmlands, types have been assigned on a best-effort guess: [HOT, PLAINS]
+[22:08:01] [Server thread/WARN] [FML]: No types have been added to Biome tardis:mountains, types have been assigned on a best-effort guess: [FOREST, CONIFEROUS, COLD, SNOWY, HILLS, DENSE]
+[22:08:01] [Server thread/INFO] [ic2.Uu]: Loading predefined UU world scan values, run /ic2 uu-world-scan <small|medium|large> to calibrate them for your world.
+[22:08:02] [Server thread/INFO] [ic2.General]: ic2 version 2.8.98-ex112 loaded.
+[22:08:02] [Server thread/INFO] [FML]: Forge Mod Loader has successfully loaded 6 mods
+[22:08:02] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Preparing level "world"
+[22:08:03] [Server thread/INFO] [FML]: Injecting existing registry data into this server instance
+[22:08:04] [Server thread/INFO] [FML]: Applying holder lookups
+[22:08:04] [Server thread/INFO] [FML]: Holder lookups applied
+[22:08:04] [Server thread/INFO] [FML]: Loading dimension 0 (world) (net.minecraft.server.dedicated.DedicatedServer@53491f58)
+[22:08:08] [Server thread/INFO] [net.minecraft.advancements.AdvancementList]: Loaded 488 advancements
+[22:08:08] [Server thread/INFO] [STDOUT]: [net.tardis.mod.common.world.TardisWorldSavedData:readFromNBT:22]: List is: [{pos:72576357368072L,name:"bc8b891e-5c25-4c9f-ae61-cdfb270f1cc1"}]
+[22:08:08] [Server thread/INFO] [FML]: Loading dimension -1 (world) (net.minecraft.server.dedicated.DedicatedServer@53491f58)
+[22:08:08] [Server thread/INFO] [FML]: Loading dimension 1 (world) (net.minecraft.server.dedicated.DedicatedServer@53491f58)
+[22:08:08] [Server thread/INFO] [FML]: Loading dimension 2 (world) (net.minecraft.server.dedicated.DedicatedServer@53491f58)
+[22:08:08] [Server thread/INFO] [FML]: Loading dimension 3 (world) (net.minecraft.server.dedicated.DedicatedServer@53491f58)
+[22:08:08] [Server thread/INFO] [FML]: Loading dimension 4 (world) (net.minecraft.server.dedicated.DedicatedServer@53491f58)
+[22:08:08] [Server thread/INFO] [FML]: Loading dimension 5 (world) (net.minecraft.server.dedicated.DedicatedServer@53491f58)
+[22:08:08] [Server thread/INFO] [FML]: Loading dimension 6 (world) (net.minecraft.server.dedicated.DedicatedServer@53491f58)
+[22:08:08] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Preparing start region for level 0
+[22:08:11] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Preparing spawn area: 0%
+[22:08:12] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Preparing spawn area: 4%
+[22:08:13] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Preparing spawn area: 38%
+[22:08:15] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Preparing spawn area: 87%
+[22:08:15] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Done (12.452s)! For help, type "help" or "?"
+[22:08:15] [Server Watchdog/INFO] [STDERR]: [java.lang.ThreadGroup:uncaughtException:1052]: java.lang.IllegalArgumentException: timeout value is negative
+[22:08:15] [Server Watchdog/INFO] [STDERR]: [java.lang.ThreadGroup:uncaughtException:1052]: 	at java.lang.Thread.sleep(Native Method)
+[22:08:15] [Server Watchdog/INFO] [STDERR]: [java.lang.ThreadGroup:uncaughtException:1052]: 	at net.minecraft.server.dedicated.ServerHangWatchdog.run(ServerHangWatchdog.java:83)
+[22:08:15] [Server Watchdog/INFO] [STDERR]: [java.lang.ThreadGroup:uncaughtException:1052]: 	at java.lang.Thread.run(Thread.java:748)
+[22:08:16] [Server thread/INFO] [FML]: Unloading dimension -1
+[22:08:16] [Server thread/INFO] [FML]: Unloading dimension 1
+[22:08:16] [Server thread/INFO] [FML]: Unloading dimension 3
+[22:08:16] [Server thread/INFO] [FML]: Unloading dimension 4
+[22:08:16] [Server thread/INFO] [FML]: Unloading dimension 5
+[22:08:16] [Server thread/INFO] [FML]: Unloading dimension 6
+[22:08:18] [Server thread/WARN] [net.minecraft.server.MinecraftServer]: Can't keep up! Did the system time change, or is the server overloaded? Running 2270ms behind, skipping 45 tick(s)
+[22:15:19] [User Authenticator #1/INFO] [net.minecraft.server.network.NetHandlerLoginServer]: UUID of player Suffril is bc8b891e-5c25-4c9f-ae61-cdfb270f1cc1
+[22:15:20] [Netty Server IO #1/INFO] [FML]: Client protocol version 2
+[22:15:20] [Netty Server IO #1/INFO] [FML]: Client attempting to join with 6 mods : minecraft@1.12.2,FML@8.0.99.99,forge@14.23.4.2739,tardis@0.0.9B,ic2@2.8.98-ex112,mcp@9.42
+[22:15:22] [Server thread/INFO] [FML]: [Server thread] Server side modded connection established
+[22:15:22] [Server thread/INFO] [net.minecraft.server.management.PlayerList]: Suffril[/127.0.0.1:64588] logged in with entity id 428 at (257.5, 128.0, 262.0)
+[22:15:22] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Suffril joined the game
+[22:15:25] [Server thread/WARN] [net.minecraft.server.MinecraftServer]: Can't keep up! Did the system time change, or is the server overloaded? Running 2589ms behind, skipping 51 tick(s)
+[22:18:06] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! 2.546729609861927,9.691045478400014,-1.1753206136679069
+[22:18:07] [Server thread/WARN] [net.minecraft.server.MinecraftServer]: Can't keep up! Did the system time change, or is the server overloaded? Running 3354ms behind, skipping 67 tick(s)
+[22:18:15] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! 0.0,-10.3414159567414,0.0
+[22:18:18] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! 0.0,-10.552241243705595,0.0
+[22:18:19] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! 0.0,-10.55660261462009,0.0
+[22:18:25] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -7.283569101084026,0.0,7.083830209481505
+[22:18:25] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -10.573374955111206,0.0,-0.06308561221021591
+[22:18:26] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -10.83478457331617,0.0,-1.9786106862919723
+[22:18:27] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -9.240997627579588,0.0,6.387056677446026
+[22:18:29] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -10.384105404681463,0.0,7.777454386260331
+[22:18:31] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -6.0352307369252856,0.0,-8.731964618188215
+[22:18:40] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! 6.117061382652395,0.0,8.79976159927196
+[22:18:41] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -9.101897172301221,0.0,6.443482064312434
+[22:18:43] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -8.621985640112428,0.0,5.993482301302151
+[22:18:44] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -8.407306315257173,0.0,5.844250234852268
+[22:18:46] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -8.799761599271903,0.0,6.117061382652366
+[22:18:47] [Server thread/WARN] [net.minecraft.network.NetHandlerPlayServer]: Suffril moved too quickly! -8.381811340665976,0.0,5.826527672398299
+[22:18:50] [Netty Server IO #1/ERROR] [FML]: NetworkDispatcher exception
+java.io.IOException: An existing connection was forcibly closed by the remote host
+	at sun.nio.ch.SocketDispatcher.read0(Native Method) ~[?:1.8.0_191]
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43) ~[?:1.8.0_191]
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223) ~[?:1.8.0_191]
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192) ~[?:1.8.0_191]
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380) ~[?:1.8.0_191]
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:288) ~[PooledUnsafeDirectByteBuf.class:4.1.9.Final]
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1100) ~[AbstractByteBuf.class:4.1.9.Final]
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:372) ~[NioSocketChannel.class:4.1.9.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:123) [AbstractNioByteChannel$NioByteUnsafe.class:4.1.9.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:624) [NioEventLoop.class:4.1.9.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:559) [NioEventLoop.class:4.1.9.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:476) [NioEventLoop.class:4.1.9.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:438) [NioEventLoop.class:4.1.9.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858) [SingleThreadEventExecutor$5.class:4.1.9.Final]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_191]
+[22:18:50] [Server thread/INFO] [net.minecraft.network.NetHandlerPlayServer]: Suffril lost connection: Internal Exception: java.io.IOException: An existing connection was forcibly closed by the remote host
+[22:18:50] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Suffril left the game
+[22:18:55] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Stopping server
+[22:18:55] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Saving players
+[22:18:55] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Saving worlds
+[22:18:55] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Saving chunks for level 'world'/overworld
+[22:18:55] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Saving chunks for level 'world'/tardis
+[22:18:56] [Server thread/INFO] [FML]: Unloading dimension 0
+[22:18:56] [Server thread/INFO] [FML]: Unloading dimension 2
+[22:18:56] [Server Shutdown Thread/INFO] [net.minecraft.server.MinecraftServer]: Stopping server
