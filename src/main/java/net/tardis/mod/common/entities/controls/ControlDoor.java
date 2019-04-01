@@ -14,12 +14,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -73,7 +75,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 			WorldServer ws = this.world.getMinecraftServer().getWorld(tardis.dimension);
 			TileEntityDoor door = (TileEntityDoor)ws.getTileEntity(tardis.getLocation().up());
 			if(door != null) {
-				door.setLocked(open);
+				door.setLocked(!open);
 			}
 		}
 	}
@@ -89,11 +91,12 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				}
 			}
 		}
-		return EnumFacing.NORTH;
+		return this.dataManager.get(FACING);
 	}
 	
 	public TileEntityTardis getTardis() {
-		return (TileEntityTardis)world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
+		TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPosition()));
+		return te instanceof TileEntityTardis ? (TileEntityTardis)te : null;
 	}
 	
 	AxisAlignedBB BOTI = Block.FULL_BLOCK_AABB.grow(10);
@@ -111,6 +114,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 			if(!this.shell.getOffset().equals(offset))
 				this.shell = new WorldShell(offset);
 			this.shell.blockMap = this.getBlockStoreInAABB(bb, offset, ws);
+			this.dataManager.set(FACING, this.getFacing());
 		}
 	}
 	
@@ -122,7 +126,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 					BlockPos bp = new BlockPos(x, y, z).add(pos);
 					IBlockState state = ws.getBlockState(bp);
 					if(!(state.getBlock() instanceof BlockTardisTop) && state.getMaterial() != Material.AIR){
-						int light = ws.getLightFromNeighbors(bp) + (ws.isDaytime() ? ws.getLightFor(EnumSkyBlock.SKY, bp) + 1 : 1);
+						int light = MathHelper.clamp(ws.getLightFromNeighbors(bp) + (ws.isDaytime() ? ws.getLightFromNeighborsFor(EnumSkyBlock.SKY, bp) + 1 : 1), 0, 15);
 						map.put(bp, new BlockStorage(state, ws.getTileEntity(bp), light));
 					}
 				}
@@ -136,7 +140,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 	}
 	
 	public void handleEnter() {
-		if(!world.isRemote) {
+		if(!world.isRemote && this.isOpen()) {
 			TileEntityTardis tardis = this.getTardis();
 			if(tardis == null) return;
 			for(Entity entity : world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox())) {
@@ -158,7 +162,8 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				this.syncWorldShell();
 		}
 		this.handleEnter();
-			
+		
+		
 	}
 
 	@Override

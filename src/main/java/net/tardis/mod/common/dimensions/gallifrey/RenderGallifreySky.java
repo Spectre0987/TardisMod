@@ -31,6 +31,12 @@ public class RenderGallifreySky extends IRenderHandler {
 	
 	public static Sphere SKY = new Sphere();
 	
+	private static RenderGallifreySky SKY_RENDER = new RenderGallifreySky();
+	
+	public static RenderGallifreySky getInstance(){
+		return SKY_RENDER;
+	}
+	
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 		

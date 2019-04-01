@@ -76,13 +76,14 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 	}
 
 	public void grow() {
+		if(world.isRemote) return;
 		BlockPos pos = TardisHelper.getTardis(owner);
 		WorldServer tardisWorld = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 		if (tardisWorld != null && pos != null) {
 			TileEntity te = tardisWorld.getTileEntity(pos);
 			if (te == null || !(te instanceof TileEntityTardis)) {
-				tardisWorld.setBlockState(pos, TBlocks.console_02.getDefaultState());
 				ConsoleRoom.CONSOLE_ROOMS.get(0).generate((world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID), pos);
+				tardisWorld.setBlockState(pos, TBlocks.console_02.getDefaultState());
 				TileEntityTardis tardis = (TileEntityTardis) tardisWorld.getTileEntity(pos);
 				this.getWorld().setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
 				tardis.setAbsoluteDesination(getPos(), this.getWorld().provider.getDimension());

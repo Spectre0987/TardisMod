@@ -12,9 +12,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.tardis.mod.common.entities.IShouldDie;
 import net.tardis.mod.common.items.TItems;
 
-public class EntityDoorsBrakSecondary extends Entity{
+public class EntityDoorsBrakSecondary extends Entity implements IShouldDie{
 
 	public static final DataParameter<Boolean> OPEN = EntityDataManager.createKey(EntityDoorsBrakSecondary.class, DataSerializers.BOOLEAN);
 	public double health = 50D;
@@ -22,6 +23,7 @@ public class EntityDoorsBrakSecondary extends Entity{
 	
 	public EntityDoorsBrakSecondary(World worldIn) {
 		super(worldIn);
+		this.setSize(2, 4);
 	}
 
 	@Override
@@ -43,7 +45,7 @@ public class EntityDoorsBrakSecondary extends Entity{
 
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox() {
-		return super.getCollisionBoundingBox();
+		return this.isOpen() ? null : this.getEntityBoundingBox();
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class EntityDoorsBrakSecondary extends Entity{
 
 	@Override
 	public AxisAlignedBB getCollisionBox(Entity entityIn) {
-		return super.getCollisionBox(entityIn);
+		return this.getEntityBoundingBox().offset(this.getPositionVector());
 	}
 
 	@Override
@@ -62,6 +64,10 @@ public class EntityDoorsBrakSecondary extends Entity{
 		return;
 	}
 
+	public boolean isOpen() {
+		return this.dataManager.get(OPEN);
+	}
+	
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
@@ -78,6 +84,10 @@ public class EntityDoorsBrakSecondary extends Entity{
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		this.health -= amount;
 		this.hurtTime = 10;
+		if(source.getTrueSource() instanceof EntityPlayer) {
+			if(((EntityPlayer)source.getTrueSource()).capabilities.isCreativeMode)
+				this.health = 0;
+		}
 		return true;
 	}
 
@@ -88,7 +98,7 @@ public class EntityDoorsBrakSecondary extends Entity{
 
 	@Override
 	public boolean canBePushed() {
-		return super.canBePushed();
+		return false;
 	}
 
 }

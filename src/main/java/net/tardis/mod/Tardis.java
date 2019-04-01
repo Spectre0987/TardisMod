@@ -51,7 +51,6 @@ import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.EntityRaider;
-import net.tardis.mod.common.entities.EntityShip;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -207,7 +206,6 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityBessie.class, "bessie");
 		EntityHelper.registerNoSpawn(EntityCompanion.class, "companion");
 		EntityHelper.registerNoSpawn(EntityDalekSkaro.class, "dalek_scaro");
-		EntityHelper.registerNoSpawn(EntityShip.class, "ship");
 		EntityHelper.registerStatic(EntityChair.class, "chair");
 		EntityHelper.registerStatic(EntityItemMaterializer.class, "item_materializer");
 		EntityHelper.registerStatic(EntityDoorsBrakSecondary.class, "doors_brak_second");
@@ -272,6 +270,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
+		//TardisProtocol.register(new ProtocolForceField());
 
 		// Register All Mobs Here.
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
@@ -322,7 +321,7 @@ public class Tardis {
 
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_builder.png", "interior/interior_builder", new BlockPos(9, 1, 9));
 
-		CapabilityManager.INSTANCE.register(ITardisCap.class, new TardisCapStorage(), CapabilityTardis::new);
+		//CapabilityManager.INSTANCE.register(ITardisCap.class, new TardisCapStorage(), CapabilityTardis::new);
 	}
 
 	@EventHandler

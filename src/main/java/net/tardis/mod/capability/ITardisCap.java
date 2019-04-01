@@ -3,6 +3,7 @@ package net.tardis.mod.capability;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ITardisCap extends INBTSerializable<NBTTagCompound> {
@@ -31,4 +32,20 @@ public interface ITardisCap extends INBTSerializable<NBTTagCompound> {
 	
 	void setDoorsOpen(boolean open);
 	boolean isOpen();
+
+	void setPrevPos(Vec3d positionVector);
+	Vec3d getPrevPos();
+	
+	void setPrevRot(Vec2d vec);
+	Vec2d getPrevRot();
+	
+	public static class Vec2d {
+		public double x;
+		public double y;
+		
+		public Vec2d(double x, double y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
 }

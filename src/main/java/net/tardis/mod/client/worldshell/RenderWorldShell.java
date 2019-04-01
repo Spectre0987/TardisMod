@@ -37,7 +37,7 @@ public class RenderWorldShell {
 			if(state.getRenderType() == EnumBlockRenderType.MODEL && model != null) {
 				GlStateManager.pushMatrix();
 				GlStateManager.translate(entry.getKey().getX(), entry.getKey().getY(), entry.getKey().getZ());
-				Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightness(model, state, (float)entry.getValue().light / 15, true);
+				Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightness(model, state, (float)entry.getValue().light / 15F, true);
 				GlStateManager.popMatrix();
 			}
 			else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
@@ -55,7 +55,7 @@ public class RenderWorldShell {
 				if(render != null) {
 					GlStateManager.pushMatrix();
 					Minecraft.getMinecraft().entityRenderer.disableLightmap();
-					float light = (float)cont.getWorldShell().blockMap.get(entity.getPos()).light / 15;
+					float light = (float)cont.getWorldShell().blockMap.get(entity.getPos()).light / 15F;
 					GlStateManager.color(light, light, light);
 					render.render(entity, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), 0, 0, 1);
 					Minecraft.getMinecraft().entityRenderer.enableLightmap();
@@ -68,7 +68,7 @@ public class RenderWorldShell {
 		for(Entity e : cont.getWorldShell().getEntitiesForRender()) {
 			GlStateManager.pushMatrix();
 			BlockStorage stor = cont.getWorldShell().blockMap.get(e.getPosition().down());
-			float light = stor != null ? ((float)stor.light / 15) : 1F;
+			float light = stor != null ? ((float)stor.light / 15F) : 1F;
 			GlStateManager.color(light, light, light);
 			Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
 			GlStateManager.popMatrix();

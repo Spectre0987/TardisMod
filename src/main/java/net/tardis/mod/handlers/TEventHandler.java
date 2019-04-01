@@ -12,7 +12,6 @@ import com.google.gson.stream.JsonWriter;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -39,12 +38,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -57,19 +54,14 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.dimensions.IDimensionProperties;
 import net.tardis.mod.capability.CapabilityTardis;
-import net.tardis.mod.capability.ITardisCap;
-import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.data.TimeLord;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.items.INeedMetadata;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
@@ -124,8 +116,15 @@ public class TEventHandler {
 				for (int i = 0; i < list.size(); i++) {
 					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "type=" + i));
 				}
-			} else
+			}
+			else {
+				if(item instanceof INeedMetadata) {
+					for(int meta : ((INeedMetadata)item).getMeta().keySet()) {
+						ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(new ResourceLocation(Tardis.MODID, ((INeedMetadata)item).getMeta().get(meta)), "inventory"));
+					}
+				}
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+			}
 		}
 	}
 

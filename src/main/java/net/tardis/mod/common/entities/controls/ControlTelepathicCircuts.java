@@ -5,7 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,7 +18,6 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis05;
 import net.tardis.mod.util.common.helpers.Helper;
-import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 public class ControlTelepathicCircuts extends EntityControl {
 	
@@ -49,21 +47,24 @@ public class ControlTelepathicCircuts extends EntityControl {
 	
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if (!world.isRemote) {
-			TileEntity te = world.getTileEntity(this.getConsolePos());
-			if (te != null) {
-				TileEntityTardis tardis = (TileEntityTardis) te;
-				if (!tardis.hasPilot()) {
-					if (player.isSneaking()) {
-						CapabilityTardis.setupFlight(player);
-					} else {
-						if (world.isRemote) {
-							openGui();
+		
+		if (player.isSneaking()) {
+			//FLIGHT
+			if (!world.isRemote) {
+				TileEntity te = world.getTileEntity(this.getConsolePos());
+				if (te != null) {
+					TileEntityTardis tardis = (TileEntityTardis) te;
+					if (!tardis.hasPilot() && !tardis.isInFlight()) {
+						if (player.isSneaking()) {
+							CapabilityTardis.setupFlight(player);
 						}
 					}
-				} else {
-					PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.has_pilot"), true);
 				}
+			}
+		} else {
+			//CIRCUITS
+			if (world.isRemote) {
+				openGui();
 			}
 		}
 	}
