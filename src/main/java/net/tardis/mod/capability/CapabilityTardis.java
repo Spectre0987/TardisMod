@@ -95,8 +95,6 @@ public class CapabilityTardis implements ITardisCap {
 		isInFlight = inFlight;
 	}
 	
-	private static final Predicate<Entity> ENTITY = p_apply_1_ -> p_apply_1_ instanceof EntityLiving;
-	
 	@Override
 	public void update() {
 		if (!isInFlight) {
@@ -110,27 +108,6 @@ public class CapabilityTardis implements ITardisCap {
 		if (player.dimension != TDimensions.TARDIS_ID) {
 			if (!getTardis().equals(BlockPos.ORIGIN)) {
 				if (isInFlight()) {
-					
-					if (isOpen() && !player.world.isRemote) {
-						for (EntityLivingBase entityLiving : player.world.getEntitiesWithinAABB(EntityLivingBase.class, player.getEntityBoundingBox().grow(4))) {
-							if(entityLiving != player){
-								TileEntityTardis tardis = TardisHelper.getConsole(getTardis());
-								
-								if(entityLiving instanceof EntityPlayer){
-									EntityPlayer player = (EntityPlayer) entityLiving;
-									if(!CapabilityTardis.get(player).isInFlight()){
-										if (tardis != null) {
-											tardis.enterTARDIS(entityLiving);
-										}
-									}
-								} else {
-									if (tardis != null) {
-										tardis.enterTARDIS(entityLiving);
-									}
-								}
-							}
-						}
-					}
 					
 					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
 						timeOnGround++;
