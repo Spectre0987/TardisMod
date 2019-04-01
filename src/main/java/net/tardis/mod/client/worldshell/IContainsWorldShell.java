@@ -17,9 +17,6 @@ public interface IContainsWorldShell {
 	 */
 	int getDimension();
 	
-	boolean requiresUpdate();
-	void setRequiresUpdate(boolean bool);
-	
 	/**Incase you're thicker than some, this should NOT be called on the server.**/
 	@Nullable
 	World getRenderWorld();

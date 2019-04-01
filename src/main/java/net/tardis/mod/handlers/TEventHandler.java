@@ -139,7 +139,8 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void loadTardises(WorldEvent.Load event) {
 		data = (TardisWorldSavedData) event.getWorld().getMapStorage().getOrLoadData(TardisWorldSavedData.class, "tardis");
-		if (data == null) data = new TardisWorldSavedData("tardis");
+		if (data == null)
+			data = new TardisWorldSavedData("tardis");
 	}
 
 	@SubscribeEvent
