@@ -1,16 +1,11 @@
 package net.tardis.mod.capability;
 
-import java.util.Objects;
-import java.util.UUID;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Predicate;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,6 +45,10 @@ import net.tardis.mod.network.packets.MessagePlayFlySound;
 import net.tardis.mod.network.packets.MessageSyncCap;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.UUID;
 
 public class CapabilityTardis implements ITardisCap {
 	
@@ -100,7 +99,7 @@ public class CapabilityTardis implements ITardisCap {
 	
 	@Override
 	public void update() {
-		if (!isInFlight && player.capabilities.getFlySpeed() == 0.75F) {
+		if (!isInFlight) {
 			setSpeeds(player, true);
 		}
 		
@@ -112,14 +111,30 @@ public class CapabilityTardis implements ITardisCap {
 			if (!getTardis().equals(BlockPos.ORIGIN)) {
 				if (isInFlight()) {
 					
-					if (isOpen()) {
-						//TODO: Teleport entities that were collided with
+					if (isOpen() && !player.world.isRemote) {
+						for (EntityLivingBase entityLiving : player.world.getEntitiesWithinAABB(EntityLivingBase.class, player.getEntityBoundingBox().grow(4))) {
+							if(entityLiving != player){
+								TileEntityTardis tardis = TardisHelper.getConsole(getTardis());
+								
+								if(entityLiving instanceof EntityPlayer){
+									EntityPlayer player = (EntityPlayer) entityLiving;
+									if(!CapabilityTardis.get(player).isInFlight()){
+										if (tardis != null) {
+											tardis.enterTARDIS(entityLiving);
+										}
+									}
+								} else {
+									if (tardis != null) {
+										tardis.enterTARDIS(entityLiving);
+									}
+								}
+							}
+						}
 					}
 					
 					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
 						timeOnGround++;
-					}
-					else {
+					} else {
 						timeOnGround = 0;
 					}
 					
@@ -128,7 +143,7 @@ public class CapabilityTardis implements ITardisCap {
 					}
 					
 					if (hasFuel) {
-						if(!player.capabilities.allowFlying) {
+						if (!player.capabilities.allowFlying) {
 							player.capabilities.allowFlying = true;
 							setSpeeds(player, false);
 							player.velocityChanged = true;
@@ -152,14 +167,15 @@ public class CapabilityTardis implements ITardisCap {
 				endFlight(player);
 			}
 		}
-		if(player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
-			if(player.getPosition().distanceSq(this.getTardis()) > 16384) {}
-				//player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 2, this.getTardis().getZ());
+		if (player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
+			if (player.getPosition().distanceSq(this.getTardis()) > 16384) {
+			}
+			//player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 2, this.getTardis().getZ());
 		}
 	}
 	
 	public static void setSpeeds(EntityPlayer player, boolean reset) {
-		if(reset || player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(mod))
+		if (reset || player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(mod))
 			player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(mod.getID());
 		else player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(mod);
 	}
@@ -265,7 +281,7 @@ public class CapabilityTardis implements ITardisCap {
 		}
 		
 		@SubscribeEvent
-		public static void onPunch(PlayerInteractEvent.RightClickEmpty empty) {
+		public static void onPunch(PlayerInteractEvent.LeftClickEmpty empty) {
 			EntityPlayer pilot = empty.getEntityPlayer();
 			ITardisCap data = get(pilot);
 			if (data.isInFlight()) {
@@ -274,25 +290,26 @@ public class CapabilityTardis implements ITardisCap {
 		}
 		
 		@SubscribeEvent
-		public static void onBreakBlock(BlockEvent.BreakEvent event){
+		public static void onBreakBlock(BlockEvent.BreakEvent event) {
 			EntityPlayer breaker = event.getPlayer();
 			ITardisCap data = get(breaker);
 			event.setCanceled(data.isInFlight());
 		}
 		
 		@SubscribeEvent
-		public static void onHurtPilot(LivingHurtEvent event){
-			if(event.getEntity() instanceof EntityPlayer){
+		public static void onHurtPilot(LivingHurtEvent event) {
+			if (event.getEntity().world.isRemote) return;
+			if (event.getEntity() instanceof EntityPlayer) {
 				EntityPlayer victim = (EntityPlayer) event.getEntity();
 				ITardisCap data = get(victim);
 				event.setAmount(0.0F);
-				if(!data.isInFlight())return;
+				if (!data.isInFlight()) return;
 				TileEntityTardis tardis = TardisHelper.getConsole(data.getTardis());
-				if(tardis == null) return;
+				if (tardis == null) return;
 				for (TardisSystems.BaseSystem s : tardis.systems) {
 					s.wear();
 				}
-				victim.world.playSound(null, victim.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 0.5F, 1F);
+				victim.world.playSound(null, victim.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 2F, 1F);
 			}
 		}
 	}
@@ -308,11 +325,12 @@ public class CapabilityTardis implements ITardisCap {
 	}
 	
 	public static void setupFlight(EntityPlayer player) {
+		if (player.world.isRemote) return;
 		setSpeeds(player, false);
 		ITardisCap cap = get(player);
 		cap.setTimeOnGround(0);
 		cap.setPrevPos(player.getPositionVector());
-		cap.setPrevRot(new Vec2d((double)player.rotationYaw, (double)player.rotationPitch));
+		cap.setPrevRot(new Vec2d((double) player.rotationYaw, (double) player.rotationPitch));
 		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
 		if (console != null && !console.hasPilot() && console.fuel > 0) {
 			console.setFlightPilot(player);
@@ -324,24 +342,21 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.allowFlying = true;
 			player.capabilities.isFlying = true;
 			player.capabilities.allowEdit = false;
-			player.capabilities.disableDamage = true;
-			player.motionY += 8;
 			player.velocityChanged = true;
 			player.eyeHeight = 2;
 			player.sendPlayerAbilities();
-			player.setEntityInvulnerable(true);
 			cap.sync();
 			WorldServer world = DimensionManager.getWorld(console.dimension);
 			player.setPositionAndUpdate(console.getLocation().getX() + 0.5, console.getLocation().getY() + 1, console.getLocation().getZ() + 0.5);
 			world.setBlockState(console.getLocation(), Blocks.AIR.getDefaultState());
 			world.setBlockState(console.getLocation().up(), Blocks.AIR.getDefaultState());
-		}
-		else {
+		} else {
 			PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.has_pilot"), true);
 		}
 	}
 	
 	public static void endFlight(EntityPlayer player) {
+		if (player.world.isRemote) return;
 		setSpeeds(player, true);
 		ITardisCap cap = get(player);
 		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
@@ -352,9 +367,7 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.allowFlying = player.isCreative();
 			player.capabilities.isFlying = player.isCreative();
 			player.capabilities.allowEdit = true;
-			player.capabilities.disableDamage = false;
 			player.velocityChanged = true;
-			player.setEntityInvulnerable(player.isCreative());
 			cap.sync();
 			player.eyeHeight = player.getDefaultEyeHeight();
 			player.sendPlayerAbilities();
@@ -376,25 +389,25 @@ public class CapabilityTardis implements ITardisCap {
 			console.setLocation(bPos);
 			console.setFlightPilot(null);
 			cap.setTimeOnGround(0);
-			((EntityPlayerMP)player).connection.setPlayerLocation(cap.getPrevPos().x, cap.getPrevPos().y, cap.getPrevPos().z, (float)cap.getPrevRot().x, (float)cap.getPrevRot().y);
+			((EntityPlayerMP) player).connection.setPlayerLocation(cap.getPrevPos().x, cap.getPrevPos().y, cap.getPrevPos().z, (float) cap.getPrevRot().x, (float) cap.getPrevRot().y);
 		}
 	}
-
+	
 	@Override
 	public void setPrevPos(Vec3d positionVector) {
 		this.prevPos = positionVector;
 	}
-
+	
 	@Override
 	public Vec3d getPrevPos() {
 		return this.prevPos;
 	}
-
+	
 	@Override
 	public void setPrevRot(Vec2d vec) {
 		this.prevRot = vec;
 	}
-
+	
 	@Override
 	public Vec2d getPrevRot() {
 		return prevRot;
