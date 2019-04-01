@@ -74,6 +74,7 @@ import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
+import net.tardis.mod.common.items.ItemSonic;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolChangeInterior;
@@ -321,7 +322,14 @@ public class Tardis {
 
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_builder.png", "interior/interior_builder", new BlockPos(9, 1, 9));
 
-		//CapabilityManager.INSTANCE.register(ITardisCap.class, new TardisCapStorage(), CapabilityTardis::new);
+		CapabilityManager.INSTANCE.register(ITardisCap.class, new TardisCapStorage(), CapabilityTardis::new);
+		
+		TileEntitySonicWorkbench.RECIPES.put(TItems.key, new Item[]{TItems.key_01});
+		Item[] sonics = new Item[ItemSonic.SONICS.size()];
+		for(int sonicID = 0; sonicID < sonics.length; ++sonicID) {
+			sonics[sonicID] = ItemSonic.SONICS.get(sonicID);
+		}
+		TileEntitySonicWorkbench.RECIPES.put(TItems.sonic_screwdriver, sonics);
 	}
 
 	@EventHandler

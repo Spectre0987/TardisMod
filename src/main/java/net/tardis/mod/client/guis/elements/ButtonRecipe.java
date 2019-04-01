@@ -35,4 +35,8 @@ public class ButtonRecipe extends GuiButton {
 		}
 		return Blocks.AIR.getDefaultState();
 	}
+	
+	public ItemStack getStack() {
+		return this.stackToRender;
+	}
 }

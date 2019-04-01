@@ -46,6 +46,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 	public int antiSpamTicks = 0;
 	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 	private World clientWorld;
+	private long otherTime = 0L;
 
 	public ControlDoor(World world) {
 		super(world);
@@ -115,6 +116,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 				this.shell = new WorldShell(offset);
 			this.shell.blockMap = this.getBlockStoreInAABB(bb, offset, ws);
 			this.dataManager.set(FACING, this.getFacing());
+			this.shell.setTime(ws.getTotalWorldTime());
 		}
 	}
 	
@@ -126,7 +128,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 					BlockPos bp = new BlockPos(x, y, z).add(pos);
 					IBlockState state = ws.getBlockState(bp);
 					if(!(state.getBlock() instanceof BlockTardisTop) && state.getMaterial() != Material.AIR){
-						int light = MathHelper.clamp(ws.getLightFromNeighbors(bp) + (ws.isDaytime() ? ws.getLightFromNeighborsFor(EnumSkyBlock.SKY, bp) + 1 : 1), 0, 15);
+						int light = MathHelper.clamp(ws.getLightFromNeighbors(bp.up()) + (ws.isDaytime() ? ws.getLightFromNeighborsFor(EnumSkyBlock.SKY, bp.up()) + 1 : 1), 0, 15);
 						map.put(bp, new BlockStorage(state, ws.getTileEntity(bp), light));
 					}
 				}
@@ -153,13 +155,14 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if(this.world.getTotalWorldTime() % 20 == 0)
+		if(this.world.getTotalWorldTime() % 200 == 0)
 			this.updateWorldShell();
 		if(world.isRemote) {
 			if(this.shell.getOffset().equals(BlockPos.ORIGIN))
 				this.syncWorldShell();
-			if(world.getTotalWorldTime() % 200 == 0)
+			if(world.getTotalWorldTime() % 200 == 1)
 				this.syncWorldShell();
+			this.shell.setTime(this.shell.getTime() + 1);
 		}
 		this.handleEnter();
 		
@@ -200,26 +203,18 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 	}
 
 	@Override
-	public boolean requiresUpdate() {
-		return false;
-	}
-
-	@Override
-	public void setRequiresUpdate(boolean bool) {}
-
-	@Override
 	public World getRenderWorld() {
 		return this.clientWorld;
 	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
-		
+		this.dataManager.set(IS_OPEN, compound.getBoolean("open"));
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
-		
+		compound.setBoolean("open", this.dataManager.get(IS_OPEN));
 	}
 
 	@Override

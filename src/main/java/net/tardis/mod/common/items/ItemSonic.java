@@ -1,5 +1,10 @@
 package net.tardis.mod.common.items;
 
+import static net.tardis.mod.util.common.helpers.Helper.getStackTag;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,13 +32,9 @@ import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static net.tardis.mod.util.common.helpers.Helper.getStackTag;
-
 public class ItemSonic extends Item {
-	public static List<ItemStack> SONICS = new ArrayList<ItemStack>();
+	
+	public static List<Item> SONICS = new ArrayList<Item>();
 	private SoundEvent sonicSound;
 	
 	public ItemSonic(SoundEvent sonicSound) {
@@ -43,7 +44,7 @@ public class ItemSonic extends Item {
 	public ItemSonic(SoundEvent sonicSound, boolean hasSpecial) {
 		this.setMaxStackSize(1);
 		this.sonicSound = sonicSound;
-		SONICS.add(new ItemStack(this));
+		SONICS.add(this);
 		
 		if (hasSpecial) {
 			addPropertyOverride(new ResourceLocation(NBT.SPECIAL), (stack, worldIn, entityIn) -> {
@@ -67,10 +68,11 @@ public class ItemSonic extends Item {
 	
 	
 	public static int getCharge(ItemStack stack) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CHARGE_KEY))
+		return 100;
+		/*if (stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CHARGE_KEY))
 			return getStackTag(stack).getInteger(NBT.CHARGE_KEY);
 		setCharge(stack, 0);
-		return getStackTag(stack).getInteger(NBT.CHARGE_KEY);
+		return getStackTag(stack).getInteger(NBT.CHARGE_KEY);*/
 	}
 	
 	public static void setCharge(ItemStack stack, int charge) {
