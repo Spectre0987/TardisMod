@@ -302,8 +302,8 @@ public class CapabilityTardis implements ITardisCap {
 			if (event.getEntity() instanceof EntityPlayer) {
 				EntityPlayer victim = (EntityPlayer) event.getEntity();
 				ITardisCap data = get(victim);
-				event.setAmount(0.0F);
 				if (!data.isInFlight()) return;
+				event.setAmount(0.0F);
 				TileEntityTardis tardis = TardisHelper.getConsole(data.getTardis());
 				if (tardis == null) return;
 				for (TardisSystems.BaseSystem s : tardis.systems) {
