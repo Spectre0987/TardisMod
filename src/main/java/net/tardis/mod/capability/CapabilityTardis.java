@@ -100,11 +100,6 @@ public class CapabilityTardis implements ITardisCap {
 		if (!isInFlight) {
 			setSpeeds(player, true);
 		}
-		
-		//Set the players Tardis position when they are in the Tardis Dimension
-		if (getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
-			setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
-		}
 		if (player.dimension != TDimensions.TARDIS_ID) {
 			if (!getTardis().equals(BlockPos.ORIGIN)) {
 				if (isInFlight()) {
@@ -143,11 +138,6 @@ public class CapabilityTardis implements ITardisCap {
 			if (isInFlight()) {
 				endFlight(player);
 			}
-		}
-		if (player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
-			if (player.getPosition().distanceSq(this.getTardis()) > 16384) {
-			}
-			//player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 2, this.getTardis().getZ());
 		}
 	}
 	
@@ -338,6 +328,7 @@ public class CapabilityTardis implements ITardisCap {
 		ITardisCap cap = get(player);
 		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
 		BlockPos bPos = player.getPosition();
+		if(!cap.isInFlight()) return;
 		if (console != null) {
 			cap.setInFlight(false);
 			console.enterTARDIS(player);
