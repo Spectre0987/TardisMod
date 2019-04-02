@@ -104,15 +104,15 @@ public class ClientHandler {
 		if (data.isInFlight()) {
 			IBlockState exteriorState = data.getExterior();
 			EnumExterior exterior = EnumExterior.getExteriorFromBlock(exteriorState.getBlock());
-			if (player.world.isRemote) {
-				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+				if(player.getUniqueID() == Minecraft.getMinecraft().player.getUniqueID()){
+					Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+				}
 				if (player.collidedHorizontally || !data.hasFuel() || player.hurtTime > 0) {
 					for (int x = 0; x <= 13; x++) {
 						player.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, player.posX + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, player.posY + player.world.rand.nextDouble() * (double) player.height, player.posZ + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, 0.0D, 0.0D, 0.0D);
 						player.world.spawnParticle(EnumParticleTypes.FLAME, player.posX + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, player.posY + player.world.rand.nextDouble() * (double) player.height, player.posZ + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, 0.0D, 0.0D, 0.0D);
 					}
 				}
-			}
 			e.setCanceled(true);
 			//Render
 			GlStateManager.pushMatrix();
@@ -127,8 +127,9 @@ public class ClientHandler {
 				GlStateManager.rotate((float) (player.ticksExisted * 3.0f * Math.PI), 0, 1, 0);
 				GlStateManager.rotate(player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.getPartialRenderTick(), 0, 1, 0);
 				float offset = 0;
+				
 				if (player.world.isAirBlock(player.getPosition().down())) {
-					if (!player.capabilities.isFlying) {
+					if (player.fallDistance > 0) {
 						float f = (float) (player.ticksExisted * 3.0f * Math.PI) + e.getPartialRenderTick();
 						float f1 = MathHelper.clamp(f * f / 100.0F, 0.0F, 1.0F);
 						GlStateManager.rotate(-f1 * (-90.0F - player.rotationPitch), 1.0F, 0.0F, 0.0F);

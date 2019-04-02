@@ -1,11 +1,8 @@
 package net.tardis.mod.capability;
 
-import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,11 +19,13 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.GetCollisionBoxesEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -105,22 +104,22 @@ public class CapabilityTardis implements ITardisCap {
 	@Override
 	public void setInFlight(boolean inFlight) {
 		isInFlight = inFlight;
+		sync();
 	}
 	
 	@Override
 	public void update() {
 		
 		//Interior Handling
-		if(this.getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
+		if (this.getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
 			this.setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
-		}
-		else if(!this.getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID) {
+		} else if (!this.getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID) {
 			this.setTardis(BlockPos.ORIGIN);
 		}
-		if(player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
+		if (player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
 			if (player.getPosition().distanceSq(this.getTardis()) > 16384) {
 				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY(), this.getTardis().getZ());
-				PlayerHelper.sendMessage(player, new TextComponentTranslation("message.tardis.confines"), true);
+				PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.confines"), true);
 			}
 		}
 		
@@ -165,7 +164,6 @@ public class CapabilityTardis implements ITardisCap {
 		} else {
 			if (isInFlight()) {
 				endFlight(player);
-				
 			}
 		}
 	}
@@ -293,6 +291,11 @@ public class CapabilityTardis implements ITardisCap {
 		}
 		
 		@SubscribeEvent
+		public static void onCollide(GetCollisionBoxesEvent event){
+		
+		}
+		
+		@SubscribeEvent
 		public static void onHurtPilot(LivingHurtEvent event) {
 			if (event.getEntity().world.isRemote) return;
 			if (event.getEntity() instanceof EntityPlayer) {
@@ -307,6 +310,24 @@ public class CapabilityTardis implements ITardisCap {
 				}
 				victim.world.playSound(null, victim.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 2F, 1F);
 			}
+		}
+	}
+	
+	
+	@SubscribeEvent
+	public static void onPlayerRespawn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent event) {
+		get(event.player).sync();
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerChangedDimension(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent event) {
+		get(event.player).sync();
+	}
+	
+	@SubscribeEvent
+	public static void onDeathEvent(LivingDeathEvent e) {
+		if (e.getEntityLiving() instanceof EntityPlayer) {
+			get((EntityPlayer) e.getEntityLiving()).sync();
 		}
 	}
 	
@@ -329,6 +350,7 @@ public class CapabilityTardis implements ITardisCap {
 		cap.setPrevRot(new Vec2d((double) player.rotationYaw, (double) player.rotationPitch));
 		if (console != null && !console.hasPilot() && console.fuel > 0) {
 			console.setFlightPilot(player);
+			cap.setFlightTardis(console.getPos());
 			console.transferPlayer(player, false);
 			NetworkHandler.NETWORK.sendToDimension(new MessagePlayFlySound(TSounds.flyLoop, player.getUniqueID().toString()), player.dimension);
 			cap.setInFlight(true);
@@ -356,7 +378,7 @@ public class CapabilityTardis implements ITardisCap {
 		ITardisCap cap = get(player);
 		TileEntityTardis console = TardisHelper.getConsole(cap.getFlightTardis());
 		BlockPos bPos = player.getPosition();
-		if(!cap.isInFlight()) return;
+		if (!cap.isInFlight()) return;
 		if (console != null) {
 			cap.setInFlight(false);
 			console.enterTARDIS(player);

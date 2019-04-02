@@ -16,10 +16,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.IDoor;
+import net.tardis.mod.common.entities.IShouldDie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 
-public class EntityHellbentDoor extends Entity implements IDoor {
+public class EntityHellbentDoor extends Entity implements IDoor, IShouldDie {
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(EntityHellbentDoor.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<Integer> OPENING_TICKS = EntityDataManager.createKey(EntityHellbentDoor.class, DataSerializers.VARINT);

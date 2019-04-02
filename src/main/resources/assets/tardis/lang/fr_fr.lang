@@ -1,5 +1,6 @@
-itemGroup.tardis_blocks=TARDIS Mod Blocks
-itemGroup.tardis_items=TARDIS Mod Items
+itemGroup.tardis_blocks=Blocs du TARDIS Mod 
+itemGroup.tardis_items=Objets du TARDIS Mod
+itemGroup.tardis_galliblocks=Strange Blocks
 
 item.tardis.tardis_key.name=Clé du TARDIS
 item.tardis.pos_setter.name=Enregistreur de coordonnées
@@ -126,6 +127,10 @@ tile.tardis.am_sphere.name=Sphère armillaire
 tile.tardis.toyota_spin.name=Toyota Spinny Thingamajig
 tile.tardis.sonic_workbench.name=Table de craft des Soniques
 
+tile.tardis.gallifreyan_grass.name=Herbe étrange
+tile.tardis.gallifreyan_dirt.name=Terre étrange
+tile.tardis.gallifreyan_stone.name=Pierre étrange
+
 tardis.locked.true=TARDIS fermé !
 tardis.locked.false=Le TARDIS a été ouvert.
 
@@ -186,6 +191,7 @@ protocol.tardis.lock=Double serrure
 protocol.tardis.destroy.rift=Consommer la Faille Dimensionnel
 protocol.tardis.repair=Réparer le TARDIS
 protocol.tardis.waypoint.load=Marqueurs
+protocol.tardis.interior=Changer d'intérieur
 
 tardis.repair.false=TARDIS se répare
 tardis.repair.true=TARDIS ne se répare plus
@@ -197,6 +203,7 @@ systems.tardis.antenna=Antenne interstitielle
 system.tardis.ccircuit=Circuit Caméléon
 system.tardis.temporal_grace=Circuits de grâce temporelle
 system.tardis.stabilizers=Stabilisateurs
+system.tardis.thermo=Couplage thermique
 
 tardis.dimension=Dimension Nav-com est:
 
@@ -244,6 +251,7 @@ entity.tardis_magnitude.name=Ajusteur d'amplitude de coordonnées
 entity.tardis_phone.name=Communicateur
 entity.stabilizers.name=Stabilisateurs
 entity.monitor.name=Moniteur
+entity.waypoint_select.name=Selecteur de marqueur
 
 tardis.stabilizers.true=Stabilisateurs ON
 tardis.stabilizers.false=Stabilisateurs OFF
@@ -262,6 +270,9 @@ tardis.damage.demat=Le circuit de dématérialisation a été grillé !
 
 tardis.message.refuelling=Le TARDIS se recharge...
 tardis.message.no_longer_refuelling=Le TARDIS ne se recharge plus
+tardis.message.tc_notfound=%s introuvable sur la planète %s !
+tardis.message.relocation=Vous vous réinstallez dans l'enveloppe plasmique externe de cette capsule !
+tardis.message.has_pilot=Vous ne pouvez pas faire ça mainetant
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS en vol
@@ -272,7 +283,6 @@ tardis.subtitle.force_field=Champs de force
 tardis.subtitle.locked=Vérouillé
 tardis.subtitle.door_open=Porte ouverte
 tardis.subtitle.door_closed=Porte fermée
-tardis.subtitle.interior_hum_80=Ambiance intérieure 80's
 tardis.subtitle.cloister_bell=Cloche du cloître
 tardis.subtitle.drum_beat=Battement de tambour
 tardis.subtitle.stutter=Bégaiement
@@ -289,6 +299,7 @@ commands.tardis.teleportin.usage=/tardis interior
 commands.tardis.grow.usage=/tardis grow
 commands.tardis.summon.usage=/tardis summon <player>
 command.tardis.remove.usage=/tardis remove <player>
+commands.tardis.restoresys.usage=/tardis restoresys <player> <system1> [system2] [system3]...
 
 gui.tardis.travel=Voyager
 
@@ -315,6 +326,7 @@ box.tardis.05=1980 - Yardley-Jones
 box.tardis.cc=Camouflé
 box.master.clock=Horloge du Maitre
 box.tt=TT Capsule
+box.door=Porte en bois
 
 hum.tardis.toyota=Toyota
 hum.tardis.coral=Coral

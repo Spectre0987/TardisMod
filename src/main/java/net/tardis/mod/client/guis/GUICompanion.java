@@ -13,6 +13,8 @@ import net.minecraft.world.BossInfo.Color;
 import net.tardis.mod.client.guis.elements.ButtonText;
 import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageCompanion;
 
 public class GUICompanion extends GuiScreen {
 
@@ -77,6 +79,7 @@ public class GUICompanion extends GuiScreen {
 	public enum EnumAction {
 		FOLLOW,
 		GO_TO_TARDIS,
-		BRING_TARDIS
+		BRING_TARDIS,
+		TAKE_HELD;
 	}
 }

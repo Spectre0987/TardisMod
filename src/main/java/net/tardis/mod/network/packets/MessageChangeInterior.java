@@ -1,7 +1,9 @@
 package net.tardis.mod.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -10,6 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.ars.ConsoleRoom;
+import net.tardis.mod.common.entities.IShouldDie;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class MessageChangeInterior implements IMessage{
@@ -55,6 +58,11 @@ public class MessageChangeInterior implements IMessage{
 									if(!(ctx.getServerHandler().player.world.getTileEntity(pos) instanceof TileEntityTardis));
 										ctx.getServerHandler().player.world.setBlockState(pos, Blocks.AIR.getDefaultState());
 								}
+							}
+						}
+						for(Entity entity : ctx.getServerHandler().player.world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.grow(20).offset(message.pos))) {
+							if(entity instanceof IShouldDie) {
+								entity.setDead();
 							}
 						}
 						ConsoleRoom.CONSOLE_ROOMS.get(message.index).generate(ctx.getServerHandler().player.getServerWorld(), message.pos);

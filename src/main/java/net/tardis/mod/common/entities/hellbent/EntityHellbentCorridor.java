@@ -14,9 +14,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tardis.mod.common.entities.IShouldDie;
 import net.tardis.mod.common.items.TItems;
 
-public class EntityHellbentCorridor extends Entity {
+public class EntityHellbentCorridor extends Entity implements IShouldDie{
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(EntityHellbentCorridor.class, DataSerializers.BOOLEAN);
 	public AxisAlignedBB BB = new AxisAlignedBB(-2.5, 0, -2.5, 2.5, 10, 2.5);
