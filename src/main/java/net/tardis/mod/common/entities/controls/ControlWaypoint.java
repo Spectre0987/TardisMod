@@ -41,7 +41,7 @@ public class ControlWaypoint extends EntityControl {
 				tardis.waypointIndex = 0;
 			if (tardis.waypointIndex < 0)
 				tardis.waypointIndex = tardis.saveCoords.size() - 1;
-			player.sendStatusMessage(new TextComponentString("Waypoint " + (tardis.waypointIndex + 1) + ": " + tardis.saveCoords.get(tardis.waypointIndex).name), true);
+			PlayerHelper.sendMessage(player,"Waypoint " + (tardis.waypointIndex + 1) + ": " + tardis.saveCoords.get(tardis.waypointIndex).name, true);
 		}
 
 	}
