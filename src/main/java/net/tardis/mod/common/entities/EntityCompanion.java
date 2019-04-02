@@ -82,10 +82,10 @@ public class EntityCompanion extends EntityTameable implements IInventory, IEnti
 		this.tasks.addTask(0, new EntityAIMoveTowardsRestriction(this, 1.0D));
 
 
-		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityTNTPrimed.class, 6.0F, 1.0D, 1.2D));
-		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityDalek.class, 6.0F, 1.0D, 1.2D));
-		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityRaider.class, 6.0F, 1.0D, 1.2D));
-		this.tasks.addTask(2, new EntityAIAvoidEntity(this, EntityArrow.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityTNTPrimed.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityDalek.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityRaider.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(2, new EntityAIAvoidEntity<>(this, EntityArrow.class, 6.0F, 1.0D, 1.2D));
 
 
 	}

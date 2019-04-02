@@ -65,7 +65,7 @@ public class GUICompanion extends GuiScreen {
 		this.addText(new TextComponentTranslation(TStrings.Companions.GO_TO_TARDIS).getFormattedText());
 		if (((EntityCompanion) Minecraft.getMinecraft().world.getEntityByID(entityID)).getXP() > 0)
 			this.addText(new TextComponentTranslation(TStrings.Companions.BRING_TARDIS).getFormattedText());
-		this.addText("Fucking take this");
+		this.addText(new TextComponentTranslation(TStrings.Companions.TAKE_THIS).getUnformattedText());
 		id = 0;
 	}
 
