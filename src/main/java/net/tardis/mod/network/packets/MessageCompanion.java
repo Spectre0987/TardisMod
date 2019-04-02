@@ -1,6 +1,9 @@
 package net.tardis.mod.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -56,10 +59,12 @@ public class MessageCompanion implements IMessage {
 								comp.setSit(true);
 								comp.tardisPos = tardis.getLocation().toImmutable();
 							}
-						} else if (message.action == EnumAction.FOLLOW) {
+						}
+						else if (message.action == EnumAction.FOLLOW) {
 							comp.setSit(!comp.getSit());
 							comp.tardisPos = BlockPos.ORIGIN;
-						} else if (message.action == EnumAction.BRING_TARDIS) {
+						}
+						else if (message.action == EnumAction.BRING_TARDIS) {
 							if (comp.dimension != TDimensions.TARDIS_ID) {
 								WorldServer world = ctx.getServerHandler().player.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 								if (comp.getOwner() != null && TardisHelper.hasTardis(comp.getOwner().getGameProfile().getId())) {
@@ -71,6 +76,13 @@ public class MessageCompanion implements IMessage {
 									}
 								}
 							}
+						}
+						else if(message.action == EnumAction.TAKE_HELD) {
+							ItemStack oldHeld = comp.getHeldItemMainhand();
+							if(!oldHeld.isEmpty())
+								InventoryHelper.spawnItemStack(ctx.getServerHandler().player.world, comp.posX, comp.posY, comp.posZ, oldHeld);
+							comp.setHeldItem(EnumHand.MAIN_HAND, ctx.getServerHandler().player.getHeldItem(EnumHand.MAIN_HAND));
+							ctx.getServerHandler().player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 						}
 					}
 				}

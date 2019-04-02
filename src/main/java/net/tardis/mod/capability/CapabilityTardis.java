@@ -1,11 +1,13 @@
 package net.tardis.mod.capability;
 
-import com.google.common.base.Predicate;
+import java.util.Objects;
+import java.util.UUID;
+
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,10 +47,6 @@ import net.tardis.mod.network.packets.MessagePlayFlySound;
 import net.tardis.mod.network.packets.MessageSyncCap;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
-
-import javax.annotation.Nonnull;
-import java.util.Objects;
-import java.util.UUID;
 
 public class CapabilityTardis implements ITardisCap {
 	
@@ -329,6 +327,7 @@ public class CapabilityTardis implements ITardisCap {
 		cap.setPrevRot(new Vec2d((double) player.rotationYaw, (double) player.rotationPitch));
 		if (console != null && !console.hasPilot() && console.fuel > 0) {
 			console.setFlightPilot(player);
+			cap.setFlightTardis(console.getPos());
 			console.transferPlayer(player, false);
 			NetworkHandler.NETWORK.sendToDimension(new MessagePlayFlySound(TSounds.flyLoop, player.getUniqueID().toString()), player.dimension);
 			cap.setInFlight(true);
