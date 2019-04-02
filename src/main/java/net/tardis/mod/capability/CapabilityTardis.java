@@ -11,7 +11,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -26,7 +25,6 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.GetCollisionBoxesEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,7 +33,6 @@ import net.tardis.mod.capability.TardisCapStorage.TardisCapProvider;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -114,8 +111,7 @@ public class CapabilityTardis implements ITardisCap {
 		//Interior Handling
 		if (this.getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
 			this.setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
-		}
-		else if (!this.getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID) {
+		} else if (!this.getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID) {
 			this.setTardis(BlockPos.ORIGIN);
 		}
 		if (player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
@@ -292,7 +288,7 @@ public class CapabilityTardis implements ITardisCap {
 		}
 		
 		@SubscribeEvent
-		public static void onKnockBack(LivingKnockBackEvent event){
+		public static void onKnockBack(LivingKnockBackEvent event) {
 			if (event.getEntity() instanceof EntityPlayer) {
 				EntityPlayer victim = (EntityPlayer) event.getEntity();
 				ITardisCap data = get(victim);
@@ -387,15 +383,14 @@ public class CapabilityTardis implements ITardisCap {
 			cap.setTardis(BlockPos.ORIGIN);
 			cap.setInFlight(false);
 			console.enterTARDIS(player);
-			player.capabilities.allowFlying = player.isCreative();
-			player.capabilities.isFlying = player.isCreative();
-			player.capabilities.allowEdit = true;
+			if(player instanceof EntityPlayerMP) {
+				((EntityPlayerMP) player).interactionManager.getGameType().configurePlayerCapabilities(player.capabilities);
+			}
 			player.velocityChanged = true;
 			cap.sync();
 			player.eyeHeight = player.getDefaultEyeHeight();
 			player.sendPlayerAbilities();
 			
-			if (player.world.isRemote) return;
 			WorldServer exteriorWorld = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(console.dimension);
 			
 			exteriorWorld.getChunkProvider().loadChunk(bPos.getX() * 16, bPos.getZ() * 16);
