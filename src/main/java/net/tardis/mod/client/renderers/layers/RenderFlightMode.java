@@ -46,6 +46,11 @@ public class RenderFlightMode {
 			e.setCanceled(true);
 			//Render
 			GlStateManager.pushMatrix();
+			
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			GlStateManager.color(1.0F, 1.0F, 1.0F, data.getAlpha());
+			
 			e.getRenderer().renderName((AbstractClientPlayer) e.getEntityPlayer(), e.getX(), e.getY() + 1, e.getZ());
 			double x2 = ((player.prevPosX + (player.posX - player.prevPosX) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerX);
 			double y2 = ((player.prevPosY + (player.posY - player.prevPosY) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerY);
@@ -57,9 +62,8 @@ public class RenderFlightMode {
 				GlStateManager.rotate((float) (player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.getPartialRenderTick() + player.motionX + player.motionZ), 0, 1, 0);
 				
 				int amplifier = PlayerHelper.isPlayerMoving(player) ? 1 : 4;
-				
 				GlStateManager.rotate((float) (player.ticksExisted * 3.0f * Math.PI / amplifier), 0, 1, 0);
-				float offset = 0;
+				
 				
 				//If the player is falling
 				if (player.world.isAirBlock(player.getPosition().down())) {
@@ -68,8 +72,14 @@ public class RenderFlightMode {
 						float f1 = MathHelper.clamp(f * f / 100.0F, 0.0F, 1.0F);
 						GlStateManager.rotate(-f1 * (-90.0F - player.rotationPitch), 1.0F, 0.0F, 0.0F);
 					}
-					offset = MathHelper.cos(player.ticksExisted * 0.1F) * -0.67F;
+					
 				}
+				
+				float offset = 0;
+				offset = MathHelper.cos(player.ticksExisted * 0.1F) * -0.67F;
+				double motion = (Math.abs(e.getEntity().motionX) + Math.abs(e.getEntityPlayer().motionZ)) / 8.0D;
+				GlStateManager.rotate((float) (motion * 150D), 0, 0, 1);
+				
 				GlStateManager.translate(0, -offset, 0);
 			}
 			Minecraft.getMinecraft().getTextureManager().bindTexture(exterior.tex);
@@ -78,7 +88,13 @@ public class RenderFlightMode {
 			} else {
 				EXTERIOR_CACHE.get(exterior).renderOpen(0.0625F);
 			}
+			
+			GlStateManager.color(1.0F, 1.0F, 1.0F, 1F);
+			GlStateManager.disableAlpha();
+			GlStateManager.disableBlend();
+			
 			GlStateManager.popMatrix();
+			
 		}
 	}
 	
