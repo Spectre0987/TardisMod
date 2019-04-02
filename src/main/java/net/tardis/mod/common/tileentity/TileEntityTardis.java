@@ -523,6 +523,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				DimensionType currentType = DimensionManager.getProviderType(this.dimension);
 				if (type != null) this.currentDimName = currentType.getName();
 			}
+			if(this.isInFlight()) {
+				this.ticksToTravel += this.calcTimeToTravel();
+				this.totalTimeToTravel = this.ticksToTravel;
+			}
 		}
 	}
 	

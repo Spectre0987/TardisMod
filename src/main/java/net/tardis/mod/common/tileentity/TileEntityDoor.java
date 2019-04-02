@@ -210,7 +210,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (!this.isRemat && !this.isDemat)
 			this.alpha = 1.0F;
 		
-		if (world.isRemote && (this.worldShell.getOffset().equals(BlockPos.ORIGIN) || this.requiresUpdate)) {
+		if (world.isRemote && !this.isLocked() && (this.worldShell.getOffset().equals(BlockPos.ORIGIN) || this.requiresUpdate)) {
 			NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI(this.getPos()));
 			this.setupClientWorld();
 			this.requiresUpdate = false;
