@@ -124,10 +124,11 @@ public class ClientHandler {
 			GlStateManager.rotate(-180, 1, 0, 0);
 			GlStateManager.translate(0, -1.5, 0);
 			if (!player.onGround) {
+				GlStateManager.rotate((float) (player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.getPartialRenderTick() + player.motionX + player.motionZ), 0, 1, 0);
 				GlStateManager.rotate((float) (player.ticksExisted * 3.0f * Math.PI), 0, 1, 0);
-				GlStateManager.rotate(player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.getPartialRenderTick(), 0, 1, 0);
 				float offset = 0;
 				
+				//If the player is falling
 				if (player.world.isAirBlock(player.getPosition().down())) {
 					if (player.fallDistance > 0) {
 						float f = (float) (player.ticksExisted * 3.0f * Math.PI) + e.getPartialRenderTick();
@@ -136,7 +137,6 @@ public class ClientHandler {
 					}
 					offset = MathHelper.cos(player.ticksExisted * 0.1F) * -0.67F;
 				}
-				
 				GlStateManager.translate(0, -offset, 0);
 			}
 			Minecraft.getMinecraft().getTextureManager().bindTexture(exterior.tex);
