@@ -31,6 +31,7 @@ import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
+import net.tardis.mod.common.entities.IShouldDie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
@@ -39,7 +40,7 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
+public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, IShouldDie {
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<EnumFacing> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FACING);

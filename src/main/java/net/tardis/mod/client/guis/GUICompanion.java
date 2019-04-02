@@ -1,5 +1,7 @@
 package net.tardis.mod.client.guis;
 
+import java.io.IOException;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -13,8 +15,6 @@ import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageCompanion;
-
-import java.io.IOException;
 
 public class GUICompanion extends GuiScreen {
 
@@ -41,9 +41,14 @@ public class GUICompanion extends GuiScreen {
 	protected void actionPerformed(GuiButton button) throws IOException {
 		int id = button.id;
 		EnumAction action = null;
-		if (id == 0) action = EnumAction.FOLLOW;
-		else if (id == 1) action = EnumAction.GO_TO_TARDIS;
-		else if (id == 2) action = EnumAction.BRING_TARDIS;
+		if (id == 0)
+			action = EnumAction.FOLLOW;
+		else if (id == 1)
+			action = EnumAction.GO_TO_TARDIS;
+		else if (id == 2)
+			action = EnumAction.BRING_TARDIS;
+		else if(id == 3)
+			action = EnumAction.TAKE_HELD;
 		if (action != null) {
 			NetworkHandler.NETWORK.sendToServer(new MessageCompanion(entityID, action));
 			Minecraft.getMinecraft().displayGuiScreen(null);
@@ -60,6 +65,7 @@ public class GUICompanion extends GuiScreen {
 		this.addText(new TextComponentTranslation(TStrings.Companions.GO_TO_TARDIS).getFormattedText());
 		if (((EntityCompanion) Minecraft.getMinecraft().world.getEntityByID(entityID)).getXP() > 0)
 			this.addText(new TextComponentTranslation(TStrings.Companions.BRING_TARDIS).getFormattedText());
+		this.addText("Fucking take this");
 		id = 0;
 	}
 
@@ -77,6 +83,7 @@ public class GUICompanion extends GuiScreen {
 	public enum EnumAction {
 		FOLLOW,
 		GO_TO_TARDIS,
-		BRING_TARDIS
+		BRING_TARDIS,
+		TAKE_HELD;
 	}
 }
