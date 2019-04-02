@@ -113,12 +113,13 @@ public class CapabilityTardis implements ITardisCap {
 		//Interior Handling
 		if (this.getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
 			this.setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
-		} else if (!this.getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID) {
+		}
+		else if (!this.getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID) {
 			this.setTardis(BlockPos.ORIGIN);
 		}
 		if (player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
 			if (player.getPosition().distanceSq(this.getTardis()) > 16384) {
-				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY(), this.getTardis().getZ());
+				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 1, this.getTardis().getZ());
 				PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.confines"), true);
 			}
 		}
@@ -380,6 +381,7 @@ public class CapabilityTardis implements ITardisCap {
 		BlockPos bPos = player.getPosition();
 		if (!cap.isInFlight()) return;
 		if (console != null) {
+			cap.setTardis(BlockPos.ORIGIN);
 			cap.setInFlight(false);
 			console.enterTARDIS(player);
 			player.capabilities.allowFlying = player.isCreative();

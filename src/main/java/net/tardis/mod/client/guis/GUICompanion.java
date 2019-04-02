@@ -55,6 +55,7 @@ public class GUICompanion extends GuiScreen {
 		this.addText(new TextComponentTranslation(TStrings.Companions.GO_TO_TARDIS).getFormattedText(), EnumAction.GO_TO_TARDIS);
 		if (((EntityCompanion) Minecraft.getMinecraft().world.getEntityByID(entityID)).getXP() > 0)
 			this.addText(new TextComponentTranslation(TStrings.Companions.BRING_TARDIS).getFormattedText(), EnumAction.BRING_TARDIS);
+		this.addText("Fucking take this", EnumAction.TAKE_HELD);
 		id = 0;
 	}
 
@@ -63,12 +64,13 @@ public class GUICompanion extends GuiScreen {
 		ButtonText tb = this.addButton(new ButtonText(nid, res.getScaledWidth() / 2, res.getScaledHeight() / 2 + ((Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * nid), Minecraft.getMinecraft().fontRenderer, text));
 		tb.addAction(() -> {
 			this.sendMessage(action);
+			Minecraft.getMinecraft().displayGuiScreen(null);
 		});
 		id++;
 	}
 
 	public void sendMessage(EnumAction action) {
-		
+		NetworkHandler.NETWORK.sendToServer(new MessageCompanion(this.entityID, action));
 	}
 	
 	@Override
