@@ -22,6 +22,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -40,7 +41,7 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageCapabilityDoorOpen;
-import net.tardis.mod.network.packets.MessagePlayFlySound;
+import net.tardis.mod.network.packets.MessageSetupFlight;
 import net.tardis.mod.network.packets.MessageSyncCap;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
@@ -124,8 +125,9 @@ public class CapabilityTardis implements ITardisCap {
 			}
 		}
 		
+		
 		//Flight
-		if (!isInFlight) {
+		if (!isInFlight()) {
 			setSpeeds(player, true);
 		}
 		if (player.dimension != TDimensions.TARDIS_ID) {
@@ -143,15 +145,13 @@ public class CapabilityTardis implements ITardisCap {
 					}
 					
 					if (hasFuel) {
-						if (!player.capabilities.allowFlying) {
+						if (!player.capabilities.allowFlying || !player.capabilities.isFlying) {
 							player.capabilities.allowFlying = true;
+							player.capabilities.isFlying = true;
 							setSpeeds(player, false);
 							player.velocityChanged = true;
 						}
 					} else {
-						if (player.ticksExisted % 100 == 0) {
-							player.world.playSound(null, player.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 0.5F, 1F);
-						}
 						setSpeeds(player, true);
 						player.capabilities.isFlying = false;
 						player.capabilities.allowFlying = false;
@@ -292,8 +292,12 @@ public class CapabilityTardis implements ITardisCap {
 		}
 		
 		@SubscribeEvent
-		public static void onCollide(GetCollisionBoxesEvent event){
-		
+		public static void onKnockBack(LivingKnockBackEvent event){
+			if (event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer victim = (EntityPlayer) event.getEntity();
+				ITardisCap data = get(victim);
+				event.setCanceled(data.isInFlight() && victim.onGround);
+			}
 		}
 		
 		@SubscribeEvent
@@ -309,7 +313,6 @@ public class CapabilityTardis implements ITardisCap {
 				for (TardisSystems.BaseSystem s : tardis.systems) {
 					s.wear();
 				}
-				victim.world.playSound(null, victim.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 2F, 1F);
 			}
 		}
 	}
@@ -353,7 +356,7 @@ public class CapabilityTardis implements ITardisCap {
 			console.setFlightPilot(player);
 			cap.setFlightTardis(console.getPos());
 			console.transferPlayer(player, false);
-			NetworkHandler.NETWORK.sendToDimension(new MessagePlayFlySound(TSounds.flyLoop, player.getUniqueID().toString()), player.dimension);
+			NetworkHandler.NETWORK.sendToDimension(new MessageSetupFlight(player.getUniqueID().toString()), player.dimension);
 			cap.setInFlight(true);
 			cap.setExterior(console.getTopBlock());
 			cap.setHasFuel(true);

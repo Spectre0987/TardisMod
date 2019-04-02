@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -37,6 +38,7 @@ import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
+import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 import java.util.HashMap;
 
@@ -98,6 +100,13 @@ public class ClientHandler {
 	}
 	
 	@SubscribeEvent
+	public static void onRenderOverlay(RenderGameOverlayEvent.Pre event){
+		for (RenderGameOverlayEvent.ElementType value : RenderGameOverlayEvent.ElementType.values()) {
+			event.setCanceled(event.getType() == value);
+		}
+	}
+	
+	@SubscribeEvent
 	public static void flyRender(RenderPlayerEvent.Pre e) {
 		EntityPlayer player = e.getEntityPlayer();
 		ITardisCap data = CapabilityTardis.get(player);
@@ -125,12 +134,15 @@ public class ClientHandler {
 			GlStateManager.translate(0, -1.5, 0);
 			if (!player.onGround) {
 				GlStateManager.rotate((float) (player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.getPartialRenderTick() + player.motionX + player.motionZ), 0, 1, 0);
-				GlStateManager.rotate((float) (player.ticksExisted * 3.0f * Math.PI), 0, 1, 0);
+				
+				int amplifier = PlayerHelper.isPlayerMoving(player) ? 1 : 4;
+				
+				GlStateManager.rotate((float) (player.ticksExisted * 3.0f * Math.PI / amplifier), 0, 1, 0);
 				float offset = 0;
 				
 				//If the player is falling
 				if (player.world.isAirBlock(player.getPosition().down())) {
-					if (player.fallDistance > 0) {
+					if (player.fallDistance > 0 || !data.hasFuel() || !player.capabilities.isFlying) {
 						float f = (float) (player.ticksExisted * 3.0f * Math.PI) + e.getPartialRenderTick();
 						float f1 = MathHelper.clamp(f * f / 100.0F, 0.0F, 1.0F);
 						GlStateManager.rotate(-f1 * (-90.0F - player.rotationPitch), 1.0F, 0.0F, 0.0F);
