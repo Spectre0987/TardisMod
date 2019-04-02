@@ -1,24 +1,16 @@
 package net.tardis.mod.client.handler;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -28,19 +20,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.capability.CapabilityTardis;
-import net.tardis.mod.capability.ITardisCap;
-import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.guis.GuiVortexM;
-import net.tardis.mod.client.models.exteriors.IExteriorModel;
+import net.tardis.mod.client.renderers.layers.RenderFlightMode;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
-import net.tardis.mod.util.common.helpers.PlayerHelper;
-
-import java.util.HashMap;
 
 @Mod.EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientHandler {
@@ -89,76 +76,9 @@ public class ClientHandler {
 		}
 	}
 	
-	//This is horrible, I know it is, just bare with me
-	
-	public static HashMap<EnumExterior, IExteriorModel> EXTERIOR_CACHE = new HashMap<>();
-	
-	public static void cacheFlightModels() {
-		for (EnumExterior value : EnumExterior.values()) {
-			EXTERIOR_CACHE.put(value, value.model);
-		}
-	}
-	
-	@SubscribeEvent
-	public static void onRenderOverlay(RenderGameOverlayEvent.Pre event){
-		for (RenderGameOverlayEvent.ElementType value : RenderGameOverlayEvent.ElementType.values()) {
-			event.setCanceled(event.getType() == value);
-		}
-	}
-	
 	@SubscribeEvent
 	public static void flyRender(RenderPlayerEvent.Pre e) {
-		EntityPlayer player = e.getEntityPlayer();
-		ITardisCap data = CapabilityTardis.get(player);
-		if (data.isInFlight()) {
-			IBlockState exteriorState = data.getExterior();
-			EnumExterior exterior = EnumExterior.getExteriorFromBlock(exteriorState.getBlock());
-				if(player.getUniqueID() == Minecraft.getMinecraft().player.getUniqueID()){
-					Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
-				}
-				if (player.collidedHorizontally || !data.hasFuel() || player.hurtTime > 0) {
-					for (int x = 0; x <= 13; x++) {
-						player.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, player.posX + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, player.posY + player.world.rand.nextDouble() * (double) player.height, player.posZ + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, 0.0D, 0.0D, 0.0D);
-						player.world.spawnParticle(EnumParticleTypes.FLAME, player.posX + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, player.posY + player.world.rand.nextDouble() * (double) player.height, player.posZ + (player.world.rand.nextDouble() - 0.5D) * (double) player.width, 0.0D, 0.0D, 0.0D);
-					}
-				}
-			e.setCanceled(true);
-			//Render
-			GlStateManager.pushMatrix();
-			e.getRenderer().renderName((AbstractClientPlayer) e.getEntityPlayer(), e.getX(), e.getY() + 1, e.getZ());
-			double x2 = ((player.prevPosX + (player.posX - player.prevPosX) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerX);
-			double y2 = ((player.prevPosY + (player.posY - player.prevPosY) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerY);
-			double z2 = ((player.prevPosZ + (player.posZ - player.prevPosZ) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerZ);
-			GlStateManager.translate(x2, y2, z2);
-			GlStateManager.rotate(-180, 1, 0, 0);
-			GlStateManager.translate(0, -1.5, 0);
-			if (!player.onGround) {
-				GlStateManager.rotate((float) (player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.getPartialRenderTick() + player.motionX + player.motionZ), 0, 1, 0);
-				
-				int amplifier = PlayerHelper.isPlayerMoving(player) ? 1 : 4;
-				
-				GlStateManager.rotate((float) (player.ticksExisted * 3.0f * Math.PI / amplifier), 0, 1, 0);
-				float offset = 0;
-				
-				//If the player is falling
-				if (player.world.isAirBlock(player.getPosition().down())) {
-					if (player.fallDistance > 0 || !data.hasFuel() || !player.capabilities.isFlying) {
-						float f = (float) (player.ticksExisted * 3.0f * Math.PI) + e.getPartialRenderTick();
-						float f1 = MathHelper.clamp(f * f / 100.0F, 0.0F, 1.0F);
-						GlStateManager.rotate(-f1 * (-90.0F - player.rotationPitch), 1.0F, 0.0F, 0.0F);
-					}
-					offset = MathHelper.cos(player.ticksExisted * 0.1F) * -0.67F;
-				}
-				GlStateManager.translate(0, -offset, 0);
-			}
-			Minecraft.getMinecraft().getTextureManager().bindTexture(exterior.tex);
-			if (!data.isOpen()) {
-				EXTERIOR_CACHE.get(exterior).renderClosed(0.0625F);
-			} else {
-				EXTERIOR_CACHE.get(exterior).renderOpen(0.0625F);
-			}
-			GlStateManager.popMatrix();
-		}
+		RenderFlightMode.renderFlightMode(e);
 	}
 	
 	@SubscribeEvent
