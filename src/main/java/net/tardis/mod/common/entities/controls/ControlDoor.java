@@ -25,6 +25,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.Chunk;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.WorldShell;
@@ -128,7 +129,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 					BlockPos bp = new BlockPos(x, y, z).add(pos);
 					IBlockState state = ws.getBlockState(bp);
 					if(!(state.getBlock() instanceof BlockTardisTop) && state.getMaterial() != Material.AIR){
-						int light = MathHelper.clamp(ws.getLightFromNeighbors(bp.up()) + (ws.isDaytime() ? ws.getLightFromNeighborsFor(EnumSkyBlock.SKY, bp.up()) + 1 : 1), 0, 15);
+						int light = MathHelper.clamp(ws.getLightFromNeighbors(bp.up()) + (ws.isDaytime() ? getLightFromNeighborsFor(ws, EnumSkyBlock.SKY, bp.up()) + 1 : 1), 0, 15);
 						map.put(bp, new BlockStorage(state, ws.getTileEntity(bp), light));
 					}
 				}
@@ -136,6 +137,66 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor {
 		}
 		return map;
 	}
+	
+	public int getLightFromNeighborsFor(WorldServer server, EnumSkyBlock type, BlockPos pos)
+	{
+		if (!server.provider.hasSkyLight() && type == EnumSkyBlock.SKY)
+		{
+			return 0;
+		}
+		else
+		{
+			if (pos.getY() < 0)
+			{
+				pos = new BlockPos(pos.getX(), 0, pos.getZ());
+			}
+			
+			if (!server.isValid(pos))
+			{
+				return type.defaultLightValue;
+			}
+			else if (!server.isBlockLoaded(pos))
+			{
+				return type.defaultLightValue;
+			}
+			else if (server.getBlockState(pos).useNeighborBrightness())
+			{
+				int i1 = server.getLightFor(type, pos.up());
+				int i = server.getLightFor(type, pos.east());
+				int j = server.getLightFor(type, pos.west());
+				int k = server.getLightFor(type, pos.south());
+				int l = server.getLightFor(type, pos.north());
+				
+				if (i > i1)
+				{
+					i1 = i;
+				}
+				
+				if (j > i1)
+				{
+					i1 = j;
+				}
+				
+				if (k > i1)
+				{
+					i1 = k;
+				}
+				
+				if (l > i1)
+				{
+					i1 = l;
+				}
+				
+				return i1;
+			}
+			else
+			{
+				Chunk chunk = server.getChunk(pos);
+				return chunk.getLightFor(type, pos);
+			}
+		}
+	}
+	
 	
 	public void syncWorldShell() {
 		NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI(this.getEntityId()));
