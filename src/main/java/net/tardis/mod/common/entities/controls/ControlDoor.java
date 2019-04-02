@@ -217,9 +217,9 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if(this.world.getTotalWorldTime() % 200 == 0)
+		if(this.isOpen() && this.world.getTotalWorldTime() % 200 == 0)
 			this.updateWorldShell();
-		if(world.isRemote) {
+		if(world.isRemote && this.isOpen()) {
 			if(this.shell.getOffset().equals(BlockPos.ORIGIN))
 				this.syncWorldShell();
 			if(world.getTotalWorldTime() % 200 == 1)
