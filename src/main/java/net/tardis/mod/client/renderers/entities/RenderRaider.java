@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers.entities;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.common.entities.EntityRaider;
 
@@ -17,6 +18,7 @@ public class RenderRaider extends RenderLiving<EntityRaider> {
 		super(rendermanagerIn, STEVE, 0.3F);
 		STEVE.isChild = false;
 		ALEX.isChild = false;
+		addLayer(new LayerHeldItem(this));
 	}
 
 

@@ -84,6 +84,7 @@ public class TStrings {
 		public static final String FOLLOW = "companion.tardis.follow.";
 		public static final String GO_TO_TARDIS = "companion.tardis.tardis";
 		public static final String BRING_TARDIS = "companion.tardis.fetch";
+		public static final String TAKE_THIS = "companion.tardis.take";
 		public static final String SAVED = "companion.tardis.saved.dalek";
 	}
 

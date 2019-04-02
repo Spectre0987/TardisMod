@@ -20,6 +20,16 @@
       }
     ]
   },
+  "tardis_no_fuel": {
+    "category": "block",
+    "subtitle": "tardis.subtitle.vworp",
+    "sounds": [
+      {
+        "name": "tardis:tardis_no_fuel",
+        "stream": false
+      }
+    ]
+  },
 "control_stabilizers_on": {
     "category": "block",
     "subtitle": "tardis.subtitle.stabilizers_on",

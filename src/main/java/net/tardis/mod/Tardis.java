@@ -150,7 +150,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
-	public static final String VERSION = "0.1.0A";
+	public static final String VERSION = "0.1.0b";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = true;
 	public static Logger LOG = LogManager.getLogger(NAME);
@@ -277,7 +277,7 @@ public class Tardis {
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
 		EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
 		EntityHelper.registerMobEgg(EntityQuark.class, "quark", 5, 5, 2);
-		EntityHelper.registerMobEgg(EntityRaider.class, "raider", 5, 5, 2);
+		EntityHelper.registerMobEgg(EntityRaider.class, "TMraider", 5, 5, 2);
 		//EntityHelper.registerNoSpawnEgg(EntityCybermanTomb.class, "cyberman_tomb", 5, 5);
 		EntityHelper.registerMobEgg(EntityAdipose.class, "adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance, 5, 3);
 

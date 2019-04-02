@@ -81,7 +81,7 @@ public class TDimensions {
 	//		GALLIFREY_ID = TardisConfig.Dimensions.gallifreyDimension;
 	//	else GALLIFREY_ID = DimensionManager.getNextFreeDimId();
 	//	GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
-	//	DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
+		//DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
 	}
 
 	@EventBusSubscriber(modid = Tardis.MODID)

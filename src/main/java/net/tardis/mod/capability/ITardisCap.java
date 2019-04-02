@@ -43,7 +43,14 @@ public interface ITardisCap extends INBTSerializable<NBTTagCompound> {
 	void setPrevRot(Vec2d vec);
 	Vec2d getPrevRot();
 	
-	public static class Vec2d {
+	CapabilityTardis.TardisFlightState getFlightState();
+	
+	void setFlightState(CapabilityTardis.TardisFlightState state);
+	
+	float getAlpha();
+	
+	
+	class Vec2d {
 		public double x;
 		public double y;
 		

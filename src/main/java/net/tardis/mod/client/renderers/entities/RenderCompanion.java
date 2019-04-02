@@ -3,6 +3,8 @@ package net.tardis.mod.client.renderers.entities;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.layers.LayerHeldBlock;
+import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
@@ -18,6 +20,7 @@ public class RenderCompanion extends RenderLiving<EntityCompanion> {
 		super(rendermanagerIn, STEVE, 0.3F);
 		STEVE.isChild = false;
 		ALEX.isChild = false;
+		addLayer(new LayerHeldItem(this));
 	}
 
 	@Override

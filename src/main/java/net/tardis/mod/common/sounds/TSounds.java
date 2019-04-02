@@ -64,6 +64,7 @@ public class TSounds {
 	public static SoundEvent FOOD_MACHINE = register("1963_food_machine");
 
 	public static SoundEvent tardis_land = register("tardis_land");
+	public static SoundEvent tardis_no_fuel = register("tardis_no_fuel");
 
 
 	public static SoundEvent register(String name) {

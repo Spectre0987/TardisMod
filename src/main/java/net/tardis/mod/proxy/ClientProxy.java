@@ -1,7 +1,5 @@
 package net.tardis.mod.proxy;
 
-import java.util.ArrayList;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelOcelot;
@@ -22,7 +20,6 @@ import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.guis.GuiConsoleChange;
 import net.tardis.mod.client.guis.GuiToggleHum;
-import net.tardis.mod.client.handler.ClientHandler;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.client.models.decoration.ModelBChair;
@@ -76,6 +73,7 @@ import net.tardis.mod.client.renderers.items.RenderItemTardis;
 import net.tardis.mod.client.renderers.items.RenderItemTardis02;
 import net.tardis.mod.client.renderers.items.RenderItemTardis03;
 import net.tardis.mod.client.renderers.items.RenderTEISRItem;
+import net.tardis.mod.client.renderers.layers.RenderFlightMode;
 import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
@@ -151,6 +149,8 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 import net.tardis.mod.config.TardisConfig;
+
+import java.util.ArrayList;
 
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientProxy extends ServerProxy {
@@ -330,6 +330,6 @@ public class ClientProxy extends ServerProxy {
 	@Override
 	public void postInit() {
 		super.postInit();
-		ClientHandler.cacheFlightModels();
+		RenderFlightMode.cacheFlightModels();
 	}
 }

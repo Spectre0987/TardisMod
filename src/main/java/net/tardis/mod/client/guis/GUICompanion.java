@@ -39,20 +39,10 @@ public class GUICompanion extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		int id = button.id;
-		EnumAction action = null;
-		if (id == 0)
-			action = EnumAction.FOLLOW;
-		else if (id == 1)
-			action = EnumAction.GO_TO_TARDIS;
-		else if (id == 2)
-			action = EnumAction.BRING_TARDIS;
-		else if(id == 3)
-			action = EnumAction.TAKE_HELD;
-		if (action != null) {
-			NetworkHandler.NETWORK.sendToServer(new MessageCompanion(entityID, action));
-			Minecraft.getMinecraft().displayGuiScreen(null);
+		try{
+			((ButtonText)button).getAction().call();
 		}
+		catch(Exception e) {}
 		super.actionPerformed(button);
 	}
 
@@ -61,20 +51,28 @@ public class GUICompanion extends GuiScreen {
 		super.initGui();
 		this.buttonList.clear();
 		id = 0;
-		this.addText(new TextComponentTranslation(TStrings.Companions.FOLLOW + ((EntityCompanion) Minecraft.getMinecraft().world.getEntityByID(entityID)).getSit()).getFormattedText());
-		this.addText(new TextComponentTranslation(TStrings.Companions.GO_TO_TARDIS).getFormattedText());
+		this.addText(new TextComponentTranslation(TStrings.Companions.FOLLOW + ((EntityCompanion) Minecraft.getMinecraft().world.getEntityByID(entityID)).getSit()).getFormattedText(), EnumAction.FOLLOW);
+		this.addText(new TextComponentTranslation(TStrings.Companions.GO_TO_TARDIS).getFormattedText(), EnumAction.GO_TO_TARDIS);
 		if (((EntityCompanion) Minecraft.getMinecraft().world.getEntityByID(entityID)).getXP() > 0)
-			this.addText(new TextComponentTranslation(TStrings.Companions.BRING_TARDIS).getFormattedText());
-		this.addText("Fucking take this");
+		this.addText(new TextComponentTranslation(TStrings.Companions.TAKE_THIS).getFormattedText(), EnumAction.TAKE_HELD);
+			this.addText(new TextComponentTranslation(TStrings.Companions.BRING_TARDIS).getFormattedText(), EnumAction.BRING_TARDIS);
 		id = 0;
 	}
 
-	private void addText(String text) {
+	private void addText(String text, EnumAction action) {
 		int nid = id;
-		this.addButton(new ButtonText(nid, res.getScaledWidth() / 2, res.getScaledHeight() / 2 + ((Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * nid), Minecraft.getMinecraft().fontRenderer, text));
+		ButtonText tb = this.addButton(new ButtonText(nid, res.getScaledWidth() / 2, res.getScaledHeight() / 2 + ((Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2) * nid), Minecraft.getMinecraft().fontRenderer, text));
+		tb.addAction(() -> {
+			this.sendMessage(action);
+			Minecraft.getMinecraft().displayGuiScreen(null);
+		});
 		id++;
 	}
 
+	public void sendMessage(EnumAction action) {
+		NetworkHandler.NETWORK.sendToServer(new MessageCompanion(this.entityID, action));
+	}
+	
 	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
