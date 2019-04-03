@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.capability.CapabilityTardis;
+import net.tardis.mod.client.TardisKeyBinds;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.client.renderers.layers.RenderFlightMode;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
@@ -25,6 +26,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageDematAnim;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 
 @Mod.EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
@@ -87,6 +89,13 @@ public class ClientHandler {
 			if (!CapabilityTardis.get(player).hasFuel()) {
 				moveType.jump = false;
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onClientTick(TickEvent.ClientTickEvent e) {
+		if (TardisKeyBinds.DEMAT_REMAT_ANIM.isPressed()){
+			NetworkHandler.NETWORK.sendToServer(new MessageDematAnim());
 		}
 	}
 	

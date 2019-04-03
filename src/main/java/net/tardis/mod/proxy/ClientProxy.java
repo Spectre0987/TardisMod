@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
+import net.tardis.mod.client.TardisKeyBinds;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.guis.GuiConsoleChange;
 import net.tardis.mod.client.guis.GuiToggleHum;
@@ -325,6 +326,8 @@ public class ClientProxy extends ServerProxy {
 		EntityRaider.EnumRaiderType.MATT.setModel(RenderRaider.STEVE);
 		EntityRaider.EnumRaiderType.RICHARD.setModel(RenderRaider.ALEX);
 		EntityRaider.EnumRaiderType.STEVEN.setModel(RenderRaider.STEVE);
+
+		TardisKeyBinds.init();
 	}
 	
 	@Override
