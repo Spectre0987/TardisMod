@@ -317,7 +317,7 @@ public class Tardis {
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_aquatic.png", "interior/interior_aquatic", new BlockPos(19,2,18));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_industrial.png", "interior/interior_industrial", new BlockPos(11,2,17));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_helian.png", "interior/interior_helian", new BlockPos(18,1,18));
-		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_iceshrine.png", "interior/interior_iceshrine", new BlockPos(12, 2, 12));
+		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_iceshrine.png", "interior/interior_iceshrine", new BlockPos(11, 2, 11));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_magmatic.png", "interior/interior_magmatic", new BlockPos(21, 3, 16));
 
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_builder.png", "interior/interior_builder", new BlockPos(9, 1, 9));
