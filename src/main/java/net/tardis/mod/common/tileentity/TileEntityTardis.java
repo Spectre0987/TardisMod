@@ -99,7 +99,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private BlockPos tardisLocation = BlockPos.ORIGIN;
 	private BlockPos tardisDestination = BlockPos.ORIGIN;
 	public int dimension = 0;
-	private int destDim = 0;
+	public int destDim = 0;
 	public int dimIndex = 0;
 	private boolean isLoading = false;
 	private static IBlockState blockBase = TBlocks.tardis.getDefaultState();

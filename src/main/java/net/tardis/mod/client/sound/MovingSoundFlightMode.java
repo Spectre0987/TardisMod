@@ -42,6 +42,26 @@ public class MovingSoundFlightMode extends MovingSound {
 			if (entityObject instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entityObject;
 				
+				//Remat
+				if(sound.getSoundLocation().equals(TSounds.tardis_land.getRegistryName())) {
+					if (CapabilityTardis.get(player).getFlightState() == CapabilityTardis.TardisFlightState.REMAT) {
+						volume = 1;
+					} else {
+						volume = 0;
+					}
+				}
+				
+				
+				//Remat
+				if(sound.getSoundLocation().equals(TSounds.takeoff.getRegistryName())) {
+					if (CapabilityTardis.get(player).getFlightState() == CapabilityTardis.TardisFlightState.DEMAT) {
+						volume = 1;
+					} else {
+						volume = 0;
+					}
+				}
+				
+				
 				//Fly loop
 				if(sound.getSoundLocation().equals(TSounds.flyLoop.getRegistryName())) {
 					if (player.onGround || !CapabilityTardis.get(player).hasFuel()) {

@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.capabilities.Capability;
@@ -40,6 +41,8 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageCapabilityDoorOpen;
 import net.tardis.mod.network.packets.MessageSetupFlight;
 import net.tardis.mod.network.packets.MessageSyncCap;
+import net.tardis.mod.util.TardisTeleporter;
+import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
@@ -246,12 +249,12 @@ public class CapabilityTardis implements ITardisCap {
 			alpha += 0.005F;
 		}
 		
-		if (alpha >= 1F) {
+		if (alpha >= 1F  && flightState != TardisFlightState.REMAT_FULL) {
 			setFlightState(TardisFlightState.REMAT_FULL);
 			alpha = 1F;
 		}
 		
-		if (alpha <= 0F) {
+		if (alpha <= 0F && flightState != TardisFlightState.DEMAT_FULL) {
 			setFlightState(TardisFlightState.DEMAT_FULL);
 			alpha = 0F;
 		}

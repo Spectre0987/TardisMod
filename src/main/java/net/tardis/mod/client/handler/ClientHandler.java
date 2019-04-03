@@ -2,7 +2,6 @@ package net.tardis.mod.client.handler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovementInput;
@@ -10,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -69,12 +67,6 @@ public class ClientHandler {
 		}
 	}
 	
-	@SubscribeEvent
-	public static void fixLight(ModelBakeEvent event) {
-		for (ModelResourceLocation loc : event.getModelRegistry().getKeys()) {
-			
-		}
-	}
 	
 	@SubscribeEvent
 	public static void flyRender(RenderPlayerEvent.Pre e) {
