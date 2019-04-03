@@ -6,6 +6,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.*;
 import net.tardis.mod.util.common.helpers.Helper;
@@ -50,7 +51,9 @@ public class ControlLaunch extends EntityControl {
 						tardis.crash(false);
 					}
 				} else {
-					PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.has_pilot"), true);
+					//PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.has_pilot"), true);
+					EntityPlayer pilot = tardis.getFlightPilot();
+					CapabilityTardis.get(pilot).setFlightState(CapabilityTardis.TardisFlightState.DEMAT);
 				}
 			}
 		} else

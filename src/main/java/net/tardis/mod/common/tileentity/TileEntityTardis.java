@@ -213,7 +213,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					player.connection.sendPacket(new SPacketSoundEffect(TSounds.takeoff, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
 				}
 			else if (this.ticksToTravel > 200 && this.ticksToTravel < this.totalTimeToTravel - 200) {
-				if (this.ticksToTravel % 40 == 0) {
+				if (this.ticksToTravel % 40 == 0 || hasPilot() && getFlightPilot().ticksExisted % 40 ==0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
