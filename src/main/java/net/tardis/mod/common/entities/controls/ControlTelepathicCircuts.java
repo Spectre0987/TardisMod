@@ -56,7 +56,7 @@ public class ControlTelepathicCircuts extends EntityControl {
 					TileEntityTardis tardis = (TileEntityTardis) te;
 					if (!tardis.hasPilot() && !tardis.isInFlight()) {
 						if (player.isSneaking()) {
-							CapabilityTardis.setupFlight(player, tardis);
+							CapabilityTardis.setupFlight(player, tardis, true);
 						}
 					}
 				}
