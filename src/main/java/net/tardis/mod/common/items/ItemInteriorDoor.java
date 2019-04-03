@@ -20,7 +20,8 @@ public class ItemInteriorDoor extends ItemBase {
 		if (!worldIn.isRemote) {
 			if (facing == EnumFacing.UP) {
 				ControlDoor door = new ControlDoor(worldIn);
-				door.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + (player.isSneaking() ? 0 : 0.5), Helper.getAngleFromFacing(player.getHorizontalFacing()), 0);
+				double height = worldIn.getBlockState(pos).getBoundingBox(worldIn, pos).maxY;
+				door.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + height, pos.getZ() + (player.isSneaking() ? 0 : 0.5), Helper.getAngleFromFacing(player.getHorizontalFacing()), 0);
 				worldIn.spawnEntity(door);
 				player.getHeldItem(hand).shrink(1);
 			}

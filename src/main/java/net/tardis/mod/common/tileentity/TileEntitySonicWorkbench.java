@@ -1,13 +1,18 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntitySonicWorkbench extends TileEntity implements IInventory{
 
 	ItemStack craftSlot = ItemStack.EMPTY;
+	public static Map<Item, Item[]> RECIPES = new HashMap<>();
 
 	@Override
 	public String getName() {

@@ -1,6 +1,5 @@
 package net.tardis.mod;
 
-import net.tardis.mod.common.protocols.ProtocolForceField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,7 +51,6 @@ import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.EntityRaider;
-import net.tardis.mod.common.entities.EntityShip;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -76,6 +74,7 @@ import net.tardis.mod.common.entities.controls.ControlZ;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentCorridor;
 import net.tardis.mod.common.entities.hellbent.EntityHellbentDoor;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
+import net.tardis.mod.common.items.ItemSonic;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolChangeInterior;
@@ -151,7 +150,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
-	public static final String VERSION = "0.0.9B";
+	public static final String VERSION = "0.1.0b";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = true;
 	public static Logger LOG = LogManager.getLogger(NAME);
@@ -208,7 +207,6 @@ public class Tardis {
 		EntityHelper.registerNoSpawn(EntityBessie.class, "bessie");
 		EntityHelper.registerNoSpawn(EntityCompanion.class, "companion");
 		EntityHelper.registerNoSpawn(EntityDalekSkaro.class, "dalek_scaro");
-		EntityHelper.registerNoSpawn(EntityShip.class, "ship");
 		EntityHelper.registerStatic(EntityChair.class, "chair");
 		EntityHelper.registerStatic(EntityItemMaterializer.class, "item_materializer");
 		EntityHelper.registerStatic(EntityDoorsBrakSecondary.class, "doors_brak_second");
@@ -279,7 +277,7 @@ public class Tardis {
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
 		EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
 		EntityHelper.registerMobEgg(EntityQuark.class, "quark", 5, 5, 2);
-		EntityHelper.registerMobEgg(EntityRaider.class, "raider", 5, 5, 2);
+		EntityHelper.registerMobEgg(EntityRaider.class, "TMraider", 5, 5, 2);
 		//EntityHelper.registerNoSpawnEgg(EntityCybermanTomb.class, "cyberman_tomb", 5, 5);
 		EntityHelper.registerMobEgg(EntityAdipose.class, "adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance, 5, 3);
 
@@ -315,16 +313,23 @@ public class Tardis {
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_1.png", "interior/interior_1", new BlockPos(9, 2, 9));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_greymatter.png", "interior/interior_greymatter", new BlockPos(17 ,2 ,17));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_study.png", "interior/interior_study", new BlockPos(14,2,8));
-		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_lodge.png", "interior/interior_lodge", new BlockPos(21,2,18));
-		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_aquatic.png", "interior/interior_aquatic", new BlockPos(19,1,18));
+		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_lodge.png", "interior/interior_lodge", new BlockPos(17,2,17));
+		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_aquatic.png", "interior/interior_aquatic", new BlockPos(19,2,18));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_industrial.png", "interior/interior_industrial", new BlockPos(11,2,17));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_helian.png", "interior/interior_helian", new BlockPos(18,1,18));
-		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_iceshrine.png", "interior/interior_iceshrine", new BlockPos(12, 2, 12));
+		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_iceshrine.png", "interior/interior_iceshrine", new BlockPos(11, 2, 11));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_magmatic.png", "interior/interior_magmatic", new BlockPos(21, 3, 16));
 
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_builder.png", "interior/interior_builder", new BlockPos(9, 1, 9));
 
 		CapabilityManager.INSTANCE.register(ITardisCap.class, new TardisCapStorage(), CapabilityTardis::new);
+		
+		TileEntitySonicWorkbench.RECIPES.put(TItems.key, new Item[]{TItems.key_01});
+		Item[] sonics = new Item[ItemSonic.SONICS.size()];
+		for(int sonicID = 0; sonicID < sonics.length; ++sonicID) {
+			sonics[sonicID] = ItemSonic.SONICS.get(sonicID);
+		}
+		TileEntitySonicWorkbench.RECIPES.put(TItems.sonic_screwdriver, sonics);
 	}
 
 	@EventHandler

@@ -1,21 +1,18 @@
 package net.tardis.mod.common.ars;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.common.entities.controls.EntityControl;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.tardis.mod.common.IDoor;
+import net.tardis.mod.common.entities.controls.ControlDoor;
 
 public class ConsoleRoom {
 	
@@ -39,22 +36,16 @@ public class ConsoleRoom {
 		return this.filePath;
 	}
 	
+	AxisAlignedBB BB = new AxisAlignedBB(-20, -20, -20, 20, 20, 20);
+	
 	public void generate(WorldServer world, BlockPos pos) {
-		for (Entity entity : world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(pos).grow(20))) {
-			if (!(entity instanceof EntityControl) || !(entity instanceof EntityLivingBase)) {
-				entity.setDead();
-				world.updateEntities();
-				world.updateEntityWithOptionalForce(entity, true);
-			}
+		for(Entity ent : world.getEntitiesWithinAABB(Entity.class, BB)) {
+			if(ent instanceof IDoor || ent instanceof ControlDoor)
+				ent.setDead();
 		}
 		Template temp = world.getStructureTemplateManager().get(world.getMinecraftServer(), filePath);
 		PlacementSettings ps = new PlacementSettings();
-		IBlockState consoleState = world.getBlockState(pos);
-		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(pos);
 		temp.addBlocksToWorld(world, pos.subtract(consolePos), ps);
-		world.setBlockState(pos, consoleState);
-		if (tardis != null)
-			((TileEntityTardis) world.getTileEntity(pos)).readFromNBT(tardis.writeToNBT(new NBTTagCompound()));
 	}
 	
 	public BlockPos getConsolePos() {

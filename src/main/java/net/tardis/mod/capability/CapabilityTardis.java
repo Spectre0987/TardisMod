@@ -1,62 +1,75 @@
 package net.tardis.mod.capability;
 
-import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.PlayerCapabilities;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.capability.TardisCapStorage.TardisCapProvider;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
-import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageCapabilityDoorOpen;
-import net.tardis.mod.network.packets.MessagePlayFlySound;
+import net.tardis.mod.network.packets.MessageSetupFlight;
 import net.tardis.mod.network.packets.MessageSyncCap;
+import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.UUID;
 
 public class CapabilityTardis implements ITardisCap {
 	
 	private EntityPlayer player;
-	private BlockPos pos = BlockPos.ORIGIN;
-	private boolean isInFlight;
+	private BlockPos posFly = BlockPos.ORIGIN;
+	private boolean isInFlight = false;
 	private int exterior = Block.getStateId(TBlocks.tardis_top.getDefaultState());
 	private boolean hasFuel = true;
 	private int timeOnGround = 0;
 	private boolean isOpen = false;
+	private static AttributeModifier mod = new AttributeModifier(UUID.fromString("ad4ab5e6-6904-4429-9883-15ac8aeef97d"), "Flight mode", 0.12F, 0);
+	private Vec3d prevPos = new Vec3d(0, 0, 0);
+	private Vec2d prevRot = new Vec2d(0, 0);
+	private float alpha = 1;
+	
+	static {
+		mod.setSaved(false);
+	}
+	
+	private BlockPos intPos = BlockPos.ORIGIN;
+	private TardisFlightState flightState = TardisFlightState.REMAT_FULL;
 	
 	public CapabilityTardis() {
+		
 	}
 	
 	public CapabilityTardis(EntityPlayer player) {
@@ -64,13 +77,23 @@ public class CapabilityTardis implements ITardisCap {
 	}
 	
 	@Override
+	public void setFlightTardis(BlockPos pos) {
+		this.posFly = pos;
+	}
+	
+	@Override
+	public BlockPos getFlightTardis() {
+		return posFly;
+	}
+	
+	@Override
 	public void setTardis(BlockPos pos) {
-		this.pos = pos;
+		this.intPos = pos;
 	}
 	
 	@Override
 	public BlockPos getTardis() {
-		return pos;
+		return intPos;
 	}
 	
 	@Override
@@ -83,91 +106,49 @@ public class CapabilityTardis implements ITardisCap {
 		isInFlight = inFlight;
 	}
 	
-	private static final Predicate<Entity> ENTITY = p_apply_1_ -> p_apply_1_ instanceof EntityLiving;
-	
-	@Override
-	public void update() {
-		if (!isInFlight && player.capabilities.getFlySpeed() == 0.75F) {
-			setSpeeds(player, true);
-		}
-		
-		//Set the players Tardis position when they are in the Tardis Dimension
-		if (getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
-			setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
-		} else {
-			
-			if (!getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID && !isInFlight) {
-				setTardis(BlockPos.ORIGIN);
-			}
-		}
-		
-		if (player.dimension != TDimensions.TARDIS_ID) {
-			if (!getTardis().equals(BlockPos.ORIGIN)) {
-				if (isInFlight()) {
-					
-					if (isOpen()) {
-						//	for (Entity entity : player.world.getEntitiesInAABBexcluding(player, player.getCollisionBoundingBox().grow(4), ENTITY)) {
-						//		if (entity != null && !entity.isDead) {
-						//			ITardisCap cap = get(player);
-						//			TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
-						//			if (console != null) {
-						//				console.enterTARDIS(entity);
-						//			}
-						//		}
-						//	}
-					}
-					
-					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
-						timeOnGround++;
-					} else {
-						timeOnGround = 0;
-					}
-					
-					if (timeOnGround >= 50 && player.isSneaking()) {
-						endFlight(player);
-					}
-					
-					if (hasFuel) {
-						if(!player.capabilities.allowFlying) {
-							player.capabilities.allowFlying = true;
-							setSpeeds(player, false);
-							player.velocityChanged = true;
-						}
-					} else {
-						if (player.ticksExisted % 100 == 0) {
-							player.world.playSound(null, player.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 0.5F, 1F);
-						}
-						setSpeeds(player, true);
-						player.capabilities.isFlying = false;
-						player.capabilities.allowFlying = false;
-						player.velocityChanged = true;
-					}
-				} else {
-					endFlight(player);
-					setTardis(BlockPos.ORIGIN);
-				}
+	public static void setSpeeds(EntityPlayer player, boolean reset) {
+		if (reset) {
+			if (player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(mod)) {
+				player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(mod.getID());
 			}
 		} else {
-			if (isInFlight()) {
-				endFlight(player);
+			if (!player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(mod)) {
+				player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(mod);
 			}
-		}
-		
-		
-		//Return the player to the interior when they attempt to move away from it
-		if (player.dimension == TDimensions.TARDIS_ID && !getTardis().equals(BlockPos.ORIGIN)) {
-			if (player.getPosition().distanceSq(getTardis()) > 16384) {
-				player.setPositionAndUpdate(getTardis().getX(), getTardis().getY(), getTardis().getZ());
-			}
-			
 		}
 	}
 	
-	public static void setSpeeds(EntityPlayer player, boolean reset) {
-		if (reset) {
-			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, player.capabilities, 0.05F, 5);
+	public static void setupFlight(EntityPlayer player, TileEntityTardis console, boolean move) {
+		if (player.world.isRemote) return;
+		setSpeeds(player, false);
+		ITardisCap cap = get(player);
+		cap.setTimeOnGround(0);
+		if (console != null && !console.hasPilot() && console.fuel > 0) {
+			console.setFlightPilot(player);
+			cap.setFlightTardis(console.getPos());
+			cap.setFlightState(TardisFlightState.REMAT);
+			if (move) {
+				console.transferPlayer(player, false);
+				cap.setPrevPos(player.getPositionVector());
+				cap.setPrevRot(new Vec2d((double) player.rotationYaw, (double) player.rotationPitch));
+				WorldServer world = DimensionManager.getWorld(console.dimension);
+				player.setPositionAndUpdate(console.getLocation().getX() + 0.5, console.getLocation().getY() + 1, console.getLocation().getZ() + 0.5);
+				world.setBlockState(console.getLocation(), Blocks.AIR.getDefaultState());
+				world.setBlockState(console.getLocation().up(), Blocks.AIR.getDefaultState());
+				NetworkHandler.NETWORK.sendToAll(new MessageSetupFlight(player.getUniqueID().toString()));
+			}
+			cap.setInFlight(true);
+			cap.setExterior(console.getTopBlock());
+			cap.setHasFuel(true);
+			player.capabilities.allowFlying = true;
+			player.capabilities.isFlying = true;
+			player.capabilities.allowEdit = false;
+			player.velocityChanged = true;
+			player.eyeHeight = 2;
+			player.sendPlayerAbilities();
+			cap.sync();
 		} else {
-			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, player.capabilities, 0.12F, 5);
+			PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.has_pilot"), true);
 		}
 	}
 	
@@ -216,30 +197,167 @@ public class CapabilityTardis implements ITardisCap {
 		return isOpen;
 	}
 	
-	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setInteger("exterior", exterior);
-		nbt.setBoolean("inFlight", isInFlight);
-		nbt.setBoolean("hasFuel", hasFuel());
-		nbt.setInteger("groundTime", timeOnGround);
-		nbt.setBoolean("open", isOpen);
-		return nbt;
+	public static void endFlight(EntityPlayer player, boolean placeExterior) {
+		if (player.world.isRemote) return;
+		setSpeeds(player, true);
+		ITardisCap cap = get(player);
+		TileEntityTardis console = TardisHelper.getConsole(cap.getFlightTardis());
+		BlockPos bPos = player.getPosition();
+		if (!cap.isInFlight()) return;
+		if (console != null) {
+			
+			WorldServer exteriorWorld = (WorldServer) player.world;
+			
+			if (placeExterior) {
+				exteriorWorld.getChunkProvider().loadChunk(bPos.getX() * 16, bPos.getZ() * 16);
+				exteriorWorld.setBlockState(bPos, TBlocks.tardis.getDefaultState());
+				exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
+				BlockPos consolePos = cap.getFlightTardis();
+				exteriorWorld.addScheduledTask(() -> {
+					TileEntity door = exteriorWorld.getTileEntity(bPos.up());
+					if (door instanceof TileEntityDoor) {
+						((TileEntityDoor) door).setConsolePos(consolePos);
+						((TileEntityDoor) Objects.requireNonNull(exteriorWorld.getTileEntity(bPos.up()))).forceVisible();
+					}
+				});
+			}
+			
+			console.setLocation(bPos);
+			console.dimension = exteriorWorld.provider.getDimension();
+			console.setFlightPilot(null);
+			
+			
+			cap.setTardis(BlockPos.ORIGIN);
+			cap.setInFlight(false);
+			console.enterTARDIS(player);
+			if (player instanceof EntityPlayerMP) {
+				((EntityPlayerMP) player).interactionManager.getGameType().configurePlayerCapabilities(player.capabilities);
+			}
+			player.velocityChanged = true;
+			cap.sync();
+			player.eyeHeight = player.getDefaultEyeHeight();
+			player.sendPlayerAbilities();
+			
+			
+			cap.setTimeOnGround(0);
+			((EntityPlayerMP) player).connection.setPlayerLocation(cap.getPrevPos().x, cap.getPrevPos().y, cap.getPrevPos().z, (float) cap.getPrevRot().x, (float) cap.getPrevRot().y);
+		}
 	}
 	
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		exterior = nbt.getInteger("exterior");
-		isInFlight = nbt.getBoolean("inFlight");
-		hasFuel = nbt.getBoolean("hasFuel");
-		timeOnGround = nbt.getInteger("groundTime");
-		isOpen = nbt.getBoolean("open");
+	public void update() {
+		
+		//Interior Handling
+		if (this.getTardis().equals(BlockPos.ORIGIN) && player.dimension == TDimensions.TARDIS_ID) {
+			this.setTardis(TardisHelper.getTardisForPosition(player.getPosition()));
+		} else if (!this.getTardis().equals(BlockPos.ORIGIN) && player.dimension != TDimensions.TARDIS_ID) {
+			this.setTardis(BlockPos.ORIGIN);
+		}
+		if (player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
+			if (player.getPosition().distanceSq(this.getTardis()) > 16384) {
+				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 1, this.getTardis().getZ());
+				PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.confines"), true);
+			}
+		}
+		
+		//Flight
+		if (!isInFlight()) {
+			setSpeeds(player, true);
+		}
+		
+		if (player.dimension != TDimensions.TARDIS_ID) {
+			if (!getFlightTardis().equals(BlockPos.ORIGIN)) {
+				if (isInFlight()) {
+					
+					//Alpha "Animation"
+					if (getFlightState().equals(TardisFlightState.DEMAT)) {
+						alpha -= 0.005F;
+						sync();
+					}
+					
+					if (getFlightState().equals(TardisFlightState.REMAT)) {
+						alpha += 0.005F;
+						sync();
+					}
+					
+					if (alpha >= 1F && flightState != TardisFlightState.REMAT_FULL) {
+						setFlightState(TardisFlightState.REMAT_FULL);
+						alpha = 1F;
+						sync();
+					}
+					
+					if (alpha <= 0F && flightState != TardisFlightState.DEMAT_FULL) {
+						setFlightState(TardisFlightState.DEMAT_FULL);
+						alpha = 0F;
+						if (!player.world.isRemote) {
+							TileEntityTardis console = TardisHelper.getConsole(getFlightTardis());
+							if (console != null) {
+								console.setFlightPilot(null);
+								Vec3d backUpPos = prevPos;
+								Vec2d bacupRot = prevRot;
+								System.out.println(console.getDestination());
+								System.out.println(console.destDim);
+								//if (console.dimension != player.dimension) {
+								Helper.transferToWorld((EntityPlayerMP) player, (WorldServer) player.world, console.getDestination(), console.destDim);
+								//	} else {
+								///		player.setLocationAndAngles(console.getDestination().getX(), console.getDestination().getY(), console.getDestination().getZ(), player.rotationYaw, player.rotationPitch);
+								//	}
+								setPrevPos(backUpPos);
+								setPrevRot(bacupRot);
+							}
+							setupFlight(player, console, false);
+						}
+					}
+					
+					
+					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
+						timeOnGround++;
+					} else {
+						timeOnGround = 0;
+					}
+					
+					if (timeOnGround >= 50 && player.isSneaking()) {
+						endFlight(player, true);
+					}
+					
+					if (hasFuel) {
+						if (!player.capabilities.allowFlying || !player.capabilities.isFlying) {
+							player.capabilities.allowFlying = true;
+							player.capabilities.isFlying = true;
+							setSpeeds(player, false);
+							player.velocityChanged = true;
+						}
+					} else {
+						setSpeeds(player, true);
+						player.capabilities.isFlying = false;
+						player.capabilities.allowFlying = false;
+						player.velocityChanged = true;
+						
+						player.rotationPitch += (player.world.rand.nextInt(10) - 5) * 0.1;
+						player.rotationYaw += (player.world.rand.nextInt(10) - 5) * 0.1;
+						
+					}
+				} else {
+					endFlight(player, true);
+					setFlightTardis(BlockPos.ORIGIN);
+				}
+			}
+		} else {
+			if (isInFlight()) {
+				endFlight(player, true);
+			}
+		}
 	}
 	
 	
 	//===== CAPABILITY EVENTS =====
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)
 	public static class Events {
+		
+		@SubscribeEvent
+		public static void onJoin(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+			get(event.player).sync();
+		}
 		
 		@SubscribeEvent
 		public static void attach(AttachCapabilitiesEvent<Entity> event) {
@@ -263,16 +381,21 @@ public class CapabilityTardis implements ITardisCap {
 			
 			NBTTagCompound nbt = (NBTTagCompound) storage.writeNBT(TardisCapStorage.CAP, oldCap, null);
 			storage.readNBT(TardisCapStorage.CAP, newCap, null, nbt);
+		}
+		
+		@SubscribeEvent
+		public static void onPlayerLogout(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent e) {
+			ITardisCap pilotData = CapabilityTardis.get(e.player);
+			CapabilityTardis.endFlight(e.player, true);
+		}
+		
+		@SubscribeEvent
+		public static void trackPlayer(PlayerEvent.StartTracking event) {
 			get(event.getEntityPlayer()).sync();
 		}
 		
 		@SubscribeEvent
-		public static void playerTracking(PlayerEvent.StartTracking event) {
-			get(event.getEntityPlayer()).sync();
-		}
-		
-		@SubscribeEvent
-		public static void onPunch(PlayerInteractEvent empty) {
+		public static void onPunch(PlayerInteractEvent.LeftClickEmpty empty) {
 			EntityPlayer pilot = empty.getEntityPlayer();
 			ITardisCap data = get(pilot);
 			if (data.isInFlight()) {
@@ -281,25 +404,55 @@ public class CapabilityTardis implements ITardisCap {
 		}
 		
 		@SubscribeEvent
-		public static void onBreakBlock(BlockEvent.BreakEvent event){
+		public static void onBreakBlock(BlockEvent.BreakEvent event) {
 			EntityPlayer breaker = event.getPlayer();
 			ITardisCap data = get(breaker);
 			event.setCanceled(data.isInFlight());
 		}
 		
 		@SubscribeEvent
-		public static void onHurtPilot(LivingHurtEvent event){
-			if(event.getEntity() instanceof EntityPlayer){
+		public static void onKnockBack(LivingKnockBackEvent event) {
+			if (event.getEntity() instanceof EntityPlayer) {
 				EntityPlayer victim = (EntityPlayer) event.getEntity();
 				ITardisCap data = get(victim);
-				event.setAmount(0.0F);
-				for (TardisSystems.BaseSystem s : Objects.requireNonNull(TardisHelper.getConsole(data.getTardis())).systems) {
-					s.damage();
-				}
-				victim.world.playSound(null, victim.getPosition(), TSounds.cloister_bell, SoundCategory.BLOCKS, 0.5F, 1F);
+				event.setCanceled(data.isInFlight() && victim.onGround);
 			}
 		}
 		
+		@SubscribeEvent
+		public static void onHurtPilot(LivingHurtEvent event) {
+			if (event.getEntity().world.isRemote) return;
+			if (event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer victim = (EntityPlayer) event.getEntity();
+				ITardisCap data = get(victim);
+				if (!data.isInFlight()) return;
+				event.setAmount(0.0F);
+				TileEntityTardis tardis = TardisHelper.getConsole(data.getFlightTardis());
+				if (tardis == null) return;
+				for (TardisSystems.BaseSystem s : tardis.systems) {
+					s.wear();
+				}
+			}
+		}
+	}
+	
+	
+	@SubscribeEvent
+	public static void onPlayerRespawn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent event) {
+		get(event.player).sync();
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerChangedDimension(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent event) {
+		get(event.player).sync();
+	}
+	
+	
+	@SubscribeEvent
+	public static void onDeathEvent(LivingDeathEvent e) {
+		if (e.getEntityLiving() instanceof EntityPlayer) {
+			get((EntityPlayer) e.getEntityLiving()).sync();
+		}
 	}
 	
 	//===== HELPERS =====
@@ -312,72 +465,67 @@ public class CapabilityTardis implements ITardisCap {
 		throw new IllegalStateException("Missing Tardis capability: " + player + ", please report this to the issue tracker");
 	}
 	
-	public static void setupFlight(EntityPlayer player) {
-		setSpeeds(player, false);
-		ITardisCap cap = get(player);
-		cap.setTimeOnGround(0);
-		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
-		if (console != null && !console.hasPilot() && console.fuel > 0) {
-			console.setFlightPilot(player);
-			console.transferPlayer(player, false);
-			NetworkHandler.NETWORK.sendToDimension(new MessagePlayFlySound(TSounds.flyLoop, player.getUniqueID().toString()), player.dimension);
-			cap.setInFlight(true);
-			cap.setExterior(console.getTopBlock());
-			cap.setHasFuel(true);
-			player.capabilities.allowFlying = true;
-			player.capabilities.isFlying = true;
-			player.capabilities.allowEdit = false;
-			player.capabilities.disableDamage = true;
-			player.motionY += 8;
-			player.velocityChanged = true;
-			player.eyeHeight = 2;
-			player.sendPlayerAbilities();
-			player.setEntityInvulnerable(true);
-			cap.sync();
-			WorldServer world = DimensionManager.getWorld(console.dimension);
-			world.setBlockState(console.getLocation(), Blocks.AIR.getDefaultState());
-			world.setBlockState(console.getLocation().up(), Blocks.AIR.getDefaultState());
-		} else {
-			PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.has_pilot"), true);
-		}
+	@Override
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger("exterior", exterior);
+		nbt.setBoolean("inFlight", isInFlight);
+		nbt.setBoolean("hasFuel", hasFuel());
+		nbt.setInteger("groundTime", timeOnGround);
+		nbt.setBoolean("open", isOpen);
+		nbt.setString("flightState", flightState.name());
+		nbt.setFloat("alpha", alpha);
+		return nbt;
 	}
 	
-	public static void endFlight(EntityPlayer player) {
-		setSpeeds(player, true);
-		ITardisCap cap = get(player);
-		TileEntityTardis console = TardisHelper.getConsole(cap.getTardis());
-		BlockPos bPos = player.getPosition();
-		if (console != null) {
-			cap.setInFlight(false);
-			console.enterTARDIS(player);
-			player.capabilities.allowFlying = player.isCreative();
-			player.capabilities.isFlying = player.isCreative();
-			player.capabilities.allowEdit = true;
-			player.capabilities.disableDamage = false;
-			player.velocityChanged = true;
-			player.setEntityInvulnerable(player.isCreative());
-			cap.sync();
-			player.eyeHeight = player.getDefaultEyeHeight();
-			player.sendPlayerAbilities();
-			
-			if (player.world.isRemote) return;
-			WorldServer exteriorWorld = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(console.dimension);
-			
-			exteriorWorld.getChunkProvider().loadChunk(bPos.getX() * 16, bPos.getZ() * 16);
-			exteriorWorld.setBlockState(bPos, TBlocks.tardis.getDefaultState());
-			exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
-			BlockPos consolePos = cap.getTardis();
-			exteriorWorld.addScheduledTask(() -> {
-				TileEntity door = exteriorWorld.getTileEntity(bPos.up());
-				if (door instanceof TileEntityDoor) {
-					((TileEntityDoor) door).setConsolePos(consolePos);
-					((TileEntityDoor) Objects.requireNonNull(exteriorWorld.getTileEntity(bPos.up()))).forceVisible();
-				}
-			});
-			console.setLocation(bPos);
-			console.setFlightPilot(null);
-			cap.setTimeOnGround(0);
-		}
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		exterior = nbt.getInteger("exterior");
+		isInFlight = nbt.getBoolean("inFlight");
+		hasFuel = nbt.getBoolean("hasFuel");
+		timeOnGround = nbt.getInteger("groundTime");
+		isOpen = nbt.getBoolean("open");
+		flightState = TardisFlightState.valueOf(nbt.getString("flightState"));
+		alpha = nbt.getFloat("alpha");
+	}
+	
+	@Override
+	public void setPrevPos(Vec3d positionVector) {
+		this.prevPos = positionVector;
+	}
+	
+	@Override
+	public Vec3d getPrevPos() {
+		return this.prevPos;
+	}
+	
+	@Override
+	public void setPrevRot(Vec2d vec) {
+		this.prevRot = vec;
+	}
+	
+	@Override
+	public Vec2d getPrevRot() {
+		return prevRot;
+	}
+	
+	@Override
+	public TardisFlightState getFlightState() {
+		return flightState;
+	}
+	
+	@Override
+	public void setFlightState(TardisFlightState state) {
+		flightState = state;
+	}
+	
+	@Override
+	public float getAlpha() {
+		return alpha;
+	}
+	
+	public enum TardisFlightState {
+		REMAT, REMAT_FULL, DEMAT, DEMAT_FULL
 	}
 	
 }

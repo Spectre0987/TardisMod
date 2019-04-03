@@ -1,7 +1,6 @@
 package net.tardis.mod.proxy;
 
-import java.util.ArrayList;
-
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelOcelot;
 import net.minecraft.client.model.ModelPlayer;
@@ -19,14 +18,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
+import net.tardis.mod.client.guis.GuiConsoleChange;
 import net.tardis.mod.client.guis.GuiToggleHum;
-import net.tardis.mod.client.handler.ClientHandler;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.client.models.decoration.ModelBChair;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.client.models.items.ModelFirstCane;
-import net.tardis.mod.client.models.items.ModelKey01;
 import net.tardis.mod.client.models.items.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
 import net.tardis.mod.client.renderers.RenderInvis;
@@ -69,14 +67,13 @@ import net.tardis.mod.client.renderers.exteriors.RenderTileDoorTT;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorWood;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.items.RenderItemAlembic;
-import net.tardis.mod.client.renderers.items.RenderItemDemat;
 import net.tardis.mod.client.renderers.items.RenderItemFoodMachine;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
 import net.tardis.mod.client.renderers.items.RenderItemTardis;
 import net.tardis.mod.client.renderers.items.RenderItemTardis02;
 import net.tardis.mod.client.renderers.items.RenderItemTardis03;
 import net.tardis.mod.client.renderers.items.RenderTEISRItem;
-import net.tardis.mod.client.renderers.items.RendererKey;
+import net.tardis.mod.client.renderers.layers.RenderFlightMode;
 import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
@@ -85,6 +82,7 @@ import net.tardis.mod.client.renderers.tiles.RenderFoodMachine;
 import net.tardis.mod.client.renderers.tiles.RenderJsonHelper;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
+import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityAdipose;
 import net.tardis.mod.common.entities.EntityChair;
@@ -100,7 +98,6 @@ import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.EntityRaider;
-import net.tardis.mod.common.entities.EntityShip;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -152,6 +149,8 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 import net.tardis.mod.config.TardisConfig;
+
+import java.util.ArrayList;
 
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientProxy extends ServerProxy {
@@ -270,8 +269,6 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityQuark.class, RenderQuark::new);
-		
-		RenderingRegistry.registerEntityRenderingHandler(EntityShip.class, RenderShip::new);
 
 
 	}
@@ -290,16 +287,19 @@ public class ClientProxy extends ServerProxy {
 		if (!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
 		}
+		for(Block block : TBlocks.BLOCKS) {
+			if(block instanceof BlockConsole) {
+				GuiConsoleChange.TARDISes.put(block.getDefaultState(), 
+						(TileEntityTardis)block.createTileEntity(Minecraft.getMinecraft().world, block.getDefaultState()));
+			}
+		}
 	}
 
 	@Override
 	public void init() {
 		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
 		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
-		TItems.key_01.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelKey01(), ModelKey01.TEXTURE));
 		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
-		TItems.demat_circut.setTileEntityItemStackRenderer(new RenderItemDemat());
-		TItems.key.setTileEntityItemStackRenderer(new RendererKey());
 		TItems.sonic13th.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelSonic13()));
 
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RenderItemTardis());
@@ -320,11 +320,16 @@ public class ClientProxy extends ServerProxy {
 		EnumCompanionType.VANDHAM.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.VASSILIS.setModel(new ModelPlayer(0.0625F, false));
 		EnumCompanionType.WOLSEY.setModel(new ModelOcelot());
+		
+		EntityRaider.EnumRaiderType.JESSIE.setModel(RenderRaider.ALEX);
+		EntityRaider.EnumRaiderType.MATT.setModel(RenderRaider.STEVE);
+		EntityRaider.EnumRaiderType.RICHARD.setModel(RenderRaider.ALEX);
+		EntityRaider.EnumRaiderType.STEVEN.setModel(RenderRaider.STEVE);
 	}
 	
 	@Override
 	public void postInit() {
 		super.postInit();
-		ClientHandler.cacheFlightModels();
+		RenderFlightMode.cacheFlightModels();
 	}
 }

@@ -7,6 +7,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.tardis.mod.capability.CapabilityTardis;
+import net.tardis.mod.common.sounds.TSounds;
 
 import java.util.function.Supplier;
 
@@ -14,13 +17,13 @@ import java.util.function.Supplier;
  * Created by Sub
  * on 20/09/2018.
  */
-public class MovingSoundBase extends MovingSound {
+public class MovingSoundFlightMode extends MovingSound {
 	
 	private final Object entity;
 	private final Supplier<Boolean> stopCondition;
 	private boolean donePlaying = false;
 	
-	public MovingSoundBase(Object object, SoundEvent soundIn, SoundCategory categoryIn, boolean repeat, Supplier<Boolean> stopCondition, float volumeSfx) {
+	public MovingSoundFlightMode(Object object, SoundEvent soundIn, SoundCategory categoryIn, boolean repeat, Supplier<Boolean> stopCondition, float volumeSfx) {
 		super(soundIn, categoryIn);
 		this.entity = object;
 		this.stopCondition = stopCondition;
@@ -38,13 +41,54 @@ public class MovingSoundBase extends MovingSound {
 			
 			if (entityObject instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entityObject;
-				if (player.onGround) {
-					volume = 0;
-				} else {
-					volume = 1;
+				
+				//Remat
+				if(sound.getSoundLocation().equals(TSounds.tardis_land.getRegistryName())) {
+					if (CapabilityTardis.get(player).getFlightState() == CapabilityTardis.TardisFlightState.REMAT) {
+						volume = 1;
+					} else {
+						volume = 0;
+					}
+				}
+				
+				
+				//Remat
+				if(sound.getSoundLocation().equals(TSounds.takeoff.getRegistryName())) {
+					if (CapabilityTardis.get(player).getFlightState() == CapabilityTardis.TardisFlightState.DEMAT) {
+						volume = 1;
+					} else {
+						volume = 0;
+					}
+				}
+				
+				
+				//Fly loop
+				if(sound.getSoundLocation().equals(TSounds.flyLoop.getRegistryName())) {
+					if (player.onGround || !CapabilityTardis.get(player).hasFuel()) {
+						volume = 0;
+					} else {
+						volume = 1;
+					}
+				}
+				
+				//Cloister bell
+				if(sound.getSoundLocation().equals(TSounds.cloister_bell.getRegistryName())) {
+					if (player.hurtTime > 0 || !CapabilityTardis.get(player).hasFuel() || player.collidedHorizontally) {
+						volume = 1;
+					} else {
+						volume = 0;
+					}
+				}
+				
+				//Spoopy noise
+				if(sound.getSoundLocation().equals(TSounds.tardis_no_fuel.getRegistryName())) {
+					if (!CapabilityTardis.get(player).hasFuel() && !player.onGround) {
+						volume = 1;
+					} else {
+						volume = 0;
+					}
 				}
 			}
-			
 			
 			super.xPosF = (float) entityObject.posX;
 			super.yPosF = (float) entityObject.posY;

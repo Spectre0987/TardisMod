@@ -24,11 +24,11 @@ import net.tardis.mod.util.common.helpers.Helper;
 import java.util.List;
 
 public class ItemRemote extends ItemBase {
-
+	
 	public ItemRemote() {
 		this.setMaxStackSize(1);
 	}
-
+	
 	public static BlockPos getConsolePos(ItemStack stack) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CONSOLE_POS)) {
 			return BlockPos.fromLong(stack.getTagCompound().getLong(NBT.CONSOLE_POS));
@@ -56,12 +56,12 @@ public class ItemRemote extends ItemBase {
 		}
 		return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
 	}*/
-
+	
 	public static void setConsolePos(ItemStack s, BlockPos pos) {
 		if (s.getTagCompound() == null) s.setTagCompound(new NBTTagCompound());
 		s.getTagCompound().setLong(NBT.CONSOLE_POS, pos.toLong());
 	}
-
+	
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity te = worldIn.getTileEntity(pos);
@@ -72,20 +72,19 @@ public class ItemRemote extends ItemBase {
 			TileEntity tte = worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos(player.getHeldItem(hand)));
 			if (tte != null && tte instanceof TileEntityTardis) {
 				TileEntityTardis tardis = ((TileEntityTardis) tte);
+				if (tardis.hasPilot()) return EnumActionResult.FAIL;
 				tardis.getSystem(SystemStabilizers.class).setOn(true);
 				tardis.setDesination(pos.up(1), player.dimension);
 				tardis.setFacing(player.getHorizontalFacing().getOpposite());
 				tardis.startFlight();
-
 				worldIn.playSound(null, pos, TSounds.remote_accept, SoundCategory.PLAYERS, 1.0F, 1.0F);
-
 			}
 		}
-
+		
 		return EnumActionResult.SUCCESS;
-
+		
 	}
-
+	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(NBT.CONSOLE_POS)) {
@@ -97,7 +96,7 @@ public class ItemRemote extends ItemBase {
 		} else tooltip.add(new TextComponentTranslation(TStrings.ToolTips.REMOTE_BIND).getFormattedText());
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-
+	
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
@@ -111,12 +110,12 @@ public class ItemRemote extends ItemBase {
 			}
 		}
 	}
-
+	
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		return oldStack.getItem() != newStack.getItem();
 	}
-
+	
 	public static class NBT {
 		public static final String POS = "tardis_position";
 		public static final String TIME = "time_left";

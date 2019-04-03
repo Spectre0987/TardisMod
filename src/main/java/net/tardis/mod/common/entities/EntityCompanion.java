@@ -1,12 +1,23 @@
 package net.tardis.mod.common.entities;
 
+import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAIFollowOwner;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAISit;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityTNTPrimed;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.inventory.IInventory;
@@ -42,9 +53,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-import java.util.UUID;
-
-public class EntityCompanion extends EntityCreature implements IInventory, IEntityOwnable {
+public class EntityCompanion extends EntityTameable implements IInventory, IEntityOwnable {
 
 	public static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<String> TYPE = EntityDataManager.createKey(EntityCompanion.class, DataSerializers.STRING);
@@ -53,6 +62,7 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	public boolean flyTardis = false;
 	private UUID player;
 	private NonNullList<ItemStack> INVENTORY = NonNullList.withSize(27, ItemStack.EMPTY);
+	private EntityAISit sit;
 
 	public EntityCompanion(World worldIn) {
 		super(worldIn);
@@ -63,7 +73,8 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	@Override
 	protected void initEntityAI() {
 		super.initEntityAI();
-		this.tasks.addTask(2, new EntityAIFollowOwner(this, 1D));
+		this.tasks.addTask(2, new EntityAIFollowOwner(this, 0.5D, 4, 8));
+		this.tasks.addTask(2, sit = new EntityAISit(this));
 		this.tasks.addTask(3, new EntityAIWander(this, 0.5D));
 		this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityPlayer.class, 30));
 		this.tasks.addTask(1, new EntityAIEnterTardis(this, 1.0D));
@@ -71,10 +82,10 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		this.tasks.addTask(0, new EntityAIMoveTowardsRestriction(this, 1.0D));
 
 
-		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityTNTPrimed.class, 6.0F, 1.0D, 1.2D));
-		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityDalek.class, 6.0F, 1.0D, 1.2D));
-		this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityRaider.class, 6.0F, 1.0D, 1.2D));
-		this.tasks.addTask(2, new EntityAIAvoidEntity(this, EntityArrow.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityTNTPrimed.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityDalek.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityRaider.class, 6.0F, 1.0D, 1.2D));
+		this.tasks.addTask(2, new EntityAIAvoidEntity<>(this, EntityArrow.class, 6.0F, 1.0D, 1.2D));
 
 
 	}
@@ -256,8 +267,9 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 	}
 
 	@Override
-	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if (world.isRemote && player.getGameProfile().getId().equals(this.getOwnerId())) openGui();
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		if (world.isRemote && player.getGameProfile().getId().equals(this.getOwnerId()))
+			openGui();
 		else if (this.getOwnerId() == null) {
 			this.setOwner(player);
 			if (!world.isRemote) {
@@ -347,43 +359,6 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 		}
 	}
 
-	public static class EntityAIFollowOwner extends EntityAIBase {
-
-		EntityCompanion entity;
-		double speed;
-
-		public EntityAIFollowOwner(EntityCompanion entity, double speed) {
-			this.entity = entity;
-			this.speed = speed;
-			this.setMutexBits(1);
-		}
-
-		@Override
-		public boolean shouldExecute() {
-			return entity.getOwner() != null && !entity.getDataManager().get(EntityCompanion.SITTING);
-		}
-
-		@Override
-		public boolean isInterruptible() {
-			return true;
-		}
-
-		@Override
-		public void updateTask() {
-			super.updateTask();
-			EntityPlayer player = entity.getOwner();
-			if (player == null) return;
-			if (player.getPositionVector().distanceTo(entity.getPositionVector()) > 5)
-				entity.moveHelper.setMoveTo(player.posX, player.posY, player.posZ, speed);
-		}
-
-		@Override
-		public boolean shouldContinueExecuting() {
-			return entity.getOwner() != null && entity.getOwner().getPositionVector().distanceTo(entity.getPositionVector()) > 5 && !entity.getDataManager().get(EntityCompanion.SITTING);
-		}
-
-	}
-
 	public static class EntityAIEnterTardis extends EntityAIBase {
 
 		double speed;
@@ -461,6 +436,51 @@ public class EntityCompanion extends EntityCreature implements IInventory, IEnti
 				}
 			}
 		}
+	}
+
+	@Override
+	public EntityAgeable createChild(EntityAgeable ageable) {
+		return null;
+	}
+
+
+	@Override
+	public void setTamed(boolean tamed) {}
+
+
+	@Override
+	public void setSitting(boolean sitting) {
+		this.dataManager.set(SITTING, sitting);
+		this.sit.setSitting(sitting);
+	}
+
+
+	@Override
+	public void setTamedBy(EntityPlayer player) {
+		this.setOwner(player);
+	}
+
+
+	@Override
+	public boolean isTamed() {
+		return this.getOwnerId() != null;
+	}
+
+
+	@Override
+	public boolean isSitting() {
+		return this.dataManager.get(SITTING);
+	}
+
+	@Override
+	public boolean isOwner(EntityLivingBase entityIn) {
+		return entityIn.getUniqueID().equals(this.getOwnerId());
+	}
+
+
+	@Override
+	public EntityAISit getAISit() {
+		return this.sit;
 	}
 
 }

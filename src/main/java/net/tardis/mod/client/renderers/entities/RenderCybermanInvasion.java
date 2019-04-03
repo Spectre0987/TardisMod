@@ -3,6 +3,7 @@ package net.tardis.mod.client.renderers.entities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
@@ -18,7 +19,7 @@ public class RenderCybermanInvasion extends RenderLiving<EntityCybermanInvasion>
 	public RenderCybermanInvasion(RenderManager manager) {
 		super(manager, model, 0.03F);
 		mc = Minecraft.getMinecraft();
-
+		addLayer(new LayerHeldItem(this));
 	}
 
 	@Override

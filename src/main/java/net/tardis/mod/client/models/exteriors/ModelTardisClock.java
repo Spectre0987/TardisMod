@@ -470,6 +470,6 @@ public class ModelTardisClock extends ModelBase implements IExteriorModel {
 	public void renderOpen(float scale) {
 		this.renderClockHand(scale);
 		this.render(null, 0, 0, 0, 0, 0, scale);
-		this.renderDoor(scale, -50);
+		this.renderDoor(scale, -99);
 	}
 }

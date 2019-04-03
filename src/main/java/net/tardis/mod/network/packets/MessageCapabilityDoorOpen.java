@@ -32,9 +32,11 @@ public class MessageCapabilityDoorOpen implements IMessage {
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
 				EntityPlayer pilot = ctx.getServerHandler().player;
 				ITardisCap data = CapabilityTardis.get(pilot);
-				data.setDoorsOpen(!data.isOpen());
-				pilot.world.playSound(null, pilot.posX, pilot.posY, pilot.posZ, data.isOpen() ? TSounds.door_open : TSounds.door_closed, SoundCategory.PLAYERS, 1.0F, 1.0F);
-				data.sync();
+				if(data.isInFlight()) {
+					data.setDoorsOpen(!data.isOpen());
+					pilot.world.playSound(null, pilot.posX, pilot.posY, pilot.posZ, data.isOpen() ? TSounds.door_open : TSounds.door_closed, SoundCategory.PLAYERS, 1.0F, 1.0F);
+					data.sync();
+				}
 			});
 			return null;
 		}

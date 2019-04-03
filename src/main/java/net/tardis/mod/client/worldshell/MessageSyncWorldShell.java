@@ -46,6 +46,7 @@ public class MessageSyncWorldShell implements IMessage {
 		this.id = buf.readInt();
 		this.tilePos = BlockPos.fromLong(buf.readLong());
 		this.worldShell = new WorldShell(BlockPos.fromLong(buf.readLong()));
+		this.worldShell.setTime(buf.readLong());
 		type = EnumType.values()[buf.readInt()];
 		if(type == EnumType.BLOCKS) {
 			int size = buf.readInt();
@@ -77,6 +78,7 @@ public class MessageSyncWorldShell implements IMessage {
 		buf.writeInt(id);
 		buf.writeLong(tilePos.toLong());
 		buf.writeLong(worldShell.getOffset().toLong());
+		buf.writeLong(this.worldShell.getTime());
 		buf.writeInt(type.ordinal());
 		if(type == EnumType.BLOCKS) {
 			buf.writeInt(this.worldShell.blockMap.size());
@@ -141,6 +143,7 @@ public class MessageSyncWorldShell implements IMessage {
 
 		@SideOnly(Side.CLIENT)
 		public static void combineWorldShell(IContainsWorldShell cont, WorldShell shell, EnumType type) {
+			cont.getWorldShell().setTime(shell.getTime());
 			if(type == EnumType.BLOCKS) {
 				cont.getWorldShell().blockMap.putAll(shell.blockMap);
 				cont.getWorldShell().setTESRs(cont.getRenderWorld() != null ? cont.getRenderWorld() : Minecraft.getMinecraft().world);

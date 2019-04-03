@@ -1,5 +1,8 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -41,8 +44,6 @@ import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.enums.EnumTardisState;
-import net.tardis.mod.common.protocols.ProtocolCCircuit;
-import net.tardis.mod.common.protocols.ProtocolForceField;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.network.NetworkHandler;
@@ -50,9 +51,6 @@ import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.common.helpers.TardisHelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
@@ -212,7 +210,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (!this.isRemat && !this.isDemat)
 			this.alpha = 1.0F;
 		
-		if (world.isRemote && (this.worldShell.getOffset().equals(BlockPos.ORIGIN) || this.requiresUpdate)) {
+		if (world.isRemote && !this.isLocked() && (this.worldShell.getOffset().equals(BlockPos.ORIGIN) || this.requiresUpdate)) {
 			NetworkHandler.NETWORK.sendToServer(new MessageRequestBOTI(this.getPos()));
 			this.setupClientWorld();
 			this.requiresUpdate = false;
@@ -273,11 +271,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.markDirty();
 		if (!world.isRemote)
 			world.notifyBlockUpdate(this.getPos(), world.getBlockState(this.getPos()), world.getBlockState(this.getPos()), 2);
-	}
-	
-	@Override
-	public void onLoad() {
-		super.onLoad();
 	}
 	
 	public List<BlockPos> getBlocksInAABB(AxisAlignedBB bb) {
@@ -507,11 +500,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.requiresUpdate = true;
 	}
 	
-	@Override
-	public boolean requiresUpdate() {
-		return this.requiresUpdate;
-	}
-	
 	public void updateWorldShell() {
 		if (worldShell == null || !worldShell.getOffset().equals(this.getConsolePos()))
 			this.worldShell = new WorldShell(this.getOffset());
@@ -564,10 +552,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		return oldState.getBlock() != newState.getBlock();
 	}
 	
-	@Override
-	public void setRequiresUpdate(boolean bool) {
-		this.requiresUpdate = bool;
-	}
 	
 	@Override
 	public World getRenderWorld() {

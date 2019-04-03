@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,7 +28,12 @@ public class PlayerHelper {
 			player.sendStatusMessage(message, hotBar);
 		}
 	}
-
+	
+	public static boolean isPlayerMoving(EntityPlayer player){
+		float motion = MathHelper.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ);
+		return  ((double)motion >= 0.01D);
+	}
+	
 	/**
 	 * This method is client side only.
 	 *

@@ -35,13 +35,12 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.api.dimensions.IBlockedDimension;
-import net.tardis.mod.client.sound.MovingSoundBase;
+import net.tardis.mod.client.sound.MovingSoundFlightMode;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.TardisTeleporter;
-import org.lwjgl.Sys;
 
 public class Helper {
 
@@ -257,7 +256,7 @@ public class Helper {
 	@SideOnly(Side.CLIENT)
 	public static void playSound(Entity entity, ResourceLocation soundName, SoundCategory category, boolean repeat, float volume, Supplier<Boolean> stopCondition) {
 		if (entity.world.isRemote) {
-			Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundBase(entity, new SoundEvent(soundName), category, repeat, stopCondition, volume));
+			Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundFlightMode(entity, new SoundEvent(soundName), category, repeat, stopCondition, volume));
 		}
 	}
 }

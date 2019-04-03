@@ -99,7 +99,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private BlockPos tardisLocation = BlockPos.ORIGIN;
 	private BlockPos tardisDestination = BlockPos.ORIGIN;
 	public int dimension = 0;
-	private int destDim = 0;
+	public int destDim = 0;
 	public int dimIndex = 0;
 	private boolean isLoading = false;
 	private static IBlockState blockBase = TBlocks.tardis.getDefaultState();
@@ -146,7 +146,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public boolean overrideStabilizers = false;
 	public boolean soundChanged = false;
 	private boolean playerFuckedUp = false;
-	
+	private boolean isStealth = true;
 	private EntityPlayer flightPilot = null;
 	
 	public TileEntityTardis() {
@@ -184,6 +184,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			
 			tardisLocation = getFlightPilot().getPosition();
+			dimension = getFlightPilot().dimension;
 			if (getFlightPilot().ticksExisted % 40 == 0) {
 				if (fuel > 0 && getFlightPilot().isAirBorne) {
 					this.setFuel(fuel - this.calcFuelUse());
@@ -213,7 +214,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					player.connection.sendPacket(new SPacketSoundEffect(TSounds.takeoff, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
 				}
 			else if (this.ticksToTravel > 200 && this.ticksToTravel < this.totalTimeToTravel - 200) {
-				if (this.ticksToTravel % 40 == 0) {
+				if (this.ticksToTravel % 40 == 0 || hasPilot() && getFlightPilot().ticksExisted % 40 ==0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
@@ -522,6 +523,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				if (type != null) this.targetDimName = type.getName();
 				DimensionType currentType = DimensionManager.getProviderType(this.dimension);
 				if (type != null) this.currentDimName = currentType.getName();
+			}
+			if(this.isInFlight()) {
+				this.ticksToTravel += this.calcTimeToTravel();
+				this.totalTimeToTravel = this.ticksToTravel;
 			}
 		}
 	}
