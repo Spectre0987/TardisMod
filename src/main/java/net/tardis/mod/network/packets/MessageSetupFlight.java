@@ -48,9 +48,13 @@ public class MessageSetupFlight implements IMessage {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				EntityPlayer player = Minecraft.getMinecraft().world.getPlayerEntityByUUID(UUID.fromString(message.playerUUID));
 				if (player != null) {
+					
+					//I will clean up this mess sometime
 					Helper.playSound(player, TSounds.flyLoop.getRegistryName(), SoundCategory.PLAYERS, true, 1.0F, () -> player.world.provider instanceof WorldProviderTardis);
 					Helper.playSound(player, TSounds.cloister_bell.getRegistryName(), SoundCategory.PLAYERS, true, 1.0F, () -> player.world.provider instanceof WorldProviderTardis);
 					Helper.playSound(player, TSounds.tardis_no_fuel.getRegistryName(), SoundCategory.PLAYERS, true, 1.0F, () -> player.world.provider instanceof WorldProviderTardis);
+					Helper.playSound(player, TSounds.takeoff.getRegistryName(), SoundCategory.PLAYERS, true, 1.0F, () -> player.world.provider instanceof WorldProviderTardis);
+					Helper.playSound(player, TSounds.tardis_land.getRegistryName(), SoundCategory.PLAYERS, true, 1.0F, () -> player.world.provider instanceof WorldProviderTardis);
 					
 					if (Minecraft.getMinecraft().player == player) {
 						Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;

@@ -99,7 +99,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private BlockPos tardisLocation = BlockPos.ORIGIN;
 	private BlockPos tardisDestination = BlockPos.ORIGIN;
 	public int dimension = 0;
-	private int destDim = 0;
+	public int destDim = 0;
 	public int dimIndex = 0;
 	private boolean isLoading = false;
 	private static IBlockState blockBase = TBlocks.tardis.getDefaultState();
@@ -213,7 +213,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					player.connection.sendPacket(new SPacketSoundEffect(TSounds.takeoff, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
 				}
 			else if (this.ticksToTravel > 200 && this.ticksToTravel < this.totalTimeToTravel - 200) {
-				if (this.ticksToTravel % 40 == 0) {
+				if (this.ticksToTravel % 40 == 0 || hasPilot() && getFlightPilot().ticksExisted % 40 ==0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
