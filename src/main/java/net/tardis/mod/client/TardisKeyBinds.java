@@ -9,7 +9,7 @@ public class TardisKeyBinds {
     public static KeyBinding DEMAT_REMAT_ANIM;
 
     public static void init(){
-        DEMAT_REMAT_ANIM = new KeyBinding(Tardis.MODID+".keybinds.snap", Keyboard.KEY_J, Tardis.NAME);
+        DEMAT_REMAT_ANIM = new KeyBinding(Tardis.MODID+".keybinds.demat_remat_anim", Keyboard.KEY_J, Tardis.NAME);
         ClientRegistry.registerKeyBinding(DEMAT_REMAT_ANIM);
     }
 }
