@@ -7,7 +7,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
 import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.common.sounds.TSounds;
 
@@ -33,6 +32,11 @@ public class MovingSoundFlightMode extends MovingSound {
 	
 	@Override
 	public void update() {
+		
+		if (entity == null) {
+			setDonePlaying();
+		}
+		
 		if (entity instanceof Entity) {
 			Entity entityObject = (Entity) entity;
 			if (stopCondition.get() || entityObject.isDead) {
