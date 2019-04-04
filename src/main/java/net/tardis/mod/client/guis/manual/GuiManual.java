@@ -17,6 +17,7 @@ import com.google.gson.stream.JsonReader;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -31,6 +32,7 @@ import net.tardis.mod.Tardis;
 public class GuiManual extends GuiScreen {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/manual.png");
 	private static final ResourceLocation BOOK_GUI_TEXTURES = new ResourceLocation("textures/gui/book.png");
+	public ButtonBook next, prev;
 	private static List<Page> PAGES = new ArrayList<>();
 	public int gui_width = 281, gui_height = 208;
 	private int index = 0;
@@ -79,7 +81,6 @@ public class GuiManual extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		mc.getTextureManager().bindTexture(TEXTURE);
-		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.drawModalRectWithCustomSizedTexture(width / 2 - this.gui_width / 2, height / 2 - this.gui_height / 2, 0, 0, this.gui_width, this.gui_height, 512, 512);
 		if(this.index < this.PAGES.size()) {
 			this.PAGES.get(index).draw(width / 2 - 125, height / 2 - 80);
@@ -87,11 +88,16 @@ public class GuiManual extends GuiScreen {
 		if(this.index + 1 < this.PAGES.size()) {
 			this.PAGES.get(index + 1).draw(width / 2 + 15, height / 2 - 80);
 		}
+		GlStateManager.color(1F, 1F, 1F);
+		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
+		this.buttonList.clear();
+		this.addButton(this.next = new ButtonBook(0, width / 2 + 105, height / 2 + 55, 28, 10, false));
+		this.addButton(this.prev = new ButtonBook(1, width / 2 - 120, height / 2 + 55, 28, 10, true));
 	}
 
 	@Override
@@ -103,6 +109,16 @@ public class GuiManual extends GuiScreen {
 				
 			//}
 		}
+	}
+
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException {
+		super.actionPerformed(button);
+		if(button == next && this.index < this.PAGES.size() - 2)
+			index += 2;
+		else if(button == prev && this.index > 1)
+			index -= 2;
+		System.out.println(index);
 	}
 
 	public static class Page{
@@ -217,6 +233,24 @@ public class GuiManual extends GuiScreen {
 			catch(Exception e) {}
 			return 0;
 		}
+	}
+	
+	public static class ButtonBook extends GuiButton{
+
+		private boolean isPrev;
+		public ButtonBook(int buttonId, int x, int y, int widthIn, int heightIn, boolean isPrev) {
+			super(buttonId, x, y, widthIn, heightIn, "");
+			this.isPrev = isPrev;
+		}
+
+		@Override
+		public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+			Minecraft.getMinecraft().getTextureManager().bindTexture(BOOK_GUI_TEXTURES);
+			if(isPrev)
+				this.drawTexturedModalRect(x, y, 2, 206, 18, 10);
+			else this.drawTexturedModalRect(x, y, 3, 194, 18, 10);
+		}
+		
 	}
 
 }
