@@ -1,5 +1,12 @@
 package net.tardis.mod.proxy;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelOcelot;
@@ -150,8 +157,6 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 import net.tardis.mod.config.TardisConfig;
-
-import java.util.ArrayList;
 
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientProxy extends ServerProxy {
@@ -334,5 +339,35 @@ public class ClientProxy extends ServerProxy {
 	public void postInit() {
 		super.postInit();
 		RenderFlightMode.cacheFlightModels();
+	}
+	
+	public void addBlockState(File file, Block block) {
+		file = new File(file.getAbsolutePath() + "/" + block.getRegistryName().getPath() + ".json");
+		System.out.println(file.getAbsolutePath());
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+				JsonWriter writer = new GsonBuilder().setPrettyPrinting().create().newJsonWriter(new FileWriter(file));
+				writer.beginObject();
+				
+				writer.name("variants");
+				writer.beginObject();
+				writer.name("inventory");
+					writer.beginObject();
+					writer.name("model").value("tardis:teisr");
+					writer.endObject();
+				writer.name("normal");
+					writer.beginObject();
+					writer.name("model").value("tardis:teisr");
+					writer.endObject();
+					writer.endObject();
+				
+				writer.endObject();
+				writer.close();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

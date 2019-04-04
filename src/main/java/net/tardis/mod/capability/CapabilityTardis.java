@@ -309,8 +309,8 @@ public class CapabilityTardis implements ITardisCap {
 						}
 					}
 					
-					BlockPos blockPosToCheck = player.getPosition().down();
-					if (player.world.isAirBlock(blockPosToCheck) && player.world.getBlockState(blockPosToCheck).getBlock() != Blocks.WATER) {
+					Block blockToCheck = player.world.getBlockState(player.getPosition().down()).getBlock();
+					if (blockToCheck != Blocks.AIR && blockToCheck != Blocks.WATER) {
 						timeOnGround++;
 					} else {
 						timeOnGround = 0;
