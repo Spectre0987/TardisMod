@@ -2194,7 +2194,7 @@
 			"predicate": {
 				"lefthanded": 1
 			},
-			"model": "item/key_left"
+			"model": "tardis:item/key_left"
 		}
 	]
 }
