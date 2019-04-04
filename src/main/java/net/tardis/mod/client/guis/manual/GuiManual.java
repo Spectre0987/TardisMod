@@ -1,6 +1,7 @@
 package net.tardis.mod.client.guis.manual;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -91,6 +92,17 @@ public class GuiManual extends GuiScreen {
 	@Override
 	public void initGui() {
 		super.initGui();
+	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+		if(mouseX < width / 2) {
+			//Page page = this.PAGES.get(this.index);
+			//for(Element line : page.lines) {
+				
+			//}
+		}
 	}
 
 	public static class Page{
