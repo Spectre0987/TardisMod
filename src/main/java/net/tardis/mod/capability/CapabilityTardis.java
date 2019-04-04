@@ -18,6 +18,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -145,6 +146,8 @@ public class CapabilityTardis implements ITardisCap {
 			player.capabilities.allowEdit = false;
 			player.velocityChanged = true;
 			player.eyeHeight = 2;
+			player.clearActivePotions();
+			player.extinguish();
 			player.sendPlayerAbilities();
 			cap.sync();
 		} else {
@@ -267,6 +270,7 @@ public class CapabilityTardis implements ITardisCap {
 		
 		if (player.dimension != TDimensions.TARDIS_ID) {
 			if (!getFlightTardis().equals(BlockPos.ORIGIN)) {
+				
 				if (isInFlight()) {
 					
 					//Alpha "Animation"
@@ -289,18 +293,17 @@ public class CapabilityTardis implements ITardisCap {
 					if (alpha <= 0F && flightState != TardisFlightState.DEMAT_FULL) {
 						setFlightState(TardisFlightState.DEMAT_FULL);
 						alpha = 0F;
+						
 						if (!player.world.isRemote) {
 							TileEntityTardis console = TardisHelper.getConsole(getFlightTardis());
 							if (console != null) {
 								console.setFlightPilot(null);
 								Vec3d backUpPos = prevPos;
 								Vec2d bacupRot = prevRot;
-								System.out.println(console.getDestination());
-								System.out.println(console.destDim);
-								//if (console.dimension != player.dimension) {
+								//if (console.destDim != player.dimension) {
 								Helper.transferToWorld((EntityPlayerMP) player, (WorldServer) player.world, console.getDestination(), console.destDim);
 								//	} else {
-								///		player.setLocationAndAngles(console.getDestination().getX(), console.getDestination().getY(), console.getDestination().getZ(), player.rotationYaw, player.rotationPitch);
+								player.setLocationAndAngles(console.getDestination().getX(), console.getDestination().getY(), console.getDestination().getZ(), player.rotationYaw, player.rotationPitch);
 								//	}
 								setPrevPos(backUpPos);
 								setPrevRot(bacupRot);
@@ -310,17 +313,21 @@ public class CapabilityTardis implements ITardisCap {
 					}
 					
 					
+					//Ground ticking
 					if (player.world.getBlockState(player.getPosition().down()).getBlock() != Blocks.AIR) {
 						timeOnGround++;
 					} else {
 						timeOnGround = 0;
 					}
 					
+					//Return to interior after a few seconds of shifting on ground
 					if (timeOnGround >= 50 && player.isSneaking()) {
 						endFlight(player, true);
 					}
 					
+					
 					if (hasFuel) {
+						
 						if (!player.capabilities.allowFlying || !player.capabilities.isFlying) {
 							player.capabilities.allowFlying = true;
 							player.capabilities.isFlying = true;
@@ -365,16 +372,18 @@ public class CapabilityTardis implements ITardisCap {
 				event.addCapability(new ResourceLocation(Tardis.MODID, "tardis_cap"), new TardisCapProvider((EntityPlayer) event.getObject()));
 		}
 		
+		
 		@SubscribeEvent
 		public static void update(LivingUpdateEvent event) {
-			CapabilityTardis cap = event.getEntityLiving().getCapability(TardisCapStorage.CAP, null);
-			if (cap != null)
-				cap.update();
+			if (event.getEntityLiving() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+				CapabilityTardis.get(player).update();
+			}
 		}
 		
 		@SubscribeEvent
 		public static void onPlayerClone(PlayerEvent.Clone event) {
-			Capability.IStorage storage = TardisCapStorage.CAP.getStorage();
+			Capability.IStorage<ITardisCap> storage = TardisCapStorage.CAP.getStorage();
 			
 			ITardisCap oldCap = get(event.getOriginal());
 			ITardisCap newCap = get(event.getEntityPlayer());
@@ -383,17 +392,21 @@ public class CapabilityTardis implements ITardisCap {
 			storage.readNBT(TardisCapStorage.CAP, newCap, null, nbt);
 		}
 		
+		//End flight safely when the player logs out
 		@SubscribeEvent
 		public static void onPlayerLogout(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent e) {
-			ITardisCap pilotData = CapabilityTardis.get(e.player);
-			CapabilityTardis.endFlight(e.player, true);
+			if (CapabilityTardis.get(e.player).isInFlight()) {
+				CapabilityTardis.endFlight(e.player, true);
+			}
 		}
 		
+		//SYNCING - When player tracked
 		@SubscribeEvent
-		public static void trackPlayer(PlayerEvent.StartTracking event) {
+		public static void onPlayerTracked(PlayerEvent.StartTracking event) {
 			get(event.getEntityPlayer()).sync();
 		}
 		
+		//Open and close doors when inflight
 		@SubscribeEvent
 		public static void onPunch(PlayerInteractEvent.LeftClickEmpty empty) {
 			EntityPlayer pilot = empty.getEntityPlayer();
@@ -403,6 +416,7 @@ public class CapabilityTardis implements ITardisCap {
 			}
 		}
 		
+		//Stop the player from breaking blocks in flight
 		@SubscribeEvent
 		public static void onBreakBlock(BlockEvent.BreakEvent event) {
 			EntityPlayer breaker = event.getPlayer();
@@ -410,12 +424,23 @@ public class CapabilityTardis implements ITardisCap {
 			event.setCanceled(data.isInFlight());
 		}
 		
+		//Stop players being knockedback in flight
 		@SubscribeEvent
 		public static void onKnockBack(LivingKnockBackEvent event) {
 			if (event.getEntity() instanceof EntityPlayer) {
 				EntityPlayer victim = (EntityPlayer) event.getEntity();
 				ITardisCap data = get(victim);
 				event.setCanceled(data.isInFlight() && victim.onGround);
+			}
+		}
+		
+		//Stop players taking damge in Fliht
+		@SubscribeEvent
+		public static void onPlayerAttack(LivingAttackEvent event) {
+			if (event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer attacker = (EntityPlayer) event.getEntity();
+				ITardisCap data = get(attacker);
+				event.setCanceled(data.isInFlight());
 			}
 		}
 		

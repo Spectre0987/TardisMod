@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 public class TardisCapStorage implements IStorage<ITardisCap> {
 
 	@CapabilityInject(ITardisCap.class)
-	public static Capability<CapabilityTardis> CAP = null;
+	public static Capability<ITardisCap> CAP = null;
 	
 	@Nullable
 	@Override
