@@ -293,23 +293,6 @@ public class CapabilityTardis implements ITardisCap {
 					if (alpha <= 0F && flightState != TardisFlightState.DEMAT_FULL) {
 						setFlightState(TardisFlightState.DEMAT_FULL);
 						alpha = 0F;
-						
-						if (!player.world.isRemote) {
-							TileEntityTardis console = TardisHelper.getConsole(getFlightTardis());
-							if (console != null) {
-								console.setFlightPilot(null);
-								Vec3d backUpPos = prevPos;
-								Vec2d bacupRot = prevRot;
-								//if (console.destDim != player.dimension) {
-								Helper.transferToWorld((EntityPlayerMP) player, (WorldServer) player.world, console.getDestination(), console.destDim);
-								//	} else {
-								player.setLocationAndAngles(console.getDestination().getX(), console.getDestination().getY(), console.getDestination().getZ(), player.rotationYaw, player.rotationPitch);
-								//	}
-								setPrevPos(backUpPos);
-								setPrevRot(bacupRot);
-							}
-							setupFlight(player, console, false);
-						}
 					}
 					
 					
