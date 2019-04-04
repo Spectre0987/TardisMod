@@ -26,7 +26,6 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.capability.ITardisCap.Vec2d;
 
 public class GuiManual extends GuiScreen {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/manual.png");
@@ -96,8 +95,8 @@ public class GuiManual extends GuiScreen {
 
 	public static class Page{
 		
-		private List<String> lines = new ArrayList<>();
-		private Map<Vec2d, ResourceLocation> images = new HashMap<>(); 
+		private List<Element> lines = new ArrayList<>();
+		private int yLevel;
 		
 		public static Page read(ResourceLocation loc) {
 			Page page = new Page();
@@ -106,54 +105,105 @@ public class GuiManual extends GuiScreen {
 				Iterator<String> iter = read.lines().iterator();
 				while(iter.hasNext()) {
 					String[] lines = iter.next().split("<br />");
+					int index = 0;
 					for(String line : lines) {
-						page.addLine(line);
+						Element element = Element.read(line);
+						if(element != null) {
+							line = line.substring(0, line.indexOf("<")) + line.substring(line.indexOf(">") + 1);
+							page.addElement(element);
+						}
+						if(element == null && !line.isEmpty()) {
+							element = new Element();
+							element.type = "text";
+							element.mod.put("text", line);
+							page.lines.add(element);
+						}
 					}
 				}
 				read.close();
-				page.readImages();
 			}
 			catch(Exception e) {}
 			return page;
 		}
 		
-		public void addLine(String line) {
-			this.lines.add(line);
-		}
-		
-		public void readImages() {
-			List<ResourceLocation> IMAGE = new ArrayList<>();
-			for(String s : lines) {
-				if(s.contains("<img")){
-					images.put(new Vec2d(0, 0), new ResourceLocation(s.substring(s.indexOf("src=\"") + 5, s.indexOf(">") - 1)));
-				}
-			}
-			
-		}
-		
-		public void drawImage(int x, int y) {
-			this.images.forEach((Vec2d vec, ResourceLocation image) -> {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(image);
-				BufferBuilder bb = Tessellator.getInstance().getBuffer();
-				bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-				
-				bb.pos(x, y, 10).tex(0, 0).endVertex();
-				bb.pos(x, y + 100, 10).tex(0, 1).endVertex();
-				bb.pos(x + 100, y + 100, 10).tex(1, 1).endVertex();
-				bb.pos(x + 100, y, 10).tex(1, 0).endVertex();
-				
-				Tessellator.getInstance().draw();
-			});
+		public void addElement(Element ele) {
+			this.lines.add(ele);
 		}
 		
 		public void draw(double x, double y) {
 			FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
-			int index = 0;
-			for(String line : lines) {
-				fr.drawString(line, (int)x, (int)y + (index * fr.FONT_HEIGHT), 0x000000);
-				++index;
+			this.yLevel = 0;
+			for(Element line : lines) {
+				if(line.type.equals("text"))
+					fr.drawString(line.mod.get("text"), (int)x, (int)y + yLevel, 0x000000);
+				else if(line.type.equals("img")) {
+					int height = 50, width = 100;
+					try {
+						width = Integer.parseInt(line.mod.get("width"));
+						height = Integer.parseInt(line.mod.get("height"));
+					}
+					catch(Exception e) {}
+					int baseX = (int)x, baseY = (int)y + this.yLevel;
+					Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(line.mod.get("src")));
+					BufferBuilder bb = Tessellator.getInstance().getBuffer();
+					GlStateManager.color(1F, 1, 1);
+					bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+					
+					bb.pos(baseX, baseY, 10).tex(0, 0).endVertex();
+					bb.pos(baseX, baseY + height, 10).tex(0, 1).endVertex();
+					bb.pos(baseX + width, baseY + height, 10).tex(1, 1).endVertex();
+					bb.pos(baseX + width, baseY, 10).tex(1, 0).endVertex();
+					
+					Tessellator.getInstance().draw();
+					if(line.getHeight() == fr.FONT_HEIGHT)
+						yLevel += height;
+				}
+				else if(line.type.equals("h1")) {
+					GlStateManager.pushMatrix();
+					GlStateManager.translate(x, y + this.yLevel, 10);
+					GlStateManager.scale(1.5, 1.5, 0);
+					fr.drawString(line.mod.get("text"), 0, 0, 0x000000);
+					GlStateManager.popMatrix();
+					yLevel += fr.FONT_HEIGHT * 1.5;
+				}
+				yLevel += line.getHeight();
 			}
-			this.drawImage((int)x, (int)y);
+		}
+	}
+	
+	public static class Element{
+		
+		public String type;
+		public Map<String, String> mod = new HashMap<>();
+		private int height;
+		
+		public static Element read(String line) {
+			try {
+				Element ele = new Element();
+				String parsed = line.substring(line.indexOf('<') + 1, line.indexOf('>'));
+				String[] div = parsed.split(" ");
+				ele.type = div[0];
+				for(String string : div) {
+					if(string.contains("=")) {
+						String[] split = string.split("=");
+						ele.mod.put(split[0].replaceAll("\"", "").trim(), split[1].replaceAll("\"", ""));
+					}
+				}
+				String rest = line.replaceAll(line.substring(line.indexOf("<"), line.indexOf(">")), "").replaceAll("<", "").replaceAll(">", "").trim();
+				ele.mod.put("text", rest);
+				return ele;
+			}
+			catch(Exception e) {
+				return null;
+			}
+		}
+		
+		public int getHeight() {
+			try {
+				return mod.containsKey("height") ? Integer.parseInt(mod.get("height")) : Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT;
+			}
+			catch(Exception e) {}
+			return 0;
 		}
 	}
 
