@@ -4,11 +4,13 @@
     "model": "tardis:teisr"
   },
   "variants": {
-    "normal": [
-      {}
-    ],
+    "normal": [{}],
     "inventory": {
       "model": "tardis:chair_br"
-    }
+    },
+    "facing=north":[{}],
+    "facing=south":[{}],
+    "facing=east":[{}],
+    "facing=west":[{}]
   }
 }

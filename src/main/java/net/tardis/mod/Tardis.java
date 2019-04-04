@@ -3,7 +3,6 @@ package net.tardis.mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -300,7 +299,6 @@ public class Tardis {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandlerTardis());
 
 		RepairRecipes.registerRecipe(TItems.fluid_link, TItems.mercuryBottle);
-		RepairRecipes.registerRecipe(TItems.artron_capacitor, Item.getItemFromBlock(Blocks.REDSTONE_BLOCK));
 		RepairRecipes.registerRecipe(TItems.demat_circut, Items.ENDER_PEARL);
 		RepairRecipes.registerRecipe(TItems.antenna, TItems.circuts);
 		RepairRecipes.registerRecipe(TItems.stabilizers, TItems.circuts);

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "inventory": {
+      "model": "tardis:teisr"
+    },
+    "normal": {
+      "model": "tardis:teisr"
+    }
+  }
+}
