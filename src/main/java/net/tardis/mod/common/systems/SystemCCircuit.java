@@ -12,21 +12,31 @@ import net.tardis.mod.util.common.helpers.Helper;
 public class SystemCCircuit extends BaseSystem {
 
 	private boolean checkActive = false;
-
+	private int timeStealth = 0;
+	
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
+		TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(consolePos));
 		if (checkActive) {
-			TileEntityTardis tardis = Helper.getTardis(world.getTileEntity(consolePos));
 			if (tardis != null && tardis.getTopBlock().getBlock() == TBlocks.tardis_top_cc) {
 				this.setHealth(this.getHealth() - 0.01F);
 			}
 			checkActive = false;
 		}
+		if(tardis.isStealthMode()) {
+			++this.timeStealth;
+			if(this.getHealth() <= 0.0)
+				tardis.setStealthMode(false);
+		}
+		else this.timeStealth = 0;
+		if(this.timeStealth >= 100) {
+			this.timeStealth = 0;
+			this.setHealth(this.getHealth() - 0.01F);
+		}
 	}
 
 	@Override
-	public void damage() {
-	}
+	public void damage() {}
 
 	@Override
 	public Item getRepairItem() {
