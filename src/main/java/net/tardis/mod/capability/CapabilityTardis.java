@@ -296,7 +296,7 @@ public class CapabilityTardis implements ITardisCap {
 
 					//Ground ticking
 					BlockPos blockPosToCheck = player.getPosition().down();
-					if (player.world.isAirBlock(blockPosToCheck) && player.world.getBlockState(blockPosToCheck).getBlock() != Blocks.WATER) {
+					if (player.world.isAirBlock(blockPosToCheck) && player.world.getBlockState(blockPosToCheck).getMaterial().isLiquid()) {
 						timeOnGround++;
 					} else {
 						timeOnGround = 0;
