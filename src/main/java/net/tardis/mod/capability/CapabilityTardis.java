@@ -252,7 +252,7 @@ public class CapabilityTardis implements ITardisCap {
 			
 			//Handle Enter
 			console.enterTARDIS(player);
-			//player.attemptTeleport(cap.getPreviousPos().getX() + 1, cap.getPreviousPos().getY(), cap.getPreviousPos().getZ());
+			player.attemptTeleport(console.getPos().getX(), console.getPos().getY(), console.getPos().getZ() - 1.5F);
 		}
 	}
 	
