@@ -1,6 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -13,14 +12,13 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class TileEntityFoodMachine extends TileEntity implements ITickable {
 
-	private boolean active = false;
 	private int ticks = 0;
 
 	public TileEntityFoodMachine() {
 
 	}
 
-	public void makeFood() {
+	private void makeFood() {
 		if (!world.isRemote) {
 			TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPos()));
 			if(te != null && te instanceof TileEntityTardis) {
@@ -37,16 +35,14 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		if (active) {
-			ticks++;
+		if(ticks > 0) {
+			--ticks;
+			if(ticks == 0)
+				makeFood();
 		}
+	}
 
-		if (ticks == 140) {
-			BlockPos food = this.getPos().offset(world.getBlockState(getPos()).getValue(BlockFoodMachine.FACING).getOpposite());
-			EntityItem ei = new EntityItem(world, food.getX(), food.getY(), food.getZ(), new ItemStack(Items.BREAD));
-			world.spawnEntity(ei);
-			ticks = 0;
-			active = false;
-		}
+	public void start() {
+		this.ticks = 100;
 	}
 }
