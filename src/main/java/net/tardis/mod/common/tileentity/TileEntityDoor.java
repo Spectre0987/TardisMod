@@ -1,8 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -34,6 +31,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
@@ -51,6 +49,9 @@ import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
@@ -72,6 +73,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	private boolean requiresUpdate = true;
 	//Only use this client side - This should be a WorldBOTI
 	public World clientWorld;
+	private boolean isStealth = true;
 	
 	public static final AxisAlignedBB NORTH = new AxisAlignedBB(0, 0, -0.1, 1, 2, 0);
 	public static final AxisAlignedBB EAST = new AxisAlignedBB(1, 0, 0, 1.1, 2, 1);
@@ -93,6 +95,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.alpha = tag.getFloat("alpha");
 		this.forceField = tag.getBoolean("forcefield");
 		this.renderAngle = tag.getFloat("renderAngle");
+		this.isStealth = tag.getBoolean("stealth");
 	}
 	
 	@Override
@@ -104,6 +107,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		tag.setFloat("alpha", this.alpha);
 		tag.setBoolean("forcefield", forceField);
 		tag.setFloat("renderAngle", renderAngle);
+		tag.setBoolean("stealth", this.isStealth);
 		return super.writeToNBT(tag);
 	}
 	
@@ -246,6 +250,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			else bb = WEST;
 			bb = bb.offset(this.getPos().down());
 			for (Entity e : world.getEntitiesWithinAABB(Entity.class, bb)) {
+				if (e instanceof EntityPlayer) {
+					EntityPlayer player = (EntityPlayer) e;
+					if (CapabilityTardis.get(player).isInFlight()) return;
+				}
 				tardis.enterTARDIS(e);
 			}
 		}
@@ -486,6 +494,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		tag.setBoolean("remat", this.isRemat);
 		tag.setBoolean("locked", this.isLocked);
 		tag.setInteger("light", this.lightLevel);
+		tag.setBoolean("stealth", this.isStealth);
 		return tag;
 	}
 	
@@ -497,6 +506,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.isRemat = pkt.getNbtCompound().getBoolean("remat");
 		this.isLocked = pkt.getNbtCompound().getBoolean("locked");
 		this.lightLevel = pkt.getNbtCompound().getInteger("light");
+		this.isStealth = pkt.getNbtCompound().getBoolean("stealth");
 		this.requiresUpdate = true;
 	}
 	
@@ -556,5 +566,15 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	@Override
 	public World getRenderWorld() {
 		return this.clientWorld;
+	}
+	
+	public boolean isStealth() {
+		return this.isStealth;
+	}
+	
+	public void setStealth(boolean isStealth) {
+		this.isStealth = isStealth;
+		if (!world.isRemote)
+			world.notifyBlockUpdate(this.getPos(), world.getBlockState(this.getPos()), world.getBlockState(this.getPos()), 2);
 	}
 }

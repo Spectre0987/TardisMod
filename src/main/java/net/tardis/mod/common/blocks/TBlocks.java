@@ -1,8 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -35,6 +32,9 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TBlocks {
 	
@@ -154,7 +154,6 @@ public class TBlocks {
 	
 	public static Block zero_room_glow = register(new BlockVerticalSlab(), "zero_room_slab");
 	public static Block zero_room = register(new BlockBase(), "zero_room");
-	public static Block zero_room_stairs = register(new BlockTStairs(zero_room.getDefaultState()), "zero_room_stairs");
 	
 	public static Block hellbent_light = register(new BlockFacingDecoration(TileEntityHellbentLight::new).setLightLevel(1F).setLightOpacity(0), "hellbent_light");
 	public static Block hellbent_monitor = register(new BlockMonitor(TileEntityHellbentMonitor::new), "hellbent_monitor");

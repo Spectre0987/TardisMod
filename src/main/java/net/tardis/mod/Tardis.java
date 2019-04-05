@@ -1,9 +1,5 @@
 package net.tardis.mod;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -82,6 +78,7 @@ import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
 import net.tardis.mod.common.protocols.ProtocolRepair;
+import net.tardis.mod.common.protocols.ProtocolStealth;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.ProtocolToggleHum;
 import net.tardis.mod.common.protocols.ProtocolWaypoints;
@@ -142,6 +139,8 @@ import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.common.helpers.EntityHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
@@ -271,6 +270,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
+		TardisProtocol.register(new ProtocolStealth());
 		//TardisProtocol.register(new ProtocolForceField());
 
 		// Register All Mobs Here.
@@ -300,7 +300,6 @@ public class Tardis {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandlerTardis());
 
 		RepairRecipes.registerRecipe(TItems.fluid_link, TItems.mercuryBottle);
-		RepairRecipes.registerRecipe(TItems.artron_capacitor, Item.getItemFromBlock(Blocks.REDSTONE_BLOCK));
 		RepairRecipes.registerRecipe(TItems.demat_circut, Items.ENDER_PEARL);
 		RepairRecipes.registerRecipe(TItems.antenna, TItems.circuts);
 		RepairRecipes.registerRecipe(TItems.stabilizers, TItems.circuts);

@@ -1,5 +1,7 @@
 package net.tardis.mod.proxy;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelOcelot;
@@ -17,6 +19,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
+import net.tardis.mod.client.TardisKeyBinds;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.guis.GuiConsoleChange;
 import net.tardis.mod.client.guis.GuiToggleHum;
@@ -75,6 +78,7 @@ import net.tardis.mod.client.renderers.items.RenderItemTardis03;
 import net.tardis.mod.client.renderers.items.RenderTEISRItem;
 import net.tardis.mod.client.renderers.layers.RenderFlightMode;
 import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
+import net.tardis.mod.client.renderers.layers.RenderStupidCape;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
 import net.tardis.mod.client.renderers.tiles.RenderElectricPanel;
@@ -150,6 +154,8 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 import net.tardis.mod.config.TardisConfig;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
@@ -169,6 +175,7 @@ public class ClientProxy extends ServerProxy {
 		if (!layerPlayers.contains(player)) {
 			RenderPlayer render = e.getRenderer();
 			addRenderLayer(new RenderLayerVortexM(render));
+			addRenderLayer(new RenderStupidCape(render));
 			layerPlayers.add(player);
 		}
 	}
@@ -325,11 +332,42 @@ public class ClientProxy extends ServerProxy {
 		EntityRaider.EnumRaiderType.MATT.setModel(RenderRaider.STEVE);
 		EntityRaider.EnumRaiderType.RICHARD.setModel(RenderRaider.ALEX);
 		EntityRaider.EnumRaiderType.STEVEN.setModel(RenderRaider.STEVE);
+		
+		TardisKeyBinds.init();
 	}
 	
 	@Override
 	public void postInit() {
 		super.postInit();
 		RenderFlightMode.cacheFlightModels();
+	}
+	
+	public void addBlockState(File file, Block block) {
+		file = new File(file.getAbsolutePath() + "/" + block.getRegistryName().getPath() + ".json");
+		System.out.println(file.getAbsolutePath());
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				JsonWriter writer = new GsonBuilder().setPrettyPrinting().create().newJsonWriter(new FileWriter(file));
+				writer.beginObject();
+				
+				writer.name("variants");
+				writer.beginObject();
+				writer.name("inventory");
+				writer.beginObject();
+				writer.name("model").value("tardis:teisr");
+				writer.endObject();
+				writer.name("normal");
+				writer.beginObject();
+				writer.name("model").value("tardis:teisr");
+				writer.endObject();
+				writer.endObject();
+				
+				writer.endObject();
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

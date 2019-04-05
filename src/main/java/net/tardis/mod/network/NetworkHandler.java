@@ -11,14 +11,15 @@ import net.tardis.mod.network.packets.MessageCompanion;
 import net.tardis.mod.network.packets.MessageConsoleChange;
 import net.tardis.mod.network.packets.MessageDamageSystem;
 import net.tardis.mod.network.packets.MessageDemat;
+import net.tardis.mod.network.packets.MessageDematAnim;
 import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.network.packets.MessageExteriorChange;
 import net.tardis.mod.network.packets.MessageHandlerProtocol;
 import net.tardis.mod.network.packets.MessageHandlerTeleport;
 import net.tardis.mod.network.packets.MessageMissControl;
-import net.tardis.mod.network.packets.MessageSetupFlight;
 import net.tardis.mod.network.packets.MessageProtocol;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
+import net.tardis.mod.network.packets.MessageSetupFlight;
 import net.tardis.mod.network.packets.MessageSonicWorkbench;
 import net.tardis.mod.network.packets.MessageSpawnItem;
 import net.tardis.mod.network.packets.MessageStopHum;
@@ -61,6 +62,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageCapabilityDoorOpen.Handler.class, MessageCapabilityDoorOpen.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageSetupFlight.Handler.class, MessageSetupFlight.class, id++, Side.CLIENT);
 		NETWORK.registerMessage(MessageConsoleChange.Handler.class, MessageConsoleChange.class, id++, Side.SERVER);
+		NETWORK.registerMessage(MessageDematAnim.Handler.class, MessageDematAnim.class, id++, Side.SERVER);
 	}
 	
 	

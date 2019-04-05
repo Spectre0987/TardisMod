@@ -52,6 +52,7 @@ item.tardis.stabilizers.name=Stabilizer circuits
 item.tardis.thermo.name=Thermo-Couplings
 item.tardis.sonic_third.name=Third Doctor's Sonic
 item.tardis.sonic_screwdriver.name=Sonic Screwdriver
+item.tardis.brak_doors_closed.name=TARDIS Ancillary doors
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS arriving in
@@ -340,4 +341,6 @@ hum.tardis.70=Sharp
 hum.tardis.1963=Brachacki
 hum.tardis.default=Kelt
 hum.tardis.disabled=Disabled
+
+tardis.keybinds.demat_remat_anim=Demat/Remat animation
 
