@@ -1,19 +1,12 @@
 package net.tardis.mod.util.common.helpers;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.client.sound.SoundInteriorHum;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
-
-import java.util.function.Supplier;
 
 public class PlayerHelper {
 	
@@ -29,9 +22,9 @@ public class PlayerHelper {
 		}
 	}
 	
-	public static boolean isPlayerMoving(EntityPlayer player){
+	public static boolean isPlayerMoving(EntityPlayer player) {
 		float motion = MathHelper.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ);
-		return  ((double)motion >= 0.01D);
+		return ((double) motion >= 0.01D);
 	}
 	
 	/**
@@ -43,6 +36,28 @@ public class PlayerHelper {
 	@SideOnly(Side.CLIENT)
 	public static boolean hasSmallArms(AbstractClientPlayer player) {
 		return player.getSkinType().equals("slim");
+	}
+	
+	
+	public static void resetCapabilities(EntityPlayer player) {
+		PlayerCapabilities capabilities = player.capabilities;
+		if (player.isCreative()) {
+			capabilities.allowFlying = true;
+			capabilities.isCreativeMode = true;
+			capabilities.disableDamage = true;
+		} else if (player.isSpectator()) {
+			capabilities.allowFlying = true;
+			capabilities.isCreativeMode = false;
+			capabilities.disableDamage = true;
+			capabilities.isFlying = true;
+		} else {
+			capabilities.allowFlying = false;
+			capabilities.isCreativeMode = false;
+			capabilities.disableDamage = false;
+			capabilities.isFlying = false;
+		}
+		
+		capabilities.allowEdit = !player.isSpectator();
 	}
 	
 }
