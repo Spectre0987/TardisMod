@@ -81,6 +81,7 @@ import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
 import net.tardis.mod.common.protocols.ProtocolRepair;
+import net.tardis.mod.common.protocols.ProtocolStealth;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.ProtocolToggleHum;
 import net.tardis.mod.common.protocols.ProtocolWaypoints;
@@ -270,6 +271,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
+		TardisProtocol.register(new ProtocolStealth());
 		//TardisProtocol.register(new ProtocolForceField());
 
 		// Register All Mobs Here.

@@ -28,7 +28,7 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.rotate(Helper.get360FromFacing(te.getWorld().getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.color(1, 1, 1, te.alpha);
-		if (MinecraftForgeClient.getRenderPass() == 0) {
+		if (MinecraftForgeClient.getRenderPass() == 0 && !te.isStealth()) {
 			renderExterior(te);
 		}
 		if (!te.isLocked()) {

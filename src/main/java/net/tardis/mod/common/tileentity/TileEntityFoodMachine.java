@@ -2,13 +2,14 @@ package net.tardis.mod.common.tileentity;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.blocks.BlockFoodMachine;
-import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class TileEntityFoodMachine extends TileEntity implements ITickable {
 
@@ -21,15 +22,14 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 
 	public void makeFood() {
 		if (!world.isRemote) {
-			for (TileEntity te : world.getChunk(getPos()).getTileEntityMap().values()) {
-				if (te != null && te instanceof TileEntityTardis) {
-					TileEntityTardis tardis = (TileEntityTardis) te;
-					if (tardis.fuel >= 0.01) {
-						tardis.fuel -= 0.01;
-						tardis.markDirty();
-						active = true;
-						world.playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(), TSounds.FOOD_MACHINE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-					}
+			TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPos()));
+			if(te != null && te instanceof TileEntityTardis) {
+				TileEntityTardis tardis = ((TileEntityTardis)te);
+				if(tardis.fuel > 0.01) {
+					tardis.setFuel(tardis.fuel - 0.01F);
+					EnumFacing face = world.getBlockState(getPos()).getValue(BlockFoodMachine.FACING);
+					BlockPos pos = this.getPos().offset(face);
+					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.BREAD));
 				}
 			}
 		}
