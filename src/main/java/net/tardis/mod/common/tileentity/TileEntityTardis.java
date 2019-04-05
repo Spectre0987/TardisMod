@@ -211,7 +211,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					player.connection.sendPacket(new SPacketSoundEffect(TSounds.takeoff, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
 				}
 			else if (this.ticksToTravel > 200 && this.ticksToTravel < this.totalTimeToTravel - 200) {
-				if (this.ticksToTravel % 40 == 0 || hasPilot() && getFlightPilot().ticksExisted % 40 ==0) {
+				if (this.ticksToTravel % 40 == 0 || hasPilot() && getFlightPilot().ticksExisted % 40 == 0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
@@ -526,7 +526,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				DimensionType currentType = DimensionManager.getProviderType(this.dimension);
 				if (type != null) this.currentDimName = currentType.getName();
 			}
-			if(this.isInFlight()) {
+			if (this.isInFlight()) {
 				this.ticksToTravel += this.calcTimeToTravel();
 				this.totalTimeToTravel = this.ticksToTravel;
 			}

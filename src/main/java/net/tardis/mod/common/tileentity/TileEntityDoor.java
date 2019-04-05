@@ -34,6 +34,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
@@ -249,6 +250,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			else bb = WEST;
 			bb = bb.offset(this.getPos().down());
 			for (Entity e : world.getEntitiesWithinAABB(Entity.class, bb)) {
+				if(e instanceof EntityPlayer){
+					EntityPlayer player = (EntityPlayer) e;
+					if(CapabilityTardis.get(player).isInFlight()) return;
+				}
 				tardis.enterTARDIS(e);
 			}
 		}
