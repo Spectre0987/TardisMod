@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.layers;
 
+import java.util.HashMap;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -14,8 +16,6 @@ import net.tardis.mod.capability.ITardisCap;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
-
-import java.util.HashMap;
 
 public class RenderFlightMode {
 	
@@ -56,8 +56,6 @@ public class RenderFlightMode {
 			
 			//Render
 			GlStateManager.pushMatrix();
-			
-			GlStateManager.enableAlpha();
 			GlStateManager.enableBlend();
 			
 			//Render alpha colours for Demat/Remat
@@ -112,7 +110,7 @@ public class RenderFlightMode {
 			
 			//Set things back
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1F);
-			GlStateManager.disableAlpha();
+			//GlStateManager.disableAlpha();
 			GlStateManager.disableBlend();
 			
 			GlStateManager.popMatrix();
