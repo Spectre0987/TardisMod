@@ -1,8 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -52,6 +49,9 @@ import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.common.helpers.TardisHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
@@ -250,9 +250,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			else bb = WEST;
 			bb = bb.offset(this.getPos().down());
 			for (Entity e : world.getEntitiesWithinAABB(Entity.class, bb)) {
-				if(e instanceof EntityPlayer){
+				if (e instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) e;
-					if(CapabilityTardis.get(player).isInFlight()) return;
+					if (CapabilityTardis.get(player).isInFlight()) return;
 				}
 				tardis.enterTARDIS(e);
 			}
@@ -567,14 +567,14 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public World getRenderWorld() {
 		return this.clientWorld;
 	}
-
-	public void setStealth(boolean isStealth) {
-		this.isStealth = isStealth;
-		if(!world.isRemote)
-			world.notifyBlockUpdate(this.getPos(), world.getBlockState(this.getPos()), world.getBlockState(this.getPos()), 2);
-	}
 	
 	public boolean isStealth() {
 		return this.isStealth;
+	}
+	
+	public void setStealth(boolean isStealth) {
+		this.isStealth = isStealth;
+		if (!world.isRemote)
+			world.notifyBlockUpdate(this.getPos(), world.getBlockState(this.getPos()), world.getBlockState(this.getPos()), 2);
 	}
 }

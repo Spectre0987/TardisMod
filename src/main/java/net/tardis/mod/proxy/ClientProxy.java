@@ -330,7 +330,7 @@ public class ClientProxy extends ServerProxy {
 		EntityRaider.EnumRaiderType.MATT.setModel(RenderRaider.STEVE);
 		EntityRaider.EnumRaiderType.RICHARD.setModel(RenderRaider.ALEX);
 		EntityRaider.EnumRaiderType.STEVEN.setModel(RenderRaider.STEVE);
-
+		
 		TardisKeyBinds.init();
 	}
 	
@@ -343,7 +343,7 @@ public class ClientProxy extends ServerProxy {
 	public void addBlockState(File file, Block block) {
 		file = new File(file.getAbsolutePath() + "/" + block.getRegistryName().getPath() + ".json");
 		System.out.println(file.getAbsolutePath());
-		if(!file.exists()) {
+		if (!file.exists()) {
 			try {
 				file.createNewFile();
 				JsonWriter writer = new GsonBuilder().setPrettyPrinting().create().newJsonWriter(new FileWriter(file));
@@ -352,19 +352,18 @@ public class ClientProxy extends ServerProxy {
 				writer.name("variants");
 				writer.beginObject();
 				writer.name("inventory");
-					writer.beginObject();
-					writer.name("model").value("tardis:teisr");
-					writer.endObject();
+				writer.beginObject();
+				writer.name("model").value("tardis:teisr");
+				writer.endObject();
 				writer.name("normal");
-					writer.beginObject();
-					writer.name("model").value("tardis:teisr");
-					writer.endObject();
-					writer.endObject();
+				writer.beginObject();
+				writer.name("model").value("tardis:teisr");
+				writer.endObject();
+				writer.endObject();
 				
 				writer.endObject();
 				writer.close();
-			}
-			catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

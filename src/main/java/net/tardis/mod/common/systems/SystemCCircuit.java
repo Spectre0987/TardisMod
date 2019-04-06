@@ -23,20 +23,20 @@ public class SystemCCircuit extends BaseSystem {
 			}
 			checkActive = false;
 		}
-		if(tardis.isStealthMode()) {
+		if (tardis.isStealthMode()) {
 			++this.timeStealth;
-			if(this.getHealth() <= 0.0)
+			if (this.getHealth() <= 0.0)
 				tardis.setStealthMode(false);
-		}
-		else this.timeStealth = 0;
-		if(this.timeStealth >= 100) {
+		} else this.timeStealth = 0;
+		if (this.timeStealth >= 100) {
 			this.timeStealth = 0;
 			this.setHealth(this.getHealth() - 0.01F);
 		}
 	}
 
 	@Override
-	public void damage() {}
+	public void damage() {
+	}
 
 	@Override
 	public Item getRepairItem() {

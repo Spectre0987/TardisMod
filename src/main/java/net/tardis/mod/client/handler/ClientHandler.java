@@ -91,10 +91,10 @@ public class ClientHandler {
 			}
 		}
 	}
-
+	
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent e) {
-		if (TardisKeyBinds.DEMAT_REMAT_ANIM.isPressed()){
+		if (TardisKeyBinds.DEMAT_REMAT_ANIM.isPressed()) {
 			NetworkHandler.NETWORK.sendToServer(new MessageDematAnim());
 		}
 	}
