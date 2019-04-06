@@ -609,6 +609,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			return false;
 		}
 		
+		if (hasPilot()) {
+			this.setLoading(false);
+			this.setFueling(false);
+			EntityPlayer pilot = getFlightPilot();
+			CapabilityTardis.get(pilot).setFlightState(CapabilityTardis.TardisFlightState.DEMAT);
+			return true;
+		}
+		
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;

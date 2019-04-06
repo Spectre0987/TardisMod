@@ -60,7 +60,7 @@ public class CapabilityTardis implements ITardisCap {
 	private boolean hasFuel = true;
 	private int timeOnGround = 0;
 	private boolean isOpen = false;
-	private static AttributeModifier mod = new AttributeModifier(UUID.fromString("ad4ab5e6-6904-4429-9883-15ac8aeef97d"), "Flight mode", 0.12F, 0);
+	private static AttributeModifier mod = new AttributeModifier(UUID.fromString("42b68862-2bdc-4df4-9fbe-4ad597cda211"), "Flight mode", 0.12F, 0);
 	private BlockPos prevPos = new BlockPos(0, 0, 0);
 	private Vec2d prevRot = new Vec2d(0, 0);
 	private float alpha = 1;
@@ -210,14 +210,19 @@ public class CapabilityTardis implements ITardisCap {
 		TileEntityTardis console = TardisHelper.getConsole(cap.getFlightTardis()); //Get the Console
 		BlockPos bPos = player.getPosition(); //Back up the players position before we do anything
 		
-		if (!cap.isInFlight()) return; //If the player isn't in flight, what's the point in going further
 		
 		if (console != null) {
 			
-			WorldServer exteriorWorld = (WorldServer) player.world;
+			if (player.dimension != console.getWorld().provider.getDimension()) {
+				console.enterTARDIS(player);
+				player.attemptTeleport(console.getPos().getX(), console.getPos().getY(), console.getPos().getZ() - 1.5F);
+			}
+			
+			
+			WorldServer exteriorWorld = DimensionManager.getWorld(console.dimension);
 			
 			//Set Exterior of asked to
-			if (placeExterior) {
+			if (placeExterior && cap.isInFlight()) {
 				exteriorWorld.getChunkProvider().loadChunk(bPos.getX() * 16, bPos.getZ() * 16);
 				exteriorWorld.setBlockState(bPos, TBlocks.tardis.getDefaultState());
 				exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
@@ -235,12 +240,8 @@ public class CapabilityTardis implements ITardisCap {
 			console.setLocation(bPos);
 			console.dimension = exteriorWorld.provider.getDimension();
 			console.setFlightPilot(null);
+			console.markDirty();
 			
-			//Reset Cap stuff
-			cap.setTardis(BlockPos.ORIGIN);
-			cap.setInFlight(false);
-			cap.sync();
-			cap.setTimeOnGround(0);
 			
 			//Set player Capabilities/Speeds and eye height back to normal
 			player.velocityChanged = true;
@@ -250,9 +251,11 @@ public class CapabilityTardis implements ITardisCap {
 			player.sendPlayerAbilities();
 			setSpeeds(player, true);
 			
-			//Handle Enter
-			console.enterTARDIS(player);
-			player.attemptTeleport(console.getPos().getX(), console.getPos().getY(), console.getPos().getZ() - 1.5F);
+			//Reset Cap stuff
+			cap.setTardis(BlockPos.ORIGIN);
+			cap.setInFlight(false);
+			cap.setTimeOnGround(0);
+			cap.sync();
 		}
 	}
 	
@@ -373,7 +376,7 @@ public class CapabilityTardis implements ITardisCap {
 			}
 		} else {
 			//If the player is in the Tardis dimension and are still in a state of flight, we reset them
-			if (isInFlight()) {
+			if (isInFlight) {
 				endFlight(player, true);
 			}
 		}
@@ -471,6 +474,9 @@ public class CapabilityTardis implements ITardisCap {
 		@SubscribeEvent
 		public static void onJoin(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
 			get(event.player).sync();
+			if (get(event.player).isInFlight()) {
+				CapabilityTardis.endFlight(event.player, true);
+			}
 		}
 		
 		@SubscribeEvent
