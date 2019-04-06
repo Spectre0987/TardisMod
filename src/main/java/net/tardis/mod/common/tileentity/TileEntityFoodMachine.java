@@ -21,9 +21,9 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 	private void makeFood() {
 		if (!world.isRemote) {
 			TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPos()));
-			if(te != null && te instanceof TileEntityTardis) {
-				TileEntityTardis tardis = ((TileEntityTardis)te);
-				if(tardis.fuel > 0.01) {
+			if (te != null && te instanceof TileEntityTardis) {
+				TileEntityTardis tardis = ((TileEntityTardis) te);
+				if (tardis.fuel > 0.01) {
 					tardis.setFuel(tardis.fuel - 0.01F);
 					EnumFacing face = world.getBlockState(getPos()).getValue(BlockFoodMachine.FACING);
 					BlockPos pos = this.getPos().offset(face);

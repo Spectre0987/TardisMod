@@ -9,30 +9,30 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.capability.CapabilityTardis;
 
 public class MessageDematAnim implements IMessage {
-    public MessageDematAnim() {
-
-    }
-
-    @Override
-    public void fromBytes(ByteBuf buf) {
-
-    }
-
-    @Override
-    public void toBytes(ByteBuf buf) {
-
-    }
-
-    public static class Handler implements IMessageHandler<MessageDematAnim, IMessage>{
-        @Override
-        public IMessage onMessage(MessageDematAnim message, MessageContext ctx) {
-            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() ->{
-                EntityPlayer player = ctx.getServerHandler().player;
-                if (CapabilityTardis.get(player).isInFlight()) {
-                    CapabilityTardis.get(player).setFlightState(CapabilityTardis.get(player).getFlightState().name().toLowerCase().contains("demat") ? CapabilityTardis.TardisFlightState.REMAT : CapabilityTardis.TardisFlightState.DEMAT);
-                }
-            });
-            return null;
-        }
-    }
+	public MessageDematAnim() {
+	
+	}
+	
+	@Override
+	public void fromBytes(ByteBuf buf) {
+	
+	}
+	
+	@Override
+	public void toBytes(ByteBuf buf) {
+	
+	}
+	
+	public static class Handler implements IMessageHandler<MessageDematAnim, IMessage> {
+		@Override
+		public IMessage onMessage(MessageDematAnim message, MessageContext ctx) {
+			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+				EntityPlayer player = ctx.getServerHandler().player;
+				if (CapabilityTardis.get(player).isInFlight()) {
+					CapabilityTardis.get(player).setFlightState(CapabilityTardis.get(player).getFlightState().name().toLowerCase().contains("demat") ? CapabilityTardis.TardisFlightState.REMAT : CapabilityTardis.TardisFlightState.DEMAT);
+				}
+			});
+			return null;
+		}
+	}
 }

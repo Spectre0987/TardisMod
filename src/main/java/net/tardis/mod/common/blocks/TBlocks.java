@@ -1,8 +1,5 @@
 package net.tardis.mod.common.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -35,6 +32,9 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TBlocks {
 	

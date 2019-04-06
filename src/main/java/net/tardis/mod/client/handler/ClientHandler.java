@@ -61,6 +61,7 @@ public class ClientHandler {
 		}
 	}
 	
+	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
@@ -91,10 +92,10 @@ public class ClientHandler {
 			}
 		}
 	}
-
+	
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent e) {
-		if (TardisKeyBinds.DEMAT_REMAT_ANIM.isPressed()){
+		if (TardisKeyBinds.DEMAT_REMAT_ANIM.isPressed()) {
 			NetworkHandler.NETWORK.sendToServer(new MessageDematAnim());
 		}
 	}

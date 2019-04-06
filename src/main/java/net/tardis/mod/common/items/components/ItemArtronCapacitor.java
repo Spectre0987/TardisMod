@@ -1,8 +1,5 @@
 package net.tardis.mod.common.items.components;
 
-import java.text.DecimalFormat;
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,12 +18,26 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 
-public class ItemArtronCapacitor extends Item {
+import java.text.DecimalFormat;
+import java.util.List;
 
+public class ItemArtronCapacitor extends Item {
+	
 	static DecimalFormat FORMAT = new DecimalFormat("#.##");
 	
 	public ItemArtronCapacitor() {
 		this.setMaxStackSize(1);
+	}
+	
+	public static void setPower(ItemStack stack, float power) {
+		NBTTagCompound tag = Helper.getStackTag(stack);
+		tag.setFloat("artron", power);
+		stack.setTagCompound(tag);
+	}
+	
+	public static float getPower(ItemStack stack) {
+		NBTTagCompound tag = Helper.getStackTag(stack);
+		return tag.hasKey("artron") ? tag.getFloat("artron") : 0F;
 	}
 
 	@Override
@@ -50,33 +61,22 @@ public class ItemArtronCapacitor extends Item {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		if (!worldIn.isRemote && RiftHelper.isRift(worldIn.getChunk(entityIn.getPosition()).getPos(), worldIn)) {
 			float oldPower = ItemArtronCapacitor.getPower(stack);
-			if(oldPower < 1.0F)
-				ItemArtronCapacitor.setPower(stack, (float)MathHelper.clamp(ItemArtronCapacitor.getPower(stack) + 0.005, 0, 1));
+			if (oldPower < 1.0F)
+				ItemArtronCapacitor.setPower(stack, (float) MathHelper.clamp(ItemArtronCapacitor.getPower(stack) + 0.005, 0, 1));
 		}
 	}
-
+	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if(stack != null) {
+		if (stack != null) {
 			NBTTagCompound tag = Helper.getStackTag(stack);
-			if(tag.hasKey("artron")) {
+			if (tag.hasKey("artron")) {
 				tooltip.add(new TextComponentTranslation("tooltip.tardis.artron_capacitor").getFormattedText() + ": " + FORMAT.format(tag.getFloat("artron") * 100));
 			}
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-
-	public static void setPower(ItemStack stack, float power) {
-		NBTTagCompound tag = Helper.getStackTag(stack);
-		tag.setFloat("artron", power);
-		stack.setTagCompound(tag);
-	}
 	
-	public static float getPower(ItemStack stack) {
-		NBTTagCompound tag = Helper.getStackTag(stack);
-		return tag.hasKey("artron") ? tag.getFloat("artron") : 0F;
-	}
-
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		return slotChanged;

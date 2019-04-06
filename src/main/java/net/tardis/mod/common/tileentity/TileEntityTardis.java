@@ -1,9 +1,5 @@
 package net.tardis.mod.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -90,6 +86,10 @@ import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
@@ -319,7 +319,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					WorldServer dWorld1 = world.getMinecraftServer().getWorld(destDim);
 					TileEntity te = dWorld1.getTileEntity(landPos.up());
 					if (te instanceof TileEntityDoor) {
-						TileEntityDoor door = (TileEntityDoor)te;
+						TileEntityDoor door = (TileEntityDoor) te;
 						door.setConsolePos(consolePos);
 						door.setRemat();
 						door.setStealth(this.isStealth);
@@ -609,6 +609,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			return false;
 		}
 		
+		if (hasPilot()) {
+			this.setLoading(false);
+			this.setFueling(false);
+			EntityPlayer pilot = getFlightPilot();
+			CapabilityTardis.get(pilot).setFlightState(CapabilityTardis.TardisFlightState.DEMAT);
+			return true;
+		}
+		
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;
@@ -747,18 +755,18 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return false;
 	}
 	
-	public void setStealthMode(boolean stealth) {
-		this.isStealth = stealth;
-		if(!world.isRemote && !this.isInFlight()) {
-			TileEntity te = world.getMinecraftServer().getWorld(dimension).getTileEntity(this.getLocation().up());
-			if(te != null && te instanceof TileEntityDoor) {
-				((TileEntityDoor)te).setStealth(this.isStealth);
-			}
-		}
-	}
-	
 	public boolean isStealthMode() {
 		return this.isStealth;
+	}
+	
+	public void setStealthMode(boolean stealth) {
+		this.isStealth = stealth;
+		if (!world.isRemote && !this.isInFlight()) {
+			TileEntity te = world.getMinecraftServer().getWorld(dimension).getTileEntity(this.getLocation().up());
+			if (te != null && te instanceof TileEntityDoor) {
+				((TileEntityDoor) te).setStealth(this.isStealth);
+			}
+		}
 	}
 	
 	@Override

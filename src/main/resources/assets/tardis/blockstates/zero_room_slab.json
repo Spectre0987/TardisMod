@@ -34,8 +34,8 @@
     "inventory": {
       "model": "tardis:vertical_slab"
     },
-    "normal":{
-        "model": "tardis:vertical_slab"
+    "normal": {
+      "model": "tardis:vertical_slab"
     }
   }
 }
