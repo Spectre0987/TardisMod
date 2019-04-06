@@ -46,6 +46,7 @@ import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekSkaro;
+import net.tardis.mod.common.entities.EntityDummy;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
@@ -199,6 +200,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlStabilizers.class, "stabilizers");
 		EntityHelper.registerStatic(ControlMonitor.class, "monitor");
 		EntityHelper.registerStatic(ControlWaypoint.class, "waypoint_select");
+		EntityHelper.registerStatic(EntityDummy.class, "dummy");
 		EntityHelper.registerProjectiles(EntityLaserRay.class, "cyber_ray");
 		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
@@ -222,7 +224,7 @@ public class Tardis {
 		registerTileEntity(TileEntityHellbentLight.class, "TileEntityHellbentLight");
 		registerTileEntity(TileEntityHellbentMonitor.class, "TileEntityHellbentMonitor");
 		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
-		registerTileEntity(TileEntityHelbentRoof.class, "Tile	EntityHelbentRoof");
+		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
 		registerTileEntity(TileEntityComponentRepair.class, "TileEntityComponentRepair");
 		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		registerTileEntity(TileEntityChair.class, "chair");

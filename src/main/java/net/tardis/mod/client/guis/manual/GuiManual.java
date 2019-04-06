@@ -33,11 +33,12 @@ public class GuiManual extends GuiScreen {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/manual.png");
 	private static final ResourceLocation BOOK_GUI_TEXTURES = new ResourceLocation("textures/gui/book.png");
 	public ButtonBook next, prev;
-	private static List<Page> PAGES = new ArrayList<>();
+	private static List<Page> PAGES = new ArrayList<>();;
 	public int gui_width = 281, gui_height = 208;
 	private int index = 0;
 	
 	static {
+		PAGES =  new ArrayList<>();
 		IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
 		if(manager instanceof IReloadableResourceManager) {
 			((IReloadableResourceManager)manager).registerReloadListener(new IResourceManagerReloadListener() {
