@@ -1,6 +1,14 @@
+//Misc. Strings
+
+general.time.seconds=seconds
+
+//Creative Tabs
+
 itemGroup.tardis_blocks=TARDIS Mod Blocks
 itemGroup.tardis_items=TARDIS Mod Items
 itemGroup.tardis_galliblocks=Strange Blocks
+
+//Items
 
 item.tardis.key.name=TARDIS Key
 item.tardis.pos_setter.name=Coordinate Logger
@@ -54,16 +62,7 @@ item.tardis.sonic_third.name=Third Doctor's Sonic
 item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 item.tardis.brak_doors_closed.name=TARDIS Ancillary doors
 
-tooltip.remote=Remote bound to TARDIS at:
-tooltip.remote.time=TARDIS arriving in
-tooltip.remote.fuel=Artron Banks
-tooltip.remote.exteriorpos=TARDIS Exterior:
-tooltip.remote.bind=To bind, right click on a console.
-tooltip.tardis.toolkit=Right click the console to repair all non-destroyed systems by 15
-
-tooltip.manual.sn=Found in the heart of a supernova.
-
-general.time.seconds=seconds
+//Tiles
 
 tile.tardis.tardis.name=TARDIS
 tile.tardis.time_rotor.name=Console
@@ -132,19 +131,17 @@ tile.tardis.gallifreyan_grass.name=Strange Grass
 tile.tardis.gallifreyan_dirt.name=Strange Dirt
 tile.tardis.gallifreyan_stone.name=Strange Stone
 
-
-
-
-tardis.locked.true=TARDIS locked!
-tardis.locked.false=TARDIS unlocked!
-
-door.tardis.locked.true=This TARDIS is now double locked!
-door.tardis.locked.false=Double lock lifted.
+//Death messages
 
 death.attack.dalek=killed by a Dalek Ray Gun!
+death.cyberman.generic=was converted!
 death.cyberman.ray=was deleted.
+death.attack.damage.noair=killed by prolonged exposure to a mercury leak!
 
 damage.dalek=was exterminated
+
+
+//Sonic Settings
 
 screw.recall=Recall Mode
 screw.lamp=Tinker Mode
@@ -160,30 +157,64 @@ screw.entity=Entity Interact
 screw.fail.itswood=It doesn't work on wood!
 screw.fail.bottom-door=To open the door, you must sonic the bottom of the door!
 
+//Item tooltips
+
 raygun.ammo=Ammo Left
 raygun.ammo.none=No Ammo!
 
-mods.tardis.compat.optifine=You're running Optifine with this mod! That's fine! We can understand why. But please be warned we do not accept any rendering bug reports with optifine installed
+tooltip.remote=Remote bound to TARDIS at:
+tooltip.remote.time=TARDIS arriving in
+tooltip.remote.fuel=Artron Banks
+tooltip.remote.exteriorpos=TARDIS Exterior:
+tooltip.remote.bind=To bind, right click on a console.
+tooltip.tardis.toolkit=Right click the console to repair all non-destroyed systems by 15
+tooltip.tardis.artron_capacitor=Charge
+
+key.console.location=Interior Pos:
+
+manual.help=Mouse over console controls to learn about them.
+tooltip.manual.sn=Found in the heart of a supernova.
+
+//Tardis Output hotbar message
 
 tardis.none=You don't own a TARDIS
 tardis.flying=TARDIS in flight!
+tardis.damage.demat=The Dematerialization Circuit has been fried!
 
 tardis.console.land.true=TARDIS will search upwards for a landing spot
 tardis.console.land.false=TARDIS will search downwards for a landing spot
+
+door.tardis.locked.true=This TARDIS is now double locked!
+door.tardis.locked.false=Double lock lifted.
+
+tardis.locked.true=TARDIS locked!
+tardis.locked.false=TARDIS unlocked!
+
+tardis.dimension=Nav-Com Dimension is:
 
 tardis.direction.north=TARDIS is now facing north
 tardis.direction.east=TARDIS is now facing east
 tardis.direction.south=TARDIS is now facing south
 tardis.direction.west=TARDIS is now facing west
 
+tardis.event.dalek=Dalek Invasion at:
+
 tardis.missing=The outer plasmic shell cannot be found! Please land again.
 
 tardis.magnitude=TARDIS Coordinate modifier is
 
+tardis.stabilizers.true=Stabilizers On
+tardis.stabilizers.false=Stabilizers Off
+
 tardis.hads.enabled.true=H.A.D.S has been enabled
 tardis.hads.enabled.false=H.A.D.S has been disabled
 
-protocol.ccircut=Chameleon Circuit
+tardis.repair.false=TARDIS hull is no longer repairing
+tardis.repair.true=TARDIS hull is now repairing
+
+//Monitor Strings
+
+protocol.ccircuit=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
 protocol.hum=Toggle hum
 protocol.tardis.find_rift=Find nearest Rift
@@ -197,9 +228,7 @@ protocol.tardis.repair=Repair the TARDIS
 protocol.tardis.waypoint.load=Waypoint
 protocol.tardis.interior=Change Interior
 
-tardis.repair.false=TARDIS hull is no longer repairing
-tardis.repair.true=TARDIS hull is now repairing
-
+//Monitor Sub System Strings
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
 system.tardis.fluidlinks=Fluid Links
@@ -209,30 +238,15 @@ system.tardis.temporal_grace=Temporal Grace Circuits
 system.tardis.stabilizers=Stabilizers
 system.tardis.thermo=Thermo-Couplings
 
-tardis.dimension=Nav-Com Dimension is:
+//Tardis Navigation
+course.tardis.direction.x=Coordinate Slip - X!
+course.tardis.direction.y=Coordinate Slip - Y!
+course.tardis.direction.z=Coordinate Slip - Z!
+course.tardis.dimension=Dimensional Drift!
+course.tardis.artron_leak=Fuel overpressurized!
+course.tardis.spin=Angular Momentum Overload!
 
-tardis.event.dalek=Dalek Invasion at:
-
-config.category.dims=Dimensions
-config.dims=Dimension List
-config.setdim=Set Dimension IDs for this mod?
-config.tDim=TARDIS Dimension
-config.bhDim=Space Dimension
-config.dim.usewhitelist=Should the dimensions in the below list be used as a whitelist?
-config.telosDim=Telos Dimension ID
-
-config.entity=Entities
-config.entity.allowed=Should this mod add Mobs?
-config.entity.cybermen.spawnchance=Chance That A Cyberman Will Spawn (Per Chunk)
-config.entity.adipose.spawnchance=Chance That An Adipose Will Spawn (Per Chunk)
-
-config.misc=Misc
-config.misc.givekey=Give player a TARDIS key when they join the world?
-config.misc.maxrand=Maximum number of blocks the TARDIS should travel when using the randomizer
-config.misc.shake=Should the camera shake when taking off/landing?
-
-config.boti=Enable BOTI?
-
+//Entity Tardis Controls
 entity.launch_lever.name=Time Rotor Handbrake
 entity.x_valve.name=Space Control - X
 entity.y_valve.name=Space Control - Y
@@ -257,20 +271,14 @@ entity.stabilizers.name=Stabilizers
 entity.monitor.name=Monitor
 entity.waypoint_select.name=Waypoint Selector
 
-tardis.stabilizers.true=Stabilizers On
-tardis.stabilizers.false=Stabilizers Off
+//Entity Mobs
 
 entity.dalek.name=Dalek
 entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Invasion Cyberman
+entity.quark=Quark
 
-death.cyberman.generic=was converted!
-
-key.console.location=Interior Pos:
-
-manual.help=Mouse over console controls to learn about them.
-
-tardis.damage.demat=The Dematerialization Circuit has been fried!
+//Hotbar messages
 
 tardis.message.refuelling=Tardis now fueling...
 tardis.message.no_longer_refuelling=Tardis no longer fueling.
@@ -278,6 +286,9 @@ tardis.message.tc_notfound=Could not find %s on planet %s!
 tardis.message.relocation=Relocating you to this capsule's outer plasmic shell!
 tardis.message.has_pilot=You cannot currently do that
 tardis.message.confines=Please remain in the confines of your own capsule
+
+
+//Subtitles
 
 tardis.subtitle.vworp=Vworp
 tardis.subtitle.flying=TARDIS flying
@@ -293,6 +304,8 @@ tardis.subtitle.drum_beat=Drum beat
 tardis.subtitle.stutter= TARDIS stutters
 tardis.subtitle.vm_teleport=Vortex Manipulator teleportation
 
+//Command Output
+
 command.no_tardis_owned=No TARDIS found
 command.no_player_found=No player found with this username
 command.tardis_travel=The selected TARDIS is being summoned to you.
@@ -300,14 +313,15 @@ command.tardis_deleted=TARDIS deleted
 command.tardis.nosystem=No system found
 commands.tardis.system_restored=System restored
 
+//Command Usage
 commands.tardis.teleportin.usage=/tardis interior [player]
 commands.tardis.grow.usage=/tardis grow
-commands.tardis.summon.usage=/summon tardis <player>
-commands.tardis.remove.usage=/tardis remove <player>
-commands.tardis.restoresys.usage=/tardis restoresys <player> <system1> [system2] [system3]...
+commands.tardis.summon.usage=/summon tardis [player]
+commands.tardis.restoresys.usage=/tardis restoresys [player] [system1] [system2] [system3]...
+commands.tardis.remove.usage=/tardis remove [player]
 
-gui.tardis.travel=Travel
 
+//Companions
 companion.tardis.follow.true=Please follow me.
 companion.tardis.follow.false=Wait here.
 companion.tardis.tardis=Go back to the TARDIS and wait for me.
@@ -315,15 +329,13 @@ companion.tardis.fetch=I need you to go get the TARDIS.
 companion.tardis.saved.dalek=Good work with those Daleks!
 companion.tardis.take=Take this!
 
+// - Configuration and Misc - 
+
+//Mod Compatibility
+mods.tardis.compat.optifine=You're running Optifine with this mod! That's fine! We can understand why. But please be warned we do not accept any rendering bug reports with optifine installed
 jei.tardis.book.description=Acquired by right clicking a TARDIS console with a vanilla book.
 
-course.tardis.direction.x=Coordinate Slip - X!
-course.tardis.direction.y=Coordinate Slip - Y!
-course.tardis.direction.z=Coordinate Slip - Z!
-course.tardis.dimension=Dimensional Drift!
-course.tardis.artron_leak=Fuel overpressurized!
-course.tardis.spin=Angular Momentum Overload!
-
+//Exteriors
 box.tardis.01=1963 - Brachacki
 box.tardis.02=1966 - Altered Brachacki
 box.tardis.03=1976 - Newbery
@@ -334,6 +346,10 @@ box.master.clock=Master's Clock
 box.tt=TT Capsule
 box.door=Wooden Door
 
+//GUI
+gui.tardis.travel=Travel
+
+//Hums
 hum.tardis.toyota=Toyota
 hum.tardis.coral=Coral
 hum.tardis.copper=Copper
@@ -342,4 +358,27 @@ hum.tardis.1963=Brachacki
 hum.tardis.default=Kelt
 hum.tardis.disabled=Disabled
 
+
+//Keybinds
 tardis.keybinds.demat_remat_anim=Demat/Remat animation
+
+//Config
+config.category.dims=Dimensions
+config.dims=Dimension List
+config.setdim=Set Dimension IDs for this mod?
+config.tDim=TARDIS Dimension
+config.bhDim=Space Dimension
+config.dim.usewhitelist=Should the dimensions in the below list be used as a whitelist?
+config.telosDim=Telos Dimension ID
+
+config.entity=Entities
+config.entity.allowed=Should this mod add Mobs?
+config.entity.cybermen.spawnchance=Chance That A Cyberman Will Spawn (Per Chunk)
+config.entity.adipose.spawnchance=Chance That An Adipose Will Spawn (Per Chunk)
+
+config.misc=Misc
+config.misc.givekey=Give player a TARDIS key when they join the world?
+config.misc.maxrand=Maximum number of blocks the TARDIS should travel when using the randomizer
+config.misc.shake=Should the camera shake when taking off/landing?
+
+config.boti=Enable BOTI?
