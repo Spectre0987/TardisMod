@@ -78,7 +78,6 @@ import net.tardis.mod.client.renderers.items.RenderItemTardis03;
 import net.tardis.mod.client.renderers.items.RenderTEISRItem;
 import net.tardis.mod.client.renderers.layers.RenderFlightMode;
 import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
-import net.tardis.mod.client.renderers.layers.RenderStupidCape;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
 import net.tardis.mod.client.renderers.tiles.RenderElectricPanel;
@@ -175,7 +174,6 @@ public class ClientProxy extends ServerProxy {
 		if (!layerPlayers.contains(player)) {
 			RenderPlayer render = e.getRenderer();
 			addRenderLayer(new RenderLayerVortexM(render));
-			addRenderLayer(new RenderStupidCape(render));
 			layerPlayers.add(player);
 		}
 	}
