@@ -9,7 +9,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.tardis.mod.common.TDamageSources;
+import net.tardis.mod.common.TDamage;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.sounds.TSounds;
 
@@ -48,7 +48,7 @@ public class ItemRayGun extends ItemBase {
 		if (!playerIn.isSneaking()) {
 			if (getAmmo(gun) > 0) {
 				Vec3d v3 = playerIn.getLook(1);
-				EntityLaserRay ball = new EntityLaserRay(worldIn, playerIn, 2, TDamageSources.LASER, new Vec3d(0, 1, 0));
+				EntityLaserRay ball = new EntityLaserRay(worldIn, playerIn, 2, TDamage.LASER, new Vec3d(0, 1, 0));
 				if (!worldIn.isRemote) {
 					ball.shoot(v3.x, v3.y, v3.z, 1.6F, (float) (14 - worldIn.getDifficulty().getId() * 4));
 					worldIn.spawnEntity(ball);

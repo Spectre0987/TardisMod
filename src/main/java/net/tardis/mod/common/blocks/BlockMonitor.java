@@ -1,5 +1,7 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.function.Supplier;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +22,6 @@ import net.tardis.mod.client.guis.GuiMonitor;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.TardisHelper;
-
-import java.util.function.Supplier;
 
 public class BlockMonitor extends BlockFacingDecoration implements IRenderBox {
 
@@ -50,7 +50,7 @@ public class BlockMonitor extends BlockFacingDecoration implements IRenderBox {
 
 	@SideOnly(Side.CLIENT)
 	public void openGui(TileEntityTardis tardis) {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiMonitor(tardis.getPos()));
+		Minecraft.getMinecraft().displayGuiScreen(new GuiMonitor(tardis));
 	}
 
 	@Override

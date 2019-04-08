@@ -57,8 +57,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.dimensions.IDimensionProperties;
-import net.tardis.mod.capability.CapabilityTardis;
-import net.tardis.mod.capability.ITardisCap;
+import net.tardis.mod.common.TDamage;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.data.TimeLord;
@@ -159,7 +158,7 @@ public class TEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void stopHurt(LivingHurtEvent event) {
-		if (event.getSource().equals(Tardis.SUFFICATION)) {
+		if (event.getSource().equals(TDamage.SUFFICATION)) {
 			if (event.getEntityLiving() instanceof EntityPlayer) {
 				int count = 0;
 				for (ItemStack stack : event.getEntityLiving().getArmorInventoryList()) {

@@ -1,5 +1,8 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -24,6 +27,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -37,7 +41,7 @@ import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
-import net.tardis.mod.common.TDamageSources;
+import net.tardis.mod.common.TDamage;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -49,9 +53,6 @@ import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.common.helpers.TardisHelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
 	
@@ -307,7 +308,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			}
 			
 			if (entity instanceof IMob) {
-				entity.attackEntityFrom(TDamageSources.FORCEFIELD, 4.0F);
+				entity.attackEntityFrom(TDamage.FORCEFIELD, 4.0F);
 			}
 			
 		});
@@ -521,11 +522,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		ControlDoor door = tardis.getDoor();
 		AxisAlignedBB BOTI = Block.FULL_BLOCK_AABB.grow(20);
 		if (door != null) {
-			BOTI = BOTI.offset(door.getPosition().offset(door.getHorizontalFacing(), ((int) BOTI.maxX) - 1));
+			BOTI = BOTI.offset(door.getPosition().offset(door.getHorizontalFacing(), MathHelper.floor(BOTI.maxX) - 1));
 		} else BOTI = BOTI.offset(this.getConsolePos());
 		for (BlockPos pos : this.getBlocksInAABB(BOTI)) {
 			if (ws.getBlockState(pos).getMaterial() != Material.AIR)
-				this.worldShell.blockMap.put(pos, new BlockStorage(ws.getBlockState(pos), ws.getTileEntity(pos), 15));
+				this.worldShell.blockMap.put(pos, new BlockStorage(ws.getBlockState(pos)
+						.getActualState(ws, pos), ws.getTileEntity(pos), 15));
 		}
 		List<NBTTagCompound> entities = new ArrayList<NBTTagCompound>();
 		for (Entity e : ws.getEntitiesWithinAABB(Entity.class, BOTI)) {

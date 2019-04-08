@@ -1,12 +1,8 @@
 package net.tardis.mod.client.models.entity.cybermen;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.tardis.mod.util.client.ModelUtil;
 
 public class ModelCybermanInvasion extends ModelBiped {
 	//fields
@@ -334,91 +330,7 @@ public class ModelCybermanInvasion extends ModelBiped {
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-
-		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		ModelUtil.copyAngle(this.bipedLeftArm, this.LeftArm);
-		ModelUtil.copyAngle(this.bipedRightArm, this.RightArm);
-		ModelUtil.copyAngle(this.bipedLeftLeg, this.LeftLeg);
-		ModelUtil.copyAngle(this.bipedLeftLeg, this.LeftBoot);
-		ModelUtil.copyAngle(this.bipedLeftLeg, this.LeftToe);
-		ModelUtil.copyAngle(this.bipedRightLeg, this.RightBoot);
-		ModelUtil.copyAngle(this.bipedRightLeg, this.RightLeg);
-		ModelUtil.copyAngle(this.bipedRightLeg, this.RightToe);
-		if (entity != null && entity instanceof EntityLivingBase) {
-			GlStateManager.pushMatrix();
-			GlStateManager.rotate((float) Math.toDegrees(this.bipedHead.rotateAngleY), 0, 1, 0);
-			GlStateManager.rotate((float) Math.toDegrees(this.bipedHead.rotateAngleX), 1, 0, 0);
-			{
-				GlStateManager.pushMatrix();
-				Minecraft mc = Minecraft.getMinecraft();
-				GlStateManager.disableLighting();
-				mc.entityRenderer.disableLightmap();
-				LampGlow.render(f5);
-				EyeGlow1.render(f5);
-				EyeGlow2.render(f5);
-				mc.entityRenderer.enableLightmap();
-				GlStateManager.enableLighting();
-				GlStateManager.popMatrix();
-			}
-			Head1.render(f5);
-			Head2.render(f5);
-			Head3.render(f5);
-			Head4.render(f5);
-			Head5.render(f5);
-			Head6.render(f5);
-			Head7.render(f5);
-			Head8.render(f5);
-			Head9.render(f5);
-			Head10.render(f5);
-			Head11.render(f5);
-			Head12.render(f5);
-			Head13.render(f5);
-			Head14.render(f5);
-			Head15.render(f5);
-			Head16.render(f5);
-			Head17.render(f5);
-			Head18.render(f5);
-			Head19.render(f5);
-			Head20.render(f5);
-			Head21.render(f5);
-			Head22.render(f5);
-			Head23.render(f5);
-			GlStateManager.popMatrix();
-		}
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
-		Neck.render(f5);
-		Torso.render(f5);
-		{
-			GlStateManager.pushMatrix();
-			Minecraft mc = Minecraft.getMinecraft();
-			GlStateManager.disableLighting();
-			mc.entityRenderer.disableLightmap();
-			ChestUnitGlow.render(f5);
-			mc.entityRenderer.enableLightmap();
-			GlStateManager.enableLighting();
-			GlStateManager.popMatrix();
-		}
-		ChestUnit1.render(f5);
-		ChestUnit2.render(f5);
-		ChestUnit3.render(f5);
-		ChestUnit4.render(f5);
-		ChestUnit5.render(f5);
-		ChestUnit6.render(f5);
-		ChestUnit7.render(f5);
-		Crotch.render(f5);
-
-		LeftArm.render(f5);
-		RightArm.render(f5);
-		LeftLeg.render(f5);
-		LeftBoot.render(f5);
-		LeftToe.render(f5);
-		RightLeg.render(f5);
-		RightToe.render(f5);
-		RightBoot.render(f5);
-		GlStateManager.popMatrix();
-	}
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5){}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;

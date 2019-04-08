@@ -32,7 +32,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.api.entities.IDontSufficate;
-import net.tardis.mod.common.TDamageSources;
+import net.tardis.mod.common.TDamage;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.sounds.TSounds;
 
@@ -160,7 +160,7 @@ public class EntityDalek extends EntityMob implements IRangedAttackMob, EntityFl
 	 */
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
-		EntityLaserRay laser = new EntityLaserRay(world, this, 7, TDamageSources.DALEK, new Vec3d(0, 1, 0));
+		EntityLaserRay laser = new EntityLaserRay(world, this, 7, TDamage.DALEK, new Vec3d(0, 1, 0));
 		double d0 = target.posX - this.posX;
 		double d1 = target.getEntityBoundingBox().minY + (double) (target.height / 3.0F) - laser.posY;
 		double d2 = target.posZ - this.posZ;

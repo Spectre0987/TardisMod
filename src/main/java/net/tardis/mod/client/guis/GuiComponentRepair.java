@@ -1,7 +1,6 @@
 package net.tardis.mod.client.guis;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -15,7 +14,6 @@ public class GuiComponentRepair extends GuiContainer {
 	public static final int WIDTH = 177;
 	public static final int HEIGHT = 166;
 	private TileEntityComponentRepair cont;
-	private ScaledResolution res;
 
 	public GuiComponentRepair(Container inventorySlotsIn) {
 		super(inventorySlotsIn);
@@ -26,14 +24,19 @@ public class GuiComponentRepair extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		this.drawDefaultBackground();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
-		this.drawTexturedModalRect(res.getScaledWidth() / 2 - WIDTH / 2, res.getScaledHeight() / 2 - HEIGHT / 2, 0, 0, WIDTH, HEIGHT);
-		this.drawTexturedModalRect(res.getScaledWidth() / 2 - 3, res.getScaledHeight() / 2 - 48, 177, 14, Math.round(22 * (float) (200 - cont.progress) / 200), 16);
+		this.drawTexturedModalRect(width / 2 - WIDTH / 2, height / 2 - HEIGHT / 2, 0, 0, WIDTH, HEIGHT);
+		this.drawTexturedModalRect(width / 2 - 3, height / 2 - 48, 177, 14, Math.round(22 * (float) (200 - cont.progress) / 200), 16);
+	}
+
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		this.renderHoveredToolTip(mouseX - 150, mouseY - 25);
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
-		res = new ScaledResolution(Minecraft.getMinecraft());
 	}
 
 }

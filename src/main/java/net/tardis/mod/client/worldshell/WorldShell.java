@@ -32,7 +32,6 @@ public class WorldShell implements IBlockAccess {
 	public Map<BlockPos, BlockStorage> blockMap;
 	@SideOnly(Side.CLIENT)
 	BufferBuilder.State bufferstate;
-	boolean updateRequired = false;
 	// Contains every TESR to speed up rendering
 	private List<TileEntity> tesrs;
 	//Entities to render
