@@ -57,7 +57,7 @@ public class RenderWorldShell {
 					Minecraft.getMinecraft().entityRenderer.disableLightmap();
 					float light = (float)cont.getWorldShell().blockMap.get(entity.getPos()).light / 15F;
 					GlStateManager.color(light, light, light);
-					render.render(entity, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), 0, 0, 1);
+					render.render(entity, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ() - 1, 0, 0, 1);
 					Minecraft.getMinecraft().entityRenderer.enableLightmap();
 					GlStateManager.popMatrix();
 				}
