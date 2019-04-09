@@ -1,6 +1,9 @@
 package net.tardis.mod.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -45,11 +48,16 @@ public class MessageDamageSystem implements IMessage {
 				public void run() {
 					WorldServer ws = ctx.getServerHandler().player.getServer().getWorld(TDimensions.TARDIS_ID);
 					TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(message.pos);
+					EntityPlayer player = ctx.getServerHandler().player;
 					if (tardis != null) {
 						BaseSystem sys = tardis.getSystem(TardisSystems.createFromName(message.system).getClass());
 						if (sys != null) {
+							if(sys.getHealth() > 0) {
+								ItemStack stack = new ItemStack(sys.getRepairItem());
+								stack.setItemDamage((int) (100 - (sys.getHealth() * 100)));
+								InventoryHelper.spawnItemStack(ws, player.posX, player.posY, player.posZ, stack);
+							}
 							sys.setHealth(0F);
-							System.out.println(message.pos);
 						}
 					}
 				}

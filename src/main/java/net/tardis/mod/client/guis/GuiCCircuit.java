@@ -42,11 +42,9 @@ public class GuiCCircuit extends GuiScreen{
 		GlStateManager.pushMatrix();
 		GlStateManager.color(1F, 1, 1, 1F);
 		GlStateManager.translate(width / 2 + 50, height / 2, 200);
-		GlStateManager.scale(30, 30, 1);
+		GlStateManager.scale(30, 30, 30);
 		GlStateManager.rotate(-22.5F, 1, 0, 0);
 		GlStateManager.rotate((Minecraft.getMinecraft().world.getTotalWorldTime() % 360) + partialTicks, 0, 1, 0);
-		GlStateManager.enableAlpha();
-		GlStateManager.blendFunc(SourceFactor.ONE, DestFactor.ONE);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(exteriors[index].tex);
 		exteriors[index].model.renderClosed(0.0625F);
 		GlStateManager.popMatrix();

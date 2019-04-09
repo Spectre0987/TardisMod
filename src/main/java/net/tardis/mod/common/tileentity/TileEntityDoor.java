@@ -52,6 +52,7 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
+import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class TileEntityDoor extends TileEntity implements ITickable, IInventory, IContainsWorldShell {
@@ -465,7 +466,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	public void setLightLevel(int light) {
 		this.lightLevel = light;
-		world.checkLight(this.getPos());
+		world.notifyBlockUpdate(this.getPos(), world.getBlockState(this.getPos()), world.getBlockState(this.getPos()), 2);
 	}
 	
 	@Override
@@ -527,7 +528,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		for (BlockPos pos : this.getBlocksInAABB(BOTI)) {
 			if (ws.getBlockState(pos).getMaterial() != Material.AIR)
 				this.worldShell.blockMap.put(pos, new BlockStorage(ws.getBlockState(pos)
-						.getActualState(ws, pos), ws.getTileEntity(pos), 15));
+						.getActualState(ws, pos), ws.getTileEntity(pos), Helper.getLight(ws, pos) == 0 ? 4 : Helper.getLight(ws, pos)));
 		}
 		List<NBTTagCompound> entities = new ArrayList<NBTTagCompound>();
 		for (Entity e : ws.getEntitiesWithinAABB(Entity.class, BOTI)) {

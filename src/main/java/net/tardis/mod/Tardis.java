@@ -284,7 +284,6 @@ public class Tardis {
 		EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
 		EntityHelper.registerMobEgg(EntityQuark.class, "quark", 5, 5, 2);
 		EntityHelper.registerMobEgg(EntityRaider.class, "TMraider", 5, 5, 2);
-		//EntityHelper.registerNoSpawnEgg(EntityCybermanTomb.class, "cyberman_tomb", 5, 5);
 		EntityHelper.registerMobEgg(EntityAdipose.class, "adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance, 5, 3);
 
 		proxy.preInit();
