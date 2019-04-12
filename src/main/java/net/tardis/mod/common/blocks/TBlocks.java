@@ -1,5 +1,8 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -32,9 +35,6 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TBlocks {
 	
@@ -205,6 +205,7 @@ public class TBlocks {
 	public static Block sonic_workbench = register(new BlockSonicWorkbench(), "sonic_workbench");
 	public static Block kerblam_box = register(new BlockKerblamBox(), "keblam_box", false);
 	//public static Block item_materializer = register(new BlockMaterializer(), "item_materializer");
+	public static Block tree_egg = register(new BlockTreeEgg() ,"tree_egg");
 	
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
 	

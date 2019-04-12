@@ -3,18 +3,13 @@ package net.tardis.mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Loader;
@@ -108,6 +103,7 @@ import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
 import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
+import net.tardis.mod.common.tileentity.TileEntityEgg;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityItemMaterializer;
@@ -259,6 +255,7 @@ public class Tardis {
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
 		registerTileEntity(TileEntityItemMaterializer.class, "item_materializer");
 		registerTileEntity(TileEntityKerblam.class, "kerblam_box");
+		registerTileEntity(TileEntityEgg.class, "ars_egg");
 
 		NetworkHandler.init();
 
