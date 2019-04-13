@@ -7,7 +7,7 @@
   "mcversion": "${mcversion}",
   "url": "https://tardis-mod.com",
   "updateUrl": "https://minecraft.curseforge.com/projects/new-tardis-mod",
-  "authorList": ["Spectre0987", "Suffril", "Mel", "Dhi", "Honeyluck"],
+  "authorList": ["Spectre0987", "Suffril", "Mel", "Dhi", "Honeyluck", "LotuxPunk"],
   "credits": "Many thanks to Snakefangox for his method to render other worlds! Thanks to LotuxPunk for their French translation! Thanks to Dhi for their TARDIS Coral model!",
   "logoFile": "",
   "screenshots": [],
