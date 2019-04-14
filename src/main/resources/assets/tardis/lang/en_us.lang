@@ -145,6 +145,7 @@ death.attack.dalek=killed by a Dalek Ray Gun!
 death.cyberman.ray=was deleted.
 
 damage.dalek=was exterminated
+damage.tardis.noair=died of suffication
 
 screw.recall=Recall Mode
 screw.lamp=Tinker Mode
@@ -196,6 +197,9 @@ protocol.tardis.destroy.rift=Consume Dimensional Rift
 protocol.tardis.repair=Repair the TARDIS
 protocol.tardis.waypoint.load=Waypoint
 protocol.tardis.interior=Change Interior
+protocol.tardis.stealth=Stealth Mode
+protocol.tardis.stealth.false=Disengaged Stealth Mode
+protocol.tardis.stealth.true=Stealth Mode Engaged!
 
 tardis.repair.false=TARDIS hull is no longer repairing
 tardis.repair.true=TARDIS hull is now repairing

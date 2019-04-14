@@ -146,7 +146,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public boolean overrideStabilizers = false;
 	public boolean soundChanged = false;
 	private boolean playerFuckedUp = false;
-	private boolean isStealth = true;
+	private boolean isStealth = false;
 	private EntityPlayer flightPilot = null;
 	
 	public TileEntityTardis() {
