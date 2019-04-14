@@ -44,7 +44,6 @@ import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 import java.util.UUID;
 
 public class CapabilityTardis implements ITardisCap {
@@ -210,16 +209,14 @@ public class CapabilityTardis implements ITardisCap {
 		TileEntityTardis console = TardisHelper.getConsole(cap.getFlightTardis()); //Get the Console
 		BlockPos bPos = player.getPosition(); //Back up the players position before we do anything
 		
-		
 		if (console != null) {
+			WorldServer exteriorWorld = DimensionManager.getWorld(console.dimension);
 			
 			if (player.dimension != console.getWorld().provider.getDimension()) {
 				console.enterTARDIS(player);
 				player.attemptTeleport(console.getPos().getX(), console.getPos().getY(), console.getPos().getZ() - 1.5F);
 			}
 			
-			
-			WorldServer exteriorWorld = DimensionManager.getWorld(console.dimension);
 			
 			//Set Exterior of asked to
 			if (placeExterior && cap.isInFlight()) {
@@ -228,10 +225,12 @@ public class CapabilityTardis implements ITardisCap {
 				exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
 				BlockPos consolePos = cap.getFlightTardis();
 				exteriorWorld.addScheduledTask(() -> {
-					TileEntity door = exteriorWorld.getTileEntity(bPos.up());
-					if (door instanceof TileEntityDoor) {
-						((TileEntityDoor) door).setConsolePos(consolePos);
-						((TileEntityDoor) Objects.requireNonNull(exteriorWorld.getTileEntity(bPos.up()))).forceVisible();
+					TileEntity tileTemp = exteriorWorld.getTileEntity(bPos.up());
+					if (tileTemp instanceof TileEntityDoor) {
+						TileEntityDoor door = (TileEntityDoor) tileTemp;
+						door.setConsolePos(consolePos);
+						door.setStealth(console.isStealthMode());
+						door.forceVisible();
 					}
 				});
 			}
