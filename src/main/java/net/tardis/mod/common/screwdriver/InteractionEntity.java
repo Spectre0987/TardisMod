@@ -61,6 +61,7 @@ public class InteractionEntity implements IScrew {
 
 		//Parrot
 		if (target instanceof EntityParrot) {
+			EntityParrot parrot = (EntityParrot) target;
 			return false;
 		}
 
@@ -92,5 +93,10 @@ public class InteractionEntity implements IScrew {
 	@Override
 	public int energyRequired() {
 		return 5;
+	}
+	
+	@Override
+	public String getInfo() {
+		return "screwdriver.info.entity";
 	}
 }

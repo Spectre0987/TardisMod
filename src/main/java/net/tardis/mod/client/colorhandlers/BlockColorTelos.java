@@ -15,7 +15,7 @@ public class BlockColorTelos implements IBlockColor {
 
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess worldIn, BlockPos pos, int tintIndex) {
-		return pos == null || worldIn == null ? normal : worldIn.getBiome(pos) == TDimensions.telosBiomeOrange ? color : normal;
+		return pos == null || worldIn == null ? normal : worldIn.getBiome(pos) == TDimensions.BIOME_TELOS_ORANGE ? color : normal;
 	}
 
 }

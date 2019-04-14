@@ -70,7 +70,7 @@ public class WorldProviderTardis extends WorldProvider {
 
 	@Override
 	public DimensionType getDimensionType() {
-		return TDimensions.tardisType;
+		return TDimensions.DIMTYPE_TARDIS;
 	}
 
 	@Override

@@ -23,8 +23,8 @@ import net.tardis.mod.common.dimensions.telos.ChunkGeneratorTelos;
 import java.util.Random;
 
 public class MoonProvider extends WorldProvider implements IDimensionProperties {
-
-	private static BiomeProviderSingle biomeP = new BiomeProviderSingle(TDimensions.moonBiome);
+	
+	private static BiomeProviderSingle biomeP = new BiomeProviderSingle(TDimensions.BIOME_MOON);
 
 	public MoonProvider() {
 	}

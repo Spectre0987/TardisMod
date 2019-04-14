@@ -1,7 +1,5 @@
 package net.tardis.mod.common.entities;
 
-import java.util.UUID;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,6 +10,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.tardis.mod.capability.CapabilityTardis;
 import net.tardis.mod.capability.ITardisCap;
+
+import java.util.UUID;
 
 public class EntityDummy extends Entity{
 
@@ -40,7 +40,7 @@ public class EntityDummy extends Entity{
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
-		compound.setString("player_id", this.dataManager.get(PLAYER_ID).toString());
+		compound.setString("player_id", this.dataManager.get(PLAYER_ID));
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class EntityDummy extends Entity{
 			if(player != null) {
 				ITardisCap cap = CapabilityTardis.get(player);
 				if(cap.isInFlight()) {
-					CapabilityTardis.endFlight(player, true);
+					CapabilityTardis.end(player, true);
 				}
 			}
 			this.setDead();

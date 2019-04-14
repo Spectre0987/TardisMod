@@ -82,6 +82,7 @@ tile.tardis.electric_panel.name=Electric Interface Panel
 tile.tardis.megalos.name=Meglos
 tile.tardis.console.name=TARDIS Console
 tile.tardis.toyota_hexagon_1.name=Toyota Block
+tile.tardis.toyota_hexagon_1.name=Toyota Block
 tile.tardis.ruby_ore.name=Ruby Ore
 tile.tardis.holoprojector.name=Holoprojector
 tile.tardis.tardis_coral.name=TARDIS Coral
@@ -161,8 +162,10 @@ screw.entity=Entity Interact
 screw.fail.itswood=It doesn't work on wood!
 screw.fail.bottom-door=To open the door, you must sonic the bottom of the door!
 
-raygun.ammo=Ammo Left
+raygun.ammo=Ammo left: %s
 raygun.ammo.none=No Ammo!
+raygun.ammo.howto=Press %s to load %s
+iteminfo.shift=Press %s for more info!
 
 mods.tardis.compat.optifine=You're running Optifine with this mod! That's fine! We can understand why. But please be warned we do not accept any rendering bug reports with optifine installed
 
@@ -348,3 +351,6 @@ hum.tardis.disabled=Disabled
 
 tardis.keybinds.demat_remat_anim=Demat/Remat animation
 
+screwdriver.info.entity=This mode can: \n - Detonate Creepers \n - Shear Sheep \n Make a Rabbit Jump
+screwdriver.info.blocks=This mode can: \n - Make a Dispenser Dispense \n - Open Iron doors \n - Open Trap doors \n - Detonate TNT \n - Not work on Wood :(
+screwdriver.info.signal-This mode sets the Destination of your Tardis to where you right clicked! (Note: Does NOT make Tardis Travel there)

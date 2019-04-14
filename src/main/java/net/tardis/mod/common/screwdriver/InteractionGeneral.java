@@ -144,5 +144,10 @@ public class InteractionGeneral implements IScrew {
 		return 5;
 	}
 	
+	@Override
+	public String getInfo() {
+		return "screwdriver.info.blocks";
+	}
+	
 	
 }

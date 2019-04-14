@@ -13,7 +13,7 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-public class ModeSignal implements IScrew {
+public class InteractionSignal implements IScrew {
 
 	@Override
 	public EnumActionResult performAction(World world, EntityPlayer player, EnumHand hand) {
@@ -55,5 +55,10 @@ public class ModeSignal implements IScrew {
 	public int energyRequired() {
 		return 5;
 	}
-
+	
+	@Override
+	public String getInfo() {
+		return "screwdriver.info.signal";
+	}
+	
 }

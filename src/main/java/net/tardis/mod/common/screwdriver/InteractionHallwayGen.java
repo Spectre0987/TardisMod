@@ -71,8 +71,13 @@ public class InteractionHallwayGen implements IScrew {
 	public int energyRequired() {
 		return 10;
 	}
-
-
+	
+	@Override
+	public String getInfo() {
+		return null;
+	}
+	
+	
 	public BlockPos getOffsetFromFacing(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:
