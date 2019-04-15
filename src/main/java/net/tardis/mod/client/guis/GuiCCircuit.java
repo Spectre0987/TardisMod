@@ -18,7 +18,7 @@ import net.tardis.mod.network.packets.MessageExteriorChange;
 
 public class GuiCCircuit extends GuiScreen{
 	
-	public static EnumExterior[] exteriors = new EnumExterior[]{EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FIFTH, EnumExterior.FOURTH, EnumExterior.CLOCK, EnumExterior.TT, EnumExterior.WOOD_DOOR, EnumExterior.CC};
+	public static EnumExterior[] exteriors = new EnumExterior[]{EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FIFTH, EnumExterior.FOURTH, EnumExterior.CLOCK, EnumExterior.TT, EnumExterior.WOOD_DOOR, EnumExterior.CC, EnumExterior.WARDROBE};
 	private TileEntityTardis tardis;
 	private int index = 0;
 	

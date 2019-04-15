@@ -134,6 +134,7 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWardrobe;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
@@ -244,6 +245,7 @@ public class Tardis {
 		registerTileEntity(TileEntityDoorClock.class, "TileEntityDoorClock");
 		registerTileEntity(TileEntityDoorTT.class, "TileEntityDoorTT");
 		registerTileEntity(TileEntityDoorWood.class, "TileEntityDoorWood");
+		registerTileEntity(TileEntityDoorWardrobe.class, "exterior_wardrobe");
 
 		//Interiors
 		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");

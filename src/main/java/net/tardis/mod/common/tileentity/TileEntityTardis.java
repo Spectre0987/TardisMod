@@ -1,5 +1,9 @@
 package net.tardis.mod.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -86,10 +90,6 @@ import net.tardis.mod.util.SpaceTimeCoord;
 import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class TileEntityTardis extends TileEntity implements ITickable, IInventory {
 	
@@ -310,7 +310,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 						otherTardis.startHADS();
 					}
 				}
-				((WorldServer) dWorld).getChunkProvider().loadChunk(nPos.getX() * 16, nPos.getZ() * 16);
+				ChunkPos otherCPos = dWorld.getChunk(nPos).getPos();
+				((WorldServer) dWorld).getChunkProvider().loadChunk(otherCPos.x, otherCPos.z);
 				dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				BlockPos consolePos = this.getPos();

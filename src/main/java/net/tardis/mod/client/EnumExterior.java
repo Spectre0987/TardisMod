@@ -6,12 +6,27 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.ModelBlocks;
-import net.tardis.mod.client.models.exteriors.*;
+import net.tardis.mod.client.models.exteriors.IExteriorModel;
+import net.tardis.mod.client.models.exteriors.ModelTardis01;
+import net.tardis.mod.client.models.exteriors.ModelTardis02;
+import net.tardis.mod.client.models.exteriors.ModelTardis03;
+import net.tardis.mod.client.models.exteriors.ModelTardis04;
+import net.tardis.mod.client.models.exteriors.ModelTardis05;
+import net.tardis.mod.client.models.exteriors.ModelTardisClock;
+import net.tardis.mod.client.models.exteriors.ModelTardisTT;
+import net.tardis.mod.client.models.exteriors.ModelTardisWoodDoor;
+import net.tardis.mod.client.models.exteriors.ModelWardrobe;
 import net.tardis.mod.client.models.interiors.IInteriorModel;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor01;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor02;
 import net.tardis.mod.client.models.interiors.ModelInteriorDoor03;
-import net.tardis.mod.client.renderers.exteriors.*;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoor04;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoor05;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoorClock;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoorTT;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoorWardrobe;
+import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.common.blocks.TBlocks;
 
@@ -26,7 +41,8 @@ public enum EnumExterior {
 	FIFTH(new ModelTardis05(), new ModelInteriorDoor01(), RenderTileDoor05.TEXTURE, TBlocks.tardis_top_04, "box.tardis.05"),
 	CLOCK(new ModelTardisClock(), new ModelInteriorDoor01(), RenderTileDoorClock.TEXTURE, TBlocks.tardis_top_clock, "box.master.clock"),
 	TT(new ModelTardisTT(), new ModelInteriorDoor01(), RenderTileDoorTT.TEXTURE, TBlocks.tardis_top_tt, "box.tt"),
-	WOOD_DOOR(new ModelTardisWoodDoor(), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE, TBlocks.tardis_top_wood_door, "box.door");
+	WOOD_DOOR(new ModelTardisWoodDoor(), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE, TBlocks.tardis_top_wood_door, "box.door"),
+	WARDROBE(new ModelWardrobe(), new ModelInteriorDoor01(), RenderTileDoorWardrobe.TEXTURE, TBlocks.tardis_top_wardrobe, "box.wardrobe");
 
 	public IExteriorModel model;
 	public IInteriorModel interiorModel;
