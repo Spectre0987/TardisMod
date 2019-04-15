@@ -75,7 +75,12 @@ public class InteractionGRoom implements IScrew {
 	public int energyRequired() {
 		return 10;
 	}
-
+	
+	@Override
+	public String getInfo() {
+		return null;
+	}
+	
 	private Rotation getRotation(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:

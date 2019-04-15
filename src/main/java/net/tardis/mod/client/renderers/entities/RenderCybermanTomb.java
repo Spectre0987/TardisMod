@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.models.entity.cybermen.ModelCybermanTomb;
@@ -13,8 +12,8 @@ import net.tardis.mod.common.entities.EntityCybermanTomb;
 public class RenderCybermanTomb extends Render<EntityCybermanTomb> {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cyberman_tomb.png");
-	Minecraft mc;
-	ModelCybermanTomb model = new ModelCybermanTomb();
+	private Minecraft mc;
+	private ModelCybermanTomb model = new ModelCybermanTomb();
 
 	public RenderCybermanTomb(RenderManager manager) {
 		super(manager);
