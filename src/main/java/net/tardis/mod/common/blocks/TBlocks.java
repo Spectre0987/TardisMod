@@ -34,6 +34,7 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWardrobe;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 
 public class TBlocks {
@@ -154,7 +155,6 @@ public class TBlocks {
 	
 	public static Block zero_room_glow = register(new BlockVerticalSlab(), "zero_room_slab");
 	public static Block zero_room = register(new BlockBase(), "zero_room");
-	public static Block zero_room_stairs = register(new BlockTStairs(zero_room.getDefaultState()), "zero_room_stairs");
 	
 	public static Block hellbent_light = register(new BlockFacingDecoration(TileEntityHellbentLight::new).setLightLevel(1F).setLightOpacity(0), "hellbent_light");
 	public static Block hellbent_monitor = register(new BlockMonitor(TileEntityHellbentMonitor::new), "hellbent_monitor");
@@ -187,6 +187,7 @@ public class TBlocks {
 	public static Block tardis_top_clock = register(new BlockTardisTop(TileEntityDoorClock::new), "tardis_top_clock", false);
 	public static Block tardis_top_tt = register(new BlockTardisTop(TileEntityDoorTT::new), "tardis_top_tt", false);
 	public static Block tardis_top_wood_door = register(new BlockTardisTop(TileEntityDoorWood::new), "tardis_top_wood_door", false);
+	public static Block tardis_top_wardrobe = register(new BlockTardisTop(TileEntityDoorWardrobe::new), "tardis_top_wardrobe", false);
 	
 	//Consoles
 	public static Block console = register(new BlockConsole(TileEntityTardis::new), "console", false);
@@ -206,6 +207,7 @@ public class TBlocks {
 	public static Block sonic_workbench = register(new BlockSonicWorkbench(), "sonic_workbench");
 	public static Block kerblam_box = register(new BlockKerblamBox(), "keblam_box", false);
 	//public static Block item_materializer = register(new BlockMaterializer(), "item_materializer");
+	public static Block tree_egg = register(new BlockTreeEgg() ,"tree_egg");
 	
 	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
 	

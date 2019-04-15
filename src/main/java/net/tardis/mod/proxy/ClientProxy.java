@@ -1,5 +1,12 @@
 package net.tardis.mod.proxy;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelOcelot;
@@ -17,6 +24,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
+import net.tardis.mod.client.TardisKeyBinds;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.guis.GuiConsoleChange;
 import net.tardis.mod.client.guis.GuiToggleHum;
@@ -27,6 +35,7 @@ import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.client.models.items.ModelFirstCane;
 import net.tardis.mod.client.models.items.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
+import net.tardis.mod.client.renderers.RenderDummy;
 import net.tardis.mod.client.renderers.RenderInvis;
 import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
@@ -64,10 +73,10 @@ import net.tardis.mod.client.renderers.exteriors.RenderTileDoor05;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorCC;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorClock;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorTT;
+import net.tardis.mod.client.renderers.exteriors.RenderTileDoorWardrobe;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorWood;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.items.RenderItemAlembic;
-import net.tardis.mod.client.renderers.items.RenderItemFoodMachine;
 import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
 import net.tardis.mod.client.renderers.items.RenderItemTardis;
 import net.tardis.mod.client.renderers.items.RenderItemTardis02;
@@ -78,7 +87,6 @@ import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
 import net.tardis.mod.client.renderers.tiles.RenderElectricPanel;
-import net.tardis.mod.client.renderers.tiles.RenderFoodMachine;
 import net.tardis.mod.client.renderers.tiles.RenderJsonHelper;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
 import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
@@ -94,6 +102,7 @@ import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekSkaro;
+import net.tardis.mod.common.entities.EntityDummy;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
@@ -125,7 +134,6 @@ import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
-import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -147,10 +155,9 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWardrobe;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 import net.tardis.mod.config.TardisConfig;
-
-import java.util.ArrayList;
 
 @EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientProxy extends ServerProxy {
@@ -190,7 +197,6 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUmbrellaStand.class, new RenderUmbrellaStand());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor.class, new RenderTileDoor());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoodMachine.class, new RenderFoodMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAlembic.class, new RenderAlembic());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEPanel.class, new RenderElectricPanel());
 
@@ -220,6 +226,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorClock.class, new RenderTileDoorClock());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorTT.class, new RenderTileDoorTT());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorWood.class, new RenderTileDoorWood());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorWardrobe.class, new RenderTileDoorWardrobe());
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
 
@@ -269,6 +276,8 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityQuark.class, RenderQuark::new);
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityDummy.class, RenderDummy::new);
 
 
 	}
@@ -303,7 +312,6 @@ public class ClientProxy extends ServerProxy {
 		TItems.sonic13th.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelSonic13()));
 
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RenderItemTardis());
-		Item.getItemFromBlock(TBlocks.food_machine).setTileEntityItemStackRenderer(new RenderItemFoodMachine());
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
 		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
 		Item.getItemFromBlock(TBlocks.alembic).setTileEntityItemStackRenderer(new RenderItemAlembic());
@@ -325,11 +333,42 @@ public class ClientProxy extends ServerProxy {
 		EntityRaider.EnumRaiderType.MATT.setModel(RenderRaider.STEVE);
 		EntityRaider.EnumRaiderType.RICHARD.setModel(RenderRaider.ALEX);
 		EntityRaider.EnumRaiderType.STEVEN.setModel(RenderRaider.STEVE);
+		
+		TardisKeyBinds.init();
 	}
 	
 	@Override
 	public void postInit() {
 		super.postInit();
 		RenderFlightMode.cacheFlightModels();
+	}
+	
+	public void addBlockState(File file, Block block) {
+		file = new File(file.getAbsolutePath() + "/" + block.getRegistryName().getPath() + ".json");
+		System.out.println(file.getAbsolutePath());
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				JsonWriter writer = new GsonBuilder().setPrettyPrinting().create().newJsonWriter(new FileWriter(file));
+				writer.beginObject();
+				
+				writer.name("variants");
+				writer.beginObject();
+				writer.name("inventory");
+				writer.beginObject();
+				writer.name("model").value("tardis:teisr");
+				writer.endObject();
+				writer.name("normal");
+				writer.beginObject();
+				writer.name("model").value("tardis:teisr");
+				writer.endObject();
+				writer.endObject();
+				
+				writer.endObject();
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

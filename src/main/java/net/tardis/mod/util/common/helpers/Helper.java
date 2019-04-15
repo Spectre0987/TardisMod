@@ -26,6 +26,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
@@ -258,5 +259,25 @@ public class Helper {
 		if (entity.world.isRemote) {
 			Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundFlightMode(entity, new SoundEvent(soundName), category, repeat, stopCondition, volume));
 		}
+	}
+	
+	public static int getLight(World world, BlockPos pos) {
+		int light = 0;
+		for(EnumFacing face : EnumFacing.VALUES) {
+			int newLight = world.getLight(pos.offset(face), true);
+			if(newLight > light)
+				light = newLight;
+		}
+		return light;
+	}
+	
+	public static int getDaylight(World world, BlockPos pos) {
+		int light = 0;
+		for(EnumFacing face : EnumFacing.VALUES) {
+			int newLight = world.getLightFor(EnumSkyBlock.SKY, pos);
+			if(newLight > light)
+				light = newLight;
+		}
+		return light;
 	}
 }

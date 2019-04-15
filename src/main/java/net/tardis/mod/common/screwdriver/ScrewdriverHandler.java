@@ -17,6 +17,6 @@ public class ScrewdriverHandler {
 	public static void init() {
 		register(new InteractionGeneral());
 		register(new InteractionEntity());
-		register(new ModeSignal());
+		register(new InteractionSignal());
 	}
 }

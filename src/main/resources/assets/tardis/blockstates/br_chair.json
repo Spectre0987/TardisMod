@@ -9,6 +9,18 @@
     ],
     "inventory": {
       "model": "tardis:chair_br"
-    }
+    },
+    "facing=north": [
+      {}
+    ],
+    "facing=south": [
+      {}
+    ],
+    "facing=east": [
+      {}
+    ],
+    "facing=west": [
+      {}
+    ]
   }
 }

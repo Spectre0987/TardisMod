@@ -1,8 +1,5 @@
 package net.tardis.mod.common.dimensions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
@@ -23,30 +20,38 @@ import net.tardis.mod.common.dimensions.telos.BiomeTelos;
 import net.tardis.mod.common.dimensions.telos.WorldProviderTelos;
 import net.tardis.mod.config.TardisConfig;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TDimensions {
-
+	
+	//Tardis
 	public static int TARDIS_ID;
-	public static DimensionType tardisType;
-
-	public static int SPACE_ID;
-	public static DimensionType spaceType;
-
-	public static int TELOS_ID;
-	public static DimensionType telosType;
-	public static Biome telosBiome = new BiomeTelos(true);
-	public static Biome telosBiomeOrange = new BiomeTelos(false);
-
-	//Gallifrey
-	public static Biome gallifreyRedlands = new BiomeRedlands();
-	public static Biome gallifreyFarmlands = new BiomeWastelands();
-	public static Biome gallifreyMountains = new BiomeMountains();
-
+	public static DimensionType DIMTYPE_TARDIS;
+	
+	//Moon
 	public static int MOON_ID;
 	public static DimensionType MOON_TYPE;
-	public static Biome moonBiome = new BiomeMoon();
+	public static Biome BIOME_MOON = new BiomeMoon();
 	
+	//Space
+	public static int SPACE_ID;
+	public static DimensionType DIMTYPE_SPACE;
+	
+	//Telos
+	public static int TELOS_ID;
+	public static DimensionType DIMTYPE_TELOS;
+	public static Biome BIOME_TELOS = new BiomeTelos(true);
+	public static Biome BIOME_TELOS_ORANGE = new BiomeTelos(false);
+
+	//Gallifrey
 	public static int GALLIFREY_ID;
 	public static DimensionType GALLIFREY_TYPE;
+	public static Biome BIOME_GALLIFREY_REDLANDS = new BiomeRedlands();
+	public static Biome BIOME_GALLIFREY_FARMLAND = new BiomeWastelands();
+	public static Biome BIOME_GALLIFREY_MOUNTAIN = new BiomeMountains();
+	
+	
 	
 
 	public static void register() {
@@ -56,20 +61,20 @@ public class TDimensions {
 		if (setDim)
 			TARDIS_ID = TardisConfig.Dimensions.tardisDimension;
 		else TARDIS_ID = DimensionManager.getNextFreeDimId();
-		tardisType = DimensionType.register("tardis", "_tardis", TARDIS_ID, WorldProviderTardis.class, false);
-		DimensionManager.registerDimension(TARDIS_ID, tardisType);
+		DIMTYPE_TARDIS = DimensionType.register("tardis", "_tardis", TARDIS_ID, WorldProviderTardis.class, false);
+		DimensionManager.registerDimension(TARDIS_ID, DIMTYPE_TARDIS);
 
 		if (setDim)
 			SPACE_ID = TardisConfig.Dimensions.spaceDimension;
 		else SPACE_ID = DimensionManager.getNextFreeDimId();
-		spaceType = DimensionType.register("space", "_space", SPACE_ID, SpaceProvider.class, false);
-		DimensionManager.registerDimension(SPACE_ID, spaceType);
+		DIMTYPE_SPACE = DimensionType.register("space", "_space", SPACE_ID, SpaceProvider.class, false);
+		DimensionManager.registerDimension(SPACE_ID, DIMTYPE_SPACE);
 
 		if (setDim)
 			TELOS_ID = TardisConfig.Dimensions.telosDimension;
 		else TELOS_ID = DimensionManager.getNextFreeDimId();
-		telosType = DimensionType.register("telos", "_telos", TELOS_ID, WorldProviderTelos.class, false);
-		DimensionManager.registerDimension(TELOS_ID, telosType);
+		DIMTYPE_TELOS = DimensionType.register("telos", "_telos", TELOS_ID, WorldProviderTelos.class, false);
+		DimensionManager.registerDimension(TELOS_ID, DIMTYPE_TELOS);
 
 		if (setDim)
 			MOON_ID = TardisConfig.Dimensions.moonDimension;
@@ -77,11 +82,13 @@ public class TDimensions {
 		MOON_TYPE = DimensionType.register("moon", "_moon", MOON_ID, MoonProvider.class, false);
 		DimensionManager.registerDimension(MOON_ID, MOON_TYPE);
 		
-	//	if (setDim)
-	//		GALLIFREY_ID = TardisConfig.Dimensions.gallifreyDimension;
-	//	else GALLIFREY_ID = DimensionManager.getNextFreeDimId();
-	//	GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
-		//DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
+		if (Tardis.getIsDev()) { //Comment/Remove this on build/release
+			if (setDim)
+				GALLIFREY_ID = TardisConfig.Dimensions.gallifreyDimension;
+			else GALLIFREY_ID = DimensionManager.getNextFreeDimId();
+			GALLIFREY_TYPE = DimensionType.register("gallifrey", "_gallifrey", GALLIFREY_ID, WorldProviderGallifrey.class, false);
+			DimensionManager.registerDimension(GALLIFREY_ID, GALLIFREY_TYPE);
+		}
 	}
 
 	@EventBusSubscriber(modid = Tardis.MODID)
@@ -100,13 +107,13 @@ public class TDimensions {
 		}
 
 		public static void init() {
-			registerBiome(TDimensions.telosBiome, "telos", BiomeDictionary.Type.SNOWY);
-			registerBiome(TDimensions.telosBiomeOrange, "telos_orange", BiomeDictionary.Type.SNOWY);
-			registerBiome(TDimensions.moonBiome, "moon", BiomeDictionary.Type.COLD);
-
-			registerBiome(TDimensions.gallifreyRedlands, "redlands", BiomeDictionary.Type.PLAINS);
-			registerBiome(TDimensions.gallifreyFarmlands, "farmlands", BiomeDictionary.Type.PLAINS);
-			registerBiome(TDimensions.gallifreyMountains, "mountains", BiomeDictionary.Type.SNOWY);
+			registerBiome(TDimensions.BIOME_TELOS, "telos", BiomeDictionary.Type.SNOWY);
+			registerBiome(TDimensions.BIOME_TELOS_ORANGE, "telos_orange", BiomeDictionary.Type.SNOWY);
+			registerBiome(TDimensions.BIOME_MOON, "moon", BiomeDictionary.Type.COLD);
+			
+			registerBiome(TDimensions.BIOME_GALLIFREY_REDLANDS, "redlands", BiomeDictionary.Type.PLAINS);
+			registerBiome(TDimensions.BIOME_GALLIFREY_FARMLAND, "farmlands", BiomeDictionary.Type.PLAINS);
+			registerBiome(TDimensions.BIOME_GALLIFREY_MOUNTAIN, "mountains", BiomeDictionary.Type.SNOWY);
 		}
 	}
 }

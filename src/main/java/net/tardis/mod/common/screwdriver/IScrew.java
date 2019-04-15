@@ -36,5 +36,6 @@ public interface IScrew {
 	boolean causesCoolDown();
 
 	int energyRequired();
-
+	
+	String getInfo();
 }

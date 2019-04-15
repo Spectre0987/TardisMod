@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 
@@ -30,15 +31,23 @@ public class RenderWorldShell {
 		BufferBuilder bb = Tessellator.getInstance().getBuffer();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.color(1F, 1, 1, 1f);
-		RenderHelper.enableStandardItemLighting();
+		//RenderHelper.enableStandardItemLighting();
 		for(Entry<BlockPos, BlockStorage> entry : cont.getWorldShell().blockMap.entrySet()) {
 			IBlockState state = entry.getValue().blockstate;
 			IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
 			if(state.getRenderType() == EnumBlockRenderType.MODEL && model != null) {
+				BlockRenderLayer layer = state.getBlock().getRenderLayer();
+				if(layer == BlockRenderLayer.TRANSLUCENT)
+					GlStateManager.enableBlend();
 				GlStateManager.pushMatrix();
 				GlStateManager.translate(entry.getKey().getX(), entry.getKey().getY(), entry.getKey().getZ());
-				Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightness(model, state, (float)entry.getValue().light / 15F, true);
+				int light = entry.getValue().light;
+				if(light == 0)
+					light = 4;
+				Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightness(model, state, (float)light / 15F, false);
 				GlStateManager.popMatrix();
+				if(layer == BlockRenderLayer.TRANSLUCENT)
+					GlStateManager.disableBlend();
 			}
 			else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
 				bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
@@ -57,7 +66,7 @@ public class RenderWorldShell {
 					Minecraft.getMinecraft().entityRenderer.disableLightmap();
 					float light = (float)cont.getWorldShell().blockMap.get(entity.getPos()).light / 15F;
 					GlStateManager.color(light, light, light);
-					render.render(entity, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), 0, 0, 1);
+					render.render(entity, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ() - 1, 0, 0, 1);
 					Minecraft.getMinecraft().entityRenderer.enableLightmap();
 					GlStateManager.popMatrix();
 				}

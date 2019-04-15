@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.common.TDamage;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.util.common.helpers.Helper;
@@ -25,7 +25,7 @@ public class SystemFluidLinks extends BaseSystem {
 			--ticksToHurt;
 			if (!world.isRemote && world.getWorldTime() % 20 == 0) {
 				for (EntityLivingBase base : world.getEntitiesWithinAABB(EntityLivingBase.class, Helper.createBB(consolePos, 60))) {
-					base.attackEntityFrom(Tardis.SUFFICATION, 2F);
+					base.attackEntityFrom(TDamage.SUFFICATION, 2F);
 				}
 			}
 		}

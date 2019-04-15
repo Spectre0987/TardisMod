@@ -1,5 +1,7 @@
 package net.tardis.mod.client.guis;
 
+import java.io.IOException;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -11,8 +13,6 @@ import net.tardis.mod.client.guis.elements.ButtonMonitor;
 import net.tardis.mod.common.sounds.InteriorHum;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageSwitchHum;
-
-import java.io.IOException;
 
 public class GuiToggleHum extends GuiScreen {
 
@@ -39,6 +39,7 @@ public class GuiToggleHum extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 		this.drawTexturedModalRect(width / 2 - 242 / 2, height / 2 - 132 / 2, 0, 0, 242, 132);
@@ -56,7 +57,7 @@ public class GuiToggleHum extends GuiScreen {
 		this.buttonList.clear();
 		int index = 0;
 		for(InteriorHum hum : InteriorHum.hums) {
-			this.addButton(new ButtonMonitor(index, width / 2 - 110, (height / 2 + 50) - Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * index  + index * - 3, "> " + hum.getTranslatedName()));
+			this.addButton(new ButtonMonitor(index, width / 2 - 110, (height / 2 + 50) - Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * index , "> " + hum.getTranslatedName()));
 			++index;
 		}
 	}

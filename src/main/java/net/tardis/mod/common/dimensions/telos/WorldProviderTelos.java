@@ -14,7 +14,7 @@ import net.tardis.mod.common.dimensions.TDimensions;
 public class WorldProviderTelos extends WorldProvider {
 
 	public static final Vec3d fogColor = new Vec3d(0.611, 0.69, 0.788);
-	private BiomeProviderSingle biomeP = new BiomeProviderSingle(TDimensions.telosBiome);
+	private BiomeProviderSingle biomeP = new BiomeProviderSingle(TDimensions.BIOME_TELOS);
 	private ChunkGeneratorFactory chunkGen = ChunkGeneratorTelos::new;
 
 	public WorldProviderTelos() {
@@ -26,7 +26,7 @@ public class WorldProviderTelos extends WorldProvider {
 
 	@Override
 	public DimensionType getDimensionType() {
-		return TDimensions.telosType;
+		return TDimensions.DIMTYPE_TELOS;
 	}
 
 	@Override

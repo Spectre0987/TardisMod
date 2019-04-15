@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
@@ -26,8 +27,11 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
+import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
@@ -38,6 +42,7 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
+import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, IShouldDie {
@@ -118,7 +123,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 				this.shell = new WorldShell(offset);
 			this.shell.blockMap = this.getBlockStoreInAABB(bb, offset, ws);
 			this.dataManager.set(FACING, this.getFacing());
-			this.shell.setTime(ws.getTotalWorldTime());
+			this.shell.setTime(ws.getWorldTime());
 		}
 	}
 	
@@ -130,13 +135,18 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 					BlockPos bp = new BlockPos(x, y, z).add(pos);
 					IBlockState state = ws.getBlockState(bp);
 					if(!(state.getBlock() instanceof BlockTardisTop) && state.getMaterial() != Material.AIR){
-						int light = MathHelper.clamp(ws.getLightFromNeighbors(bp.up()) + (ws.isDaytime() ? getLightFromNeighborsFor(ws, EnumSkyBlock.SKY, bp.up()) + 1 : 1), 0, 15);
+						int light = MathHelper.clamp(Helper.getLight(ws, bp) + (ws.isDaytime() ? Helper.getDaylight(ws, bp) : 0), 0, 15);
 						map.put(bp, new BlockStorage(state, ws.getTileEntity(bp), light));
 					}
 				}
 			}
 		}
 		return map;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void setupClientWorld() {
+		this.clientWorld = new WorldBoti(this.getDimension(),(WorldClient) world, this.shell);
 	}
 	
 	public int getLightFromNeighborsFor(WorldServer server, EnumSkyBlock type, BlockPos pos)
@@ -225,6 +235,8 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 			if(world.getTotalWorldTime() % 200 == 1)
 				this.syncWorldShell();
 			this.shell.setTime(this.shell.getTime() + 1);
+			if(this.clientWorld == null || ((WorldBoti)this.clientWorld).dimension != this.getDimension())
+				this.setupClientWorld();
 		}
 		this.handleEnter();
 		
