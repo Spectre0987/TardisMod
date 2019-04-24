@@ -144,6 +144,7 @@ import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.common.helpers.EntityHelper;
+import net.tardis.mod.util.common.helpers.FileHelper;
 
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
@@ -152,7 +153,7 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
-	public static final String VERSION = "0.1.0b";
+	public static final String VERSION = "0.1.0C";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = false;
 	public static Logger LOG = LogManager.getLogger(NAME);
@@ -333,6 +334,8 @@ public class Tardis {
 			sonics[sonicID] = ItemSonic.SONICS.get(sonicID);
 		}
 		TileEntitySonicWorkbench.RECIPES.put(TItems.sonic_screwdriver, sonics);
+		
+		FileHelper.readOrWriteARS(event.getModConfigurationDirectory());
 	}
 
 	@EventHandler
@@ -357,6 +360,7 @@ public class Tardis {
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
 
+		TileEntityEgg.register(new ItemStack(TBlocks.hellbent_glass01, 64));
 	}
 
 	@EventHandler

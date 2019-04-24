@@ -1,6 +1,15 @@
 package net.tardis.mod.client.models;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.List;
+
+import org.lwjgl.opengl.GL11;
+
 import com.google.gson.stream.JsonReader;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -20,18 +29,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.models.exteriors.IExteriorModel;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.client.worldshell.WorldShell;
-import org.lwjgl.opengl.GL11;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.List;
-
+@SideOnly(Side.CLIENT)
 public class ModelBlocks implements IExteriorModel {
 
 	public ResourceLocation loc;

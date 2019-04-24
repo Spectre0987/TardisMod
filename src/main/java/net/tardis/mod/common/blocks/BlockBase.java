@@ -8,6 +8,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.tardis.mod.client.creativetabs.TardisTabs;
+import net.tardis.mod.common.tileentity.TileEntityEgg;
 
 public class BlockBase extends Block {
 
@@ -16,6 +17,7 @@ public class BlockBase extends Block {
 		this.setHardness(2F);
 		this.setResistance(99999F);
 		setCreativeTab(TardisTabs.BLOCKS);
+		TileEntityEgg.register(new ItemStack(this, 64));
 	}
 
 	@Override
