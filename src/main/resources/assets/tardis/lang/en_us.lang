@@ -1,3 +1,5 @@
+general.time.seconds=seconds
+
 itemGroup.tardis_blocks=TARDIS Mod Blocks
 itemGroup.tardis_items=TARDIS Mod Items
 itemGroup.tardis_galliblocks=Strange Blocks
@@ -54,16 +56,6 @@ item.tardis.sonic_third.name=Third Doctor's Sonic
 item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 item.tardis.brak_doors_closed.name=TARDIS Ancillary doors
 
-tooltip.remote=Remote bound to TARDIS at:
-tooltip.remote.time=TARDIS arriving in
-tooltip.remote.fuel=Artron Banks
-tooltip.remote.exteriorpos=TARDIS Exterior:
-tooltip.remote.bind=To bind, right click on a console.
-tooltip.tardis.toolkit=Right click the console to repair all non-destroyed systems by 15
-
-tooltip.manual.sn=Found in the heart of a supernova.
-
-general.time.seconds=seconds
 
 tile.tardis.tardis.name=TARDIS
 tile.tardis.time_rotor.name=Console
@@ -134,17 +126,26 @@ tile.tardis.gallifreyan_stone.name=Strange Stone
 
 
 
+tooltip.remote=Remote bound to TARDIS at:
+tooltip.remote.time=TARDIS arriving in
+tooltip.remote.fuel=Artron Banks
+tooltip.remote.exteriorpos=TARDIS Exterior:
+tooltip.remote.bind=To bind, right click on a console.
+tooltip.tardis.toolkit=Right click the console to repair all non-destroyed systems by 15
+tooltip.tardis.artron_capacitor=Charge
 
-tardis.locked.true=TARDIS locked!
-tardis.locked.false=TARDIS unlocked!
-
-door.tardis.locked.true=This TARDIS is now double locked!
-door.tardis.locked.false=Double lock lifted.
+tooltip.manual.sn=Found in the heart of a supernova.
 
 death.attack.dalek=killed by a Dalek Ray Gun!
+death.cyberman.generic=was converted!
 death.cyberman.ray=was deleted.
+death.attack.damage.noair=killed by prolonged exposure to a mercury leak!
 
 damage.dalek=was exterminated
+
+key.console.location=Interior Pos:
+
+manual.help=Mouse over console controls to learn about them.
 
 screw.recall=Recall Mode
 screw.lamp=Tinker Mode
@@ -167,21 +168,38 @@ mods.tardis.compat.optifine=You're running Optifine with this mod! That's fine! 
 
 tardis.none=You don't own a TARDIS
 tardis.flying=TARDIS in flight!
+tardis.damage.demat=The Dematerialization Circuit has been fried!
 
 tardis.console.land.true=TARDIS will search upwards for a landing spot
 tardis.console.land.false=TARDIS will search downwards for a landing spot
+
+door.tardis.locked.true=This TARDIS is now double locked!
+door.tardis.locked.false=Double lock lifted.
+
+tardis.locked.true=TARDIS locked!
+tardis.locked.false=TARDIS unlocked!
+
+tardis.dimension=Nav-Com Dimension is:
 
 tardis.direction.north=TARDIS is now facing north
 tardis.direction.east=TARDIS is now facing east
 tardis.direction.south=TARDIS is now facing south
 tardis.direction.west=TARDIS is now facing west
 
+tardis.event.dalek=Dalek Invasion at:
+
 tardis.missing=The outer plasmic shell cannot be found! Please land again.
 
 tardis.magnitude=TARDIS Coordinate modifier is
 
+tardis.stabilizers.true=Stabilizers On
+tardis.stabilizers.false=Stabilizers Off
+
 tardis.hads.enabled.true=H.A.D.S has been enabled
 tardis.hads.enabled.false=H.A.D.S has been disabled
+
+tardis.repair.false=TARDIS hull is no longer repairing
+tardis.repair.true=TARDIS hull is now repairing
 
 protocol.ccircut=Chameleon Circuit
 protocol.hads=Toggle H.A.D.S
@@ -197,9 +215,6 @@ protocol.tardis.repair=Repair the TARDIS
 protocol.tardis.waypoint.load=Waypoint
 protocol.tardis.interior=Change Interior
 
-tardis.repair.false=TARDIS hull is no longer repairing
-tardis.repair.true=TARDIS hull is now repairing
-
 systems.tardis.flight=Flight System
 systems.protocol.dimensions=Dimensional Dams
 system.tardis.fluidlinks=Fluid Links
@@ -208,10 +223,6 @@ system.tardis.ccircuit=Chameleon Circuit
 system.tardis.temporal_grace=Temporal Grace Circuits
 system.tardis.stabilizers=Stabilizers
 system.tardis.thermo=Thermo-Couplings
-
-tardis.dimension=Nav-Com Dimension is:
-
-tardis.event.dalek=Dalek Invasion at:
 
 config.category.dims=Dimensions
 config.dims=Dimension List
@@ -257,20 +268,10 @@ entity.stabilizers.name=Stabilizers
 entity.monitor.name=Monitor
 entity.waypoint_select.name=Waypoint Selector
 
-tardis.stabilizers.true=Stabilizers On
-tardis.stabilizers.false=Stabilizers Off
 
 entity.dalek.name=Dalek
 entity.adipose.name=Adipose
 entity.invasion_cyberman.name=Invasion Cyberman
-
-death.cyberman.generic=was converted!
-
-key.console.location=Interior Pos:
-
-manual.help=Mouse over console controls to learn about them.
-
-tardis.damage.demat=The Dematerialization Circuit has been fried!
 
 tardis.message.refuelling=Tardis now fueling...
 tardis.message.no_longer_refuelling=Tardis no longer fueling.
