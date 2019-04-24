@@ -10,13 +10,16 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 
 public class BlockFoodMachine extends BlockTileBase {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	private static final AxisAlignedBB BOX = new AxisAlignedBB(0.1875, 0, 0.1875, 0.8125, 1.4, 0.8125);
 	public ItemBlock item = new ItemBlock(this);
 
 	public BlockFoodMachine() {
@@ -52,9 +55,7 @@ public class BlockFoodMachine extends BlockTileBase {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if (meta < 3 && meta > 0)
-			return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
-		return this.getDefaultState();
+		return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
 	}
 
 	@Override
@@ -71,5 +72,13 @@ public class BlockFoodMachine extends BlockTileBase {
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, FACING);
 	}
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BOX;
+	}
 
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return BOX;
+	}
 }

@@ -1,11 +1,13 @@
 package net.tardis.mod;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -43,6 +45,7 @@ import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekSkaro;
+import net.tardis.mod.common.entities.EntityDummy;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
@@ -100,6 +103,7 @@ import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
 import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
+import net.tardis.mod.common.tileentity.TileEntityEgg;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityItemMaterializer;
@@ -130,6 +134,7 @@ import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor04;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoor05;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorCC;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorClock;
+import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWardrobe;
 import net.tardis.mod.common.tileentity.exteriors.TileEntityDoorWood;
 import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
@@ -139,8 +144,7 @@ import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.common.helpers.EntityHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.tardis.mod.util.common.helpers.FileHelper;
 
 
 @Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
@@ -149,12 +153,11 @@ public class Tardis {
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
 	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
-	public static final String VERSION = "0.1.0b";
+	public static final String VERSION = "0.1.0C";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
-	public static final boolean updateChangesConfig = true;
+	public static final boolean updateChangesConfig = false;
 	public static Logger LOG = LogManager.getLogger(NAME);
 	public static boolean hasIC2 = false;
-	public static DamageSource SUFFICATION = new DamageSource("damage.noair");
 
 	@Instance(MODID)
 	public static Tardis instance;
@@ -198,6 +201,7 @@ public class Tardis {
 		EntityHelper.registerStatic(ControlStabilizers.class, "stabilizers");
 		EntityHelper.registerStatic(ControlMonitor.class, "monitor");
 		EntityHelper.registerStatic(ControlWaypoint.class, "waypoint_select");
+		EntityHelper.registerStatic(EntityDummy.class, "dummy");
 		EntityHelper.registerProjectiles(EntityLaserRay.class, "cyber_ray");
 		EntityHelper.registerNoSpawn(EntityCorridor.class, "toyota_corridor");
 		EntityHelper.registerNoSpawn(EntityDalekCasing.class, "dalek_casing");
@@ -221,7 +225,7 @@ public class Tardis {
 		registerTileEntity(TileEntityHellbentLight.class, "TileEntityHellbentLight");
 		registerTileEntity(TileEntityHellbentMonitor.class, "TileEntityHellbentMonitor");
 		registerTileEntity(TileEntityHellbentPole.class, "TileEntityHellbentPole");
-		registerTileEntity(TileEntityHelbentRoof.class, "Tile	EntityHelbentRoof");
+		registerTileEntity(TileEntityHelbentRoof.class, "TileEntityHelbentRoof");
 		registerTileEntity(TileEntityComponentRepair.class, "TileEntityComponentRepair");
 		registerTileEntity(TileEntitySonicGun.class, "TileEntitySonicGun");
 		registerTileEntity(TileEntityChair.class, "chair");
@@ -242,6 +246,7 @@ public class Tardis {
 		registerTileEntity(TileEntityDoorClock.class, "TileEntityDoorClock");
 		registerTileEntity(TileEntityDoorTT.class, "TileEntityDoorTT");
 		registerTileEntity(TileEntityDoorWood.class, "TileEntityDoorWood");
+		registerTileEntity(TileEntityDoorWardrobe.class, "exterior_wardrobe");
 
 		//Interiors
 		registerTileEntity(TileEntityTardis01.class, "TileEntityTardis01");
@@ -253,6 +258,7 @@ public class Tardis {
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
 		registerTileEntity(TileEntityItemMaterializer.class, "item_materializer");
 		registerTileEntity(TileEntityKerblam.class, "kerblam_box");
+		registerTileEntity(TileEntityEgg.class, "ars_egg");
 
 		NetworkHandler.init();
 
@@ -278,7 +284,6 @@ public class Tardis {
 		EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
 		EntityHelper.registerMobEgg(EntityQuark.class, "quark", 5, 5, 2);
 		EntityHelper.registerMobEgg(EntityRaider.class, "TMraider", 5, 5, 2);
-		//EntityHelper.registerNoSpawnEgg(EntityCybermanTomb.class, "cyberman_tomb", 5, 5);
 		EntityHelper.registerMobEgg(EntityAdipose.class, "adipose", TardisConfig.USE_ENTITIES.adiposeSpawnChance, 5, 3);
 
 		proxy.preInit();
@@ -329,6 +334,8 @@ public class Tardis {
 			sonics[sonicID] = ItemSonic.SONICS.get(sonicID);
 		}
 		TileEntitySonicWorkbench.RECIPES.put(TItems.sonic_screwdriver, sonics);
+		
+		FileHelper.readOrWriteARS(event.getModConfigurationDirectory());
 	}
 
 	@EventHandler
@@ -353,6 +360,7 @@ public class Tardis {
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
 
+		TileEntityEgg.register(new ItemStack(TBlocks.hellbent_glass01, 64));
 	}
 
 	@EventHandler

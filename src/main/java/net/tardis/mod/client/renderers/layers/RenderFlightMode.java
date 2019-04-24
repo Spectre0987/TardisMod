@@ -25,6 +25,8 @@ import java.util.Map;
 
 public class RenderFlightMode {
 	
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cape/cape.png");
+	private static final ResourceLocation SUFF_TEX = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cape/suff_cape.png");
 	//This is horrible, I know it is, just bare with me
 	public static HashMap<EnumExterior, IExteriorModel> EXTERIOR_CACHE = new HashMap<>();
 	
@@ -34,17 +36,13 @@ public class RenderFlightMode {
 		}
 	}
 	
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cape/cape.png");
-	private static final ResourceLocation SUFF_TEX = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cape/suff_cape.png");
-	
-	
 	public static void renderFlightMode(RenderPlayerEvent.Pre e) {
 		EntityPlayer player = e.getEntityPlayer();
 		ITardisCap data = CapabilityTardis.get(player);
+		AbstractClientPlayer ap = (AbstractClientPlayer) player;
 		
 		//Just shove this in here because yeah
 		if (player.getUniqueID().toString().equals("3f4f2acd-9427-4917-81c3-7b8a3031fffb") || player.getUniqueID().toString().equals("bc8b891e-5c25-4c9f-ae61-cdfb270f1cc1")) {
-			AbstractClientPlayer ap = (AbstractClientPlayer) player;
 			if (ap.getLocationCape() != null && !ap.getLocationCape().equals(TEXTURE)) {
 				setStupidCape(ap, TEXTURE, player.getUniqueID().toString().equals("bc8b891e-5c25-4c9f-ae61-cdfb270f1cc1") ? SUFF_TEX : TEXTURE);
 			}
@@ -52,7 +50,6 @@ public class RenderFlightMode {
 			if (ap.getLocationCape() == null) {
 				setStupidCape(ap, TEXTURE, player.getUniqueID().toString().equals("bc8b891e-5c25-4c9f-ae61-cdfb270f1cc1") ? SUFF_TEX : TEXTURE);
 			}
-			
 		}
 		
 		
@@ -87,7 +84,7 @@ public class RenderFlightMode {
 			GlStateManager.color(1.0F, 1.0F, 1.0F, data.getAlpha());
 			
 			//Render the players name, since we cancel the render player event, this won't render without us calling it
-			e.getRenderer().renderName((AbstractClientPlayer) e.getEntityPlayer(), e.getX(), e.getY() + 1, e.getZ());
+			e.getRenderer().renderName(ap, e.getX(), e.getY() + 1, e.getZ());
 			
 			//Translate the rendering position based on the viewer, else the Tardis will render really badly
 			double x2 = ((player.prevPosX + (player.posX - player.prevPosX) * e.getPartialRenderTick()) - TileEntityRendererDispatcher.staticPlayerX);

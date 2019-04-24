@@ -44,7 +44,6 @@ import net.tardis.mod.util.common.helpers.PlayerHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 import java.util.UUID;
 
 public class CapabilityTardis implements ITardisCap {
@@ -110,7 +109,7 @@ public class CapabilityTardis implements ITardisCap {
 		isInFlight = inFlight;
 	}
 	
-	public static void setSpeeds(EntityPlayer player, boolean reset) {
+	public static void setFlightSpeeds(EntityPlayer player, boolean reset) {
 		if (reset) {
 			if (player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(mod)) {
 				player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(mod.getID());
@@ -122,9 +121,9 @@ public class CapabilityTardis implements ITardisCap {
 		}
 	}
 	
-	public static void setupFlight(EntityPlayer player, TileEntityTardis console, boolean move) {
+	public static void start(EntityPlayer player, TileEntityTardis console, boolean move) {
 		if (player.world.isRemote) return;
-		setSpeeds(player, false);
+		setFlightSpeeds(player, false);
 		ITardisCap cap = get(player);
 		cap.setTimeOnGround(0);
 		if (console != null && !console.hasPilot() && console.fuel > 0) {
@@ -203,23 +202,21 @@ public class CapabilityTardis implements ITardisCap {
 		return isOpen;
 	}
 	
-	public static void endFlight(EntityPlayer player, boolean placeExterior) {
+	public static void end(EntityPlayer player, boolean placeExterior) {
 		if (player.world.isRemote) return;
 		
 		ITardisCap cap = get(player); //Get the Players Tardis Data
 		TileEntityTardis console = TardisHelper.getConsole(cap.getFlightTardis()); //Get the Console
 		BlockPos bPos = player.getPosition(); //Back up the players position before we do anything
 		
-		
 		if (console != null) {
+			WorldServer exteriorWorld = DimensionManager.getWorld(console.dimension);
 			
 			if (player.dimension != console.getWorld().provider.getDimension()) {
 				console.enterTARDIS(player);
 				player.attemptTeleport(console.getPos().getX(), console.getPos().getY(), console.getPos().getZ() - 1.5F);
 			}
 			
-			
-			WorldServer exteriorWorld = DimensionManager.getWorld(console.dimension);
 			
 			//Set Exterior of asked to
 			if (placeExterior && cap.isInFlight()) {
@@ -228,10 +225,12 @@ public class CapabilityTardis implements ITardisCap {
 				exteriorWorld.setBlockState(bPos.up(), console.getTopBlock().withProperty(BlockTardisTop.FACING, player.getHorizontalFacing()));
 				BlockPos consolePos = cap.getFlightTardis();
 				exteriorWorld.addScheduledTask(() -> {
-					TileEntity door = exteriorWorld.getTileEntity(bPos.up());
-					if (door instanceof TileEntityDoor) {
-						((TileEntityDoor) door).setConsolePos(consolePos);
-						((TileEntityDoor) Objects.requireNonNull(exteriorWorld.getTileEntity(bPos.up()))).forceVisible();
+					TileEntity tileTemp = exteriorWorld.getTileEntity(bPos.up());
+					if (tileTemp instanceof TileEntityDoor) {
+						TileEntityDoor door = (TileEntityDoor) tileTemp;
+						door.setConsolePos(consolePos);
+						door.setStealth(console.isStealthMode());
+						door.forceVisible();
 					}
 				});
 			}
@@ -249,7 +248,7 @@ public class CapabilityTardis implements ITardisCap {
 			PlayerHelper.resetCapabilities(player);
 			player.noClip = false;
 			player.sendPlayerAbilities();
-			setSpeeds(player, true);
+			setFlightSpeeds(player, true);
 			
 			//Reset Cap stuff
 			cap.setTardis(BlockPos.ORIGIN);
@@ -279,7 +278,7 @@ public class CapabilityTardis implements ITardisCap {
 		
 		if (player.dimension == TDimensions.TARDIS_ID && !this.getTardis().equals(BlockPos.ORIGIN)) {
 			if (player.getPosition().distanceSq(this.getTardis()) > 16384) {
-				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY() + 1, this.getTardis().getZ());
+				player.setPositionAndUpdate(this.getTardis().getX(), this.getTardis().getY(), this.getTardis().getZ() + 1.5F);
 				PlayerHelper.sendMessage(player, new TextComponentTranslation("tardis.message.confines"), true);
 			}
 		}
@@ -299,19 +298,16 @@ public class CapabilityTardis implements ITardisCap {
 					//Alpha "Animation"
 					if (getFlightState().equals(TardisFlightState.DEMAT)) {
 						alpha -= 0.005F;
-						player.noClip = true;
 						sync();
 					}
 					
 					if (getFlightState().equals(TardisFlightState.REMAT)) {
 						alpha += 0.005F;
-						player.noClip = true;
 						sync();
 					}
 					
 					if (alpha >= 1F && flightState != TardisFlightState.REMAT_FULL) {
 						setFlightState(TardisFlightState.REMAT_FULL);
-						player.noClip = false;
 						alpha = 1F;
 						sync();
 					}
@@ -336,7 +332,7 @@ public class CapabilityTardis implements ITardisCap {
 								setPreviousPos(backUpPos);
 								setPrevRot(bacupRot);
 							}
-							setupFlight(player, console, false);
+							start(player, console, false);
 						}
 						
 					}
@@ -352,32 +348,31 @@ public class CapabilityTardis implements ITardisCap {
 					
 					//Return to interior after a few seconds of shifting on ground
 					if (timeOnGround >= 50 && player.isSneaking()) {
-						endFlight(player, true);
+						end(player, true);
 					}
 					
 					
 					if (hasFuel) {
-						
 						if (!player.capabilities.allowFlying || !player.capabilities.isFlying) {
 							player.capabilities.allowFlying = true;
 							player.capabilities.isFlying = true;
-							setSpeeds(player, false);
+							setFlightSpeeds(player, false);
 							player.velocityChanged = true;
 						}
 					} else {
-						setSpeeds(player, true);
+						setFlightSpeeds(player, true);
 						player.capabilities.isFlying = false;
 						player.capabilities.allowFlying = false;
 						player.velocityChanged = true;
 					}
 				} else {
-					endFlight(player, true);
+					end(player, true);
 				}
 			}
 		} else {
 			//If the player is in the Tardis dimension and are still in a state of flight, we reset them
 			if (isInFlight) {
-				endFlight(player, true);
+				end(player, true);
 			}
 		}
 	}
@@ -475,7 +470,7 @@ public class CapabilityTardis implements ITardisCap {
 		public static void onJoin(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
 			get(event.player).sync();
 			if (get(event.player).isInFlight()) {
-				CapabilityTardis.endFlight(event.player, true);
+				CapabilityTardis.end(event.player, true);
 			}
 		}
 		
@@ -509,7 +504,7 @@ public class CapabilityTardis implements ITardisCap {
 		@SubscribeEvent
 		public static void onPlayerLogout(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent e) {
 			if (CapabilityTardis.get(e.player).isInFlight()) {
-				CapabilityTardis.endFlight(e.player, true);
+				CapabilityTardis.end(e.player, true);
 			}
 		}
 		

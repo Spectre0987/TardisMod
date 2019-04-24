@@ -10,12 +10,14 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.guis.elements.ButtonText.IAction;
 
 public class ButtonRecipe extends GuiButton {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/item_button.png");
 	ItemStack stackToRender = ItemStack.EMPTY;
 	TransformType type = TransformType.GUI;
+	IAction action;
 
 	public ButtonRecipe(int buttonId, int x, int y, ItemStack stack) {
 		super(buttonId, x, y, 18, 18, "Item");
@@ -38,5 +40,15 @@ public class ButtonRecipe extends GuiButton {
 	
 	public ItemStack getStack() {
 		return this.stackToRender;
+	}
+	
+	public void addAction(IAction action) {
+		this.action = action;
+	}
+	
+	public void doAction() {
+		if(this.action != null) {
+			this.action.call();
+		}
 	}
 }

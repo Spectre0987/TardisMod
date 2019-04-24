@@ -6,8 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.blocks.BlockFoodMachine;
+import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class TileEntityFoodMachine extends TileEntity implements ITickable {
@@ -43,6 +45,7 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 	}
 
 	public void start() {
-		this.ticks = 100;
+		this.ticks = 160;
+		world.playSound(null, this.getPos(), TSounds.FOOD_MACHINE, SoundCategory.BLOCKS, 1F, 1F);
 	}
 }

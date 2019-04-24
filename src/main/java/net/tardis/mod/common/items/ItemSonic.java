@@ -1,10 +1,6 @@
 package net.tardis.mod.common.items;
 
-import static net.tardis.mod.util.common.helpers.Helper.getStackTag;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,6 +27,11 @@ import net.tardis.mod.common.screwdriver.IScrew;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static net.tardis.mod.util.common.helpers.Helper.getStackTag;
 
 public class ItemSonic extends Item {
 	
@@ -201,8 +202,16 @@ public class ItemSonic extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("Mode: " + new TextComponentTranslation(ScrewdriverHandler.MODES.get(getMode(stack)).getName()).getFormattedText());
+		IScrew currentMode = ScrewdriverHandler.MODES.get(getMode(stack));
 		tooltip.add("Charge: " + getCharge(stack));
+		tooltip.add("Mode: " + new TextComponentTranslation(currentMode.getName()).getFormattedText());
+		
+		if (GuiInventory.isShiftKeyDown()) {
+			//	tooltip.add(new TextComponentTranslation(currentMode.getInfo()).getUnformattedText().replace("\n", System.getProperty("line.separator")));
+		} else {
+			//	tooltip.add(new TextComponentTranslation("iteminfo.shift", Minecraft.getMinecraft().gameSettings.keyBindSneak.getDisplayName()).getUnformattedText());
+		}
+		
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

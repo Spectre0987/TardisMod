@@ -1,9 +1,5 @@
 package net.tardis.mod.common.dimensions.space;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,6 +18,10 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.renderers.sky.RenderVoid;
 import net.tardis.mod.common.dimensions.TDimensions;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class SpaceProvider extends WorldProvider {
 
 	public Map<BlockPos, SpaceEvent> space = new HashMap<>();
@@ -31,7 +31,7 @@ public class SpaceProvider extends WorldProvider {
 
 	@Override
 	public DimensionType getDimensionType() {
-		return TDimensions.spaceType;
+		return TDimensions.DIMTYPE_SPACE;
 	}
 
 	@Override

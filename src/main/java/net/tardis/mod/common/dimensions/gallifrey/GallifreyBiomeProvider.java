@@ -6,15 +6,18 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
-import net.minecraft.world.gen.layer.*;
+import net.minecraft.world.gen.layer.GenLayer;
+import net.minecraft.world.gen.layer.GenLayerFuzzyZoom;
+import net.minecraft.world.gen.layer.GenLayerVoronoiZoom;
+import net.minecraft.world.gen.layer.GenLayerZoom;
 import net.tardis.mod.common.dimensions.TDimensions;
 
 import java.util.List;
 
 
 public class GallifreyBiomeProvider extends BiomeProvider {
-
-    public static final List<Biome> BIOMES_TO_SPAWN_IN = Lists.newArrayList(TDimensions.gallifreyRedlands,TDimensions.gallifreyMountains);
+	
+	public static final List<Biome> BIOMES_TO_SPAWN_IN = Lists.newArrayList(TDimensions.BIOME_GALLIFREY_REDLANDS, TDimensions.BIOME_GALLIFREY_MOUNTAIN);
 
 
     public GallifreyBiomeProvider(World world){

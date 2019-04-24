@@ -1,7 +1,20 @@
 package net.tardis.mod.client.guis.manual;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.lwjgl.opengl.GL11;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -15,23 +28,17 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
-import org.lwjgl.opengl.GL11;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 public class GuiManual extends GuiScreen {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/manual.png");
 	private static final ResourceLocation BOOK_GUI_TEXTURES = new ResourceLocation("textures/gui/book.png");
+	public ButtonBook next, prev;
+	private static List<Page> PAGES = new ArrayList<>();;
+	public int gui_width = 281, gui_height = 208;
+	private int index = 0;
 	
 	static {
+		PAGES =  new ArrayList<>();
 		IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
 		if (manager instanceof IReloadableResourceManager) {
 			((IReloadableResourceManager) manager).registerReloadListener(new IResourceManagerReloadListener() {
@@ -42,11 +49,6 @@ public class GuiManual extends GuiScreen {
 			});
 		}
 	}
-	private static List<Page> PAGES = new ArrayList<>();
-	public int gui_width = 281, gui_height = 208;
-	private int index = 0;
-	
-	public ButtonBook next, prev;
 
 	public GuiManual() {
 		mc = Minecraft.getMinecraft();
