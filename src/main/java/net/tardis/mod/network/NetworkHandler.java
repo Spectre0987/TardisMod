@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.network.packets.MessageARSSpawn;
 import net.tardis.mod.network.packets.MessageCapabilityDoorOpen;
 import net.tardis.mod.network.packets.MessageChangeInterior;
 import net.tardis.mod.network.packets.MessageCompanion;
@@ -63,6 +64,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageSetupFlight.Handler.class, MessageSetupFlight.class, id++, Side.CLIENT);
 		NETWORK.registerMessage(MessageConsoleChange.Handler.class, MessageConsoleChange.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageDematAnim.Handler.class, MessageDematAnim.class, id++, Side.SERVER);
+		NETWORK.registerMessage(MessageARSSpawn.Handler.class, MessageARSSpawn.class, id++, Side.SERVER);
 	}
 	
 	
