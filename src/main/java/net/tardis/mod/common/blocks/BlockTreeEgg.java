@@ -52,7 +52,7 @@ public class BlockTreeEgg extends BlockTileBase {
 
 	@Override
 	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
+		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 
 	@Override

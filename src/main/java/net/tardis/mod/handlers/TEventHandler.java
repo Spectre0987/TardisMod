@@ -246,11 +246,15 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void giveManual(PlayerInteractEvent.RightClickBlock event) {
 		if (!event.getWorld().isRemote) {
-			if (event.getItemStack().getItem() == Items.BOOK) {
-				World world = event.getWorld();
-				IBlockState state = world.getBlockState(event.getPos());
-				if (state.getBlock() instanceof BlockConsole) {
-					EntityPlayer player = event.getEntityPlayer();
+			World world = event.getWorld();
+			IBlockState state = world.getBlockState(event.getPos());
+			if (state.getBlock() instanceof BlockConsole) {
+				EntityPlayer player = event.getEntityPlayer();
+				if(player.getHeldItemMainhand().getItem() == Items.EGG) {
+					InventoryHelper.spawnItemStack(world, player.posX, player.posY, player.posZ, new ItemStack(TBlocks.tree_egg));
+					player.getHeldItemMainhand().shrink(1);
+				}
+				else {
 					int slot = Helper.getSlotForItem(player, Items.BOOK);
 					if (slot != -1) {
 						player.inventory.getStackInSlot(slot).shrink(1);
