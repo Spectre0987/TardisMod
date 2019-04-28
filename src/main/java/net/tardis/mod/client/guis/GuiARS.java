@@ -30,15 +30,23 @@ public class GuiARS extends GuiScreen {
 	public void initGui() {
 		super.initGui();
 		this.buttonList.clear();
-		int x = width / 2 - 100;
-		int y = height / 2 - 140;
+		final int guiFirstX = width/2 - GuiMonitor.getGuiWidth()/2 + 13;
+		final int guiFirstY = height/2 - GuiMonitor.getGuiHeigt()/2 + 10;
+		final int maxItem = 12;
 		int id = 0;
+		int line = 0;
+		int collum = 0;
 		for(ItemStack stack : TileEntityEgg.ITEMS) {
-			this.addButton(new ButtonRecipe(id, x + ((id % 11) * 18), y + (id / 11) * 18, stack)).addAction(() -> {
+			this.addButton(new ButtonRecipe(id, guiFirstX + collum * 18  , guiFirstY + line  * 18 , stack)).addAction(() -> {
 				NetworkHandler.NETWORK.sendToServer(new MessageARSSpawn(tardis.getPos(), stack));
 				Minecraft.getMinecraft().displayGuiScreen(null);
 			});
 			++id;
+			collum++;
+			if (collum >= maxItem){
+				collum = 0;
+				line++;
+			}
 		}
 	}
 

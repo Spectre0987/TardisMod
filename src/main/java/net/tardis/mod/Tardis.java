@@ -1,5 +1,8 @@
 package net.tardis.mod;
 
+import net.tardis.mod.common.blocks.BlockSonicWorkbench;
+import net.tardis.mod.common.blocks.BlockSuitcase;
+import net.tardis.mod.common.blocks.interfaces.IARSBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -335,7 +338,7 @@ public class Tardis {
 		}
 		TileEntitySonicWorkbench.RECIPES.put(TItems.sonic_screwdriver, sonics);
 		
-		FileHelper.readOrWriteARS(event.getModConfigurationDirectory());
+		//FileHelper.readOrWriteARS(event.getModConfigurationDirectory());
 	}
 
 	@EventHandler
@@ -361,6 +364,13 @@ public class Tardis {
 		TDimensions.register();
 
 		TileEntityEgg.register(new ItemStack(TBlocks.hellbent_glass01, 64));
+
+		TBlocks.BLOCKS.forEach(block -> {
+			if (block instanceof IARSBlock && !(block instanceof BlockSonicWorkbench) && !(block instanceof BlockSuitcase)){
+				IARSBlock block1 = (IARSBlock) block;
+				TileEntityEgg.register(new ItemStack(block1.getItemARS(),64));
+			}
+		});
 	}
 
 	@EventHandler

@@ -12,12 +12,10 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
+import net.tardis.mod.common.blocks.interfaces.IARSBlock;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
-import net.tardis.mod.common.tileentity.TileEntityDoor;
-import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.*;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
@@ -224,10 +222,11 @@ public class TBlocks {
 		if (addToTab) {
 			block.setCreativeTab(TardisTabs.BLOCKS);
 		}
-		
+
+		Item itemBlock = null;
 		if (block instanceof INeedItem) {
 			
-			Item itemBlock = ((INeedItem) block).getItem().setRegistryName(rl);
+			itemBlock = ((INeedItem) block).getItem().setRegistryName(rl);
 			if (addToTab) {
 				itemBlock.setCreativeTab(TardisTabs.BLOCKS);
 			}
@@ -235,7 +234,7 @@ public class TBlocks {
 			TItems.items.add(itemBlock);
 		} else {
 			
-			Item itemBlock = new ItemBlock(block).setRegistryName(rl);
+			itemBlock = new ItemBlock(block).setRegistryName(rl);
 			
 			if (addToTab) {
 				itemBlock.setCreativeTab(TardisTabs.BLOCKS);

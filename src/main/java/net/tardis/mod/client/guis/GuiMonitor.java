@@ -22,6 +22,9 @@ public class GuiMonitor extends GuiScreen{
 	
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/gui/monitor.png");
 	private TileEntityTardis tardis;
+
+	private static int guiWidth = 242;
+	private static int guiHeigt = 132;
 	
 	public GuiMonitor(TileEntityTardis tardis) {
 		this.tardis = tardis;
@@ -75,5 +78,13 @@ public class GuiMonitor extends GuiScreen{
 	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
+	}
+
+	public static int getGuiWidth() {
+		return guiWidth;
+	}
+
+	public static int getGuiHeigt() {
+		return guiHeigt;
 	}
 }

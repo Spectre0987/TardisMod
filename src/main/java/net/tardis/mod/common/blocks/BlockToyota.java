@@ -6,6 +6,8 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -16,9 +18,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.client.creativetabs.TardisTabs;
+import net.tardis.mod.common.blocks.interfaces.IARSBlock;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 
-public class BlockToyota extends BlockBase implements INeedItem {
+public class BlockToyota extends BlockBase implements INeedItem, IARSBlock {
 
 	public ItemBlock item = new ItemBlockToyota(this);
 
@@ -32,6 +35,11 @@ public class BlockToyota extends BlockBase implements INeedItem {
 	@Override
 	public ItemBlock getItem() {
 		return item;
+	}
+
+	@Override
+	public Item getItemARS() {
+		return Item.getByNameOrId(getRegistryName().getNamespace() + ":" + getRegistryName().getPath());
 	}
 
 	public static class BlockToyotaFacing extends BlockToyota {
@@ -136,6 +144,7 @@ public class BlockToyota extends BlockBase implements INeedItem {
 		public String getItemStackDisplayName(ItemStack stack) {
 			return new TextComponentTranslation(TBlocks.toyota_hexagon_1.getTranslationKey() + ".name").getFormattedText();
 		}
+
 
 	}
 
