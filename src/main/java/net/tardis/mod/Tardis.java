@@ -363,8 +363,6 @@ public class Tardis {
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
 
-		TileEntityEgg.register(new ItemStack(TBlocks.hellbent_glass01, 64));
-
 		TBlocks.BLOCKS.forEach(block -> {
 			if (block instanceof IARSBlock && !(block instanceof BlockSonicWorkbench) && !(block instanceof BlockSuitcase)){
 				IARSBlock block1 = (IARSBlock) block;
