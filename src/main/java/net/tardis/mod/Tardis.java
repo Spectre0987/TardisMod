@@ -338,7 +338,7 @@ public class Tardis {
 		}
 		TileEntitySonicWorkbench.RECIPES.put(TItems.sonic_screwdriver, sonics);
 		
-		//FileHelper.readOrWriteARS(event.getModConfigurationDirectory());
+		FileHelper.readOrWriteARS(event.getModConfigurationDirectory());
 	}
 
 	@EventHandler
