@@ -59,8 +59,7 @@ public class TBlocks {
 	
 	public static Block toyota_light_off = register(new BlockToyotaLight(false), "toyota_light_off");
 	public static Block toyota_light_on = register(new BlockToyotaLight(true), "toyota_light_on", false);
-	
-	
+
 	public static Block toyota_upper_divider = register(new BlockToyota(false), "toyota_upper_divider");
 	public static Block toyota_platform = register(new BlockToyota(false), "toyota_platform");
 	public static Block toyota_platform_top = register(new BlockToyota(false), "toyota_platform_top");
