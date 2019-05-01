@@ -310,8 +310,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 						otherTardis.startHADS();
 					}
 				}
-				ChunkPos otherCPos = dWorld.getChunk(nPos).getPos();
-				((WorldServer) dWorld).getChunkProvider().loadChunk(otherCPos.x, otherCPos.z);
 				dWorld.setBlockState(nPos, blockBase);
 				dWorld.setBlockState(nPos.up(), blockTop.withProperty(BlockTardisTop.FACING, facing));
 				BlockPos consolePos = this.getPos();
@@ -625,9 +623,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.setFueling(false);
 		if (!world.isRemote) {
 			WorldServer oWorld = world.getMinecraftServer().getWorld(dimension);
-			if (oWorld.getTileEntity(tardisLocation.up()) != null) {
-				((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).setDemat();
-			}
+			oWorld.addScheduledTask(() -> {
+				if (oWorld.getTileEntity(tardisLocation.up()) != null) {
+					((TileEntityDoor) oWorld.getTileEntity(this.tardisLocation.up())).setDemat();
+				}
+			});
 			this.returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "Return Location");
 			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunk(getLocation()).getPos());
 			ForgeChunkManager.releaseTicket(tardisLocTicket);
