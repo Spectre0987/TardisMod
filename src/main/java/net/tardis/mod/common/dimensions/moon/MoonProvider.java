@@ -108,7 +108,7 @@ public class MoonProvider extends WorldProvider implements IDimensionProperties 
 
 	@Override
 	public double transformGrav(double motionY) {
-		return 0;
+		return motionY + 0.05;
 	}
 
 }
