@@ -1,32 +1,21 @@
 package net.tardis.mod.common.dimensions.space;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.Tardis;
+import net.tardis.mod.api.dimensions.IDimensionProperties;
 import net.tardis.mod.client.renderers.sky.RenderVoid;
 import net.tardis.mod.common.dimensions.TDimensions;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-public class SpaceProvider extends WorldProvider {
-
-	public Map<BlockPos, SpaceEvent> space = new HashMap<>();
+public class SpaceProvider extends WorldProvider implements IDimensionProperties{
 	
 	public SpaceProvider() {
+		
 	}
 
 	@Override
@@ -66,28 +55,14 @@ public class SpaceProvider extends WorldProvider {
 	}
 
 	@Override
-	public void calculateInitialWeather() {
-	}
+	public void calculateInitialWeather() {}
 
 	@Override
-	public void updateWeather() {
-	}
+	public void updateWeather() {}
 
 	@Override
 	public boolean canBlockFreeze(BlockPos pos, boolean byWater) {
 		return false;
-	}
-
-	@Override
-	public void onPlayerAdded(EntityPlayerMP player) {
-		super.onPlayerAdded(player);
-		player.setNoGravity(true);
-	}
-
-	@Override
-	public void onPlayerRemoved(EntityPlayerMP player) {
-		super.onPlayerRemoved(player);
-		player.setNoGravity(false);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -101,49 +76,24 @@ public class SpaceProvider extends WorldProvider {
 		return WorldSleepResult.DENY;
 	}
 	
-	public static class SpaceEvent{
-		
-		public World world;
-		private BlockPos pos;
-		
-		/**Also adds it to the space world**/
-		public SpaceEvent(World world, BlockPos pos) {
-			this.world = world;
-			this.pos = pos;
-			if(world.provider instanceof SpaceProvider) {
-				((SpaceProvider)world.provider).space.put(pos, this);
-			}
-		}
-		
-		public void update() {}
-		
-		public NBTTagCompound writeNBT(NBTTagCompound tag) {
-			tag.setLong("pos", this.pos.toLong());
-			return tag;
-		}
-		
-		public void readFromNBT(NBTTagCompound tag) {
-			this.pos = BlockPos.fromLong(tag.getLong("pos"));
-		}
-		
-		public BlockPos getPos() {
-			return this.pos;
-		}
+	@Override
+	public boolean hasGravity() {
+		return false;
 	}
-	
-	@EventBusSubscriber(modid = Tardis.MODID)
-	public static class Events{
-		
-		@SubscribeEvent
-		public static void update(WorldTickEvent event) {
-			if(event.world.provider instanceof SpaceProvider) {
-				for(Entry<BlockPos, SpaceEvent> entry : ((SpaceProvider)event.world.provider).space.entrySet()) {
-					if(event.world.isBlockLoaded(entry.getKey())) {
-						entry.getValue().update();
-					}
-				}
-			}
-		}
+
+	@Override
+	public boolean hasAir() {
+		return false;
+	}
+
+	@Override
+	public int getRadiationLevels() {
+		return 10;
+	}
+
+	@Override
+	public double transformGrav(double grav) {
+		return grav * 0.01;
 	}
 
 }

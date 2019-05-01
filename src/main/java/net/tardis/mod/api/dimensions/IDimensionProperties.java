@@ -8,6 +8,6 @@ public interface IDimensionProperties {
 
 	int getRadiationLevels();
 	
-	double gravModifier();
+	double transformGrav(double motionY);
 
 }

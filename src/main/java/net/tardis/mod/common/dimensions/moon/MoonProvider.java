@@ -100,15 +100,15 @@ public class MoonProvider extends WorldProvider implements IDimensionProperties 
 	public int getRadiationLevels() {
 		return 0;
 	}
-	
-	@Override
-	public double gravModifier() {
-		return 0.07;
-	}
 
 	@Override
 	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
 		return WorldSleepResult.ALLOW;
+	}
+
+	@Override
+	public double transformGrav(double motionY) {
+		return 0;
 	}
 
 }

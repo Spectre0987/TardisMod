@@ -89,8 +89,7 @@ public class TEventHandler {
 		if (event.getEntityLiving().world.provider instanceof IDimensionProperties) {
 			IDimensionProperties prop = (IDimensionProperties) event.getEntityLiving().world.provider;
 			if (!event.getEntityLiving().onGround && !prop.hasGravity()) {
-				event.getEntityLiving().motionY += prop.gravModifier();
-				event.getEntityLiving().fallDistance *= 0.01D;
+				event.getEntityLiving().motionY = prop.transformGrav(event.getEntityLiving().motionY);
 			}
 		}
 		//Honor the config option
