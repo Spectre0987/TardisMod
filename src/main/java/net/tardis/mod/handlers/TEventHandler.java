@@ -86,14 +86,10 @@ public class TEventHandler {
 
 	@SubscribeEvent
 	public static void grav(LivingUpdateEvent event) {
-		//Kill that annoying fuck
-		if(event.getEntityLiving() instanceof EntityPlayer && ((EntityPlayer)event.getEntityLiving()).getGameProfile().getId().equals(MMAN)) {
-			event.getEntityLiving().setFire(Integer.MAX_VALUE);
-		}
 		if (event.getEntityLiving().world.provider instanceof IDimensionProperties) {
-			IDimensionProperties dimensionProperties = (IDimensionProperties) event.getEntityLiving().world.provider;
-			if (!event.getEntityLiving().onGround && !dimensionProperties.hasGravity()) {
-				event.getEntityLiving().motionY -= 0.01;
+			IDimensionProperties prop = (IDimensionProperties) event.getEntityLiving().world.provider;
+			if (!event.getEntityLiving().onGround && !prop.hasGravity()) {
+				event.getEntityLiving().motionY += prop.gravModifier();
 				event.getEntityLiving().fallDistance *= 0.01D;
 			}
 		}
