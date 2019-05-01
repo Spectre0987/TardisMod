@@ -34,6 +34,11 @@ public class CommandTeleport extends CommandTemplate {
     }
 
     @Override
+    public String getUsage(ICommandSender sender) {
+        return super.getUsage(sender) + "| <username>";
+    }
+
+    @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         return true;
     }
@@ -51,7 +56,7 @@ public class CommandTeleport extends CommandTemplate {
             handleTeleport(player, null);
         }
         else
-            throw new CommandException("You do not have permission to run this command or you have executed it incorrectly");
+            throw new CommandException(getUsage(sender));
     }
 
     private void handleTeleport(EntityPlayerMP player, @Nullable String tardisOwner) {
