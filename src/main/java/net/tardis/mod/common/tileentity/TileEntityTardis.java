@@ -46,8 +46,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.events.tardis.TardisEnterEvent;
 import net.tardis.mod.api.events.tardis.TardisExitEvent;
-import net.tardis.mod.capability.CapabilityTardis;
-import net.tardis.mod.capability.ITardisCap;
 import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -147,7 +145,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public boolean soundChanged = false;
 	private boolean playerFuckedUp = false;
 	private boolean isStealth = false;
-	private EntityPlayer flightPilot = null;
 	
 	public TileEntityTardis() {
 		if (systems == null) {
@@ -175,19 +172,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	@Override
 	public void update() {
-		if (hasPilot()) {
-			ITardisCap pilotData = CapabilityTardis.get(getFlightPilot());
-			if (fuel <= 0.0F) {
-				pilotData.setHasFuel(false);
-			}
-			tardisLocation = getFlightPilot().getPosition();
-			dimension = getFlightPilot().dimension;
-			if (getFlightPilot().ticksExisted % 40 == 0) {
-				if (fuel > 0 && getFlightPilot().isAirBorne) {
-					this.setFuel(fuel - this.calcFuelUse());
-				}
-			}
-		}
 		if (hum != null) {
 			if ((soundChanged || world.getTotalWorldTime() % hum.getTicks() == 0) && !world.isRemote) {
 				world.playSound(null, getPos(), hum.getSoundEvent(), SoundCategory.AMBIENT, 1.5F, 1F);
@@ -211,7 +195,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					player.connection.sendPacket(new SPacketSoundEffect(TSounds.takeoff, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
 				}
 			else if (this.ticksToTravel > 200 && this.ticksToTravel < this.totalTimeToTravel - 200) {
-				if (this.ticksToTravel % 40 == 0 || hasPilot() && getFlightPilot().ticksExisted % 40 == 0) {
+				if (this.ticksToTravel % 40 == 0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
@@ -606,14 +590,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (MinecraftForge.EVENT_BUS.post(event) || event.getFuel() <= 0.0F || event.getDestination() == null || event.getDestination() == BlockPos.ORIGIN || !getCanFly()) {
 			world.playSound(null, this.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
 			return false;
-		}
-		
-		if (hasPilot()) {
-			this.setLoading(false);
-			this.setFueling(false);
-			EntityPlayer pilot = getFlightPilot();
-			CapabilityTardis.get(pilot).setFlightState(CapabilityTardis.TardisFlightState.DEMAT);
-			return true;
 		}
 		
 		this.shouldDelayLoop = true;
@@ -1197,18 +1173,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void setPlayerFuckedUp(boolean fuckedUp) {
 		this.playerFuckedUp = fuckedUp;
 		this.markDirty();
-	}
-	
-	public void setFlightPilot(EntityPlayer flightPilot) {
-		this.flightPilot = flightPilot;
-	}
-	
-	public boolean hasPilot() {
-		return flightPilot != null;
-	}
-	
-	public EntityPlayer getFlightPilot() {
-		return flightPilot;
 	}
 	
 	public enum EnumCourseCorrect {
