@@ -1,15 +1,11 @@
 package net.tardis.mod.client.handler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MovementInput;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.InputUpdateEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,16 +13,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.capability.CapabilityTardis;
-import net.tardis.mod.client.TardisKeyBinds;
 import net.tardis.mod.client.guis.GuiVortexM;
-import net.tardis.mod.client.renderers.layers.RenderFlightMode;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
-import net.tardis.mod.network.packets.MessageDematAnim;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 
 @Mod.EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
@@ -69,35 +61,4 @@ public class ClientHandler {
 			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
 		}
 	}
-	
-	
-	@SubscribeEvent
-	public static void flyRender(RenderPlayerEvent.Pre e) {
-		RenderFlightMode.renderFlightMode(e);
-	}
-	
-	@SubscribeEvent
-	public static void freeze(InputUpdateEvent e) {
-		if (Minecraft.getMinecraft().player == null) return;
-		EntityPlayerSP player = Minecraft.getMinecraft().player;
-		if (CapabilityTardis.get(player).isInFlight() && player.onGround) {
-			MovementInput moveType = e.getMovementInput();
-			moveType.rightKeyDown = false;
-			moveType.leftKeyDown = false;
-			moveType.backKeyDown = false;
-			moveType.moveForward = 0.0F;
-			moveType.moveStrafe = 0.0F;
-			if (!CapabilityTardis.get(player).hasFuel()) {
-				moveType.jump = false;
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public static void onClientTick(TickEvent.ClientTickEvent e) {
-		if (TardisKeyBinds.DEMAT_REMAT_ANIM.isPressed()) {
-			NetworkHandler.NETWORK.sendToServer(new MessageDematAnim());
-		}
-	}
-	
 }

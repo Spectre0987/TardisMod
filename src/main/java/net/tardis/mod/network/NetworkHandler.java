@@ -6,13 +6,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
 import net.tardis.mod.network.packets.MessageARSSpawn;
-import net.tardis.mod.network.packets.MessageCapabilityDoorOpen;
 import net.tardis.mod.network.packets.MessageChangeInterior;
 import net.tardis.mod.network.packets.MessageCompanion;
+import net.tardis.mod.network.packets.MessageConfigSync;
 import net.tardis.mod.network.packets.MessageConsoleChange;
 import net.tardis.mod.network.packets.MessageDamageSystem;
 import net.tardis.mod.network.packets.MessageDemat;
-import net.tardis.mod.network.packets.MessageDematAnim;
 import net.tardis.mod.network.packets.MessageDoorOpen;
 import net.tardis.mod.network.packets.MessageExteriorChange;
 import net.tardis.mod.network.packets.MessageHandlerProtocol;
@@ -20,12 +19,10 @@ import net.tardis.mod.network.packets.MessageHandlerTeleport;
 import net.tardis.mod.network.packets.MessageMissControl;
 import net.tardis.mod.network.packets.MessageProtocol;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
-import net.tardis.mod.network.packets.MessageSetupFlight;
 import net.tardis.mod.network.packets.MessageSonicWorkbench;
 import net.tardis.mod.network.packets.MessageSpawnItem;
 import net.tardis.mod.network.packets.MessageStopHum;
 import net.tardis.mod.network.packets.MessageSwitchHum;
-import net.tardis.mod.network.packets.MessageSyncCap;
 import net.tardis.mod.network.packets.MessageSyncTardises;
 import net.tardis.mod.network.packets.MessageTelepathicCircuit;
 import net.tardis.mod.network.packets.MessageTeleport;
@@ -59,12 +56,9 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageChangeInterior.Handler.class, MessageChangeInterior.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageSwitchHum.Handler.class, MessageSwitchHum.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageRequestBOTI.Handler.class, MessageRequestBOTI.class, id++, Side.SERVER);
-		NETWORK.registerMessage(MessageSyncCap.Handler.class, MessageSyncCap.class, id++, Side.CLIENT);
-		NETWORK.registerMessage(MessageCapabilityDoorOpen.Handler.class, MessageCapabilityDoorOpen.class, id++, Side.SERVER);
-		NETWORK.registerMessage(MessageSetupFlight.Handler.class, MessageSetupFlight.class, id++, Side.CLIENT);
 		NETWORK.registerMessage(MessageConsoleChange.Handler.class, MessageConsoleChange.class, id++, Side.SERVER);
-		NETWORK.registerMessage(MessageDematAnim.Handler.class, MessageDematAnim.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageARSSpawn.Handler.class, MessageARSSpawn.class, id++, Side.SERVER);
+		NETWORK.registerMessage(MessageConfigSync.Handler.class, MessageConfigSync.class, id++, Side.CLIENT);
 	}
 	
 	

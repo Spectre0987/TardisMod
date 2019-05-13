@@ -35,7 +35,6 @@ import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.client.models.items.ModelFirstCane;
 import net.tardis.mod.client.models.items.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
-import net.tardis.mod.client.renderers.RenderDummy;
 import net.tardis.mod.client.renderers.RenderInvis;
 import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
@@ -82,7 +81,6 @@ import net.tardis.mod.client.renderers.items.RenderItemTardis;
 import net.tardis.mod.client.renderers.items.RenderItemTardis02;
 import net.tardis.mod.client.renderers.items.RenderItemTardis03;
 import net.tardis.mod.client.renderers.items.RenderTEISRItem;
-import net.tardis.mod.client.renderers.layers.RenderFlightMode;
 import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
@@ -102,7 +100,6 @@ import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekSkaro;
-import net.tardis.mod.common.entities.EntityDummy;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
@@ -276,8 +273,6 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityQuark.class, RenderQuark::new);
-		
-		RenderingRegistry.registerEntityRenderingHandler(EntityDummy.class, RenderDummy::new);
 
 
 	}
@@ -340,7 +335,6 @@ public class ClientProxy extends ServerProxy {
 	@Override
 	public void postInit() {
 		super.postInit();
-		RenderFlightMode.cacheFlightModels();
 	}
 	
 	public void addBlockState(File file, Block block) {

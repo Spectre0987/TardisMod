@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
-import java.util.UUID;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
@@ -19,6 +18,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -74,6 +74,8 @@ import net.tardis.mod.common.systems.SystemTemporalGrace;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
+import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageConfigSync;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
@@ -82,7 +84,6 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 public class TEventHandler {
 
 	public static TardisWorldSavedData data;
-	public static final UUID MMAN = UUID.fromString("f01a9026-7e6b-46a4-99ff-d16d5a847ba8");
 
 	@SubscribeEvent
 	public static void grav(LivingUpdateEvent event) {
@@ -316,20 +317,10 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {
 		EntityPlayer player = e.player;
-		/*if (!player.world.isRemote) {
-			ForgeVersion.CheckResult version = ForgeVersion.getResult(Loader.instance().activeModContainer());
-			if (version.status == ForgeVersion.Status.OUTDATED) {
-				TextComponentString url = new TextComponentString(TextFormatting.GOLD + TextFormatting.BOLD.toString() + "UPDATE");
-				url.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://minecraft.curseforge.com/projects/new-tardis-mod"));
-				url.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponentString("Open link")));
-
-				player.sendMessage(new TextComponentString(TextFormatting.DARK_AQUA + "[New TARDIS Mod] : ").appendSibling(url));
-				String changes = String.valueOf(version.changes).replace("{" + version.target + "=", "").replace("}", "");
-				player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Changelog: " + TextFormatting.AQUA + changes));
-			}
-		}*/
 		if (Loader.isModLoaded(TStrings.ModIds.OPTIFINE))
 			player.sendStatusMessage(new TextComponentTranslation(TStrings.OPTIFINE_INSTALLED), false);
+		if(!e.player.world.isRemote)
+			NetworkHandler.NETWORK.sendTo(new MessageConfigSync(), (EntityPlayerMP) player);
 	}
 
 	@SubscribeEvent
