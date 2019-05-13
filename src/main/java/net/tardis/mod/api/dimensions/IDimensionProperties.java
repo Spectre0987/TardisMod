@@ -7,5 +7,7 @@ public interface IDimensionProperties {
 	boolean hasAir();
 
 	int getRadiationLevels();
+	
+	double transformGrav(double motionY);
 
 }

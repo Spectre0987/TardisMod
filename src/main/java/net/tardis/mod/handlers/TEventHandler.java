@@ -86,15 +86,10 @@ public class TEventHandler {
 
 	@SubscribeEvent
 	public static void grav(LivingUpdateEvent event) {
-		//Kill that annoying fuck
-		if(event.getEntityLiving() instanceof EntityPlayer && ((EntityPlayer)event.getEntityLiving()).getGameProfile().getId().equals(MMAN)) {
-			event.getEntityLiving().setFire(Integer.MAX_VALUE);
-		}
 		if (event.getEntityLiving().world.provider instanceof IDimensionProperties) {
-			IDimensionProperties dimensionProperties = (IDimensionProperties) event.getEntityLiving().world.provider;
-			if (!event.getEntityLiving().onGround && !dimensionProperties.hasGravity()) {
-				event.getEntityLiving().motionY -= 0.01;
-				event.getEntityLiving().fallDistance *= 0.01D;
+			IDimensionProperties prop = (IDimensionProperties) event.getEntityLiving().world.provider;
+			if (!event.getEntityLiving().onGround && !prop.hasGravity()) {
+				event.getEntityLiving().motionY = prop.transformGrav(event.getEntityLiving().motionY);
 			}
 		}
 		//Honor the config option
@@ -246,11 +241,15 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void giveManual(PlayerInteractEvent.RightClickBlock event) {
 		if (!event.getWorld().isRemote) {
-			if (event.getItemStack().getItem() == Items.BOOK) {
-				World world = event.getWorld();
-				IBlockState state = world.getBlockState(event.getPos());
-				if (state.getBlock() instanceof BlockConsole) {
-					EntityPlayer player = event.getEntityPlayer();
+			World world = event.getWorld();
+			IBlockState state = world.getBlockState(event.getPos());
+			if (state.getBlock() instanceof BlockConsole) {
+				EntityPlayer player = event.getEntityPlayer();
+				if(player.getHeldItemMainhand().getItem() == Items.EGG) {
+					InventoryHelper.spawnItemStack(world, player.posX, player.posY, player.posZ, new ItemStack(TBlocks.tree_egg));
+					player.getHeldItemMainhand().shrink(1);
+				}
+				else {
 					int slot = Helper.getSlotForItem(player, Items.BOOK);
 					if (slot != -1) {
 						player.inventory.getStackInSlot(slot).shrink(1);

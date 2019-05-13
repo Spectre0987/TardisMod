@@ -1,8 +1,9 @@
 package net.tardis.mod.common.dimensions.moon;
 
+import java.util.Random;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
@@ -19,8 +20,6 @@ import net.tardis.mod.client.renderers.sky.SkyRendererMoon;
 import net.tardis.mod.common.dimensions.IPopulatable;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.dimensions.telos.ChunkGeneratorTelos;
-
-import java.util.Random;
 
 public class MoonProvider extends WorldProvider implements IDimensionProperties {
 	
@@ -86,19 +85,7 @@ public class MoonProvider extends WorldProvider implements IDimensionProperties 
 	public float[] calcSunriseSunsetColors(float celestialAngle, float partialTicks) {
 		return new float[]{0, 0, 0, 0};
 	}
-
-	@Override
-	public void onPlayerAdded(EntityPlayerMP player) {
-		super.onPlayerAdded(player);
-		player.setNoGravity(true);
-	}
-
-	@Override
-	public void onPlayerRemoved(EntityPlayerMP player) {
-		super.onPlayerRemoved(player);
-		player.setNoGravity(false);
-	}
-
+	
 	@Override
 	public boolean hasGravity() {
 		return false;
@@ -117,6 +104,11 @@ public class MoonProvider extends WorldProvider implements IDimensionProperties 
 	@Override
 	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
 		return WorldSleepResult.ALLOW;
+	}
+
+	@Override
+	public double transformGrav(double motionY) {
+		return motionY + 0.05;
 	}
 
 }
