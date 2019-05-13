@@ -5,6 +5,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -15,9 +16,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.client.creativetabs.TardisTabs;
+import net.tardis.mod.common.blocks.interfaces.IARSBlock;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 
-public class BlockMegalos extends BlockBase implements INeedItem {
+public class BlockMegalos extends BlockBase implements INeedItem, IARSBlock {
 
 	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
 	public ItemBlock item = new ItemBlock(this);
@@ -99,8 +101,12 @@ public class BlockMegalos extends BlockBase implements INeedItem {
 	}
 
 	@Override
+	public Item getItemARS() {
+		return Item.getByNameOrId(getRegistryName().getNamespace() + ":" + getRegistryName().getPath());
+	}
+
+	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {
 		drops.add(new ItemStack(this, 1, state.getValue(TYPE)));
 	}
-
 }

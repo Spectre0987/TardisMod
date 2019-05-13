@@ -1,8 +1,5 @@
 package net.tardis.mod;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -350,7 +347,12 @@ public class Tardis {
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
 		TDimensions.register();
 
-		TileEntityEgg.register(new ItemStack(TBlocks.hellbent_glass01, 64));
+		TBlocks.BLOCKS.forEach(block -> {
+			if (block instanceof IARSBlock && !(block instanceof BlockSonicWorkbench) && !(block instanceof BlockSuitcase)){
+				IARSBlock block1 = (IARSBlock) block;
+				TileEntityEgg.register(new ItemStack(block1.getItemARS(),64));
+			}
+		});
 	}
 
 	@EventHandler

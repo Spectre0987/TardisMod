@@ -3,15 +3,15 @@ package net.tardis.mod.common.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tardis.mod.common.blocks.interfaces.IARSBlock;
 
 import java.util.Random;
 
-public class BlockToyotaLight extends Block {
+public class BlockToyotaLight extends Block implements IARSBlock {
     private final boolean isOn;
 
     public BlockToyotaLight(boolean isOn) {
@@ -35,6 +35,11 @@ public class BlockToyotaLight extends Block {
                 worldIn.setBlockState(pos, TBlocks.toyota_light_on.getDefaultState(), 2);
             }
         }
+    }
+
+    @Override
+    public Item getItemARS() {
+        return Item.getByNameOrId(getRegistryName().getNamespace() + ":" + getRegistryName().getPath());
     }
 
     /**
@@ -79,6 +84,5 @@ public class BlockToyotaLight extends Block {
     protected ItemStack getSilkTouchDrop(IBlockState state) {
         return new ItemStack(TBlocks.toyota_light_off);
     }
-
 }
 
