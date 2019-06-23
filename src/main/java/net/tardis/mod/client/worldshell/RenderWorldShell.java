@@ -31,7 +31,7 @@ public class RenderWorldShell {
 		BufferBuilder bb = Tessellator.getInstance().getBuffer();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.color(1F, 1, 1, 1f);
-		//RenderHelper.enableStandardItemLighting();
+		RenderHelper.enableStandardItemLighting();
 		for(Entry<BlockPos, BlockStorage> entry : cont.getWorldShell().blockMap.entrySet()) {
 			IBlockState state = entry.getValue().blockstate;
 			IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
@@ -75,6 +75,7 @@ public class RenderWorldShell {
 		//Entities
 		GlStateManager.color(1F, 1F, 1F, 1F);
 		for(Entity e : cont.getWorldShell().getEntitiesForRender()) {
+			RenderHelper.enableStandardItemLighting();
 			GlStateManager.pushMatrix();
 			BlockStorage stor = cont.getWorldShell().blockMap.get(e.getPosition().down());
 			float light = stor != null ? ((float)stor.light / 15F) : 1F;

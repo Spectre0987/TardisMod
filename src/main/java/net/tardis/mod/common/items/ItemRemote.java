@@ -35,27 +35,6 @@ public class ItemRemote extends ItemBase {
 		}
 		return BlockPos.ORIGIN;
 	}
-
-	/*@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if(!worldIn.isRemote && !Helper.isDimensionBlocked(playerIn.dimension) && !this.getConsolePos(playerIn.getHeldItem(handIn)).equals(BlockPos.ORIGIN)) {
-			TileEntityTardis tardis = ((TileEntityTardis)((WorldServer)worldIn).getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(this.getConsolePos(playerIn.getHeldItem(handIn))));
-			if(tardis != null && !tardis.isInFlight()) {
-				tardis.setDesination(playerIn.getPosition().offset(playerIn.getHorizontalFacing()), playerIn.dimension);
-				SystemFlight sys = null;
-				for(ISystem s : tardis.systems) {
-					if(s.getClass() == SystemFlight.class) {
-						sys = (SystemFlight)s;
-					}
-				}
-				if(sys != null && tardis.startFlight()) {
-					sys.setHealth(sys.getHealth() - 0.09F);
-				}
-				
-			}
-		}
-		return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
-	}*/
 	
 	public static void setConsolePos(ItemStack s, BlockPos pos) {
 		if (s.getTagCompound() == null) s.setTagCompound(new NBTTagCompound());
@@ -72,7 +51,6 @@ public class ItemRemote extends ItemBase {
 			TileEntity tte = worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos(player.getHeldItem(hand)));
 			if (tte != null && tte instanceof TileEntityTardis) {
 				TileEntityTardis tardis = ((TileEntityTardis) tte);
-				if (tardis.hasPilot()) return EnumActionResult.FAIL;
 				tardis.getSystem(SystemStabilizers.class).setOn(true);
 				tardis.setDesination(pos.up(1), player.dimension);
 				tardis.setFacing(player.getHorizontalFacing().getOpposite());

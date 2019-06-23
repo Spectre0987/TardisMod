@@ -2,6 +2,8 @@ package net.tardis.mod.client.guis;
 
 import java.io.IOException;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -18,7 +20,19 @@ import net.tardis.mod.network.packets.MessageExteriorChange;
 
 public class GuiCCircuit extends GuiScreen{
 	
-	public static EnumExterior[] exteriors = new EnumExterior[]{EnumExterior.FIRST, EnumExterior.SECOND, EnumExterior.THIRD, EnumExterior.FIFTH, EnumExterior.FOURTH, EnumExterior.CLOCK, EnumExterior.TT, EnumExterior.WOOD_DOOR, EnumExterior.CC, EnumExterior.WARDROBE};
+	public static EnumExterior[] exteriors = new EnumExterior[]{
+			EnumExterior.FIRST,
+			EnumExterior.SECOND,
+			EnumExterior.THIRD,
+			EnumExterior.FIFTH,
+			EnumExterior.FOURTH,
+			EnumExterior.CLOCK,
+			EnumExterior.TT,
+			EnumExterior.WOOD_DOOR,
+			EnumExterior.CC,
+			EnumExterior.WARDROBE
+		};
+	
 	private TileEntityTardis tardis;
 	private int index = 0;
 	
@@ -38,7 +52,6 @@ public class GuiCCircuit extends GuiScreen{
 		this.drawDefaultBackground();
 		GuiMonitor.drawMonitorBackground(this, width, height);
 		this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, "Chameleon Circuit", width / 2, height / 2 - 50, 0xFFFFFF);
-		super.drawScreen(mouseX, mouseY, partialTicks);
 		GlStateManager.pushMatrix();
 		GlStateManager.color(1F, 1, 1, 1F);
 		GlStateManager.translate(width / 2 + 50, height / 2, 200);
@@ -48,6 +61,7 @@ public class GuiCCircuit extends GuiScreen{
 		Minecraft.getMinecraft().getTextureManager().bindTexture(exteriors[index].tex);
 		exteriors[index].model.renderClosed(0.0625F);
 		GlStateManager.popMatrix();
+		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override

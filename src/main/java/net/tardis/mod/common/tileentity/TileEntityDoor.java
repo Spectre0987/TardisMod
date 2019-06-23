@@ -437,6 +437,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.alpha = 0;
 		this.isRemat = true;
 		this.sendDematPacket(false);
+		if(!world.isRemote) {
+			this.world.notifyBlockUpdate(getPos(), getWorld().getBlockState(this.getPos()), getWorld().getBlockState(this.getPos()), 2);
+		}
 	}
 	
 	public void setDemat() {
@@ -444,6 +447,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.isDemat = true;
 		this.setLocked(true);
 		this.sendDematPacket(true);
+		if(!world.isRemote) {
+			this.world.notifyBlockUpdate(getPos(), getWorld().getBlockState(this.getPos()), getWorld().getBlockState(this.getPos()), 2);
+		}
 	}
 	
 	public void forceVisible() {

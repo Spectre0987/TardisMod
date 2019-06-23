@@ -1,5 +1,5 @@
 {
-	"credit": "Mel made this!",
+	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "tardis:blocks/brachackiinterior/tablesilver",
 		"1": "tardis:blocks/brachackiinterior/tabletop",
@@ -156,25 +156,40 @@
 	],
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [4, 45, 0],
-			"translation": [0, -4.25, 1.25]
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
 		},
 		"thirdperson_lefthand": {
-			"rotation": [4, 45, 0],
-			"translation": [0, -4.25, 1.25]
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [4.25, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"translation": [3.5, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
-			"translation": [0, 5, 0]
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [0, 45, 0]
+			"rotation": [30, 225, 0],
+			"translation": [0, -0.75, 0],
+			"scale": [0.625, 0.625, 0.625]
 		},
 		"head": {
 			"rotation": [0, 45, 0],
 			"translation": [0, 14.5, 0]
 		},
 		"fixed": {
-			"rotation": [0, 45, 0]
+			"scale": [0.5, 0.5, 0.5]
 		}
 	}
 }

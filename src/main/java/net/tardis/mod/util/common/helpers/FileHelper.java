@@ -34,7 +34,7 @@ public class FileHelper {
 				usernames.put(UUID.fromString(elem.getKey()), object.get(elem.getKey()).getAsString());
 			}
 		} catch (Exception e) {
-			Tardis.LOG.info(e.getMessage());
+			System.err.println(e.getStackTrace());
 		}
 		return usernames;
 	}

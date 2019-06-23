@@ -25,7 +25,10 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.common.ars.ConsoleRoom;
+import net.tardis.mod.common.blocks.BlockSonicWorkbench;
+import net.tardis.mod.common.blocks.BlockSuitcase;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.blocks.interfaces.IARSBlock;
 import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.TardisCommand;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -148,7 +151,6 @@ public class Tardis {
 	public static final String VERSION = "0.1.0C";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = false;
-	public static Logger LOG = LogManager.getLogger(NAME);
 	public static boolean hasIC2 = false;
 
 	@Instance(MODID)
@@ -169,7 +171,8 @@ public class Tardis {
 	public void preInit(FMLPreInitializationEvent event) {
 		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
-		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT)) Galacticraft.preInit();
+		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT))
+			Galacticraft.preInit();
 		TItems.init();
 		TBlocks.register();
 		BiomeReg.init();
@@ -268,7 +271,6 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
 		TardisProtocol.register(new ProtocolStealth());
-		//TardisProtocol.register(new ProtocolForceField());
 
 		// Register All Mobs Here.
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
@@ -344,7 +346,7 @@ public class Tardis {
 		PermissionAPI.registerNode(TStrings.Permissions.GROW, DefaultPermissionLevel.OP, "Allows players to grow their TARDIS Coral faster");
 		PermissionAPI.registerNode(TStrings.Permissions.TP_OUT_TARDIS, DefaultPermissionLevel.OP, "Allows players to teleport themself out of their TARDIS");
 
-		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken ids
+		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken IDs
 		TDimensions.register();
 
 		TBlocks.BLOCKS.forEach(block -> {

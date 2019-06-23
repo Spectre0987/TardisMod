@@ -778,7 +778,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (!world.isRemote) {
 			WorldServer ws = world.getMinecraftServer().getWorld(dimension);
 			BlockPos crashSite = this.getCurrentPosOnPath();
-			System.out.println("Land: " + this.getLocation() + "Crash: " + crashSite);
 			this.setDesination(crashSite, dimension);
 			MinecraftForge.EVENT_BUS.post(new TardisCrashEvent(this, crashSite, dimension));
 			if (explode) {

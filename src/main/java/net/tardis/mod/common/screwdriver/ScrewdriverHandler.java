@@ -11,7 +11,6 @@ public class ScrewdriverHandler {
 
 	public static void register(IScrew screw) {
 		MODES.add(screw);
-		Tardis.LOG.info("Registered Sonic interaction: {}", screw.getName());
 	}
 
 	public static void init() {
