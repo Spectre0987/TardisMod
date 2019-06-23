@@ -1,14 +1,14 @@
 [
 {
-  "modid": "tardis",
-  "name": "TARDIS Mod",
-  "description": "A mod that adds a TARDIS from BBC's Doctor Who to Minecraft.",
+  "modid": "examplemod",
+  "name": "Example Mod",
+  "description": "Example placeholder mod.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://tardis-mod.com",
-  "updateUrl": "https://minecraft.curseforge.com/projects/new-tardis-mod",
-  "authorList": ["Spectre0987", "Suffril", "Mel", "Dhi", "Honeyluck", "LotuxPunk"],
-  "credits": "Many thanks to Snakefangox for his method to render other worlds! Thanks to LotuxPunk for their French translation! Thanks to Dhi for their TARDIS Coral model!",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ExampleDude"],
+  "credits": "The Forge and FML guys, for making this example",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
