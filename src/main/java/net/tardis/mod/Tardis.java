@@ -259,6 +259,7 @@ public class Tardis {
 
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 
+		TardisProtocol.register(new ProtocolEmerEscape());
 		TardisProtocol.register(new ProtocolCCircuit());
 		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
@@ -270,7 +271,6 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
 		TardisProtocol.register(new ProtocolStealth());
-		TardisProtocol.register(new ProtocolEmerEscape());
 
 		// Register All Mobs Here.
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
