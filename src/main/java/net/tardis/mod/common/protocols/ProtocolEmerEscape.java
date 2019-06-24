@@ -21,6 +21,8 @@ public class ProtocolEmerEscape implements ITardisProtocol {
 				player.changeDimension(0, new TardisTeleporter(pos));
 				player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 			}
+			tardis.fuel -= 0.01F;
+			tardis.markDirty();
 		}
 	}
 

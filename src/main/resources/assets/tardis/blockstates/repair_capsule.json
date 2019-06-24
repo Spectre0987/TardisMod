@@ -1,0 +1,10 @@
+{
+    "variants":{
+        "normal":{
+            "model":"tardis:repair_capsule"
+        },
+        "inventory":{
+            "model":"tardis:repair_capsule"
+        }
+    }
+}

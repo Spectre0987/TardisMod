@@ -82,6 +82,7 @@ public class TItems {
 	public static Item tardis_repairkit = createItem(new ItemRepairKit(), "tardis_repairkit");
 	
 	public static Item doors_brak = createItem(new ItemBrakDoors(EntityDoorsBrakSecondary::new), "brak_doors_closed");
+	public static Item repair_capsule = createItem(new ItemRepairCapsule(), "repair_capsule");
 
 	// Componenets
 	public static Item fluid_link = null;
