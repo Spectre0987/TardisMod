@@ -100,9 +100,6 @@ import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityEgg;
 import net.tardis.mod.common.tileentity.TileEntityFoodMachine;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
-import net.tardis.mod.common.tileentity.TileEntityItemMaterializer;
-import net.tardis.mod.common.tileentity.TileEntityJsonTester;
-import net.tardis.mod.common.tileentity.TileEntityKerblam;
 import net.tardis.mod.common.tileentity.TileEntityLight;
 import net.tardis.mod.common.tileentity.TileEntityMultiblock;
 import net.tardis.mod.common.tileentity.TileEntityMultiblockMaster;
@@ -228,8 +225,6 @@ public class Tardis {
 		registerTileEntity(TileEntityMultiblockMaster.class, "multi_master");
 		registerTileEntity(TileEntityMultiblock.class, "multi");
 
-		registerTileEntity(TileEntityJsonTester.class, "TileEntityJsonTester");
-
 		//Exteriors
 		registerTileEntity(TileEntityDoor01.class, "TileEntityDoor01");
 		registerTileEntity(TileEntityDoor03.class, "TileEntityDoor03");
@@ -249,8 +244,6 @@ public class Tardis {
 		registerTileEntity(TileEntityTardis05.class, "console_5");
 		
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
-		registerTileEntity(TileEntityItemMaterializer.class, "item_materializer");
-		registerTileEntity(TileEntityKerblam.class, "kerblam_box");
 		registerTileEntity(TileEntityEgg.class, "ars_egg");
 
 		NetworkHandler.init();
@@ -350,7 +343,7 @@ public class Tardis {
 		TBlocks.BLOCKS.forEach(block -> {
 			if (block instanceof IARSBlock && !(block instanceof BlockSonicWorkbench) && !(block instanceof BlockSuitcase)){
 				IARSBlock block1 = (IARSBlock) block;
-				TileEntityEgg.register(new ItemStack(block1.getItemARS(),64));
+				TileEntityEgg.register(new ItemStack(block1.getItemARS(), 64));
 			}
 		});
 	}

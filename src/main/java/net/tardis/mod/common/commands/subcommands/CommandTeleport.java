@@ -79,7 +79,8 @@ public class CommandTeleport extends CommandTemplate {
                 TileEntityTardis tileTardis = (TileEntityTardis) worldServer.getTileEntity(pos);
                 if (tileTardis != null) {
                     tileTardis.enterTARDIS(player);
-                } else {
+                }
+                else {
                     player.sendMessage(new TextComponentTranslation(TStrings.Commands.NO_TARDIS_OWNED + " but most likely a issue has arisen somewhere..."));
                 }
             } else {
