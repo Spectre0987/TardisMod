@@ -32,9 +32,12 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.Tardis;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
@@ -75,7 +78,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	//Only use this client side - This should be a WorldBOTI
 	public World clientWorld;
 	private boolean isStealth = true;
-	
+	private Ticket loadingTicket;
 	public static final AxisAlignedBB NORTH = new AxisAlignedBB(0, 0, -0.1, 1, 2, 0);
 	public static final AxisAlignedBB EAST = new AxisAlignedBB(1, 0, 0, 1.1, 2, 1);
 	public static final AxisAlignedBB WEST = new AxisAlignedBB(-0.1, 0, 0, 0, 2, 1);
@@ -166,6 +169,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (world == null) return;
 		this.handleEnter();
 		if (!world.isRemote) {
+			if(this.loadingTicket != null) {
+				this.loadingTicket = ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
+				ForgeChunkManager.forceChunk(this.loadingTicket, world.getChunk(this.getPos()).getPos());
+			}
 			WorldServer ws = (WorldServer) world;
 			TileEntityTardis tardis = (TileEntityTardis) ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
 			if (tardis == null) return;
@@ -212,6 +219,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				this.isDemat = false;
 				this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
 				this.world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());
+				ForgeChunkManager.unforceChunk(this.loadingTicket, world.getChunk(this.getPos()).getPos());
+				ForgeChunkManager.releaseTicket(loadingTicket);
+				this.loadingTicket = null;
 			}
 		}
 		if (!this.isRemat && !this.isDemat)

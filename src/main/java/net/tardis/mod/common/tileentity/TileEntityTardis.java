@@ -113,7 +113,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean isFueling = false;
 	private boolean shouldDelayLoop = true;
 	private Ticket tardisTicket;
-	public Ticket tardisLocTicket;
 	private boolean chunkLoadTick = true;
 	public boolean landOnSurface = true;
 	public EnumFacing facing = EnumFacing.NORTH;
@@ -246,8 +245,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				if (ws == null) return;
 				tardisTicket = ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisTicket, world.getChunk(this.getPos()).getPos());
-				this.tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, ws, ForgeChunkManager.Type.NORMAL);
-				ForgeChunkManager.forceChunk(tardisLocTicket, ws.getChunk(tardisLocation).getPos());
 			}
 		}
 		if (world.isRemote && !this.isInFlight()) {
@@ -314,9 +311,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				this.setDesination(nPos, dimension);
 				
 			}
-			ForgeChunkManager.releaseTicket(tardisLocTicket);
-			tardisLocTicket = ForgeChunkManager.requestTicket(Tardis.instance, dWorld, ForgeChunkManager.Type.NORMAL);
-			ForgeChunkManager.forceChunk(tardisLocTicket, dWorld.getChunk(tardisLocation).getPos());
 			this.markDirty();
 			DimensionType type = DimensionManager.getProviderType(dimension);
 			if (type != null) this.currentDimName = type.getName();
@@ -605,8 +599,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				}
 			});
 			this.returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "Return Location");
-			ForgeChunkManager.unforceChunk(tardisLocTicket, oWorld.getChunk(getLocation()).getPos());
-			ForgeChunkManager.releaseTicket(tardisLocTicket);
 		}
 		this.markDirty();
 		return true;
@@ -749,7 +741,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	@Override
 	public void invalidate() {
 		ForgeChunkManager.releaseTicket(tardisTicket);
-		ForgeChunkManager.releaseTicket(tardisLocTicket);
 		if (this.controls != null) {
 			for (EntityControl cont : controls) {
 				cont.setDead();
