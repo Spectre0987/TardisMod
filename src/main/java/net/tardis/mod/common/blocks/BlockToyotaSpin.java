@@ -60,12 +60,12 @@ public class BlockToyotaSpin extends BlockMultiblockMaster {
 					world.setBlockState(nPos, TBlocks.multiblock.getDefaultState());
 					TileEntityMultiblock multi = (TileEntityMultiblock) world.getTileEntity(nPos);
 					if (multi != null)
-						multi.setMasterPos(pos);
+						multi.setMaster(pos);
 				}
 			}
 			((TileEntityToyotaSpin) world.getTileEntity(pos)).addChildren(pos);
 			world.setBlockState(pos.down(), TBlocks.multiblock.getDefaultState());
-			((TileEntityMultiblock) world.getTileEntity(pos.down())).setMasterPos(pos);
+			((TileEntityMultiblock) world.getTileEntity(pos.down())).setMaster(pos);
 			return place;
 		}
 

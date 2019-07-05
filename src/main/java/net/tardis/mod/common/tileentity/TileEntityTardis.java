@@ -427,6 +427,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.waypointIndex = tardisTag.getInteger(NBT.WAYPOINT_INDEX);
 			this.hum = tardisTag.getInteger(NBT.HUM) != InteriorHum.hums.size() ? InteriorHum.hums.get(tardisTag.getInteger(NBT.HUM)) : null;
 			this.isStealth = tardisTag.getBoolean(NBT.STEALTH);
+			this.motionX = tardisTag.getDouble("motionX");
+			this.motionY = tardisTag.getDouble("motionY");
+			this.motionZ = tardisTag.getDouble("motionZ");
+			
 		}
 	}
 	
@@ -485,7 +489,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setInteger(NBT.WAYPOINT_INDEX, this.waypointIndex);
 			tardisTag.setInteger(NBT.HUM, hum != null ? InteriorHum.hums.indexOf(hum) : InteriorHum.hums.size());
 			tardisTag.setBoolean(NBT.STEALTH, this.isStealth);
-			//TODO: Save TARDIS Motion
+			tardisTag.setDouble("motionX", motionX);
+			tardisTag.setDouble("motionY", motionY);
+			tardisTag.setDouble("motionZ", motionZ);
 		}
 		tag.setTag("tardis", tardisTag);
 		

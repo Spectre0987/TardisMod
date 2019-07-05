@@ -219,6 +219,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				this.isDemat = false;
 				this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
 				this.world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());
+				
 				ForgeChunkManager.unforceChunk(this.loadingTicket, world.getChunk(this.getPos()).getPos());
 				ForgeChunkManager.releaseTicket(loadingTicket);
 				this.loadingTicket = null;
@@ -497,7 +498,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
-		
 		return new SPacketUpdateTileEntity(this.getPos(), -1, this.getUpdateTag());
 	}
 	

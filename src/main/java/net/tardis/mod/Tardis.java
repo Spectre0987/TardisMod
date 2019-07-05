@@ -43,6 +43,7 @@ import net.tardis.mod.common.entities.EntityDalekSkaro;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
+import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -203,6 +204,7 @@ public class Tardis {
 		EntityHelper.registerStatic(EntityChair.class, "chair");
 		EntityHelper.registerStatic(EntityItemMaterializer.class, "item_materializer");
 		EntityHelper.registerStatic(EntityDoorsBrakSecondary.class, "doors_brak_second");
+		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
 
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");

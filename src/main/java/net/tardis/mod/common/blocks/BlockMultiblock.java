@@ -28,7 +28,7 @@ public class BlockMultiblock extends BlockContainer {
 	public static IBlockState getMasterState(World world, BlockPos pos) {
 		TileEntityMultiblock multi = (TileEntityMultiblock) world.getTileEntity(pos);
 		if (multi != null)
-			return world.getBlockState(multi.getMasterPos());
+			return world.getBlockState(multi.getMaster());
 		return BlockMultiblockMaster.DUMMY.getDefaultState();
 	}
 
@@ -51,7 +51,7 @@ public class BlockMultiblock extends BlockContainer {
 	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
 		TileEntityMultiblock tile = (TileEntityMultiblock) worldIn.getTileEntity(pos);
 		if (tile != null) {
-			TileEntityMultiblockMaster master = (TileEntityMultiblockMaster) worldIn.getTileEntity(tile.getMasterPos());
+			TileEntityMultiblockMaster master = (TileEntityMultiblockMaster) worldIn.getTileEntity(tile.getMaster());
 			if (master != null) {
 				for (BlockPos child : master.getChildren()) {
 					worldIn.getBlockState(child).getBlock().harvestBlock(worldIn, player, pos, state, worldIn.getTileEntity(child), player.getHeldItemMainhand());
@@ -61,22 +61,7 @@ public class BlockMultiblock extends BlockContainer {
 		}
 		super.onBlockHarvested(worldIn, pos, state, player);
 	}
-
-	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		TileEntityMultiblock mBlock = (TileEntityMultiblock) worldIn.getTileEntity(pos);
-		if (mBlock == null || mBlock.getMasterPos() == null) return false;
-		TileEntityMultiblockMaster master = (TileEntityMultiblockMaster) worldIn.getTileEntity(mBlock.getMasterPos());
-		if (master != null && master.getChildren() != null) {
-			for (BlockPos child : master.getChildren()) {
-				if (child == null) continue;
-				IBlockState childState = worldIn.getBlockState(child);
-				childState.getBlock().onBlockActivated(worldIn, child, childState, playerIn, hand, facing, hitX, hitY, hitZ);
-			}
-		}
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-	}
-
+	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileEntityMultiblock();

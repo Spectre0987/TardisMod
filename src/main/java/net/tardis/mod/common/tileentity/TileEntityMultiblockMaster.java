@@ -16,6 +16,7 @@ public class TileEntityMultiblockMaster extends TileEntityMultiblock {
 	private List<BlockPos> children = new ArrayList<>();
 
 	public TileEntityMultiblockMaster() {
+		
 	}
 
 	public List<BlockPos> getChildren() {
@@ -63,7 +64,7 @@ public class TileEntityMultiblockMaster extends TileEntityMultiblock {
 	}
 
 	@Override
-	public BlockPos getMasterPos() {
+	public BlockPos getMaster() {
 		return this.getPos();
 	}
 }
