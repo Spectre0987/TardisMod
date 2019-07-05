@@ -1,17 +1,24 @@
 package net.tardis.mod.client.handler;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
@@ -40,7 +47,6 @@ public class ClientHandler {
 		}
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void cancelBBRender(DrawBlockHighlightEvent event) {
 		World world = event.getPlayer().world;
@@ -53,12 +59,27 @@ public class ClientHandler {
 		}
 	}
 	
-	
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
 		if (e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().dimension != TDimensions.TARDIS_ID && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
 			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
 		}
+	}
+	
+	@SubscribeEvent
+	public static void overlayFuckup(RenderGameOverlayEvent.Post event) {
+		/*if(event.getType() == ElementType.ALL) {
+			GlStateManager.disableTexture2D();
+			double width = event.getResolution().getScaledWidth(),
+			height = event.getResolution().getScaledHeight();
+			BufferBuilder bb = Tessellator.getInstance().getBuffer();
+			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+			bb.pos(0, 0, 0).color(1F, 0.3F, 0.3F, 0.5F).endVertex();
+			bb.pos(0, height, 0).color(1F, 0.3F, 0.3F, 0.5F).endVertex();
+			bb.pos(width, height, 0).color(1F, 0.5F, 0.5F, 0.5F).endVertex();
+			bb.pos(width, 0, 0).color(1F, 0.3F, 0.3F, 0.5F).endVertex();
+			Tessellator.getInstance().draw();
+			GlStateManager.enableTexture2D();
+		}*/
 	}
 }

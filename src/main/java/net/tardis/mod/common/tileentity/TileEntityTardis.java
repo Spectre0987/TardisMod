@@ -199,7 +199,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
-			if (fuel <= 0.0 && this.ticksToTravel % 5 == 0) crash();
+			if (fuel <= 0.0 && this.ticksToTravel % 5 == 0)
+				crash();
 			if (world.isRemote) {
 				if (frame + 1 >= ModelConsole.frames.length)
 					frame = 0;
@@ -223,7 +224,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					this.crash();
 				}
 			}
-		} else {
+		}
+		else {
 			if (this.isFueling()) {
 				if (!world.isRemote) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);

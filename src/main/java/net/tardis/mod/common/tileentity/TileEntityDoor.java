@@ -46,6 +46,7 @@ import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.TDamage;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.sounds.TSounds;
@@ -193,6 +194,15 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			}
 			if (lockCooldown > 0)
 				--lockCooldown;
+			//Apply Gravity
+			IBlockState underState = world.getBlockState(this.getPos().down(2));
+			if(underState.getMaterial() == Material.AIR) {
+				EntityTardis entity = new EntityTardis(world);
+				entity.setConsole(this.getConsolePos());
+				world.spawnEntity(entity);
+				world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
+				world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());
+			}
 		}
 		if (openingTicks > 0)
 			--openingTicks;

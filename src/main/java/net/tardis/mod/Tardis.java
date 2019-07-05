@@ -252,9 +252,7 @@ public class Tardis {
 		registerTileEntity(TileEntityEgg.class, "ars_egg");
 
 		NetworkHandler.init();
-
 		ScrewdriverHandler.init();
-
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new TardisLoadingCallback());
 
 		TardisProtocol.register(new ProtocolEmerEscape());

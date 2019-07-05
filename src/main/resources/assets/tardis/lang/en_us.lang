@@ -54,6 +54,7 @@ item.tardis.sonic_third.name=Third Doctor's Sonic Screwdriver
 item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 item.tardis.brak_doors_closed.name=TARDIS Ancillary doors
 item.tardis.repair_capsule.name=Repair Capsule
+item.tardis.player_victim.name=Trophy
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS arriving in
