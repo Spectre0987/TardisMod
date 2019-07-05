@@ -144,6 +144,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public boolean soundChanged = false;
 	private boolean playerFuckedUp = false;
 	private boolean isStealth = false;
+	private double motionX, motionY, motionZ;
 	
 	public TileEntityTardis() {
 		if (systems == null) {
@@ -484,6 +485,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setInteger(NBT.WAYPOINT_INDEX, this.waypointIndex);
 			tardisTag.setInteger(NBT.HUM, hum != null ? InteriorHum.hums.indexOf(hum) : InteriorHum.hums.size());
 			tardisTag.setBoolean(NBT.STEALTH, this.isStealth);
+			//TODO: Save TARDIS Motion
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -1162,6 +1164,25 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public void setPlayerFuckedUp(boolean fuckedUp) {
 		this.playerFuckedUp = fuckedUp;
+		this.markDirty();
+	}
+	
+	public double getMotionX() {
+		return this.motionX;
+	}
+	
+	public double getMotionY() {
+		return this.motionY;
+	}
+	
+	public double getMotionZ() {
+		return this.motionZ;
+	}
+	
+	public void setMotion(double x, double y, double z) {
+		this.motionX = x;
+		this.motionY = y;
+		this.motionZ = z;
 		this.markDirty();
 	}
 	
