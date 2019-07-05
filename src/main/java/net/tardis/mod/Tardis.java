@@ -1,5 +1,7 @@
 package net.tardis.mod;
 
+import java.io.File;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -149,6 +151,7 @@ public class Tardis {
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = false;
 	public static boolean hasIC2 = false;
+	private static File configDir = new File(".");
 
 	@Instance(MODID)
 	public static Tardis instance;
@@ -318,7 +321,7 @@ public class Tardis {
 		}
 		TileEntitySonicWorkbench.RECIPES.put(TItems.sonic_screwdriver, sonics);
 		
-		FileHelper.readOrWriteARS(event.getModConfigurationDirectory());
+		this.configDir = event.getModConfigurationDirectory();
 	}
 
 	@EventHandler
@@ -341,13 +344,6 @@ public class Tardis {
 
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken IDs
 		TDimensions.register();
-
-		TBlocks.BLOCKS.forEach(block -> {
-			if (block instanceof IARSBlock && !(block instanceof BlockSonicWorkbench) && !(block instanceof BlockSuitcase)){
-				IARSBlock block1 = (IARSBlock) block;
-				TileEntityEgg.register(new ItemStack(block1.getItemARS(), 64));
-			}
-		});
 	}
 
 	@EventHandler
@@ -356,6 +352,7 @@ public class Tardis {
 		for (ItemStack cinnabar : OreDictionary.getOres("dustCinnabar")) {
 			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
 		}
+		FileHelper.readOrWriteARS(this.configDir);
 
 	}
 
