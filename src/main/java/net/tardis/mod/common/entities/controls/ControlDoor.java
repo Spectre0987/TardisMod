@@ -54,7 +54,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 	private World clientWorld;
 	private long otherTime = 0L;
-
 	public ControlDoor(World world) {
 		super(world);
 		this.setSize(1F, 2F);
@@ -72,6 +71,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 			boolean open = this.dataManager.get(IS_OPEN);
 			world.playSound(null, this.getPosition(), open ? TSounds.door_open : TSounds.door_closed, SoundCategory.AMBIENT, 1F, 1F);
 			this.setOtherDoors(open);
+			this.setBotiUpdate(true);
 		}
 		return true;
 	}
@@ -227,17 +227,18 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if(this.isOpen() && this.world.getTotalWorldTime() % 200 == 0)
+		if((this.isOpen() && this.world.getTotalWorldTime() % 200 == 0) || this.getBotiUpdate())
 			this.updateWorldShell();
 		if(world.isRemote && this.isOpen()) {
 			if(this.shell.getOffset().equals(BlockPos.ORIGIN))
 				this.syncWorldShell();
-			if(world.getTotalWorldTime() % 200 == 1)
+			if(world.getTotalWorldTime() % 200 == 1 || this.getBotiUpdate())
 				this.syncWorldShell();
 			this.shell.setTime(this.shell.getTime() + 1);
 			if(this.clientWorld == null || ((WorldBoti)this.clientWorld).dimension != this.getDimension())
 				this.setupClientWorld();
 		}
+		this.setBotiUpdate(false);
 		this.handleEnter();
 		
 		
@@ -309,6 +310,14 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 			this.setDead();
 		}
 		return true;
+	}
+	
+	public void setBotiUpdate(boolean update) {
+		this.dataManager.set(UPDATE, update);
+	}
+	
+	public boolean getBotiUpdate() {
+		return this.dataManager.get(UPDATE);
 	}
 }
 

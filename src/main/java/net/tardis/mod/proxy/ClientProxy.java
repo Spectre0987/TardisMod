@@ -66,6 +66,7 @@ import net.tardis.mod.client.renderers.entities.RenderRaider;
 import net.tardis.mod.client.renderers.entities.decoration.RenderBrakDoors;
 import net.tardis.mod.client.renderers.entities.projectiles.RenderLaserRay;
 import net.tardis.mod.client.renderers.entities.vehicles.RenderBessie;
+import net.tardis.mod.client.renderers.entities.vehicles.RenderTardisEntity;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor03;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor04;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoor05;
@@ -104,6 +105,7 @@ import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.EntityRaider;
+import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
@@ -273,6 +275,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityQuark.class, RenderQuark::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, RenderTardisEntity::new);
 
 
 	}

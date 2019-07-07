@@ -38,6 +38,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
+import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.WorldBoti;
@@ -196,9 +197,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				--lockCooldown;
 			//Apply Gravity
 			IBlockState underState = world.getBlockState(this.getPos().down(2));
-			if(underState.getMaterial() == Material.AIR) {
+			if(underState.getMaterial() == Material.AIR && !this.isDemat && !this.isRemat) {
 				EntityTardis entity = new EntityTardis(world);
 				entity.setConsole(this.getConsolePos());
+				entity.setPosition(this.getPos().getX() + 0.5, this.getPos().getY(), this.getPos().getZ() + 0.5);
+				entity.rotationYaw = Helper.get360FromFacing(this.getFacing());
+				entity.setExteior(EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()));
 				world.spawnEntity(entity);
 				world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
 				world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());

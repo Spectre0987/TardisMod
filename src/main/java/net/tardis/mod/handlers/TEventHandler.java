@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -76,7 +75,6 @@ import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageConfigSync;
-import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
@@ -250,13 +248,9 @@ public class TEventHandler {
 					InventoryHelper.spawnItemStack(world, player.posX, player.posY, player.posZ, new ItemStack(TBlocks.tree_egg));
 					player.getHeldItemMainhand().shrink(1);
 				}
-				else {
-					int slot = Helper.getSlotForItem(player, Items.BOOK);
-					if (slot != -1) {
-						player.inventory.getStackInSlot(slot).shrink(1);
-						EntityItem ei = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.manual));
-						world.spawnEntity(ei);
-					}
+				else if(player.getHeldItemMainhand().getItem() == Items.BOOK){
+					InventoryHelper.spawnItemStack(world, player.posX, player.posY, player.posZ, new ItemStack(TItems.manual));
+					player.getHeldItemMainhand().shrink(1);
 				}
 			}
 		}

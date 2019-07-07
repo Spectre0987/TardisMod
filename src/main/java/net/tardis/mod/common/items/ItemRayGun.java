@@ -84,6 +84,8 @@ public class ItemRayGun extends ItemBase {
 					entity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
 					worldIn.spawnEntity(entity);
 					playerIn.getCooldownTracker().setCooldown(this, 10); //Feel free to remove, just a suggestion
+					//Fuck you, I like it
+					ItemRayGun.setAmmo(stack, ItemRayGun.getAmmo(stack) - 1);
 				}
 				worldIn.playSound(null, playerIn.getPosition(), TSounds.dalek_ray, SoundCategory.HOSTILE, 1F, 1F);
 			}
@@ -99,16 +101,10 @@ public class ItemRayGun extends ItemBase {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (getAmmo(stack) > 0) {
 			tooltip.add(new TextComponentTranslation("raygun.ammo", getAmmo(stack)).getUnformattedText());
-		} else {
+		}
+		else {
 			tooltip.add(new TextComponentTranslation("raygun.ammo.none").getFormattedText());
 		}
-		
-		if (GuiInventory.isShiftKeyDown()) {
-			tooltip.add(new TextComponentTranslation("raygun.ammo.howto", Minecraft.getMinecraft().gameSettings.keyBindSneak.getDisplayName(), TItems.power_cell.getItemStackDisplayName(new ItemStack(TItems.power_cell))).getUnformattedText());
-		} else {
-			tooltip.add(new TextComponentTranslation("iteminfo.shift", Minecraft.getMinecraft().gameSettings.keyBindSneak.getDisplayName()).getUnformattedText());
-		}
-		
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

@@ -3,6 +3,7 @@ package net.tardis.mod.util;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
 public class TSource extends DamageSource {
@@ -22,7 +23,7 @@ public class TSource extends DamageSource {
 
 	@Override
 	public ITextComponent getDeathMessage(EntityLivingBase entity) {
-		return new TextComponentTranslation(message, entity.getName());
+		return new TextComponentString(entity.getName() + " " + new TextComponentTranslation(message).getFormattedText());
 	}
 
 	@Override

@@ -322,6 +322,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			for (BaseSystem sys : this.systems) {
 				sys.wear();
 			}
+			
+			ControlDoor door = this.getDoor();
+			if(door != null) {
+				door.setBotiUpdate(true);
+			}
 		}
 		shouldDelayLoop = true;
 		

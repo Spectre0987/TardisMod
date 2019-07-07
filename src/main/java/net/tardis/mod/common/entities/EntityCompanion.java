@@ -12,6 +12,7 @@ import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAISit;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
@@ -28,6 +29,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -73,6 +75,7 @@ public class EntityCompanion extends EntityTameable implements IInventory, IEnti
 	@Override
 	protected void initEntityAI() {
 		super.initEntityAI();
+		((PathNavigateGround)this.getNavigator()).setEnterDoors(true);
 		this.tasks.addTask(2, new EntityAIFollowOwner(this, 0.5D, 4, 8));
 		this.tasks.addTask(2, sit = new EntityAISit(this));
 		this.tasks.addTask(3, new EntityAIWander(this, 0.5D));
@@ -80,6 +83,7 @@ public class EntityCompanion extends EntityTameable implements IInventory, IEnti
 		this.tasks.addTask(1, new EntityAIEnterTardis(this, 1.0D));
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(0, new EntityAIMoveTowardsRestriction(this, 1.0D));
+		this.tasks.addTask(1, new EntityAIOpenDoor(this, true));
 
 
 		this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityTNTPrimed.class, 6.0F, 1.0D, 1.2D));
@@ -327,7 +331,7 @@ public class EntityCompanion extends EntityTameable implements IInventory, IEnti
 		public ModelBase model;
 		ResourceLocation skin;
 		String formattedName = "";
-		float[] size = {0.95F, 1.75F};
+		float[] size = {0.6F, 1.75F};
 
 		EnumCompanionType(String name, String formatName) {
 			skin = new ResourceLocation(Tardis.MODID, "textures/entity/companion/" + name + ".png");
@@ -384,7 +388,8 @@ public class EntityCompanion extends EntityTameable implements IInventory, IEnti
 		public void updateTask() {
 			if (Helper.blockPosToVec3d(comp.tardisPos).distanceTo(comp.getPositionVector()) > 3) {
 				comp.moveHelper.setMoveTo(comp.tardisPos.getX(), comp.tardisPos.getY(), comp.tardisPos.getZ(), speed);
-			} else {
+			}
+			else {
 				comp.tardisPos = BlockPos.ORIGIN;
 				WorldServer world = comp.world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 				if (comp.getOwner() != null && TardisHelper.hasTardis(comp.getOwner().getGameProfile().getId())) {
@@ -394,6 +399,7 @@ public class EntityCompanion extends EntityTameable implements IInventory, IEnti
 						if (comp.flyTardis) {
 							tardis.setDesination(comp.getOwner().getPosition(), comp.getOwner().dimension);
 							tardis.startFlight();
+							tardis.overrideStabilizers = true;
 							comp.flyTardis = false;
 						}
 					}

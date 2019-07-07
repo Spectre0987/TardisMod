@@ -109,7 +109,8 @@ public class TItems {
 	public static Item sonic_trowel = createItem(new ItemSonic(TSounds.sonic_generic),"sonic_trowel");
 	public static Item sonic_pen = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_pen");
 	
-	public static Item player_victim = createItem(new ItemPlayerVictim(), "player_victim");
+	//TODO: Add the shrinky- killy thing
+	//public static Item player_victim = createItem(new ItemPlayerVictim(), "player_victim");
 
 
 	@SubscribeEvent

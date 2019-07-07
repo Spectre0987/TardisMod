@@ -30,12 +30,6 @@ public class BlockTreeEgg extends BlockTileBase {
 	}
 
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,int fortune) {
-		drops.clear();
-		drops.add(new ItemStack(this));
-	}
-
-	@Override
 	public boolean isFullBlock(IBlockState state) {
 		return false;
 	}

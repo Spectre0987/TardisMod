@@ -13,17 +13,19 @@
     "inventory": [
       {}
     ],
-    "facing=north": [
-      {}
-    ],
-    "facing=east": [
-      {}
-    ],
-    "facing=south": [
-      {}
-    ],
-    "facing=west": [
-      {}
-    ]
+    "facing=north":{
+        "y": 180,
+        "model":"tardis:foodmachine"
+    },
+    "facing=east":{
+        "y": 270,
+        "model":"tardis:foodmachine"
+    },
+    "facing=west":{
+        "y": 90
+    },
+    "facing=south":{
+        "y": 0
+    }
   }
 }
