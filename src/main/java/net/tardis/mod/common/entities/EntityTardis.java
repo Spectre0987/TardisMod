@@ -12,8 +12,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -101,12 +99,11 @@ public class EntityTardis extends Entity{
 		return this.consolePos;
 	}
 	
-	@SideOnly(Side.CLIENT)
 	public EnumExterior getExteriorEnum() {
 		return EnumExterior.valueOf(this.getDataManager().get(EXTERIOR));
 	}
 
-	public void setExteior(String exteriorName) {
-		this.dataManager.set(EXTERIOR, exteriorName);
+	public void setExteior(EnumExterior exterior) {
+		this.dataManager.set(EXTERIOR, exterior.name());
 	}
 }

@@ -24,14 +24,28 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumClothes;
+import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.TardisKeyBinds;
 import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.guis.GuiConsoleChange;
 import net.tardis.mod.client.guis.GuiToggleHum;
+import net.tardis.mod.client.models.ModelBlocks;
 import net.tardis.mod.client.models.clothing.ModelVortexM;
 import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.client.models.decoration.ModelBChair;
+import net.tardis.mod.client.models.exteriors.ModelTardis01;
+import net.tardis.mod.client.models.exteriors.ModelTardis02;
+import net.tardis.mod.client.models.exteriors.ModelTardis03;
+import net.tardis.mod.client.models.exteriors.ModelTardis04;
+import net.tardis.mod.client.models.exteriors.ModelTardis05;
+import net.tardis.mod.client.models.exteriors.ModelTardisClock;
+import net.tardis.mod.client.models.exteriors.ModelTardisTT;
+import net.tardis.mod.client.models.exteriors.ModelTardisWoodDoor;
+import net.tardis.mod.client.models.exteriors.ModelWardrobe;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
+import net.tardis.mod.client.models.interiors.ModelInteriorDoor01;
+import net.tardis.mod.client.models.interiors.ModelInteriorDoor02;
+import net.tardis.mod.client.models.interiors.ModelInteriorDoor03;
 import net.tardis.mod.client.models.items.ModelFirstCane;
 import net.tardis.mod.client.models.items.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
@@ -276,7 +290,18 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityQuark.class, RenderQuark::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, RenderTardisEntity::new);
+		
 
+		EnumExterior.FIRST.setupModels(new ModelTardis01(), new ModelInteriorDoor01());
+		EnumExterior.SECOND.setupModels(new ModelTardis02(), new ModelInteriorDoor02());
+		EnumExterior.THIRD.setupModels(new ModelTardis03(), new ModelInteriorDoor03());
+		EnumExterior.FOURTH.setupModels(new ModelTardis04(), new ModelInteriorDoor01());
+		EnumExterior.FIFTH.setupModels(new ModelTardis05(), new ModelInteriorDoor01());
+		EnumExterior.TT.setupModels(new ModelTardisTT(), new ModelInteriorDoor01());
+		EnumExterior.CC.setupModels(new ModelBlocks(new ResourceLocation(Tardis.MODID + ":shells/tree.json")), new ModelInteriorDoor01());
+		EnumExterior.CLOCK.setupModels(new ModelTardisClock(), new ModelInteriorDoor01());
+		EnumExterior.WARDROBE.setupModels(new ModelWardrobe(), new ModelInteriorDoor01());
+		EnumExterior.WOOD_DOOR.setupModels(new ModelTardisWoodDoor(), new ModelInteriorDoor01());
 
 	}
 
