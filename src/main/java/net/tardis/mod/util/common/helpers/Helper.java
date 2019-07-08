@@ -83,9 +83,13 @@ public class Helper {
 	}
 
 	public static boolean isSafe(World world, BlockPos pos, EnumFacing facing) {
-		return world.getBlockState(pos).getMaterial().equals(Material.AIR) && world.getBlockState(pos.down()).isTopSolid() && world.getBlockState(pos.up()).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing)).getMaterial().equals(Material.AIR) && world.getBlockState(pos.offset(facing).up()).getMaterial().equals(Material.AIR);
+		return isLandable(world, pos) && isLandable(world, pos.up()) && world.getBlockState(pos.down()).getMaterial() != Material.AIR;
 	}
 
+	public static boolean isLandable(World world, BlockPos pos) {
+		return world.getBlockState(pos).getBlock().canBeReplacedByLeaves(world.getBlockState(pos), world, pos);
+	}
+	
 	public static boolean isDimensionBlocked(int id) {
 		if (id == TDimensions.TARDIS_ID) return true;
 		if (DimensionManager.createProviderFor(id) instanceof IBlockedDimension) return true;

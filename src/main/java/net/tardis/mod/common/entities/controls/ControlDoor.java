@@ -23,6 +23,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -232,7 +233,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 		if(world.isRemote && this.isOpen()) {
 			if(this.shell.getOffset().equals(BlockPos.ORIGIN))
 				this.syncWorldShell();
-			if(world.getTotalWorldTime() % 200 == 1 || this.getBotiUpdate())
+			if(world.getTotalWorldTime() % 200 == 0 || this.getBotiUpdate())
 				this.syncWorldShell();
 			this.shell.setTime(this.shell.getTime() + 1);
 			if(this.clientWorld == null || ((WorldBoti)this.clientWorld).dimension != this.getDimension())
@@ -318,6 +319,13 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	
 	public boolean getBotiUpdate() {
 		return this.dataManager.get(UPDATE);
+	}
+
+	public Vec3d getMotion() {
+		TileEntityTardis tardis = this.getTardis();
+		if(tardis != null)
+			return new Vec3d(tardis.getMotionX(), tardis.getMotionY(), tardis.getMotionZ());
+		return Vec3d.ZERO;
 	}
 }
 

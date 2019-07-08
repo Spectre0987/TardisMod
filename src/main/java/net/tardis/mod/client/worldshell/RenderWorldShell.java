@@ -50,9 +50,9 @@ public class RenderWorldShell {
 					GlStateManager.disableBlend();
 			}
 			else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
-				bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-				Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer.renderFluid(world, state, entry.getKey(), bb);
-				Tessellator.getInstance().draw();
+				//bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+				//Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer.renderFluid(Minecraft.getMinecraft().world, state, entry.getKey(), bb);
+				//Tessellator.getInstance().draw();
 			}
 		}
 		//Tile Entites

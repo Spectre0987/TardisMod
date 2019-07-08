@@ -1,5 +1,6 @@
 package net.tardis.mod.common.entities;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.nbt.NBTTagCompound;
@@ -7,6 +8,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -71,6 +73,12 @@ public class EntityTardis extends Entity{
 						this.setDead();
 					}
 				}
+			}
+		}
+		
+		if(world.isRemote && this.isInsideOfMaterial(Material.WATER)) {
+			for(int i = 0; i < 20; ++i) {
+				world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX + Math.sin(Math.toRadians(i * 18)), posY, posZ + Math.cos(Math.toRadians(i * 18)), 0, 0.5, 0, 0);
 			}
 		}
 		

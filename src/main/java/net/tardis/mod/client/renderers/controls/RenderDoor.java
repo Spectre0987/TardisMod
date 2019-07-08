@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.controls;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -49,14 +51,7 @@ public class RenderDoor extends Render<ControlDoor> {
 		TileEntityTardis tardis = entity.getTardis();
 		EnumExterior ext = tardis != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()) : EnumExterior.TT;
 		GlStateManager.translate(open ? 0 : 0.25, 0, 0);
-		if(MinecraftForgeClient.getRenderPass() == 0) {
-			if(open)
-				ext.interiorModel.renderOpen();
-			else {
-				ext.interiorModel.renderClosed();
-			}
-		}
-		else if(open && tardis != null) {
+		if(open && tardis != null) {
 			EnumFacing face = entity.getFacing();
 			Vec3d vec = new Vec3d(0, 1, 0);
 			float angle = 0;
@@ -77,7 +72,15 @@ public class RenderDoor extends Render<ControlDoor> {
 				vec = new Vec3d(0, 1, 10);
 			}
 			GlStateManager.translate(0, 0, -0.001);
-			RenderHelper.renderPortal(shellRender, entity, partialTicks, angle, vec);
+			RenderHelper.renderPortal(shellRender, entity, partialTicks, angle, vec.add(entity.getMotion()));
+		
+		}
+		if(MinecraftForgeClient.getRenderPass() == 0) {
+			if(open)
+				ext.interiorModel.renderOpen();
+			else {
+				ext.interiorModel.renderClosed();
+			}
 		}
 		GlStateManager.popMatrix();
 	}

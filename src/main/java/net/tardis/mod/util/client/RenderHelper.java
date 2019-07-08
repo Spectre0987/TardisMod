@@ -4,7 +4,6 @@ import java.nio.FloatBuffer;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.client.renderer.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -12,11 +11,9 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -32,7 +29,6 @@ import net.tardis.mod.proxy.ClientProxy;
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 
-	private static Framebuffer fb;
 	private static WorldBoti wBoti;
 	private static FloatBuffer FOG_BUFFER = GLAllocation.createDirectFloatBuffer(16);
 
@@ -40,7 +36,7 @@ public class RenderHelper {
 
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size, boolean renderFog) {
 		if (ClientProxy.getRenderBOTI() && MinecraftForgeClient.getRenderPass() == 1) {
-
+	
 			if (offset == null) offset = new Vec3d(-1, 0, -7);
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1, 1, 1);
@@ -71,15 +67,11 @@ public class RenderHelper {
 				WorldClient oldW = Minecraft.getMinecraft().world;
 				RenderHelper.setRenderGlobalWorld(wBoti);
 				wBoti.setWorldTime(te.getWorldShell().getTime());
-				Framebuffer old = Minecraft.getMinecraft().getFramebuffer();
-				int width = Minecraft.getMinecraft().displayWidth, height = Minecraft.getMinecraft().displayHeight;
-				if (fb == null) fb = new Framebuffer(width, height, true);
+				
 				GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
 				GlStateManager.pushMatrix();
 				GlStateManager.rotate(180, 0, 1, 0);
 				GlStateManager.rotate(rotation, 0, 1, 0);
-				
-				GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_DST_ALPHA);
 				
 				//Handle Sky and fog
 				if (!wBoti.provider.isSkyColored()) {
@@ -103,9 +95,7 @@ public class RenderHelper {
 				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, 2);
 				renderShell.renderWorldShell(te, wBoti, offset.x, offset.y, offset.z);
 				
-				fb.deleteFramebuffer();
 				GlStateManager.popMatrix();
-				old.bindFramebuffer(true);
 				RenderHelper.setRenderGlobalWorld(oldW);
 				
 				Minecraft.getMinecraft().entityRenderer.enableLightmap();
@@ -123,7 +113,8 @@ public class RenderHelper {
 			
 			GlStateManager.popMatrix();
 			
-		} else if (!ClientProxy.getRenderBOTI()) {
+		}
+		if (!ClientProxy.getRenderBOTI()) {
 			RenderHelper.drawOutline(size);
 		}
 	}

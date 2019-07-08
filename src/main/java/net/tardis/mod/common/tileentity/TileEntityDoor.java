@@ -195,9 +195,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			}
 			if (lockCooldown > 0)
 				--lockCooldown;
+			
 			//Apply Gravity
 			IBlockState underState = world.getBlockState(this.getPos().down(2));
-			if(underState.getMaterial() == Material.AIR && !this.isDemat && !this.isRemat) {
+			if(underState.getCollisionBoundingBox(world, this.getPos().down(2)) == Block.NULL_AABB && !this.isDemat && !this.isRemat) {
 				EntityTardis entity = new EntityTardis(world);
 				entity.setConsole(this.getConsolePos());
 				entity.setPosition(this.getPos().getX() + 0.5, this.getPos().getY(), this.getPos().getZ() + 0.5);
