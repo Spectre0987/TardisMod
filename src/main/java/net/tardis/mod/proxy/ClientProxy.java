@@ -292,16 +292,16 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, RenderTardisEntity::new);
 		
 
-		EnumExterior.FIRST.setupModels(new ModelTardis01(), new ModelInteriorDoor01());
-		EnumExterior.SECOND.setupModels(new ModelTardis02(), new ModelInteriorDoor02());
-		EnumExterior.THIRD.setupModels(new ModelTardis03(), new ModelInteriorDoor03());
-		EnumExterior.FOURTH.setupModels(new ModelTardis04(), new ModelInteriorDoor01());
-		EnumExterior.FIFTH.setupModels(new ModelTardis05(), new ModelInteriorDoor01());
-		EnumExterior.TT.setupModels(new ModelTardisTT(), new ModelInteriorDoor01());
-		EnumExterior.CC.setupModels(new ModelBlocks(new ResourceLocation(Tardis.MODID + ":shells/tree.json")), new ModelInteriorDoor01());
-		EnumExterior.CLOCK.setupModels(new ModelTardisClock(), new ModelInteriorDoor01());
-		EnumExterior.WARDROBE.setupModels(new ModelWardrobe(), new ModelInteriorDoor01());
-		EnumExterior.WOOD_DOOR.setupModels(new ModelTardisWoodDoor(), new ModelInteriorDoor01());
+		EnumExterior.FIRST.setupModels(new ModelTardis01(), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE);
+		EnumExterior.SECOND.setupModels(new ModelTardis02(), new ModelInteriorDoor02(), RendererTileDoor01.TEXTURE);
+		EnumExterior.THIRD.setupModels(new ModelTardis03(), new ModelInteriorDoor03(), RenderTileDoor03.TEXTURE);
+		EnumExterior.FOURTH.setupModels(new ModelTardis04(), new ModelInteriorDoor01(), RenderTileDoor04.TEXTURE);
+		EnumExterior.FIFTH.setupModels(new ModelTardis05(), new ModelInteriorDoor01(), RenderTileDoor05.TEXTURE);
+		EnumExterior.TT.setupModels(new ModelTardisTT(), new ModelInteriorDoor01(), RenderTileDoorTT.TEXTURE);
+		EnumExterior.CC.setupModels(new ModelBlocks(new ResourceLocation(Tardis.MODID + ":shells/tree.json")), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE);
+		EnumExterior.CLOCK.setupModels(new ModelTardisClock(), new ModelInteriorDoor01(), RenderTileDoorClock.TEXTURE);
+		EnumExterior.WARDROBE.setupModels(new ModelWardrobe(), new ModelInteriorDoor01(), RenderTileDoorWardrobe.TEXTURE);
+		EnumExterior.WOOD_DOOR.setupModels(new ModelTardisWoodDoor(), new ModelInteriorDoor01(), RenderTileDoor.TEXTURE);
 
 	}
 
