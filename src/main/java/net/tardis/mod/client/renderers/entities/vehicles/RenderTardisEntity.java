@@ -1,6 +1,7 @@
 package net.tardis.mod.client.renderers.entities.vehicles;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;

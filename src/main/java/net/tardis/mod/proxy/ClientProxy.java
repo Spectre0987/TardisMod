@@ -76,7 +76,6 @@ import net.tardis.mod.client.renderers.entities.RenderDalekCaseing;
 import net.tardis.mod.client.renderers.entities.RenderDalekScaro;
 import net.tardis.mod.client.renderers.entities.RenderItemMaterializer;
 import net.tardis.mod.client.renderers.entities.RenderQuark;
-import net.tardis.mod.client.renderers.entities.RenderRaider;
 import net.tardis.mod.client.renderers.entities.decoration.RenderBrakDoors;
 import net.tardis.mod.client.renderers.entities.projectiles.RenderLaserRay;
 import net.tardis.mod.client.renderers.entities.vehicles.RenderBessie;
@@ -118,7 +117,6 @@ import net.tardis.mod.common.entities.EntityDalekSkaro;
 import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityQuark;
-import net.tardis.mod.common.entities.EntityRaider;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -284,8 +282,6 @@ public class ClientProxy extends ServerProxy {
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, RenderDalek::new);
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityRaider.class, RenderRaider::new);
-
 		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityQuark.class, RenderQuark::new);
@@ -351,11 +347,6 @@ public class ClientProxy extends ServerProxy {
 		EnumCompanionType.VANDHAM.setModel(new ModelPlayer(0.0625F, true));
 		EnumCompanionType.VASSILIS.setModel(new ModelPlayer(0.0625F, false));
 		EnumCompanionType.WOLSEY.setModel(new ModelOcelot());
-		
-		EntityRaider.EnumRaiderType.JESSIE.setModel(RenderRaider.ALEX);
-		EntityRaider.EnumRaiderType.MATT.setModel(RenderRaider.STEVE);
-		EntityRaider.EnumRaiderType.RICHARD.setModel(RenderRaider.ALEX);
-		EntityRaider.EnumRaiderType.STEVEN.setModel(RenderRaider.STEVE);
 		
 		TardisKeyBinds.init();
 	}

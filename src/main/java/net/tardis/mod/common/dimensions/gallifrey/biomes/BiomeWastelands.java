@@ -1,10 +1,11 @@
 package net.tardis.mod.common.dimensions.gallifrey.biomes;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.init.Blocks;
@@ -19,11 +20,6 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.entities.EntityRaider;
-
-import java.util.Random;
-
-import static net.tardis.mod.util.common.helpers.Helper.randomEnum;
 
 
 public class BiomeWastelands extends Biome {
@@ -47,8 +43,6 @@ public class BiomeWastelands extends Biome {
 
 		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityRabbit.class, 4, 2, 3));
 
-
-		this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityRaider.class, 50, 4, 4));
 		this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySkeleton.class, 25, 1, 4));
 
 

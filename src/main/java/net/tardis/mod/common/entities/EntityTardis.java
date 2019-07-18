@@ -2,14 +2,19 @@ package net.tardis.mod.common.entities;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.tardis.mod.client.EnumExterior;
@@ -27,6 +32,7 @@ public class EntityTardis extends Entity{
 	
 	public EntityTardis(World worldIn) {
 		super(worldIn);
+		this.setNoGravity(true);
 	}
 
 	@Override
@@ -37,17 +43,31 @@ public class EntityTardis extends Entity{
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
 		this.consolePos = BlockPos.fromLong(compound.getLong("console"));
+		this.dataManager.set(EXTERIOR, compound.getString("exterior"));
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setLong("console", this.consolePos.toLong());
+		compound.setString("exterior", this.dataManager.get(EXTERIOR));
 	}
 
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
+		
+		//Allows this to be driven
+		if(this.getPassengers().size() > 0) {
+			Entity entity = this.getPassengers().get(0);
+			if(entity instanceof EntityLivingBase)
+				this.handleRider((EntityLivingBase)entity);
+		}
+		
 		this.move();
+		
+		//Rotate the entity
+		if(this.hasNoGravity())
+			this.rotationYaw = (rotationYaw + 0.5F) % 360;
 		
 		if(!world.isRemote && !BlockPos.ORIGIN.equals(this.consolePos)) {
 			WorldServer tardisDimension = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
@@ -85,10 +105,23 @@ public class EntityTardis extends Entity{
 	}
 	
 	public void move() {
-		if(!this.onGround)
+		if(!this.onGround && !this.hasNoGravity())
 			motionY -= 0.5D;
 		this.move(MoverType.SELF, motionX, motionY, motionZ);
 		motionX = motionY = motionZ = 0;
+	}
+	
+	public void handleRider(EntityLivingBase base) {
+		Vec3d look = base.getLookVec().scale(0.3D);
+		
+		if(base.moveForward > 0) {
+			motionX = look.x;
+			motionZ = look.z;
+		}
+		else if(base.moveForward < 0) {
+			motionX = -look.x;
+			motionZ = -look.z;
+		}
 	}
 
 	public void setConsole(BlockPos console) {
@@ -105,5 +138,21 @@ public class EntityTardis extends Entity{
 
 	public void setExteior(EnumExterior exterior) {
 		this.dataManager.set(EXTERIOR, exterior.name());
+	}
+
+	@Override
+	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
+		player.startRiding(this);
+		return super.applyPlayerInteraction(player, vec, hand);
+	}
+
+	@Override
+	public boolean canBeCollidedWith() {
+		return true;
+	}
+
+	@Override
+	public boolean canBePushed() {
+		return true;
 	}
 }
