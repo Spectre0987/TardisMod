@@ -16,8 +16,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.ItemKey;
@@ -91,6 +89,10 @@ public class TardisHelper {
 			}
 		}
 		return BlockPos.ORIGIN;
+	}
+	
+	public static Map<String, BlockPos> getOwnerList() {
+		return tardisOwners;
 	}
 
 	//DO NOT USE ON CLIENT
