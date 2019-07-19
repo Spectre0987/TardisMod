@@ -14,6 +14,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,6 +45,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -61,6 +63,7 @@ import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.data.TimeLord;
 import net.tardis.mod.common.entities.EntityDalek;
+import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.INeedMetadata;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
@@ -303,7 +306,8 @@ public class TEventHandler {
 					}
 					player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300, 0));
 					return;
-				} else TimeLord.setTimeLord(player);
+				}
+				else TimeLord.setTimeLord(player);
 			}
 		}
 	}
@@ -315,6 +319,12 @@ public class TEventHandler {
 			player.sendStatusMessage(new TextComponentTranslation(TStrings.OPTIFINE_INSTALLED), false);
 		if(!e.player.world.isRemote)
 			NetworkHandler.NETWORK.sendTo(new MessageConfigSync(), (EntityPlayerMP) player);
+	}
+	
+	@SubscribeEvent
+	public static void stopAttemptingTheStabby(LivingSetAttackTargetEvent event) {
+		if(event.getEntityLiving() instanceof EntityLiving && event.getTarget() != null && event.getTarget().getRidingEntity() instanceof EntityTardis)
+			((EntityLiving)event.getEntityLiving()).setAttackTarget(null);
 	}
 
 	@SubscribeEvent

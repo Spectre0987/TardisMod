@@ -1,7 +1,6 @@
 package net.tardis.mod.common.entities;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -10,7 +9,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.client.CPacketVehicleMove;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -24,12 +22,14 @@ import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
+import net.tardis.mod.common.enums.EnumFlightState;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class EntityTardis extends Entity{
 
 	public static final DataParameter<String> EXTERIOR = EntityDataManager.createKey(EntityTardis.class, DataSerializers.STRING);
+	public static final DataParameter<Integer> OPEN_STATE = EntityDataManager.createKey(EntityTardis.class, DataSerializers.VARINT);
 	private BlockPos consolePos = BlockPos.ORIGIN;
 	
 	public EntityTardis(World worldIn) {
@@ -40,6 +40,7 @@ public class EntityTardis extends Entity{
 	@Override
 	protected void entityInit() {
 		this.dataManager.register(EXTERIOR, "TT");
+		this.dataManager.register(OPEN_STATE, EnumFlightState.CLOSED.ordinal());
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class EntityTardis extends Entity{
 				this.handleRider((EntityLivingBase)entity);
 		}*/
 		
-		this.setNoGravity(true);//(!this.getPassengers().isEmpty());
+		this.setNoGravity(!this.getPassengers().isEmpty());
 		
 		//Rotate the entity
 		if(this.hasNoGravity())
@@ -127,13 +128,6 @@ public class EntityTardis extends Entity{
 			motionZ = -look.z;
 		}
 		
-		
-		if(world.isRemote) {
-			if(Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown()) {
-				this.motionY += 0.23D;
-				Minecraft.getMinecraft().getConnection().sendPacket(new CPacketVehicleMove(this));
-			}
-		}
 	}
 
 	public void setConsole(BlockPos console) {
@@ -167,4 +161,18 @@ public class EntityTardis extends Entity{
 	public boolean canBePushed() {
 		return true;
 	}
+	
+	public void setOpenState(EnumFlightState state) {
+		this.dataManager.set(OPEN_STATE, state.ordinal());
+	}
+	
+	public EnumFlightState getOpenState() {
+		return EnumFlightState.values()[this.dataManager.get(OPEN_STATE)];
+	}
+
+	@Override
+	public double getMountedYOffset() {
+		return 0;
+	}
+	
 }

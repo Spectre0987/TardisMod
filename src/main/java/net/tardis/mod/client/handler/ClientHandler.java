@@ -1,21 +1,16 @@
 package net.tardis.mod.client.handler;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,6 +18,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
@@ -81,5 +77,12 @@ public class ClientHandler {
 			Tessellator.getInstance().draw();
 			GlStateManager.enableTexture2D();
 		}*/
+	}
+	
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public static void hidePlayer(RenderPlayerEvent.Pre event) {
+		if(event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
+			event.setCanceled(true);
+		}
 	}
 }
