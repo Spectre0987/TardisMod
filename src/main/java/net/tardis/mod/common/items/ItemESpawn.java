@@ -27,7 +27,7 @@ public class ItemESpawn extends ItemBase {
 			double height = worldIn.getBlockState(pos).getCollisionBoundingBox(worldIn, pos).maxY;
 			e.setWorld(worldIn);
 			e.setPosition(pos.getX() + 0.5, pos.getY() + height, pos.getZ() + 0.5);
-			e.rotationYaw = Helper.get360FromFacing(player.getHorizontalFacing());
+			e.rotationYaw = Helper.get180Rot(player.getHorizontalFacing());
 			worldIn.spawnEntity(e);
 			player.getHeldItem(hand).shrink(1);
 		}

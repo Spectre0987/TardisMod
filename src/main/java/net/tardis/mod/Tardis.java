@@ -6,6 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -27,10 +28,7 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.common.ars.ConsoleRoom;
-import net.tardis.mod.common.blocks.BlockSonicWorkbench;
-import net.tardis.mod.common.blocks.BlockSuitcase;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.blocks.interfaces.IARSBlock;
 import net.tardis.mod.common.commands.CommandDebug;
 import net.tardis.mod.common.commands.TardisCommand;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -85,6 +83,7 @@ import net.tardis.mod.common.protocols.ProtocolWaypoints;
 import net.tardis.mod.common.protocols.TardisProtocol;
 import net.tardis.mod.common.recipes.RepairRecipes;
 import net.tardis.mod.common.screwdriver.ScrewdriverHandler;
+import net.tardis.mod.common.serializers.TDataSerializers;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemAntenna;
 import net.tardis.mod.common.systems.SystemCCircuit;
@@ -342,6 +341,8 @@ public class Tardis {
 
 		//This should be in pre-init, but it seems some mods have a weird obsession with claiming already taken IDs
 		TDimensions.register();
+		
+		DataSerializers.registerSerializer(TDataSerializers.VEC3D);
 	}
 
 	@EventHandler

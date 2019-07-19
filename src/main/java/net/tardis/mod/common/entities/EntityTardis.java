@@ -62,13 +62,13 @@ public class EntityTardis extends Entity{
 		this.move();
 		
 		//Allows this to be driven
-		/*if(this.getPassengers().size() > 0) {
+		if(this.getPassengers().size() > 0) {
 			Entity entity = this.getPassengers().get(0);
 			if(entity instanceof EntityLivingBase)
 				this.handleRider((EntityLivingBase)entity);
-		}*/
+		}
 		
-		this.setNoGravity(!this.getPassengers().isEmpty());
+		this.setNoGravity(true);//(!this.getPassengers().isEmpty());
 		
 		//Rotate the entity
 		if(this.hasNoGravity())
@@ -81,6 +81,19 @@ public class EntityTardis extends Entity{
 				if(te instanceof TileEntityTardis) {
 					TileEntityTardis tardis = (TileEntityTardis)te;
 					tardis.setLocation(this.getPosition());
+					if(tardis.getTardisEntity() != this)
+						tardis.setTardisEntity(this);
+					
+					//Update door constantly
+					ControlDoor intDoor = tardis.getDoor();
+					if(intDoor != null){
+						if(this.ticksExisted % 20 == 0) {
+							intDoor.getDataManager().set(ControlDoor.FACING, this.rotationYaw);
+							intDoor.setBotiUpdate(true);
+							intDoor.getDataManager().set(ControlDoor.MOTION, new Vec3d(this.motionX, this.motionY, this.motionZ));
+						}
+					}
+					tardis.setMotion(this.motionX, this.motionY, this.motionZ);
 					
 					//Replace exterior
 					if(this.onGround) {
@@ -90,7 +103,6 @@ public class EntityTardis extends Entity{
 							door.setConsolePos(this.getConsole());
 							door.setStealth(tardis.isStealthMode());
 							door.alpha = 1F;
-							ControlDoor intDoor = tardis.getDoor();
 							if(intDoor != null){
 								intDoor.setBotiUpdate(true);
 							}
@@ -173,6 +185,33 @@ public class EntityTardis extends Entity{
 	@Override
 	public double getMountedYOffset() {
 		return 0;
+	}
+
+	@Override
+	public void updatePassenger(Entity passenger) {
+		super.updatePassenger(passenger);
+		double angle = Math.toRadians(-this.rotationYaw);
+		double offsetX = Math.sin(angle), offsetZ = Math.cos(angle);
+		passenger.setPosition(posX + offsetX, posY + this.getMountedYOffset() + passenger.getYOffset(), posZ + offsetZ);
+	}
+
+	@Override
+	protected void removePassenger(Entity pass) {
+		super.removePassenger(pass);
+		if(!world.isRemote) {
+			((WorldServer)world).addScheduledTask(new Runnable() {
+				@Override
+				public void run() {
+					WorldServer tardisWorld = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+					if(tardisWorld != null) {
+						TileEntity te = tardisWorld.getTileEntity(getConsole());
+						if(te instanceof TileEntityTardis) {
+							((TileEntityTardis)te).enterTARDIS(pass);
+						}
+					}
+				}
+			});
+		}
 	}
 	
 }

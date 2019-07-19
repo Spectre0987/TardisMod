@@ -32,7 +32,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
@@ -50,6 +49,7 @@ import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
 import net.tardis.mod.common.entities.controls.ControlDirection;
 import net.tardis.mod.common.entities.controls.ControlDoor;
@@ -145,6 +145,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean playerFuckedUp = false;
 	private boolean isStealth = false;
 	private double motionX, motionY, motionZ;
+	private EntityTardis entity;
 	
 	public TileEntityTardis() {
 		if (systems == null) {
@@ -437,6 +438,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.motionX = tardisTag.getDouble("motionX");
 			this.motionY = tardisTag.getDouble("motionY");
 			this.motionZ = tardisTag.getDouble("motionZ");
+			if(!world.isRemote && tardisTag.hasKey("entity_id")) {
+				Entity entity = ((WorldServer)world).getMinecraftServer().getEntityFromUuid(tardisTag.getUniqueId("entity_id"));
+				if(entity instanceof EntityTardis)
+					this.entity = (EntityTardis)entity;
+			}
 			
 		}
 	}
@@ -499,6 +505,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setDouble("motionX", motionX);
 			tardisTag.setDouble("motionY", motionY);
 			tardisTag.setDouble("motionZ", motionZ);
+			if(this.getTardisEntity() != null)
+				tardisTag.setUniqueId("entity_uuid", this.getTardisEntity().getUniqueID());
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -1028,28 +1036,28 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (ws == null) return;
 		MinecraftForge.EVENT_BUS.post(new TardisExitEvent(entity, this.getPos()));
 		BlockPos pos = this.getLocation();
-		if (checkDoors) {
-			TileEntityDoor door = (TileEntityDoor) ws.getTileEntity(this.getLocation().up());
-			if (door != null) {
-				EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
-				pos = door.getPos().down().offset(face, 1);
-				if (entity instanceof EntityPlayerMP) {
-					EntityPlayerMP player = (EntityPlayerMP) entity;
-					if (player.dimension != dimension)
-						world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
-					player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get360FromFacing(face), 0);
-				} else if (!(entity instanceof EntityPlayer)) {
-					entity.changeDimension(dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
+		
+		//Mount entity if it exists
+		EntityTardis tardis = this.getTardisEntity();
+		if(tardis != null) {
+			entity.changeDimension(this.dimension, new TardisTeleporter(this.getLocation()));
+			ws.addScheduledTask(new Runnable() {
+				@Override
+				public void run() {
+					entity.startRiding(tardis);
 				}
-			}
-		} else {
-			if (entity instanceof EntityPlayerMP) {
-				EntityPlayerMP player = (EntityPlayerMP) entity;
-				if (player.dimension != dimension)
-					world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
-				player.connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
-			} else
-				entity.changeDimension(dimension, new TardisTeleporter(new BlockPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)));
+			});
+			return;
+		}
+		
+		TileEntityDoor door = (TileEntityDoor) ws.getTileEntity(this.getLocation().up());
+		if (door != null) {
+			EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
+			pos = door.getPos().down().offset(face, 1);
+			entity.changeDimension(this.dimension, new TardisTeleporter(pos));
+		}
+		else {
+			entity.changeDimension(this.dimension, new TardisTeleporter(this.getLocation().north()));
 		}
 	}
 	
@@ -1058,24 +1066,17 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (this.getTardisState() != EnumTardisState.NORMAL) return;
 		MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, this.getPos()));
 		ControlDoor door = this.getDoor();
-		Vec3d pos;
 		EnumFacing face = EnumFacing.NORTH;
+		BlockPos pos;
 		if (door == null) {
-			pos = Helper.blockPosToVec3d(this.getPos());
-		} else {
-			pos = door.getPositionVector().add(door.getLookVec());
+			pos = this.getPos();
+		}
+		else {
+			pos = door.getPosition().add(door.getLookVec().x, door.getLookVec().y, door.getLookVec().z);
 			face = door.getHorizontalFacing();
 		}
 		
-		if (entity instanceof EntityPlayerMP) {
-			EntityPlayerMP player = (EntityPlayerMP) entity;
-			if (player.dimension != TDimensions.TARDIS_ID)
-				world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.x, pos.y, pos.z)));
-			player.connection.setPlayerLocation(pos.x, pos.y, pos.z, Helper.get360FromFacing(face), 0);
-		} else if (!(entity instanceof EntityPlayer)) {
-			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(new BlockPos(pos.x, pos.y, pos.z)));
-			entity.setPosition(pos.x, pos.y, pos.z);
-		}
+		entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(pos));
 	}
 	
 	public <T> T getSystem(Class<T> system) {
@@ -1197,6 +1198,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.motionY = y;
 		this.motionZ = z;
 		this.markDirty();
+	}
+	
+	public void setTardisEntity(EntityTardis tardis) {
+		this.entity = tardis;
+	}
+	
+	public EntityTardis getTardisEntity() {
+		return this.entity;
 	}
 	
 	public enum EnumCourseCorrect {

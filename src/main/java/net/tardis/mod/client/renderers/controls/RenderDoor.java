@@ -1,7 +1,5 @@
 package net.tardis.mod.client.renderers.controls;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -43,7 +41,7 @@ public class RenderDoor extends Render<ControlDoor> {
 	public void doRender(ControlDoor entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
-		GlStateManager.rotate(Helper.get360FromFacing(entity.getHorizontalFacing()), 0, 1, 0);
+		GlStateManager.rotate(Helper.get180Rot(entity.getHorizontalFacing()), 0, 1, 0);
 		GlStateManager.rotate(entity.getHorizontalFacing() == EnumFacing.NORTH || entity.getHorizontalFacing() == EnumFacing.SOUTH ? -180 : 0, 0, 1, 0);
 		GlStateManager.translate(-0.5, 0, 0.5);
 		mc.getTextureManager().bindTexture(BLACK);
@@ -52,27 +50,22 @@ public class RenderDoor extends Render<ControlDoor> {
 		EnumExterior ext = tardis != null ? EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()) : EnumExterior.TT;
 		GlStateManager.translate(open ? 0 : 0.25, 0, 0);
 		if(open && tardis != null) {
-			EnumFacing face = entity.getFacing();
+			EnumFacing face = EnumFacing.fromAngle(entity.getFacing() + 180);
 			Vec3d vec = new Vec3d(0, 1, 0);
-			float angle = 0;
 			if(face == EnumFacing.NORTH) {
 				vec = new Vec3d(-1, 1, -9);
-				angle = 0;
 			}
 			else if(face == EnumFacing.EAST) {
 				vec = new Vec3d(9, 1, 0);
-				angle = 90;
 			}
 			else if(face == EnumFacing.WEST) {
-				angle = 270;
 				vec = new Vec3d(-10, 1, 1);
 			}
 			else if(face == EnumFacing.SOUTH) {
-				angle = 180;
 				vec = new Vec3d(0, 1, 10);
 			}
 			GlStateManager.translate(0, 0, -0.001);
-			RenderHelper.renderPortal(shellRender, entity, partialTicks, angle, vec.add(entity.getMotion()));
+			RenderHelper.renderPortal(shellRender, entity, partialTicks, entity.getFacing(), vec.add(entity.getMotion()));
 		
 		}
 		if(MinecraftForgeClient.getRenderPass() == 0) {

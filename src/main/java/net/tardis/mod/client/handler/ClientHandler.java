@@ -18,6 +18,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.dimensions.TDimensions;
+import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.TItems;
@@ -81,7 +82,8 @@ public class ClientHandler {
 	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void hidePlayer(RenderPlayerEvent.Pre event) {
-		if(event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
+		Entity ride = event.getEntityPlayer().getRidingEntity();
+		if(ride instanceof EntityTardis || ride instanceof EntityDalekCasing) {
 			event.setCanceled(true);
 		}
 	}

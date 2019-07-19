@@ -35,11 +35,13 @@ public class RenderTardisEntity extends Render<EntityTardis>{
 		if(entity.getPassengers().size() > 0 && entity.getPassengers().get(0) instanceof EntityPlayerSP) {
 			GlStateManager.translate(0, 0.5, -0.5);
 			EntityPlayerSP player = (EntityPlayerSP)entity.getPassengers().get(0);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(player.getLocationSkin());
-			ModelPlayer STEVE = new ModelPlayer(0.0625F, false);
-			STEVE.isChild = false;
-			STEVE.isRiding = true;
-			STEVE.render(entity, 0, 0, entity.ticksExisted, 0, 0, 0.0625F);
+			if(Minecraft.getMinecraft().player != player || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {
+				Minecraft.getMinecraft().getTextureManager().bindTexture(player.getLocationSkin());
+				ModelPlayer STEVE = new ModelPlayer(0.0625F, false);
+				STEVE.isChild = false;
+				STEVE.isRiding = true;
+				STEVE.render(entity, 0, 0, entity.ticksExisted, 0, 0, 0.0625F);
+			}
 		}
 		GlStateManager.popMatrix();
 	}

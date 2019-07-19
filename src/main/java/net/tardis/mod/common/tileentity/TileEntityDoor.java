@@ -202,7 +202,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				EntityTardis entity = new EntityTardis(world);
 				entity.setConsole(this.getConsolePos());
 				entity.setPosition(this.getPos().getX() + 0.5, this.getPos().getY() - 1, this.getPos().getZ() + 0.5);
-				entity.rotationYaw = Helper.get360FromFacing(this.getFacing());
+				entity.rotationYaw = Helper.get180Rot(this.getFacing());
 				entity.setExteior(EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()));
 				world.spawnEntity(entity);
 				world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());

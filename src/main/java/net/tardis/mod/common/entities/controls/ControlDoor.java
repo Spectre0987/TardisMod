@@ -17,7 +17,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -38,6 +37,7 @@ import net.tardis.mod.common.IDoor;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.entities.IShouldDie;
 import net.tardis.mod.common.items.TItems;
+import net.tardis.mod.common.serializers.TDataSerializers;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -49,12 +49,16 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, IShouldDie {
 
 	public static final DataParameter<Boolean> IS_OPEN = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
-	public static final DataParameter<EnumFacing> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FACING);
+	public static final DataParameter<Float> FACING = EntityDataManager.createKey(ControlDoor.class, DataSerializers.FLOAT);
 	public static final DataParameter<Boolean> UPDATE = EntityDataManager.createKey(ControlDoor.class, DataSerializers.BOOLEAN);
+	public static final DataParameter<Vec3d> MOTION = EntityDataManager.createKey(ControlDoor.class, TDataSerializers.VEC3D);
+	public boolean updateServerSide = false;
+	
 	public int antiSpamTicks = 0;
 	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 	private World clientWorld;
 	private long otherTime = 0L;
+	
 	public ControlDoor(World world) {
 		super(world);
 		this.setSize(1F, 2F);
@@ -89,14 +93,16 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 		}
 	}
 	
-	public EnumFacing getFacing() {
+	public float getFacing() {
 		if(!world.isRemote) {
 			TileEntityTardis tardis = this.getTardis();
 			if(tardis != null) {
+				if(tardis.getTardisEntity() != null)
+					return tardis.getTardisEntity().rotationYaw;
 				WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 				IBlockState state = ws.getBlockState(tardis.getLocation().up());
 				if(state.getBlock() instanceof BlockTardisTop) {
-					return state.getValue(BlockTardisTop.FACING);
+					return Helper.getAngleFromFacing(state.getValue(BlockTardisTop.FACING));
 				}
 			}
 		}
@@ -125,6 +131,9 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 			this.shell.blockMap = this.getBlockStoreInAABB(bb, offset, ws);
 			this.dataManager.set(FACING, this.getFacing());
 			this.shell.setTime(ws.getWorldTime());
+			
+			//Get motion for rendering
+			this.dataManager.set(MOTION, new Vec3d(tardis.getMotionX(), tardis.getMotionY(), tardis.getMotionZ()));
 		}
 	}
 	
@@ -228,7 +237,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if((this.isOpen() && this.world.getTotalWorldTime() % 200 == 0) || this.getBotiUpdate())
+		if(this.isOpen() && (this.world.getTotalWorldTime() % 200 == 0) || this.getBotiUpdate())
 			this.updateWorldShell();
 		if(world.isRemote && this.isOpen()) {
 			if(this.shell.getOffset().equals(BlockPos.ORIGIN))
@@ -248,8 +257,9 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	@Override
 	protected void entityInit() {
 		this.dataManager.register(IS_OPEN, false);
-		this.dataManager.register(FACING, EnumFacing.NORTH);
+		this.dataManager.register(FACING, 0F);
 		this.dataManager.register(UPDATE, true);
+		this.dataManager.register(MOTION, new Vec3d(0, 0, 0));
 	}
 
 	@Override
@@ -314,18 +324,16 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	}
 	
 	public void setBotiUpdate(boolean update) {
-		this.dataManager.set(UPDATE, update);
+		//this.dataManager.set(UPDATE, update);
+		this.updateServerSide = update;
 	}
 	
 	public boolean getBotiUpdate() {
-		return this.dataManager.get(UPDATE);
+		return this.updateServerSide;//this.dataManager.get(UPDATE);
 	}
 
 	public Vec3d getMotion() {
-		TileEntityTardis tardis = this.getTardis();
-		if(tardis != null)
-			return new Vec3d(tardis.getMotionX(), tardis.getMotionY(), tardis.getMotionZ());
-		return Vec3d.ZERO;
+		return this.dataManager.get(MOTION);
 	}
 }
 

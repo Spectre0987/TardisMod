@@ -25,7 +25,7 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.rotate(180, 1, 0, 0);
 		if (te.getWorld() == null || te.getPos() == null) return;
 		if (!(te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockTardisTop)) return;
-		GlStateManager.rotate(Helper.get360FromFacing(te.getWorld().getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
+		GlStateManager.rotate(Helper.get180Rot(te.getWorld().getBlockState(te.getPos()).getValue(BlockTardisTop.FACING)), 0, 1, 0);
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.color(1, 1, 1, te.alpha);
 		if (MinecraftForgeClient.getRenderPass() == 0 && !te.isStealth()) {

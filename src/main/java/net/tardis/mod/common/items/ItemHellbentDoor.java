@@ -19,7 +19,7 @@ public class ItemHellbentDoor extends ItemBase {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
 			EntityHellbentDoor door = new EntityHellbentDoor(worldIn);
-			door.setPositionAndRotation(pos.getX(), pos.getY() + 1, pos.getZ(), Helper.get360FromFacing(player.getHorizontalFacing()), 0);
+			door.setPositionAndRotation(pos.getX(), pos.getY() + 1, pos.getZ(), Helper.get180Rot(player.getHorizontalFacing()), 0);
 			worldIn.spawnEntity(door);
 			player.getHeldItem(hand).shrink(1);
 		}

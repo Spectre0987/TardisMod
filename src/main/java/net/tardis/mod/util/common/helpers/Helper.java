@@ -130,7 +130,7 @@ public class Helper {
 		}
 	}
 
-	public static float get360FromFacing(EnumFacing facing) {
+	public static float get180Rot(EnumFacing facing) {
 		switch (facing) {
 			case NORTH:
 				return 180;
