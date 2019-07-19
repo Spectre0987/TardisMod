@@ -1,6 +1,7 @@
 package net.tardis.mod.client.renderers.entities.vehicles;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -29,7 +30,17 @@ public class RenderTardisEntity extends Render<EntityTardis>{
 		GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
 		EnumExterior exterior = entity.getExteriorEnum();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(exterior.tex);
-		exterior.model.renderClosed(0.0625F);
+		exterior.model.renderOpen(0.0625F);
+		
+		if(entity.getPassengers().size() > 0 && entity.getPassengers().get(0) instanceof EntityPlayerSP) {
+			GlStateManager.translate(0, 0.5, -0.5);
+			EntityPlayerSP player = (EntityPlayerSP)entity.getPassengers().get(0);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(player.getLocationSkin());
+			ModelPlayer STEVE = new ModelPlayer(0.0625F, false);
+			STEVE.isChild = false;
+			STEVE.isRiding = true;
+			STEVE.render(entity, 0, 0, entity.ticksExisted, 0, 0, 0.0625F);
+		}
 		GlStateManager.popMatrix();
 	}
 

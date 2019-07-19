@@ -1,6 +1,7 @@
 package net.tardis.mod.common.entities;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -9,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.client.CPacketVehicleMove;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -56,14 +58,16 @@ public class EntityTardis extends Entity{
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		
+		this.move();
+		
 		//Allows this to be driven
-		if(this.getPassengers().size() > 0) {
+		/*if(this.getPassengers().size() > 0) {
 			Entity entity = this.getPassengers().get(0);
 			if(entity instanceof EntityLivingBase)
 				this.handleRider((EntityLivingBase)entity);
-		}
+		}*/
 		
-		this.move();
+		this.setNoGravity(true);//(!this.getPassengers().isEmpty());
 		
 		//Rotate the entity
 		if(this.hasNoGravity())
@@ -121,6 +125,14 @@ public class EntityTardis extends Entity{
 		else if(base.moveForward < 0) {
 			motionX = -look.x;
 			motionZ = -look.z;
+		}
+		
+		
+		if(world.isRemote) {
+			if(Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown()) {
+				this.motionY += 0.23D;
+				Minecraft.getMinecraft().getConnection().sendPacket(new CPacketVehicleMove(this));
+			}
 		}
 	}
 
