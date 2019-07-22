@@ -543,8 +543,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void updateWorldShell() {
 		if (worldShell == null || !worldShell.getOffset().equals(this.getConsolePos()))
 			this.worldShell = new WorldShell(this.getOffset());
-		if (this.worldShell.blockMap.isEmpty()) {
-		}
+		
 		WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 		TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(this.getConsolePos());
 		if (tardis == null) return;
@@ -552,7 +551,9 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		AxisAlignedBB BOTI = Block.FULL_BLOCK_AABB.grow(20);
 		if (door != null) {
 			BOTI = BOTI.offset(door.getPosition().offset(door.getHorizontalFacing(), MathHelper.floor(BOTI.maxX) - 1));
-		} else BOTI = BOTI.offset(this.getConsolePos());
+			door.getDataManager().set(ControlDoor.FACING, Helper.getAngleFromFacing(getFacing()));
+		}
+		else BOTI = BOTI.offset(this.getConsolePos());
 		for (BlockPos pos : this.getBlocksInAABB(BOTI)) {
 			if (ws.getBlockState(pos).getMaterial() != Material.AIR)
 				this.worldShell.blockMap.put(pos, new BlockStorage(ws.getBlockState(pos)

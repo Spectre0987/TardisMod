@@ -2,12 +2,18 @@ package net.tardis.mod.common.entities.controls;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.guis.GuiTelepathicCircuts;
+import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
@@ -45,7 +51,30 @@ public class ControlTelepathicCircuts extends EntityControl {
 	
 	@Override
 	public void preformAction(EntityPlayer player) {
-		if (world.isRemote) {
+		if(!world.isRemote && player.isSneaking()) {
+			TileEntity te = world.getTileEntity(this.getConsolePos());
+			if(te instanceof TileEntityTardis) {
+				TileEntityTardis tardis = ((TileEntityTardis)te);
+				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
+				BlockPos pos = tardis.getLocation();
+				ws.setBlockState(tardis.getLocation(), Blocks.AIR.getDefaultState());
+				ws.setBlockState(tardis.getLocation().up(), Blocks.AIR.getDefaultState());
+				EntityTardis tardisEntity = new EntityTardis(ws);
+				tardisEntity.setConsole(tardis.getPos());
+				tardisEntity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+				tardisEntity.setExteior(EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()));
+				ws.spawnEntity(tardisEntity);
+				tardis.setTardisEntity(tardisEntity);
+				((WorldServer)world).addScheduledTask(new Runnable() {
+					@Override
+					public void run() {
+						player.setSneaking(false);
+						tardis.transferPlayer(player, false);
+					}
+				});
+			}
+		}
+		else if (world.isRemote && !player.isSneaking()) {
 			openGui();
 		}
 	}

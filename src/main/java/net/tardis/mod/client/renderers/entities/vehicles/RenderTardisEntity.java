@@ -10,9 +10,13 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.common.entities.EntityTardis;
+import net.tardis.mod.common.enums.EnumFlightState;
 
 public class RenderTardisEntity extends Render<EntityTardis>{
 
+	public static ModelPlayer STEVE = new ModelPlayer(0.0625F, false);
+	public static ModelPlayer ALEX = new ModelPlayer(0.0315F, true);
+	
 	public RenderTardisEntity(RenderManager renderManager) {
 		super(renderManager);
 	}
@@ -30,19 +34,21 @@ public class RenderTardisEntity extends Render<EntityTardis>{
 		GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
 		EnumExterior exterior = entity.getExteriorEnum();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(exterior.tex);
-		exterior.model.renderOpen(0.0625F);
-		
-		if(entity.getPassengers().size() > 0 && entity.getPassengers().get(0) instanceof EntityPlayerSP) {
-			GlStateManager.translate(0, 0.5, -0.5);
-			EntityPlayerSP player = (EntityPlayerSP)entity.getPassengers().get(0);
-			if(Minecraft.getMinecraft().player != player || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(player.getLocationSkin());
-				ModelPlayer STEVE = new ModelPlayer(0.0625F, false);
-				STEVE.isChild = false;
-				STEVE.isRiding = true;
-				STEVE.render(entity, 0, 0, entity.ticksExisted, 0, 0, 0.0625F);
+		if(entity.getOpenState() == EnumFlightState.SITTING) {
+			exterior.model.renderOpen(0.0625F);
+			if(entity.getPassengers().size() > 0 && entity.getPassengers().get(0) instanceof EntityPlayerSP) {
+				GlStateManager.translate(0, 0.5, -0.5);
+				EntityPlayerSP player = (EntityPlayerSP)entity.getPassengers().get(0);
+				ModelPlayer modelPlayer = STEVE;
+				if(Minecraft.getMinecraft().player != player || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {
+					Minecraft.getMinecraft().getTextureManager().bindTexture(player.getLocationSkin());
+					modelPlayer.isChild = false;
+					modelPlayer.isRiding = true;
+					modelPlayer.render(entity, 0, 0, entity.ticksExisted, 0, 0, 0.0625F);
+				}
 			}
 		}
+		else exterior.model.renderClosed(0.0625F);
 		GlStateManager.popMatrix();
 	}
 

@@ -2,8 +2,6 @@ package net.tardis.mod.client.worldshell;
 
 import java.util.Map.Entry;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -15,7 +13,6 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -50,9 +47,7 @@ public class RenderWorldShell {
 					GlStateManager.disableBlend();
 			}
 			else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
-				//bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-				//Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer.renderFluid(Minecraft.getMinecraft().world, state, entry.getKey(), bb);
-				//Tessellator.getInstance().draw();
+				
 			}
 		}
 		//Tile Entites

@@ -32,6 +32,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
@@ -438,7 +439,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.motionX = tardisTag.getDouble("motionX");
 			this.motionY = tardisTag.getDouble("motionY");
 			this.motionZ = tardisTag.getDouble("motionZ");
-			if(!world.isRemote && tardisTag.hasKey("entity_id")) {
+			if(world != null && !world.isRemote && tardisTag.hasKey("entity_id")) {
 				Entity entity = ((WorldServer)world).getMinecraftServer().getEntityFromUuid(tardisTag.getUniqueId("entity_id"));
 				if(entity instanceof EntityTardis)
 					this.entity = (EntityTardis)entity;
@@ -607,6 +608,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (MinecraftForge.EVENT_BUS.post(event) || event.getFuel() <= 0.0F || event.getDestination() == null || event.getDestination() == BlockPos.ORIGIN || !getCanFly()) {
 			world.playSound(null, this.getPos(), TSounds.engine_stutter, SoundCategory.BLOCKS, 1F, 1F);
 			return false;
+		}
+		
+		//Kill Tardis Entity
+		if(this.entity != null) {
+			this.entity.setDead();
+			this.entity = null;
 		}
 		
 		this.shouldDelayLoop = true;
@@ -1039,7 +1046,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		
 		//Mount entity if it exists
 		EntityTardis tardis = this.getTardisEntity();
-		if(tardis != null) {
+		if(tardis != null && !tardis.isDead) {
 			entity.changeDimension(this.dimension, new TardisTeleporter(this.getLocation()));
 			ws.addScheduledTask(new Runnable() {
 				@Override
@@ -1054,10 +1061,21 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		if (door != null) {
 			EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
 			pos = door.getPos().down().offset(face, 1);
-			entity.changeDimension(this.dimension, new TardisTeleporter(pos));
+			
+			if(entity instanceof EntityPlayerMP) {
+				if(entity.dimension != this.dimension)
+					((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)entity, this.dimension, new TardisTeleporter(pos));
+				((EntityPlayerMP)entity).connection.setPlayerLocation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get180Rot(face), 0);
+				return;
+			}
+			else if(entity.dimension != this.dimension)
+				entity.changeDimension(this.dimension, new TardisTeleporter(pos));
+			
+			entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, Helper.get180Rot(face), 0);
 		}
 		else {
 			entity.changeDimension(this.dimension, new TardisTeleporter(this.getLocation().north()));
+			entity.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ());
 		}
 	}
 	
@@ -1067,16 +1085,24 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		MinecraftForge.EVENT_BUS.post(new TardisEnterEvent(entity, this.getPos()));
 		ControlDoor door = this.getDoor();
 		EnumFacing face = EnumFacing.NORTH;
-		BlockPos pos;
+		Vec3d pos;
 		if (door == null) {
-			pos = this.getPos();
+			pos = new Vec3d(this.getPos().getX() + 0.5, this.getPos().getY() + 1, this.getPos().getZ() + 0.5);
 		}
 		else {
-			pos = door.getPosition().add(door.getLookVec().x, door.getLookVec().y, door.getLookVec().z);
+			pos = door.getPositionVector().add(door.getLookVec());
 			face = door.getHorizontalFacing();
 		}
 		
-		entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter(pos));
+		if(entity instanceof EntityPlayerMP) {
+			if(TDimensions.TARDIS_ID != entity.dimension)
+				((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)entity, TDimensions.TARDIS_ID, new TardisTeleporter());
+			((EntityPlayerMP)entity).connection.setPlayerLocation(pos.x, pos.y, pos.z, Helper.get180Rot(face), 0);
+			return;
+		}
+		else if(entity.dimension != TDimensions.TARDIS_ID)
+			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
+		entity.setPositionAndRotation(pos.x, pos.y, pos.z, Helper.get180Rot(face), 0);
 	}
 	
 	public <T> T getSystem(Class<T> system) {

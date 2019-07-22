@@ -34,7 +34,6 @@ public class EntityTardis extends Entity{
 	
 	public EntityTardis(World worldIn) {
 		super(worldIn);
-		this.setNoGravity(true);
 	}
 
 	@Override
@@ -68,7 +67,7 @@ public class EntityTardis extends Entity{
 				this.handleRider((EntityLivingBase)entity);
 		}
 		
-		this.setNoGravity(true);//(!this.getPassengers().isEmpty());
+		this.setNoGravity(!this.getPassengers().isEmpty());
 		
 		//Rotate the entity
 		if(this.hasNoGravity())
@@ -107,6 +106,7 @@ public class EntityTardis extends Entity{
 								intDoor.setBotiUpdate(true);
 							}
 						}
+						tardis.setTardisEntity(null);
 						this.setDead();
 					}
 				}
@@ -138,6 +138,16 @@ public class EntityTardis extends Entity{
 		else if(base.moveForward < 0) {
 			motionX = -look.x;
 			motionZ = -look.z;
+		}
+		if(base.moveStrafing > 0) {
+			Vec3d move = look.rotateYaw(-80);
+			motionX = move.x;
+			motionZ = move.z;
+		}
+		else if(base.moveStrafing < 0) {
+			Vec3d move = look.rotateYaw(80);
+			motionX = move.x;
+			motionZ = move.z;
 		}
 		
 	}
@@ -191,7 +201,7 @@ public class EntityTardis extends Entity{
 	public void updatePassenger(Entity passenger) {
 		super.updatePassenger(passenger);
 		double angle = Math.toRadians(-this.rotationYaw);
-		double offsetX = Math.sin(angle), offsetZ = Math.cos(angle);
+		double offsetX = Math.sin(angle) * 0.5, offsetZ = Math.cos(angle) * 0.5;
 		passenger.setPosition(posX + offsetX, posY + this.getMountedYOffset() + passenger.getYOffset(), posZ + offsetZ);
 	}
 

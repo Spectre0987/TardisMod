@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -21,8 +22,11 @@ import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
+import net.tardis.mod.common.enums.EnumFlightState;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.network.NetworkHandler;
+import net.tardis.mod.network.packets.MessageTardisFlight;
+import net.tardis.mod.network.packets.MessageTardisFlightChange;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
 
 @Mod.EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
@@ -85,6 +89,27 @@ public class ClientHandler {
 		Entity ride = event.getEntityPlayer().getRidingEntity();
 		if(ride instanceof EntityTardis || ride instanceof EntityDalekCasing) {
 			event.setCanceled(true);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void flyTardis(InputUpdateEvent event) {
+		if(event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
+			EntityTardis tardis = (EntityTardis)event.getEntityPlayer().getRidingEntity();
+			if(event.getMovementInput().jump)
+				NetworkHandler.NETWORK.sendToServer(new MessageTardisFlight(tardis.getEntityId(), true));
+			else if(event.getMovementInput().sneak) {
+				NetworkHandler.NETWORK.sendToServer(new MessageTardisFlight(tardis.getEntityId(), false));
+				event.getMovementInput().sneak = false;
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void changeTardisFlightState(PlayerInteractEvent.RightClickEmpty event) {
+		if(event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
+			EntityTardis entity = (EntityTardis)event.getEntityPlayer().getRidingEntity();
+			NetworkHandler.NETWORK.sendToServer(new MessageTardisFlightChange(entity.getEntityId(), entity.getOpenState() == EnumFlightState.CLOSED ? EnumFlightState.SITTING : EnumFlightState.CLOSED));
 		}
 	}
 }

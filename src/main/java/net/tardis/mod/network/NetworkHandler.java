@@ -24,6 +24,8 @@ import net.tardis.mod.network.packets.MessageSpawnItem;
 import net.tardis.mod.network.packets.MessageStopHum;
 import net.tardis.mod.network.packets.MessageSwitchHum;
 import net.tardis.mod.network.packets.MessageSyncTardises;
+import net.tardis.mod.network.packets.MessageTardisFlight;
+import net.tardis.mod.network.packets.MessageTardisFlightChange;
 import net.tardis.mod.network.packets.MessageTelepathicCircuit;
 import net.tardis.mod.network.packets.MessageTeleport;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
@@ -59,6 +61,8 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageConsoleChange.Handler.class, MessageConsoleChange.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageARSSpawn.Handler.class, MessageARSSpawn.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageConfigSync.Handler.class, MessageConfigSync.class, id++, Side.CLIENT);
+		NETWORK.registerMessage(MessageTardisFlight.Handler.class, MessageTardisFlight.class, id++, Side.SERVER);
+		NETWORK.registerMessage(MessageTardisFlightChange.Handler.class, MessageTardisFlightChange.class, id++, Side.SERVER);
 	}
 	
 	
