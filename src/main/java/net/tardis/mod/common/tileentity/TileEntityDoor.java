@@ -351,7 +351,13 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (!world.isRemote && this.getConsolePos() != null) {
 			WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 			if (ws != null) {
-				ws.playSound(null, getConsolePos(), knockSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
+				TileEntity te = ws.getTileEntity(this.getConsolePos());
+				if(te instanceof TileEntityTardis) {
+					ControlDoor door = ((TileEntityTardis)te).getDoor();
+					if(door != null)
+						ws.playSound(null, door.getPosition(), knockSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
+				}
+				else ws.playSound(null, getConsolePos(), knockSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 		}
 	}

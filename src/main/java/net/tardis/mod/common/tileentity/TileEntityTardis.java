@@ -176,7 +176,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public void update() {
 		if (hum != null) {
 			if ((soundChanged || world.getTotalWorldTime() % hum.getTicks() == 0) && !world.isRemote) {
-				world.playSound(null, getPos(), hum.getSoundEvent(), SoundCategory.AMBIENT, 1.5F, 1F);
+				world.playSound(null, getPos(), hum.getSoundEvent(), SoundCategory.AMBIENT, 0.25F, 1F);
 				soundChanged = false;
 			}
 		}
@@ -292,7 +292,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 							}
 						}
 						this.destDim = TDimensions.TARDIS_ID;
-					} else if (otherTardis != null && otherTardis.isHADSEnabled()) {
+					}
+					else if (otherTardis != null && otherTardis.isHADSEnabled()) {
 						otherTardis.startHADS();
 					}
 				}
@@ -807,7 +808,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			this.travel();
 			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
-		} else if (explode) {
+		}
+		else if (explode) {
 			Random rand = new Random();
 			for (int i = 0; i < 300; ++i) {
 				world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, getPos().getX() + (rand.nextInt(3) - 1), getPos().getY() + (rand.nextInt(3) - 1), getPos().getZ() + (rand.nextInt(3) - 1), 0, 1, 0, 0);
