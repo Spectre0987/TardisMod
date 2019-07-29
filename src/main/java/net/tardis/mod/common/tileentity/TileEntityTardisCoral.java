@@ -33,7 +33,7 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 public class TileEntityTardisCoral extends TileEntity implements ITickable {
 
 	public int time = 0;
-	public int growStage = 0;
+	public int maxTime = -1;
 	public UUID owner;
 
 	public TileEntityTardisCoral() {}
@@ -42,7 +42,6 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		time = compound.getInteger("time");
-		this.growStage = compound.getInteger("grow");
 		if(compound.hasKey("owner_id"))
 			owner = UUID.fromString(compound.getString("owner_id"));
 	}
@@ -50,7 +49,6 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("time", time);
-		compound.setInteger("grow", growStage);
 		if(owner != null)
 			compound.setString("owner_id", owner.toString());
 		return super.writeToNBT(compound);
@@ -59,18 +57,19 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 	@Override
 	public void update() {
 		if (!world.isRemote && this.owner != null) {
-			if (world.getWorldTime() % 2400 == 0) {
-				if (time > (RiftHelper.isRift(world.getChunk(getPos()).getPos(), world) ? 1 : 2)) {
-					this.grow();
-					time = 0;
-				}
-				++time;
-				this.markDirty();
-			}
-			if(world.getWorldTime() % 600 == 0) {
-				++this.growStage;
-				if(growStage > 3) growStage = 3;
-				world.setBlockState(this.getPos(), TBlocks.tardis_coral.getDefaultState().withProperty(BlockTardisCoral.GROW_STAGE, this.growStage));
+			//Check if rift
+			if(RiftHelper.isRift(world.getChunk(this.getPos()).getPos(), world))
+				this.maxTime = 24000;
+			else this.maxTime = 24000 * 2;
+			
+			//grow
+			++time;
+			int growthStage = this.world.getBlockState(this.getPos()).getValue(BlockTardisCoral.GROW_STAGE);
+			int newGrowStage = Math.round(time / (this.maxTime / 3));
+			if(growthStage != newGrowStage) {
+				if(newGrowStage > 3)
+					grow();
+				else world.setBlockState(this.getPos(), this.world.getBlockState(getPos()).withProperty(BlockTardisCoral.GROW_STAGE, newGrowStage), 3);
 			}
 		}
 	}
@@ -124,6 +123,7 @@ public class TileEntityTardisCoral extends TileEntity implements ITickable {
 			}
 		}
 		getWorld().setBlockToAir(getPos()); //Just to make sure Coral goes bye bye
+		//It doesn't
 	}
 
 	public void setOwner(UUID id) {
