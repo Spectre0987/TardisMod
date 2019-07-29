@@ -103,7 +103,7 @@ public class EntityBessie extends Entity {
 			pass.setPosition(pos.x, pos.y, pos.z);
 		}
 
-		if (pass instanceof EntityLivingBase) {
+		if (!(pass instanceof EntityPlayer)) {
 			((EntityLivingBase) pass).rotationYaw = this.rotationYaw;
 		}
 	}

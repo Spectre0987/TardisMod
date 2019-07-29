@@ -6,13 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.items.TItems;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
-import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 public class SystemDimension extends BaseSystem {
 
@@ -26,11 +26,10 @@ public class SystemDimension extends BaseSystem {
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
 		TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(consolePos);
-		if (this.getHealth() <= 0.00F) {
+		if (this.getHealth() <= 0.00F && tardis.dimension != TDimensions.TARDIS_ID) {
 			if (runOnce) {
 				tardis.setTardisState(EnumTardisState.DISABLED);
 				for (EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(consolePos, 8 * 16))) {
-					PlayerHelper.sendMessage(p, "door.tardis.relocating", false);
 					tardis.transferPlayer(p, false);
 					ControlDoor door = tardis.getDoor();
 					if (door != null) door.setOpen(false);
@@ -39,7 +38,6 @@ public class SystemDimension extends BaseSystem {
 			}
 			if (!world.isRemote) {
 				for (EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, Helper.createBB(consolePos, 20))) {
-					PlayerHelper.sendMessage(p, "door.tardis.relocating", false);
 					tardis.transferPlayer(p, false);
 				}
 			}
