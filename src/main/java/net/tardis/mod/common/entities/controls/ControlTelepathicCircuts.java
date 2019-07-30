@@ -21,6 +21,7 @@ import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis05;
+import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlTelepathicCircuts extends EntityControl {
@@ -61,7 +62,7 @@ public class ControlTelepathicCircuts extends EntityControl {
 				ws.setBlockState(tardis.getLocation().up(), Blocks.AIR.getDefaultState());
 				EntityTardis tardisEntity = new EntityTardis(ws);
 				tardisEntity.setConsole(tardis.getPos());
-				tardisEntity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+				tardisEntity.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 				tardisEntity.setExteior(EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()));
 				ws.spawnEntity(tardisEntity);
 				tardis.setTardisEntity(tardisEntity);

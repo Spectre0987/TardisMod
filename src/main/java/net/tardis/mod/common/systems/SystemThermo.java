@@ -12,15 +12,16 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 public class SystemThermo extends BaseSystem {
 
 	boolean crashed = false;
+	boolean hasRun = false;
 	boolean repaired = false;
 
 	public SystemThermo() {}
 
 	@Override
 	public void onUpdate(World world, BlockPos consolePos) {
-		if (!crashed && this.getHealth() <= 0F) {
+		if (this.crashed && !this.hasRun) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(consolePos);
-			crashed = true;
+			this.hasRun = true;
 			if (tardis != null) {
 				tardis.setAbsoluteDesination(consolePos.north(5), TDimensions.TARDIS_ID);
 				tardis.startFlight();
@@ -28,12 +29,12 @@ public class SystemThermo extends BaseSystem {
 				return;
 			}
 		}
-		if (this.getHealth() > 0) {
+		if (crashed && this.getHealth() > 0) {
 			this.crashed = false;
-		}
-		if(repaired) {
+			this.hasRun = false;
 			TileEntityTardis tardis = (TileEntityTardis) world.getTileEntity(consolePos);
 			tardis.setDesination(tardis.returnLocation.getPos(), tardis.returnLocation.getDimension());
+			tardis.startFlight();
 			repaired = false;
 		}
 	}
@@ -55,6 +56,8 @@ public class SystemThermo extends BaseSystem {
 	@Override
 	public void damage() {
 		this.setHealth(this.getHealth() - 0.2F);
+		if(this.getHealth() <= 0)
+			this.crashed = true;
 	}
 
 	@Override
@@ -73,6 +76,8 @@ public class SystemThermo extends BaseSystem {
 	}
 
 	@Override
-	public void wear() {}
+	public void wear() {
+		this.setHealth(this.getHealth() - 0.001F);
+	}
 
 }

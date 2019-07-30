@@ -10,15 +10,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.blocks.BlockFoodMachine;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class TileEntityFoodMachine extends TileEntity implements ITickable {
 
 	private int ticks = 0;
 
-	public TileEntityFoodMachine() {
-
-	}
+	public TileEntityFoodMachine() {}
 
 	private void makeFood() {
 		if (!world.isRemote) {
@@ -31,6 +30,9 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 					BlockPos pos = this.getPos().offset(face);
 					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.BREAD));
 				}
+			}
+			else if(RiftHelper.isRift(world.getChunk(this.getPos()).getPos(), world)) {
+				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.BREAD));
 			}
 		}
 	}
