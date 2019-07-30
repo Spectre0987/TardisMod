@@ -70,6 +70,7 @@ public class ControlTelepathicCircuts extends EntityControl {
 					public void run() {
 						player.setSneaking(false);
 						tardis.transferPlayer(player, false);
+						player.startRiding(tardisEntity);
 					}
 				});
 			}
