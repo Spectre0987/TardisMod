@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.client.CPacketVehicleMove;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -149,6 +150,9 @@ public class EntityTardis extends Entity{
 			motionX = move.x;
 			motionZ = move.z;
 		}
+		
+		if(world.isRemote)
+			world.sendPacketToServer(new CPacketVehicleMove(this));
 		
 	}
 

@@ -1,5 +1,6 @@
 package net.tardis.mod.common.entities.vehicles;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -13,6 +14,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.client.CPacketVehicleMove;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
@@ -188,4 +191,10 @@ public class EntityBessie extends Entity {
 	public boolean shouldDismountInWater(Entity rider) {
 		return false;
 	}
+
+	@Override
+	protected void playStepSound(BlockPos pos, Block blockIn) {
+		
+	}
+	
 }
