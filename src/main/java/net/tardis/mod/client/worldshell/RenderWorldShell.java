@@ -1,7 +1,5 @@
 package net.tardis.mod.client.worldshell;
 
-import java.util.Map.Entry;
-
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.state.IBlockState;
@@ -21,8 +19,8 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 
 public class RenderWorldShell {
@@ -52,24 +50,25 @@ public class RenderWorldShell {
 		if(BOTI == null) {
 			BOTI = new VertexBuffer(DefaultVertexFormats.BLOCK);
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-			for(Entry<BlockPos, BlockStorage> entry : cont.getWorldShell().blockMap.entrySet()) {
+			/*for(Entry<BlockPos, BlockStorage> entry : cont.getWorldShell().blockMap.entrySet()) {
 				IBlockState state = entry.getValue().blockstate;
 				state = state.getActualState(world, entry.getKey());
 				IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
 				if(state.getRenderType() != EnumBlockRenderType.INVISIBLE && model != null) {
-						GlStateManager.enableBlend();
 					GlStateManager.pushMatrix();
 					int light = entry.getValue().light;
 					if(light == 0)
 						light = 4;
-					
 					Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer()
-					.renderModelFlat(world, model, state, entry.getKey(), bb, true, 0);
+					.renderModel(world, model, state, entry.getKey(), bb, true);
 					//.renderModel(world, model, state, entry.getKey(), bb, true);
 
 					GlStateManager.popMatrix();
 				}
-			}
+			}*/
+			IBlockState state = Blocks.ANVIL.getDefaultState();
+			IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
+			Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(state, offset.east(), world, bb);
 			bb.finishDrawing();
 			bb.reset();
 			BOTI.bufferData(bb.getByteBuffer());
@@ -78,14 +77,13 @@ public class RenderWorldShell {
 			BOTI.bindBuffer();
 			GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, DefaultVertexFormats.BLOCK.getSize(), 0);
 			GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-			GlStateManager.glEnableClientState(GL11.GL_NORMAL_ARRAY);
-			//GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
+			GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
 			GlStateManager.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
             BOTI.drawArrays(GL11.GL_QUADS);
-            BOTI.unbindBuffer();
             GlStateManager.glDisableClientState(GL11.GL_VERTEX_ARRAY);
             GlStateManager.glDisableClientState(GL11.GL_COLOR_ARRAY);
             GlStateManager.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+            BOTI.unbindBuffer();
 		}
 		
 		//Tile Entites
