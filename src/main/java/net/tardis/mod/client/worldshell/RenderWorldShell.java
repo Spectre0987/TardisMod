@@ -1,5 +1,8 @@
 package net.tardis.mod.client.worldshell;
 
+import java.util.List;
+import java.util.Map.Entry;
+
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.state.IBlockState;
@@ -9,18 +12,22 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
+import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class RenderWorldShell {
@@ -47,42 +54,45 @@ public class RenderWorldShell {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.color(1F, 1F, 1F, 1F);
 		RenderHelper.enableStandardItemLighting();
+		VertexFormat format = DefaultVertexFormats.POSITION_TEX;
 		if(BOTI == null) {
-			BOTI = new VertexBuffer(DefaultVertexFormats.BLOCK);
-			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-			/*for(Entry<BlockPos, BlockStorage> entry : cont.getWorldShell().blockMap.entrySet()) {
+			BOTI = new VertexBuffer(format);
+			BOTI.bindBuffer();
+			bb.begin(GL11.GL_QUADS, format);
+			for(Entry<BlockPos, BlockStorage> entry : cont.getWorldShell().blockMap.entrySet()) {
 				IBlockState state = entry.getValue().blockstate;
 				state = state.getActualState(world, entry.getKey());
 				IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
 				if(state.getRenderType() != EnumBlockRenderType.INVISIBLE && model != null) {
-					GlStateManager.pushMatrix();
+					TextureAtlasSprite sprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes()
+							.getTexture(state);
 					int light = entry.getValue().light;
-					if(light == 0)
-						light = 4;
-					Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer()
-					.renderModel(world, model, state, entry.getKey(), bb, true);
-					//.renderModel(world, model, state, entry.getKey(), bb, true);
-
-					GlStateManager.popMatrix();
+					if(light == 0) light = 4;
+					
+					bb.setTranslation(entry.getKey().getX(), entry.getKey().getY(), entry.getKey().getZ());
+					for(EnumFacing face : EnumFacing.VALUES) {
+						List<BakedQuad> quads = model.getQuads(state, face, 0);
+						for(BakedQuad quad : quads) {
+							int[] array = quad.getVertexData();
+							System.out.print("");
+						}
+					}
 				}
-			}*/
-			IBlockState state = Blocks.ANVIL.getDefaultState();
-			IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
-			Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(state, offset.east(), world, bb);
+			}
 			bb.finishDrawing();
 			bb.reset();
 			BOTI.bufferData(bb.getByteBuffer());
 		}
 		else {
 			BOTI.bindBuffer();
-			GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, DefaultVertexFormats.BLOCK.getSize(), 0);
+			GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, format.getSize(), 0);
 			GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-			GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
 			GlStateManager.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+			GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
             BOTI.drawArrays(GL11.GL_QUADS);
             GlStateManager.glDisableClientState(GL11.GL_VERTEX_ARRAY);
-            GlStateManager.glDisableClientState(GL11.GL_COLOR_ARRAY);
             GlStateManager.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+            GlStateManager.glDisableClientState(GL11.GL_COLOR_ARRAY);
             BOTI.unbindBuffer();
 		}
 		

@@ -41,7 +41,7 @@ public class RenderHelper {
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1, 1, 1);
 
-			GL11.glEnable(GL11.GL_STENCIL_TEST);
+			//GL11.glEnable(GL11.GL_STENCIL_TEST);
 
 			// Always write to stencil buffer
 			GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xFF);
