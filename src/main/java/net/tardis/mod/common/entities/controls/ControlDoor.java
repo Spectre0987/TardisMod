@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,6 +18,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -251,9 +253,40 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 		this.setBotiUpdate(false);
 		this.handleEnter();
 		
+		if(!world.isRemote && world.getTotalWorldTime() % 20 == 0) {
+			TileEntityTardis tardis = this.getTardis();
+			if(tardis != null) {
+				WorldServer world = this.world.getMinecraftServer().getWorld(tardis.dimension);
+				
+				EnumFacing face = EnumFacing.fromAngle(this.getFacing() + 180);
+				if(this.isOpen() && isWater(world, tardis.getLocation().offset(face))) {
+					if(!isWater(this.world, this.getPosition()))
+						this.updateFluid(this.world, this.getPosition(), Blocks.WATER.getDefaultState());
+				}
+				else if(isWater(this.world, this.getPosition()))
+					this.updateFluid(this.world, getPosition(), Blocks.AIR.getDefaultState());
+				
+				if(this.isOpen() && isWater(world, tardis.getLocation().offset(tardis.getFacing()).up())) {
+					if(!isWater(this.world, this.getPosition().up()))
+						this.updateFluid(this.world, this.getPosition().up(), Blocks.WATER.getDefaultState());
+				}
+				else if(isWater(this.world, this.getPosition().up())) {
+					this.updateFluid(this.world, this.getPosition().up(), Blocks.AIR.getDefaultState());
+				}
+			}
+		}
 		
 	}
 
+	private static boolean isWater(World world, BlockPos pos) {
+		return world.getBlockState(pos).getMaterial() == Material.WATER;
+	}
+	
+	private static void updateFluid(World world, BlockPos pos, IBlockState state) {
+		world.setBlockState(pos, state, 3);
+		state.getBlock().neighborChanged(state, world, pos, state.getBlock(), pos);
+	}
+	
 	@Override
 	protected void entityInit() {
 		this.dataManager.register(IS_OPEN, false);
