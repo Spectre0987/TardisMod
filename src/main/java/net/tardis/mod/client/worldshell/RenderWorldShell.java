@@ -22,7 +22,6 @@ import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 
@@ -58,20 +57,16 @@ public class RenderWorldShell {
 				state = state.getActualState(world, entry.getKey());
 				IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
 				if(state.getRenderType() != EnumBlockRenderType.INVISIBLE && model != null) {
-					BlockRenderLayer layer = state.getBlock().getRenderLayer();
-					if(layer == BlockRenderLayer.TRANSLUCENT)
-						GlStateManager.enableBlend();
 					GlStateManager.pushMatrix();
 					int light = entry.getValue().light;
 					if(light == 0)
 						light = 4;
 					
 					Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer()
-					.renderModel(world, model, state, entry.getKey(), bb, true);
+					.renderModelSmooth(world, model, state, entry.getKey(), bb, false, 0);
+					//.renderModel(world, model, state, entry.getKey(), bb, true);
 
 					GlStateManager.popMatrix();
-					if(layer == BlockRenderLayer.TRANSLUCENT)
-						GlStateManager.disableBlend();
 				}
 			}
 			bb.finishDrawing();
@@ -82,7 +77,8 @@ public class RenderWorldShell {
 			BOTI.bindBuffer();
 			GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, DefaultVertexFormats.BLOCK.getSize(), 0);
 			GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-			GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
+			GlStateManager.glEnableClientState(GL11.GL_NORMAL_ARRAY);
+			//GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
 			GlStateManager.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
             BOTI.drawArrays(GL11.GL_QUADS);
             BOTI.unbindBuffer();
