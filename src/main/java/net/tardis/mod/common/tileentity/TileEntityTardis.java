@@ -277,6 +277,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			World dWorld = world.getMinecraftServer().getWorld(destDim);
 			World oWorld = world.getMinecraftServer().getWorld(dimension);
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld, getDestination());
+			
+			//WorldBorder safety checks
+			if(dWorld.getWorldBorder().contains(nPos)) {
+				nPos = this.getLandingBlock(dWorld, new BlockPos(dWorld.getWorldBorder().getCenterX(), nPos.getY(), dWorld.getWorldBorder().getCenterZ());
+			}
+			
 			if (nPos != null) {
 				//TnT Stuff
 				if (dWorld.getTileEntity(nPos.down()) instanceof TileEntityDoor) {
