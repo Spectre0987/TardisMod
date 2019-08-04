@@ -279,8 +279,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld, getDestination());
 			
 			//WorldBorder safety checks
-			if(dWorld.getWorldBorder().contains(nPos)) {
-				nPos = this.getLandingBlock(dWorld, new BlockPos(dWorld.getWorldBorder().getCenterX(), nPos.getY(), dWorld.getWorldBorder().getCenterZ());
+			if(!dWorld.getWorldBorder().contains(nPos)) {
+				nPos = this.getLandingBlock(dWorld, new BlockPos(dWorld.getWorldBorder().getCenterX(), nPos.getY(), dWorld.getWorldBorder().getCenterZ()));
 			}
 			
 			if (nPos != null) {
