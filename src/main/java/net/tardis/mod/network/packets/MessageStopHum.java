@@ -35,7 +35,7 @@ public class MessageStopHum implements IMessage {
     public static class Handler implements IMessageHandler<MessageStopHum,IMessage>{
         @Override
         public IMessage onMessage(MessageStopHum message, MessageContext ctx) {
-            FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(()->{
+            Minecraft.getMinecraft().addScheduledTask(()->{
                 InteriorHum humToStop = InteriorHum.hums.get(message.soundID);
                 Minecraft.getMinecraft().getSoundHandler().stop(humToStop.getSoundEvent().getSoundName().toString(), SoundCategory.AMBIENT);
             });
