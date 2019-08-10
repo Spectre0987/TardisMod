@@ -18,6 +18,7 @@ import net.tardis.mod.network.packets.MessageHandlerProtocol;
 import net.tardis.mod.network.packets.MessageHandlerTeleport;
 import net.tardis.mod.network.packets.MessageMissControl;
 import net.tardis.mod.network.packets.MessageProtocol;
+import net.tardis.mod.network.packets.MessageReinitStencil;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.network.packets.MessageSonicWorkbench;
 import net.tardis.mod.network.packets.MessageSpawnItem;
@@ -63,6 +64,7 @@ public class NetworkHandler {
 		NETWORK.registerMessage(MessageConfigSync.Handler.class, MessageConfigSync.class, id++, Side.CLIENT);
 		NETWORK.registerMessage(MessageTardisFlight.Handler.class, MessageTardisFlight.class, id++, Side.SERVER);
 		NETWORK.registerMessage(MessageTardisFlightChange.Handler.class, MessageTardisFlightChange.class, id++, Side.SERVER);
+		NETWORK.registerMessage(MessageReinitStencil.Handler.class, MessageReinitStencil.class, id++, Side.CLIENT);
 	}
 	
 	
