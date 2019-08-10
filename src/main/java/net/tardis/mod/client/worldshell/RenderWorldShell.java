@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -51,7 +50,7 @@ public class RenderWorldShell {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.color(1F, 1F, 1F, 1F);
 		RenderHelper.enableStandardItemLighting();
-		VertexFormat format = DefaultVertexFormats.POSITION_TEX;
+		VertexFormat format = DefaultVertexFormats.BLOCK;
 		if(BOTI == null) {
 			BOTI = new VertexBuffer(format);
 			BOTI.bindBuffer();
@@ -61,13 +60,15 @@ public class RenderWorldShell {
 				state = state.getActualState(world, entry.getKey());
 				IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
 				if(state.getRenderType() != EnumBlockRenderType.INVISIBLE && model != null) {
-					TextureAtlasSprite sprite = Minecraft.getMinecraft().getBlockRendererDispatcher()
-							.getBlockModelShapes().getTexture(state);
-					int light = entry.getValue().light;
-					if(light == 0) light = 4;
+					//int light = entry.getValue().light;
+					//if(light == 0) light = 4;
 					
+					Minecraft.getMinecraft().getBlockRendererDispatcher()
+					.getBlockModelRenderer().renderModelFlat(world, model, state, entry.getKey(), bb, true, 0);
 				}
 			}
+			bb.sortVertexData((float)x, (float)y, (float)z);
+	            
 			bb.finishDrawing();
 			bb.reset();
 			BOTI.bufferData(bb.getByteBuffer());
