@@ -44,7 +44,6 @@ public class JEI implements IModPlugin {
 		registry.getJeiHelpers().getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(TBlocks.tardis_top_02));
 		registry.getJeiHelpers().getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(TBlocks.tardis_top_03));
 		registry.getJeiHelpers().getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(TBlocks.tardis_top_cc));
-		registry.getJeiHelpers().getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(TBlocks.sonic_blaster));
 		registry.getJeiHelpers().getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(TBlocks.tardis));
 
 		registry.addRecipeCatalyst(new ItemStack(TBlocks.circuit_repair), JEIRepairCategory.id);

@@ -13,11 +13,9 @@ public class RenderCybermanInvasion extends RenderLiving<EntityCybermanInvasion>
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Tardis.MODID, "textures/entity/mob/cyberman_tomb.png");
 	public static ModelCybermanTomb model = new ModelCybermanTomb();
-	Minecraft mc;
 
 	public RenderCybermanInvasion(RenderManager manager) {
 		super(manager, model, 0.03F);
-		mc = Minecraft.getMinecraft();
 		addLayer(new LayerHeldItem(this));
 	}
 	

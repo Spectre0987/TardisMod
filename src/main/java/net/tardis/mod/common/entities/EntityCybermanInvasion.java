@@ -63,7 +63,8 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
 
 	@Override
 	public boolean getCanSpawnHere() {
-		return !world.canBlockSeeSky(this.getPosition().down()) && posY < 64 && world.getBlockState(getPosition().down()).getLightValue() < 2;
+		return !world.canBlockSeeSky(this.getPosition().down()) &&
+				posY < 64 && world.getBlockState(getPosition().down()).getLightValue() < 2;
 	}
 
 	/**
@@ -85,7 +86,6 @@ public class EntityCybermanInvasion extends EntityCyberman implements IRangedAtt
 	}
 
 	@Override
-	public void setSwingingArms(boolean swingingArms) {
-	}
+	public void setSwingingArms(boolean swingingArms) {}
 
 }
