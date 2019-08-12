@@ -15,11 +15,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.tardis.mod.api.blocks.IBlock;
 import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class BlockTardis extends Block implements IBlock {
+public class BlockTardis extends Block {
 
 	public ItemBlock item = new ItemBlock(this);
 
@@ -66,11 +65,6 @@ public class BlockTardis extends Block implements IBlock {
 
 	@Override
 	public boolean causesSuffocation(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean doesDelete() {
 		return false;
 	}
 

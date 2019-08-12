@@ -75,7 +75,6 @@ public class TItems {
 	public static Item marker = null;
 
 	public static Item sonic13th = null;
-	public static Item sonicBlaster = createItem(new ItemSonicBlaster(), "sonic_blaster");
 
 	public static Item bessie = createItem(new ItemESpawn(EntityBessie::new), "bessie");
 
@@ -123,7 +122,6 @@ public class TItems {
 		circuts = createItem(new ItemBase(), "circuts");
 		gunstick = createItem(new ItemBase(), "gunstick");
 		power_cell = createItem(new ItemBase(), "power_cell");
-		fob_watch = createItem(new ItemFobWatch(), "fob_watch");
 		ray_gun = createItem(new ItemRayGun(), "ray_gun");
 		void_specs = createItem(new ItemHat(EnumClothes.HAT_VOID_SPECS), "void_specs");
 		fez = createItem(new ItemFez(), "fez");
@@ -151,7 +149,6 @@ public class TItems {
 		hellbent_door = createItem(new ItemHellbentDoor(), "hellbent_door");
 
 		interior_door = createItem(new ItemInteriorDoor(), "interiordoor");
-		marker = createItem(new ItemMarker(), "marker");
 		sonic13th = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_screwdriver_13");
 	
 

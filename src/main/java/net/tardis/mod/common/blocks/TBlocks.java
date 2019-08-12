@@ -12,10 +12,12 @@ import net.minecraft.util.ResourceLocation;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.client.creativetabs.TardisTabs;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
-import net.tardis.mod.common.blocks.interfaces.IARSBlock;
 import net.tardis.mod.common.blocks.interfaces.INeedItem;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.tileentity.*;
+import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
+import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
+import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
@@ -193,8 +195,6 @@ public class TBlocks {
 	public static Block console_03 = register(new BlockConsole(TileEntityTardis03::new), "console_03", false);
 	public static Block console_04 = register(new BlockConsole(TileEntityTardis04::new), "console_04", false);
 	public static Block console_05 = register(new BlockConsole(TileEntityTardis05::new), "console_05", false);
-
-	public static Block sonic_blaster = register(new BlockSonicBlaster(), "blaster_block", false);
 	
 	public static Block circuit_repair = register(new BlockComponentRepair(Material.IRON, TileEntityComponentRepair::new), "circuit_repair");
 	
@@ -204,7 +204,6 @@ public class TBlocks {
 	public static Block sonic_workbench = register(new BlockSonicWorkbench(), "sonic_workbench");
 	public static Block tree_egg = register(new BlockTreeEgg() ,"tree_egg");
 	
-	public static Block json_tester = Tardis.getIsDev() ? register(new BlockJsonTester(), "json_test", false) : null;
 	
 	public static Block register(Block block, String name) {
 		return register(block, name, true);

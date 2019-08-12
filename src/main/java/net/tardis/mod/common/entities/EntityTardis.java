@@ -32,6 +32,7 @@ public class EntityTardis extends Entity{
 	public static final DataParameter<String> EXTERIOR = EntityDataManager.createKey(EntityTardis.class, DataSerializers.STRING);
 	public static final DataParameter<Integer> OPEN_STATE = EntityDataManager.createKey(EntityTardis.class, DataSerializers.VARINT);
 	private BlockPos consolePos = BlockPos.ORIGIN;
+	private int ticksOnGround = 0;
 	
 	public EntityTardis(World worldIn) {
 		super(worldIn);
@@ -97,18 +98,21 @@ public class EntityTardis extends Entity{
 					
 					//Replace exterior
 					if(this.onGround) {
-						world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
-						if(world.setBlockState(this.getPosition().up(), tardis.getTopBlock().withProperty(BlockTardisTop.FACING, this.getHorizontalFacing()))) {
-							TileEntityDoor door = (TileEntityDoor)world.getTileEntity(this.getPosition().up());
-							door.setConsolePos(this.getConsole());
-							door.setStealth(tardis.isStealthMode());
-							door.alpha = 1F;
-							if(intDoor != null){
-								intDoor.setBotiUpdate(true);
+						++this.ticksOnGround;
+						if(this.ticksOnGround > 60) {
+							world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
+							if(world.setBlockState(this.getPosition().up(), tardis.getTopBlock().withProperty(BlockTardisTop.FACING, this.getHorizontalFacing()))) {
+								TileEntityDoor door = (TileEntityDoor)world.getTileEntity(this.getPosition().up());
+								door.setConsolePos(this.getConsole());
+								door.setStealth(tardis.isStealthMode());
+								door.alpha = 1F;
+								if(intDoor != null){
+									intDoor.setBotiUpdate(true);
+								}
 							}
+							tardis.setTardisEntity(null);
+							this.setDead();
 						}
-						tardis.setTardisEntity(null);
-						this.setDead();
 					}
 				}
 			}
@@ -213,18 +217,24 @@ public class EntityTardis extends Entity{
 	protected void removePassenger(Entity pass) {
 		super.removePassenger(pass);
 		if(!world.isRemote) {
-			((WorldServer)world).addScheduledTask(new Runnable() {
-				@Override
-				public void run() {
-					WorldServer tardisWorld = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
-					if(tardisWorld != null) {
-						TileEntity te = tardisWorld.getTileEntity(getConsole());
-						if(te instanceof TileEntityTardis) {
-							((TileEntityTardis)te).enterTARDIS(pass);
+			if(this.getOpenState() == EnumFlightState.CLOSED) {
+				((WorldServer)world).addScheduledTask(new Runnable() {
+					@Override
+					public void run() {
+						WorldServer tardisWorld = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+						if(tardisWorld != null) {
+							TileEntity te = tardisWorld.getTileEntity(getConsole());
+							if(te instanceof TileEntityTardis) {
+								((TileEntityTardis)te).enterTARDIS(pass);
+							}
 						}
 					}
-				}
-			});
+				});
+			}
+			else {
+				double x = Math.sin(Math.toRadians(this.rotationYaw)), z = Math.cos(Math.toRadians(this.rotationYaw));
+				pass.setPosition(this.posX + z, this.posY, this.posZ + z);
+			}
 		}
 	}
 	

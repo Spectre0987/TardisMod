@@ -67,15 +67,10 @@ import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentLight;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentMonitor;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentPole;
 import net.tardis.mod.client.renderers.decorations.hellbent.RenderHellbentRoof;
-import net.tardis.mod.client.renderers.entities.RenderAdipose;
 import net.tardis.mod.client.renderers.entities.RenderCompanion;
 import net.tardis.mod.client.renderers.entities.RenderCybermanInvasion;
-import net.tardis.mod.client.renderers.entities.RenderCybermanTomb;
 import net.tardis.mod.client.renderers.entities.RenderDalek;
-import net.tardis.mod.client.renderers.entities.RenderDalekCaseing;
 import net.tardis.mod.client.renderers.entities.RenderDalekScaro;
-import net.tardis.mod.client.renderers.entities.RenderItemMaterializer;
-import net.tardis.mod.client.renderers.entities.RenderQuark;
 import net.tardis.mod.client.renderers.entities.decoration.RenderBrakDoors;
 import net.tardis.mod.client.renderers.entities.projectiles.RenderLaserRay;
 import net.tardis.mod.client.renderers.entities.vehicles.RenderBessie;
@@ -99,24 +94,17 @@ import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
 import net.tardis.mod.client.renderers.tiles.RenderElectricPanel;
-import net.tardis.mod.client.renderers.tiles.RenderJsonHelper;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
-import net.tardis.mod.client.renderers.tiles.RenderUmbrellaStand;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.entities.EntityAdipose;
 import net.tardis.mod.common.entities.EntityChair;
 import net.tardis.mod.common.entities.EntityCompanion;
 import net.tardis.mod.common.entities.EntityCompanion.EnumCompanionType;
 import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
-import net.tardis.mod.common.entities.EntityCybermanTomb;
 import net.tardis.mod.common.entities.EntityDalek;
-import net.tardis.mod.common.entities.EntityDalekCasing;
 import net.tardis.mod.common.entities.EntityDalekSkaro;
-import net.tardis.mod.common.entities.EntityItemMaterializer;
 import net.tardis.mod.common.entities.EntityLaserRay;
-import net.tardis.mod.common.entities.EntityQuark;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.controls.ControlDimChange;
@@ -146,9 +134,7 @@ import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
-import net.tardis.mod.common.tileentity.TileEntityJsonTester;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.common.tileentity.TileEntityUmbrellaStand;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
@@ -206,7 +192,6 @@ public class ClientProxy extends ServerProxy {
 
 	public void registerRenders() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis.class, new RenderConsole());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUmbrellaStand.class, new RenderUmbrellaStand());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoor.class, new RenderTileDoor());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAlembic.class, new RenderAlembic());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEPanel.class, new RenderElectricPanel());
@@ -239,8 +224,6 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorWood.class, new RenderTileDoorWood());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorWardrobe.class, new RenderTileDoorWardrobe());
 
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJsonTester.class, new RenderJsonHelper());
-
 		// Controls
 		if (!ClientProxy.disableControlRender) {
 			RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);
@@ -272,19 +255,14 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentCorridor.class, RenderHellbentCorridor::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellbentDoor.class, RenderHellbentDoor::new);
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityDalekCasing.class, RenderDalekCaseing::new);
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanInvasion.class, RenderCybermanInvasion::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanTomb.class, RenderCybermanTomb::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaserRay.class, new RenderLaserRay(Minecraft.getMinecraft().getRenderManager()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityItemMaterializer.class, RenderItemMaterializer::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityDoorsBrakSecondary.class, RenderBrakDoors::new);
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, RenderDalek::new);
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityAdipose.class, RenderAdipose::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCompanion.class, RenderCompanion::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityQuark.class, RenderQuark::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityTardis.class, RenderTardisEntity::new);
 		
 

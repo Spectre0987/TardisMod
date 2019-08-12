@@ -76,7 +76,7 @@ public class RenderWorldShell {
 			BOTI.bufferData(bb.getByteBuffer());
 		}
 		
-		GlStateManager.resetColor();
+		//GlStateManager.resetColor();
 		BOTI.bindBuffer();
 		GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, format.getSize(), 0);
 		GlStateManager.glColorPointer(4, GL11.GL_UNSIGNED_BYTE, format.getSize(), format.getColorOffset());

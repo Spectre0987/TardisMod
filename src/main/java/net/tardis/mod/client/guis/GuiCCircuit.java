@@ -2,14 +2,11 @@ package net.tardis.mod.client.guis;
 
 import java.io.IOException;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.GlStateManager.CullFace;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.client.EnumExterior;
@@ -52,7 +49,12 @@ public class GuiCCircuit extends GuiScreen{
 		this.drawDefaultBackground();
 		GuiMonitor.drawMonitorBackground(this, width, height);
 		this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, "Chameleon Circuit", width / 2, height / 2 - 50, 0xFFFFFF);
+		super.drawScreen(mouseX, mouseY, partialTicks);
 		GlStateManager.pushMatrix();
+		GlStateManager.enableBlend();
+		GlStateManager.enableDepth();
+		GlStateManager.enableCull();
+		GlStateManager.cullFace(CullFace.FRONT);
 		GlStateManager.color(1F, 1, 1, 1F);
 		GlStateManager.translate(width / 2 + 50, height / 2, 200);
 		GlStateManager.scale(30, 30, 30);
@@ -60,8 +62,11 @@ public class GuiCCircuit extends GuiScreen{
 		GlStateManager.rotate((Minecraft.getMinecraft().world.getTotalWorldTime() % 360) + partialTicks, 0, 1, 0);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(exteriors[index].tex);
 		exteriors[index].model.renderClosed(0.0625F);
+		GlStateManager.cullFace(CullFace.BACK);
+		GlStateManager.disableBlend();
+		GlStateManager.disableDepth();
+		GlStateManager.disableCull();
 		GlStateManager.popMatrix();
-		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override

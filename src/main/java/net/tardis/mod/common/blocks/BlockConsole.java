@@ -1,6 +1,7 @@
 package net.tardis.mod.common.blocks;
 
 import com.google.common.base.Supplier;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,13 +15,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.tardis.mod.api.blocks.IBlock;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
 import net.tardis.mod.common.entities.controls.EntityControl;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
-public class BlockConsole extends BlockTileBase implements IRenderBox, IBlock {
+public class BlockConsole extends BlockTileBase implements IRenderBox {
 
 	public static final AxisAlignedBB BB = new AxisAlignedBB(-1, 0, -1, 2, 0.7, 2);
 	public ItemBlock item = new ItemBlock(this);
@@ -104,11 +104,6 @@ public class BlockConsole extends BlockTileBase implements IRenderBox, IBlock {
 	 */
 	@Override
 	public boolean shouldRenderBox() {
-		return false;
-	}
-
-	@Override
-	public boolean doesDelete() {
 		return false;
 	}
 }
