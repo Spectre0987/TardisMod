@@ -28,6 +28,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.tardis.mod.api.dimensions.IBlockedDimension;
+import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
@@ -267,5 +268,17 @@ public class Helper {
 				light = newLight;
 		}
 		return light;
+	}
+	
+	public static boolean areWorldShellsEqual(WorldShell shell, WorldShell shell1) {
+		if(!shell.getOffset().equals(shell1.getOffset()))
+			return false;
+		if(shell.blockMap.size() != shell1.blockMap.size())
+			return false;
+		for(BlockPos pos : shell.blockMap.keySet()) {
+			if(!shell.blockMap.get(pos).equals(shell1.blockMap.get(pos)))
+				return false;
+		}
+		return true;
 	}
 }

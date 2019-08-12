@@ -41,6 +41,8 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
+import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
@@ -52,6 +54,7 @@ import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
@@ -178,7 +181,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			WorldServer ws = (WorldServer) world;
 			TileEntityTardis tardis = (TileEntityTardis) ws.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
 			if (tardis == null) return;
-			if (this.world.getTotalWorldTime() % 20 == 0)
+			if (this.world.getTotalWorldTime() % TardisConfig.BOTI.botiTickRate == 0)
 				this.updateWorldShell();
 			
 			//HADS
@@ -549,7 +552,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void updateWorldShell() {
 		if (worldShell == null || !worldShell.getOffset().equals(this.getConsolePos()))
 			this.worldShell = new WorldShell(this.getOffset());
-		
+
 		WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 		TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(this.getConsolePos());
 		if (tardis == null) return;
@@ -614,5 +617,15 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.isStealth = isStealth;
 		if (!world.isRemote)
 			world.notifyBlockUpdate(this.getPos(), world.getBlockState(this.getPos()), world.getBlockState(this.getPos()), 2);
+	}
+
+	@Override
+	public void onLoad() {
+		super.onLoad();
+		if(!world.isRemote) {
+			this.updateWorldShell();
+			NetworkHandler.NETWORK.sendToAllAround(new MessageSyncWorldShell(this.worldShell, this.getPos(), EnumType.BLOCKS),
+					new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 32));
+		}
 	}
 }

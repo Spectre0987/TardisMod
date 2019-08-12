@@ -43,7 +43,8 @@ public class MessageConfigSync implements IMessage{
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					TileEntityEgg.ITEMS = message.arsItems;
+					TileEntityEgg.ITEMS.clear();
+					TileEntityEgg.ITEMS.addAll(message.arsItems);
 				}
 			});
 			return null;

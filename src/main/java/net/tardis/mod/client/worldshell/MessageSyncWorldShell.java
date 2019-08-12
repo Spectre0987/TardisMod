@@ -111,6 +111,7 @@ public class MessageSyncWorldShell implements IMessage {
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
+					RenderWorldShell.BOTI = null;
 					World world = Minecraft.getMinecraft().world;
 					if (mes == null || world == null) return;
 					if (mes.id == -1) {

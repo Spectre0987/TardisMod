@@ -43,6 +43,7 @@ import net.tardis.mod.common.serializers.TDataSerializers;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageRequestBOTI;
 import net.tardis.mod.util.common.helpers.Helper;
@@ -244,7 +245,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 		if(world.isRemote && this.isOpen()) {
 			if(this.shell.getOffset().equals(BlockPos.ORIGIN))
 				this.syncWorldShell();
-			if(world.getTotalWorldTime() % 200 == 0 || this.getBotiUpdate())
+			if(world.getTotalWorldTime() % TardisConfig.BOTI.botiTickRate == 0 || this.getBotiUpdate())
 				this.syncWorldShell();
 			this.shell.setTime(this.shell.getTime() + 1);
 			if(this.clientWorld == null || ((WorldBoti)this.clientWorld).dimension != this.getDimension())

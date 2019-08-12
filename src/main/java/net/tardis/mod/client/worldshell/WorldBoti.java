@@ -36,7 +36,7 @@ public class WorldBoti extends WorldClient {
 		BlockStorage stor = this.shell.blockMap.get(pos);
 		if(stor != null)
 			return stor.light;
-		return 15;
+		return 0;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class WorldBoti extends WorldClient {
 
 	@Override
 	public int getLightFor(EnumSkyBlock type, BlockPos pos) {
-		return this.getLight(pos);
+		return type == EnumSkyBlock.SKY ? 15 : this.getLight(pos);
 	}
 
 	@Override
@@ -62,11 +62,6 @@ public class WorldBoti extends WorldClient {
 	@Override
 	public TileEntity getTileEntity(BlockPos pos) {
 		return shell.getTileEntity(pos);
-	}
-
-	@Override
-	public int getCombinedLight(BlockPos pos, int lightValue) {
-		return 15;
 	}
 
 	public void setShell(WorldShell worldShell) {

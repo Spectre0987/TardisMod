@@ -105,6 +105,10 @@ public class TardisConfig {
 		@Config.LangKey("config.boti.skip")
 		@Config.Comment("This is used to block any blocks from specfic mods from being rendered in the Bigger on the inside effect (For compatibility)")
 		public String[] modids = {};
+		
+		@Config.LangKey("config.boti.ticks")
+		@Config.Comment("How many ticks before we poll the world again")
+		public int botiTickRate = 100;
 	}
 
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)
