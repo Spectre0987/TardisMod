@@ -28,7 +28,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class RenderWorldShell {
 	
-	private static VertexBuffer BOTI = null;
+	public static VertexBuffer BOTI = null;
 	static {
 		((SimpleReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(new IResourceManagerReloadListener() {
 
@@ -59,12 +59,14 @@ public class RenderWorldShell {
 				IBlockState state = entry.getValue().blockstate;
 				state = state.getActualState(world, entry.getKey());
 				IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
-				if(state.getRenderType() != EnumBlockRenderType.INVISIBLE && model != null) {
-					//int light = entry.getValue().light;
-					//if(light == 0) light = 4;
+				if(state.getRenderType() != EnumBlockRenderType.INVISIBLE &&state.getRenderType() != EnumBlockRenderType.ENTITYBLOCK_ANIMATED && model != null) {
 					
 					Minecraft.getMinecraft().getBlockRendererDispatcher()
-					.getBlockModelRenderer().renderModelFlat(world, model, state, entry.getKey(), bb, true, 0);
+					.getBlockModelRenderer().renderModel(world, model, state, entry.getKey(), bb, true);
+				}
+				else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
+					Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer
+					.renderFluid(world, state, entry.getKey(), bb);
 				}
 			}
 			bb.sortVertexData((float)x, (float)y, (float)z);
@@ -73,18 +75,21 @@ public class RenderWorldShell {
 			bb.reset();
 			BOTI.bufferData(bb.getByteBuffer());
 		}
-		else {
-			BOTI.bindBuffer();
-			GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, format.getSize(), 0);
-			GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-			GlStateManager.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
-			GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
-            BOTI.drawArrays(GL11.GL_QUADS);
-            GlStateManager.glDisableClientState(GL11.GL_VERTEX_ARRAY);
-            GlStateManager.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
-            GlStateManager.glDisableClientState(GL11.GL_COLOR_ARRAY);
-            BOTI.unbindBuffer();
-		}
+		
+		GlStateManager.resetColor();
+		BOTI.bindBuffer();
+		GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, format.getSize(), 0);
+		GlStateManager.glColorPointer(4, GL11.GL_UNSIGNED_BYTE, format.getSize(), format.getColorOffset());
+		GlStateManager.glTexCoordPointer(2, GL11.GL_FLOAT, format.getSize(), format.getUvOffsetById(0));
+		
+		GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+		GlStateManager.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+		GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
+        BOTI.drawArrays(GL11.GL_QUADS);
+        GlStateManager.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+        GlStateManager.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+        GlStateManager.glDisableClientState(GL11.GL_COLOR_ARRAY);
+        BOTI.unbindBuffer();
 		
 		//Tile Entites
 		RenderHelper.enableStandardItemLighting();
