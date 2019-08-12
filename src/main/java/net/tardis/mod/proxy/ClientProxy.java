@@ -312,9 +312,6 @@ public class ClientProxy extends ServerProxy {
 		registerRenders();
 		EnumClothes.ClothingHandler.init();
 		OverlayHandler.init();
-		if (!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
-			Minecraft.getMinecraft().getFramebuffer().enableStencil();
-		}
 		for(Block block : TBlocks.BLOCKS) {
 			if(block instanceof BlockConsole) {
 				GuiConsoleChange.TARDISes.put(block.getDefaultState(), 
@@ -354,6 +351,9 @@ public class ClientProxy extends ServerProxy {
 	@Override
 	public void postInit() {
 		super.postInit();
+		if (!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
+			Minecraft.getMinecraft().getFramebuffer().enableStencil();
+		}
 	}
 	
 	public void addBlockState(File file, Block block) {

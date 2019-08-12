@@ -14,6 +14,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -31,8 +34,6 @@ public class RenderHelper {
 
 	private static WorldBoti wBoti;
 	private static FloatBuffer FOG_BUFFER = GLAllocation.createDirectFloatBuffer(16);
-
-	public RenderHelper() {}
 
 	public static void renderPortal(RenderWorldShell renderShell, IContainsWorldShell te, float partialTicks, float rotation, @Nullable Vec3d offset, @Nullable Vec3d size, boolean renderFog) {
 		if (ClientProxy.getRenderBOTI() && MinecraftForgeClient.getRenderPass() == 1) {

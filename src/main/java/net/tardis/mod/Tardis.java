@@ -360,8 +360,6 @@ public class Tardis {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
 		event.registerServerCommand(new TardisCommand());
-		if (Tardis.getIsDev()) {
-			event.registerServerCommand(new CommandDebug());
-		}
+		event.registerServerCommand(new CommandDebug());
 	}
 }
