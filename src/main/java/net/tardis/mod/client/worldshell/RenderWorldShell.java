@@ -25,6 +25,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
+import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderWorldShell {
 	
@@ -59,10 +60,14 @@ public class RenderWorldShell {
 				IBlockState state = entry.getValue().blockstate;
 				state = state.getActualState(world, entry.getKey());
 				IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
-				if(state.getRenderType() != EnumBlockRenderType.INVISIBLE &&state.getRenderType() != EnumBlockRenderType.ENTITYBLOCK_ANIMATED && model != null) {
+				
+				if(!Helper.canRenderInBOTI(state))
+					continue;
+				
+				if(model != null && !model.isBuiltInRenderer() && state.getRenderType() == EnumBlockRenderType.MODEL) {
 					
 					Minecraft.getMinecraft().getBlockRendererDispatcher()
-					.getBlockModelRenderer().renderModel(world, model, state, entry.getKey(), bb, true);
+					.getBlockModelRenderer().renderModel(world, model, state, entry.getKey(), bb, false);
 				}
 				else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
 					Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer

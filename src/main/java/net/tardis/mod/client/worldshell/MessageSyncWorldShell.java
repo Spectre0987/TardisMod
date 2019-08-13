@@ -104,8 +104,6 @@ public class MessageSyncWorldShell implements IMessage {
 
 	public static class Handler implements IMessageHandler<MessageSyncWorldShell, IMessage> {
 
-		public Handler() {}
-
 		@Override
 		public IMessage onMessage(MessageSyncWorldShell mes, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {

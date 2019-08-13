@@ -180,6 +180,10 @@ public class TEventHandler {
 				}
 			}
 		}
+		//RWF
+		if(event.getEntityLiving().getRidingEntity() instanceof EntityTardis) {
+			event.setCanceled(true);
+		}
 	}
 
 
@@ -296,6 +300,10 @@ public class TEventHandler {
 	public static void useRegen(LivingDeathEvent event) {
 		if (event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+			if(player.getRidingEntity() instanceof EntityTardis) {
+				event.setCanceled(true);
+				return;
+			}
 			if (TimeLord.isTimeLord(player)) {
 				if (TimeLord.useRegen(player)) {
 					event.setCanceled(true);

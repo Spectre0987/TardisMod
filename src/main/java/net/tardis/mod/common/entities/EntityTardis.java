@@ -129,8 +129,10 @@ public class EntityTardis extends Entity{
 	public void move() {
 		if(!this.onGround && !this.hasNoGravity())
 			motionY -= 0.5D;
+		else if(this.hasNoGravity())
+			motionY = 0;
 		this.move(MoverType.SELF, motionX, motionY, motionZ);
-		motionX = motionY = motionZ = 0;
+		motionX = motionZ = 0;
 	}
 	
 	public void handleRider(EntityLivingBase base) {

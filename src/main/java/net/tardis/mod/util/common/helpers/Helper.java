@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -277,6 +278,16 @@ public class Helper {
 			return false;
 		for(BlockPos pos : shell.blockMap.keySet()) {
 			if(!shell.blockMap.get(pos).equals(shell1.blockMap.get(pos)))
+				return false;
+		}
+		return true;
+	}
+	
+	public static boolean canRenderInBOTI(IBlockState state) {
+		for(String blocked : TardisConfig.BOTI.modids) {
+			if(blocked.contains(":") && blocked.charAt(blocked.indexOf(":")) == '*')
+				return false;
+			if(state.getBlock().getRegistryName().toString().equals(blocked))
 				return false;
 		}
 		return true;
