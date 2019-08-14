@@ -1,5 +1,7 @@
 package net.tardis.mod.common.world;
 
+import java.util.Map;
+
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -8,16 +10,15 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
-import java.util.Map;
-
 public class TardisWorldSavedData extends WorldSavedData {
-
+	
 	public TardisWorldSavedData(String name) {
 		super(name);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
+		TardisHelper.tardisOwners.clear();
 		NBTTagList list = nbt.getTagList("tardises", Constants.NBT.TAG_COMPOUND);
 		for (NBTBase base : list) {
 			NBTTagCompound tag = (NBTTagCompound) base;
@@ -38,5 +39,7 @@ public class TardisWorldSavedData extends WorldSavedData {
 		nbt.setTag("tardises", list);
 		return nbt;
 	}
+	
+	
 
 }

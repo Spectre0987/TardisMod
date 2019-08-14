@@ -285,10 +285,13 @@ public class Helper {
 	
 	public static boolean canRenderInBOTI(IBlockState state) {
 		for(String blocked : TardisConfig.BOTI.modids) {
-			if(blocked.contains(":") && blocked.charAt(blocked.indexOf(":")) == '*')
-				return false;
 			if(state.getBlock().getRegistryName().toString().equals(blocked))
 				return false;
+			if(blocked.endsWith("*")) {
+				String modid = blocked.substring(0, blocked.indexOf(':'));
+				if(state.getBlock().getRegistryName().getNamespace().equals(modid))
+					return false;
+			}
 		}
 		return true;
 	}

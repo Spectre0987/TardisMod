@@ -25,6 +25,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
+import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class RenderWorldShell {
@@ -67,7 +68,7 @@ public class RenderWorldShell {
 				if(model != null && !model.isBuiltInRenderer() && state.getRenderType() == EnumBlockRenderType.MODEL) {
 					
 					Minecraft.getMinecraft().getBlockRendererDispatcher()
-					.getBlockModelRenderer().renderModel(world, model, state, entry.getKey(), bb, false);
+					.getBlockModelRenderer().renderModel(world, model, state, entry.getKey(), bb, TardisConfig.BOTI.checkSides);
 				}
 				else if(state.getRenderType() == EnumBlockRenderType.LIQUID) {
 					Minecraft.getMinecraft().getBlockRendererDispatcher().fluidRenderer

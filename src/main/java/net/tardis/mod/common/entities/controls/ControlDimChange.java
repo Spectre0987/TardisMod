@@ -54,7 +54,8 @@ public class ControlDimChange extends EntityControl {
 				tardis.dimIndex = ids.length - 1;
 
 			int dim = ids[tardis.dimIndex];
-			if (Helper.isDimensionBlocked(dim)) this.preformAction(player);
+			if (Helper.isDimensionBlocked(dim))
+				this.preformAction(player);
 			tardis.setTargetDimension(ids[tardis.dimIndex]);
 			player.sendStatusMessage(new TextComponentString(new TextComponentTranslation(TStrings.TARDIS_DIMENSION).getFormattedText() + " " + Helper.formatDimensionName(DimensionManager.createProviderFor(ids[tardis.dimIndex]).getDimensionType().getName())), true);
 		} else

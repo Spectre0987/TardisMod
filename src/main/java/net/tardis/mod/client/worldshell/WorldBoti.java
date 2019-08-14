@@ -36,7 +36,7 @@ public class WorldBoti extends WorldClient {
 		BlockStorage stor = this.shell.blockMap.get(pos);
 		if(stor != null)
 			return stor.light;
-		return 0;
+		return 15;
 	}
 
 	@Override

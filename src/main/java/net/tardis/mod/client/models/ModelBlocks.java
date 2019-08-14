@@ -74,7 +74,7 @@ public class ModelBlocks implements IExteriorModel {
 				BufferBuilder bb = Tessellator.getInstance().getBuffer();
 				GlStateManager.translate(pos.getX(), pos.getY(), pos.getZ());
 				List<BakedQuad> quads = model.getQuads(state, null, 0);
-				VertexFormat vFormat = quads.size() > 0 ? quads.get(0).getFormat() : DefaultVertexFormats.ITEM;
+				VertexFormat vFormat = quads.size() > 0 ? quads.get(0).getFormat() : DefaultVertexFormats.BLOCK;
 				bb.begin(GL11.GL_QUADS, vFormat);
 				int color = Minecraft.getMinecraft().getBlockColors().colorMultiplier(state, world, Minecraft.getMinecraft().player.getPosition(), MinecraftForgeClient.getRenderPass());
 				for (BakedQuad bq : quads) {

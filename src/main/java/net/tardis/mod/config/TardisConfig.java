@@ -1,3 +1,4 @@
+
 package net.tardis.mod.config;
 
 import net.minecraftforge.common.config.Config;
@@ -103,12 +104,16 @@ public class TardisConfig {
 		public boolean enabled = true;
 
 		@Config.LangKey("config.boti.skip")
-		@Config.Comment("This is used to block any blocks from specfic mods from being rendered in the Bigger on the inside effect (For compatibility)")
+		@Config.Comment("This is used to block any blocks from being rendered in the Bigger on the inside effect (For compatibility) ex. ic2:te or if you want to block all of ic2 ic2:*")
 		public String[] modids = {};
 		
 		@Config.LangKey("config.boti.ticks")
 		@Config.Comment("How many ticks before we poll the world again")
 		public int botiTickRate = 100;
+		
+		@Config.LangKey("config.boti.fast")
+		@Config.Comment("If this is enabled boti will check sides before rendering. Set this to false if you crash")
+		public boolean checkSides = true;
 	}
 
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)
