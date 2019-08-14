@@ -75,8 +75,7 @@ public class RenderWorldShell {
 					.renderFluid(world, state, entry.getKey(), bb);
 				}
 			}
-			bb.sortVertexData((float)x, (float)y, (float)z);
-	            
+			
 			bb.finishDrawing();
 			bb.reset();
 			BOTI.bufferData(bb.getByteBuffer());

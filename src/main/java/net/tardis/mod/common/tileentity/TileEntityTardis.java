@@ -535,8 +535,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				if (type != null) this.currentDimName = currentType.getName();
 			}
 			if (this.isInFlight()) {
-				this.ticksToTravel += this.calcTimeToTravel();
-				this.totalTimeToTravel = this.ticksToTravel;
+				this.ticksToTravel += this.calcTimeToTravel() - 400;
+				this.totalTimeToTravel += this.ticksToTravel;
 			}
 		}
 	}
