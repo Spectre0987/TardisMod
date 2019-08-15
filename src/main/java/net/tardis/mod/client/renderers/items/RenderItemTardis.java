@@ -30,9 +30,8 @@ public class RenderItemTardis extends TileEntityItemStackRenderer {
 		GlStateManager.rotate(180, 1, 0, 0);
 		GlStateManager.rotate(23.5F, 1, 0, 0);
 		GlStateManager.rotate(45, 0, 1, 0);
-		model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		door_r.render(null, 0, 0, 0, 0, 0, 0.0625F);
-		door_l.render(null, 0, 0, 0, 0, 0, 0.0625F);
+		GlStateManager.rotate(Minecraft.getMinecraft().world.getTotalWorldTime() + Minecraft.getMinecraft().getRenderPartialTicks() % 360, 0, 1, 0);
+		model.renderClosed(0.0625F);
 		GlStateManager.popMatrix();
 	}
 }

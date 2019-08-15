@@ -51,7 +51,6 @@ import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -59,7 +58,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.dimensions.IDimensionProperties;
-import net.tardis.mod.common.TDamage;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.data.TimeLord;
@@ -68,7 +66,6 @@ import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.INeedMetadata;
 import net.tardis.mod.common.items.ItemKey;
 import net.tardis.mod.common.items.TItems;
-import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.recipes.RecipeCinnabar;
 import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.recipes.RecipeRemote;
@@ -156,19 +153,7 @@ public class TEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void stopHurt(LivingHurtEvent event) {
-		if (event.getSource().equals(TDamage.SUFFICATION)) {
-			if (event.getEntityLiving() instanceof EntityPlayer) {
-				int count = 0;
-				for (ItemStack stack : event.getEntityLiving().getArmorInventoryList()) {
-					if (stack.getItem() instanceof ItemSpaceSuit) {
-						++count;
-					}
-				}
-				if (count >= 3) {
-					event.setCanceled(true);
-				}
-			}
-		}
+		
 		EntityLivingBase e = event.getEntityLiving();
 		if (!(e instanceof IMob) && !TardisHelper.getTardisForPosition(e.getPosition()).equals(BlockPos.ORIGIN)) {
 			TileEntityTardis tardis = (TileEntityTardis) e.world.getTileEntity(TardisHelper.getTardisForPosition(e.getPosition()));
@@ -279,20 +264,6 @@ public class TEventHandler {
 			if (map.key.toString().equals("tardis:raider")) {
 				map.ignore();
 			}
-		}
-	}
-	
-	@SubscribeEvent
-	public static void stopDrown(LivingUpdateEvent event) {
-		EntityLivingBase base = event.getEntityLiving();
-		int count = 0;
-		for (ItemStack stack : base.getArmorInventoryList()) {
-			if (stack.getItem() instanceof ItemSpaceSuit) {
-				count++;
-			}
-		}
-		if (count >= 3) {
-			base.setAir(200);
 		}
 	}
 

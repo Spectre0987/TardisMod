@@ -1052,6 +1052,15 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		MinecraftForge.EVENT_BUS.post(new TardisExitEvent(entity, this.getPos()));
 		BlockPos pos = this.getLocation();
 		
+		//Teleport entities this is riding
+		if(entity.getRidingEntity() != null) {
+			Entity ride = entity.getRidingEntity();
+			entity.startRiding(null);
+			if(!(ride instanceof EntityTardis)) {
+				this.transferPlayer(ride, checkDoors);
+			}
+
+		}
 		//Mount entity if it exists
 		EntityTardis tardis = this.getTardisEntity();
 		if(tardis != null && !tardis.isDead) {

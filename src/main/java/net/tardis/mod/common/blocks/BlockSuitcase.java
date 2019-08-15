@@ -1,5 +1,8 @@
 package net.tardis.mod.common.blocks;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -14,9 +17,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.common.items.TItems;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class BlockSuitcase extends BlockBase {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -25,11 +25,11 @@ public class BlockSuitcase extends BlockBase {
 	private Random rand = new Random();
 
 	public BlockSuitcase() {
-		clothes.add(new ItemStack[]{new ItemStack(TItems.space_chest), new ItemStack(TItems.space_helm), new ItemStack(TItems.space_legs)});
 		clothes.add(new ItemStack[]{new ItemStack(TItems.fez), new ItemStack(TItems.bowtie)});
 		clothes.add(new ItemStack[]{new ItemStack(TItems.first_cane), new ItemStack(TItems.fourth_hat)});
-		clothes.add(new ItemStack[]{new ItemStack(TItems.void_specs), new ItemStack(TItems.fob_watch)});
+		clothes.add(new ItemStack[]{new ItemStack(TItems.void_specs)});
 		clothes.add(new ItemStack[]{new ItemStack(TItems.thirteen_coat)});
+		this.setHarvestLevel("pickaxe", 0);
 	}
 
 	@Override

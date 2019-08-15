@@ -300,7 +300,6 @@ public class ClientProxy extends ServerProxy {
 
 	@Override
 	public void init() {
-		TItems.space_helm.setTileEntityItemStackRenderer(new RenderItemSpaceHelm());
 		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
 		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
 		TItems.sonic13th.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelSonic13()));

@@ -3,6 +3,7 @@ package net.tardis.mod.common.entities.controls;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -15,13 +16,13 @@ import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.guis.GuiTelepathicCircuts;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.sounds.TSounds;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis04;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis05;
-import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public class ControlTelepathicCircuts extends EntityControl {
@@ -58,12 +59,17 @@ public class ControlTelepathicCircuts extends EntityControl {
 				TileEntityTardis tardis = ((TileEntityTardis)te);
 				WorldServer ws = ((WorldServer)world).getMinecraftServer().getWorld(tardis.dimension);
 				BlockPos pos = tardis.getLocation();
-				ws.setBlockState(tardis.getLocation(), Blocks.AIR.getDefaultState());
-				ws.setBlockState(tardis.getLocation().up(), Blocks.AIR.getDefaultState());
 				EntityTardis tardisEntity = new EntityTardis(ws);
 				tardisEntity.setConsole(tardis.getPos());
 				tardisEntity.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 				tardisEntity.setExteior(EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()));
+				TileEntity door = ws.getTileEntity(tardis.getLocation().up());
+				if(door instanceof TileEntityDoor) {
+					NBTTagCompound doorTag = ((TileEntityDoor)door).serializeNBT();
+					tardisEntity.setDoorTag(doorTag);
+				}
+				ws.setBlockState(tardis.getLocation(), Blocks.AIR.getDefaultState());
+				ws.setBlockState(tardis.getLocation().up(), Blocks.AIR.getDefaultState());
 				ws.spawnEntity(tardisEntity);
 				tardis.setTardisEntity(tardisEntity);
 				((WorldServer)world).addScheduledTask(new Runnable() {

@@ -20,8 +20,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -129,7 +127,6 @@ import net.tardis.mod.common.world.TardisLoadingCallback;
 import net.tardis.mod.common.world.WorldGenTardis;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.handlers.GuiHandlerTardis;
-import net.tardis.mod.integrations.Galacticraft;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.proxy.ServerProxy;
 import net.tardis.mod.util.common.helpers.EntityHelper;
@@ -141,7 +138,7 @@ public class Tardis {
 
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
-	public static final String DEP = "after:ic2, galacticraftcore; required-after:forge@[14.23.2.2638,)";
+	public static final String DEP = "after:ic2; required-after:forge@[14.23.2.2638,)";
 	public static final String VERSION = "0.1.1A";
 	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = false;
@@ -166,8 +163,6 @@ public class Tardis {
 	public void preInit(FMLPreInitializationEvent event) {
 		proxy.preInit();
 		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
-		if (Loader.isModLoaded(TStrings.ModIds.GALACTICRAFT))
-			Galacticraft.preInit();
 		TItems.init();
 		TBlocks.register();
 		BiomeReg.init();
@@ -317,8 +312,6 @@ public class Tardis {
 		proxy.init();
 		// Ore Dictionary
 		OreDictionary.registerOre("oreUranium", TItems.power_cell);
-		OreDictionary.registerOre("gemRuby", TItems.ruby);
-		OreDictionary.registerOre("oreRuby", TBlocks.ruby_ore);
 		OreDictionary.registerOre("dustCinnabar", TItems.crushedCinnabar);
 		OreDictionary.registerOre("oreCinnabar", TBlocks.cinnabar_ore);
 

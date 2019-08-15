@@ -14,7 +14,6 @@ import java.util.Random;
 public class WorldGenTardis implements IWorldGenerator {
 
 	WorldGenMinable CINNABAR_GEN = new WorldGenMinable(TBlocks.cinnabar_ore.getDefaultState(), 6);
-	WorldGenMinable RUBY_GEN = new WorldGenMinable(TBlocks.ruby_ore.getDefaultState(), 3);
 
 	public WorldGenTardis() {
 
@@ -28,9 +27,6 @@ public class WorldGenTardis implements IWorldGenerator {
 			if (random.nextInt(100) < 90) {
 				CINNABAR_GEN.generate(world, random, new BlockPos(chunkX * 16, random.nextInt(80), chunkZ * 16).add(8, 0, 8));
 			}
-		}
-		if (random.nextInt(100) < 70) {
-			RUBY_GEN.generate(world, random, new BlockPos(chunkX * 16, random.nextInt(80), chunkZ * 16).add(8, 0, 8));
 		}
 	}
 

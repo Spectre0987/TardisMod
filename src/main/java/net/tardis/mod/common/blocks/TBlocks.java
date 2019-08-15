@@ -85,7 +85,6 @@ public class TBlocks {
 	
 	public static Block electric_panel = register(new BlockEPanel(), "electric_panel");
 	
-	public static Block ruby_ore = register(new BlockItemDrop(() -> new ItemStack(TItems.ruby), 1, 1), "ruby_ore");
 	public static Block cinnabar_ore = register(new BlockItemDrop(() -> new ItemStack(TItems.crushedCinnabar), 1, 1), "cinnabar_ore");
 	public static Block tardis_coral = register(new BlockTardisCoral(), "tardis_coral");
 	

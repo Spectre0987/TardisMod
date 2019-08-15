@@ -628,4 +628,11 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 32));
 		}
 	}
+	
+	public EntityTardis createTardisEntity() {
+		EntityTardis tardis = new EntityTardis(world);
+		tardis.setConsole(this.getConsolePos());
+		tardis.setDoorTag(this.serializeNBT());
+		return tardis;
+	}
 }

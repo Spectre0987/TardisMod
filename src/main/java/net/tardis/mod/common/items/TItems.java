@@ -3,7 +3,6 @@ package net.tardis.mod.common.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -16,7 +15,6 @@ import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.items.clothing.ItemBowTie;
 import net.tardis.mod.common.items.clothing.ItemFez;
-import net.tardis.mod.common.items.clothing.ItemSpaceSuit;
 import net.tardis.mod.common.items.components.ItemArtronCapacitor;
 import net.tardis.mod.common.items.components.ItemComponent;
 import net.tardis.mod.common.items.components.ItemDematCircut;
@@ -34,7 +32,6 @@ public class TItems {
 	public static Item circuts = null;
 	public static Item gunstick = null;
 	public static Item power_cell = null;
-	public static Item fob_watch = null;
 
 	public static Item ray_gun = null;
 
@@ -49,10 +46,6 @@ public class TItems {
 	public static Item sonic_screwdriver = null;
 	public static Item manual = null;
 
-	public static Item space_helm = null;
-	public static Item space_chest = null;
-	public static Item space_legs = null;
-
 	public static Item first_cane = null;
 	public static Item fourth_hat = null;
 	public static Item thirteen_coat = null;
@@ -63,7 +56,6 @@ public class TItems {
 	public static Item time_vector_generator = null;
 	public static Item biodampener = null;
 
-	public static Item ruby = null;
 	public static Item mercuryBottle = null;
 	public static Item crushedCinnabar = null;
 
@@ -71,8 +63,6 @@ public class TItems {
 	public static Item hellbent_door = null;
 
 	public static Item interior_door = null;
-
-	public static Item marker = null;
 
 	public static Item sonic13th = null;
 
@@ -129,9 +119,6 @@ public class TItems {
 		sonic_cane = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_cane");
 		vortex_manip = createItem(new ItemVortexManipulator(), "vortex_manip");
 		sonic_screwdriver = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_screwdriver");
-		space_helm = createItem(new ItemSpaceSuit(0, EntityEquipmentSlot.HEAD), "space_helm");
-		space_chest = createItem(new ItemSpaceSuit(1, EntityEquipmentSlot.CHEST), "space_chest");
-		space_legs = createItem(new ItemSpaceSuit(2, EntityEquipmentSlot.LEGS), "space_legs");
 		manual = createItem(new ItemManual(), "tardis_manual");
 		key_01 = createItem(new ItemKey(), "key_01");
 		first_cane = createItem(new ItemCane(), "first_cane");
@@ -140,7 +127,6 @@ public class TItems {
 		symbiotic_nuclei = createItem(new ItemSymbioticNuclei(), "symbiotic_nuclei");
 		stattenheim_remote = createItem(new ItemRemote(), "stattenheim_remote");
 		time_vector_generator = createItem(new ItemTVG(), "time_vector_generator");
-		ruby = createItem(new ItemBase(), "ruby");
 		sonic_shades = createItem(new ItemSonicShades(EnumClothes.HAT_SONIC_SHADES), "sonic_shades");
 		biodampener = createItem(new ItemBase(), "biodampener");
 		mercuryBottle = createItem(new ItemBase(), "mercury_bottle");
