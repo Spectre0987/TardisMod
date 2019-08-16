@@ -34,4 +34,9 @@ public class TileEntityMultiblock extends TileEntity implements IMultiblock{
 		this.markDirty();
 	}
 
+	@Override
+	public float getHardness() {
+		return 5F;
+	}
+
 }

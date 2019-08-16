@@ -1,11 +1,6 @@
 package net.tardis.mod.proxy;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
-
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonWriter;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -30,8 +25,6 @@ import net.tardis.mod.client.colorhandlers.BlockColorTelos;
 import net.tardis.mod.client.guis.GuiConsoleChange;
 import net.tardis.mod.client.guis.GuiToggleHum;
 import net.tardis.mod.client.models.ModelBlocks;
-import net.tardis.mod.client.models.clothing.ModelVortexM;
-import net.tardis.mod.client.models.consoles.ModelConsole;
 import net.tardis.mod.client.models.decoration.ModelBChair;
 import net.tardis.mod.client.models.exteriors.ModelTardis01;
 import net.tardis.mod.client.models.exteriors.ModelTardis02;
@@ -50,6 +43,7 @@ import net.tardis.mod.client.models.items.ModelFirstCane;
 import net.tardis.mod.client.models.items.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
 import net.tardis.mod.client.renderers.RenderInvis;
+import net.tardis.mod.client.renderers.TEISRVictim;
 import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
 import net.tardis.mod.client.renderers.consoles.RenderConsole03;
@@ -85,12 +79,9 @@ import net.tardis.mod.client.renderers.exteriors.RenderTileDoorWardrobe;
 import net.tardis.mod.client.renderers.exteriors.RenderTileDoorWood;
 import net.tardis.mod.client.renderers.exteriors.RendererTileDoor01;
 import net.tardis.mod.client.renderers.items.RenderItemAlembic;
-import net.tardis.mod.client.renderers.items.RenderItemSpaceHelm;
 import net.tardis.mod.client.renderers.items.RenderItemTardis;
 import net.tardis.mod.client.renderers.items.RenderItemTardis02;
-import net.tardis.mod.client.renderers.items.RenderItemTardis03;
 import net.tardis.mod.client.renderers.items.RenderTEISRItem;
-import net.tardis.mod.client.renderers.layers.RenderLayerVortexM;
 import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
 import net.tardis.mod.client.renderers.tiles.RenderElectricPanel;
@@ -172,7 +163,7 @@ public class ClientProxy extends ServerProxy {
 
 		if (!layerPlayers.contains(player)) {
 			RenderPlayer render = e.getRenderer();
-			addRenderLayer(new RenderLayerVortexM(render));
+			//addRenderLayer(new RenderLayerVortexM(render));
 			layerPlayers.add(player);
 		}
 	}
@@ -181,13 +172,6 @@ public class ClientProxy extends ServerProxy {
 		for (RenderPlayer playerRender : Minecraft.getMinecraft().getRenderManager().getSkinMap().values()) {
 			playerRender.addLayer(layer);
 		}
-	}
-
-	public static boolean shouldRender(String modid) {
-		for (String s : TardisConfig.BOTI.modids) {
-			if (modid.equals(s)) return false;
-		}
-		return true;
 	}
 
 	public void registerRenders() {
@@ -226,7 +210,6 @@ public class ClientProxy extends ServerProxy {
 
 		// Controls
 		if (!ClientProxy.disableControlRender) {
-			RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlX.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlY.class, RenderInvis::new);
 			RenderingRegistry.registerEntityRenderingHandler(ControlZ.class, RenderInvis::new);
@@ -247,6 +230,7 @@ public class ClientProxy extends ServerProxy {
 			RenderingRegistry.registerEntityRenderingHandler(ControlWaypoint.class, RenderInvis::new);
 		}
 
+		RenderingRegistry.registerEntityRenderingHandler(ControlDoor.class, RenderDoor::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCorridor.class, RenderCorridor::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBessie.class, RenderBessie::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalekSkaro.class, RenderDalekScaro::new);
@@ -257,7 +241,7 @@ public class ClientProxy extends ServerProxy {
 
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityCybermanInvasion.class, RenderCybermanInvasion::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityLaserRay.class, new RenderLaserRay(Minecraft.getMinecraft().getRenderManager()));
+		RenderingRegistry.registerEntityRenderingHandler(EntityLaserRay.class, RenderLaserRay::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityDoorsBrakSecondary.class, RenderBrakDoors::new);
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDalek.class, RenderDalek::new);
@@ -300,18 +284,15 @@ public class ClientProxy extends ServerProxy {
 
 	@Override
 	public void init() {
-		TItems.vortex_manip.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelVortexM(), ModelVortexM.TEXTURE));
 		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
 		TItems.sonic13th.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelSonic13()));
+		TItems.player_victim.setTileEntityItemStackRenderer(new TEISRVictim());
 
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RenderItemTardis());
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());
-		Item.getItemFromBlock(TBlocks.tardis_top_02).setTileEntityItemStackRenderer(new RenderItemTardis03());
 		Item.getItemFromBlock(TBlocks.alembic).setTileEntityItemStackRenderer(new RenderItemAlembic());
 
 		Item.getItemFromBlock(TBlocks.br_chair).setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelBChair(), new ResourceLocation(Tardis.MODID, "textures/blocks/chair_br.png")));
-
-		Item.getItemFromBlock(TBlocks.console).setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelConsole(), RenderConsole.CONSOLE_TEXTURE));
 
 		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new BlockColorTelos(), TBlocks.telos_sand);
 
@@ -330,35 +311,6 @@ public class ClientProxy extends ServerProxy {
 		super.postInit();
 		if (!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
-		}
-	}
-	
-	public void addBlockState(File file, Block block) {
-		file = new File(file.getAbsolutePath() + "/" + block.getRegistryName().getPath() + ".json");
-		System.out.println(file.getAbsolutePath());
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-				JsonWriter writer = new GsonBuilder().setPrettyPrinting().create().newJsonWriter(new FileWriter(file));
-				writer.beginObject();
-				
-				writer.name("variants");
-				writer.beginObject();
-				writer.name("inventory");
-				writer.beginObject();
-				writer.name("model").value("tardis:teisr");
-				writer.endObject();
-				writer.name("normal");
-				writer.beginObject();
-				writer.name("model").value("tardis:teisr");
-				writer.endObject();
-				writer.endObject();
-				
-				writer.endObject();
-				writer.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }

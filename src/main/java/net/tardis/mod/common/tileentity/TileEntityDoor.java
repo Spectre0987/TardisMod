@@ -632,7 +632,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public EntityTardis createTardisEntity() {
 		EntityTardis tardis = new EntityTardis(world);
 		tardis.setConsole(this.getConsolePos());
-		tardis.setDoorTag(this.serializeNBT());
 		return tardis;
 	}
 }

@@ -1,22 +1,20 @@
 package net.tardis.mod.common.items;
 
-import net.minecraft.client.Minecraft;
+import java.util.List;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tardis.mod.client.guis.manual.GuiManual;
-import net.tardis.mod.common.strings.TStrings;
-
-import java.util.List;
 
 public class ItemManual extends ItemBase {
 
+	private static TextComponentString LAZY = new TextComponentString("We're too lazy to write this, just hover your mouse over the controls!");
+	
 	public ItemManual() {
 		this.setMaxStackSize(1);
 	}
@@ -24,20 +22,13 @@ public class ItemManual extends ItemBase {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TextComponentTranslation("manual.help").getFormattedText());
-		tooltip.add(new TextComponentTranslation(TStrings.ToolTips.MANUAL_SUPERNOVA).getFormattedText());
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if (worldIn.isRemote) {
-			openGui();
-		}
+		if(!worldIn.isRemote)
+			playerIn.sendMessage(LAZY);
 		return super.onItemRightClick(worldIn, playerIn, handIn);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void openGui() {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiManual());
 	}
 }

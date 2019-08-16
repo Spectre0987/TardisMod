@@ -40,9 +40,6 @@ public class TItems {
 	public static Item bowtie = null;
 
 	public static Item sonic_cane = null;
-	public static Item umbrella_closed = null;
-	public static Item umbrella_open = null;
-	public static Item vortex_manip = null;
 	public static Item sonic_screwdriver = null;
 	public static Item manual = null;
 
@@ -99,8 +96,7 @@ public class TItems {
 	public static Item sonic_pen = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_pen");
 	
 	//TODO: Add the shrinky- killy thing
-	//public static Item player_victim = createItem(new ItemPlayerVictim(), "player_victim");
-
+	public static Item player_victim = createItem(new ItemPlayerVictim(), "player_victim");
 
 	@SubscribeEvent
 	public static void regItems(RegistryEvent.Register<Item> event) {
@@ -117,7 +113,6 @@ public class TItems {
 		fez = createItem(new ItemFez(), "fez");
 		bowtie = createItem(new ItemBowTie(), "bowtie");
 		sonic_cane = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_cane");
-		vortex_manip = createItem(new ItemVortexManipulator(), "vortex_manip");
 		sonic_screwdriver = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_screwdriver");
 		manual = createItem(new ItemManual(), "tardis_manual");
 		key_01 = createItem(new ItemKey(), "key_01");

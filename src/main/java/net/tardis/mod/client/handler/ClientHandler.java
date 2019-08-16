@@ -60,13 +60,6 @@ public class ClientHandler {
 	}
 	
 	@SubscribeEvent
-	public static void useVortexM(PlayerInteractEvent.RightClickEmpty e) {
-		if (e.getEntityPlayer().getHeldItemMainhand().isEmpty() && e.getEntityPlayer().dimension != TDimensions.TARDIS_ID && e.getEntityPlayer().inventory.hasItemStack(new ItemStack(TItems.vortex_manip))) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiVortexM());
-		}
-	}
-	
-	@SubscribeEvent
 	public static void overlayFuckup(RenderGameOverlayEvent.Post event) {
 		/*if(event.getType() == ElementType.ALL) {
 			GlStateManager.disableTexture2D();

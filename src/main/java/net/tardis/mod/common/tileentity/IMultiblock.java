@@ -6,5 +6,6 @@ public interface IMultiblock {
 	
 	BlockPos getMaster();
 	void setMaster(BlockPos pos);
+	float getHardness();
 
 }

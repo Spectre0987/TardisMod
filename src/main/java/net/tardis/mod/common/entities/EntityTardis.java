@@ -33,7 +33,6 @@ public class EntityTardis extends Entity{
 	public static final DataParameter<Integer> OPEN_STATE = EntityDataManager.createKey(EntityTardis.class, DataSerializers.VARINT);
 	private BlockPos consolePos = BlockPos.ORIGIN;
 	private int ticksOnGround = 0;
-	private NBTTagCompound doorTag;
 	
 	public EntityTardis(World worldIn) {
 		super(worldIn);
@@ -49,14 +48,12 @@ public class EntityTardis extends Entity{
 	protected void readEntityFromNBT(NBTTagCompound compound) {
 		this.consolePos = BlockPos.fromLong(compound.getLong("console"));
 		this.dataManager.set(EXTERIOR, compound.getString("exterior"));
-		this.doorTag = compound.getCompoundTag("door_tag");
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setLong("console", this.consolePos.toLong());
 		compound.setString("exterior", this.dataManager.get(EXTERIOR));
-		compound.setTag("door_tag", this.doorTag);
 	}
 
 	@Override
@@ -237,19 +234,11 @@ public class EntityTardis extends Entity{
 		}
 	}
 	
-	public void setDoorTag(NBTTagCompound tag) {
-		this.doorTag = tag;
-	}
-	
 	public TileEntityDoor createDoorTile() {
 		world.setBlockState(this.getPosition().up(), this.getExteriorEnum().block.getDefaultState().withProperty(BlockTardisTop.FACING, this.getHorizontalFacing()));
 		world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
 		TileEntity te = world.getTileEntity(this.getPosition().up());
-		if(te instanceof TileEntityDoor) {
-			((TileEntityDoor)te).deserializeNBT(this.doorTag);
-			return (TileEntityDoor)te;
-		}
-		return null;
+		return (TileEntityDoor) te;
 	}
 	
 }
