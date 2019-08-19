@@ -1,0 +1,17 @@
+{
+    "forge_marker" : 1, 
+    "defaults": {
+        "model":"cube_bottom_top",
+        "textures":{
+            "side":"tardis:blocks/tractor_beam_sides",
+            "top":"tardis:blocks/tractor_beam_sides",
+            "bottom":"tardis:blocks/tractor_beam_bottom"
+        }
+    },
+    "variants":{
+        "normal": [{}],
+        "inventory":[{}],
+        "up=true":[{}],
+        "up=false":[{}]
+    }
+}
