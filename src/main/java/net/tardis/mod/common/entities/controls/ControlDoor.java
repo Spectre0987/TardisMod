@@ -8,6 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
@@ -240,6 +241,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
+		TileEntityTardis tardis = this.getTardis();
 		if(this.isOpen() && (this.world.getTotalWorldTime() % 200 == 0) || this.getBotiUpdate())
 			this.updateWorldShell();
 		if(world.isRemote && this.isOpen()) {
@@ -255,7 +257,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 		this.handleEnter();
 		
 		if(!world.isRemote && world.getTotalWorldTime() % 20 == 0) {
-			TileEntityTardis tardis = this.getTardis();
 			if(tardis != null) {
 				WorldServer world = this.world.getMinecraftServer().getWorld(tardis.dimension);
 				
@@ -274,6 +275,15 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 				else if(isWater(this.world, this.getPosition().up())) {
 					this.updateFluid(this.world, this.getPosition().up(), Blocks.AIR.getDefaultState());
 				}
+			}
+		}
+		
+		if(tardis.isInFlight() && this.isOpen()) {
+			for(EntityLivingBase base : world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(30))) {
+				Vec3d move = this.getPositionVector().subtract(base.getPositionVector()).normalize().scale(0.23);
+				base.motionX += move.x;
+				base.motionY += move.y;
+				base.motionZ += move.z;
 			}
 		}
 		

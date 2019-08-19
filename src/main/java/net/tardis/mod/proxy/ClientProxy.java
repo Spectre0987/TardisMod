@@ -86,6 +86,7 @@ import net.tardis.mod.client.renderers.tiles.RenderAlembic;
 import net.tardis.mod.client.renderers.tiles.RenderCorridor;
 import net.tardis.mod.client.renderers.tiles.RenderElectricPanel;
 import net.tardis.mod.client.renderers.tiles.RenderTileDoor;
+import net.tardis.mod.client.renderers.tiles.RenderTractorBeam;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.entities.EntityChair;
@@ -126,6 +127,7 @@ import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTractorBeam;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
@@ -189,6 +191,7 @@ public class ClientProxy extends ServerProxy {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChair.class, new RendererChairBR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAmSphere.class, new RenderAmSphere());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTractorBeam.class, new RenderTractorBeam());
 
 		//Consoles
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTardis01.class, new RenderConsole01());

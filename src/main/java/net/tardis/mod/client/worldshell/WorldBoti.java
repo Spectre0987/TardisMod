@@ -51,7 +51,7 @@ public class WorldBoti extends WorldClient {
 
 	@Override
 	public int getLightFor(EnumSkyBlock type, BlockPos pos) {
-		return type == EnumSkyBlock.SKY ? 15 : this.getLight(pos);
+		return super.getLightFor(type, pos);
 	}
 
 	@Override

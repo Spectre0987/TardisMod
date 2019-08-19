@@ -18,6 +18,7 @@ import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityHellbentLight;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityTractorBeam;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
@@ -203,6 +204,7 @@ public class TBlocks {
 	public static Block sonic_workbench = register(new BlockSonicWorkbench(), "sonic_workbench");
 	public static Block tree_egg = register(new BlockTreeEgg() ,"tree_egg");
 	
+	public static Block tractor_beam = register(new BlockTractorBeam(TileEntityTractorBeam::new), "tractor_beam");
 	
 	public static Block register(Block block, String name) {
 		return register(block, name, true);

@@ -104,6 +104,7 @@ import net.tardis.mod.common.tileentity.TileEntityMultiblockMaster;
 import net.tardis.mod.common.tileentity.TileEntitySonicWorkbench;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.tileentity.TileEntityTardisCoral;
+import net.tardis.mod.common.tileentity.TileEntityTractorBeam;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis01;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis02;
 import net.tardis.mod.common.tileentity.consoles.TileEntityTardis03;
@@ -236,6 +237,8 @@ public class Tardis {
 		
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
 		registerTileEntity(TileEntityEgg.class, "ars_egg");
+		
+		registerTileEntity(TileEntityTractorBeam.class, "tractor_beam");
 
 		NetworkHandler.init();
 		ScrewdriverHandler.init();

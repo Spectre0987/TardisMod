@@ -66,7 +66,6 @@ public class RenderWorldShell {
 					continue;
 				
 				if(model != null && !model.isBuiltInRenderer() && state.getRenderType() == EnumBlockRenderType.MODEL) {
-					
 					Minecraft.getMinecraft().getBlockRendererDispatcher()
 					.getBlockModelRenderer().renderModel(world, model, state, entry.getKey(), bb, TardisConfig.BOTI.checkSides);
 				}
