@@ -50,7 +50,7 @@ public class TileEntityTractorBeam extends TileEntity implements ITickable{
 
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
-		return Block.FULL_BLOCK_AABB.offset(getPos()).grow(1000);
+		return this.tractorAABB;
 	}
 
 	@Override

@@ -60,6 +60,11 @@ public class RenderTractorBeam extends TileEntitySpecialRenderer<TileEntityTract
 	}
 
 	@Override
+	public boolean isGlobalRenderer(TileEntityTractorBeam te) {
+		return true;
+	}
+
+	@Override
 	protected void bindTexture(ResourceLocation location) {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(location);
 	}
