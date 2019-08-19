@@ -115,6 +115,8 @@ public class TBlocks {
 	public static Block s13blankroundel3 = register(new BlockBase(), "s13blankroundel3");
 	public static Block s13floor = register(new BlockBase(), "s13floor");
 	public static Block s13flooralt = register(new BlockBase(), "s13flooralt");
+	
+	public static Block dalek_hull = register(new BlockSlab(Material.IRON), "dalek_hull");
 
 
 	// Custom Roundels (Moose's Custom Blocks)
