@@ -10,6 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.client.creativetabs.TardisTabs;
 
@@ -22,11 +23,12 @@ public class BlockSlab extends Block {
 	public BlockSlab(Material materialIn) {
 		super(materialIn);
 		this.setCreativeTab(TardisTabs.BLOCKS);
+		this.setHardness(5F);
+		this.setHarvestLevel("pickaxe", 0);
 	}
 	
 	@Override
 	public boolean isTranslucent(IBlockState state) {
-		// TODO Auto-generated method stub
 		return super.isTranslucent(state);
 	}
 
@@ -67,7 +69,17 @@ public class BlockSlab extends Block {
 
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return this.getDefaultState().withProperty(TOP_HALF, hitY > 0.5 ? true : false);
+		return this.getDefaultState().withProperty(TOP_HALF, facing == EnumFacing.UP ? false : (facing == EnumFacing.DOWN ? true : (hitY > 0.5 ? true : false)));
+	}
+
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return state.getValue(TOP_HALF) ? TOP : BOTTOM;
+	}
+
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return this.getBoundingBox(blockState, worldIn, pos);
 	}
 
 }

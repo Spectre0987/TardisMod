@@ -2,11 +2,12 @@ package net.tardis.mod.common.tileentity;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.tardis.mod.common.blocks.BlockTractorBeam;
 
 public class TileEntityTractorBeam extends TileEntity implements ITickable{
@@ -17,7 +18,7 @@ public class TileEntityTractorBeam extends TileEntity implements ITickable{
 	@Override
 	public void onLoad() {
 		super.onLoad();
-		tractorAABB = new AxisAlignedBB(this.getPos().getX(), 0, this.getPos().getZ(),
+		tractorAABB = new AxisAlignedBB(this.getPos().getX(), this.getBlockUnder(), this.getPos().getZ(),
 				this.getPos().getX() + 1, this.getPos().getY() + 1, this.getPos().getZ() + 1);
 	}
 
@@ -61,6 +62,16 @@ public class TileEntityTractorBeam extends TileEntity implements ITickable{
 	@Override
 	public double getMaxRenderDistanceSquared()
     {
-        return 1000000.0D;
+        return 100000.0D;
     }
+	
+	public int getBlockUnder() {
+		for(int y = this.getPos().getY() - 1; y > 0; --y) {
+			IBlockState state = world.getBlockState(new BlockPos(this.getPos().getX(), y, this.getPos().getZ()));
+			if(state.causesSuffocation()) {
+				return y;
+			}
+		}
+		return 0;
+	}
 }

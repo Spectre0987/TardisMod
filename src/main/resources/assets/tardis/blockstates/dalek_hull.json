@@ -1,13 +1,13 @@
 {
     "forge_marker": 1,
     "defaults":{
+        "model":"cube_all",
         "textures":{
-            
+            "all":"tardis:blocks/dalek_hull"
         }
     },
     "variants":{
-        "inventory":{
-            "model":""
-        }
+        "normal":[{}],
+        "inventory":[{}]
     }
 }

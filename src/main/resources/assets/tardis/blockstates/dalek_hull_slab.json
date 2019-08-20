@@ -1,0 +1,19 @@
+{
+    "forge_marker": 1,
+    "defaults":{
+        "model":"half_slab",
+        "textures":{
+            "bottom":"tardis:blocks/dalek_hull",
+            "top":"tardis:blocks/dalek_hull",
+            "side":"tardis:blocks/dalek_hull"
+        }
+    },
+    "variants":{
+        "inventory":[{}],
+        "normal":[{}],
+        "top=false":[{}],
+        "top=true":{
+            "model":"upper_slab"
+        }
+    }
+}
