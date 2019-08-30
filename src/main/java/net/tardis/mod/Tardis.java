@@ -38,6 +38,7 @@ import net.tardis.mod.common.entities.EntityCorridor;
 import net.tardis.mod.common.entities.EntityCybermanInvasion;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityDalekSkaro;
+import net.tardis.mod.common.entities.EntityDefabric;
 import net.tardis.mod.common.entities.EntityLaserRay;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.brak.EntityDoorsBrakSecondary;
@@ -197,6 +198,7 @@ public class Tardis {
 		EntityHelper.registerStatic(EntityChair.class, "chair");
 		EntityHelper.registerStatic(EntityDoorsBrakSecondary.class, "doors_brak_second");
 		EntityHelper.registerNoSpawn(EntityTardis.class, "tardis");
+		EntityHelper.registerProjectiles(EntityDefabric.class, "defabric");
 
 		registerTileEntity(TileEntityTardis.class, "TileEntityTardis");
 		registerTileEntity(TileEntityDoor.class, "TileEntityDoor");
