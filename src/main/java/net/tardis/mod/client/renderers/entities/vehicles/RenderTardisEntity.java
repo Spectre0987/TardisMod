@@ -51,5 +51,9 @@ public class RenderTardisEntity extends Render<EntityTardis>{
 		else exterior.model.renderClosed(0.0625F);
 		GlStateManager.popMatrix();
 	}
-
+	
+	public double interpolate(double pos, double prev) {
+		float p = Minecraft.getMinecraft().getRenderPartialTicks();
+		return prev + p * (pos - prev);
+	}
 }

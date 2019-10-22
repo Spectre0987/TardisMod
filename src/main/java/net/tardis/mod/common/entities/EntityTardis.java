@@ -4,15 +4,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.client.CPacketVehicleMove;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -127,6 +124,9 @@ public class EntityTardis extends Entity{
 			motionY -= 0.5D;
 		this.move(MoverType.SELF, motionX, motionY, motionZ);
 		motionX = motionZ = motionY = 0;
+		this.prevPosX = posX;
+		this.prevPosY = posY;
+		this.prevPosZ = posZ;
 	}
 	
 	public void handleRider(EntityLivingBase base) {
@@ -170,12 +170,6 @@ public class EntityTardis extends Entity{
 
 	public void setExteior(EnumExterior exterior) {
 		this.dataManager.set(EXTERIOR, exterior.name());
-	}
-
-	@Override
-	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-		player.startRiding(this);
-		return super.applyPlayerInteraction(player, vec, hand);
 	}
 
 	@Override
