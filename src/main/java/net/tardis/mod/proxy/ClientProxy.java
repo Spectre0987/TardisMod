@@ -43,7 +43,6 @@ import net.tardis.mod.client.models.items.ModelFirstCane;
 import net.tardis.mod.client.models.items.ModelSonic13;
 import net.tardis.mod.client.overlays.OverlayHandler;
 import net.tardis.mod.client.renderers.RenderInvis;
-import net.tardis.mod.client.renderers.TEISRVictim;
 import net.tardis.mod.client.renderers.consoles.RenderConsole01;
 import net.tardis.mod.client.renderers.consoles.RenderConsole02;
 import net.tardis.mod.client.renderers.consoles.RenderConsole03;
@@ -289,7 +288,7 @@ public class ClientProxy extends ServerProxy {
 	public void init() {
 		TItems.first_cane.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelFirstCane(), ModelFirstCane.TEXTURE));
 		TItems.sonic13th.setTileEntityItemStackRenderer(new RenderTEISRItem(new ModelSonic13()));
-		TItems.player_victim.setTileEntityItemStackRenderer(new TEISRVictim());
+		//TItems.player_victim.setTileEntityItemStackRenderer(new TEISRVictim());
 
 		Item.getItemFromBlock(TBlocks.tardis_top).setTileEntityItemStackRenderer(new RenderItemTardis());
 		Item.getItemFromBlock(TBlocks.tardis_top_01).setTileEntityItemStackRenderer(new RenderItemTardis02());

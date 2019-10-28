@@ -812,13 +812,15 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				ws.createExplosion(null, crashSite.getX(), crashSite.getY(), crashSite.getZ(), 3F, true);
 				world.playSound(null, this.getPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1F, 1F);
 			}
-			this.travel();
+			//Hopfully avoid dupes
+			this.ticksToTravel = 0;
 			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
 		}
 		else if (explode) {
 			Random rand = new Random();
 			for (int i = 0; i < 300; ++i) {
-				world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, getPos().getX() + (rand.nextInt(3) - 1), getPos().getY() + (rand.nextInt(3) - 1), getPos().getZ() + (rand.nextInt(3) - 1), 0, 1, 0, 0);
+				double offX = Math.sin(Math.toRadians(i)), offZ = Math.cos(Math.toRadians(i));
+				world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, getPos().getX() + 0.5 + offX, getPos().getY(), getPos().getZ() + 0.5 + offZ, 0, 1, 0, 0);
 			}
 		}
 		for (BaseSystem s : systems) {
@@ -1075,7 +1077,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		
 		TileEntityDoor door = (TileEntityDoor) ws.getTileEntity(this.getLocation().up());
-		if (door != null) {
+		if (door != null && ws.getBlockState(door.getPos()).getBlock() instanceof BlockTardisTop) {
 			EnumFacing face = ws.getBlockState(door.getPos()).getValue(BlockTardisTop.FACING);
 			pos = door.getPos().down().offset(face, 1);
 			

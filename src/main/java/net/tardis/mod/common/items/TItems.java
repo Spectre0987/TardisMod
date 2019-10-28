@@ -96,9 +96,9 @@ public class TItems {
 	public static Item sonic_pen = createItem(new ItemSonic(TSounds.sonic_generic), "sonic_pen");
 	
 	//TODO: Add the shrinky- killy thing
-	public static Item player_victim = createItem(new ItemPlayerVictim(), "player_victim");
+	//public static Item player_victim = createItem(new ItemPlayerVictim(), "player_victim");
 	
-	public static Item defabricator = createItem(new ItemDefabric(), "defabric");
+	//public static Item defabricator = createItem(new ItemDefabric(), "defabric");
 
 	@SubscribeEvent
 	public static void regItems(RegistryEvent.Register<Item> event) {

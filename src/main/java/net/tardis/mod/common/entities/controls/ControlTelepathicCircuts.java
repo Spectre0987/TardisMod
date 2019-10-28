@@ -64,6 +64,7 @@ public class ControlTelepathicCircuts extends EntityControl {
 				tardisEntity.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 				tardisEntity.setExteior(EnumExterior.getExteriorFromBlock(tardis.getTopBlock().getBlock()));
 				TileEntity door = ws.getTileEntity(tardis.getLocation().up());
+				tardisEntity.setTag(door.serializeNBT());
 				ws.setBlockState(tardis.getLocation(), Blocks.AIR.getDefaultState());
 				ws.setBlockState(tardis.getLocation().up(), Blocks.AIR.getDefaultState());
 				ws.spawnEntity(tardisEntity);

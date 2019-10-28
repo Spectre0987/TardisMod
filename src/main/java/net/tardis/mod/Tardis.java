@@ -258,7 +258,6 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
 		TardisProtocol.register(new ProtocolStealth());
-		//TardisProtocol.register(new ProtocolTest());
 
 		// Register All Mobs Here.
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);

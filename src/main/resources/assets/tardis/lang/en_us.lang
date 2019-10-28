@@ -55,6 +55,7 @@ item.tardis.sonic_screwdriver.name=Sonic Screwdriver
 item.tardis.brak_doors_closed.name=TARDIS Ancillary doors
 item.tardis.repair_capsule.name=Repair Capsule
 item.tardis.player_victim.name=Trophy
+item.tardis.defabric.name=Defabricator
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS arriving in
@@ -134,6 +135,8 @@ tile.tardis.sonic_workbench.name=Sonic Workbench
 tile.tardis.tree_egg.name=ARS Tree Egg
 tile.tardis.table_brachacki.name=Table
 tile.tardis.tractor_beam.name=Dalek Tractor Beam
+tile.tardis.dalek_hull.name=Dalek hull
+tile.tardis.dalek_hull_slab.name=Dalek Hull Slab
 
 tile.tardis.gallifreyan_grass.name=Strange Grass
 tile.tardis.gallifreyan_dirt.name=Strange Dirt
