@@ -8,6 +8,7 @@ import net.tardis.mod.client.models.exteriors.IExteriorModel;
 import net.tardis.mod.client.models.interiors.IInteriorModel;
 import net.tardis.mod.common.blocks.TBlocks;
 
+@SideOnly(Side.CLIENT)
 public enum EnumExterior {
 
 	FIRST(TBlocks.tardis_top, "box.tardis.01"),

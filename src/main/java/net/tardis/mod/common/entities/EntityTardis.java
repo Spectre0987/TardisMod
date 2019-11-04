@@ -1,6 +1,8 @@
 package net.tardis.mod.common.entities;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -15,6 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -26,11 +30,12 @@ import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public class EntityTardis extends Entity{
 
-	public static final DataParameter<String> EXTERIOR = EntityDataManager.createKey(EntityTardis.class, DataSerializers.STRING);
 	public static final DataParameter<Integer> OPEN_STATE = EntityDataManager.createKey(EntityTardis.class, DataSerializers.VARINT);
+	public static final DataParameter<Integer> EXTERIOR = EntityDataManager.createKey(EntityTardis.class, DataSerializers.VARINT);
 	private BlockPos consolePos = BlockPos.ORIGIN;
 	private int ticksOnGround = 0;
 	private NBTTagCompound doorTag;
+	private IBlockState state = TBlocks.tardis_top_tt.getDefaultState();
 	
 	public EntityTardis(World worldIn) {
 		super(worldIn);
@@ -38,22 +43,23 @@ public class EntityTardis extends Entity{
 
 	@Override
 	protected void entityInit() {
-		this.dataManager.register(EXTERIOR, "TT");
 		this.dataManager.register(OPEN_STATE, EnumFlightState.CLOSED.ordinal());
+		this.dataManager.register(EXTERIOR, Block.getStateId(TBlocks.tardis_top_tt.getDefaultState()));
 	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
 		this.consolePos = BlockPos.fromLong(compound.getLong("console"));
-		this.dataManager.set(EXTERIOR, compound.getString("exterior"));
 		this.doorTag = compound.getCompoundTag("door_tag");
+		this.state = Block.getStateById(compound.getInteger("exterior_state"));
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setLong("console", this.consolePos.toLong());
-		compound.setString("exterior", this.dataManager.get(EXTERIOR));
-		if(doorTag!= null && !doorTag.isEmpty())compound.setTag("door_tag", doorTag);
+		if(doorTag!= null && !doorTag.isEmpty())
+			compound.setTag("door_tag", doorTag);
+		compound.setInteger("exterior_state", Block.getStateId(state));
 	}
 
 	@Override
@@ -61,7 +67,7 @@ public class EntityTardis extends Entity{
 		super.onEntityUpdate();
 		
 		this.move();
-		
+	
 		//Allows this to be driven
 		if(this.getPassengers().size() > 0) {
 			Entity entity = this.getPassengers().get(0);
@@ -120,6 +126,10 @@ public class EntityTardis extends Entity{
 			}
 		}
 		
+		//Update Exterior Enum
+		if(world.isRemote && this.ticksExisted % 20 == 0)
+			this.state = Block.getStateById(this.dataManager.get(EXTERIOR));
+		
 	}
 	
 	public void move() {
@@ -167,12 +177,9 @@ public class EntityTardis extends Entity{
 		return this.consolePos;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public EnumExterior getExteriorEnum() {
-		return EnumExterior.valueOf(this.getDataManager().get(EXTERIOR));
-	}
-
-	public void setExteior(EnumExterior exterior) {
-		this.dataManager.set(EXTERIOR, exterior.name());
+		return EnumExterior.getExteriorFromBlock(this.state.getBlock());
 	}
 
 	@Override
@@ -232,8 +239,17 @@ public class EntityTardis extends Entity{
 		}
 	}
 	
+	public IBlockState getBlockState() {
+		return this.state;
+	}
+	
+	public void setBlockState(IBlockState state) {
+		this.state = state;
+		this.dataManager.set(EXTERIOR, Block.getStateId(state));
+	}
+	
 	public TileEntityDoor createDoorTile() {
-		world.setBlockState(this.getPosition().up(), this.getExteriorEnum().block.getDefaultState().withProperty(BlockTardisTop.FACING, this.getHorizontalFacing()));
+		world.setBlockState(this.getPosition().up(), this.getBlockState().withProperty(BlockTardisTop.FACING, this.getHorizontalFacing()));
 		world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
 		TileEntity te = world.getTileEntity(this.getPosition().up());
 		if(te instanceof TileEntityDoor && this.doorTag != null && !this.doorTag.isEmpty()) {

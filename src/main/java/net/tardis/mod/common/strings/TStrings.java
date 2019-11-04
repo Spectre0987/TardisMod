@@ -90,5 +90,9 @@ public class TStrings {
 	public static class JEI {
 		public static final String MANUAL = "jei.tardis.book.description";
 	}
+	
+	public static class EnumExterior{
+		public static final String TT = "";
+	}
 
 }

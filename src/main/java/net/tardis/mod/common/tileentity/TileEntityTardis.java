@@ -147,6 +147,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean isStealth = false;
 	private double motionX, motionY, motionZ;
 	private EntityTardis entity;
+	private boolean guideActive = false;
 	
 	public TileEntityTardis() {
 		if (systems == null) {
@@ -1253,6 +1254,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return this.entity;
 	}
 	
+	public boolean isGuideActive() {
+		return this.guideActive;
+	}
+	
+	public void setGuideActive(boolean active) {
+		this.guideActive = active;
+		this.markDirty();
+		
+		//TODO: Save and sync this
+	}
 	public enum EnumCourseCorrect {
 		NONE(null, ""),
 		DIRECTION_X(ControlX.class, "course.tardis.direction.x"),
