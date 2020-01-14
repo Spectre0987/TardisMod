@@ -50,8 +50,7 @@ public class TardisChunkGenerator implements IChunkGenerator {
 	}
 
 	@Override
-	public void populate(int x, int z) {
-	}
+	public void populate(int x, int z) {}
 
 	@Override
 	public boolean generateStructures(Chunk chunkIn, int x, int z) {
@@ -65,12 +64,11 @@ public class TardisChunkGenerator implements IChunkGenerator {
 
 	@Override
 	public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) {
-		return null;
+		return BlockPos.ORIGIN;
 	}
 
 	@Override
-	public void recreateStructures(Chunk chunkIn, int x, int z) {
-	}
+	public void recreateStructures(Chunk chunkIn, int x, int z) {}
 
 	@Override
 	public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos) {

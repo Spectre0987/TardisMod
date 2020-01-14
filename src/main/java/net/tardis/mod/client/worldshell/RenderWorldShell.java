@@ -62,7 +62,7 @@ public class RenderWorldShell {
 				state = state.getActualState(world, entry.getKey());
 				IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
 				
-				if(!Helper.canRenderInBOTI(state))
+				if(!Helper.canRenderInBOTI(state) || state == null)
 					continue;
 				
 				if(model != null && !model.isBuiltInRenderer() && state.getRenderType() == EnumBlockRenderType.MODEL) {

@@ -14,8 +14,7 @@ import net.tardis.mod.client.renderers.sky.RenderVoid;
 
 public class WorldProviderTardis extends WorldProvider {
 
-	public WorldProviderTardis() {
-	}
+	public WorldProviderTardis() {}
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
@@ -43,8 +42,7 @@ public class WorldProviderTardis extends WorldProvider {
 	}
 
 	@Override
-	public void calculateInitialWeather() {
-	}
+	public void calculateInitialWeather() {}
 
 	@Override
 	protected void generateLightBrightnessTable() {
