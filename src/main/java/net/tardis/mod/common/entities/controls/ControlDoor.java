@@ -242,6 +242,10 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		TileEntityTardis tardis = this.getTardis();
+		
+		if(tardis == null)
+			return;
+		
 		if(this.isOpen() && (this.world.getTotalWorldTime() % 200 == 0) || this.getBotiUpdate())
 			this.updateWorldShell();
 		if(world.isRemote && this.isOpen()) {
