@@ -71,6 +71,7 @@ import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.recipes.RecipeRemote;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemTemporalGrace;
+import net.tardis.mod.common.tileentity.TileEntityEgg;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
@@ -298,7 +299,7 @@ public class TEventHandler {
 		if (Loader.isModLoaded(TStrings.ModIds.OPTIFINE))
 			player.sendStatusMessage(new TextComponentTranslation(TStrings.OPTIFINE_INSTALLED), false);
 		if(!e.player.world.isRemote)
-			NetworkHandler.NETWORK.sendTo(new MessageConfigSync(), (EntityPlayerMP) player);
+			NetworkHandler.NETWORK.sendTo(new MessageConfigSync(TileEntityEgg.ITEMS), (EntityPlayerMP) player);
 	}
 	
 	@SubscribeEvent

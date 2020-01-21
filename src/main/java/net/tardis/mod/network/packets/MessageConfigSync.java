@@ -16,9 +16,11 @@ public class MessageConfigSync implements IMessage{
 
 	List<ItemStack> arsItems = new ArrayList<ItemStack>();
 	
-	public MessageConfigSync(){
-		this.arsItems = TileEntityEgg.ITEMS;
+	public MessageConfigSync(List<ItemStack> list){
+		this.arsItems = list;
+		System.out.println(list);
 	}
+	public MessageConfigSync() {}
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {

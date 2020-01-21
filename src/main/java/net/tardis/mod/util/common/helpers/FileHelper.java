@@ -19,7 +19,6 @@ import com.google.gson.stream.JsonWriter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.tardis.mod.Tardis;
 import net.tardis.mod.common.tileentity.TileEntityEgg;
 
 public class FileHelper {
@@ -46,7 +45,8 @@ public class FileHelper {
 				JsonReader reader = new GsonBuilder().create().newJsonReader(new FileReader(dir));
 				reader.beginArray();
 				while(reader.hasNext()) {
-					TileEntityEgg.register(new ItemStack(Item.getByNameOrId(reader.nextString()), 64));
+					ItemStack stack = new ItemStack(Item.getByNameOrId(reader.nextString()), 64);
+					TileEntityEgg.register(stack);
 				}
 				reader.endArray();
 				reader.close();

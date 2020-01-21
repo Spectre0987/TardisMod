@@ -215,6 +215,7 @@ protocol.tardis.stealth=Stealth Mode
 protocol.tardis.stealth.false=Disengaged Stealth Mode
 protocol.tardis.stealth.true=Stealth Mode Engaged!
 protocol.tardis.emer.escape=§4Escape§r
+protocol.tardis.forcefield=Forcefield
 
 tardis.repair.false=TARDIS hull is no longer repairing
 tardis.repair.true=TARDIS hull is now repairing

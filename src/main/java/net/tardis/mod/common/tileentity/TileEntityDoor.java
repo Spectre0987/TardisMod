@@ -28,6 +28,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -38,7 +39,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.EnumExterior;
 import net.tardis.mod.client.worldshell.BlockStorage;
 import net.tardis.mod.client.worldshell.IContainsWorldShell;
 import net.tardis.mod.client.worldshell.MessageSyncWorldShell;
@@ -46,7 +46,6 @@ import net.tardis.mod.client.worldshell.MessageSyncWorldShell.EnumType;
 import net.tardis.mod.client.worldshell.WorldBoti;
 import net.tardis.mod.client.worldshell.WorldShell;
 import net.tardis.mod.common.IDoor;
-import net.tardis.mod.common.TDamage;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityTardis;
@@ -55,6 +54,7 @@ import net.tardis.mod.common.enums.EnumTardisState;
 import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.config.TardisConfig;
+import net.tardis.mod.misc.TimedDecal;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageDemat;
 import net.tardis.mod.network.packets.MessageDoorOpen;
@@ -71,7 +71,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public SoundEvent knockSound = SoundEvents.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD;
 	public boolean isLocked = true;
 	public int lockCooldown = 0;
-	public boolean forceField = false;
+	private boolean forceField = false;
 	public int openingTicks = 0;
 	public float alpha = 1;
 	public boolean isDemat, isRemat = false;
@@ -88,6 +88,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public static final AxisAlignedBB EAST = new AxisAlignedBB(1, 0, 0, 1.1, 2, 1);
 	public static final AxisAlignedBB WEST = new AxisAlignedBB(-0.1, 0, 0, 0, 2, 1);
 	public static final AxisAlignedBB SOUTH = new AxisAlignedBB(0, 0, 1, 1, 2, 1.1);
+	public ArrayList<TimedDecal> forcefieldHits = new ArrayList<>();
+	private ArrayList<Integer> hitEntitiesIDs = new ArrayList<>();
 	
 	public TileEntityDoor() {
 		this.isRemat = true;
@@ -184,33 +186,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			if (this.world.getTotalWorldTime() % TardisConfig.BOTI.botiTickRate == 0)
 				this.updateWorldShell();
 			
-			//HADS
-			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(1D));
-			for (Entity e : projectiles) {
-				if (e instanceof IProjectile || e instanceof IMob) {
-					try {
-						tardis.startHADS();
-					}
-					catch (Exception exc) {
-						
-					}
-				}
-			}
 			if (lockCooldown > 0)
 				--lockCooldown;
-			
-			//Apply Gravity
-			/*IBlockState underState = world.getBlockState(this.getPos().down(2));
-			if(underState.getCollisionBoundingBox(world, this.getPos().down(2)) == Block.NULL_AABB && !this.isDemat && !this.isRemat) {
-				EntityTardis entity = new EntityTardis(world);
-				entity.setConsole(this.getConsolePos());
-				entity.setPosition(this.getPos().getX() + 0.5, this.getPos().getY() - 1, this.getPos().getZ() + 0.5);
-				entity.rotationYaw = Helper.get180Rot(this.getFacing());
-				entity.setBlockState(tardis.getTopBlock());
-				world.spawnEntity(entity);
-				world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-				world.setBlockState(this.getPos().down(), Blocks.AIR.getDefaultState());
-			}*/
 		}
 		if (openingTicks > 0)
 			--openingTicks;
@@ -221,11 +198,12 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					for (Entity e : world.getEntitiesWithinAABB(Entity.class, aabb.offset(this.getPos().down()))) {
 						try {
 							((TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos())).enterTARDIS(e);
-						} catch (Exception exc) {
 						}
+						catch (Exception exc) {}
 					}
 				}
-			} else {
+			}
+			else {
 				this.isRemat = false;
 				this.alpha = 1.0F;
 				world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 2);
@@ -256,9 +234,19 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			this.worldShell = new WorldShell(BlockPos.ORIGIN);
 		}
 		
-		if (forceField) {
+		if (forceField)
 			handleForceField();
+		
+		//Forcefield decals
+		ArrayList<TimedDecal> deadHits = new ArrayList<TimedDecal>();
+		for(TimedDecal dec : this.forcefieldHits) {
+			int left = dec.shrinkTime();
+			if(left <= 0)
+				deadHits.add(dec);
 		}
+		
+		for(TimedDecal dec : deadHits)
+			this.forcefieldHits.remove(dec);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -335,10 +323,38 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			}
 			
 			if (entity instanceof IMob) {
-				entity.attackEntityFrom(TDamage.FORCEFIELD, 4.0F);
+				
+				Vec3d dir = entity.getPositionVector()
+						.subtract(new Vec3d(this.getPos().getX() + 0.5, this.getPos().getY(), this.getPos().getZ() + 0.5))
+						.normalize().scale(0.25);
+				
+				entity.motionX = dir.x;
+				entity.motionY = dir.y;
+				entity.motionZ = dir.z;
+				
+				if(!this.hitEntitiesIDs.contains(entity.getEntityId())) {
+					this.hitEntitiesIDs.add(entity.getEntityId());
+					this.forcefieldHits.add(new TimedDecal(entity.getPositionVector(), 80));
+					
+				}
+				
 			}
 			
 		});
+		
+		if(!world.isRemote && world.getTotalWorldTime() % 60 == 0) {
+			WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+			if(ws != null) {
+				TileEntity te = ws.getTileEntity(this.getConsolePos());
+				if(te instanceof TileEntityTardis) {
+					TileEntityTardis tardis = ((TileEntityTardis)te);
+					tardis.setFuel(tardis.fuel - 0.005F);
+					
+					if(tardis.fuel <= 0)
+						this.setForcefield(false);
+				}
+			}
+		}
 	}
 	
 	public BlockPos getConsolePos() {
@@ -534,6 +550,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		tag.setBoolean("locked", this.isLocked);
 		tag.setInteger("light", this.lightLevel);
 		tag.setBoolean("stealth", this.isStealth);
+		tag.setBoolean("forcefield", this.forceField);
 		return tag;
 	}
 	
@@ -546,6 +563,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		this.isLocked = pkt.getNbtCompound().getBoolean("locked");
 		this.lightLevel = pkt.getNbtCompound().getInteger("light");
 		this.isStealth = pkt.getNbtCompound().getBoolean("stealth");
+		this.forceField = pkt.getNbtCompound().getBoolean("forcefield");
 		this.requiresUpdate = true;
 	}
 	
@@ -633,5 +651,18 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		EntityTardis tardis = new EntityTardis(world);
 		tardis.setConsole(this.getConsolePos());
 		return tardis;
+	}
+	
+	public void setForcefield(boolean force) {
+		this.forceField = force;
+		this.markDirty();
+	}
+	
+	public boolean getForcefield() {
+		return this.forceField;
+	}
+	
+	public void addForcefieldHitDecal(TimedDecal decal) {
+		this.forcefieldHits.add(decal);
 	}
 }

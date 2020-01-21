@@ -72,6 +72,7 @@ import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEmerEscape;
 import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
+import net.tardis.mod.common.protocols.ProtocolForcefield;
 import net.tardis.mod.common.protocols.ProtocolRepair;
 import net.tardis.mod.common.protocols.ProtocolStealth;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
@@ -135,16 +136,14 @@ import net.tardis.mod.util.common.helpers.EntityHelper;
 import net.tardis.mod.util.common.helpers.FileHelper;
 
 
-@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP, updateJSON = Tardis.UPDATE_JSON_URL)
+@Mod(modid = Tardis.MODID, name = Tardis.NAME, version = Tardis.VERSION, dependencies = Tardis.DEP)
 public class Tardis {
 
 	public static final String MODID = "tardis";
 	public static final String NAME = "Tardis Mod";
-	public static final String DEP = "after:ic2; required-after:forge@[14.23.2.2638,)";
+	public static final String DEP = "required-after:forge@[14.23.2.2638,)";
 	public static final String VERSION = "";
-	public static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Spectre0987/TardisMod/master/update.json";
 	public static final boolean updateChangesConfig = false;
-	public static boolean hasIC2 = false;
 	private static File configDir = new File(".");
 
 	@Instance(MODID)
@@ -164,7 +163,6 @@ public class Tardis {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		proxy.preInit();
-		hasIC2 = Loader.isModLoaded(TStrings.ModIds.INDUSTRIAL_CRAFT);
 		TItems.init();
 		TBlocks.register();
 		BiomeReg.init();
@@ -258,6 +256,7 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());
 		TardisProtocol.register(new ProtocolStealth());
+		TardisProtocol.register(new ProtocolForcefield());
 
 		// Register All Mobs Here.
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
@@ -339,7 +338,7 @@ public class Tardis {
 		for (ItemStack cinnabar : OreDictionary.getOres("dustCinnabar")) {
 			AlembicRecipe.registerRecipe(cinnabar.getItem(), TItems.mercuryBottle);
 		}
-		FileHelper.readOrWriteARS(this.configDir);
+		FileHelper.readOrWriteARS(configDir);
 
 	}
 

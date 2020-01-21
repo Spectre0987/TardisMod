@@ -169,8 +169,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.controlClases.add(ControlY::new);
 		this.controlClases.add(ControlZ::new);
 		this.controlClases.add(ControlWaypoint::new);
-		if (this.getClass() == TileEntityTardis.class)
-			this.controlClases.add(ControlSonicSlot::new);
 	}
 	
 	@Override

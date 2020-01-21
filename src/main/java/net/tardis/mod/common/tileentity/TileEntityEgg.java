@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityEgg extends TileEntity{
 
-	public static List<ItemStack> ITEMS = new ArrayList<>();
+	public static List<ItemStack> ITEMS = new ArrayList<ItemStack>();
 	
 	public static void register(ItemStack stack) {
 		ITEMS.add(stack);
