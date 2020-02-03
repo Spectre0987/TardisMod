@@ -260,24 +260,25 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 		this.setBotiUpdate(false);
 		this.handleEnter();
 		
+		//Water flowing shit
 		if(!world.isRemote && world.getTotalWorldTime() % 20 == 0) {
 			if(tardis != null) {
 				WorldServer world = this.world.getMinecraftServer().getWorld(tardis.dimension);
 				
 				EnumFacing face = EnumFacing.fromAngle(this.getFacing() + 180);
 				if(this.isOpen() && isWater(world, tardis.getLocation().offset(face))) {
-					if(!isWater(this.world, this.getPosition()))
-						this.updateFluid(this.world, this.getPosition(), Blocks.WATER.getDefaultState());
+					if(!isWater(this.world, this.getPosition()) && !tardis.isForceFieldEnabled())
+						ControlDoor.updateFluid(this.world, this.getPosition(), Blocks.WATER.getDefaultState());
 				}
 				else if(isWater(this.world, this.getPosition()))
-					this.updateFluid(this.world, getPosition(), Blocks.AIR.getDefaultState());
+					ControlDoor.updateFluid(this.world, getPosition(), Blocks.AIR.getDefaultState());
 				
 				if(this.isOpen() && isWater(world, tardis.getLocation().offset(tardis.getFacing()).up())) {
-					if(!isWater(this.world, this.getPosition().up()))
-						this.updateFluid(this.world, this.getPosition().up(), Blocks.WATER.getDefaultState());
+					if(!isWater(this.world, this.getPosition().up()) && !tardis.isForceFieldEnabled())
+						ControlDoor.updateFluid(this.world, this.getPosition().up(), Blocks.WATER.getDefaultState());
 				}
 				else if(isWater(this.world, this.getPosition().up())) {
-					this.updateFluid(this.world, this.getPosition().up(), Blocks.AIR.getDefaultState());
+					ControlDoor.updateFluid(this.world, this.getPosition().up(), Blocks.AIR.getDefaultState());
 				}
 			}
 		}

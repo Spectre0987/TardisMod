@@ -5,14 +5,11 @@ import java.io.IOException;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializer;
-import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class TDataSerializers {
 	
-	public static final DataSerializer VEC3D = new DataSerializer<Vec3d>() {
+	public static final DataSerializer<Vec3d> VEC3D = new DataSerializer<Vec3d>() {
 
 		@Override
 		public void write(PacketBuffer buf, Vec3d value) {

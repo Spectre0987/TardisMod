@@ -70,7 +70,6 @@ import net.tardis.mod.common.protocols.ProtocolCCircuit;
 import net.tardis.mod.common.protocols.ProtocolChangeInterior;
 import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEmerEscape;
-import net.tardis.mod.common.protocols.ProtocolEnabledHADS;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
 import net.tardis.mod.common.protocols.ProtocolForcefield;
 import net.tardis.mod.common.protocols.ProtocolRepair;
@@ -246,7 +245,6 @@ public class Tardis {
 
 		TardisProtocol.register(new ProtocolEmerEscape());
 		TardisProtocol.register(new ProtocolCCircuit());
-		TardisProtocol.register(new ProtocolEnabledHADS());
 		TardisProtocol.register(new ProtocolSystemReadout());
 		TardisProtocol.register(new ProtocolConsole());
 		if (Loader.isModLoaded(TStrings.ModIds.DIM_DOORS))
@@ -260,7 +258,7 @@ public class Tardis {
 
 		// Register All Mobs Here.
 		EntityHelper.registerMobEgg(EntityCybermanInvasion.class, "invasion_cyberman", TardisConfig.USE_ENTITIES.cybermanSpawnChance, 5, 4);
-		EntityHelper.registerMobEgg(EntityDalek.class, "dalek", 5, 5, 1);
+		EntityHelper.registerNoSpawnEgg(EntityDalek.class, "dalek", 0x8a7a28, 0x553420);
 
 		proxy.preInit();
 

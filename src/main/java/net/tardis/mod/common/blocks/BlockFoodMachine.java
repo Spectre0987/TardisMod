@@ -48,7 +48,7 @@ public class BlockFoodMachine extends BlockTileBase {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity te = worldIn.getTileEntity(pos);
 		if (te != null && te instanceof TileEntityFoodMachine) {
-			((TileEntityFoodMachine) te).start();
+			((TileEntityFoodMachine) te).start(playerIn.isSneaking() ? 16 : 1);
 		}
 		return true;
 	}

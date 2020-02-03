@@ -10,8 +10,8 @@
       "item": "minecraft:redstone_block"
     },
     "S": {
-      "item": "minecraft:planks",
-      "data": 0
+      "type": "forge:ore_dict",
+       "ore": "plankWood"
     },
     "K": [
       {

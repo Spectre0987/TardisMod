@@ -16,6 +16,7 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 public class TileEntityFoodMachine extends TileEntity implements ITickable {
 
 	private int ticks = 0;
+	private int count = 1;
 
 	public TileEntityFoodMachine() {}
 
@@ -27,7 +28,7 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 				if (tardis.fuel > 0.01) {
 					tardis.setFuel(tardis.fuel - 0.01F);
 					EnumFacing face = world.getBlockState(getPos()).getValue(BlockFoodMachine.FACING);
-					BlockPos pos = this.getPos().offset(face);
+					BlockPos pos = this.getPos().offset(face.getOpposite());
 					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.BREAD));
 				}
 			}
@@ -42,12 +43,14 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 		if(ticks > 0) {
 			--ticks;
 			if(ticks == 0)
-				makeFood();
+				for(int i = 0; i < count; ++i)
+					makeFood();
 		}
 	}
 
-	public void start() {
+	public void start(int count) {
 		this.ticks = 160;
+		this.count = count;
 		world.playSound(null, this.getPos(), TSounds.FOOD_MACHINE, SoundCategory.BLOCKS, 1F, 1F);
 	}
 }

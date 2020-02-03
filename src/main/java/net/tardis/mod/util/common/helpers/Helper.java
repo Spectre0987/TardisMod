@@ -9,7 +9,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -67,11 +66,21 @@ public class Helper {
 	public static BlockPos getLowestBlock(World world, BlockPos pos) {
 		pos = new BlockPos(pos.getX(), 0, pos.getZ());
 		for (int i = 0; i < 256; ++i) {
-			if (world.getBlockState(pos).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == Blocks.AIR)
+			if (isStateOverwritable(world.getBlockState(pos)) && isStateOverwritable(world.getBlockState(pos.up())))
 				return pos;
 			pos = pos.up();
 		}
 		return null;
+	}
+	
+	public static boolean isStateOverwritable(IBlockState state) {
+		return state.getMaterial() == Material.PLANTS ||
+				state.getMaterial() == Material.AIR ||
+				state.getMaterial() == Material.SNOW ||
+				state.getMaterial() == Material.WATER||
+				state.getMaterial() == Material.CARPET ||
+				state.getMaterial().isLiquid() || 
+				state.getMaterial().isReplaceable();
 	}
 
 	public static double clamp(double f, double f1) {
@@ -83,11 +92,7 @@ public class Helper {
 	}
 
 	public static boolean isSafe(World world, BlockPos pos, EnumFacing facing) {
-		return isLandable(world, pos) && isLandable(world, pos.up()) && world.getBlockState(pos.down()).getMaterial() != Material.AIR;
-	}
-
-	public static boolean isLandable(World world, BlockPos pos) {
-		return world.getBlockState(pos).getBlock().canBeReplacedByLeaves(world.getBlockState(pos), world, pos);
+		return isStateOverwritable(world.getBlockState(pos)) && isStateOverwritable(world.getBlockState(pos.up())) && !isStateOverwritable(world.getBlockState(pos.down()));
 	}
 	
 	public static boolean isDimensionBlocked(int id) {

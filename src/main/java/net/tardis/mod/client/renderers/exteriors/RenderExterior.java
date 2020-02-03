@@ -1,5 +1,7 @@
 package net.tardis.mod.client.renderers.exteriors;
 
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
@@ -14,6 +16,8 @@ import net.tardis.mod.misc.TimedDecal;
 import net.tardis.mod.util.common.helpers.Helper;
 
 public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntityDoor> {
+	
+	private static Random rand = new Random();
 	
 	@Override
 	public void render(TileEntityDoor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
@@ -39,7 +43,7 @@ public abstract class RenderExterior extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.popMatrix();
 		
 		for(TimedDecal dec : te.forcefieldHits) {
-			//TODO: Render hit image
+			te.getWorld().spawnParticle(EnumParticleTypes.END_ROD, dec.getPos().x, dec.getPos().y, dec.getPos().z, (rand.nextDouble() - 0.5) * 0.1, (rand.nextDouble() - 0.5) * 0.1, (rand.nextDouble() - 0.5) * 0.1, 0);
 		}
 	}
 	

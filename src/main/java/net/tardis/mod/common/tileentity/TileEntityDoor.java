@@ -21,6 +21,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -320,6 +321,11 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 			
 			if (entity instanceof IProjectile) {
 				entity.setDead();
+				if(!this.hitEntitiesIDs.contains(entity.getEntityId())) {
+					this.hitEntitiesIDs.add(entity.getEntityId());
+					this.forcefieldHits.add(new TimedDecal(entity.getPositionVector(), 20));
+					
+				}
 			}
 			
 			if (entity instanceof IMob) {
@@ -332,11 +338,8 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				entity.motionY = dir.y;
 				entity.motionZ = dir.z;
 				
-				if(!this.hitEntitiesIDs.contains(entity.getEntityId())) {
-					this.hitEntitiesIDs.add(entity.getEntityId());
-					this.forcefieldHits.add(new TimedDecal(entity.getPositionVector(), 80));
-					
-				}
+				this.hitEntitiesIDs.add(entity.getEntityId());
+				this.forcefieldHits.add(new TimedDecal(entity.getPositionVector().add(0, entity.getEyeHeight() / 2.0, 0), 20));
 				
 			}
 			
@@ -656,6 +659,13 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void setForcefield(boolean force) {
 		this.forceField = force;
 		this.markDirty();
+		
+		if(!world.isRemote) {
+			WorldServer ws = world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+			TileEntity te = world.getTileEntity(this.getConsolePos());
+			if(te instanceof TileEntityTardis)
+				((TileEntityTardis)te).setForceFieldEnabled(force);
+		}
 	}
 	
 	public boolean getForcefield() {
