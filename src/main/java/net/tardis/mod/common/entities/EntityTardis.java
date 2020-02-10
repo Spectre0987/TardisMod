@@ -6,6 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -27,6 +28,7 @@ import net.tardis.mod.common.entities.controls.ControlDoor;
 import net.tardis.mod.common.enums.EnumFlightState;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.TardisTeleporter;
 
 public class EntityTardis extends Entity{
 
@@ -224,10 +226,10 @@ public class EntityTardis extends Entity{
 					public void run() {
 						WorldServer tardisWorld = ((WorldServer)world).getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 						if(tardisWorld != null) {
-							TileEntity te = tardisWorld.getTileEntity(getConsole());
-							if(te instanceof TileEntityTardis) {
-								((TileEntityTardis)te).enterTARDIS(pass);
-							}
+							BlockPos pos = getConsole().south();
+							pass.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+							if(pass instanceof EntityPlayerMP)
+								world.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)pass, TDimensions.TARDIS_ID, new TardisTeleporter());
 						}
 					}
 				});
