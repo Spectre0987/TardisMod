@@ -1112,6 +1112,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			face = door.getHorizontalFacing();
 		}
 		
+		
+		entity.setPositionAndRotation(pos.x, pos.y, pos.z, Helper.get180Rot(face), 0);
 		if(entity instanceof EntityPlayerMP) {
 			if(TDimensions.TARDIS_ID != entity.dimension)
 				((WorldServer)world).getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP)entity, TDimensions.TARDIS_ID, new TardisTeleporter());
@@ -1120,7 +1122,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		else if(entity.dimension != TDimensions.TARDIS_ID)
 			entity.changeDimension(TDimensions.TARDIS_ID, new TardisTeleporter());
-		entity.setPositionAndRotation(pos.x, pos.y, pos.z, Helper.get180Rot(face), 0);
 	}
 	
 	public <T> T getSystem(Class<T> system) {

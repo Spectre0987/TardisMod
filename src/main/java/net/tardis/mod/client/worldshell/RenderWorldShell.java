@@ -31,6 +31,7 @@ import net.tardis.mod.util.common.helpers.Helper;
 public class RenderWorldShell {
 	
 	public static VertexBuffer BOTI = null;
+	
 	static {
 		((SimpleReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(new IResourceManagerReloadListener() {
 
@@ -119,7 +120,9 @@ public class RenderWorldShell {
 			BlockStorage stor = cont.getWorldShell().blockMap.get(e.getPosition().down());
 			float light = stor != null ? ((float)stor.light / 15F) : 1F;
 			GlStateManager.color(light, light, light);
-			Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, e.posX, e.posY, e.posZ, e.rotationYaw, 0);
+			GlStateManager.translate(e.posX, e.posY, e.posZ);
+			GlStateManager.rotate(e.rotationYaw, 0, 1, 0);
+			Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(e).doRender(e, 0, 0, 0, 0, 0);
 			GlStateManager.popMatrix();
 		}
 		GlStateManager.popMatrix();

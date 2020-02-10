@@ -1,6 +1,8 @@
 package net.tardis.mod.common.entities.controls;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
@@ -8,6 +10,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -128,17 +131,31 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 			if(ws == null) return;
 			IBlockState state = ws.getBlockState(tardis.getLocation().up());
 			if(!(state.getBlock() instanceof BlockTardisTop)) return;
+			
 			BlockPos offset = tardis.getLocation().up().offset(state.getValue(BlockTardisTop.FACING), 10);
 			AxisAlignedBB bb = BOTI;
 			if(!this.shell.getOffset().equals(offset))
 				this.shell = new WorldShell(offset);
 			this.shell.blockMap = this.getBlockStoreInAABB(bb, offset, ws);
+			this.shell.setEntities(this.getShellEntities(ws, bb.offset(offset)));
 			this.dataManager.set(FACING, this.getFacing());
 			this.shell.setTime(ws.getWorldTime());
 			
 			//Get motion for rendering
 			this.dataManager.set(MOTION, new Vec3d(tardis.getMotionX(), tardis.getMotionY(), tardis.getMotionZ()));
 		}
+	}
+	
+	public List<NBTTagCompound> getShellEntities(WorldServer other, AxisAlignedBB bb){
+		List<NBTTagCompound> entities = new ArrayList<NBTTagCompound>();
+		for(Entity ent : other.getEntitiesWithinAABB(Entity.class, bb)) {
+			if(EntityList.getKey(ent) != null) {
+				NBTTagCompound tag = ent.serializeNBT();
+				tag.setString("id", EntityList.getKey(ent).toString());
+				entities.add(tag);
+			}
+		}
+		return entities;
 	}
 	
 	public Map<BlockPos, BlockStorage> getBlockStoreInAABB(AxisAlignedBB bb, BlockPos pos, WorldServer ws){

@@ -29,7 +29,7 @@ public class BlockSuitcase extends BlockBase {
 		clothes.add(new ItemStack[]{new ItemStack(TItems.first_cane), new ItemStack(TItems.fourth_hat)});
 		clothes.add(new ItemStack[]{new ItemStack(TItems.void_specs)});
 		clothes.add(new ItemStack[]{new ItemStack(TItems.thirteen_coat)});
-		this.setHarvestLevel("pickaxe", 0);
+		this.setHarvestLevel("pickaxe", -1);
 	}
 
 	@Override
