@@ -10,14 +10,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.sounds.InteriorHum;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
-import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class MessageSwitchHum implements IMessage {
     private int humID;
     private long blockpos;
 
-    public MessageSwitchHum() {
-    }
+    public MessageSwitchHum() {}
 
     public MessageSwitchHum(int soundID, long blockpos) {
         this.humID = soundID;

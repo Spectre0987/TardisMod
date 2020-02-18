@@ -94,7 +94,7 @@ public class RenderHelper {
 				}
 				
 				Minecraft.getMinecraft().renderGlobal.renderSky(partialTicks, 2);
-				renderShell.renderWorldShell(te, wBoti, offset.x, offset.y, offset.z);
+				RenderWorldShell.renderWorldShell(te, wBoti, offset.x, offset.y, offset.z);
 				
 				GlStateManager.popMatrix();
 				RenderHelper.setRenderGlobalWorld(oldW);

@@ -44,7 +44,6 @@ public class RenderWorldShell {
 	}
 	
 	public static void renderWorldShell(IContainsWorldShell cont, WorldClient world, double x, double y, double z) {
-		//BOTI = null;
 
 		GlStateManager.pushMatrix();
 		BlockPos offset = cont.getWorldShell().getOffset();

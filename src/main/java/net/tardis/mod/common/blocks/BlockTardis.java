@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tardis.mod.client.creativetabs.TardisTabs;
-import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.common.tileentity.TileEntityDoor;
 
 public class BlockTardis extends Block {
 
@@ -32,7 +32,7 @@ public class BlockTardis extends Block {
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if(worldIn.getTileEntity(pos.up()) == null || !(worldIn.getTileEntity(pos.up()) instanceof TileEntityTardis)) {
+		if(worldIn.getTileEntity(pos.up()) == null || !(worldIn.getTileEntity(pos.up()) instanceof TileEntityDoor)) {
 			worldIn.setBlockToAir(pos);
 		}
 		super.updateTick(worldIn, pos, state, rand);

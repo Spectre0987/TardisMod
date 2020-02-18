@@ -21,6 +21,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.EnumExterior;
+import net.tardis.mod.common.blocks.BlockTardis;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -37,10 +38,11 @@ public class EntityTardis extends Entity{
 	private BlockPos consolePos = BlockPos.ORIGIN;
 	private int ticksOnGround = 0;
 	private NBTTagCompound doorTag;
-	private IBlockState state = TBlocks.tardis_top_tt.getDefaultState();
+	private IBlockState state;
 	
 	public EntityTardis(World worldIn) {
 		super(worldIn);
+		state = TBlocks.tardis_top_tt.getDefaultState();
 	}
 
 	@Override
@@ -251,6 +253,12 @@ public class EntityTardis extends Entity{
 	}
 	
 	public TileEntityDoor createDoorTile() {
+		
+		if(state == null || !(state.getBlock() instanceof BlockTardis)) {
+			this.setDead();
+			return null;
+		}
+		
 		world.setBlockState(this.getPosition().up(), this.getBlockState().withProperty(BlockTardisTop.FACING, this.getHorizontalFacing()));
 		world.setBlockState(this.getPosition(), TBlocks.tardis.getDefaultState());
 		TileEntity te = world.getTileEntity(this.getPosition().up());

@@ -2,13 +2,17 @@ package net.tardis.mod.client.handler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -16,9 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.tardis.mod.Tardis;
-import net.tardis.mod.client.guis.GuiVortexM;
 import net.tardis.mod.common.blocks.interfaces.IRenderBox;
-import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.entities.vehicles.EntityBessie;
 import net.tardis.mod.common.enums.EnumFlightState;
@@ -27,6 +29,7 @@ import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageTardisFlight;
 import net.tardis.mod.network.packets.MessageTardisFlightChange;
 import net.tardis.mod.network.packets.MessageUpdateBessie;
+import net.tardis.mod.util.common.helpers.RiftHelper;
 
 @Mod.EventBusSubscriber(modid = Tardis.MODID, value = Side.CLIENT)
 public class ClientHandler {
@@ -102,6 +105,22 @@ public class ClientHandler {
 		if(event.getEntityPlayer().getRidingEntity() instanceof EntityTardis) {
 			EntityTardis entity = (EntityTardis)event.getEntityPlayer().getRidingEntity();
 			NetworkHandler.NETWORK.sendToServer(new MessageTardisFlightChange(entity.getEntityId(), entity.getOpenState() == EnumFlightState.CLOSED ? EnumFlightState.SITTING : EnumFlightState.CLOSED));
+		}
+	}
+	
+	@SubscribeEvent
+	public static void worldRender(RenderWorldLastEvent event) {
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if(player != null && player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == TItems.void_specs) {
+			ChunkPos cPos = player.world.getChunk(player.getPosition()).getPos();
+			for(int x = -3; x < 7; ++x) {
+				for(int z = -3; z < 7; ++z) {
+					ChunkPos newCP = new ChunkPos(cPos.x + x, cPos.z + z);
+					if(RiftHelper.isRift(newCP, player.world)) {
+						player.world.spawnParticle(EnumParticleTypes.CLOUD, newCP.getXStart() + 8, player.posY, newCP.getZStart() + 8, 0, 1, 0, 0);
+					}
+				}
+			}
 		}
 	}
 }

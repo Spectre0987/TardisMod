@@ -62,16 +62,7 @@ jar{
     }
 }
 
-dependencies {
-    //use deobfProvided for optional dependencies, deobfCompile for required ones!
-
-    //ic2-ex
-    compileOnly "net.industrial-craft:industrialcraft-2:${project.ic2ex_version}:api"
-    runtime "net.industrial-craft:industrialcraft-2:${project.ic2ex_version}"
-
-    //JEI
-    compileOnly "mezz.jei:jei_1.12.2:4.14.4.267:api"
-}
+dependencies {}
 
 processResources {
     // this will ensure that this task is redone when the versions change.

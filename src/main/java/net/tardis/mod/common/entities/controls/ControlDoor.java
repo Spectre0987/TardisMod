@@ -64,7 +64,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	public int antiSpamTicks = 0;
 	private WorldShell shell = new WorldShell(BlockPos.ORIGIN);
 	private World clientWorld;
-	private long otherTime = 0L;
 	
 	public ControlDoor(World world) {
 		super(world);
@@ -121,18 +120,20 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 		return te instanceof TileEntityTardis ? (TileEntityTardis)te : null;
 	}
 	
-	AxisAlignedBB BOTI = Block.FULL_BLOCK_AABB.grow(10);
+	AxisAlignedBB BOTI = Block.FULL_BLOCK_AABB.grow(20);
 	
 	public void updateWorldShell() {
 		if(!world.isRemote) {
 			TileEntityTardis tardis = this.getTardis();
 			if(tardis == null) return;
+			
 			WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
 			if(ws == null) return;
+			
 			IBlockState state = ws.getBlockState(tardis.getLocation().up());
 			if(!(state.getBlock() instanceof BlockTardisTop)) return;
 			
-			BlockPos offset = tardis.getLocation().up().offset(state.getValue(BlockTardisTop.FACING), 10);
+			BlockPos offset = tardis.getLocation().up().offset(state.getValue(BlockTardisTop.FACING), 20);
 			AxisAlignedBB bb = BOTI;
 			if(!this.shell.getOffset().equals(offset))
 				this.shell = new WorldShell(offset);
@@ -390,12 +391,11 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	}
 	
 	public void setBotiUpdate(boolean update) {
-		//this.dataManager.set(UPDATE, update);
 		this.updateServerSide = update;
 	}
 	
 	public boolean getBotiUpdate() {
-		return this.updateServerSide;//this.dataManager.get(UPDATE);
+		return this.updateServerSide;
 	}
 
 	public Vec3d getMotion() {

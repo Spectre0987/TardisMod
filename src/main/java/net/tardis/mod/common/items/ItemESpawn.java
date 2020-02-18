@@ -13,9 +13,9 @@ import net.tardis.mod.util.common.helpers.Helper;
 
 public class ItemESpawn extends ItemBase {
 
-	IEntityFactory entity;
+	IEntityFactory<?> entity;
 
-	public ItemESpawn(IEntityFactory e) {
+	public ItemESpawn(IEntityFactory<?> e) {
 		this.setMaxStackSize(1);
 		this.entity = e;
 	}

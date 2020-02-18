@@ -6,8 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelOcelot;
 import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -163,15 +161,7 @@ public class ClientProxy extends ServerProxy {
 		EntityPlayer player = e.getEntityPlayer();
 
 		if (!layerPlayers.contains(player)) {
-			RenderPlayer render = e.getRenderer();
-			//addRenderLayer(new RenderLayerVortexM(render));
 			layerPlayers.add(player);
-		}
-	}
-
-	private static void addRenderLayer(LayerRenderer layer) {
-		for (RenderPlayer playerRender : Minecraft.getMinecraft().getRenderManager().getSkinMap().values()) {
-			playerRender.addLayer(layer);
 		}
 	}
 
