@@ -20,7 +20,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -135,6 +134,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean isStealth = false;
 	private EntityTardis entity;
 	
+	//Effects
+	private int landingSoundDuration = 200;
+	
 	public TileEntityTardis() {
 		if (systems == null) {
 			this.systems = this.createSystems();
@@ -172,26 +174,28 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(this.ticksToTravel % 20 == 0)
 				this.artron -= this.calcFuelUse();
 			
+			//land
 			if (ticksToTravel <= 0)
 				this.travel();
 			
 			if (this.ticksToTravel == 200) {
-				for (EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16))) {
-					player.connection.sendPacket(new SPacketSoundEffect(TSounds.tardis_land, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
-				}
+				if(!world.isRemote)
+					world.playSound(null, this.getPos(), TSounds.tardis_land, SoundCategory.BLOCKS, 1F, 1F);
 			}
 			
 			if (this.ticksToTravel == this.totalTimeToTravel - 1)
-				for (EntityPlayerMP player : world.getEntitiesWithinAABB(EntityPlayerMP.class, Block.FULL_BLOCK_AABB.offset(this.getPos()).grow(16))) {
-					player.connection.sendPacket(new SPacketSoundEffect(TSounds.takeoff, SoundCategory.AMBIENT, getPos().getX(), getPos().getY(), getPos().getZ(), 0.5F, 1F));
-				}
-			else if (this.ticksToTravel > 200 && this.ticksToTravel < this.totalTimeToTravel - 200) {
+				if(!world.isRemote)
+					world.playSound(null, this.getPos(), TSounds.takeoff, SoundCategory.BLOCKS, 1F, 1F);
+			
+			else if (this.ticksToTravel > this.landingSoundDuration && this.ticksToTravel < this.totalTimeToTravel - this.landingSoundDuration) {
 				if (this.ticksToTravel % 40 == 0) {
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
+			
 			if (this.artron <= 0.0 && this.ticksToTravel % 5 == 0)
 				crash();
+			
 			if (world.isRemote) {
 				if (frame + 1 >= ModelConsole.frames.length)
 					frame = 0;
@@ -216,12 +220,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				}
 			}
 		}
+		//Not flying
 		else {
 			if (this.isFueling()) {
 				if (!world.isRemote && world.getTotalWorldTime() % 20 == 0) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-					this.artron += TardisConfig.MISC.artronRechargeRate *
-							(RiftHelper.isRift(ws.getChunk(getLocation()).getPos(), ws) ? 2 : 1);
+					this.setArtron(this.getArtron() + TardisConfig.MISC.artronRechargeRate *
+							(RiftHelper.isRift(ws.getChunk(getLocation()).getPos(), ws) ? 2 : 1));
 				}
 			}
 		}
@@ -230,18 +235,23 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			ticks = 0;
 			this.updateServer();
 		}
+		
+		//Console chunk loading
 		if (chunkLoadTick) {
 			chunkLoadTick = false;
 			if (!world.isRemote) {
 				WorldServer ws = world.getMinecraftServer().getWorld(this.dimension);
-				if (ws == null) return;
+				if (ws == null)
+					return;
 				tardisTicket = ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(tardisTicket, world.getChunk(this.getPos()).getPos());
 			}
 		}
+		
 		if (world.isRemote && !this.isInFlight()) {
 			frame = 0;
 		}
+		
 		this.createControls();
 		for (BaseSystem sys : this.systems) {
 			if (sys != null)
@@ -271,7 +281,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			
 			if (nPos != null) {
-				//TnT Stuff
+				//TARDIS in TARDIS Stuff
 				if (dWorld.getTileEntity(nPos.down()) instanceof TileEntityDoor) {
 					TileEntityDoor door = (TileEntityDoor) dWorld.getTileEntity(nPos.down());
 					TileEntityTardis otherTardis = (TileEntityTardis) world.getTileEntity(door.getConsolePos());
@@ -311,10 +321,14 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				
 			}
 			this.markDirty();
+			
 			DimensionType type = DimensionManager.getProviderType(dimension);
-			if (type != null) this.currentDimName = type.getName();
+			if (type != null)
+				this.currentDimName = type.getName();
 			MinecraftForge.EVENT_BUS.post(new TardisLandEvent(this));
+			
 			world.playSound(null, this.getPos(), TSounds.drum_beat, SoundCategory.BLOCKS, 0.5F, 1F);
+			
 			for (BaseSystem sys : this.systems) {
 				sys.wear();
 			}
@@ -568,7 +582,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public void setArtron(float f) {
-		this.artron = (f > this.maxArtron ? this.maxArtron : f);
+		this.artron = (f > this.maxArtron ? this.maxArtron : (f < 0 ? 0 : f));
 		this.markDirty();
 	}
 	

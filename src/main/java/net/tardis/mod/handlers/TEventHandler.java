@@ -21,28 +21,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
@@ -60,7 +55,6 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.api.dimensions.IDimensionProperties;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
-import net.tardis.mod.common.data.TimeLord;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.INeedMetadata;
@@ -264,31 +258,6 @@ public class TEventHandler {
 		for (RegistryEvent.MissingMappings.Mapping<EntityEntry> map : e.getAllMappings()) {
 			if (map.key.toString().equals("tardis:raider")) {
 				map.ignore();
-			}
-		}
-	}
-
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void useRegen(LivingDeathEvent event) {
-		if (event.getEntityLiving() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-			if(player.getRidingEntity() instanceof EntityTardis) {
-				event.setCanceled(true);
-				return;
-			}
-			if (TimeLord.isTimeLord(player)) {
-				if (TimeLord.useRegen(player)) {
-					event.setCanceled(true);
-					player.setHealth(player.getMaxHealth());
-					player.sendMessage(new TextComponentString("You have " + TimeLord.getRegens(player) + " regenerations left."));
-					Potion[] me = {MobEffects.WEAKNESS, MobEffects.SLOWNESS, MobEffects.MINING_FATIGUE, MobEffects.ABSORPTION, MobEffects.REGENERATION, MobEffects.HUNGER};
-					for (Potion p : me) {
-						player.addPotionEffect(new PotionEffect(p, 600, 0));
-					}
-					player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300, 0));
-					return;
-				}
-				else TimeLord.setTimeLord(player);
 			}
 		}
 	}

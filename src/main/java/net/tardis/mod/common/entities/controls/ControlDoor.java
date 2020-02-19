@@ -84,6 +84,7 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 			this.setOtherDoors(open);
 			this.setBotiUpdate(true);
 		}
+		else this.syncWorldShell();
 		return true;
 	}
 
@@ -123,15 +124,18 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 	AxisAlignedBB BOTI = Block.FULL_BLOCK_AABB.grow(20);
 	
 	public void updateWorldShell() {
+		this.updateServerSide = false;
 		if(!world.isRemote) {
 			TileEntityTardis tardis = this.getTardis();
 			if(tardis == null) return;
 			
 			WorldServer ws = world.getMinecraftServer().getWorld(tardis.dimension);
-			if(ws == null) return;
+			if(ws == null)
+				return;
 			
 			IBlockState state = ws.getBlockState(tardis.getLocation().up());
-			if(!(state.getBlock() instanceof BlockTardisTop)) return;
+			if(!(state.getBlock() instanceof BlockTardisTop))
+				return;
 			
 			BlockPos offset = tardis.getLocation().up().offset(state.getValue(BlockTardisTop.FACING), 20);
 			AxisAlignedBB bb = BOTI;

@@ -46,7 +46,6 @@ public class TItems {
 	public static Item first_cane = null;
 	public static Item fourth_hat = null;
 	public static Item thirteen_coat = null;
-	public static Item symbiotic_nuclei = null;
 
 	public static Item stattenheim_remote = null;
 	public static Item sonic_shades = null;
@@ -121,7 +120,6 @@ public class TItems {
 		first_cane = createItem(new ItemCane(), "first_cane");
 		fourth_hat = createItem(new ItemHat(EnumClothes.HAT_FOURTH_DOC), "fourth_hat");
 		thirteen_coat = createItem(new ItemClothing(EnumClothes.CHEST_13TH_COAT), "thirteen_coat");
-		symbiotic_nuclei = createItem(new ItemSymbioticNuclei(), "symbiotic_nuclei");
 		stattenheim_remote = createItem(new ItemRemote(), "stattenheim_remote");
 		time_vector_generator = createItem(new ItemTVG(), "time_vector_generator");
 		sonic_shades = createItem(new ItemSonicShades(EnumClothes.HAT_SONIC_SHADES), "sonic_shades");

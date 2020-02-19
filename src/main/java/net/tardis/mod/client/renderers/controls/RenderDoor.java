@@ -53,16 +53,16 @@ public class RenderDoor extends Render<ControlDoor> {
 			EnumFacing face = EnumFacing.fromAngle(entity.getFacing() + 180);
 			Vec3d vec = new Vec3d(0, 1, 0);
 			if(face == EnumFacing.NORTH) {
-				vec = new Vec3d(-1, 1, -9);
+				vec = new Vec3d(-1, 1, -20);
 			}
 			else if(face == EnumFacing.EAST) {
-				vec = new Vec3d(9, 1, 0);
+				vec = new Vec3d(19, 1, -1);
 			}
 			else if(face == EnumFacing.WEST) {
-				vec = new Vec3d(-10, 1, 1);
+				vec = new Vec3d(-20, 1, 0);
 			}
 			else if(face == EnumFacing.SOUTH) {
-				vec = new Vec3d(0, 1, 10);
+				vec = new Vec3d(0, 1, 19);
 			}
 			GlStateManager.translate(0, 0, -0.001);
 			RenderHelper.renderPortal(shellRender, entity, partialTicks, entity.getFacing(), vec.add(entity.getMotion()));
