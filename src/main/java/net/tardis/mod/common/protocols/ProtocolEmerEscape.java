@@ -11,9 +11,11 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class ProtocolEmerEscape implements ITardisProtocol {
 
+	private static float PROTOCOL_USE = 100;
+	
 	@Override
 	public void onActivated(World world, TileEntityTardis tardis) {
-		if(!world.isRemote && tardis.fuel > 0.01) {
+		if(!world.isRemote && tardis.getArtron() > 100) {
 			WorldServer overworld = ((WorldServer)world).getMinecraftServer().getWorld(0);
 			BlockPos pos = overworld.getSpawnPoint();
 			pos = overworld.getTopSolidOrLiquidBlock(pos);
@@ -21,7 +23,7 @@ public class ProtocolEmerEscape implements ITardisProtocol {
 				player.changeDimension(0, new TardisTeleporter(pos));
 				player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 			}
-			tardis.fuel -= 0.01F;
+			tardis.setArtron(tardis.getArtron() - PROTOCOL_USE);
 			tardis.markDirty();
 		}
 	}

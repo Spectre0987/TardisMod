@@ -18,7 +18,7 @@ public class TardisLandEvent extends Event {
         this.tardis = tardis;
         location = tardis.getDestination();
         dimension = tardis.getTargetDim();
-        fuel = tardis.fuel;
+        fuel = tardis.getArtron();
     }
 
     /**

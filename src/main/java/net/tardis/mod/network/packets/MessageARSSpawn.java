@@ -49,8 +49,8 @@ public class MessageARSSpawn implements IMessage{
 					EntityPlayerMP player = ctx.getServerHandler().player;
 					if(te instanceof TileEntityTardis) {
 						TileEntityTardis tardis = (TileEntityTardis)te;
-						if(tardis.fuel > 0.005) {
-							tardis.setFuel(tardis.fuel - 0.005F);
+						if(tardis.getArtron() > 2) {
+							tardis.setArtron(tardis.getArtron() - 2);
 							InventoryHelper.spawnItemStack(ws, player.posX, player.posY, player.posZ, message.stack);
 						}
 					}

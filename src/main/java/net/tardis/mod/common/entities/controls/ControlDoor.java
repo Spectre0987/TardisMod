@@ -141,9 +141,6 @@ public class ControlDoor extends Entity implements IContainsWorldShell, IDoor, I
 			this.shell.setEntities(this.getShellEntities(ws, bb.offset(offset)));
 			this.dataManager.set(FACING, this.getFacing());
 			this.shell.setTime(ws.getWorldTime());
-			
-			//Get motion for rendering
-			this.dataManager.set(MOTION, new Vec3d(tardis.getMotionX(), tardis.getMotionY(), tardis.getMotionZ()));
 		}
 	}
 	

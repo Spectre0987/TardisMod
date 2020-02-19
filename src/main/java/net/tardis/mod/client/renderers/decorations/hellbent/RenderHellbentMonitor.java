@@ -73,13 +73,11 @@ public class RenderHellbentMonitor extends TileEntitySpecialRenderer<TileEntityH
 		mc.fontRenderer.drawString("Dimension: " + name, 0, mc.fontRenderer.FONT_HEIGHT * 1, Color.WHITE.getRGB());
 		mc.fontRenderer.drawString("Destination: " + Helper.formatBlockPos(tardis.getDestination()), 0, mc.fontRenderer.FONT_HEIGHT * 2, Color.WHITE.getRGB());
 		mc.fontRenderer.drawString("Target Dim: " + targetDimName, 0, mc.fontRenderer.FONT_HEIGHT * 3, Color.WHITE.getRGB());
-		mc.fontRenderer.drawString("Artron Banks: " + Math.round(tardis.fuel * 100) + "%", 0, mc.fontRenderer.FONT_HEIGHT * 4, Color.white.getRGB());
+		mc.fontRenderer.drawString("Artron Banks: " + tardis.getArtron() + " units", 0, mc.fontRenderer.FONT_HEIGHT * 4, Color.white.getRGB());
 		if (tardis.isInFlight())
 			mc.fontRenderer.drawString("Time Left " + tardis.getTimeLeft() / 20, 0, mc.fontRenderer.FONT_HEIGHT * 5, Color.WHITE.getRGB());
 		else mc.fontRenderer.drawString("TARDIS Landed", 0, mc.fontRenderer.FONT_HEIGHT * 5, Color.WHITE.getRGB());
 		mc.fontRenderer.drawString("TARDIS Facing: " + tardis.facing.getName(), 0, mc.fontRenderer.FONT_HEIGHT * 6, Color.WHITE.getRGB());
-		String health = (tardis.getHealth() * 100 + "");
-		mc.fontRenderer.drawString("TARDIS Hull: " + health.substring(0, health.indexOf(".")) + "%", 0, mc.fontRenderer.FONT_HEIGHT * 7, Color.WHITE.getRGB());
 	}
 
 }

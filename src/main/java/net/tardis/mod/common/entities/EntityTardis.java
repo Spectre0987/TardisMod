@@ -104,7 +104,6 @@ public class EntityTardis extends Entity{
 							intDoor.getDataManager().set(ControlDoor.MOTION, new Vec3d(this.motionX, this.motionY, this.motionZ));
 						}
 					}
-					tardis.setMotion(this.motionX, this.motionY, this.motionZ);
 					
 					//Replace exterior
 					if(this.onGround) {

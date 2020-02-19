@@ -42,7 +42,6 @@ public class SystemStabilizers extends BaseSystem {
 							this.explode(world, consolePos);
 							SystemFlight f = tardis.getSystem(SystemFlight.class);
 							f.setHealth(f.getHealth() - 0.05F);
-							tardis.setHealth(tardis.getHealth() - 0.01F);
 						}
 						EnumCourseCorrect newEvent = EnumCourseCorrect.values()[rand.nextInt(EnumCourseCorrect.values().length)];
 						tardis.setCourseEvent(newEvent);

@@ -20,7 +20,7 @@ public class TardisTakeOffEvent extends Event {
         this.tardis = tardis;
         destination = tardis.getDestination();
         dimension = tardis.getTargetDim();
-        fuel = tardis.fuel;
+        fuel = tardis.getArtron();
     }
 
     /**

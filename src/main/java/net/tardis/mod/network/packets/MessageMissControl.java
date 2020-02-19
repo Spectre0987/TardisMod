@@ -4,7 +4,6 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -38,10 +37,9 @@ public class MessageMissControl implements IMessage {
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					Vec3d look = new Vec3d(0.1, 0, 0.1);
-					for (int i = 0; i < 300; ++i) {
-						Minecraft.getMinecraft().world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, message.pos.getX() + 0.5, message.pos.getY(), message.pos.getZ() + 0.5, look.x, look.y, look.z, 0);
-						look = look.rotateYaw(0.003F);
+					for (int i = 0; i < 120; ++i) {
+						double x = Math.sin(i * 3) * 0.5, z = Math.cos(i * 3) * 0.5;
+						Minecraft.getMinecraft().world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, message.pos.getX() + 0.5, message.pos.getY(), message.pos.getZ() + 0.5, x, 0.3, z, 0);
 					}
 				}
 			});

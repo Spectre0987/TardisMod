@@ -31,7 +31,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
@@ -62,7 +61,6 @@ import net.tardis.mod.common.entities.controls.ControlLaunch;
 import net.tardis.mod.common.entities.controls.ControlMag;
 import net.tardis.mod.common.entities.controls.ControlPhone;
 import net.tardis.mod.common.entities.controls.ControlRandom;
-import net.tardis.mod.common.entities.controls.ControlSonicSlot;
 import net.tardis.mod.common.entities.controls.ControlStabilizers;
 import net.tardis.mod.common.entities.controls.ControlTelepathicCircuts;
 import net.tardis.mod.common.entities.controls.ControlWaypoint;
@@ -100,7 +98,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public int dimension = 0;
 	public int destDim = 0;
 	public int dimIndex = 0;
-	private boolean isLoading = false;
 	private static IBlockState blockBase = TBlocks.tardis.getDefaultState();
 	private IBlockState blockTop = TBlocks.tardis_top_tt.getDefaultState();
 	/**
@@ -110,7 +107,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public NonNullList<SpaceTimeCoord> saveCoords = NonNullList.withSize(15, SpaceTimeCoord.ORIGIN);
 	public NonNullList<ItemStack> buffer = NonNullList.withSize(9, ItemStack.EMPTY);
 	public EntityControl[] controls;
-	public float fuel = 1F;
+	private float artron = 256F;
+	private float maxArtron = 256F;
 	private boolean isFueling = false;
 	private boolean shouldDelayLoop = true;
 	private Ticket tardisTicket;
@@ -125,29 +123,17 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	private boolean hadsEnabled = false, forceFields = false;
 	public int magnitude = 10;
 	public EnumEvent currentEvent = EnumEvent.NONE;
-	public static float defaultFuelUse = 0.0001F;
-	public float fuelUseage = defaultFuelUse;
 	public BaseSystem[] systems;
 	private EnumTardisState currentState = EnumTardisState.NORMAL;
-	public double power = 0;
-	private boolean isLocked = false;
-	//Is the TARDIS 'parked' in the Vortex?
-	private boolean parkingOrbit = false;
-	private float hullHealth = 1F;
 	private EnumCourseCorrect courseCorrect = EnumCourseCorrect.NONE;
-	private boolean repairing = false;
-	private float rechargeRate = 0.0001F;
 	public List<TardisControlFactory> controlClases = new ArrayList<>();
 	public int waypointIndex = 0;
 	public SpaceTimeCoord returnLocation = new SpaceTimeCoord(this.getLocation(), this.dimension, "");
 	public InteriorHum hum = InteriorHum.DEFAULT;
 	public boolean overrideStabilizers = false;
 	public boolean soundChanged = false;
-	private boolean playerFuckedUp = false;
 	private boolean isStealth = false;
-	private double motionX, motionY, motionZ;
 	private EntityTardis entity;
-	private boolean guideActive = false;
 	
 	public TileEntityTardis() {
 		if (systems == null) {
@@ -181,7 +167,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		if (this.ticksToTravel > 0) {
 			--ticksToTravel;
-			this.setFuel(fuel - this.calcFuelUse());
+			
+			//Fuel use
+			if(this.ticksToTravel % 20 == 0)
+				this.artron -= this.calcFuelUse();
+			
 			if (ticksToTravel <= 0)
 				this.travel();
 			
@@ -200,7 +190,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					world.playSound(null, this.getPos(), TSounds.loop, SoundCategory.BLOCKS, 0.5F, 1F);
 				}
 			}
-			if (fuel <= 0.0 && this.ticksToTravel % 5 == 0)
+			if (this.artron <= 0.0 && this.ticksToTravel % 5 == 0)
 				crash();
 			if (world.isRemote) {
 				if (frame + 1 >= ModelConsole.frames.length)
@@ -228,13 +218,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		else {
 			if (this.isFueling()) {
-				if (!world.isRemote) {
+				if (!world.isRemote && world.getTotalWorldTime() % 20 == 0) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-					this.setFuel(fuel + (RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws) ? 0.0005F : this.rechargeRate));
+					this.artron += TardisConfig.MISC.artronRechargeRate *
+							(RiftHelper.isRift(ws.getChunk(getLocation()).getPos(), ws) ? 2 : 1);
 				}
-			}
-			if (this.getRepairing()) {
-				this.setHealth(this.getHealth() + 0.01F);
 			}
 		}
 		++ticks;
@@ -256,7 +244,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		this.createControls();
 		for (BaseSystem sys : this.systems) {
-			if (sys != null) sys.onUpdate(world, this.getPos());
+			if (sys != null)
+				sys.onUpdate(world, this.getPos());
 			else {
 				List<BaseSystem> systems = new ArrayList<>();
 				for (int i = 0; i < this.systems.length; ++i) {
@@ -274,7 +263,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			Random rand = new Random();
 			this.ticksToTravel = 0;
 			World dWorld = world.getMinecraftServer().getWorld(destDim);
-			World oWorld = world.getMinecraftServer().getWorld(dimension);
 			BlockPos nPos = Helper.isSafe(dWorld, getDestination(), this.facing) ? this.getDestination() : this.getLandingBlock(dWorld, getDestination());
 			
 			//WorldBorder safety checks
@@ -398,7 +386,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.tardisLocation = BlockPos.fromLong(tardisTag.getLong("tardisLoc"));
 			this.dimension = tardisTag.getInteger("dim");
 			this.destDim = tardisTag.getInteger("destDim");
-			this.fuel = tardisTag.getFloat("fuel");
+			this.artron = tardisTag.getFloat("fuel");
 			this.landOnSurface = tardisTag.getBoolean(NBT.LAND_ON_SURFACE);
 			NBTTagList coordList = tardisTag.getTagList("coordList", Constants.NBT.TAG_COMPOUND);
 			int i = 0;
@@ -418,7 +406,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.magnitude = tardisTag.getInteger(NBT.MAGNITUDE);
 			this.hadsEnabled = tardisTag.getBoolean(NBT.HADS_ENABLED);
 			this.blockTop = Block.getStateById(tardisTag.getInteger(NBT.EXTERIOR));
-			this.fuelUseage = tardisTag.getFloat(NBT.FUEL_USAGE);
 			
 			List<BaseSystem> newSystems = new ArrayList<>();
 			NBTTagList systemList = tardisTag.getTagList(NBT.SYSTEM_LIST, Constants.NBT.TAG_COMPOUND);
@@ -437,14 +424,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				this.systems = newSystems.toArray(new BaseSystem[]{});
 			}
 			this.currentState = Enum.valueOf(EnumTardisState.class, tardisTag.getString(NBT.TARDIS_STATE_ID));
-			this.isLocked = tardisTag.getBoolean(NBT.IS_LOCKED);
-			this.hullHealth = tardisTag.getFloat(NBT.HEALTH);
 			this.waypointIndex = tardisTag.getInteger(NBT.WAYPOINT_INDEX);
 			this.hum = tardisTag.getInteger(NBT.HUM) != InteriorHum.hums.size() ? InteriorHum.hums.get(tardisTag.getInteger(NBT.HUM)) : null;
 			this.isStealth = tardisTag.getBoolean(NBT.STEALTH);
-			this.motionX = tardisTag.getDouble("motionX");
-			this.motionY = tardisTag.getDouble("motionY");
-			this.motionZ = tardisTag.getDouble("motionZ");
 			if(world != null && !world.isRemote && tardisTag.hasKey("entity_id")) {
 				Entity entity = ((WorldServer)world).getMinecraftServer().getEntityFromUuid(tardisTag.getUniqueId("entity_id"));
 				if(entity instanceof EntityTardis)
@@ -469,7 +451,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setLong("tardisLoc", this.tardisLocation.toLong());
 			tardisTag.setInteger("dim", this.dimension);
 			tardisTag.setInteger("destDim", this.destDim);
-			tardisTag.setFloat("fuel", fuel);
+			tardisTag.setFloat("fuel", this.artron);
 			tardisTag.setBoolean(NBT.LAND_ON_SURFACE, this.landOnSurface);
 			NBTTagList cList = new NBTTagList();
 			for (SpaceTimeCoord co : saveCoords) {
@@ -487,7 +469,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setInteger(NBT.MAGNITUDE, this.magnitude);
 			tardisTag.setBoolean(NBT.HADS_ENABLED, this.hadsEnabled);
 			tardisTag.setInteger(NBT.EXTERIOR, Block.getStateId(this.blockTop));
-			tardisTag.setFloat(NBT.FUEL_USAGE, this.fuelUseage);
 			
 			NBTTagList systemList = new NBTTagList();
 			for (BaseSystem sys : systems) {
@@ -504,14 +485,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			tardisTag.setTag(NBT.SYSTEM_LIST, systemList);
 			tardisTag.setString(NBT.TARDIS_STATE_ID, this.currentState.name());
-			tardisTag.setBoolean(NBT.IS_LOCKED, this.isLocked);
-			tardisTag.setFloat(NBT.HEALTH, this.hullHealth);
 			tardisTag.setInteger(NBT.WAYPOINT_INDEX, this.waypointIndex);
 			tardisTag.setInteger(NBT.HUM, hum != null ? InteriorHum.hums.indexOf(hum) : InteriorHum.hums.size());
 			tardisTag.setBoolean(NBT.STEALTH, this.isStealth);
-			tardisTag.setDouble("motionX", motionX);
-			tardisTag.setDouble("motionY", motionY);
-			tardisTag.setDouble("motionZ", motionZ);
 			if(this.getTardisEntity() != null)
 				tardisTag.setUniqueId("entity_uuid", this.getTardisEntity().getUniqueID());
 		}
@@ -582,15 +558,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return this.ticksToTravel > 0;
 	}
 	
-	public void setLoading(boolean b) {
-		this.isLoading = b;
-		this.markDirty();
-	}
-	
-	public boolean getLoading() {
-		return this.isLoading;
-	}
-	
 	public boolean isFueling() {
 		return isFueling;
 	}
@@ -600,8 +567,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.markDirty();
 	}
 	
-	public void setFuel(float f) {
-		fuel = MathHelper.clamp(f, 0.0F, 1.0F);
+	public void setArtron(float f) {
+		this.artron = (f > this.maxArtron ? this.maxArtron : f);
 		this.markDirty();
 	}
 	
@@ -625,7 +592,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.shouldDelayLoop = true;
 		this.ticksToTravel = this.calcTimeToTravel();
 		this.totalTimeToTravel = this.ticksToTravel;
-		this.setLoading(false);
 		this.setFueling(false);
 		if (!world.isRemote) {
 			WorldServer oWorld = world.getMinecraftServer().getWorld(dimension);
@@ -642,9 +608,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	
 	public boolean getCanFly() {
 		for (BaseSystem s : systems) {
-			if (s.shouldStopFlight()) return false;
+			if (s.shouldStopFlight())
+				return false;
 		}
-		return this.getHealth() > 0;
+		return true;
 	}
 	
 	@Override
@@ -659,7 +626,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		tag.setInteger("destDim", this.destDim);
 		tag.setLong("loc", this.getLocation().toLong());
 		tag.setLong("dest", this.getDestination().toLong());
-		tag.setFloat("fuel", fuel);
+		tag.setFloat("fuel", this.artron);
 		tag.setInteger("timeLeft", ticksToTravel);
 		tag.setInteger(NBT.MAX_TIME, this.totalTimeToTravel);
 		tag.setString(NBT.CURRENT_DIM_NAME, this.currentDimName);
@@ -684,10 +651,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		}
 		tag.setTag(NBT.SYSTEM_LIST, sysList);
 		tag.setString("course_correct", this.getCourseCorrect().name());
-		tag.setBoolean(NBT.IS_LOCKED, this.isLocked);
-		tag.setFloat(NBT.HEALTH, this.hullHealth);
 		tag.setInteger(NBT.WAYPOINT_INDEX, this.waypointIndex);
-		tag.setBoolean(NBT.FUCKED_UP, this.playerFuckedUp);
 		return tag;
 	}
 	
@@ -699,7 +663,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			this.dimension = tag.getInteger("dim");
 			this.tardisDestination = BlockPos.fromLong(tag.getLong("dest"));
 			this.tardisLocation = BlockPos.fromLong(tag.getLong("loc"));
-			this.fuel = tag.getFloat("fuel");
+			this.artron = tag.getFloat("fuel");
 			this.ticksToTravel = tag.getInteger("timeLeft");
 			this.totalTimeToTravel = tag.getInteger(NBT.MAX_TIME);
 			this.targetDimName = tag.getString(NBT.TARGET_DIM_NAME);
@@ -725,10 +689,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			}
 			this.systems = systems.toArray(new BaseSystem[]{});
 			this.setCourseEvent(Enum.valueOf(EnumCourseCorrect.class, tag.getString("course_correct")));
-			this.isLocked = tag.getBoolean(NBT.IS_LOCKED);
-			this.hullHealth = tag.getFloat(NBT.HEALTH);
 			this.waypointIndex = tag.getInteger(NBT.WAYPOINT_INDEX);
-			this.playerFuckedUp = tag.getBoolean(NBT.FUCKED_UP);
 		}
 	}
 	
@@ -816,9 +777,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			world.playSound(null, this.getPos(), TSounds.cloister_bell, SoundCategory.BLOCKS, 1F, 1F);
 		}
 		else if (explode) {
-			Random rand = new Random();
-			for (int i = 0; i < 300; ++i) {
-				double offX = Math.sin(Math.toRadians(i)), offZ = Math.cos(Math.toRadians(i));
+			for (int i = 0; i < 120; ++i) {
+				double offX = Math.sin(Math.toRadians(i * 3)), offZ = Math.cos(Math.toRadians(i * 3));
 				world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, getPos().getX() + 0.5 + offX, getPos().getY(), getPos().getZ() + 0.5 + offZ, 0, 1, 0, 0);
 			}
 		}
@@ -1020,7 +980,11 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	}
 	
 	public float calcFuelUse() {
-		return defaultFuelUse + (this.hadsEnabled ? (defaultFuelUse * 1.5F) : 0F);
+		SystemStabilizers stab = this.getSystem(SystemStabilizers.class);
+		if(stab != null) {
+			return stab.getHealth() > 0.0F && stab.isOn() ? 1 : 0.5F;
+		}
+		return 1;
 	}
 	
 	public int getTimeLeft() {
@@ -1149,15 +1113,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return tes;
 	}
 	
-	public double getPower() {
-		return this.power;
-	}
-	
-	public void setPower(double power) {
-		this.power = power;
-		this.markDirty();
-	}
-	
 	public ControlDoor getDoor() {
 		if (!this.getWorld().isRemote) {
 			ChunkPos pos = this.getWorld().getChunk(this.getPos()).getPos();
@@ -1173,30 +1128,12 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return null;
 	}
 	
-	public boolean isLocked() {
-		return this.isLocked;
-	}
-	
-	public void setLocked(boolean b) {
-		this.isLocked = b;
-		this.markDirty();
-	}
-	
 	public BlockPos getCurrentPosOnPath() {
 		if (this.isInFlight()) {
 			BlockPos dist = this.getDestination().subtract(this.getLocation());
 			return this.getLocation().add(Helper.scaleBP(dist, this.ticksToTravel / (float) this.totalTimeToTravel));
 		}
 		return this.getLocation();
-	}
-	
-	public void setHealth(float health) {
-		this.hullHealth = MathHelper.clamp(health, 0.0F, 1.0F);
-		this.markDirty();
-	}
-	
-	public float getHealth() {
-		return this.hullHealth;
 	}
 	
 	public void setCourseEvent(EnumCourseCorrect event) {
@@ -1208,43 +1145,6 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return this.courseCorrect;
 	}
 	
-	public void setRepairing(boolean b) {
-		this.repairing = b;
-		this.markDirty();
-	}
-	
-	public boolean getRepairing() {
-		return this.repairing;
-	}
-	
-	public boolean hasPlayerFuckedUp() {
-		return this.playerFuckedUp;
-	}
-	
-	public void setPlayerFuckedUp(boolean fuckedUp) {
-		this.playerFuckedUp = fuckedUp;
-		this.markDirty();
-	}
-	
-	public double getMotionX() {
-		return this.motionX;
-	}
-	
-	public double getMotionY() {
-		return this.motionY;
-	}
-	
-	public double getMotionZ() {
-		return this.motionZ;
-	}
-	
-	public void setMotion(double x, double y, double z) {
-		this.motionX = x;
-		this.motionY = y;
-		this.motionZ = z;
-		this.markDirty();
-	}
-	
 	public void setTardisEntity(EntityTardis tardis) {
 		this.entity = tardis;
 	}
@@ -1253,16 +1153,10 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return this.entity;
 	}
 	
-	public boolean isGuideActive() {
-		return this.guideActive;
+	public float getArtron() {
+		return this.artron;
 	}
 	
-	public void setGuideActive(boolean active) {
-		this.guideActive = active;
-		this.markDirty();
-		
-		//TODO: Save and sync this
-	}
 	public enum EnumCourseCorrect {
 		NONE(null, ""),
 		DIRECTION_X(ControlX.class, "course.tardis.direction.x"),

@@ -72,7 +72,6 @@ import net.tardis.mod.common.protocols.ProtocolConsole;
 import net.tardis.mod.common.protocols.ProtocolEmerEscape;
 import net.tardis.mod.common.protocols.ProtocolFindDimDRfit;
 import net.tardis.mod.common.protocols.ProtocolForcefield;
-import net.tardis.mod.common.protocols.ProtocolRepair;
 import net.tardis.mod.common.protocols.ProtocolStealth;
 import net.tardis.mod.common.protocols.ProtocolSystemReadout;
 import net.tardis.mod.common.protocols.ProtocolToggleHum;
@@ -249,7 +248,6 @@ public class Tardis {
 		TardisProtocol.register(new ProtocolConsole());
 		if (Loader.isModLoaded(TStrings.ModIds.DIM_DOORS))
 			TardisProtocol.register(new ProtocolFindDimDRfit());
-		TardisProtocol.register(new ProtocolRepair());
 		TardisProtocol.register(new ProtocolWaypoints());
 		TardisProtocol.register(new ProtocolToggleHum());
 		TardisProtocol.register(new ProtocolChangeInterior());

@@ -25,11 +25,12 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 			TileEntity te = world.getTileEntity(TardisHelper.getTardisForPosition(this.getPos()));
 			if (te != null && te instanceof TileEntityTardis) {
 				TileEntityTardis tardis = ((TileEntityTardis) te);
-				if (tardis.fuel > 0.01) {
-					tardis.setFuel(tardis.fuel - 0.01F);
+				//TODO: Fuel Use
+				if (tardis.getArtron() > 5) {
+					tardis.setArtron(tardis.getArtron() - 5);
 					EnumFacing face = world.getBlockState(getPos()).getValue(BlockFoodMachine.FACING);
 					BlockPos pos = this.getPos().offset(face.getOpposite());
-					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.BREAD));
+					InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, new ItemStack(Items.BREAD));
 				}
 			}
 			else if(RiftHelper.isRift(world.getChunk(this.getPos()).getPos(), world)) {

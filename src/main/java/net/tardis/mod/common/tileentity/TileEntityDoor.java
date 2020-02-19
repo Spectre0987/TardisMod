@@ -127,7 +127,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 		if (world != null && !world.isRemote) {
 			TileEntityTardis tardis = (TileEntityTardis) world.getMinecraftServer().getWorld(TDimensions.TARDIS_ID).getTileEntity(getConsolePos());
 			if (tardis != null && tardis.getTardisState() == EnumTardisState.NORMAL) {
-				if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0 && alpha >= 1.0F && !tardis.isLocked()) {
+				if (TardisHelper.hasValidKey(player, consolePos) && lockCooldown == 0 && alpha >= 1.0F) {
 					lockCooldown = 20;
 					isLocked = !isLocked;
 					this.markDirty();
@@ -148,8 +148,6 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 					}
 					IBlockState state = world.getBlockState(this.getPos());
 					world.notifyBlockUpdate(getPos(), state, state, 2);
-				} else if (tardis.isLocked()) {
-					player.sendStatusMessage(new TextComponentTranslation(TStrings.DOUBLE_LOCKED + true), false);
 				}
 			}
 		}
@@ -174,8 +172,11 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	
 	@Override
 	public void update() {
-		if (world == null) return;
+		if (world == null)
+			return;
+		
 		this.handleEnter();
+		
 		if (!world.isRemote) {
 			if(this.loadingTicket != null) {
 				this.loadingTicket = ForgeChunkManager.requestTicket(Tardis.instance, world, ForgeChunkManager.Type.NORMAL);
@@ -351,9 +352,10 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 				TileEntity te = ws.getTileEntity(this.getConsolePos());
 				if(te instanceof TileEntityTardis) {
 					TileEntityTardis tardis = ((TileEntityTardis)te);
-					tardis.setFuel(tardis.fuel - 0.005F);
+					//TODO: Balence Fuel use
+					tardis.setArtron(tardis.getArtron() - 1F);
 					
-					if(tardis.fuel <= 0)
+					if(tardis.getArtron() <= 0)
 						this.setForcefield(false);
 				}
 			}

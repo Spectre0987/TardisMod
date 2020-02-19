@@ -82,7 +82,7 @@ public class ItemRemote extends ItemBase {
 			WorldServer ws = worldIn.getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
 			TileEntityTardis tardis = (TileEntityTardis) ws.getTileEntity(getConsolePos(stack));
 			if (tardis != null && tardis.isInFlight()) {
-				stack.getTagCompound().setFloat(NBT.FUEL, tardis.fuel);
+				stack.getTagCompound().setFloat(NBT.FUEL, tardis.getArtron());
 				stack.getTagCompound().setInteger(NBT.TIME, tardis.getTimeLeft());
 				stack.getTagCompound().setLong(NBT.POS, tardis.getLocation().toLong());
 			}
