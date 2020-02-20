@@ -2,6 +2,7 @@ package net.tardis.mod;
 
 import java.io.File;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -92,6 +93,7 @@ import net.tardis.mod.common.systems.SystemThermo;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
+import net.tardis.mod.common.tileentity.TileEntityArtronBank;
 import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
@@ -233,10 +235,11 @@ public class Tardis {
 		registerTileEntity(TileEntityTardis04.class, "console_4");
 		registerTileEntity(TileEntityTardis05.class, "console_5");
 		
+		//Machines
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
 		registerTileEntity(TileEntityEgg.class, "ars_egg");
-		
 		registerTileEntity(TileEntityTractorBeam.class, "tractor_beam");
+		registerTileEntity(TileEntityArtronBank.class, "artron_bank");
 
 		NetworkHandler.init();
 		ScrewdriverHandler.init();
@@ -302,6 +305,7 @@ public class Tardis {
 			sonics[sonicID] = ItemSonic.SONICS.get(sonicID);
 		}
 		TileEntitySonicWorkbench.RECIPES.put(TItems.sonic_screwdriver, sonics);
+		TileEntitySonicWorkbench.RECIPES.put(Item.getItemFromBlock(Blocks.WOOL), new Item[]{TItems.void_specs});
 		
 		this.configDir = event.getModConfigurationDirectory();
 	}

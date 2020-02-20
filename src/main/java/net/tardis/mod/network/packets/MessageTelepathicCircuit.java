@@ -1,5 +1,8 @@
 package net.tardis.mod.network.packets;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -7,6 +10,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
@@ -22,9 +26,6 @@ import net.tardis.mod.common.sounds.TSounds;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class MessageTelepathicCircuit implements IMessage {
 	
@@ -87,6 +88,10 @@ public class MessageTelepathicCircuit implements IMessage {
 								biomePos.add(0, locationWorld.getSeaLevel(), 0);
 								tardis.setDesination(biomePos, tardis.getTargetDim());
 								tardis.startFlight();
+								managed = true;
+							}
+							else {
+								PlayerHelper.sendMessage(ctx.getServerHandler().player, new TextComponentString("Biome not found in range!"), true);
 								managed = true;
 							}
 						} else {

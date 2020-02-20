@@ -26,6 +26,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -34,14 +35,17 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -55,6 +59,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.api.dimensions.IDimensionProperties;
 import net.tardis.mod.common.blocks.BlockConsole;
 import net.tardis.mod.common.blocks.TBlocks;
+import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.entities.EntityDalek;
 import net.tardis.mod.common.entities.EntityTardis;
 import net.tardis.mod.common.items.INeedMetadata;
@@ -65,6 +70,7 @@ import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.recipes.RecipeRemote;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemTemporalGrace;
+import net.tardis.mod.common.tileentity.TileEntityArtronBank;
 import net.tardis.mod.common.tileentity.TileEntityEgg;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.world.TardisWorldSavedData;
@@ -285,5 +291,22 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void loadChunkData(ChunkDataEvent.Load event) {
 		RiftHelper.readRiftStatus(event.getChunk(), event.getWorld(), event.getData());
+	}
+	
+	@SubscribeEvent
+	public static void attachCaps(AttachCapabilitiesEvent<Chunk> event) {
+		
+	}
+	
+	@SubscribeEvent
+	public static void onBlockPlaced(BlockEvent.PlaceEvent event) {
+		if(event.getState().getBlock() == TBlocks.artron_bank) {
+			if(event.getWorld().provider.getDimension() == TDimensions.TARDIS_ID) {
+				TileEntity te = event.getWorld().getTileEntity(TardisHelper.getTardisForPosition(event.getPos()));
+				if(te instanceof TileEntityTardis) {
+					((TileEntityTardis)te).addArtronBank(event.getPos());
+				}
+			}
+		}
 	}
 }

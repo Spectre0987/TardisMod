@@ -206,8 +206,8 @@ public class TBlocks {
 	
 	public static Block sonic_workbench = register(new BlockSonicWorkbench(), "sonic_workbench");
 	public static Block tree_egg = register(new BlockTreeEgg() ,"tree_egg");
-	
 	public static Block tractor_beam = register(new BlockTractorBeam(TileEntityTractorBeam::new), "tractor_beam");
+	public static Block artron_bank = register(new BlockArtronBank(), "artron_bank");
 	
 	public static Block register(Block block, String name) {
 		return register(block, name, true);

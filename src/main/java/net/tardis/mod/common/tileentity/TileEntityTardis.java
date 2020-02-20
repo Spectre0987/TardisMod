@@ -225,8 +225,9 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (this.isFueling()) {
 				if (!world.isRemote && world.getTotalWorldTime() % 20 == 0) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-					this.setArtron(this.getArtron() + TardisConfig.MISC.artronRechargeRate *
-							(RiftHelper.isRift(ws.getChunk(getLocation()).getPos(), ws) ? 2 : 1));
+					if(RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws)) {
+						this.setArtron(this.getArtron() + TardisConfig.MISC.artronRechargeRate);
+					}
 				}
 			}
 		}
@@ -446,7 +447,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				if(entity instanceof EntityTardis)
 					this.entity = (EntityTardis)entity;
 			}
-			
+			this.maxArtron = tardisTag.getFloat("max_artron");
 		}
 	}
 	
@@ -504,6 +505,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setBoolean(NBT.STEALTH, this.isStealth);
 			if(this.getTardisEntity() != null)
 				tardisTag.setUniqueId("entity_uuid", this.getTardisEntity().getUniqueID());
+			tardisTag.setFloat("max_artron", this.maxArtron);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -1170,6 +1172,28 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public float getArtron() {
 		return this.artron;
 	}
+	
+	public void addArtronBank(BlockPos pos) {
+		TileEntity te = world.getTileEntity(pos);
+		if(te instanceof TileEntityArtronBank) {
+			this.setMaxArtron(this.maxArtron + ((TileEntityArtronBank)te).getMaxArtron());
+		}
+		this.markDirty();
+	}
+	
+	public void setMaxArtron(float max) {
+		this.maxArtron = max;
+		if(this.artron > max)
+			this.artron = max;
+		this.markDirty();
+	}
+	
+	public void removeArtronBank(TileEntityArtronBank bank) {
+		this.maxArtron -= bank.getMaxArtron();
+		this.setArtron(this.artron - bank.getMaxArtron());
+		this.markDirty();
+	}
+
 	
 	public enum EnumCourseCorrect {
 		NONE(null, ""),

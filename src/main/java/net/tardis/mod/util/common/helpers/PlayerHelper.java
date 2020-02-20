@@ -4,6 +4,7 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,7 +17,7 @@ public class PlayerHelper {
 		}
 	}
 	
-	public static void sendMessage(EntityPlayer player, TextComponentTranslation message, boolean hotBar) {
+	public static void sendMessage(EntityPlayer player, ITextComponent message, boolean hotBar) {
 		if (!player.world.isRemote) {
 			player.sendStatusMessage(message, hotBar);
 		}
