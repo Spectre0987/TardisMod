@@ -1173,11 +1173,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return this.artron;
 	}
 	
-	public void addArtronBank(BlockPos pos) {
-		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof TileEntityArtronBank) {
-			this.setMaxArtron(this.maxArtron + ((TileEntityArtronBank)te).getMaxArtron());
-		}
+	public void addArtronBank(TileEntityArtronBank bank) {
+		this.setMaxArtron(this.maxArtron + bank.getMaxArtron());
 		this.markDirty();
 	}
 	
