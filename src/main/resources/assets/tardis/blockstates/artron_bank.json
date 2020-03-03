@@ -1,0 +1,10 @@
+{
+	"variants":{
+		"normal":{
+			"model":"tardis:artron_bank"
+		},
+		"inventory":{
+			"model":"tardis:artron_bank"
+		}
+	}
+}

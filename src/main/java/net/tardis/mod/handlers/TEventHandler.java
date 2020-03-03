@@ -297,16 +297,4 @@ public class TEventHandler {
 	public static void attachCaps(AttachCapabilitiesEvent<Chunk> event) {
 		
 	}
-	
-	@SubscribeEvent
-	public static void onBlockPlaced(BlockEvent.PlaceEvent event) {
-		if(event.getState().getBlock() == TBlocks.artron_bank) {
-			if(event.getWorld().provider.getDimension() == TDimensions.TARDIS_ID) {
-				TileEntity te = event.getWorld().getTileEntity(TardisHelper.getTardisForPosition(event.getPos()));
-				if(te instanceof TileEntityTardis) {
-					((TileEntityTardis)te).addArtronBank(event.getPos());
-				}
-			}
-		}
-	}
 }

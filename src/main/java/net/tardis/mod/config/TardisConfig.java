@@ -96,7 +96,7 @@ public class TardisConfig {
 		public boolean camShake = true;
 
 		@Config.LangKey("config.misc.recharge")
-		public float artronRechargeRate = 2F;
+		public float artronRechargeRate = 4F;
 
 	}
 
