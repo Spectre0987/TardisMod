@@ -35,10 +35,6 @@ minecraft {
 }
 
 repositories {
-    maven {
-        name = "IC2"
-        url = "http://maven.ic2.player.to"
-    }
 
     maven {
         name = "CurseForge"
