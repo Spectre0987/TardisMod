@@ -297,9 +297,10 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void onSleep(PlayerSleepInBedEvent event) {
 		if(event.getEntityPlayer().getEntityWorld().provider.getDimension() == TDimensions.TARDIS_ID) {
-			TileEntity te = event.getEntityPlayer().world.getTileEntity(event.getPos());
+			TileEntity te = event.getEntityPlayer().world.getTileEntity(TardisHelper.getTardisForPosition(event.getPos()));
 			if(te instanceof TileEntityTardis) {
 				((TileEntityTardis)te).addBedLoc(event.getEntityPlayer(), event.getPos());
+				System.out.println("Added " + event.getPos() + " which was " + event.getEntityPlayer().world.getBlockState(event.getPos()).getBlock());
 			}
 		}
 	}

@@ -524,7 +524,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 				NBTTagCompound bedTag = new NBTTagCompound();
 				bedTag.setString("player_id", entry.getKey().toString());
 				bedTag.setLong("pos", entry.getValue().toLong());
-				bedList.appendTag(bedList);
+				bedList.appendTag(bedTag);
 			}
 			tardisTag.setTag("bed_list", bedList);
 		}
