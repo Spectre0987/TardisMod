@@ -3,6 +3,7 @@ package net.tardis.mod.common.tileentity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.UUID;
 
@@ -451,6 +452,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 					this.entity = (EntityTardis)entity;
 			}
 			this.maxArtron = tardisTag.getFloat("max_artron");
+			
+			//Bed Positions
+			NBTTagList bedList = tardisTag.getTagList("bed_list", Constants.NBT.TAG_COMPOUND);
+			for(NBTBase base : bedList) {
+				NBTTagCompound bedTag = ((NBTTagCompound)base);
+				this.bedPositions.put(UUID.fromString(bedTag.getString("player_id")), BlockPos.fromLong(bedTag.getLong("pos")));
+			}
 		}
 	}
 	
@@ -509,6 +517,16 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if(this.getTardisEntity() != null)
 				tardisTag.setUniqueId("entity_uuid", this.getTardisEntity().getUniqueID());
 			tardisTag.setFloat("max_artron", this.maxArtron);
+			
+			//Bed locations
+			NBTTagList bedList = new NBTTagList();
+			for(Entry<UUID, BlockPos> entry : this.bedPositions.entrySet()) {
+				NBTTagCompound bedTag = new NBTTagCompound();
+				bedTag.setString("player_id", entry.getKey().toString());
+				bedTag.setLong("pos", entry.getValue().toLong());
+				bedList.appendTag(bedList);
+			}
+			tardisTag.setTag("bed_list", bedList);
 		}
 		tag.setTag("tardis", tardisTag);
 		
@@ -1193,6 +1211,13 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.markDirty();
 	}
 
+	public void addBedLoc(EntityPlayer player, BlockPos pos) {
+		this.bedPositions.put(player.getUniqueID(), pos);
+	}
+	
+	public BlockPos getBedPos(EntityPlayer player) {
+		return this.bedPositions.get(player.getUniqueID());
+	}
 	
 	public enum EnumCourseCorrect {
 		NONE(null, ""),
