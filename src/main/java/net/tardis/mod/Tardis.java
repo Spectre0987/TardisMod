@@ -93,7 +93,6 @@ import net.tardis.mod.common.systems.SystemThermo;
 import net.tardis.mod.common.systems.TardisSystems;
 import net.tardis.mod.common.tileentity.TileEntityAlembic;
 import net.tardis.mod.common.tileentity.TileEntityAlembic.AlembicRecipe;
-import net.tardis.mod.common.tileentity.TileEntityArtronBank;
 import net.tardis.mod.common.tileentity.TileEntityComponentRepair;
 import net.tardis.mod.common.tileentity.TileEntityDoor;
 import net.tardis.mod.common.tileentity.TileEntityEPanel;
@@ -239,7 +238,6 @@ public class Tardis {
 		registerTileEntity(TileEntitySonicWorkbench.class, "sonic_workbench");
 		registerTileEntity(TileEntityEgg.class, "ars_egg");
 		registerTileEntity(TileEntityTractorBeam.class, "tractor_beam");
-		registerTileEntity(TileEntityArtronBank.class, "artron_bank");
 
 		NetworkHandler.init();
 		ScrewdriverHandler.init();

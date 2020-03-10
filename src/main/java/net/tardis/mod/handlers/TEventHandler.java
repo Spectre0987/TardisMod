@@ -35,17 +35,15 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -54,6 +52,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.tardis.mod.Tardis;
 import net.tardis.mod.api.dimensions.IDimensionProperties;
@@ -70,13 +69,13 @@ import net.tardis.mod.common.recipes.RecipeKey;
 import net.tardis.mod.common.recipes.RecipeRemote;
 import net.tardis.mod.common.strings.TStrings;
 import net.tardis.mod.common.systems.SystemTemporalGrace;
-import net.tardis.mod.common.tileentity.TileEntityArtronBank;
 import net.tardis.mod.common.tileentity.TileEntityEgg;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 import net.tardis.mod.common.world.TardisWorldSavedData;
 import net.tardis.mod.config.TardisConfig;
 import net.tardis.mod.network.NetworkHandler;
 import net.tardis.mod.network.packets.MessageConfigSync;
+import net.tardis.mod.util.TardisTeleporter;
 import net.tardis.mod.util.common.helpers.RiftHelper;
 import net.tardis.mod.util.common.helpers.TardisHelper;
 
@@ -294,7 +293,26 @@ public class TEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void attachCaps(AttachCapabilitiesEvent<Chunk> event) {
-		
+	public static void onSleep(PlayerSleepInBedEvent event) {
+		if(event.getEntityPlayer().getEntityWorld().provider.getDimension() == TDimensions.TARDIS_ID) {
+			TileEntity te = event.getEntityPlayer().world.getTileEntity(event.getPos());
+			if(te instanceof TileEntityTardis) {
+				
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onRespawnEvent(PlayerRespawnEvent event) {
+		if(TardisHelper.hasTardis(event.player.getUniqueID())) {
+			BlockPos pos = TardisHelper.getTardis(event.player.getUniqueID());
+			
+			event.player.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+			
+			if(event.player.world.provider.getDimension() != TDimensions.TARDIS_ID) {
+				event.player.getEntityWorld().getMinecraftServer().getPlayerList()
+				.transferPlayerToDimension((EntityPlayerMP)event.player, TDimensions.TARDIS_ID, new TardisTeleporter());
+			}
+		}
 	}
 }

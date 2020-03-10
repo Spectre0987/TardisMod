@@ -65,7 +65,6 @@ public class TardisConfig {
 
 	public static class UseEntities {
 
-		@Config.RequiresMcRestart
 		@Config.LangKey("config.entity.allowed")
 		public boolean entities = true;
 
@@ -121,6 +120,7 @@ public class TardisConfig {
 
 	@Mod.EventBusSubscriber(modid = Tardis.MODID)
 	private static class EventHandler {
+		
 		@SubscribeEvent
 		public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
 			if (event.getModID().equals(Tardis.MODID)) {

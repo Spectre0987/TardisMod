@@ -1,8 +1,10 @@
 package net.tardis.mod.common.tileentity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -45,6 +47,7 @@ import net.tardis.mod.Tardis;
 import net.tardis.mod.api.events.tardis.TardisEnterEvent;
 import net.tardis.mod.api.events.tardis.TardisExitEvent;
 import net.tardis.mod.client.models.consoles.ModelConsole;
+import net.tardis.mod.common.blocks.BlockArtronBank;
 import net.tardis.mod.common.blocks.BlockTardisTop;
 import net.tardis.mod.common.blocks.TBlocks;
 import net.tardis.mod.common.dimensions.TDimensions;
@@ -133,6 +136,7 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 	public boolean soundChanged = false;
 	private boolean isStealth = false;
 	private EntityTardis entity;
+	private HashMap<UUID, BlockPos> bedPositions = new HashMap<UUID, BlockPos>();
 	
 	//Effects
 	private int landingSoundDuration = 200;
@@ -225,9 +229,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			if (this.isFueling()) {
 				if (!world.isRemote && world.getTotalWorldTime() % 20 == 0) {
 					WorldServer ws = world.getMinecraftServer().getWorld(dimension);
-					if(RiftHelper.isRift(ws.getChunk(this.getLocation()).getPos(), ws)) {
-						this.setArtron(this.getArtron() + TardisConfig.MISC.artronRechargeRate);
-					}
+					this.setArtron(this.getArtron() + TardisConfig.MISC.artronRechargeRate *
+							(RiftHelper.isRift(ws.getChunk(tardisLocation).getPos(), ws) ? 2 : 1));
 				}
 			}
 		}
@@ -1173,8 +1176,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		return this.artron;
 	}
 	
-	public void addArtronBank(TileEntityArtronBank bank) {
-		this.setMaxArtron(this.maxArtron + bank.getMaxArtron());
+	public void addArtronBank() {
+		this.maxArtron += BlockArtronBank.MAX_ARTRON;
 		this.markDirty();
 	}
 	
@@ -1185,9 +1188,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 		this.markDirty();
 	}
 	
-	public void removeArtronBank(TileEntityArtronBank bank) {
-		this.maxArtron -= bank.getMaxArtron();
-		this.setArtron(this.artron - bank.getMaxArtron());
+	public void removeArtronBank() {
+		this.setMaxArtron(maxArtron - BlockArtronBank.MAX_ARTRON);
 		this.markDirty();
 	}
 

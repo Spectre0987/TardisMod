@@ -1,6 +1,7 @@
 package net.tardis.mod.common.dimensions;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -11,6 +12,7 @@ import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tardis.mod.client.renderers.sky.RenderVoid;
+import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class WorldProviderTardis extends WorldProvider {
 
@@ -29,11 +31,6 @@ public class WorldProviderTardis extends WorldProvider {
 	@Override
 	public float[] calcSunriseSunsetColors(float celestialAngle, float partialTicks) {
 		return super.calcSunriseSunsetColors(celestialAngle, partialTicks);
-	}
-
-	@Override
-	public int getDimension() {
-		return super.getDimension();
 	}
 
 	@Override
@@ -79,6 +76,58 @@ public class WorldProviderTardis extends WorldProvider {
 	@Override
 	public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
 		return WorldSleepResult.ALLOW;
+	}
+
+	@Override
+	public boolean canCoordinateBeSpawn(int x, int z) {
+		return true;
+	}
+
+	@Override
+	public boolean isSurfaceWorld() {
+		return true;
+	}
+
+	@Override
+	public boolean doesWaterVaporize() {
+		return false;
+	}
+
+	@Override
+	public boolean isNether() {
+		return false;
+	}
+
+	@Override
+	public BlockPos getRandomizedSpawnPoint() {
+		return BlockPos.ORIGIN;
+	}
+
+	@Override
+	public int getRespawnDimension(EntityPlayerMP player) {
+		if(TardisHelper.hasTardis(player.getUniqueID()))
+			return this.getDimension();
+		return super.getRespawnDimension(player);
+	}
+
+	@Override
+	public boolean isDaytime() {
+		return false;
+	} 
+
+	@Override
+	public boolean canSnowAt(BlockPos pos, boolean checkLight) {
+		return false;
+	}
+
+	@Override
+	public boolean isBlockHighHumidity(BlockPos pos) {
+		return false;
+	}
+
+	@Override
+	public double getHorizon() {
+		return 0.0D;
 	}
 
 	@SideOnly(Side.CLIENT)
