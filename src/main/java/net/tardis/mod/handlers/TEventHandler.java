@@ -10,6 +10,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
@@ -35,6 +36,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -297,7 +299,7 @@ public class TEventHandler {
 		if(event.getEntityPlayer().getEntityWorld().provider.getDimension() == TDimensions.TARDIS_ID) {
 			TileEntity te = event.getEntityPlayer().world.getTileEntity(event.getPos());
 			if(te instanceof TileEntityTardis) {
-				
+				((TileEntityTardis)te).addBedLoc(event.getEntityPlayer(), event.getPos());
 			}
 		}
 	}
@@ -305,13 +307,25 @@ public class TEventHandler {
 	@SubscribeEvent
 	public static void onRespawnEvent(PlayerRespawnEvent event) {
 		if(TardisHelper.hasTardis(event.player.getUniqueID())) {
-			BlockPos pos = TardisHelper.getTardis(event.player.getUniqueID());
-			
-			event.player.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
-			
-			if(event.player.world.provider.getDimension() != TDimensions.TARDIS_ID) {
-				event.player.getEntityWorld().getMinecraftServer().getPlayerList()
-				.transferPlayerToDimension((EntityPlayerMP)event.player, TDimensions.TARDIS_ID, new TardisTeleporter());
+			WorldServer ws = event.player.getEntityWorld().getMinecraftServer().getWorld(TDimensions.TARDIS_ID);
+			if(ws != null) {
+				TileEntity te = ws.getTileEntity(TardisHelper.getTardis(event.player.getUniqueID()));
+				if(te instanceof TileEntityTardis) {
+					TileEntityTardis tardis = (TileEntityTardis)te;
+					if(tardis.getBedPos(event.player) != null) {
+						BlockPos pos = tardis.getBedPos(event.player);
+						
+						if(!(ws.getBlockState(pos).getBlock() instanceof BlockBed))
+							return;
+						
+						event.player.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+						
+						if(event.player.world.provider.getDimension() != TDimensions.TARDIS_ID) {
+							event.player.getEntityWorld().getMinecraftServer().getPlayerList()
+							.transferPlayerToDimension((EntityPlayerMP)event.player, TDimensions.TARDIS_ID, new TardisTeleporter());
+						}
+					}
+				}
 			}
 		}
 	}
