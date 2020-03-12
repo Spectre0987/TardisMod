@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ici",
+    "aaa"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "c": {
+      "item": "tardis:circuts"
+    },
+    "a": {
+      "item": "tardis:artron_capacitor"
+    }
+  },
+  "result": {
+    "item": "tardis:artron_bank"
+  }
+}

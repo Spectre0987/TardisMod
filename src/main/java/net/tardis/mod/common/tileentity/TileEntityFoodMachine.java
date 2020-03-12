@@ -34,7 +34,7 @@ public class TileEntityFoodMachine extends TileEntity implements ITickable {
 				}
 			}
 			else if(RiftHelper.isRift(world.getChunk(this.getPos()).getPos(), world)) {
-				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.BREAD));
+				InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, new ItemStack(Items.BREAD));
 			}
 		}
 	}

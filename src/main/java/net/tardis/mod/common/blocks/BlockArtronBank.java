@@ -10,7 +10,7 @@ import net.tardis.mod.util.common.helpers.TardisHelper;
 
 public class BlockArtronBank extends BlockBase {
 
-	public static final int MAX_ARTRON = 100;
+	public static final int MAX_ARTRON = 128;
 	
 	public BlockArtronBank() {}
 

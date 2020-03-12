@@ -137,6 +137,7 @@ tile.tardis.table_brachacki.name=Table
 tile.tardis.tractor_beam.name=Dalek Tractor Beam
 tile.tardis.dalek_hull.name=Dalek hull
 tile.tardis.dalek_hull_slab.name=Dalek Hull Slab
+tile.tardis.artron_bank.name=Artron Bank
 
 tile.tardis.gallifreyan_grass.name=Strange Grass
 tile.tardis.gallifreyan_dirt.name=Strange Dirt
@@ -152,7 +153,7 @@ death.attack.dalek=killed by a Dalek Ray Gun!
 death.cyberman.ray=was deleted.
 
 damage.dalek=was exterminated!
-damage.tardis.noair=poisoned via mercury exposure!
+damage.tardis.noair=%s was poisoned via mercury exposure!
 
 damagesrc.tardis.cyberman=was deleted.
 damagesrc.tardis.forcefield=fried by a forcefield!
@@ -177,8 +178,6 @@ raygun.ammo=Ammo left: %s
 raygun.ammo.none=No Ammo!
 raygun.ammo.howto=Press %s to load %s
 iteminfo.shift=Press %s for more info!
-
-mods.tardis.compat.optifine=You're running Optifine with this mod! That's fine! We can understand why. But please be warned we do not accept any rendering bug reports with optifine installed
 
 tardis.none=You don't own a TARDIS
 tardis.flying=TARDIS in flight!
