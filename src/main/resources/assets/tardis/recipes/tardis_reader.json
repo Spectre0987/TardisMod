@@ -1,0 +1,14 @@
+{
+	"type":"minecraft:crafting_shapeless",
+	"ingredients":[
+		{
+			"item":"tardis:circuts"
+		},
+		{
+			"item":"minecraft:iron_ingot"
+		}
+	],
+	"result":{
+		"item":"tardis:tracker"
+	}
+}

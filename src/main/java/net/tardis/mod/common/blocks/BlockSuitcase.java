@@ -2,11 +2,13 @@ package net.tardis.mod.common.blocks;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -20,23 +22,27 @@ import net.tardis.mod.common.items.TItems;
 public class BlockSuitcase extends BlockBase {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	private static final ArrayList<ItemStack[]> clothes = new ArrayList<>();
+	private static final ArrayList<Supplier<ItemStack[]>> clothes = new ArrayList<>();
 	private static final AxisAlignedBB BB = new AxisAlignedBB(0.0625, 0, 0.0625, 0.9375, 0.4375, 0.875);
 	private Random rand = new Random();
 
 	public BlockSuitcase() {
-		clothes.add(new ItemStack[]{new ItemStack(TItems.fez), new ItemStack(TItems.bowtie)});
-		clothes.add(new ItemStack[]{new ItemStack(TItems.first_cane), new ItemStack(TItems.fourth_hat)});
-		clothes.add(new ItemStack[]{new ItemStack(TItems.void_specs)});
-		clothes.add(new ItemStack[]{new ItemStack(TItems.thirteen_coat)});
-		this.setHarvestLevel("pickaxe", -1);
+		clothes.add(() -> new ItemStack[]{new ItemStack(TItems.fez), new ItemStack(TItems.bowtie)});
+		clothes.add(() -> new ItemStack[]{new ItemStack(TItems.first_cane), new ItemStack(TItems.fourth_hat)});
+		clothes.add(() -> new ItemStack[]{new ItemStack(TItems.void_specs)});
+		clothes.add(() -> new ItemStack[]{new ItemStack(TItems.thirteen_coat)});
+		this.setHardness(0.25F);
 	}
 
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-		ItemStack[] stacks = clothes.get(rand.nextInt(clothes.size()));
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {}
+
+	@Override
+	public void onPlayerDestroy(World worldIn, BlockPos pos, IBlockState state) {
+		super.onPlayerDestroy(worldIn, pos, state);
+		ItemStack[] stacks = clothes.get(rand.nextInt(clothes.size())).get();
 		for (ItemStack stack : stacks) {
-			drops.add(stack.copy());
+			InventoryHelper.spawnItemStack(worldIn, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
 		}
 	}
 

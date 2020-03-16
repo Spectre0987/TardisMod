@@ -516,7 +516,8 @@ public class TileEntityTardis extends TileEntity implements ITickable, IInventor
 			tardisTag.setBoolean(NBT.STEALTH, this.isStealth);
 			if(this.getTardisEntity() != null)
 				tardisTag.setUniqueId("entity_uuid", this.getTardisEntity().getUniqueID());
-			tardisTag.setFloat("max_artron", this.maxArtron);
+			if(tardisTag.hasKey("max_artron"))
+				tardisTag.setFloat("max_artron", this.maxArtron);
 			
 			//Bed locations
 			NBTTagList bedList = new NBTTagList();

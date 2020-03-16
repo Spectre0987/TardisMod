@@ -56,6 +56,9 @@ item.tardis.brak_doors_closed.name=TARDIS Ancillary doors
 item.tardis.repair_capsule.name=Repair Capsule
 item.tardis.player_victim.name=Trophy
 item.tardis.defabric.name=Defabricator
+item.tardis.tracker.name=TARDIS Diagnostic Tool
+
+msg.tardis.tracker.tooltip=Bound to TARDIS Console at %s
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS arriving in

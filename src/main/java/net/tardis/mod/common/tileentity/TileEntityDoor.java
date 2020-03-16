@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -21,7 +22,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -320,7 +320,7 @@ public class TileEntityDoor extends TileEntity implements ITickable, IInventory,
 	public void handleForceField() {
 		world.getEntitiesWithinAABB(Entity.class, RENDER_BB.offset(this.getPos())).forEach(entity -> {
 			
-			if (entity instanceof IProjectile) {
+			if (entity instanceof IProjectile || entity instanceof EntityThrowable) {
 				entity.setDead();
 				if(!this.hitEntitiesIDs.contains(entity.getEntityId())) {
 					this.hitEntitiesIDs.add(entity.getEntityId());

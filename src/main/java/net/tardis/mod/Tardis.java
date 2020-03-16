@@ -12,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -27,6 +28,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import net.tardis.mod.api.disguise.DisguiseRegistry;
+import net.tardis.mod.cap.ITardisTracker;
+import net.tardis.mod.cap.ITardisTracker.TardisTrackerStorage;
+import net.tardis.mod.cap.TardisTrackerCapability;
 import net.tardis.mod.client.models.exteriors.TileEntityDoorTT;
 import net.tardis.mod.common.ars.ConsoleRoom;
 import net.tardis.mod.common.blocks.TBlocks;
@@ -294,6 +298,7 @@ public class Tardis {
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_industrial.png", "interior/interior_industrial", new BlockPos(11, 2, 18));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_helian.png", "interior/interior_helian", new BlockPos(18,1,18));
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_magmatic.png", "interior/interior_magmatic", new BlockPos(21, 3, 16));
+		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_explorer.png", "interior/interior_explorer", new BlockPos(23, 3, 20));
 
 		ConsoleRoom.registerConsoleRoom("textures/gui/previews/preview_builder.png", "interior/interior_builder", new BlockPos(9, 1, 9));
 		
@@ -306,6 +311,8 @@ public class Tardis {
 		TileEntitySonicWorkbench.RECIPES.put(Item.getItemFromBlock(Blocks.WOOL), new Item[]{TItems.void_specs});
 		
 		this.configDir = event.getModConfigurationDirectory();
+		
+		CapabilityManager.INSTANCE.register(ITardisTracker.class, new TardisTrackerStorage(), TardisTrackerCapability::new);
 	}
 
 	@EventHandler

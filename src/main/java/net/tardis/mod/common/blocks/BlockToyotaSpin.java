@@ -1,6 +1,7 @@
 package net.tardis.mod.common.blocks;
 
 import com.google.common.base.Supplier;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -67,6 +68,20 @@ public class BlockToyotaSpin extends BlockMultiblockMaster {
 			world.setBlockState(pos.down(), TBlocks.multiblock.getDefaultState());
 			((TileEntityMultiblock) world.getTileEntity(pos.down())).setMaster(pos);
 			return place;
+		}
+
+		@Override
+		public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack) {
+			if(side != EnumFacing.DOWN)
+				return false;
+			pos = pos.down();
+			for (BlockPos nPos : BlockPos.getAllInBox(pos.offset(EnumFacing.NORTH).offset(EnumFacing.EAST), pos.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST))) {
+				if(!worldIn.getBlockState(nPos).getMaterial().isReplaceable()) {
+					return false;
+				}
+			}
+			
+			return true;
 		}
 
 	}
