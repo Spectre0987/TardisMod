@@ -304,7 +304,6 @@ public class TEventHandler {
 			TileEntity te = event.getEntityPlayer().world.getTileEntity(TardisHelper.getTardisForPosition(event.getPos()));
 			if(te instanceof TileEntityTardis) {
 				((TileEntityTardis)te).addBedLoc(event.getEntityPlayer(), event.getPos());
-				System.out.println("Added " + event.getPos() + " which was " + event.getEntityPlayer().world.getBlockState(event.getPos()).getBlock());
 			}
 		}
 	}

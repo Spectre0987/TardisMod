@@ -17,6 +17,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.tardis.mod.common.dimensions.TDimensions;
 import net.tardis.mod.common.systems.TardisSystems.BaseSystem;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
+import net.tardis.mod.util.common.helpers.Helper;
 import net.tardis.mod.util.common.helpers.PlayerHelper;
 
 public class TardisTrackerCapability implements ITardisTracker{
@@ -24,17 +25,12 @@ public class TardisTrackerCapability implements ITardisTracker{
 	public static final DecimalFormat FORMAT = new DecimalFormat("##.#");
 	BlockPos consolePos;
 	TileEntityTardis console;
-	private boolean isSelected = false;
-	
-	//For Client only
-	private BlockPos exteriorPos;
 	
 	public TardisTrackerCapability() {}
 	
 	@Override
 	public void setConsole(BlockPos pos) {
 		consolePos = pos.toImmutable();
-		this.findConsoleInstance();
 	}
 
 	@Override
@@ -62,17 +58,12 @@ public class TardisTrackerCapability implements ITardisTracker{
 	@Override
 	public void deserialize(NBTTagCompound tag) {
 		this.consolePos = BlockPos.fromLong(tag.getLong("console"));
-		
-		if(tag.hasKey("exterior"))
-			this.exteriorPos = BlockPos.fromLong(tag.getLong("exterior"));
 	}
 
 	@Override
 	public NBTTagCompound write(NBTTagCompound tag) {
 		if(consolePos != null)
 			tag.setLong("console", this.consolePos.toLong());
-		if(console != null)
-			tag.setLong("exterior", this.console.getLocation().toLong());
 		return tag;
 	}
 
@@ -96,6 +87,7 @@ public class TardisTrackerCapability implements ITardisTracker{
 			for(BaseSystem sub : console.systems) {
 				PlayerHelper.sendMessage(playerIn, new TextComponentString(new TextComponentTranslation(sub.getNameKey()).getFormattedText() + " " + FORMAT.format(sub.getHealth() * 100) + "%"), false);
 			}
+			PlayerHelper.sendMessage(playerIn, new TextComponentTranslation("tooltip.tardis.tracker.exterior", Helper.formatBlockPos(console.getLocation()), console.dimension), false);
 		}
 		else PlayerHelper.sendMessage(playerIn, "Remote not bound!", true);
 	}

@@ -69,6 +69,7 @@ tooltip.tardis.toolkit=Right click the console to repair all non-destroyed syste
 tooltip.tardis.artron_capacitor=Stored Artron
 
 tooltip.manual.sn=Found in the heart of a supernova.
+tooltip.tardis.tracker.exterior=Exterior located at %s
 
 general.time.seconds=seconds
 
