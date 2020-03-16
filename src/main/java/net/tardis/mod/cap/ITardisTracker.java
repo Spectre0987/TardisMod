@@ -1,8 +1,6 @@
 package net.tardis.mod.cap;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -12,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.tardis.mod.common.tileentity.TileEntityTardis;
 
 public interface ITardisTracker {
@@ -48,7 +46,7 @@ public interface ITardisTracker {
 		
 	}
 	
-	public static class TrackerProvider implements ICapabilityProvider{
+	public static class TrackerProvider implements ICapabilitySerializable<NBTTagCompound>{
 
 		private ITardisTracker tracker;
 		
@@ -64,6 +62,16 @@ public interface ITardisTracker {
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 			return capability == TRACKER ? (T)tracker : null;
+		}
+
+		@Override
+		public NBTTagCompound serializeNBT() {
+			return tracker.write(new NBTTagCompound());
+		}
+
+		@Override
+		public void deserializeNBT(NBTTagCompound nbt) {
+			this.tracker.deserialize(nbt);
 		}
 		
 	}

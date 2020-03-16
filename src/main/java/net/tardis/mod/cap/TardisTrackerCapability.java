@@ -69,7 +69,8 @@ public class TardisTrackerCapability implements ITardisTracker{
 
 	@Override
 	public NBTTagCompound write(NBTTagCompound tag) {
-		tag.setLong("console", this.consolePos.toLong());
+		if(consolePos != null)
+			tag.setLong("console", this.consolePos.toLong());
 		if(console != null)
 			tag.setLong("exterior", this.console.getLocation().toLong());
 		return tag;
