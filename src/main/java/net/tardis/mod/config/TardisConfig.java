@@ -97,9 +97,9 @@ public class TardisConfig {
 		@Config.LangKey("config.misc.recharge")
 		public float artronRechargeRate = 4F;
 
-		@Config.LangKey("config.misc.warn")
+		@Config.LangKey("config.misc.optifineWaring")
 		@Config.Comment("If this is enabled and optifine is detected, then a warning at startup is displayed")
-		public boolean warn = true;
+		public boolean optifineWarning = true;
 
 	}
 
