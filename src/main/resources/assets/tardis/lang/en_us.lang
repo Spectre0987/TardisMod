@@ -62,7 +62,7 @@ msg.tardis.tracker.tooltip=Bound to TARDIS Console at %s
 
 tooltip.remote=Remote bound to TARDIS at:
 tooltip.remote.time=TARDIS arriving in
-tooltip.remote.fuel=Artron Banks
+tooltip.remote.fuel=Artron Banks:
 tooltip.remote.exteriorpos=TARDIS Exterior:
 tooltip.remote.bind=To bind, right click on a console.
 tooltip.tardis.toolkit=Right click the console to repair all non-destroyed systems by 15
@@ -251,8 +251,9 @@ config.entity.adipose.spawnchance=Chance That An Adipose Will Spawn (Per Chunk)
 
 config.misc=Misc
 config.misc.givekey=Give player a TARDIS key when they join the world?
-config.misc.maxrand=Maximum number of blocks the TARDIS should travel when using the randomizer
+config.misc.maxrand=Maximum blocks the randomizer can change.
 config.misc.shake=Should the camera shake when taking off/landing?
+config.misc.optifineWarning=Optifine warning.
 
 config.boti=Enable BOTI?
 
