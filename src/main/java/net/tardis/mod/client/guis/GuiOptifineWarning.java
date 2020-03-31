@@ -11,9 +11,12 @@ import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.tardis.mod.config.TardisConfig;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.lang.model.util.ElementScanner6;
 
 public class GuiOptifineWarning extends GuiScreen {
 	
@@ -21,22 +24,18 @@ public class GuiOptifineWarning extends GuiScreen {
 
 	public GuiOptifineWarning() {
 	}
-	
+
 	@Override
 	public void initGui() {
-		super.initGui();
-		
-		this.addButton(new GuiButtonExt(0, this.width / 2 - 154, this.height - 48, 150, 20, I18n.format("Close Game")));
-		this.addButton(new GuiButtonExt(1, this.width / 2 + 4, this.height - 48, 150, 20, I18n.format("Ignore (I understand)")));
+	super.initGui();
+		this.addButton(new GuiButtonExt(1, this.width / 2 - 70, this.height - 48, 150, 20, I18n.format("Ignore (I understand)")));
 	}
 	
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
+	protected void actionPerformed(final GuiButton button) throws IOException {
 		super.actionPerformed(button);
 		
-		if (button.id == 0) {
-			Minecraft.getMinecraft().shutdown();
-		} else if (button.id == 1) {
+		if (button.id == 1) {
 			Minecraft.getMinecraft().displayGuiScreen(lastGui);
 		}
 	}
@@ -61,12 +60,17 @@ public class GuiOptifineWarning extends GuiScreen {
 		@SubscribeEvent
 		public static void onLoadMC(GuiScreenEvent.InitGuiEvent e) {
 			if (!opened && FMLClientHandler.instance().hasOptifine() && e.getGui() instanceof GuiMainMenu) {
-				lastGui = e.getGui();
-				Minecraft.getMinecraft().displayGuiScreen(new GuiOptifineWarning());
-				opened = true;
+				{
+					if (TardisConfig.MISC.warn==true) {
+						lastGui = e.getGui();
+						Minecraft.getMinecraft().displayGuiScreen(new GuiOptifineWarning());
+						opened = true;
+					}else
+					{
+						opened = true;
+					}
+				}
 			}
 		}
-		
 	}
-	
 }
