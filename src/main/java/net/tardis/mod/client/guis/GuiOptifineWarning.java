@@ -16,8 +16,6 @@ import net.tardis.mod.config.TardisConfig;
 import java.io.IOException;
 import java.util.List;
 
-import javax.lang.model.util.ElementScanner6;
-
 public class GuiOptifineWarning extends GuiScreen {
 	
 	public static GuiScreen lastGui;
@@ -61,7 +59,7 @@ public class GuiOptifineWarning extends GuiScreen {
 		public static void onLoadMC(GuiScreenEvent.InitGuiEvent e) {
 			if (!opened && FMLClientHandler.instance().hasOptifine() && e.getGui() instanceof GuiMainMenu) {
 				{
-					if (TardisConfig.MISC.warn==true) {
+					if (TardisConfig.MISC.optifineWarning) {
 						lastGui = e.getGui();
 						Minecraft.getMinecraft().displayGuiScreen(new GuiOptifineWarning());
 						opened = true;
